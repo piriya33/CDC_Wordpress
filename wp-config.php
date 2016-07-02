@@ -58,8 +58,8 @@ define('NONCE_SALT',       'L?$s*1EfZ/3JpP>ZaETQd+Z0D$|sniayaRhzZTx$9.CH^oV:-{y3
 /**#@-*/
 
 /** Define AWS Access Key **/
-define( 'AWS_ACCESS_KEY_ID', 'AKIAJYS335O6DXLTFNWA' );
-define( 'AWS_SECRET_ACCESS_KEY', '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' );
+define( 'AWS_ACCESS_KEY_ID', '' );
+define( 'AWS_SECRET_ACCESS_KEY', '' );
 /* Define REDIS node endpoint */
 define('WP_REDIS_HOST', 'cdc.ywsccw.0001.apse1.cache.amazonaws.com');
 
