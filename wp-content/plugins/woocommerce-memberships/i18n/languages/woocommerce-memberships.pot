@@ -2,7 +2,7 @@
 # This file is distributed under the GNU General Public License v3.0.
 msgid ""
 msgstr ""
-"Project-Id-Version: WooCommerce Memberships 1.6.2\n"
+"Project-Id-Version: WooCommerce Memberships 1.6.3\n"
 "Report-Msgid-Bugs-To: https://support.woothemes.com/hc/\n"
 "POT-Creation-Date: 2015-10-09 20:38:01+00:00\n"
 "MIME-Version: 1.0\n"
@@ -1605,7 +1605,7 @@ msgstr ""
 msgid "A note has been added about your membership"
 msgstr ""
 
-#: includes/class-wc-memberships-membership-plan.php:665
+#: includes/class-wc-memberships-membership-plan.php:674
 msgid "Membership access granted from purchasing %s (Order %s)"
 msgstr ""
 

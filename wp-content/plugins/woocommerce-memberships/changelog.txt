@@ -1,5 +1,10 @@
 *** WooCommerce Memberships Changelog ***
 
+2016.07.06 - version 1.6.3
+ * Fix - Avoid loading the My Account tabbed navigation twice when some third party plugins hook into it as well
+ * Fix - Corrects member count while viewing plan list
+ * Misc - Make query arguments for posts and products shown in Member Area sections filterable
+
 2016.06.22 - version 1.6.2
  * Tweak - When dripping content for delayed access, take into consideration the amount of time a membership may have been paused when reactivating the membership and resuming access to restricted content
  * Tweak - When redirecting non-members off from restricted content, if they login they are redirected back to a content they have access to

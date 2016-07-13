@@ -32,7 +32,7 @@ defined( 'ABSPATH' ) or exit;
  */
 class WC_Memberships_Member_Area {
 
-	
+
 	/**
 	 * Member Area
 	 *
@@ -45,7 +45,7 @@ class WC_Memberships_Member_Area {
 
 		// render My Account -> My Membership member area page
 		add_filter( 'woocommerce_get_breadcrumb', array( $this, 'filter_breadcrumbs' ), 100 );
-		add_filter( 'the_content',                array( $this, 'render_member_area_content' ), 100 );
+		add_filter( 'the_content',                array( $this, 'render_member_area_content' ), 200 );
 	}
 
 
@@ -125,11 +125,11 @@ class WC_Memberships_Member_Area {
 				// Member Area should have at least one section enabled
 				if ( ! empty( $members_area ) ) {
 
-					// load My Account navigation
-					do_action( 'woocommerce_account_navigation' );
-					// prevents to load twice the navigation
-					// TODO this probably has to be removed when the Member Area gets overhauled {FN 2016-06-06}
-					remove_action( 'woocommerce_account_navigation', 'woocommerce_account_navigation' );
+					// load My Account tabbed navigation preventing duplicates
+					if ( did_action( 'woocommerce_account_navigation' ) ) {
+						do_action( 'woocommerce_account_navigation' );
+						remove_action( 'woocommerce_account_navigation', 'woocommerce_account_navigation' );
+					}
 
 					// get the first section to be used as fallback
 					$section = $sections[0];

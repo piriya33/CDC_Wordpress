@@ -317,7 +317,7 @@ class WC_Memberships_Membership_Plan {
 	 * @since 1.4.0
 	 * @param string $type 'content_restriction', 'product_restriction', 'purchasing_discount'
 	 * @param int $paged Pagination (optional)
-	 * @return null|WP_Query Query results of restricted posts accessible to this membership
+	 * @return null|\WP_Query Query results of restricted posts accessible to this membership
 	 */
 	private function get_restricted( $type, $paged = 1 ) {
 
@@ -335,7 +335,7 @@ class WC_Memberships_Membership_Plan {
 
 			foreach ( $plan_rules as $rule ) {
 
-				if ( 'post_type' == $rule['content_type'] ) {
+				if ( 'post_type' === $rule['content_type'] ) {
 
 					if ( ! empty( $rule['object_ids'] ) ) {
 
@@ -353,7 +353,7 @@ class WC_Memberships_Membership_Plan {
 
 					}
 
-				} elseif ( 'taxonomy' == $rule['content_type'] ) {
+				} elseif ( 'taxonomy' === $rule['content_type'] ) {
 
 					if ( ! empty( $rule['content_type_name'] ) ) {
 
@@ -378,22 +378,31 @@ class WC_Memberships_Membership_Plan {
 						) );
 
 						$post_ids = array_merge( $post_ids, $taxonomy->posts );
-
 					}
-
 				}
-
 			}
 		}
 
 		if ( ! empty( $post_ids ) ) {
 
-			$posts = new WP_Query( array(
+			$query_args = array(
 				'post_type'           => 'any',
 				'post__in'            => array_unique( $post_ids ),
 				'ignore_sticky_posts' => true,
 				'paged'               => $paged,
-			) );
+			);
+
+			/**
+			 * Filter restricted content query args
+			 *
+			 * @since 1.6.3
+			 * @param array $query_args Args passed to WP_Query
+			 * @param string $query_type Type of request: 'content_restriction', 'product_restriction', 'purchasing_discount'
+			 * @param int $query_paged Pagination request
+			 */
+			$query_args = apply_filters( 'wc_memberships_get_restricted_posts_query_args', $query_args, $type, $paged );
+
+			$posts = new WP_Query( $query_args );
 
 			return $posts;
 		}
@@ -488,7 +497,7 @@ class WC_Memberships_Membership_Plan {
 	 */
 	public function get_memberships( $args = array() ) {
 
-		wp_parse_args( $args, array(
+		$args = wp_parse_args( $args, array(
 			'post_type'   => 'wc_user_membership',
 			'post_status' => 'any',
 			'post_parent' => $this->get_id(),

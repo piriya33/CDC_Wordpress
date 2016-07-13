@@ -3,3 +3,9 @@
  *
  * This file will be loaded after all other theme stylesheets.
  */
+
+.woocommerce-active .site-header .secondary-navigation {
+float: right;
+margin-right: 0%;
+width: 60%;
+}
