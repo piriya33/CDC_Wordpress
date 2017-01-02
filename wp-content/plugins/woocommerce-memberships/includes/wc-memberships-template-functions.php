@@ -292,41 +292,17 @@ if ( ! function_exists( 'wc_memberships_product_has_member_discount' ) ) {
 if ( ! function_exists( 'wc_memberships_user_has_member_discount' ) ) {
 
 	/**
-	 * Check if the current user is eligible for member discount for the current product
+	 * Check if a user is eligible for member discount for the current product
 	 *
 	 * @since 1.0.0
-	 * @param int|null $product_id Product ID: optional, defaults to current product
+	 * @param int|\WC_Product|null $product_id Optional, product id or object, if not set will attempt to get the current one
+	 * @param int|\WP_User|null Optional, user to check for (defaults to current logged in user)
 	 * @return bool
 	 */
-	function wc_memberships_user_has_member_discount( $product_id = null ) {
-
-		if ( ! is_user_logged_in() ) {
-			return false;
-		}
-
-		if ( ! $product_id ) {
-			global $product;
-
-			$product_id = $product->id;
-		}
-
-		$product      = wc_get_product( $product_id );
-		$user_id      = get_current_user_id();
-		$has_discount = wc_memberships()->get_rules_instance()->user_has_product_member_discount( $user_id, $product_id );
-
-		if ( ! $has_discount && $product->has_child() ) {
-			foreach ( $product->get_children( true ) as $child_id ) {
-
-				$has_discount = wc_memberships()->get_rules_instance()->user_has_product_member_discount( $user_id, $child_id );
-
-				if ( $has_discount ) {
-					break;
-				}
-			}
-		}
-
-		return $has_discount;
+	function wc_memberships_user_has_member_discount( $product_id = null, $user_id = null ) {
+		return wc_memberships()->get_member_discounts_instance()->user_has_member_discount( $product_id, $user_id );
 	}
+
 }
 
 
@@ -383,6 +359,23 @@ if ( ! function_exists( 'wc_memberships_show_product_member_discount_badge' ) ) 
 	 */
 	function wc_memberships_show_product_member_discount_badge() {
 		wc_get_template( 'single-product/member-discount-badge.php' );
+	}
+
+}
+
+
+if ( ! function_exists( 'wc_memberships_get_member_discount_badge' ) ) {
+	
+	/**
+	 * Get member discount badge
+	 *
+	 * @since 1.6.4
+	 * @param \WC_Product $product The product object to output a badge for (passed to filter)
+	 * @param bool $variation Whether to output a discount badge for a product variation (default false)
+	 * @return string
+	 */
+	function wc_memberships_get_member_discount_badge( $product, $variation = false ) {
+		return wc_memberships()->get_member_discounts_instance()->get_member_discount_badge( $product, $variation );
 	}
 
 }

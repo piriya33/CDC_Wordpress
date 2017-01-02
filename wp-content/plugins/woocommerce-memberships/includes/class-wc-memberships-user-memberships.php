@@ -115,16 +115,16 @@ class WC_Memberships_User_Memberships {
 
 
 	/**
-	 * Get user's membership
+	 * Get a User Membership
 	 *
-	 * Supports getting user membership by membership ID, Post object
-	 * or a combination of the user ID and membership plan id/slug/Post object
+	 * Supports getting user membership by membership id, post object
+	 * or a combination of the user id and membership plan id/slug/post object
 	 *
 	 * If no $id is provided, defaults to getting the membership for the current user
 	 *
 	 * @since 1.0.0
-	 * @param int|\WC_Memberships_User_Membership $id Optional: post object or post ID of the User Membership, or user ID
-	 * @param int|string|\WC_Memberships_Membership_Plan Optional: Membership Plan slug, post object or related post ID
+	 * @param int|\WC_Memberships_User_Membership $id Optional: post object or post ID of the User Membership, or user id
+	 * @param int|string|\WC_Memberships_Membership_Plan Optional: Membership Plan slug, post object or related post id
 	 * @return false|\WC_Memberships_User_Membership
 	 */
 	public function get_user_membership( $id = null, $plan = null ) {
@@ -222,37 +222,84 @@ class WC_Memberships_User_Memberships {
 
 
 	/**
-	 * Check if user is a mem ber of a particular membership plan
+	 * Check if user is a member of one particular or any membership plan
 	 *
 	 * @since 1.0.0
-	 * @param int $user_id Optional. Defaults to current user.
-	 * @param int|string $membership_plan Optional. Membership plan ID or slug
-	 * @return bool True, if is a member, false otherwise
+	 * @param int|\WP_User $user_id Optional, defaults to current user
+	 * @param int|string|\WC_Memberships_Membership_Plan $membership_plan Optional: membership plan id, object or slug;
+	 *                                                                    leave empty to check if the user is a member of any plan
+	 * @param bool $check_if_active Optional additional check to see if the member is currently active (default false)
+	 * @return bool
 	 */
-	public function is_user_member( $user_id = null, $membership_plan ) {
+	public function is_user_member( $user_id = null, $membership_plan = null, $check_if_active = false ) {
 
-		$user_membership = $this->get_user_membership( $user_id, $membership_plan );
-		return (bool) $user_membership;
+		$is_member = false;
+
+		if ( null === $user_id ) {
+			$user_id = get_current_user_id();
+		} elseif ( isset( $user_id->ID ) ) {
+			$user_id = $user_id->ID;
+		}
+
+		// sanity check (invalid user or not logged in)
+		if ( ! is_numeric( $user_id ) || 0 === $user_id ) {
+			return $is_member;
+		} else {
+			$user_id = (int) $user_id;
+		}
+
+		if ( null === $membership_plan ) {
+
+			// check if the user is a member of at least one plan
+			$plans = wc_memberships_get_membership_plans();
+
+			if ( ! empty( $plans ) ) {
+
+				foreach ( $plans as $plan ) {
+
+					if ( $user_membership = $this->get_user_membership( $user_id, $plan ) ) {
+
+						// if not checking for active memberships
+						// $check_if_active === false, then $is_member === true
+						$is_member = true !== $check_if_active;
+
+						if ( true === $check_if_active ) {
+							if ( $is_member = ( $user_membership->is_active() && $user_membership->is_in_active_period() ) ) {
+								break;
+							}
+						} else {
+							break;
+						}
+					}
+				}
+			}
+
+		} else {
+
+			// check if the user is a member of a specific plan
+			$user_membership = $this->get_user_membership( $user_id, $membership_plan );
+			$is_member       = (bool) $user_membership;
+
+			if ( $is_member && true === $check_if_active ) {
+				$is_member = $user_membership->is_active() && $user_membership->is_in_active_period();
+			}
+		}
+
+		return $is_member;
 	}
 
 
 	/**
-	 * Check if user is an active member of a particular membership plan
+	 * Check if user is an active member of one particular or any membership plan
 	 *
 	 * @since 1.0.0
-	 * @param int $user_id Optional. Defaults to current user.
-	 * @param int|string $membership_plan Optional. Membership plan ID or slug
-	 * @return bool True, if is a member, false otherwise
+	 * @param int|\WP_User $user_id Optional, defaults to current user
+	 * @param int|string $membership_plan Optional: membership plan ID or slug;
+	 *                                     leave empty to check if the user is a member of any plan
+	 * @return bool
 	 */
-	public function is_user_active_member( $user_id = null, $membership_plan ) {
-
-		$user_membership = $this->get_user_membership( $user_id, $membership_plan );
-
-		if ( ! $user_membership ) {
-			return false;
-		}
-
-		return ! $user_membership->is_cancelled() && ! $user_membership->is_expired() && ! $user_membership->is_paused() && $user_membership->is_in_active_period();
+	public function is_user_active_member( $user_id = null, $membership_plan = null ) {
+		return $this->is_user_member( $user_id, $membership_plan, true );
 	}
 
 

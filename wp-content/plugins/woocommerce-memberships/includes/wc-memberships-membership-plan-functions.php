@@ -44,7 +44,7 @@ function wc_memberships_get_membership_plan( $membership_plan = null ) {
  * @param array $args Optional array of arguments, same as for get_posts()
  * @return \WC_Memberships_Membership_Plan[]
  */
-function wc_memberships_get_membership_plans( $args = null ) {
+function wc_memberships_get_membership_plans( $args = array() ) {
 	return wc_memberships()->get_plans_instance()->get_membership_plans( $args );
 }
 

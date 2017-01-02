@@ -30,14 +30,13 @@ defined( 'ABSPATH' ) or exit;
  * @type \WP_Post $post Post object
  * @type \WC_Product $product Product object
  *
- * @version 1.0.0
+ * @version 1.6.4
  * @since 1.0.0
  */
+global $product;
 
-global $post, $product;
-?>
-<?php if ( wc_memberships_user_has_member_discount() ) : ?>
+if ( wc_memberships_user_has_member_discount() ) :
 
-	<?php echo apply_filters( 'wc_memberships_member_discount_badge', '<span class="onsale wc-memberships-member-discount">' . esc_html__( 'Member discount!', 'woocommerce-memberships' ) . '</span>', $post, $product ); ?>
+	echo wc_memberships_get_member_discount_badge( $product );
 
-<?php endif; ?>
+endif;

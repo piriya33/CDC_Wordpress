@@ -105,7 +105,7 @@ class WC_Memberships_Meta_Box_User_Membership_Member_Details extends WC_Membersh
 
 		echo get_avatar( $user->ID, 256 ); ?>
 
-		<h2><?php echo esc_html( $user->display_name ); ?></h2>
+		<h2 class="member-name"><?php echo esc_html( $user->display_name ); ?></h2> <span>(<a href="<?php echo esc_url( get_edit_user_link( $user->ID ) ); ?>"><?php esc_html_e( 'Edit User', 'woocommerce-memberships' ); ?></a>)</span>
 
 		<p>
 			<a href="mailto:<?php echo esc_attr( $user->user_email ); ?>" class="member-email"><?php echo esc_html( $user->user_email ); ?></a>

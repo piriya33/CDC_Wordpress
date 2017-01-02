@@ -2,7 +2,7 @@
 # This file is distributed under the GNU General Public License v3.0.
 msgid ""
 msgstr ""
-"Project-Id-Version: WooCommerce Memberships 1.6.3\n"
+"Project-Id-Version: WooCommerce Memberships 1.6.4\n"
 "Report-Msgid-Bugs-To: https://support.woothemes.com/hc/\n"
 "POT-Creation-Date: 2015-10-09 20:38:01+00:00\n"
 "MIME-Version: 1.0\n"
@@ -160,7 +160,7 @@ msgstr ""
 
 #: includes/admin/class-wc-memberships-admin-user-memberships.php:156
 #: includes/admin/class-wc-memberships-admin.php:497
-#: includes/wc-memberships-template-functions.php:503
+#: includes/wc-memberships-template-functions.php:496
 msgid "Cancel"
 msgstr ""
 
@@ -1003,9 +1003,9 @@ msgid "year(s)"
 msgstr ""
 
 #: includes/admin/meta-boxes/class-wc-memberships-meta-box-membership-plan-data.php:179
-#: includes/wc-memberships-template-functions.php:511
-#: includes/wc-memberships-template-functions.php:522
-#: includes/wc-memberships-template-functions.php:537
+#: includes/wc-memberships-template-functions.php:504
+#: includes/wc-memberships-template-functions.php:515
+#: includes/wc-memberships-template-functions.php:530
 msgid "View"
 msgstr ""
 
@@ -1315,6 +1315,10 @@ msgstr ""
 msgid "Member Details"
 msgstr ""
 
+#: includes/admin/meta-boxes/class-wc-memberships-meta-box-user-membership-member-details.php:108
+msgid "Edit User"
+msgstr ""
+
 #: includes/admin/meta-boxes/class-wc-memberships-meta-box-user-membership-member-details.php:116
 #. translators: %s - date
 msgid "Member since %s"
@@ -1492,8 +1496,8 @@ msgstr ""
 
 #: includes/admin/meta-boxes/views/html-membership-note.php:47
 #: includes/admin/meta-boxes/views/html-membership-recent-activity-note.php:48
-#: includes/class-wc-memberships-user-membership.php:797
-#: includes/class-wc-memberships-user-membership.php:799
+#: includes/class-wc-memberships-user-membership.php:814
+#: includes/class-wc-memberships-user-membership.php:816
 msgid "WooCommerce"
 msgstr ""
 
@@ -1582,9 +1586,8 @@ msgstr ""
 msgid "Add New Discount"
 msgstr ""
 
-#: includes/class-wc-memberships-member-discounts.php:269
-#. translators: %1$s - opening HTML <span> tag, %2$s - closing HTML </span> tag
-msgid "%1$sMember discount!%2$s"
+#: includes/class-wc-memberships-member-discounts.php:421
+msgid "Member discount!"
 msgstr ""
 
 #: includes/class-wc-memberships-membership-note-email.php:47
@@ -1799,84 +1802,84 @@ msgid ""
 "cannot be purchased."
 msgstr ""
 
-#: includes/class-wc-memberships-user-membership.php:850
+#: includes/class-wc-memberships-user-membership.php:867
 msgid "Membership paused."
 msgstr ""
 
-#: includes/class-wc-memberships-user-membership.php:863
+#: includes/class-wc-memberships-user-membership.php:880
 msgid "Membership cancelled."
 msgstr ""
 
-#: includes/class-wc-memberships-user-membership.php:884
+#: includes/class-wc-memberships-user-membership.php:901
 msgid "Membership expired."
 msgstr ""
 
-#: includes/class-wc-memberships-user-membership.php:901
+#: includes/class-wc-memberships-user-membership.php:918
 msgid "Membership resumed."
 msgstr ""
 
-#: includes/class-wc-memberships-user-membership.php:907
+#: includes/class-wc-memberships-user-membership.php:924
 msgid "Membership activated."
 msgstr ""
 
-#: includes/class-wc-memberships-user-membership.php:1019
+#: includes/class-wc-memberships-user-membership.php:1036
 #. translators: Membership transferred from user A to user B
 msgid "Membership transferred from %1$s to %2$s."
 msgstr ""
 
-#: includes/class-wc-memberships-user-memberships.php:272
+#: includes/class-wc-memberships-user-memberships.php:319
 #. translators: Active Membership(s)
 msgid "Active <span class=\"count\">(%s)</span>"
 msgid_plural "Active <span class=\"count\">(%s)</span>"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/class-wc-memberships-user-memberships.php:278
+#: includes/class-wc-memberships-user-memberships.php:325
 #. translators: Complimentary Membership(s)
 msgid "Complimentary <span class=\"count\">(%s)</span>"
 msgid_plural "Complimentary <span class=\"count\">(%s)</span>"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/class-wc-memberships-user-memberships.php:284
+#: includes/class-wc-memberships-user-memberships.php:331
 #. translators: Membership(s) Pending Cancellation
 msgid "Pending Cancellation <span class=\"count\">(%s)</span>"
 msgid_plural "Pending Cancellation <span class=\"count\">(%s)</span>"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/class-wc-memberships-user-memberships.php:290
+#: includes/class-wc-memberships-user-memberships.php:337
 #. translators: Paused Membership(s)
 msgid "Paused <span class=\"count\">(%s)</span>"
 msgid_plural "Paused <span class=\"count\">(%s)</span>"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/class-wc-memberships-user-memberships.php:296
+#: includes/class-wc-memberships-user-memberships.php:343
 #. translators: Expired Membership(s)
 msgid "Expired <span class=\"count\">(%s)</span>"
 msgid_plural "Expired <span class=\"count\">(%s)</span>"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/class-wc-memberships-user-memberships.php:302
+#: includes/class-wc-memberships-user-memberships.php:349
 #. translators: Cancelled Membership(s)
 msgid "Cancelled <span class=\"count\">(%s)</span>"
 msgid_plural "Cancelled <span class=\"count\">(%s)</span>"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/class-wc-memberships-user-memberships.php:386
+#: includes/class-wc-memberships-user-memberships.php:433
 #. translators: Membership status changed from status A (%1$s) to status B
 #. (%2$s)
 msgid "Membership status changed from %1$s to %2$s."
 msgstr ""
 
-#: includes/class-wc-memberships-user-memberships.php:550
+#: includes/class-wc-memberships-user-memberships.php:597
 msgid "Membership cancelled because the associated order was trashed."
 msgstr ""
 
-#: includes/class-wc-memberships-user-memberships.php:561
+#: includes/class-wc-memberships-user-memberships.php:608
 msgid "Membership cancelled because the associated order was refunded."
 msgstr ""
 
@@ -2211,28 +2214,23 @@ msgstr ""
 msgid "My Discounts"
 msgstr ""
 
-#: includes/wc-memberships-template-functions.php:495
+#: includes/wc-memberships-template-functions.php:488
 msgid "Renew"
 msgstr ""
 
+#: includes/wc-memberships-template-functions.php:616
 #: includes/wc-memberships-template-functions.php:623
-#: includes/wc-memberships-template-functions.php:630
 msgid "Next &rarr;"
 msgstr ""
 
-#: includes/wc-memberships-template-functions.php:626
-#: includes/wc-memberships-template-functions.php:629
+#: includes/wc-memberships-template-functions.php:619
+#: includes/wc-memberships-template-functions.php:622
 msgid "&larr; Previous"
 msgstr ""
 
 #: templates/emails/membership-note.php:39
 #: templates/emails/plain/membership-note.php:38
 msgid "Hello, a note has just been added to your membership:"
-msgstr ""
-
-#: templates/loop/member-discount-badge.php:40
-#: templates/single-product/member-discount-badge.php:41
-msgid "Member discount!"
 msgstr ""
 
 #: templates/myaccount/my-membership-content.php:39
@@ -2357,7 +2355,7 @@ msgstr ""
 msgid "http://www.woothemes.com/"
 msgstr ""
 
-#: includes/class-wc-memberships-member-discounts.php:228
+#: includes/class-wc-memberships-member-discounts.php:364
 msgctxt "Price range: from-to"
 msgid "%1$s&ndash;%2$s"
 msgstr ""
@@ -2368,32 +2366,32 @@ msgctxt "Admin menu name"
 msgid "Memberships"
 msgstr ""
 
-#: includes/class-wc-memberships-user-memberships.php:270
+#: includes/class-wc-memberships-user-memberships.php:317
 msgctxt "Membership Status"
 msgid "Active"
 msgstr ""
 
-#: includes/class-wc-memberships-user-memberships.php:276
+#: includes/class-wc-memberships-user-memberships.php:323
 msgctxt "Membership Status"
 msgid "Complimentary"
 msgstr ""
 
-#: includes/class-wc-memberships-user-memberships.php:282
+#: includes/class-wc-memberships-user-memberships.php:329
 msgctxt "Membership Status"
 msgid "Pending Cancellation"
 msgstr ""
 
-#: includes/class-wc-memberships-user-memberships.php:288
+#: includes/class-wc-memberships-user-memberships.php:335
 msgctxt "Membership Status"
 msgid "Paused"
 msgstr ""
 
-#: includes/class-wc-memberships-user-memberships.php:294
+#: includes/class-wc-memberships-user-memberships.php:341
 msgctxt "Membership Status"
 msgid "Expired"
 msgstr ""
 
-#: includes/class-wc-memberships-user-memberships.php:300
+#: includes/class-wc-memberships-user-memberships.php:347
 msgctxt "Membership Status"
 msgid "Cancelled"
 msgstr ""

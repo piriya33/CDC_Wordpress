@@ -619,7 +619,7 @@ class WC_Memberships_User_Membership {
 	 * Get the product that granted access
 	 *
 	 * @since 1.0.0
-	 * @return \WC_Product|null Instance of WC_Product
+	 * @return \WC_Product|null
 	 */
 	public function get_product() {
 
@@ -635,7 +635,7 @@ class WC_Memberships_User_Membership {
 	 * Check if membership has been cancelled
 	 *
 	 * @since 1.0.0
-	 * @return bool True, if membership is cancelled, false otherwise
+	 * @return bool
 	 */
 	public function is_cancelled() {
 		return 'cancelled' === $this->get_status();
@@ -646,7 +646,7 @@ class WC_Memberships_User_Membership {
 	 * Check if membership is expired
 	 *
 	 * @since 1.0.0
-	 * @return bool True, if membership is expired, false otherwise
+	 * @return bool
 	 */
 	public function is_expired() {
 		return 'expired' === $this->get_status();
@@ -657,18 +657,35 @@ class WC_Memberships_User_Membership {
 	 * Check if membership is paused
 	 *
 	 * @since 1.0.0
-	 * @return bool True, if membership is paused, false otherwise
+	 * @return bool
 	 */
 	public function is_paused() {
 		return 'paused' === $this->get_status();
 	}
 
 
+	/***
+	 * Check if a membership is active
+	 *
+	 * Note: this does not check if the Membership is in the active period
+	 * @see \WC_Memberships_User_Membership::is_in_active_period()
+	 *
+	 * @since 1.6.4
+	 * @return bool
+	 */
+	public function is_active() {
+		return ! $this->is_paused() && ! $this->is_cancelled() && ! $this->is_expired();
+	}
+
+
 	/**
 	 * Check if membership has started, but not expired
 	 *
+	 * Note: this does not check the active User Membership status itself
+	 * @see \WC_Memberships_User_Membership::is_active()
+	 *
 	 * @since 1.0.0
-	 * @return bool True, if membership is in active period, false otherwise
+	 * @return bool
 	 */
 	public function is_in_active_period() {
 

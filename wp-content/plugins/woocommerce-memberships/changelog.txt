@@ -1,5 +1,9 @@
 *** WooCommerce Memberships Changelog ***
 
+2016.07.20 - version 1.6.4
+ * Fix - When a product is both on sale and part of a membership plan's discount rules, if a user is logged in and is not a member of that plan, the sale price label doesn't show the original standard price before the sale price
+ * Fix - When a guest customer adds a product to a cart, then logs in as a member that should get a membership discount for that product, the mini-cart did not reflect the price change before visiting the cart page or adding more products to cart
+
 2016.07.06 - version 1.6.3
  * Fix - Avoid loading the My Account tabbed navigation twice when some third party plugins hook into it as well
  * Fix - Corrects member count while viewing plan list

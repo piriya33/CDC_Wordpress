@@ -88,11 +88,11 @@ function wc_memberships_get_user_memberships( $user_id = null, $args = array() )
  * Check if user is an active member of a particular membership plan
  *
  * @since 1.0.0
- * @param int $user_id Optional, defaults to current user
+ * @param int|\WP_User $user_id Optional, defaults to current user
  * @param int|string $plan Membership Plan slug, post object or related post ID
  * @return bool
  */
-function wc_memberships_is_user_active_member( $user_id = null, $plan ) {
+function wc_memberships_is_user_active_member( $user_id = null, $plan = null ) {
 	return wc_memberships()->get_user_memberships_instance()->is_user_active_member( $user_id, $plan );
 }
 
@@ -105,7 +105,7 @@ function wc_memberships_is_user_active_member( $user_id = null, $plan ) {
  * @param int|string $membership_plan Membership Plan slug, post object or related post ID
  * @return bool
  */
-function wc_memberships_is_user_member( $user_id = null, $membership_plan ) {
+function wc_memberships_is_user_member( $user_id = null, $membership_plan = null ) {
 	return wc_memberships()->get_user_memberships_instance()->is_user_member( $user_id, $membership_plan );
 }
 
