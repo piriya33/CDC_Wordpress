@@ -1,0 +1,11 @@
+0000000000000000000000000000000000000000 579862584352442347c8167a5a51cba9be95fdf7 root <root@ip-192-168-0-118.ap-southeast-1.compute.internal> 1467283174 +0000	commit (initial): First Commit
+579862584352442347c8167a5a51cba9be95fdf7 38f3bf481ba9b6a5e9eccc4db2a33652c630ceb2 root <root@ip-192-168-0-118.ap-southeast-1.compute.internal> 1467284286 +0000	commit: Added readme.md
+38f3bf481ba9b6a5e9eccc4db2a33652c630ceb2 a16adba54e781e6ed5990374d1e3ec726d7501cb root <root@ip-192-168-0-118.ap-southeast-1.compute.internal> 1467284356 +0000	pull: Merge made by the 'recursive' strategy.
+a16adba54e781e6ed5990374d1e3ec726d7501cb 5088f8fc5a23e5d0cd82abb36f83e43d316c0dd9 root <root@ip-192-168-0-118.ap-southeast-1.compute.internal> 1467464492 +0000	commit: Added WC memberships and storefront
+5088f8fc5a23e5d0cd82abb36f83e43d316c0dd9 195fa1bb56f90923cc83ea4e9c3e653f77a79f97 root <root@ip-192-168-0-118.ap-southeast-1.compute.internal> 1467468086 +0000	commit: removed access keys
+195fa1bb56f90923cc83ea4e9c3e653f77a79f97 37da033b8664a47f7c719c98d45c765c91262a59 root <root@ip-192-168-0-118.ap-southeast-1.compute.internal> 1467468235 +0000	commit (merge): removed access keys
+37da033b8664a47f7c719c98d45c765c91262a59 2f28a448f7b05e54d6a9759ff3f806cf47658e6d root <root@ip-192-168-0-118.ap-southeast-1.compute.internal> 1467628790 +0000	commit: Licensed S3 offload and Woo Subscriptions
+2f28a448f7b05e54d6a9759ff3f806cf47658e6d 67ad21d6aeadf5454f0410484f4fa7c828ed8b2b root <root@ip-192-168-0-118.ap-southeast-1.compute.internal> 1467635730 +0000	commit: Added SSL keypair
+67ad21d6aeadf5454f0410484f4fa7c828ed8b2b e4f679b602b1a82ca9ad57fe41921a8961e4ba43 root <root@ip-192-168-0-118.ap-southeast-1.compute.internal> 1468385667 +0000	commit: Added lots of stuff, bbpress and modified the naviation menus
+e4f679b602b1a82ca9ad57fe41921a8961e4ba43 2892c8179ab2c32616e443c984cfade01d0d8200 root <root@ip-192-168-0-118.ap-southeast-1.compute.internal> 1469437801 +0000	commit: added blog customizer to storefront
+2892c8179ab2c32616e443c984cfade01d0d8200 b7619a75de82b2a587cbe9494d7c93c7ea1e9bce root <root@ip-192-168-0-118.ap-southeast-1.compute.internal> 1483438647 +0000	commit: first commit after update
