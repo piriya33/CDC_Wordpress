@@ -30,7 +30,7 @@ defined( 'ABSPATH' ) or exit;
  * @type \WC_Memberships_User_Membership[] $customer_memberships Array of user membership objects
  * @type int $user_id The current user ID
  *
- * @version 1.5.0
+ * @version 1.7.0
  * @since 1.0.0
  */
 ?>
@@ -66,10 +66,10 @@ defined( 'ABSPATH' ) or exit;
 				 * @param array $my_memberships_columns Associative array of column ids and names
 				 */
 				$my_memberships_columns = apply_filters( 'wc_memberships_my_memberships_column_names', array(
-					'membership-plan'       => __( 'Plan', 'woocommerce-memberships' ),
-					'membership-start-date' => __( 'Signed up', 'woocommerce-memberships' ),
-					'membership-end-date'   => __( 'Expires', 'woocommerce-memberships' ),
-					'membership-status'     => __( 'Status', 'woocommerce-memberships' ),
+					'membership-plan'       => _x( 'Plan', 'Membership plan', 'woocommerce-memberships' ),
+					'membership-start-date' => _x( 'Start', 'Membership start date', 'woocommerce-memberships' ),
+					'membership-end-date'   => _x( 'Expires', 'Membership end date', 'woocommerce-memberships' ),
+					'membership-status'     => _x( 'Status', 'Membership status', 'woocommerce-memberships' ),
 					'membership-actions'    => '&nbsp;',
 				), $user_id );
 			?>
@@ -107,7 +107,8 @@ defined( 'ABSPATH' ) or exit;
 
 						<td class="membership-plan" data-title="<?php echo esc_attr( $column_name ); ?>">
 							<?php $members_area = $customer_membership->get_plan()->get_members_area_sections(); ?>
-							<?php if ( wc_memberships_is_user_active_member( get_current_user_id(), $customer_membership->get_plan() ) && ! empty ( $members_area ) && is_array( $members_area ) ) : ?>
+							<?php if (    ( ! empty ( $members_area ) && is_array( $members_area ) )
+							           && ( wc_memberships_is_user_active_member( get_current_user_id(), $customer_membership->get_plan() ) || wc_memberships_is_user_delayed_member( get_current_user_id(), $customer_membership->get_plan() ) ) ) : ?>
 								<a href="<?php echo esc_url( wc_memberships_get_members_area_url( $customer_membership->get_plan_id(), $members_area[0] ) ); ?>"><?php echo esc_html( $customer_membership->get_plan()->get_name() ); ?></a>
 							<?php else : ?>
 								<?php echo esc_html( $customer_membership->get_plan()->get_name() ); ?>
@@ -117,7 +118,17 @@ defined( 'ABSPATH' ) or exit;
 					<?php elseif ( 'membership-start-date' === $column_id ) : ?>
 
 						<td class="membership-start-date" data-title="<?php echo esc_attr( $column_name ); ?>">
-							<?php if ( $start_date = $customer_membership->get_local_start_date( 'timestamp' ) ) : ?>
+							<?php
+								$past_start_date = $customer_membership->get_order() && ( $customer_membership->get_start_date() < $customer_membership->get_order()->order_date );
+
+								// show the order date instead if the start date is in the past
+								if ( $customer_membership->get_plan()->is_access_length_type( 'fixed' ) && $customer_membership->get_order_id() && $past_start_date ) {
+									$start_date = strtotime( $customer_membership->get_order()->order_date );
+								} else {
+									$start_date = $customer_membership->get_local_start_date( 'timestamp' );
+								}
+							?>
+							<?php if ( ! empty( $start_date ) && is_numeric( $start_date ) ) : ?>
 								<time datetime="<?php echo date( 'Y-m-d', $start_date ); ?>" title="<?php echo esc_attr( date_i18n( wc_date_format(), $start_date ) ); ?>"><?php echo date_i18n( wc_date_format(), $start_date ); ?></time>
 							<?php else : ?>
 								<?php esc_html_e( 'N/A', 'woocommerce-memberships' ); ?>

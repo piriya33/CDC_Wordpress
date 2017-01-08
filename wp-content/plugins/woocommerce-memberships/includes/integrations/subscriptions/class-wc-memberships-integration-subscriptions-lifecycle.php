@@ -54,6 +54,8 @@ class WC_Memberships_Integration_Subscriptions_Lifecycle {
 	/**
 	 * Handle subscriptions activation
 	 *
+	 * @internal
+	 *
 	 * @since 1.6.0
 	 */
 	public function handle_activation() {
@@ -63,6 +65,8 @@ class WC_Memberships_Integration_Subscriptions_Lifecycle {
 
 	/**
 	 * Handle subscriptions deactivation
+	 *
+	 * @internal
 	 *
 	 * @since 1.6.0
 	 */
@@ -75,6 +79,8 @@ class WC_Memberships_Integration_Subscriptions_Lifecycle {
 	 * Pause subscription-based memberships
 	 *
 	 * Find any memberships that are on free trial and pause them
+	 *
+	 * @internal
 	 *
 	 * @since 1.6.0
 	 */
@@ -107,6 +113,8 @@ class WC_Memberships_Integration_Subscriptions_Lifecycle {
 	 * Find any memberships tied to a subscription that are paused,
 	 * which may need to be re-activated or put back on trial
 	 *
+	 * @internal
+	 *
 	 * @since 1.6.0
 	 */
 	public function update_subscription_memberships() {
@@ -136,7 +144,8 @@ class WC_Memberships_Integration_Subscriptions_Lifecycle {
 		}
 
 		foreach ( $posts as $post ) {
-			$user_membership = wc_memberships_get_user_membership( $post );
+
+			$user_membership = new WC_Memberships_Integration_Subscriptions_User_Membership( $post );
 
 			// get the related subscription
 			$subscription = $integration->get_subscription_from_membership( $user_membership->get_id() );
@@ -150,25 +159,27 @@ class WC_Memberships_Integration_Subscriptions_Lifecycle {
 			// if statuses do not match, update
 			if ( ! $integration->has_subscription_same_status( $subscription, $user_membership ) ) {
 
-				// special handling for paused memberships
+				// special handling for paused memberships which might be put on free trial
 				if ( 'paused' === $user_membership->get_status() ) {
 
 					// do not bother if the Subscription isn't active in the first place
-					if ( 'active' !== $subscription_status ) {
+					if ( 'active' === $subscription_status ) {
 
 						// get trial end timestamp
 						$trial_end = $integration->get_subscription_event_time( $subscription, 'trial_end' );
 
-						// if there is no trial end date and the Subscription is active, activate the membership
-						if ( ! $trial_end || current_time( 'timestamp', true ) >= strtotime( $trial_end ) ) {
+						// if there is no trial end date or the trial end date is past
+						// and the Subscription is active, activate the membership
+						if ( ! $trial_end || current_time( 'timestamp', true ) >= $trial_end ) {
 							$user_membership->activate_membership( __( 'Membership activated because WooCommerce Subscriptions was activated.', 'woocommerce-memberships' ) );
-						// otherwise, put it on free trial
+						// otherwise, put the membership on free trial
 						} else {
 							$user_membership->update_status( 'free_trial', __( 'Membership free trial activated because WooCommerce Subscriptions was activated.', 'woocommerce-memberships' ) );
+							$user_membership->set_free_trial_end_date( date( 'Y-m-d H:i:s', $trial_end ) );
 						}
 					}
 
-				// all other statuses: simply update the membership status
+				// all other membership statuses: simply update the status
 				} else {
 
 					$integration->update_related_membership_status( $subscription, $user_membership, $subscription_status );
@@ -195,6 +206,8 @@ class WC_Memberships_Integration_Subscriptions_Lifecycle {
 	 *
 	 * This solution catches all upgrades, even if they were done while Memberships
 	 * was not active.
+	 *
+	 * @internal
 	 *
 	 * @since 1.6.0
 	 */

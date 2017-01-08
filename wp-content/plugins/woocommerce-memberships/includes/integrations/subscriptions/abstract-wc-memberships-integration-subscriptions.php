@@ -59,10 +59,10 @@ abstract class WC_Memberships_Integration_Subscriptions_Abstract {
 	protected $discounts;
 
 	/** @var array Subscription trial end date lazy storage */
-	protected $_subscription_trial_end_date = array();
+	protected $subscription_trial_end_date = array();
 
 	/** @var array Membership plan subscription check lazy storage */
-	protected $_has_membership_plan_subscription = array();
+	protected $has_membership_plan_subscription = array();
 
 
 	/**
@@ -81,9 +81,13 @@ abstract class WC_Memberships_Integration_Subscriptions_Abstract {
 	 */
 	public function __construct() {
 
+		// load integration parts that should run at WordPress init time
+		add_action( 'init', array( $this, 'init' ) );
+
 		// handle granting Membership access
 		add_filter( 'wc_memberships_access_granting_purchased_product_id',               array( $this, 'adjust_access_granting_product_id' ), 10, 3 );
 		add_filter( 'wc_memberships_new_membership_data',                                array( $this, 'adjust_new_membership_data' ), 10, 2 );
+		add_filter( 'wc_memberships_user_membership_created',                            array( $this, 'upon_new_membership_created' ) );
 		add_filter( 'wc_memberships_renew_membership',                                   array( $this, 'renew_membership' ), 10, 3 );
 		add_action( 'wc_memberships_grant_membership_access_from_purchase',              array( $this, 'save_subscription_data' ), 10, 2 );
 		add_filter( 'wc_memberships_grant_access_from_new_purchase',                     array( $this, 'maybe_grant_access_from_new_subscription' ), 10, 2 );
@@ -91,8 +95,7 @@ abstract class WC_Memberships_Integration_Subscriptions_Abstract {
 		add_filter( 'wc_memberships_grant_access_from_existing_purchase_order_statuses', array( $this, 'grant_access_from_active_subscription' ) );
 
 		// adjust Memberships access dates
-		add_filter( 'wc_memberships_access_from_time',     array( $this, 'adjust_post_access_from_time' ), 10, 3 );
-		add_filter( 'wc_memberships_plan_expiration_date', array( $this, 'adjust_plan_expiration_date' ), 10, 3 );
+		add_filter( 'wc_memberships_access_from_time', array( $this, 'adjust_post_access_from_time' ), 10, 3 );
 
 		// handle Membership expiration by cron event
 		add_filter( 'wc_memberships_expire_user_membership', array( $this, 'handle_membership_expiry_by_scheduled_event' ), 5, 2 );
@@ -103,8 +106,44 @@ abstract class WC_Memberships_Integration_Subscriptions_Abstract {
 		// handle Membership status changes
 		add_action( 'wc_memberships_user_membership_status_changed', array( $this, 'handle_user_membership_status_change' ), 10, 3 );
 
-		// filter Renew Membership URL
-		add_filter( 'wc_memberships_get_renew_membership_url', array( $this, 'renew_membership_url' ), 10, 2 );
+		// load integration files
+		$this->includes();
+	}
+
+
+	/**
+	 * Init
+	 *
+	 * @internal
+	 *
+	 * @since 1.7.3
+	 */
+	public function init() {
+
+		// filter memberships objects
+		add_filter( 'wc_memberships_membership_plan', array( $this, 'get_membership_plan' ), 2, 3 );
+		add_filter( 'wc_memberships_user_membership', array( $this, 'get_user_membership' ), 2, 1 );
+
+		// set the user membership to subscription type if the membership is tied to a subscription
+		add_filter( 'wc_memberships_user_membership_type', array( $this, 'get_subscription_tied_membership_type' ), 1, 2 );
+	}
+
+
+	/**
+	 * Load integration files and init objects
+	 *
+	 * @since 1.7.0
+	 */
+	private function includes() {
+
+		// load helper functions
+		require_once( wc_memberships()->get_plugin_path() . '/includes/integrations/subscriptions/functions/wc-memberships-integration-subscriptions-functions.php' );
+
+		// helper object for subscription-tied user memberships
+		require( wc_memberships()->get_plugin_path() . '/includes/integrations/subscriptions/class-wc-memberships-integration-subscriptions-user-membership.php' );
+
+		// helper object for subscription-tied membership plans
+		require( wc_memberships()->get_plugin_path() . '/includes/integrations/subscriptions/class-wc-memberships-integration-subscriptions-membership-plan.php' );
 
 		// handle free trials for Memberships
 		$this->free_trial = wc_memberships()->load_class( '/includes/integrations/subscriptions/class-wc-memberships-integration-subscriptions-free-trial.php', 'WC_Memberships_Integration_Subscriptions_Free_Trial' );
@@ -202,11 +241,11 @@ abstract class WC_Memberships_Integration_Subscriptions_Abstract {
 	 *
 	 * @since 1.6.0
 	 * @param array|\WC_Subscription $subscription
-	 * @param \WC_Memberships_User_Membership $user_membership
-	 * @param string $status Subscription status
+	 * @param \WC_Memberships_Integration_Subscriptions_User_Membership $user_membership
+	 * @param string $new_subscription_status Subscription status changing to
 	 * @param string|void $note Optional Membership note, if empty will be automatically set by status type
 	 */
-	public function update_related_membership_status( $subscription, $user_membership, $status, $note = '' ) {
+	public function update_related_membership_status( $subscription, $user_membership, $new_subscription_status, $note = '' ) {
 
 		$plan_id = $user_membership->get_plan_id();
 
@@ -214,7 +253,7 @@ abstract class WC_Memberships_Integration_Subscriptions_Abstract {
 			return;
 		}
 
-		switch ( $status ) {
+		switch ( $new_subscription_status ) {
 
 			case 'active':
 
@@ -227,6 +266,10 @@ abstract class WC_Memberships_Integration_Subscriptions_Abstract {
 					}
 
 					$user_membership->update_status( 'free_trial', $note );
+
+					// also update the free trial end date
+					// which now might account for a paused interval
+					$user_membership->set_free_trial_end_date( $this->get_subscription_event_date( $subscription, 'trial_end' ) );
 
 				} else {
 
@@ -251,21 +294,40 @@ abstract class WC_Memberships_Integration_Subscriptions_Abstract {
 
 			case 'expired':
 
-				if ( ! $note ) {
-					$note = __( 'Membership expired because subscription expired.', 'woocommerce-memberships' );
-				}
+				$user_membership = new WC_Memberships_Integration_Subscriptions_User_Membership( $user_membership->post );
 
-				$user_membership->update_status( 'expired', $note );
+				// if subscription is used as an installment plan,
+				// when the billing cycle is over, the membership shouldn't expire
+				if ( ! $user_membership->has_installment_plan() ) {
+
+					if ( ! $note ) {
+						$note = __( 'Membership expired because subscription expired.', 'woocommerce-memberships' );
+					}
+
+					$user_membership->update_status( 'expired', $note );
+
+				} else {
+
+					// to avoid accidental reactivations of limited memberships
+					// after an installment plan has completed, we need to unlink
+					// the subscription from the membership
+					$this->unlink_membership( $user_membership->get_id(), $subscription );
+				}
 
 			break;
 
 			case 'pending-cancel':
 
-				if ( ! $note ) {
-					$note = __( 'Membership marked as pending cancellation because subscription is pending cancellation.', 'woocommerce-memberships' );
-				}
+				// sanity check: do not send the membership to pending cancel
+				// until a free trial is finally cancelled or period has ended
+				if ( ! $user_membership->is_in_free_trial_period() ) {
 
-				$user_membership->update_status( 'pending', $note );
+					if ( ! $note ) {
+						$note = __( 'Membership marked as pending cancellation because subscription is pending cancellation.', 'woocommerce-memberships' );
+					}
+
+					$user_membership->update_status( 'pending', $note );
+				}
 
 			break;
 
@@ -295,12 +357,15 @@ abstract class WC_Memberships_Integration_Subscriptions_Abstract {
 
 			default:
 			break;
+
 		}
 	}
 
 
 	/**
 	 * Handle user membership status changes
+	 *
+	 * @internal
 	 *
 	 * @since 1.6.0
 	 * @param \WC_Memberships_User_Membership $user_membership
@@ -317,8 +382,14 @@ abstract class WC_Memberships_Integration_Subscriptions_Abstract {
 		// Note: this duplicates the behavior in core, when status is changed to 'active'
 		if ( 'free_trial' === $new_status && $paused_date = $user_membership->get_paused_date() ) {
 
+			// sanity check, maybe reinitialize this object
+			if ( ! $user_membership instanceof WC_Memberships_Integration_Subscriptions_User_Membership ) {
+				$user_membership = new WC_Memberships_Integration_Subscriptions_User_Membership( $user_membership->post );
+			}
+
 			$user_membership->set_end_date( $user_membership->get_end_date() );
 			$user_membership->delete_paused_date();
+			$user_membership->delete_paused_intervals();
 		}
 	}
 
@@ -327,6 +398,8 @@ abstract class WC_Memberships_Integration_Subscriptions_Abstract {
 	 * Check if a Subscription-tied membership should really expire
 	 * by comparing it to either the Subscription's or User Membership's expiry date
 	 *
+	 * @internal
+	 *
 	 * @since 1.5.4
 	 * @param bool $maybe_expire Whether the User Membership is set to expire (true) or not (false)
 	 * @param \WC_Memberships_User_Membership $user_membership The User Membership object set to expire
@@ -334,36 +407,47 @@ abstract class WC_Memberships_Integration_Subscriptions_Abstract {
 	 */
 	public function handle_membership_expiry_by_scheduled_event( $maybe_expire, $user_membership ) {
 
-		$subscription = $this->get_subscription_from_membership( $user_membership->get_id() );
+		$subscription    = $this->get_subscription_from_membership( $user_membership->get_id() );
+		$user_membership = new WC_Memberships_Integration_Subscriptions_User_Membership( $user_membership->post );
 
-		// bail if this Membership is not tied to a Subscription
-		if ( ! $subscription ) {
+		// sanity checks
+		if (    ! $subscription
+		     || ! $user_membership
+		     || ! $user_membership->has_subscription() ) {
+
 			return $maybe_expire;
-		}
 
-		$subscription_end_date = $this->get_subscription_event_date( $subscription, 'end' );
+		} elseif ( true === $maybe_expire && $user_membership->has_installment_plan() ) {
 
-		// expire only if the scheduled date matches the subscription end date...
-		if ( $subscription_end_date === $user_membership->get_end_date() ) {
+			$this->unlink_membership( $user_membership->get_id(), $user_membership->get_subscription() );
 
-			$today = date( 'Y-m-d', current_time( 'timestamp', true ) );
+			$maybe_expire = false;
 
-			// ...and it's scheduled to expire today
-			if ( 0 === strpos( $subscription_end_date, $today ) ) {
-				return true;
+		} else {
+
+			$subscription_end_date = $this->get_subscription_event_date( $subscription, 'end' );
+
+			// expire only if the scheduled date matches the subscription end date...
+			if ( $subscription_end_date === $user_membership->get_end_date() ) {
+
+				$today = date( 'Y-m-d', current_time( 'timestamp', true ) );
+
+				// ...and it's scheduled to expire today
+				if ( 0 === strpos( $subscription_end_date, $today ) ) {
+					$maybe_expire = true;
+				}
 			}
-
-			// ...otherwise leave it running
-			return $maybe_expire;
 		}
 
-		return false;
+		return $maybe_expire;
 	}
 
 
 	/**
-	 * Handle subscription upgrades/downgrades (switch).
-	 * Hook is available since Subscriptions 2.0.6+ only.
+	 * Handle subscription upgrades/downgrades (switch)
+	 * (note: hook is available since Subscriptions 2.0.6+ only)
+	 *
+	 * @internal
 	 *
 	 * @since 1.6.0
 	 * @param \WC_Subscription $subscription The subscription object
@@ -409,7 +493,68 @@ abstract class WC_Memberships_Integration_Subscriptions_Abstract {
 
 
 	/**
+	 * Get a subscription-tied membership plan object
+	 *
+	 * @since 1.7.0
+	 * @param \WC_Memberships_Membership_Plan $membership_plan The membership plan
+	 * @param null|\WP_Post $membership_plan_post The membership plan post object
+	 * @param null|\WC_Memberships_User_Membership $user_membership
+	 * @return \WC_Memberships_Integration_Subscriptions_Membership_Plan|\WC_Memberships_Membership_Plan
+	 */
+	public function get_membership_plan( $membership_plan, $membership_plan_post = null, $user_membership = null ) {
+
+		// we can't filter directly $membership_plan since it may have
+		// both regular products and subscription products that grant access;
+		// instead, the user membership type will tell the type of purchase
+		if (    $user_membership instanceof WC_Memberships_User_Membership
+		     && $membership_plan instanceof WC_Memberships_Membership_Plan
+		     && $this->has_subscription_granted_access( $user_membership ) ) {
+
+			return new WC_Memberships_Integration_Subscriptions_Membership_Plan( $membership_plan->post );
+		}
+
+		return $membership_plan;
+	}
+
+
+	/**
+	 * Get a subscription-tied user membership object
+	 *
+	 * @since 1.7.0
+	 * @param \WC_Memberships_User_Membership $user_membership The user membership object
+	 * @return \WC_Memberships_Integration_Subscriptions_User_Membership|\WC_Memberships_User_Membership
+	 */
+	public function get_user_membership( $user_membership ) {
+
+		if (    $user_membership instanceof WC_Memberships_User_Membership
+		     && $this->has_subscription_granted_access( $user_membership ) ) {
+
+			return new WC_Memberships_Integration_Subscriptions_User_Membership( $user_membership->post );
+		}
+
+		return $user_membership;
+	}
+
+
+	/**
+	 * Filter the membership type
+	 *
+	 * @internal
+	 *
+	 * @since 1.7.0
+	 * @param string $membership_type The membership type to filter
+	 * @param \WC_Memberships_User_Membership $user_membership The user membership object
+	 * @return string
+	 */
+	public function get_subscription_tied_membership_type( $membership_type, $user_membership ) {
+		return $this->has_subscription_granted_access( $user_membership ) ? 'subscription' : $membership_type;
+	}
+
+
+	/**
 	 * Adjust user membership post scheduled content 'access from' time for subscription-based memberships
+	 *
+	 * @internal
 	 *
 	 * @since 1.6.0
 	 * @param string $from_time Access from time, as a timestamp
@@ -421,10 +566,9 @@ abstract class WC_Memberships_Integration_Subscriptions_Abstract {
 
 		if ( 'yes' === $rule->get_access_schedule_exclude_trial() ) {
 
-			$has_subscription = $this->is_membership_linked_to_subscription( $user_membership->get_id() );
-			$trial_end_date   = $this->get_user_membership_trial_end_date( $user_membership->get_id(), 'timestamp' );
+			$subscription_user_membership = new WC_Memberships_Integration_Subscriptions_User_Membership( $user_membership->get_id() );
 
-			if ( $has_subscription && $trial_end_date ) {
+			if ( $subscription_user_membership->has_subscription() && ( $trial_end_date = $subscription_user_membership->get_free_trial_end_date( 'timestamp' ) ) ) {
 
 				$from_time = $trial_end_date;
 			}
@@ -435,71 +579,9 @@ abstract class WC_Memberships_Integration_Subscriptions_Abstract {
 
 
 	/**
-	 * Adjust plan expiration date
-	 *
-	 * This helps align a membership expiration date to a Subscription length
-	 * for installations where an access length has been set before assigning
-	 * a subscription product that grants access or where multiple product types
-	 * can grant access
-	 *
-	 * @since 1.6.0
-	 * @param string $end_date Expiration date, might be empty for unlimited plans
-	 * @param string|int $end_timestamp Expiration timestamp or empty string for unlimited plans
-	 * @param array $args Additional arguments
-	 * @return string Expiration date
-	 */
-	public function adjust_plan_expiration_date( $end_date, $end_timestamp, $args ) {
-
-		if ( isset( $args['product_id'] ) ) {
-
-			$access_product = wc_get_product( $args['product_id'] );
-
-			if ( $access_product && $access_product->is_type( array( 'subscription', 'subscription_variation' ) ) ) {
-
-				$product_id = $access_product->is_type( 'subscription_variation' ) ? $access_product->variation_id : $access_product->id;
-
-				$expiration_date = WC_Subscriptions_Product::get_expiration_date( $product_id );
-
-				// by zero Subscriptions means there is no expiry date,
-				// but we use empty string for that
-				if ( 0 === $expiration_date ) {
-					return '';
-				}
-
-				// by this point $expiration_date should have a value,
-				// but let's still do a sanity check
-				return ! $expiration_date ? $end_date : $expiration_date;
-			}
-		}
-
-		return $end_date;
-	}
-
-
-	/**
-	 * Adjust renew membership URL for subscription-based memberships
-	 *
-	 * @since 1.6.0
-	 * @param string $url Renew membership URL
-	 * @param \WC_Memberships_User_Membership $user_membership
-	 * @return string Modified renew URL
-	 */
-	public function renew_membership_url( $url, WC_Memberships_User_Membership $user_membership ) {
-
-		// note that we must also check if order contains a subscription
-		// since users can be manually-assigned to memberships
-		// and not have an associated subscription
-		if ( $this->has_membership_plan_subscription( $user_membership->get_plan_id() ) && $this->order_contains_subscription( $user_membership->get_order() ) ) {
-
-			$url = $this->get_subscription_renewal_url( $user_membership );
-		}
-
-		return $url;
-	}
-
-
-	/**
 	 * Adjust whether a membership should be renewed or not
+	 *
+	 * @internal
 	 *
 	 * @since 1.6.0
 	 * @param bool $renew
@@ -509,16 +591,16 @@ abstract class WC_Memberships_Integration_Subscriptions_Abstract {
 	 */
 	public function renew_membership( $renew, $plan, $args ) {
 
-		$product = wc_get_product( $args['product_id'] );
+		if ( $plan && ! empty( $args['product_id'] ) ) {
 
-		if ( ! $product ) {
-			return $renew;
-		}
+			$product = wc_get_product( $args['product_id'] );
 
-		// disable renewing via a re-purchase of a subscription product
-		if ( $product->is_type( array( 'subscription', 'subscription_variation', 'variable-subscription' ) ) && $this->plan_grants_access_while_subscription_active( $plan->get_id() ) ) {
+			if (      $product instanceof WC_Product
+			     &&   $product->is_type( array( 'subscription', 'subscription_variation', 'variable-subscription' ) )
+			     && ! $this->plan_grants_access_while_subscription_active( $plan->get_id() ) ) {
 
-			$renew = false;
+				$renew = false;
+			}
 		}
 
 		return $renew;
@@ -529,6 +611,8 @@ abstract class WC_Memberships_Integration_Subscriptions_Abstract {
 	 * Adjust the product ID that grants access to a membership plan on purchase
 	 *
 	 * Subscription products take priority over all other products
+	 *
+	 * @internal
 	 *
 	 * @since 1.6.0
 	 * @param int $product_id Product ID
@@ -541,7 +625,8 @@ abstract class WC_Memberships_Integration_Subscriptions_Abstract {
 
 		// check if more than one products may grant access,
 		// and if the plan even allows access while subscription is active
-		if ( count( $access_granting_product_ids ) > 1 && $this->plan_grants_access_while_subscription_active( $plan->get_id() ) ) {
+		if (    count( $access_granting_product_ids ) > 1
+		     && $this->plan_grants_access_while_subscription_active( $plan->get_id() ) ) {
 
 			// first, find all subscription products that grant access
 			$access_granting_subscription_product_ids = array();
@@ -602,8 +687,9 @@ abstract class WC_Memberships_Integration_Subscriptions_Abstract {
 
 
 	/**
-	 * Only grant access to new subscriptions
-	 * if they're not a subscription renewal
+	 * Only grant access to new subscriptions if they're not a subscription renewal
+	 *
+	 * @internal
 	 *
 	 * @since 1.6.0
 	 * @param bool $grant_access
@@ -612,7 +698,9 @@ abstract class WC_Memberships_Integration_Subscriptions_Abstract {
 	 */
 	public function maybe_grant_access_from_new_subscription( $grant_access, $args ) {
 
-		if ( $this->is_subscriptions_gte_2_0() && wcs_order_contains_renewal( $args['order_id'] ) ) {
+		$is_subscriptions_gte_2_0 = $this->is_subscriptions_gte_2_0();
+
+		if ( $is_subscriptions_gte_2_0 && wcs_order_contains_renewal( $args['order_id'] ) ) {
 
 			// subscription renewals cannot grant access
 			$grant_access = false;
@@ -626,8 +714,8 @@ abstract class WC_Memberships_Integration_Subscriptions_Abstract {
 
 			if ( $product && $product->is_type( array( 'subscription', 'subscription_variation', 'variable-subscription' ) ) ) {
 
-				$user_id = $args['user_id'];
-				$order   = wc_get_order( $args['order_id'] );
+				$user_id = (int) $args['user_id'];
+				$order   = wc_get_order( (int) $args['order_id'] );
 				$plans   = wc_memberships()->get_plans_instance()->get_membership_plans();
 
 				// loop over all available membership plans
@@ -638,7 +726,7 @@ abstract class WC_Memberships_Integration_Subscriptions_Abstract {
 						continue;
 					}
 
-					$access_granting_product_ids = wc_memberships()->get_access_granting_purchased_product_ids( $plan, $order );
+					$access_granting_product_ids = wc_memberships_get_order_access_granting_product_ids( $plan, $order );
 
 					foreach ( $access_granting_product_ids as $access_granting_product_id ) {
 
@@ -653,10 +741,11 @@ abstract class WC_Memberships_Integration_Subscriptions_Abstract {
 
 							// check if the user purchasing is already member of a plan
 							// but the membership is cancelled or pending cancellation
-							if ( wc_memberships_is_user_member( $user_id, $plan ) && $user_membership->has_status( array( 'pending-cancel', 'pending', 'cancelled' ) ) ) {
+							if ( wc_memberships_is_user_member( $user_id, $plan ) && $user_membership->has_status( array( 'pending', 'cancelled' ) ) ) {
+
+								$subscription_membership = new WC_Memberships_Integration_Subscriptions_User_Membership( $user_membership->post );
 
 								// reactivate the User Membership and leave a note
-
 								$note = sprintf(
 									/* translators: Placeholders: %1$s is the subscription product name, %2%s is the order number */
 									__( 'Membership re-activated due to subscription re-purchase (%1$s, Order %2$s).', 'woocommerce-memberships' ),
@@ -664,15 +753,15 @@ abstract class WC_Memberships_Integration_Subscriptions_Abstract {
 									'<a href="' . admin_url( 'post.php?post=' . $order->id . '&action=edit' ) .'" >' . $order->id . '</a>'
 								);
 
-								$user_membership->activate_membership( $note );
+								$subscription_membership->activate_membership( $note );
 
 								// update the User Membership with the new Subscription meta
-								if ( $this->is_subscriptions_gte_2_0() ) {
+								if ( $is_subscriptions_gte_2_0 ) {
 									$subscription = $this->get_order_product_subscription( $order->id, $product->id );
-									update_post_meta( $user_membership->id, '_subscription_id', $subscription->id );
+									$subscription_membership->set_subscription_id( $subscription->id );
 								} else {
 									$subscription_key = WC_Subscriptions_Manager::get_subscription_key( $args['order_id'], $product->id );
-									update_post_meta( $user_membership->id, '_subscription_key', $subscription_key );
+									$subscription_membership->set_subscription_id( $subscription_key );
 								}
 							}
 						}
@@ -688,6 +777,8 @@ abstract class WC_Memberships_Integration_Subscriptions_Abstract {
 	/**
 	 * Only grant access from existing subscription if it's active
 	 *
+	 * @internal
+	 *
 	 * @since 1.6.0
 	 * @param bool $grant_access
 	 * @param array $args
@@ -702,8 +793,9 @@ abstract class WC_Memberships_Integration_Subscriptions_Abstract {
 		}
 
 		// handle access from subscriptions
-		if ( $product->is_type( array( 'subscription', 'subscription_variation', 'variable-subscription' ) )
-		     && isset( $args['order_id'] ) && $args['order_id'] > 0 ) {
+		if (    $product->is_type( array( 'subscription', 'subscription_variation', 'variable-subscription' ) )
+		     && isset( $args['order_id'] )
+		     && $args['order_id'] > 0 ) {
 
 			$subscription = $this->get_order_product_subscription( $args['order_id'], $product->id );
 
@@ -728,6 +820,8 @@ abstract class WC_Memberships_Integration_Subscriptions_Abstract {
 	 *
 	 * Filters wc_memberships_grant_access_from_existing_purchase_order_statuses
 	 *
+	 * @internal
+	 *
 	 * @since 1.6.0
 	 * @param array $statuses
 	 * @return array
@@ -741,6 +835,8 @@ abstract class WC_Memberships_Integration_Subscriptions_Abstract {
 	 * Adjust new membership data
 	 *
 	 * Sets the end date to match subscription end date
+	 *
+	 * @internal
 	 *
 	 * @since 1.6.0
 	 * @param array $data Original membership data
@@ -756,9 +852,10 @@ abstract class WC_Memberships_Integration_Subscriptions_Abstract {
 		}
 
 		// handle access from subscriptions
-		if ( $product->is_type( array( 'subscription', 'subscription_variation', 'variable-subscription' ) )
-			&& isset( $args['order_id'] ) && (int) $args['order_id'] > 0
-			&& $subscription = $this->get_order_product_subscription( $args['order_id'], $product->id ) ) {
+		if (    isset( $args['order_id'] )
+		     && (int) $args['order_id'] > 0
+		     && $product->is_type( array( 'subscription', 'subscription_variation', 'variable-subscription' ) )
+		     && $subscription = $this->get_order_product_subscription( $args['order_id'], $product->id ) ) {
 
 			$trial_end = $this->get_subscription_event_time( $subscription, 'trial_end' );
 
@@ -772,9 +869,34 @@ abstract class WC_Memberships_Integration_Subscriptions_Abstract {
 
 
 	/**
+	 * When a new membership is created (not necessarily subscription tied)
+	 *
+	 * @internal
+	 *
+	 * @since 1.7.1
+	 * @param \WC_Memberships_User_Membership $user_membership The new user membership
+	 */
+	public function upon_new_membership_created( $user_membership ) {
+
+		if ( $user_membership->post && $this->has_subscription_granted_access( $user_membership ) ) {
+
+			$subscription_tied_membership = new WC_Memberships_Integration_Subscriptions_User_Membership( $user_membership->post );
+
+			// maybe set the free trial end date meta if subscription is on trial
+			if ( $subscription_tied_membership->has_status( 'free_trial' ) ) {
+
+				$subscription_tied_membership->set_free_trial_end_date( $this->get_subscription_event_date( $subscription_tied_membership->get_subscription(), 'trial_end' ) );
+			}
+		}
+	}
+
+
+	/**
 	 * Save related subscription data when a membership access is granted via a purchase
 	 *
 	 * Sets the end date to match subscription end date
+	 *
+	 * @internal
 	 *
 	 * @since 1.6.0
 	 * @param WC_Memberships_Membership_Plan $plan
@@ -799,61 +921,32 @@ abstract class WC_Memberships_Integration_Subscriptions_Abstract {
 				return;
 			}
 
+			$subscription_membership = new WC_Memberships_Integration_Subscriptions_User_Membership( $args['user_membership_id'] );
+
+			// save related subscription id or key
 			if ( $this->is_subscriptions_gte_2_0() ) {
-
-				// Save related subscription ID
-				update_post_meta( $args['user_membership_id'], '_subscription_id', $subscription->id );
-
+				$subscription_membership->set_subscription_id( $subscription->id );
 			} else {
-
-				// Save related subscription key
 				$subscription_key = WC_Subscriptions_Manager::get_subscription_key( $args['order_id'], $product->id );
-				update_post_meta( $args['user_membership_id'], '_subscription_key', $subscription_key );
+				$subscription_membership->set_subscription_id( $subscription_key );
 			}
 
-			$end_date = '';
+			$subscription_plan   = new WC_Memberships_Integration_Subscriptions_Membership_Plan( $subscription_membership->get_plan_id() );
+			$access_length_type  = $subscription_plan->get_access_length_type();
 
-			// set membership expiry date based on subscription expiry date
-			if ( $this->plan_grants_access_while_subscription_active( $plan->get_id() ) ) {
-
-				$end_date = $this->get_subscription_event_date( $subscription, 'end' );
-			}
-
-			update_post_meta( $args['user_membership_id'], '_end_date', $end_date );
-		}
-	}
-
-
-	/**
-	 * Get the membership subscription trial end datetime
-	 *
-	 * May return null if the membership is not tied to a subscription
-	 *
-	 * @since 1.6.0
-	 * @param int $user_membership_id User Membership ID
-	 * @param string $format Optional. Defaults to 'mysql'
-	 * @return string|null Returns the trial end date or null
-	 */
-	public function get_user_membership_trial_end_date( $user_membership_id, $format = 'mysql' ) {
-
-		if ( ! isset( $this->_subscription_trial_end_date[ $user_membership_id ] ) ) {
-
-			if ( ! $this->is_membership_linked_to_subscription( $user_membership_id ) ) {
-				return null;
-			}
-
-			$subscription = $this->get_subscription_from_membership( $user_membership_id );
-
-			if ( 'mysql' === $format ) {
-				$trial_end = $this->get_subscription_event_date( $subscription, 'trial_end' );
+			if ( 'subscription' === $access_length_type && $this->plan_grants_access_while_subscription_active( $plan->get_id() ) ) {
+				$membership_end_date = $this->get_subscription_event_date( $subscription, 'end' );
 			} else {
-				$trial_end = $this->get_subscription_event_time( $subscription, 'trial_end' );
+				$membership_end_date = $subscription_plan->get_expiration_date( current_time( 'mysql', true ), $args );
 			}
 
-			$this->_subscription_trial_end_date[ $user_membership_id ] = $trial_end;
-		}
+			// maybe update the trial end date
+			if ( $trial_end_date = $this->get_subscription_event_date( $subscription, 'trial_end' ) ) {
+				$subscription_membership->set_free_trial_end_date( $trial_end_date );
+			}
 
-		return $this->_subscription_trial_end_date[ $user_membership_id ];
+			$subscription_membership->set_end_date( $membership_end_date );
+		}
 	}
 
 
@@ -897,6 +990,17 @@ abstract class WC_Memberships_Integration_Subscriptions_Abstract {
 
 
 	/**
+	 * Check if Subscription version is < 2.0.0
+	 *
+	 * @since 1.7.0
+	 * @return bool
+	 */
+	public function is_subscription_lt_2_0() {
+		return ! $this->is_subscriptions_gte_2_0();
+	}
+
+
+	/**
 	 * Get the User Membership post meta key name
 	 * used for storing a tied Subscription
 	 *
@@ -909,11 +1013,47 @@ abstract class WC_Memberships_Integration_Subscriptions_Abstract {
 
 
 	/**
+	 * Get Subscriptions
+	 *
+	 * @see wcs_get_subscriptions() but more broad
+	 *
+	 * @since 1.7.0
+	 * @param array $args
+	 * @return \WC_Subscription[] An associative array of post ids => subscription objects
+	 */
+	public function get_subscriptions( $args = array() ) {
+
+		$args = wp_parse_args( $args, array(
+			'posts_per_page' => -1,
+			'post_status'    => 'any',
+		) );
+
+		$args['post_type'] = 'shop_subscription';
+
+		$results = get_posts( $args );
+
+		if ( $results && ! isset( $args['fields'] ) ) {
+
+			$subscriptions = array();
+
+			foreach ( $results as $subscription_post ) {
+
+				$subscriptions[ $subscription_post->ID ] = new WC_Subscription( $subscription_post );
+			}
+
+			return $subscriptions;
+		}
+
+		return $results;
+	}
+
+
+	/**
 	 * Get a Subscription object
 	 *
 	 * @since 1.6.0
 	 * @param int|object|\WC_Subscription $subscription
-	 * @return WC_Subscription
+	 * @return \WC_Subscription
 	 */
 	public function get_subscription( $subscription ) {
 		return wcs_get_subscription( $subscription );
@@ -942,6 +1082,21 @@ abstract class WC_Memberships_Integration_Subscriptions_Abstract {
 
 
 	/**
+	 * Get Subscriptions ids
+	 *
+	 * @since 1.7.0
+	 * @param array $args Optional, passed to `get_posts()`
+	 * @return int[] An array of ids (by default from all the existing subscriptions)
+	 */
+	public function get_subscriptions_ids( $args = array() ) {
+
+		$args['fields'] = 'ids';
+
+		return $this->get_subscriptions( $args );
+	}
+
+
+	/**
 	 * Get an User Membership post meta storing the tied Subscription information
 	 *
 	 * @since 1.6.0
@@ -952,7 +1107,12 @@ abstract class WC_Memberships_Integration_Subscriptions_Abstract {
 
 		$user_membership_id = is_object( $user_membership ) ? $user_membership->id : $user_membership;
 
-		return get_post_meta( (int) $user_membership_id, $this->get_subscription_meta_key_name(), true );
+		if ( is_numeric( $user_membership_id ) && $subscription_membership = new WC_Memberships_Integration_Subscriptions_User_Membership( $user_membership_id ) ) {
+
+			return $subscription_membership->get_subscription_id();
+		}
+
+		return false;
 	}
 
 
@@ -981,6 +1141,20 @@ abstract class WC_Memberships_Integration_Subscriptions_Abstract {
 
 
 	/**
+	 * Get the the Subscription's id and the Subscription's holder name
+	 *
+	 * @since 1.7.0
+	 * @param \WC_Subscription $subscription A subscription object
+	 * @return string
+	 */
+	public function get_formatted_subscription_id_holder_name( WC_Subscription $subscription ) {
+
+		/* translators: Placeholders: %1$s - The Subscription's id, %2$s - The Subscription's holder full name */
+		return sprintf( __( 'Subscription #%1$s - %2$s', 'woocommerce-memberships' ), $subscription->id, $subscription->get_formatted_billing_full_name() );
+	}
+
+
+	/**
 	 * Check if a Subscription associated to a Membership is renewable
 	 *
 	 * @since 1.6.0
@@ -989,26 +1163,6 @@ abstract class WC_Memberships_Integration_Subscriptions_Abstract {
 	 * @return bool
 	 */
 	abstract public function is_subscription_linked_to_membership_renewable( $subscription, $user_membership );
-
-
-	/**
-	 * Get a Subscription renewal link for a Subscription-tied Membership
-	 *
-	 * @since 1.6.0
-	 * @param \WC_Memberships_User_Membership A User Membership object
-	 * @return string
-	 */
-	abstract public function get_subscription_renewal_url( $user_membership );
-
-
-	/**
-	 * Check if an order contains a Subscription
-	 *
-	 * @since 1.6.0
-	 * @param WC_Order $order
-	 * @return bool
-	 */
-	abstract protected function order_contains_subscription( $order );
 
 
 	/**
@@ -1137,7 +1291,7 @@ abstract class WC_Memberships_Integration_Subscriptions_Abstract {
 	 */
 	public function has_membership_plan_subscription( $plan_id ) {
 
-		if ( ! isset( $this->_has_membership_plan_subscription[ $plan_id ] ) ) {
+		if ( ! isset( $this->has_membership_plan_subscription[ $plan_id ] ) ) {
 
 			$plan = wc_memberships_get_membership_plan( $plan_id );
 
@@ -1149,7 +1303,7 @@ abstract class WC_Memberships_Integration_Subscriptions_Abstract {
 			$product_ids = $plan->get_product_ids();
 			$product_ids = ! empty( $product_ids ) ? array_map( 'absint',  $product_ids ) : null;
 
-			$this->_has_membership_plan_subscription[ $plan_id ] = false;
+			$this->has_membership_plan_subscription[ $plan_id ] = false;
 
 			if ( ! empty( $product_ids ) ) {
 
@@ -1166,14 +1320,46 @@ abstract class WC_Memberships_Integration_Subscriptions_Abstract {
 					}
 
 					if ( $product->is_type( array( 'subscription', 'subscription_variation', 'variable-subscription' ) ) ) {
-						$this->_has_membership_plan_subscription[ $plan_id ] = true;
+						$this->has_membership_plan_subscription[ $plan_id ] = true;
 						break;
 					}
 				}
 			}
 		}
 
-		return $this->_has_membership_plan_subscription[ $plan_id ];
+		return $this->has_membership_plan_subscription[ $plan_id ];
+	}
+
+
+	/**
+	 * Is the product that granted access a subscription
+	 *
+	 * @since 1.7.0
+	 * @param \WC_Memberships_User_Membership $user_membership User Membership
+	 * @return bool
+	 */
+	public function has_subscription_granted_access( $user_membership ) {
+
+		$is_subscription_tied = false;
+
+		if ( $user_membership instanceof WC_Memberships_User_Membership ) {
+
+			if ( $subscription_id = get_post_meta( $user_membership->get_id(), $this->get_subscription_meta_key_name(), true ) ) {
+
+				$is_subscription_tied = ! empty( $subscription_id ) && $this->get_subscription( $subscription_id );
+
+			} else {
+
+				$product_that_grants_access = $user_membership->get_product();
+
+				if ( $product_that_grants_access && $product_that_grants_access->is_type( array( 'subscription', 'subscription_variation', 'variable-subscription' ) ) ) {
+
+					$is_subscription_tied = true;
+				}
+			}
+		}
+
+		return $is_subscription_tied;
 	}
 
 
@@ -1186,9 +1372,10 @@ abstract class WC_Memberships_Integration_Subscriptions_Abstract {
 	 */
 	public function is_membership_linked_to_subscription( $user_membership ) {
 
-		$user_membership_id = is_object( $user_membership ) ? $user_membership->get_id() : (int) $user_membership;
+		$user_membership_id      = is_object( $user_membership ) ? $user_membership->get_id() : (int) $user_membership;
+		$subscription_membership = new WC_Memberships_Integration_Subscriptions_User_Membership( $user_membership_id );
 
-		return (bool) get_post_meta( $user_membership_id, $this->get_subscription_meta_key_name(), true );
+		return $subscription_membership->has_subscription();
 	}
 
 
@@ -1204,14 +1391,15 @@ abstract class WC_Memberships_Integration_Subscriptions_Abstract {
 	 */
 	public function unlink_membership( $user_membership_id, $unlink_subscription ) {
 
-		$subscription_linked = get_post_meta( (int) $user_membership_id, $this->get_subscription_meta_key_name(), true );
+		$subscription_membership = new WC_Memberships_Integration_Subscriptions_User_Membership( $user_membership_id );
+		$subscription_linked     = $subscription_membership->get_subscription_id();
 
 		// sanity check: are we unlinking the right Subscription?
 		if ( $this->is_subscriptions_gte_2_0() ) {
 
 			$subscription_id = is_object( $unlink_subscription ) && isset( $unlink_subscription->id ) ? $unlink_subscription->id : $unlink_subscription;
 
-			if ( $subscription_linked && (int) $subscription_linked !== (int) $subscription_id) {
+			if ( $subscription_linked && (int) $subscription_linked !== (int) $subscription_id ) {
 				return null;
 			}
 
@@ -1220,7 +1408,7 @@ abstract class WC_Memberships_Integration_Subscriptions_Abstract {
 			return null;
 		}
 
-		return delete_post_meta( (int) $user_membership_id, $this->get_subscription_meta_key_name() );
+		return $subscription_membership->delete_subscription_id();
 	}
 
 
@@ -1242,23 +1430,70 @@ abstract class WC_Memberships_Integration_Subscriptions_Abstract {
 		$class = 'wc_memberships()->get_integrations()->get_subscriptions_instance()';
 
 		$deprecated_since_1_6_0 = '1.6.0';
+		$deprecated_since_1_7_0 = '1.7.0';
+		$deprecated_since_1_7_1 = '1.7.1';
 
 		switch ( $method ) {
 
+			/** @deprecated since 1.7.1 */
+			case 'get_user_membership_trial_end_date' :
+
+				_deprecated_function( "{$class}->{$method}()", $deprecated_since_1_7_1, 'wc_memberships_get_user_membership()->get_free_trial_end_date()' );
+
+				$user_membership_id = isset( $args[0] ) ? $args[0] : $args;
+				$format             = isset( $args[1] ) ? $args[1] : 'mysql';
+
+				if ( is_int( $user_membership_id ) ) {
+
+					$user_membership = wc_memberships_get_user_membership( $user_membership_id );
+
+					if ( $this->is_membership_linked_to_subscription( $user_membership ) ) {
+
+						return $user_membership->get_free_trial_end_date( $format );
+					}
+				}
+
+				return null;
+
+			/** @deprecated since 1.7.0 */
+			case 'order_contains_subscription' :
+				_deprecated_function( "{$class}->{$method}()", $deprecated_since_1_7_0, 'wcs_order_contains_subscription()' );
+				$order_id = isset( $args[0] ) ? $args[0] : $args;
+				return $this->is_subscriptions_gte_2_0() ? wcs_order_contains_subscription( $args ) : WC_Subscriptions_Order::order_contains_subscription( $order_id );
+
+			/** @deprecated since 1.7.0 */
+			case 'adjust_plan_expiration_date' :
+				_deprecated_function( "{$class}->{$method}()", $deprecated_since_1_7_0, 'wc_memberships_get_membership_plan()->get_expiration_date()' );
+				return '';
+
+			/** @deprecated since 1.7.0 */
+			case 'renew_membership_url' :
+				_deprecated_function( "{$class}->{$method}()", $deprecated_since_1_7_0, 'wc_memberships_get_user_membership()->get_renew_membership_url()' );
+				$user_membership = isset( $args[1] ) && $args[1] instanceof WC_Memberships_User_Membership ? $args[0] : $args;
+				$user_membership = $user_membership instanceof WC_Memberships_User_Membership ? wc_memberships_get_user_membership( $user_membership->post ) : null;
+				return $user_membership ? $user_membership->get_renew_membership_url() : ( isset( $args[0] ) ? $args[0] : $args );
+
+			/** @deprecated since 1.7.0 */
+			case 'get_subscription_renewal_url' :
+				_deprecated_function( "{$class}->{$method}()", $deprecated_since_1_7_0, 'wc_memberships_get_user_membership()->get_renew_membership_url()' );
+				$user_membership = isset( $args[0] ) && $args[0] instanceof WC_Memberships_User_Membership ? $args[0] : $args;
+				$user_membership = $user_membership instanceof WC_Memberships_User_Membership ? wc_memberships_get_user_membership( $user_membership->post ) : null;
+				return $user_membership ? $user_membership->get_renew_membership_url() : '';
+
 			/** @deprecated since 1.6.0 */
-			/** @see WC_Memberships_Integration_Subscriptions::is_membership_linked_to_subscription() */
+			/** @see \WC_Memberships_Integration_Subscriptions::is_membership_linked_to_subscription() */
 			case 'has_user_membership_subscription' :
 			case 'membership_has_subscription' :
 				_deprecated_function( "{$class}->{$method}()", $deprecated_since_1_6_0, "{$class}->is_membership_linked_to_subscription()" );
 				return $this->is_membership_linked_to_subscription( $args );
 
 			/** @deprecated since 1.6.0 */
-			/** @see WC_Memberships_Integration_Subscriptions::get_subscription_from_membership() */
+			/** @see \WC_Memberships_Integration_Subscriptions::get_subscription_from_membership() */
 			case 'get_user_membership_subscription' :
 				return $this->get_subscription_from_membership( $args );
 
 			/** @deprecated since 1.6.0 */
-			/** @see WC_Memberships_Integration_Subscriptions_Admin */
+			/** @see \WC_Memberships_Integration_Subscriptions_Admin */
 			case 'output_subscription_details' :
 			case 'output_subscription_options' :
 			case 'output_exclude_trial_option' :
@@ -1281,7 +1516,7 @@ abstract class WC_Memberships_Integration_Subscriptions_Abstract {
 				return null;
 
 			/** @deprecated since 1.6.0 */
-			/** @see WC_Memberships_Integration_Subscriptions_Ajax */
+			/** @see \WC_Memberships_Integration_Subscriptions_Ajax */
 			case 'ajax_plan_has_subscription' :
 			case 'delete_membership_with_subscription' :
 
@@ -1290,7 +1525,7 @@ abstract class WC_Memberships_Integration_Subscriptions_Abstract {
 				return $this->get_ajax_instance()->$method();
 
 			/** @deprecated since 1.6.0 */
-			/** @see WC_Memberships_Integration_Subscriptions_Discounts */
+			/** @see \WC_Memberships_Integration_Subscriptions_Discounts */
 			case 'enable_discounts_to_sign_up_fees' :
 			case 'apply_discounts_to_sign_up_fees' :
 			case 'display_original_sign_up_fees' :
@@ -1308,7 +1543,7 @@ abstract class WC_Memberships_Integration_Subscriptions_Abstract {
 				return null;
 
 			/** @deprecated since 1.6.0 */
-			/** @see WC_Memberships_Integration_Subscriptions_Free_Trial */
+			/** @see \WC_Memberships_Integration_Subscriptions_Free_Trial */
 			case 'add_free_trial_status' :
 			case 'enable_cancel_for_free_trial' :
 			case 'edit_user_membership_screen_status_options' :
@@ -1327,7 +1562,7 @@ abstract class WC_Memberships_Integration_Subscriptions_Abstract {
 				return null;
 
 			/** @deprecated since 1.6.0 */
-			/** @see WC_Memberships_Integration_Subscriptions_Frontend */
+			/** @see \WC_Memberships_Integration_Subscriptions_Frontend */
 			case 'output_subscription_column_headers' :
 			case 'output_subscription_columns' :
 			case 'my_membership_actions' :
@@ -1345,7 +1580,7 @@ abstract class WC_Memberships_Integration_Subscriptions_Abstract {
 				return null;
 
 			/** @deprecated since 1.6.0 */
-			/** @see WC_Memberships_Integration_Subscriptions_Lifecycle */
+			/** @see \WC_Memberships_Integration_Subscriptions_Lifecycle */
 			case 'handle_activation' :
 			case 'handle_deactivation' :
 			case 'handle_upgrade' :

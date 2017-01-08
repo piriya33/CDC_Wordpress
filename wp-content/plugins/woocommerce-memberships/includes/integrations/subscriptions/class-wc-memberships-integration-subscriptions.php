@@ -34,6 +34,10 @@ defined( 'ABSPATH' ) or exit;
 class WC_Memberships_Integration_Subscriptions extends WC_Memberships_Integration_Subscriptions_Abstract {
 
 
+	/** @var \WC_Memberships_Integration_Subscriptions_CLI instance */
+	protected $cli;
+
+
 	/**
 	 * Constructor
 	 *
@@ -45,11 +49,27 @@ class WC_Memberships_Integration_Subscriptions extends WC_Memberships_Integratio
 
 		parent::__construct();
 
+		// WP CLI support
+		if ( defined( 'WP_CLI' ) && WP_CLI ) {
+			$this->cli = wc_memberships()->load_class( '/includes/integrations/subscriptions/class-wc-memberships-integration-subscriptions-cli.php', 'WC_Memberships_Integration_Subscriptions_CLI' );
+		}
+
 		// Subscriptions events
-		add_action( 'woocommerce_subscription_status_updated', array( $this, 'handle_subscription_status_change' ), 10, 2 );
+		add_action( 'woocommerce_subscription_status_updated', array( $this, 'handle_subscription_status_change' ), 10, 3 );
 		add_action( 'woocommerce_subscription_date_updated',   array( $this, 'update_related_membership_dates' ), 10, 3 );
 		add_action( 'trashed_post',                            array( $this, 'cancel_related_membership' ) );
 		add_action( 'delete_post',                             array( $this, 'cancel_related_membership' ) );
+	}
+
+
+	/**
+	 * Get Subscriptions WP CLI integration instance
+	 *
+	 * @since 1.7.0
+	 * @return null|\WC_Memberships_Integration_Subscriptions_CLI
+	 */
+	public function get_cli_instance() {
+		return $this->cli;
 	}
 
 
@@ -58,9 +78,10 @@ class WC_Memberships_Integration_Subscriptions extends WC_Memberships_Integratio
 	 *
 	 * @since 1.6.0
 	 * @param \WC_Subscription $subscription Subscription being changed
-	 * @param string $new_status statue changing to
+	 * @param string $new_subscription_status Subscription status changing to
+	 * @param string $old_subscription_status Subscription status changing from
 	 */
-	public function handle_subscription_status_change( WC_Subscription $subscription, $new_status ) {
+	public function handle_subscription_status_change( WC_Subscription $subscription, $new_subscription_status, $old_subscription_status ) {
 
 		// get Memberships tied to the Subscription
 		$user_memberships = $this->get_memberships_from_subscription( $subscription->id );
@@ -73,13 +94,15 @@ class WC_Memberships_Integration_Subscriptions extends WC_Memberships_Integratio
 		// update status of found memberships
 		foreach ( $user_memberships as $user_membership ) {
 
-			$this->update_related_membership_status( $subscription, $user_membership, $new_status );
+			$this->update_related_membership_status( $subscription, $user_membership, $new_subscription_status );
 		}
 	}
 
 
 	/**
 	 * Update related membership upon subscription date change
+	 *
+	 * @internal
 	 *
 	 * @since 1.6.0
 	 * @param \WC_Subscription $subscription
@@ -98,11 +121,19 @@ class WC_Memberships_Integration_Subscriptions extends WC_Memberships_Integratio
 
 			foreach ( $user_memberships as $user_membership ) {
 
-				$plan_id = $user_membership->get_plan_id();
+				$subscription_plan_id = $user_membership->get_plan_id();
 
-				if ( $plan_id && $this->plan_grants_access_while_subscription_active( $plan_id ) ) {
+				if ( $subscription_plan_id && $this->plan_grants_access_while_subscription_active( $subscription_plan_id ) ) {
 
-					$end_date = $datetime ? $datetime : '';
+					$subscription_plan  = new WC_Memberships_Integration_Subscriptions_Membership_Plan( $subscription_plan_id );
+
+					if ( $subscription_plan->is_access_length_type( 'subscription' ) ) {
+						// membership length matches subscription length
+						$end_date = ! empty( $datetime ) ? $datetime : '';
+					} else {
+						// membership length is decoupled from subscription length
+						$end_date = $subscription_plan->get_expiration_date( current_time( 'timestamp', true ), array( 'product_id' => $user_membership->get_product_id() ) );
+					}
 
 					$user_membership->set_end_date( $end_date );
 				}
@@ -113,6 +144,8 @@ class WC_Memberships_Integration_Subscriptions extends WC_Memberships_Integratio
 
 	/**
 	 * Cancel User Membership when connected Subscription is deleted
+	 *
+	 * @internal
 	 *
 	 * @since 1.6.0
 	 * @param int $post_id Id of the \WC_Subscription post being deleted
@@ -278,39 +311,27 @@ class WC_Memberships_Integration_Subscriptions extends WC_Memberships_Integratio
 
 
 	/**
-	 * Check if order contains a Subscription
-	 *
-	 * @since 1.6.0
-	 * @param \WC_Order $order Order object
-	 * @return bool
-	 */
-	protected function order_contains_subscription( $order ) {
-		return wcs_order_contains_subscription( $order );
-	}
-
-
-	/**
-	 * Get a Subscription renewal url for a Subscription-tied Membership
-	 *
-	 * @since 1.6.0
-	 * @param \WC_Memberships_User_Membership $user_membership
-	 * @return string
-	 */
-	public function get_subscription_renewal_url( $user_membership ) {
-		return wcs_get_users_resubscribe_link( $this->get_user_membership_subscription_id( $user_membership->get_id() ) );
-	}
-
-
-	/**
 	 * Check if a Subscription associated to a Membership is renewable
 	 *
 	 * @since 1.6.0
-	 * @param \WC_Subscription $subscription
-	 * @param \WC_Memberships_User_Membership $user_Membership
+	 * @param \WC_Subscription $subscription Subscription
+	 * @param \WC_Memberships_User_Membership $user_membership User Membership
 	 * @return bool
 	 */
-	public function is_subscription_linked_to_membership_renewable( $subscription, $user_Membership ) {
-		return wcs_can_user_resubscribe_to( $subscription, $user_Membership->get_user_id() );
+	public function is_subscription_linked_to_membership_renewable( $subscription, $user_membership ) {
+
+		$is_renewable    = false;
+		$user_membership = new WC_Memberships_Integration_Subscriptions_User_Membership( $user_membership->post );
+
+		if (      $user_membership
+		     &&   $user_membership->can_be_renewed()
+		     && ! $user_membership->has_installment_plan()
+			 &&   wcs_can_user_resubscribe_to( $subscription, $user_membership->get_user_id() ) ) {
+
+		     	$is_renewable = true;
+		}
+
+		return $is_renewable;
 	}
 
 

@@ -1,5 +1,8 @@
 *** Storefront Designer Changelog ***
 
+2016.08.25 - version 1.8.4
+ * Fix - Header layout when using the "inline" option.
+
 2016.05.12 - version 1.8.3
  * Fix - Typo in header layout settings.
 

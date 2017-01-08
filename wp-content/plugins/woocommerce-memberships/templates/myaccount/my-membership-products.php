@@ -31,7 +31,7 @@ defined( 'ABSPATH' ) or exit;
  * @type \WP_Query $restricted_products Query results of products post objects for all products restricted to the membership
  * @type int $user_id The current user ID
  *
- * @version 1.5.0
+ * @version 1.7.1
  * @since 1.4.0
  */
 ?>
@@ -78,6 +78,7 @@ defined( 'ABSPATH' ) or exit;
 		<?php foreach ( $restricted_products->posts as $member_product ) : ?>
 
 			<?php
+
 			$product = wc_get_product( $member_product );
 
 			if ( ! $product ) {
@@ -87,10 +88,10 @@ defined( 'ABSPATH' ) or exit;
 			// Customer capabilities
 			$can_view_product     = wc_memberships_user_can( $user_id, 'view' , array( 'product' => $product->id ) );
 			$can_purchase_product = wc_memberships_user_can( $user_id, 'purchase', array( 'product' => $product->id ) );
-			$view_start_time      = wc_memberships_get_user_access_start_time( $user_id, 'view', array( 'product' => $product->id ) );
+			$view_start_time      = wc_memberships_adjust_date_by_timezone( wc_memberships_get_user_access_start_time( $user_id, 'view', array( 'product' => $product->id ) ), 'timestamp', wc_timezone_string() );
 			$purchase_start_time  = wc_memberships_get_user_access_start_time( $user_id, 'purchase', array( 'product' => $product->id ) );
-			?>
 
+			?>
 			<tr class="membership-product">
 				<?php foreach ( $my_membership_products_columns as $column_id => $column_name ) : ?>
 
@@ -120,7 +121,7 @@ defined( 'ABSPATH' ) or exit;
 							<?php if ( $can_view_product ) : ?>
 								<?php esc_html_e( 'Now', 'woocommerce-memberships' ); ?>
 							<?php else : ?>
-								<time datetime="<?php echo date( 'Y-m-d', $view_start_time ); ?>" title="<?php echo esc_attr( $view_start_time ); ?>"><?php echo date_i18n( get_option( 'date_format' ), $view_start_time ); ?></time>
+								<time datetime="<?php echo date( 'Y-m-d H:i:s', $view_start_time ); ?>" title="<?php echo esc_attr( $view_start_time ); ?>"><?php echo date_i18n( wc_date_format(), $view_start_time ); ?></time>
 							<?php endif; ?>
 						</td>
 

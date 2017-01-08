@@ -30,12 +30,16 @@ abstract class WCS_Scheduler {
 		$this->date_types_to_schedule = apply_filters( 'woocommerce_subscriptions_date_types_to_schedule', array_keys( wcs_get_subscription_date_types() ) );
 	}
 
+	protected function get_date_types_to_schedule() {
+		return $this->date_types_to_schedule;
+	}
+
 	/**
 	 * When a subscription's date is updated, maybe schedule an event
 	 *
 	 * @param object $subscription An instance of a WC_Subscription object
 	 * @param string $date_type Can be 'start', 'trial_end', 'next_payment', 'last_payment', 'end', 'end_of_prepaid_term' or a custom date type
-	 * @param string $datetime A MySQL formated date/time string in the GMT/UTC timezone.
+	 * @param string $datetime A MySQL formatted date/time string in the GMT/UTC timezone.
 	 */
 	abstract public function update_date( $subscription, $date_type, $datetime );
 
@@ -51,8 +55,8 @@ abstract class WCS_Scheduler {
 	 * When a subscription's status is updated, maybe schedule an event
 	 *
 	 * @param object $subscription An instance of a WC_Subscription object
-	 * @param string $date_type Can be 'start', 'trial_end', 'next_payment', 'last_payment', 'end', 'end_of_prepaid_term' or a custom date type
-	 * @param string $datetime A MySQL formated date/time string in the GMT/UTC timezone.
+	 * @param string $new_status A valid subscription status
+	 * @param string $old_status A valid subscription status
 	 */
 	abstract public function update_status( $subscription, $new_status, $old_status );
 }

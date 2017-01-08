@@ -200,6 +200,8 @@ class WC_Memberships_Post_Types {
 	/**
 	 * Customize updated messages for custom post types
 	 *
+	 * @internal 
+	 *
 	 * @since 1.0.0
 	 * @param array $messages Original messages
 	 * @return array $messages Modified messages
@@ -241,6 +243,8 @@ class WC_Memberships_Post_Types {
 	/**
 	 * Customize updated messages for custom post types
 	 *
+	 * @internal
+	 *
 	 * @since 1.0.0
 	 * @param array $messages Original messages
 	 * @param array $bulk_counts
@@ -269,8 +273,10 @@ class WC_Memberships_Post_Types {
 
 
 	/**
-	 * Remove third party meta boxes from our CPT screens unless they're on the
-	 * whitelist
+	 * Remove third party meta boxes from our CPT screens
+	 * unless they're on the whitelist
+	 *
+	 * @internal
 	 *
 	 * @since 1.0.0
 	 * @param string $post_type

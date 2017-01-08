@@ -29,7 +29,9 @@ defined( 'ABSPATH' ) or exit;
  *
  * @type string $email_heading Email heading
  * @type string $membership_note Membership note
- * 
+ * @type \WC_Memberships_User_Membership $user_membership User Membership
+ *
+ * @version 1.0.0
  * @since 1.0.0
  */
 

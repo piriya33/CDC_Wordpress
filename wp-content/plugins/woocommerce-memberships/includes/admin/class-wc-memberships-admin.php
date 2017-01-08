@@ -33,12 +33,6 @@ defined( 'ABSPATH' ) or exit;
 class WC_Memberships_Admin {
 
 
-	/** @var array tab URLs / titles */
-	protected $tabs = array();
-
-	/** @var array Admin screen IDs used by Memberships */
-	protected $screen_ids = array();
-
 	/** @var \SV_WP_Admin_Message_Handler instance */
 	public $message_handler; // this is passed from \WC_Memberships and can't be protected
 
@@ -68,32 +62,6 @@ class WC_Memberships_Admin {
 	 */
 	public function __construct() {
 
-		// admin screens used by Memberships
-		$this->screen_ids = array(
-			'wc_user_membership',
-			'wc_membership_plan',
-			'edit-wc_user_membership',
-			'wc_memberships_import_export',
-			'admin_page_wc_memberships_import_export',
-			'admin_page_wc-memberships-settings',
-		);
-
-		// tabs being shown at the top of Memberships admin
-		$this->tabs = array(
-			'members'       => array(
-				'title' => __( 'Members', 'woocommerce-memberships' ),
-				'url'   => admin_url( 'edit.php?post_type=wc_user_membership' ),
-			),
-			'memberships'   => array(
-				'title' => __( 'Membership Plans', 'woocommerce-memberships' ),
-				'url'   => admin_url( 'edit.php?post_type=wc_membership_plan' ),
-			),
-			'import-export' => array(
-				'title' => __( 'Import / Export', 'woocommerce-memberships' ),
-				'url'   => admin_url( 'admin.php?page=wc_memberships_import_export' ),
-			),
-		);
-
 		// init settings page
 		add_filter( 'woocommerce_get_settings_pages', array( $this, 'add_settings_page' ) );
 
@@ -110,7 +78,7 @@ class WC_Memberships_Admin {
 		add_action( 'all_admin_notices', array( $this, 'render_tabs' ), 5 );
 
 		// enqueue admin scripts & styles
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts_and_styles' ) );
+		add_action( 'admin_enqueue_scripts', array( $this,  'enqueue_scripts_and_styles' ) );
 		// load admin scripts & styles
 		add_filter( 'woocommerce_screen_ids', array( $this, 'load_wc_scripts' ) );
 
@@ -189,32 +157,68 @@ class WC_Memberships_Admin {
 
 
 	/**
-	 * Get WooCommerce Memberships admin screen ids
+	 * Get admin screen ids
 	 *
 	 * @since 1.0.0
 	 * @return array
 	 */
 	public function get_screen_ids() {
-		return $this->screen_ids;
+		return array(
+			'wc_user_membership',
+			'wc_membership_plan',
+			'edit-wc_user_membership',
+			'wc_memberships_import_export',
+			'admin_page_wc_memberships_import_export',
+			'admin_page_wc-memberships-settings',
+		);
+	}
+
+
+	/**
+	 * Get admin page tabs
+	 *
+	 * @since 1.7.0
+	 * @return array
+	 */
+	private function get_tabs() {
+		return array(
+			'members'       => array(
+				'title' => __( 'Members', 'woocommerce-memberships' ),
+				'url'   => admin_url( 'edit.php?post_type=wc_user_membership' ),
+			),
+			'memberships'   => array(
+				'title' => __( 'Membership Plans', 'woocommerce-memberships' ),
+				'url'   => admin_url( 'edit.php?post_type=wc_membership_plan' ),
+			),
+			'import-export' => array(
+				'title' => __( 'Import / Export', 'woocommerce-memberships' ),
+				'url'   => admin_url( 'admin.php?page=wc_memberships_import_export' ),
+			),
+		);
 	}
 
 
 	/**
 	 * Add Memberships settings page to WooCommerce settings
 	 *
-	 * @since 1.0
+	 * @internal
+	 *
+	 * @since 1.0.0
 	 * @param array $settings
 	 * @return array
 	 */
 	public function add_settings_page( $settings ) {
 
 		$settings[] = wc_memberships()->load_class( '/includes/admin/class-wc-memberships-settings.php', 'WC_Settings_Memberships' );
+
 		return $settings;
 	}
 
 
 	/**
 	 * Add Import / Export page for Memberships admin page
+	 *
+	 * @internal
 	 *
 	 * @since 1.6.0
 	 */
@@ -241,6 +245,8 @@ class WC_Memberships_Admin {
 
 	/**
 	 * Render Import / Export admin page
+	 *
+	 * @internal
 	 *
 	 * @since 1.6.0
 	 */
@@ -272,6 +278,8 @@ class WC_Memberships_Admin {
 
 	/**
 	 * Initialize the main admin screen
+	 *
+	 * @internal
 	 *
 	 * @since 1.0.0
 	 */
@@ -305,6 +313,8 @@ class WC_Memberships_Admin {
 	/**
 	 * Load meta boxes
 	 *
+	 * @internal
+	 *
 	 * @since 1.0.0
 	 */
 	public function load_meta_boxes() {
@@ -321,9 +331,10 @@ class WC_Memberships_Admin {
 		$screen = get_current_screen();
 
 		$this->meta_boxes = new stdClass();
+		$meta_box_classes = array();
 
 		// load restriction meta boxes on post screen only
-		$meta_box_classes = array( 'WC_Memberships_Meta_Box_Post_Memberships_Data' );
+		$meta_box_classes[] = 'WC_Memberships_Meta_Box_Post_Memberships_Data';
 
 		// product-specific meta boxes
 		if ( 'product' === $screen->id ) {
@@ -333,17 +344,15 @@ class WC_Memberships_Admin {
 		// load user membership meta boxes on user membership screen only
 		if ( 'wc_membership_plan' === $screen->id ) {
 			$meta_box_classes[] = 'WC_Memberships_Meta_Box_Membership_Plan_Data';
+			$meta_box_classes[] = 'WC_Memberships_Meta_Box_Membership_Plan_Email_Content_Merge_Tags';
 		}
 
 		// load user membership meta boxes on user membership screen only
 		if ( 'wc_user_membership' === $screen->id ) {
-
-			$meta_box_classes = array_merge( $meta_box_classes, array(
-				'WC_Memberships_Meta_Box_User_Membership_Data',
-				'WC_Memberships_Meta_Box_User_Membership_Notes',
-				'WC_Memberships_Meta_Box_User_Membership_Member_Details',
-				'WC_Memberships_Meta_Box_User_Membership_Recent_Activity',
-			) );
+			$meta_box_classes[] = 'WC_Memberships_Meta_Box_User_Membership_Data';
+			$meta_box_classes[] = 'WC_Memberships_Meta_Box_User_Membership_Notes';
+			$meta_box_classes[] = 'WC_Memberships_Meta_Box_User_Membership_Member_Details';
+			$meta_box_classes[] = 'WC_Memberships_Meta_Box_User_Membership_Recent_Activity';
 		}
 
 		// load and instantiate
@@ -428,6 +437,8 @@ class WC_Memberships_Admin {
 	/**
 	 * Enqueue admin scripts & styles
 	 *
+	 * @internal
+	 *
 	 * @since 1.0.0
 	 * @param string $hook_suffix The current URL filename, ie edit.php, post.php, etc
 	 */
@@ -441,8 +452,9 @@ class WC_Memberships_Admin {
 
 		$screen = get_current_screen();
 
-		// load pointer script on some screens
 		if ( 'edit-wc_user_membership' === $screen->id || 'wc_user_membership' === $screen->id ) {
+
+			// load the WP Pointers script on some screens
 			wp_enqueue_style( 'wp-pointer' );
 			wp_enqueue_script( 'wp-pointer' );
 		}
@@ -454,8 +466,9 @@ class WC_Memberships_Admin {
 		$dependencies = array( 'jquery' );
 
 		// load a datepicker on admin pages (except on restrictable content edit screens)
-		if ( ( 'wc_user_membership' === $typenow && ( 'post.php' === $pagenow || 'post-new.php' === $pagenow ) )
-		     || $this->is_import_export_admin_page( $screen ) ) {
+		if (    $this->is_import_export_admin_page( $screen )
+		     || ( in_array( $typenow, array( 'wc_user_membership', 'wc_membership_plan' ), true ) && in_array( $pagenow, array( 'post.php', 'post-new.php' ), true ) ) ) {
+
 			$dependencies[] = 'jquery-ui-datepicker';
 		}
 
@@ -466,7 +479,7 @@ class WC_Memberships_Admin {
 
 		wp_localize_script( 'wc-memberships-admin', 'wc_memberships_admin', array(
 
-			// Add any config/state properties here, for example:
+			// add any config/state properties here, for example:
 			// 'is_user_logged_in' => is_user_logged_in()
 
 			'ajax_url'                                  => admin_url('admin-ajax.php'),
@@ -477,7 +490,7 @@ class WC_Memberships_Admin {
 			'calendar_image'                            => WC()->plugin_url() . '/assets/images/calendar.png',
 			'user_membership_url'                       => admin_url( 'edit.php?post_type=wc_user_membership' ),
 			'new_user_membership_url'                   => admin_url( 'post-new.php?post_type=wc_user_membership' ),
-			'get_membership_expiration_nonce'           => wp_create_nonce( 'get-membership-expiration' ),
+			'get_membership_date_nonce'                 => wp_create_nonce( 'get-membership-date' ),
 			'search_customers_nonce'                    => wp_create_nonce( 'search-customers' ),
 			'add_user_membership_note_nonce'            => wp_create_nonce( 'add-user-membership-note' ),
 			'delete_user_membership_note_nonce'         => wp_create_nonce( 'delete-user-membership-note' ),
@@ -487,15 +500,16 @@ class WC_Memberships_Admin {
 
 			'i18n' => array(
 
-				// Add i18n strings here, for example:
+				// add i18n strings here, for example:
 				// 'log_in' => __( 'Log In', 'woocommerce-memberships' )
 
-				'select_user'               => __( 'Select user', 'woocommerce-memberships' ),
-				'add_member'                => __( 'Add Member', 'woocommerce-memberships' ),
-				'delete_membership_confirm' => __( 'Are you sure that you want to permanently delete this membership?', 'woocommerce-memberships' ),
-				'transfer_membership'       => __( 'Transfer Membership', 'woocommerce-memberships' ),
-				'cancel'                    => __( 'Cancel', 'woocommerce-memberships' ),
-				'search_for_user'           => __( 'Search for a user&hellip;', 'woocommerce-memberships' ),
+				'select_user'                => __( 'Select user', 'woocommerce-memberships' ),
+				'add_member'                 => __( 'Add Member', 'woocommerce-memberships' ),
+				'delete_membership_confirm'  => __( 'Are you sure that you want to permanently delete this membership?', 'woocommerce-memberships' ),
+				'delete_memberships_confirm' => __( 'Are you sure that you want to permanently delete these memberships?', 'woocommerce-memberships' ),
+				'transfer_membership'        => __( 'Transfer Membership', 'woocommerce-memberships' ),
+				'cancel'                     => __( 'Cancel', 'woocommerce-memberships' ),
+				'search_for_user'            => __( 'Search for a user&hellip;', 'woocommerce-memberships' ),
 			),
 		) );
 	}
@@ -504,12 +518,14 @@ class WC_Memberships_Admin {
 	/**
 	 * Add settings/export screen ID to the list of pages for WC to load its JS on
 	 *
+	 * @internal
+	 *
 	 * @since 1.0.0
 	 * @param array $screen_ids
 	 * @return array
 	 */
 	public function load_wc_scripts( $screen_ids ) {
-		return array_merge( $screen_ids, $this->screen_ids );
+		return array_merge( $screen_ids, $this->get_screen_ids() );
 	}
 
 
@@ -518,6 +534,8 @@ class WC_Memberships_Admin {
 	 * is not being viewed. It's easier to add both submenu links via register_post_type()
 	 * and conditionally remove them here than it is try to add them both
 	 * correctly.
+	 *
+	 * @internal
 	 *
 	 * @since 1.2.0
 	 */
@@ -539,6 +557,8 @@ class WC_Memberships_Admin {
 
 	/**
 	 * Set the current tab
+	 *
+	 * @internal
 	 *
 	 * @since 1.0.0
 	 * @param string $current_tab Current tab slug
@@ -562,12 +582,14 @@ class WC_Memberships_Admin {
 	/**
 	 * Render tabs on our custom post types pages
 	 *
+	 * @internal
+	 *
 	 * @since 1.0.0
 	 */
 	public function render_tabs() {
 		global $typenow;
 
-		if ( $this->is_import_export_admin_page()
+		if (    $this->is_import_export_admin_page()
 		     || ( is_string( $typenow ) && in_array( $typenow, array( 'wc_user_membership', 'wc_membership_plan' ), true ) ) ) :
 
 			?>
@@ -582,7 +604,8 @@ class WC_Memberships_Admin {
 					$current_tab = apply_filters( 'wc_memberships_admin_current_tab', '' );
 				?>
 				<h2 class="nav-tab-wrapper woo-nav-tab-wrapper">
-					<?php foreach ( $this->tabs as $tab_id => $tab ) : ?>
+					<?php $tabs = $this->get_tabs(); ?>
+					<?php foreach ( $tabs as $tab_id => $tab ) : ?>
 						<?php $class = ( $tab_id === $current_tab ) ? array( 'nav-tab', 'nav-tab-active' ) : array( 'nav-tab' ); ?>
 						<?php printf( '<a href="%1$s" class="%2$s">%3$s</a>', esc_url( $tab['url'] ), implode( ' ', array_map( 'sanitize_html_class', $class ) ), esc_html( $tab['title'] ) ); ?>
 					<?php endforeach; ?>
@@ -753,6 +776,8 @@ class WC_Memberships_Admin {
 	/**
 	 * Adds Memberships to "Edit Order" screen
 	 *
+	 * @internal
+	 *
 	 * @since 1.3.8
 	 * @param \WC_Order $order the WooCommerce order
 	 */
@@ -781,7 +806,7 @@ class WC_Memberships_Admin {
 
 						$plan = $membership->get_plan();
 
-						if ( $plan && wc_memberships()->get_user_memberships_instance()->is_user_active_member( $user_id, $plan ) ) {
+						if ( $plan && wc_memberships_is_user_active_member( $user_id, $plan ) ) {
 
 							edit_post_link( esc_html( $plan->name ), '', '<br />', $membership->id );
 							$count++;
@@ -796,12 +821,13 @@ class WC_Memberships_Admin {
 			?>
 		</p>
 		<?php
-
 	}
 
 
 	/**
 	 * Add the "Memberships" column to the User's admin table
+	 *
+	 * @internal
 	 *
 	 * @since 1.3.8
 	 * @param array $columns the array of Users columns
@@ -824,6 +850,8 @@ class WC_Memberships_Admin {
 
 	/**
 	 * Display membership plan name(s) if a given user has a membership for the plan.
+	 *
+	 * @internal
 	 *
 	 * @since 1.3.8
 	 * @param string $output The string to output in the column specified with $column_name
@@ -848,7 +876,8 @@ class WC_Memberships_Admin {
 
 				$plan = $membership->get_plan();
 
-				if ( $plan && wc_memberships()->get_user_memberships_instance()->is_user_active_member( $user_id, $plan ) ) {
+				if ( $plan && wc_memberships_is_user_active_member( $user_id, $plan ) ) {
+
 					$membership_links[] = '<a href="' . esc_url( get_edit_post_link( $membership->id ) ) . '">' . esc_html( $plan->name ) . '</a>';
 				}
 			}
@@ -862,6 +891,8 @@ class WC_Memberships_Admin {
 
 	/**
 	 * Show user memberships on user profile page
+	 *
+	 * @internal
 	 *
 	 * @since 1.0.0
 	 * @param \WP_User $user
@@ -1190,6 +1221,8 @@ class WC_Memberships_Admin {
 	/**
 	 * Remove New User Membership menu option from Admin Bar
 	 *
+	 * @internal
+	 *
 	 * @since 1.3.0
 	 * @param \WP_Admin_Bar $admin_bar WP_Admin_Bar instance, passed by reference
 	 */
@@ -1207,7 +1240,7 @@ class WC_Memberships_Admin {
 	 */
 	public function duplicate_product_memberships_data( $new_id, $post ) {
 
-		// Get product restriction rules
+		// get product restriction rules
 		$product_restriction_rules = wc_memberships()->get_rules_instance()->get_rules( array(
 			'rule_type'         => 'product_restriction',
 			'object_id'         => $post->ID,
@@ -1217,7 +1250,7 @@ class WC_Memberships_Admin {
 			'plan_status'       => 'any',
 		) );
 
-		// Get purchasing discount rules
+		// get purchasing discount rules
 		$purchasing_discount_rules = wc_memberships()->get_rules_instance()->get_rules( array(
 			'rule_type'         => 'purchasing_discount',
 			'object_id'         => $post->ID,
@@ -1229,7 +1262,7 @@ class WC_Memberships_Admin {
 
 		$product_rules = array_merge( $product_restriction_rules, $purchasing_discount_rules );
 
-		// Duplicate rules
+		// duplicate rules
 		if ( ! empty( $product_rules ) ) {
 
 			$all_rules = get_option( 'wc_memberships_rules' );
@@ -1244,7 +1277,7 @@ class WC_Memberships_Admin {
 			update_option( 'wc_memberships_rules', $all_rules );
 		}
 
-		// Duplicate custom messages
+		// duplicate custom messages
 		foreach ( array( 'product_viewing_restricted', 'product_purchasing_restricted' ) as $message_type ) {
 
 			$message    = get_post_meta( $post->ID, "_wc_memberships_{$message_type}_message", true );
@@ -1259,20 +1292,23 @@ class WC_Memberships_Admin {
 			}
 		}
 
-		// Duplicate 'grants access to'
-		foreach ( wc_memberships_get_membership_plans() as $plan ) {
+		$plans = wc_memberships_get_membership_plans();
 
-			if ( $plan->has_product( $post->ID ) ) {
+		if ( ! empty( $plans ) ) {
 
-				$product_ids   = get_post_meta( $plan->get_id(), '_product_ids', true );
-				$product_ids[] = $new_id;
+			// duplicate 'grants access to'
+			foreach ( $plans as $plan ) {
 
-				update_post_meta( $plan->get_id(), '_product_ids', $product_ids );
+				if ( $plan->has_product( $post->ID ) ) {
+					// add new product id to product ids
+					$plan->set_product_ids( $new_id, true );
+				}
 			}
 		}
 
-		// Duplicate other settings
-		update_post_meta( $new_id, '_wc_memberships_force_public', get_post_meta( $post->ID, '_wc_memberships_force_public', true ) );
+		// duplicate other settings
+		update_post_meta( $new_id, '_wc_memberships_force_public',      get_post_meta( $post->ID, '_wc_memberships_force_public', true ) );
+		update_post_meta( $new_id, '_wc_memberships_exclude_discounts', get_post_meta( $post->ID, '_wc_memberships_exclude_discounts', true ) );
 	}
 
 
@@ -1342,7 +1378,7 @@ class WC_Memberships_Admin {
 			/** @deprecated since 1.6.0 */
 			case 'tabs' :
 				_deprecated_function( "{$class}->{$property}", $deprecated_since_1_6_0 );
-				return $this->tabs;
+				return $this->get_tabs();
 
 			default :
 				// you're probably doing it wrong
@@ -1365,15 +1401,11 @@ class WC_Memberships_Admin {
 	 */
 	public function __call( $method, $args ) {
 
-		$class = 'wc_memberships()->get_admin_instance()';
-
-		$deprecated_since_1_6_0 = '1.6.0';
-
 		switch ( $method ) {
 
 			/** @deprecated since 1.6.0 */
 			case 'render_tabs_for_cpt' :
-				_deprecated_function( "{$class}->{$method}()", $deprecated_since_1_6_0, "{$class}->render_tabs()" );
+				_deprecated_function( "WC_Memberships_Admin::{$method}()", '1.6.0', 'wc_memberships()->get_admin_instance()->render_tabs()' );
 				$this->render_tabs();
 				return null;
 

@@ -198,7 +198,7 @@ class WC_Memberships_Membership_Plan_Rule {
 		 */
 		$access_time = apply_filters( 'wc_memberships_rule_access_start_time', $access_time, $from_time, $this );
 
-		// access always starts at midnight
+		// access always starts at the beginning of the day (midnight)
 		return strtotime( 'midnight', $access_time );
 	}
 

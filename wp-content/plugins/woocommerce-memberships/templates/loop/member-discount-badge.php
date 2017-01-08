@@ -30,8 +30,8 @@ defined( 'ABSPATH' ) or exit;
  * @type \WP_Post $post Post object
  * @type \WC_Product $product Product object
  *
- * @since 1.0.0
  * @version 1.6.4
+ * @since 1.0.0
  */
 global $product;
 

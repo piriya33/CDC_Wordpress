@@ -53,45 +53,49 @@ class WC_Memberships_Restrictions {
 	 */
 	public function __construct() {
 
-		// Exclude restricted content (hide restriction mode)
+		// exclude restricted content (hide restriction mode)
 		add_filter( 'pre_get_posts',  array( $this, 'exclude_restricted_posts' ) );
 		add_filter( 'posts_clauses',  array( $this, 'posts_clauses' ), 10, 2 );
 		add_filter( 'get_terms_args', array( $this, 'get_terms_args' ), 10, 2 );
 		add_filter( 'terms_clauses',  array( $this, 'terms_clauses' ), 10, 3 );
 
-		// Exclude restricted pages
+		// exclude restricted pages
 		add_filter( 'get_pages', array( $this, 'exclude_restricted_pages' ), 10, 2 );
 
-		// Redirect content & products (redirect restriction mode)
-		add_filter( 'wp', array( $this, 'redirect_restricted_content' ) );
-		add_filter( 'wp', array( $this, 'hide_restricted_content_comments' ) );
+		// redirect content & products (redirect restriction mode)
+		add_action( 'wp', array( $this, 'redirect_restricted_content' ) );
+		add_action( 'wp', array( $this, 'hide_restricted_content_comments' ) );
 
-		// Restrict (filter) content (hide_content restriction mode)
+		// restrict (filter) content (hide_content restriction mode)
 		add_filter( 'the_content',   array( $this, 'restrict_content' ) );
 		add_filter( 'the_excerpt',   array( $this, 'restrict_content' ) );
 		add_filter( 'comments_open', array( $this, 'maybe_close_comments' ) );
 
-		// Remove restricted comments from comment feeds
+		// remove restricted comments from comment feeds
 		add_filter( 'the_posts', array( $this, 'exclude_restricted_comments' ), 10, 2 );
 
-		// Hide prices & thumbnails for view-restricted products
-		add_filter( 'woocommerce_get_price_html', array( $this, 'hide_restricted_product_price' ), 10, 2 );
+		// hide prices & thumbnails for view-restricted products
+		add_filter( 'woocommerce_get_price_html',              array( $this, 'hide_restricted_product_price' ), 10, 2 );
 		add_action( 'woocommerce_before_shop_loop_item_title', array( $this, 'maybe_remove_product_thumbnail' ), 5 );
 		add_action( 'woocommerce_after_shop_loop_item_title',  array( $this, 'restore_product_thumbnail' ), 5 );
 
-		// Restrict product viewing by hijacking WooCommerce product password protection (hide_content restriction mode)
+		// remove restricted product categories from being listed in product categories widget
+		add_filter( 'woocommerce_product_categories_widget_args',    array( $this, 'hide_widget_product_categories' ), 1 );
+		add_filter( 'wc_product_dropdown_categories_get_terms_args', array( $this, 'hide_widget_product_dropdown_categories' ), 1 );
+
+		// restrict product viewing by hijacking WooCommerce product password protection (hide_content restriction mode)
 		add_action( 'woocommerce_before_single_product', array( $this, 'maybe_password_protect_product' ) );
 
-		// Restrict product visibility
+		// restrict product visibility
 		add_filter( 'woocommerce_product_is_visible',        array( $this, 'product_is_visible' ), 10, 2 );
 		add_filter( 'woocommerce_variation_is_visible',      array( $this, 'variation_is_visible' ), 10, 2 );
 		add_filter( 'woocommerce_hide_invisible_variations', array( $this, 'hide_invisible_variations' ), 10, 3 );
 
-		// Restrict product purchasing
+		// restrict product purchasing
 		add_filter( 'woocommerce_is_purchasable',           array( $this, 'product_is_purchasable' ), 10, 2 );
 		add_filter( 'woocommerce_variation_is_purchasable', array( $this, 'product_is_purchasable' ), 10, 2 );
 
-		// Show product purchasing restriction message
+		// show product purchasing restriction message
 		add_action( 'woocommerce_single_product_summary', array( $this, 'single_product_purchasing_restricted_message' ), 30 );
 		add_action( 'woocommerce_single_product_summary', array( $this, 'single_product_member_discount_message' ), 31 );
 
@@ -171,6 +175,8 @@ class WC_Memberships_Restrictions {
 	/**
 	 * Exclude restricted post types, taxonomies & terms by altering posts query clauses
 	 *
+	 * TODO this method is long, has many variables and some code repetition, improve naming, break down and make it easier to read {FN 2016-09-14}
+	 *
 	 * @since 1.0.0
 	 * @param array $pieces SQL clause pieces
 	 * @param \WP_Query $wp_query Instance of WP_Query
@@ -219,7 +225,7 @@ class WC_Memberships_Restrictions {
 				//   from the exclusin list
 				$placeholder = implode( ', ', array_fill( 0, count( $conditions['restricted']['post_types'] ), '%s' ) );
 
-				$subquery = $wpdb->prepare("SELECT ID FROM $wpdb->posts WHERE post_type IN ($placeholder)", $conditions['restricted']['post_types'] );
+				$subquery = $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_type IN ($placeholder)", $conditions['restricted']['post_types'] );
 
 				// Allow access to whole taxonomies
 				$subquery .= $this->get_taxonomy_access_where_clause( $granted_taxonomies );
@@ -236,107 +242,136 @@ class WC_Memberships_Restrictions {
 			}
 		}
 
-		// Exclude taxonomies
+		// exclude taxonomies
 		if ( ! empty( $conditions['restricted']['taxonomies'] ) ) {
 
 			$taxonomy_post_types = array();
+
 			foreach ( $conditions['restricted']['taxonomies'] as $taxonomy ) {
-				$taxonomy_post_types[ $taxonomy ] = $this->get_post_types_for_taxonomies( (array) $taxonomy );
+
+				if ( $the_taxonomy = get_taxonomy( $taxonomy ) ) {
+
+					$taxonomy_post_types[ $taxonomy ] = $this->get_post_types_for_taxonomies( (array) $taxonomy );
+				}
 			}
 
-			$all_taxonomy_post_types = $this->get_post_types_for_taxonomies( $conditions['restricted']['taxonomies'] );
-
-			$granted_posts = $this->get_user_granted_posts( $all_taxonomy_post_types );
-			$granted_terms = $this->get_user_granted_terms( $conditions['restricted']['taxonomies'] );
-
-			// Main taxonomy query is always the same, regardless if user has access to specific terms or posts under
-			// these taxonomies.
-			$placeholder = implode( ', ', array_fill( 0, count( $conditions['restricted']['taxonomies'] ), '%s' ) );
-
-			// Use case statement to check if the post type for the object is registered for the restricted taxonomy
-			// If it is not, then don't restrict (this fixes issues when a taxonomy was once registered for a post
-			// type but is not anymore, but restriction rules still apply to that post type via term relationships
-			// in DB )
+			// Use case statement to check if the post type for the object is registered
+			// for the restricted taxonomy; if it is not, then don't restrict (this
+			// fixes issues when a taxonomy was once registered for a post type but
+			// is not anymore, but restriction rules still apply to that post type
+			// via term relationships in database)
 			$case = '';
-			foreach ( $taxonomy_post_types as $tax => $post_types ) {
-				$args = array_merge( array( $tax ), $post_types );
-				$post_types_placeholder = implode( ', ', array_fill( 0, count( $post_types ), '%s' ) );
-				$case .= $wpdb->prepare( " WHEN $wpdb->term_taxonomy.taxonomy = %s THEN $wpdb->posts.post_type IN ( $post_types_placeholder )", $args );
+
+			if ( ! empty( $taxonomy_post_types ) ) {
+
+				// main taxonomy query is always the same, regardless if user has access
+				// to specific terms or posts under these taxonomies
+				$placeholder = implode( ', ', array_fill( 0, count( $conditions['restricted']['taxonomies'] ), '%s' ) );
+
+				foreach ( $taxonomy_post_types as $tax => $post_types ) {
+
+					$args                   = array_merge( array( $tax ), $post_types );
+					$post_types_placeholder = implode( ', ', array_fill( 0, count( $post_types ), '%s' ) );
+
+					$case .= $wpdb->prepare( " WHEN $wpdb->term_taxonomy.taxonomy = %s THEN $wpdb->posts.post_type IN ( $post_types_placeholder )", $args );
+				}
+
+				$subquery = $wpdb->prepare( "
+					SELECT object_id FROM $wpdb->term_relationships
+					LEFT JOIN $wpdb->posts ON $wpdb->posts.ID = $wpdb->term_relationships.object_id
+					LEFT JOIN $wpdb->term_taxonomy ON $wpdb->term_relationships.term_taxonomy_id = $wpdb->term_taxonomy.term_taxonomy_id
+					WHERE CASE $case END
+					AND $wpdb->term_taxonomy.taxonomy IN ($placeholder)
+				", $conditions['restricted']['taxonomies'] );
+
+				$all_taxonomy_post_types = $this->get_post_types_for_taxonomies( $conditions['restricted']['taxonomies'] );
+
+				$granted_posts = $this->get_user_granted_posts( $all_taxonomy_post_types );
+				$granted_terms = $this->get_user_granted_terms( $conditions['restricted']['taxonomies'] );
+
+				// it looks like while general access to these taxonomies is restricted,
+				// there are some rules that grant the user access to some terms or posts
+				// in one or more restricted taxonomies
+				if ( ! empty( $granted_terms ) || ! empty( $granted_posts ) ) {
+
+					// Allow access to specific terms
+					$subquery .= $this->get_term_access_where_clause( $granted_terms );
+
+					// Allow access to specific posts
+					$subquery .= $this->get_post_access_where_clause( $granted_posts );
+				}
+
+				// put it all together now
+				$pieces['where'] .= " AND $wpdb->posts.ID NOT IN ( " . $subquery . " ) ";
 			}
-
-			$subquery = $wpdb->prepare("
-				SELECT object_id FROM $wpdb->term_relationships
-				LEFT JOIN $wpdb->posts ON $wpdb->posts.ID = $wpdb->term_relationships.object_id
-				LEFT JOIN $wpdb->term_taxonomy ON $wpdb->term_relationships.term_taxonomy_id = $wpdb->term_taxonomy.term_taxonomy_id
-				WHERE CASE $case END
-				AND $wpdb->term_taxonomy.taxonomy IN ($placeholder)
-			", $conditions['restricted']['taxonomies'] );
-
-			// It looks like while general access to these taxonomies is restricted, there are some
-			// rules that grant the user access to some terms or posts in one or more restricted taxonomies
-			if ( ! empty( $granted_terms ) || ! empty( $granted_posts ) ) {
-
-				// Allow access to specific terms
-				$subquery .= $this->get_term_access_where_clause( $granted_terms );
-
-				// Allow access to specific posts
-				$subquery .= $this->get_post_access_where_clause( $granted_posts );
-			}
-
-			// Put it all together now
-			$pieces['where'] .= " AND $wpdb->posts.ID NOT IN ( " . $subquery . " ) ";
 		}
 
-		// Exclude taxonomy terms
+		// exclude taxonomy terms
 		if ( ! empty( $conditions['restricted']['terms'] ) ) {
 
 			$term_ids   = array();
 			$taxonomies = array_keys( $conditions['restricted']['terms'] );
 
 			foreach ( $conditions['restricted']['terms'] as $taxonomy => $terms ) {
+
 				$term_ids = array_merge( $term_ids, $terms );
 			}
 
 			if ( ! empty( $term_ids ) ) {
 
 				$taxonomy_post_types = array();
+
 				foreach ( $taxonomies as $taxonomy ) {
-					$taxonomy_post_types[ $taxonomy ] = $this->get_post_types_for_taxonomies( (array) $taxonomy );
+
+					if ( get_taxonomy( $taxonomy ) ) {
+
+						$taxonomy_post_types[ $taxonomy ] = $this->get_post_types_for_taxonomies( (array) $taxonomy );
+					}
 				}
 
-				$all_taxonomy_post_types = $this->get_post_types_for_taxonomies( $taxonomies );
-				$granted_posts           = $this->get_user_granted_posts( $all_taxonomy_post_types );
+				if ( ! empty ( $taxonomy_post_types ) ) {
 
-				// Main term query is always the same, regardless if user has access to specific posts under with these terms
-				$placeholder = implode( ', ', array_fill( 0, count( $term_ids ), '%d' ) );
+					// main term query is always the same, regardless if user has access
+					// to specific posts under with these terms
+					$placeholder = implode( ', ', array_fill( 0, count( $term_ids ), '%d' ) );
 
-				// Use case statement to check if the post type for the object is registered for the restricted taxonomy
-				// If it is not, then don't restrict (this fixes issues when a taxonomy was once registered for a post
-				// type but is not anymore, but restriction rules still apply to that post type via term relationships
-				// in DB )
-				$case = '';
-				foreach ( $taxonomy_post_types as $tax => $post_types ) {
-					$args = array_merge( array( $tax ), $post_types );
-					$post_types_placeholder = implode( ', ', array_fill( 0, count( $post_types ), '%s' ) );
-					$case .= $wpdb->prepare( " WHEN $wpdb->term_taxonomy.taxonomy = %s THEN $wpdb->posts.post_type IN ( $post_types_placeholder )", $args );
+					// use case statement to check if the post type for the object is
+					// registered for the restricted taxonomy; if it is not, then don't
+					// restrict (this fixes issues when a taxonomy was once registered
+					// for a post type but is not anymore, but restriction rules still
+					// apply to that post type via term relationships in database)
+					$case = '';
+
+					foreach ( $taxonomy_post_types as $tax => $post_types ) {
+
+						$args                   = array_merge( array( $tax ), $post_types );
+						$post_types_placeholder = implode( ', ', array_fill( 0, count( $post_types ), '%s' ) );
+
+						$case .= $wpdb->prepare( " WHEN $wpdb->term_taxonomy.taxonomy = %s THEN $wpdb->posts.post_type IN ( $post_types_placeholder )", $args );
+					}
+
+					$subquery = $wpdb->prepare( "
+						SELECT object_id FROM $wpdb->term_relationships
+						LEFT JOIN $wpdb->posts ON $wpdb->posts.ID = $wpdb->term_relationships.object_id
+						LEFT JOIN $wpdb->term_taxonomy ON $wpdb->term_relationships.term_taxonomy_id = $wpdb->term_taxonomy.term_taxonomy_id
+						WHERE CASE $case END
+						AND $wpdb->term_relationships.term_taxonomy_id IN ($placeholder)
+					", $term_ids );
+
+					$all_taxonomy_post_types = $this->get_post_types_for_taxonomies( $taxonomies );
+					$granted_posts           = $this->get_user_granted_posts( $all_taxonomy_post_types );
+
+					// it looks like while general access to these terms is restricted,
+					// there are some rules that grant the user access to some posts in
+					// one or more restricted terms
+					if ( ! empty( $granted_posts ) ) {
+
+						$subquery .= $this->get_post_access_where_clause( $granted_posts );
+					}
+
+					// put it all together now
+					$pieces['where'] .= " AND $wpdb->posts.ID NOT IN ( " . $subquery . " ) ";
 				}
-
-				$subquery = $wpdb->prepare("
-					SELECT object_id FROM $wpdb->term_relationships
-					LEFT JOIN $wpdb->posts ON $wpdb->posts.ID = $wpdb->term_relationships.object_id
-					LEFT JOIN $wpdb->term_taxonomy ON $wpdb->term_relationships.term_taxonomy_id = $wpdb->term_taxonomy.term_taxonomy_id
-					WHERE CASE $case END
-					AND $wpdb->term_relationships.term_taxonomy_id IN ($placeholder)
-				", $term_ids );
-
-				// It looks like while general access to these terms is restricted, there are some
-				// rules that grant the user access to some posts in one or more restricted terms
-				if ( ! empty( $granted_posts ) ) {
-					$subquery .= $this->get_post_access_where_clause( $granted_posts );
-				}
-
-				// Put it all together now
-				$pieces['where'] .= " AND $wpdb->posts.ID NOT IN ( " . $subquery . " ) ";
 			}
 		}
 
@@ -473,10 +508,9 @@ class WC_Memberships_Restrictions {
 	 * Redirect restricted content/products based on content/product restriction rules
 	 *
 	 * @since 1.0.0
-	 * @param \WP $wp_object
 	 * @return string
 	 */
-	public function redirect_restricted_content( $wp_object ) {
+	public function redirect_restricted_content() {
 
 		if ( 'redirect' !== get_option( 'wc_memberships_restriction_mode' ) ) {
 			return;
@@ -512,10 +546,9 @@ class WC_Memberships_Restrictions {
 	 * Hide restricted content/product comments
 	 *
 	 * @since 1.0.0
-	 * @param string $content The content
 	 * @return string
 	 */
-	public function hide_restricted_content_comments( $content ) {
+	public function hide_restricted_content_comments() {
 
 		if ( 'hide_content' !== get_option( 'wc_memberships_restriction_mode' ) ) {
 			return;
@@ -595,7 +628,6 @@ class WC_Memberships_Restrictions {
 
 					$content .= $message;
 				}
-
 			}
 
 			// indicates that the content for this post has already been filtered
@@ -690,7 +722,7 @@ class WC_Memberships_Restrictions {
 	 */
 	public function hide_restricted_product_price ( $price, WC_Product $product ) {
 
-		if ( 'hide_content' === get_option( 'wc_memberships_restriction_mode' )
+		if (      'hide_content' === get_option( 'wc_memberships_restriction_mode' )
 		     && ! current_user_can( 'wc_memberships_view_restricted_product', $product->id ) ) {
 
 			$price = '';
@@ -705,7 +737,7 @@ class WC_Memberships_Restrictions {
 	 *
 	 * @since 1.0.0
 	 */
-	public function maybe_remove_product_thumbnail () {
+	public function maybe_remove_product_thumbnail() {
 		global $post;
 
 		$this->product_thumbnail_restricted = false;
@@ -737,12 +769,92 @@ class WC_Memberships_Restrictions {
 	 */
 	public function restore_product_thumbnail() {
 
-		if ( $this->product_thumbnail_restricted
+		if (      $this->product_thumbnail_restricted
 		     && ! has_action( 'woocommerce_before_shop_loop_item_title', 'woocommerce_template_loop_product_thumbnail' ) ) {
 
 			add_action( 'woocommerce_before_shop_loop_item_title', 'woocommerce_template_loop_product_thumbnail', 10 );
 			remove_action( 'woocommerce_before_shop_loop_item_title', array( $this, 'template_loop_product_thumbnail_placeholder' ) );
 		}
+	}
+
+
+	/**
+	 * Return an array of product categories ids to be excluded
+	 *
+	 * @since 1.7.1
+	 * @param array $args Arguments to pass to get_terms()
+	 * @return array
+	 */
+	private function get_restricted_product_category_excluded_tree( array $args ) {
+
+		if ( version_compare( get_bloginfo( 'version' ), '4.5', '>=' ) ) {
+			$args['taxonomy']   = 'product_cat';
+			$product_categories = get_terms( $args );
+		} else {
+			$product_categories = get_terms( 'product_cat', $args );
+		}
+
+		$exclude_tree = array();
+
+		// if we are not hiding products completely we can safely list categories
+		if ( ! empty( $product_categories ) && 'yes' === get_option( 'wc_memberships_hide_restricted_products' ) ) {
+
+			foreach ( $product_categories as $product_category_id ) {
+
+				if ( ! current_user_can( 'wc_memberships_view_restricted_product_taxonomy_term', 'product_cat', $product_category_id ) ) {
+					$exclude_tree[] = $product_category_id;
+				}
+			}
+		}
+
+		return $exclude_tree;
+	}
+
+
+	/**
+	 * Filter the WooCommerce product categories widget
+	 * to account for restricted product categories to be hidden completely
+	 *
+	 * @internal
+	 *
+	 * @since 1.7.1
+	 * @param array $args Array of arguments
+	 * @return array
+	 */
+	public function hide_widget_product_categories( $args ) {
+
+		$excluded_tree = $this->get_restricted_product_category_excluded_tree( array( 'fields' => 'ids' ) );
+
+		if ( ! empty( $excluded_tree ) ) {
+			$args['exclude_tree'] = $excluded_tree;
+		}
+
+		return $args;
+	}
+
+
+	/**
+	 * Filter the WooCommerce product categories dropdown widget
+	 * to account for restricted product categories to be hidden completely
+	 *
+	 * @internal
+	 *
+	 * @since 1.7.1
+	 * @param array $args Array of arguments
+	 * @return array
+	 */
+	public function hide_widget_product_dropdown_categories( $args ) {
+
+		$ids_only           = $args;
+		$ids_only['fields'] = 'ids';
+
+		$exclude_tree = $this->get_restricted_product_category_excluded_tree( $ids_only );
+
+		if ( ! empty( $exclude_tree ) ) {
+			$args['exclude_tree'] = $exclude_tree;
+		}
+
+		return $args;
 	}
 
 
@@ -754,6 +866,7 @@ class WC_Memberships_Restrictions {
 	public function template_loop_product_thumbnail_placeholder() {
 
 		if ( wc_placeholder_img_src() ) {
+
 			echo wc_placeholder_img( 'shop_catalog' );
 		}
 	}
@@ -777,11 +890,13 @@ class WC_Memberships_Restrictions {
 			if ( ! current_user_can( 'wc_memberships_view_restricted_product', $post->ID ) ) {
 
 				$post->post_password = $this->product_restriction_password = uniqid( 'wc_memberships_restricted_' );
+
 				add_filter( 'the_password_form', array( $this, 'restrict_product_content' ) );
 
 			} elseif ( ! current_user_can( 'wc_memberships_view_delayed_product', $post->ID ) ) {
 
 				$post->post_password = $this->product_restriction_password = uniqid( 'wc_memberships_delayed_' );
+
 				add_filter( 'the_password_form', array( $this, 'restrict_product_content' ) );
 			}
 		}
@@ -839,7 +954,7 @@ class WC_Memberships_Restrictions {
 	 *
 	 * @since 1.0.0
 	 * @param bool $purchasable whether the product is purchasable
-	 * @param \WC_Product $product the product
+	 * @param \WC_Product|\WC_Product_Variation $product the product
 	 * @return bool
 	 */
 	public function product_is_purchasable( $purchasable, $product ) {
@@ -857,7 +972,7 @@ class WC_Memberships_Restrictions {
 
 		// double-check for variations:
 		// if parent is not purchasable, then neither should be the variation
-		if ( $purchasable && $product->is_type( 'variation' ) ) {
+		if ( $purchasable && $product->is_type( array( 'variation', 'subscription_variation' ) ) ) {
 
 			$purchasable = $product->parent->is_purchasable();
 		}
@@ -876,7 +991,7 @@ class WC_Memberships_Restrictions {
 	 */
 	public function product_is_visible( $visible, $product_id ) {
 
-		if ( 'yes' === get_option( 'wc_memberships_hide_restricted_products' )
+		if (      'yes' === get_option( 'wc_memberships_hide_restricted_products' )
 		     && ! current_user_can( 'wc_memberships_view_restricted_product', $product_id ) ) {
 
 			$visible = false;
@@ -892,22 +1007,21 @@ class WC_Memberships_Restrictions {
 	 * @since 1.0.0
 	 */
 	public function single_product_purchasing_restricted_message() {
-
 		global $product;
 
-		// Purchasing is restricted
 		if ( ! current_user_can( 'wc_memberships_purchase_restricted_product', $product->id ) ) {
+
+			// purchasing is restricted
 			echo '<div class="woocommerce"><div class="woocommerce-info wc-memberships-restriction-message wc-memberships-product-purchasing-restricted-message">' . wp_kses_post( wc_memberships()->get_frontend_instance()->get_product_purchasing_restricted_message( $product->id ) ) . '</div></div>';
-		}
 
-		// Purchasing is delayed
-		else if ( ! current_user_can( 'wc_memberships_purchase_delayed_product', $product->id ) ) {
+		} elseif ( ! current_user_can( 'wc_memberships_purchase_delayed_product', $product->id ) ) {
+
+				// purchasing is delayed
 			echo '<div class="woocommerce"><div class="woocommerce-info wc-memberships-restriction-message wc-memberships-product-purchasing-delayed-message">' . wp_kses_post( wc_memberships()->get_frontend_instance()->get_content_delayed_message( get_current_user_id(), $product->id, 'purchase' ) ) . '</div></div>';
-		}
 
-		// Variation-specific messages
-		else if ( $product->is_type( 'variable' ) && $product->has_child() ) {
+		} elseif ( $product->is_type( 'variable' ) && $product->has_child() ) {
 
+			// variation-specific messages
 			$variations_restricted = false;
 
 			foreach ( $product->get_available_variations() as $variation ) {
@@ -917,31 +1031,35 @@ class WC_Memberships_Restrictions {
 					$variation_id = $variation['variation_id'];
 
 					if ( ! current_user_can( 'wc_memberships_purchase_restricted_product', $variation_id ) ) {
-						$variations_restricted = true;
-						echo '<div class="woocommerce"><div class="woocommerce-info wc-memberships-restriction-message wc-memberships-product-purchasing-restricted-message wc-memberships-variation-message js-variation-' . sanitize_html_class( $variation_id ) . '">' . wp_kses_post( wc_memberships()->get_frontend_instance()->get_product_purchasing_restricted_message( $variation_id ) ) . '</div></div>';
-					}
 
-					else if ( ! current_user_can( 'wc_memberships_purchase_delayed_product', $variation['variation_id'] ) ) {
 						$variations_restricted = true;
+
+						echo '<div class="woocommerce"><div class="woocommerce-info wc-memberships-restriction-message wc-memberships-product-purchasing-restricted-message wc-memberships-variation-message js-variation-' . sanitize_html_class( $variation_id ) . '">' . wp_kses_post( wc_memberships()->get_frontend_instance()->get_product_purchasing_restricted_message( $variation_id ) ) . '</div></div>';
+
+					} else if ( ! current_user_can( 'wc_memberships_purchase_delayed_product', $variation['variation_id'] ) ) {
+
+						$variations_restricted = true;
+
 						echo '<div class="woocommerce"><div class="woocommerce-info wc-memberships-restriction-message wc-memberships-product-purchasing-delayed-message wc-memberships-variation-message js-variation-' . sanitize_html_class( $variation_id ) . '">' . wp_kses_post( wc_memberships()->get_frontend_instance()->get_content_delayed_message( get_current_user_id(), $variation_id, 'purchase' ) ) . '</div></div>';
 					}
 				}
 			}
 
 			if ( $variations_restricted ) {
-				wc_enqueue_js("
+
+				wc_enqueue_js( "
 					jQuery('.variations_form')
 						.on( 'woocommerce_variation_select_change', function( event ) {
 							jQuery('.wc-memberships-variation-message').hide();
-						})
+						} )
 						.on( 'found_variation', function( event, variation ) {
-							jQuery('.wc-memberships-variation-message').hide();
+							jQuery( '.wc-memberships-variation-message' ).hide();
 							if ( ! variation.is_purchasable ) {
 								jQuery( '.wc-memberships-variation-message.js-variation-' + variation.variation_id ).show();
 							}
-						})
+						} )
 						.find( '.variations select' ).change();
-				");
+				" );
 			}
 		}
 	}
@@ -992,15 +1110,15 @@ class WC_Memberships_Restrictions {
 
 			if ( $variations_discounted ) {
 
-				wc_enqueue_js("
+				wc_enqueue_js( "
 					jQuery( '.variations_form' )
 						.on( 'woocommerce_variation_select_change', function( event ) {
 							jQuery( '.wc-memberships-variation-message.wc-memberships-member-discount-message' ).hide();
-						})
+						} )
 						.on( 'found_variation', function( event, variation ) {
 							jQuery( '.wc-memberships-variation-message.wc-memberships-member-discount-message' ).hide();
 							jQuery( '.wc-memberships-variation-message.wc-memberships-member-discount-message.js-variation-' + variation.variation_id ).show();
-						})
+						} )
 						.find( '.variations select' ).change();
 				");
 			}
@@ -1112,14 +1230,12 @@ class WC_Memberships_Restrictions {
 					}
 
 					// check if user is an active member of the plan
-					$plan_id    = $rule->get_membership_plan_id();
-					$is_member  = $user_id > 0 && wc_memberships()->get_user_memberships_instance()->is_user_active_member( $user_id, $plan_id );
-					$has_access = false;
+					$plan_id           = $rule->get_membership_plan_id();
+					$is_active_member  = $user_id > 0 && wc_memberships_is_user_active_member( $user_id, $plan_id );
+					$has_access        = false;
 
 					// check if user has scheduled access to the content
-					if ( $is_member ) {
-
-						$user_membership = wc_memberships()->get_user_memberships_instance()->get_user_membership( $user_id, $plan_id );
+					if ( $is_active_member && ( $user_membership = wc_memberships()->get_user_memberships_instance()->get_user_membership( $user_id, $plan_id ) ) ) {
 
 						/** This filter is documented in includes/class-wc-memberships-capabilities.php **/
 						$from_time = apply_filters( 'wc_memberships_access_from_time', $user_membership->get_start_date( 'timestamp' ), $rule, $user_membership );
@@ -1414,7 +1530,6 @@ class WC_Memberships_Restrictions {
 	 * @return string
 	 */
 	private function get_taxonomy_access_where_clause( $taxonomies ) {
-
 		global $wpdb;
 
 		if ( empty( $taxonomies ) ) {
@@ -1443,7 +1558,6 @@ class WC_Memberships_Restrictions {
 	 * @return string
 	 */
 	private function get_term_access_where_clause( $term_ids, $query_type = 'posts' ) {
-
 		global $wpdb;
 
 		if ( empty( $term_ids ) ) {
@@ -1452,20 +1566,21 @@ class WC_Memberships_Restrictions {
 
 		$placeholder = implode( ', ', array_fill( 0, count( $term_ids ), '%d' ) );
 
-		if ( 'posts' == $query_type ) {
+		if ( 'posts' === $query_type ) {
 
-			$subquery = $wpdb->prepare("
+			$subquery = $wpdb->prepare( "
 				SELECT object_id FROM $wpdb->term_relationships
 				WHERE term_taxonomy_id IN ($placeholder)
 			", $term_ids );
 
 			return " AND $wpdb->posts.ID NOT IN ( " . $subquery . " ) ";
 
-		} elseif ( 'taxonomies' == $query_type ) {
+		} elseif ( 'taxonomies' === $query_type ) {
 
 			return $wpdb->prepare( " AND sub_t.term_id NOT IN ($placeholder) ", $term_ids );
 		}
 
+		return '';
 	}
 
 
@@ -1477,7 +1592,6 @@ class WC_Memberships_Restrictions {
 	 * @return string
 	 */
 	private function get_post_access_where_clause( $post_ids ) {
-
 		global $wpdb;
 
 		if ( empty( $post_ids ) ) {
@@ -1514,18 +1628,24 @@ class WC_Memberships_Restrictions {
 	 *
 	 * @since 1.0.0
 	 * @param array $taxonomies
-	 * @return array Array with post types
+	 * @return string[] Array with post types
 	 */
 	private function get_post_types_for_taxonomies( $taxonomies ) {
 
 		$post_types = array();
 
 		foreach ( $taxonomies as $taxonomy ) {
-			$tax = get_taxonomy( $taxonomy );
-			$post_types = array_merge( $post_types, $tax->object_type );
+
+			if ( $the_taxonomy = get_taxonomy( $taxonomy ) ) {
+
+				foreach ( $the_taxonomy->object_type as $object_type ) {
+
+					$post_types[] = $object_type;
+				}
+			}
 		}
 
-		return array_unique( $post_types );
+		return ! empty( $post_types ) ? array_unique( $post_types ) : array();
 	}
 
 

@@ -407,13 +407,12 @@ class WC_Memberships_Capabilities {
 				case 'wc_memberships_cancel_membership' :
 				case 'wc_memberships_renew_membership' :
 
-					$user_id            = $args[1];
-					$user_membership_id = $args[2];
+					list( $cap, $user_id, $user_membership_id ) = $args;
 
 					$user_membership = wc_memberships_get_user_membership( $user_membership_id );
 
 					// complimentary memberships cannot be cancelled or renewed by the user
-					$allcaps[ $caps[0] ] = $user_membership && $user_membership->get_user_id() == $user_id && ! $user_membership->has_status( 'complimentary' );
+					$allcaps[ $caps[0] ] = $user_membership && (int) $user_membership->get_user_id() === (int) $user_id && ! $user_membership->has_status( 'complimentary' );
 
 				break;
 
@@ -478,11 +477,11 @@ class WC_Memberships_Capabilities {
 
 		$post_type = get_post_type( $post_id );
 
-		if ( 'product_variation' == $post_type ) {
+		if ( 'product_variation' === $post_type ) {
 			$post_type = 'product';
 		}
 
-		$rule_type = 'product' == $post_type ? 'product_restriction' : 'content_restriction';
+		$rule_type = 'product' === $post_type ? 'product_restriction' : 'content_restriction';
 
 		return $this->get_user_access_start_time( array(
 			'rule_type'         => $rule_type,
@@ -506,11 +505,11 @@ class WC_Memberships_Capabilities {
 	 */
 	public function get_user_access_start_time_for_post_type( $user_id, $post_type, $access_type = 'view' ) {
 
-		if ( 'product_variation' == $post_type ) {
+		if ( 'product_variation' === $post_type ) {
 			$post_type = 'product';
 		}
 
-		$rule_type = 'product' == $post_type ? 'product_restriction' : 'content_restriction';
+		$rule_type = 'product' === $post_type ? 'product_restriction' : 'content_restriction';
 
 		return $this->get_user_access_start_time( array(
 			'rule_type'         => $rule_type,
@@ -545,6 +544,8 @@ class WC_Memberships_Capabilities {
 	/**
 	 * Get user access date for a taxonomy term
 	 *
+	 * @internal
+	 *
 	 * @since 1.0.0
 	 * @param int $user_id
 	 * @param string $taxonomy
@@ -567,6 +568,8 @@ class WC_Memberships_Capabilities {
 	/**
 	 * Get user access date for a piece of content
 	 *
+	 * @internal
+	 *
 	 * @since 1.0.0
 	 * @param array $args {
 	 *   Optional. An array of arguments.
@@ -581,65 +584,64 @@ class WC_Memberships_Capabilities {
 	 */
 	public function get_user_access_start_time( $args = array() ) {
 
-		$defaults = array(
+		// prepare args
+		$args = wp_parse_args( $args, array(
 			'rule_type'          => array( 'content_restriction', 'product_restriction' ),
 			'user_id'            => get_current_user_id(),
 			'content_type'       => null,
 			'content_type_name'  => null,
 			'object_id'          => null,
 			'access_type'        => 'view',
-		);
-
-		$args = wp_parse_args( $args, $defaults );
+		) );
 
 		if ( is_string( $args['rule_type'] ) ) {
 			$args['rule_type'] = (array) $args['rule_type'];
 		}
 
+		// use memoization to speed up subsequent checks
 		$cache_key = http_build_query( $args );
 
-		$user_id = $args['user_id'];
-
-		// Only calculate access time if not cached before, speeds up subsequent checks
 		if ( ! isset( $this->_user_access_start_time[ $cache_key ] ) ) {
 
-			$access_time   = current_time( 'timestamp', true ); // by default, access is immediate
+			// set defaults, access is immediate
+			$access_time   = current_time( 'timestamp', true );
 			$inactive_time = 0;
+			$user_id       = $args['user_id'];
 			$access_type   = $args['access_type'];
 
+			// get rules args
 			$rules_args = $args;
-			unset( $rules_args['access_type'] );
-			unset( $rules_args['user_id'] );
+			unset( $rules_args['access_type'], $rules_args['user_id'] );
 
 			$rules = wc_memberships()->get_rules_instance()->get_rules( $rules_args );
 
-			// If rules apply, process them
 			if ( ! empty( $rules ) ) {
 
-				// If there are no product restriction rules, then we can safely say that
-				// access is restricted
-				if ( ! in_array( 'product_restriction', $rules_args['rule_type'] ) ) {
+				if ( ! in_array( 'product_restriction', $rules_args['rule_type'], true ) ) {
+
+					// if there are no product restriction rules,
+					// then we can safely say that access is restricted...
 					$access_time = null;
-				}
 
-				// Otherwise, we need to check if there are any content restriction rules
-				// or any product restriction rules that restrict the queried access type
-				else {
+				} else {
 
+					// ...otherwise, we need to check if there are any content restriction rules
+					// or any product restriction rules that restrict the queried access type
 					foreach ( $rules as $rule ) {
 
-						// Check if the product restriction rule applies to the correct access type
-						if ( 'product_restriction' == $rule->get_rule_type() ) {
+						if ( 'product_restriction' === $rule->get_rule_type() ) {
 
+							// check if the product restriction rule applies
+							// to the correct access type
 							if ( $access_type === $rule->get_access_type() ) {
 
 								$access_time = null;
 								break;
 							}
 
-						// Content restriction rules indicate that access is restricted
 						} else {
 
+							// content restriction rules indicate that access is restricted
 							$access_time = null;
 							break;
 						}
@@ -667,43 +669,45 @@ class WC_Memberships_Capabilities {
 							}
 						}
 
-						if ( $rule_applies && wc_memberships()->get_user_memberships_instance()->is_user_active_member( $user_id, $rule->get_membership_plan_id() ) ) {
+						if ( $rule_applies && ( $user_membership = wc_memberships()->get_user_memberships_instance()->get_user_membership( $user_id, $rule->get_membership_plan_id() ) ) ) {
 
-							$user_membership = wc_memberships()->get_user_memberships_instance()->get_user_membership( $user_id, $rule->get_membership_plan_id() );
+							if (    ( $membership_is_delayed = $user_membership->is_delayed() )
+							     || ( $user_membership->is_active() && $user_membership->is_in_active_period() ) ) {
 
-							/**
-							 * Filter the rule's content 'access from' time for a user membership
-							 *
-							 * The 'access from' time is used as the base time for calculating
-							 * the access start time for scheduled content
-							 *
-							 * @since 1.0.0
-							 * @param int $from_time Access from time, as a timestamp
-							 * @param \WC_Memberships_Membership_Plan_Rule $rule
-							 * @param \WC_Memberships_User_Membership $user_membership
-							 */
-							$from_time = apply_filters( 'wc_memberships_access_from_time', $user_membership->get_start_date( 'timestamp' ), $rule, $user_membership );
+								/**
+								 * Filter the rule's content 'access from' time for a user membership
+								 *
+								 * The 'access from' time is used as the base time for calculating
+								 * the access start time for scheduled content
+								 *
+								 * @since 1.0.0
+								 * @param int $from_time Access from time, as a timestamp
+								 * @param \WC_Memberships_Membership_Plan_Rule $rule
+								 * @param \WC_Memberships_User_Membership $user_membership
+								 */
+								$from_time = apply_filters( 'wc_memberships_access_from_time', $user_membership->get_start_date( 'timestamp' ), $rule, $user_membership );
 
-							// if there is no time to calculate the access time from,
-							// simply use the current time as access start time
-							if ( ! $from_time ) {
-								$access_time = current_time( 'timestamp', true );
-								break;
-							}
+								// if there is no time to calculate the access time from,
+								// simply use the current time as access start time
+								if ( ! $from_time ) {
+									$access_time = current_time( 'timestamp', true );
+									break;
+								}
 
-							$inactive_time    = $user_membership->get_total_inactive_time();
-							$rule_access_time = $rule->get_access_start_time( $from_time );
-							$rule_priority    = $rule->get_priority();
+								$inactive_time    = $membership_is_delayed ? 0 : $user_membership->get_total_inactive_time();
+								$rule_access_time = $rule->get_access_start_time( $membership_is_delayed ? wc_memberships_adjust_date_by_timezone( $from_time + $inactive_time, 'timestamp' ) : $from_time + $inactive_time );
+								$rule_priority    = $rule->get_priority();
 
-							// - If this rule has higher priority than last rule,
-							// override the previous access time
-							// - If this has the same priority as the last rule,
-							// and grants earlier access, override previous access time
-							if ( $rule_priority > $last_priority
-							     || ( $rule_priority === $last_priority && ( ! $access_time || $rule_access_time < $access_time ) ) ) {
+								// - if this rule has higher priority than last rule,
+								// override the previous access time
+								// - if this has the same priority as the last rule,
+								// and grants earlier access, override previous access time
+								if (    ( $rule_priority > $last_priority )
+								     || ( $rule_priority === $last_priority && ( ! $access_time || $rule_access_time < $access_time ) ) ) {
 
-								$access_time   = $rule_access_time;
-								$last_priority = $rule_priority;
+									$access_time   = $rule_access_time;
+									$last_priority = $rule_priority;
+								}
 							}
 						}
 					}
@@ -714,7 +718,7 @@ class WC_Memberships_Capabilities {
 			 * Filter user's access start time to a piece of content
 			 *
 			 * @since 1.0.0
-			 * @param int $access_time Access start timestamp
+			 * @param int|null $access_time Access start timestamp or null if no access should be granted
 			 * @param array $args {
 			 *   An array of arguments.
 			 *
@@ -724,9 +728,9 @@ class WC_Memberships_Capabilities {
 			 *   @type string $access_type
 			 * }
 			 */
-			$access_time = (int) apply_filters( 'wc_memberships_user_object_access_start_time', $access_time, $args );
+			$access_time = apply_filters( 'wc_memberships_user_object_access_start_time', $access_time, $args );
 
-			$this->_user_access_start_time[ $cache_key ] = $access_time + $inactive_time;
+			$this->_user_access_start_time[ $cache_key ] = is_numeric( $access_time ) ? (int) $access_time + $inactive_time : null;
 		}
 
 		return $this->_user_access_start_time[ $cache_key ];
@@ -734,7 +738,54 @@ class WC_Memberships_Capabilities {
 
 
 	/**
-	 * Check if a post (post type or product) is accessible (viewable or purchaseable)
+	 * Check if user can view a post or a product
+	 *
+	 * @since 1.7.1
+	 * @param int $user_id User id
+	 * @param int $post_id WP_Post or WC_Product id
+	 * @return bool
+	 */
+	private function user_can_view( $user_id, $post_id ) {
+
+		if ( $this->post_is_public( $post_id ) ) {
+			$can_view = true;
+		} else {
+			if ( 'product' === get_post_type( $post_id ) ) {
+				$rules    = wc_memberships()->get_rules_instance()->get_the_product_restriction_rules( $post_id );
+				$can_view = wc_memberships()->get_rules_instance()->user_has_product_view_access_from_rules( $user_id, $rules, $post_id );
+			} else {
+				$rules    = wc_memberships()->get_rules_instance()->get_post_content_restriction_rules( $post_id );
+				$can_view = wc_memberships()->get_rules_instance()->user_has_content_access_from_rules( $user_id, $rules, $post_id );
+			}
+		}
+
+		return (bool) $can_view;
+	}
+
+
+	/**
+	 * Check if a user can purchase a product
+	 *
+	 * @since 1.7.1
+	 * @param int $user_id User id
+	 * @param int $product_id WC_Product id
+	 * @return bool
+	 */
+	private function user_can_purchase( $user_id, $product_id )  {
+
+		if ( $this->post_is_public( $product_id ) ) {
+			$can_purchase = true;
+		} else {
+			$rules        = wc_memberships()->get_rules_instance()->get_the_product_restriction_rules( $product_id );
+			$can_purchase = wc_memberships()->get_rules_instance()->user_has_product_purchase_access_from_rules( $user_id, $rules, $product_id );
+		}
+
+		return (bool) $can_purchase;
+	}
+
+
+	/**
+	 * Check if a post (post type or product) is accessible (viewable or purchasable)
 	 *
 	 * TODO for now $target only supports 'post' => id or 'product' => id  {FN 2016-04-26}
 	 * having an array can be more future proof compatible if we decide to check for other content types
@@ -743,30 +794,57 @@ class WC_Memberships_Capabilities {
 	 * @since 1.4.0
 	 * @param int $user_id The user id to check for access
 	 * @param string|array $action Type of action(s): 'view', 'purchase' (products only)
-	 * @param array $target Associative array of content type and content id to access to
+	 * @param array $content Associative array of content type and content id to access to
 	 * @param int|string $access_time UTC timestamp to compare for content access (optional, defaults to now)
 	 * @return bool
 	 */
-	public function user_can( $user_id, $action, $target, $access_time = '' ) {
+	public function user_can( $user_id, $action, $content, $access_time = '' ) {
 
-		if ( empty( $access_time ) ) {
+		if ( $user_id > 0 && user_can( $user_id, 'manage_woocommerce' ) ) {
+			// do not bother further for shop managers
+			return true;
+		} elseif ( ! $user_id > 0 || ! wc_memberships_is_user_active_member( $user_id ) ) {
+			// sanity check: bail out early if we are checking capabilities for an invalid user
+			return false;
+		} elseif ( empty( $access_time ) ) {
+			// default value for start access time is now
 			$access_time = current_time( 'timestamp', true );
 		}
+
+		$user_can   = false;
+		$content_id = reset( $content );
 
 		if ( is_array( $action ) ) {
 
 			$conditions = array();
 
 			foreach ( $action as $capability ) {
-				$conditions[] = $access_time >= $this->get_user_access_start_time_for_post( $user_id, reset( $target ), $capability );
+
+				if ( 'view' === $capability ) {
+					$user_can = $this->user_can_view( $user_id, $content_id );
+				} elseif ( 'purchase' === $capability ) {
+					$user_can = $this->user_can_purchase( $user_id, $content_id );
+				}
+
+				$conditions[] = $user_can && $access_time >= $this->get_user_access_start_time_for_post( $user_id, $content_id, $capability );
 			}
 
-			return in_array( true, $conditions );
+			$user_can = in_array( true, $conditions, true );
+
+		} else {
+
+			if ( 'view' === $action ) {
+				$user_can = $this->user_can_view( $user_id, $content_id );
+			} elseif ( 'purchase' === $action ) {
+				$user_can = $this->user_can_purchase( $user_id, $content_id );
+			}
+
+			$user_start_time = $this->get_user_access_start_time_for_post( $user_id, $content_id, $action );
+
+			$user_can = null === $user_start_time || ! $user_can ? false : $access_time >= $user_start_time;
 		}
 
-		$user_start_time = $this->get_user_access_start_time_for_post( $user_id, reset( $target ), $action );
-
-		return null === $user_start_time ? false : $access_time >= $user_start_time;
+		return (bool) $user_can;
 	}
 
 

@@ -39,6 +39,10 @@ class WC_Memberships_Integration_Subscriptions_Frontend {
 	 */
 	public function __construct() {
 
+		// restrict subscription product or variation purchase if rules/dripping apply
+		add_filter( 'woocommerce_subscription_is_purchasable',           array( $this, 'subscription_is_purchasable' ), 10, 2 );
+		add_filter( 'woocommerce_subscription_variation_is_purchasable', array( $this, 'subscription_is_purchasable' ), 10, 2 );
+
 		// Frontend UI hooks (2.0 & backwards compatible, Memberships < 1.4)
 		// TODO when dropping support for Memberships templates < 1.4.0 these can be removed {FN 2016-04-26}
 		add_action( 'wc_memberships_my_memberships_column_headers',     array( $this, 'output_subscription_column_headers' ) );
@@ -54,7 +58,25 @@ class WC_Memberships_Integration_Subscriptions_Frontend {
 
 
 	/**
+	 * Restrict product purchasing based on restriction rules
+	 *
+	 * @internal
+	 * @see \WC_Memberships_Restrictions::product_is_purchasable()
+	 *
+	 * @since 1.6.5
+	 * @param bool $purchasable whether Whether the subscription product is purchasable
+	 * @param \WC_Product_Subscription|\WC_Product_Subscription_Variation $subscription_product The subscription product
+	 * @return bool
+	 */
+	public function subscription_is_purchasable( $purchasable, $subscription_product ) {
+		return wc_memberships()->get_frontend_instance()->get_restrictions_instance()->product_is_purchasable( $purchasable, $subscription_product );
+	}
+
+
+	/**
 	 * Remove cancel action from memberships tied to a subscription
+	 *
+	 * @internal
 	 *
 	 * @since 1.6.0
 	 * @param array $actions
@@ -87,7 +109,7 @@ class WC_Memberships_Integration_Subscriptions_Frontend {
 	 * Display Subscriptions column headers
 	 * in My Memberships section for Memberships < 1.4.0
 	 *
-	 * @deprecated 
+	 * @deprecated
 	 * @since 1.6.0
 	 */
 	public function output_subscription_column_headers() {
@@ -102,6 +124,8 @@ class WC_Memberships_Integration_Subscriptions_Frontend {
 	/**
 	 * Add subscription column headers in My Memberships
 	 * on My Account page for Memberships 1.4.0+
+	 *
+	 * @internal
 	 *
 	 * @since 1.6.0
 	 * @param array $columns
@@ -120,6 +144,8 @@ class WC_Memberships_Integration_Subscriptions_Frontend {
 
 	/**
 	 * Display subscription columns in My Memberships section
+	 *
+	 * @internal
 	 *
 	 * @since 1.6.0
 	 * @param \WC_Memberships_User_Membership $user_membership Post object
@@ -148,5 +174,6 @@ class WC_Memberships_Integration_Subscriptions_Frontend {
 		</td>
 		<?php
 	}
+
 
 }

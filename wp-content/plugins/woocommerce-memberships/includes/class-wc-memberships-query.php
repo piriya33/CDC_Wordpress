@@ -42,18 +42,25 @@ class WC_Memberships_Query {
 
 		// add rewrite rules
 		add_action( 'init', array( $this, 'add_endpoints' ), 1 );
+
+		// comments (user membership notes) handling
+		add_filter( 'comments_clauses',   array( $this, 'exclude_membership_notes_from_queries' ), 10, 1 );
+		add_action( 'comment_feed_join',  array( $this, 'exclude_membership_notes_from_feed_join' ) );
+		add_action( 'comment_feed_where', array( $this, 'exclude_membership_notes_from_feed_where' ) );
 	}
 
 
 	/**
 	 * Add endpoints for the Member Area
 	 *
-	 * @see WC_Memberships_Member_Area
+	 * @internal
+	 *
+	 * @see \WC_Memberships_Member_Area
 	 *
 	 * @since 1.6.0
 	 */
 	public function add_endpoints() {
-		
+
 		// Membership Plan id (numeric)
 		add_rewrite_tag( '%members_area%', '([^&]+)' );
 		// Members Area section (string)
@@ -85,6 +92,82 @@ class WC_Memberships_Query {
 			'index.php?page_id=' . $page_id . '&members_area=$matches[2]&members_area_section=$matches[3]&members_area_section_page=$matches[4]',
 			'top'
 		);
+	}
+
+
+	/**
+	 * Exclude user membership notes from queries and RSS
+	 *
+	 * @internal
+	 *
+	 * @since 1.7.0
+	 * @param array $clauses
+	 * @return array
+	 */
+	public function exclude_membership_notes_from_queries( $clauses ) {
+		global $wpdb, $typenow;
+
+		if ( 'wc_user_membership' === $typenow && is_admin() && current_user_can( 'manage_woocommerce' ) ) {
+			return $clauses; // Don't hide when viewing user memberships in admin
+		}
+
+		if ( ! $clauses['join'] ) {
+			$clauses['join'] = '';
+		}
+
+		if ( ! strstr( $clauses['join'], "JOIN $wpdb->posts" ) ) {
+			$clauses['join'] .= " LEFT JOIN $wpdb->posts ON comment_post_ID = $wpdb->posts.ID ";
+		}
+
+		if ( $clauses['where'] ) {
+			$clauses['where'] .= ' AND ';
+		}
+
+		$clauses['where'] .= " $wpdb->posts.post_type <> 'wc_user_membership' ";
+
+		return $clauses;
+	}
+
+
+	/**
+	 * Exclude user membership notes from queries and RSS
+	 *
+	 * @internal
+	 *
+	 * @since 1.7.0
+	 * @param string $join
+	 * @return string
+	 */
+	public function exclude_membership_notes_from_feed_join( $join ) {
+		global $wpdb;
+
+		if ( ! strstr( $join, $wpdb->posts ) ) {
+			$join = " LEFT JOIN $wpdb->posts ON $wpdb->comments.comment_post_ID = $wpdb->posts.ID ";
+		}
+
+		return $join;
+	}
+
+
+	/**
+	 * Exclude user membership notes from queries and RSS
+	 *
+	 * @internal
+	 *
+	 * @since 1.7.0
+	 * @param string $where
+	 * @return string
+	 */
+	public function exclude_membership_notes_from_feed_where( $where ) {
+		global $wpdb;
+
+		if ( $where ) {
+			$where .= ' AND ';
+		}
+
+		$where .= " $wpdb->posts.post_type <> 'wc_user_membership' ";
+
+		return $where;
 	}
 
 

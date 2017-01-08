@@ -81,15 +81,17 @@ class WC_Memberships_Integration_Subscriptions_Discounts {
 	 * by checking a mix of cart/checkout constants and hooks to see if we're in
 	 * something relating to the cart or not.
 	 *
+	 * @internal
+	 *
 	 * @since 1.6.1
 	 */
 	public function disable_price_adjustments_for_renewal() {
 
-		if ( false !== wcs_cart_contains_renewal() ) {
+		if ( function_exists( 'wcs_cart_contains_renewal' ) && false !== wcs_cart_contains_renewal() ) {
 
 			$disable_price_adjustments = false;
 
-			if ( is_checkout() || is_cart() || defined( 'WOOCOMMERCE_CHECKOUT' ) ) {
+			if ( defined( 'WOOCOMMERCE_CHECKOUT' ) || is_checkout() || is_cart() ) {
 				$disable_price_adjustments = true;
 			} elseif ( did_action( 'woocommerce_before_mini_cart' ) > did_action( 'woocommerce_after_mini_cart' ) ) {
 				$disable_price_adjustments = true;
@@ -109,6 +111,8 @@ class WC_Memberships_Integration_Subscriptions_Discounts {
 	 * Filters product settings fields and add a checkbox
 	 * to let user choose to enable discounts for subscriptions sign up fees
 	 *
+	 * @internal
+	 *
 	 * @since 1.6.0
 	 * @param $product_settings
 	 * @return array $product_settings
@@ -117,11 +121,11 @@ class WC_Memberships_Integration_Subscriptions_Discounts {
 
 		$new_option = array(
 			array(
-				'type'     => 'checkbox',
-				'id'       => 'wc_memberships_enable_subscriptions_sign_up_fees_discounts',
-				'name'     => __( 'Discounts apply to subscriptions sign up fees', 'woocommerce-memberships' ),
-				'desc'     => __( 'If enabled, membership discounts will also apply to sign up fees of subscription products.', 'woocommerce-memberships' ),
-				'default'  => 'no',
+				'type'    => 'checkbox',
+				'id'      => 'wc_memberships_enable_subscriptions_sign_up_fees_discounts',
+				'name'    => __( 'Discounts apply to subscriptions sign up fees', 'woocommerce-memberships' ),
+				'desc'    => __( 'If enabled, membership discounts will also apply to sign up fees of subscription products.', 'woocommerce-memberships' ),
+				'default' => 'no',
 			),
 		);
 
@@ -134,7 +138,8 @@ class WC_Memberships_Integration_Subscriptions_Discounts {
 	/**
 	 * While enabling membership discount price adjustments
 	 *
-	 * @see WC_Memberships_Member_Discounts::enable_price_html_adjustments()
+	 * @internal
+	 * @see \WC_Memberships_Member_Discounts::enable_price_html_adjustments()
 	 *
 	 * @since 1.6.0
 	 */
@@ -148,7 +153,8 @@ class WC_Memberships_Integration_Subscriptions_Discounts {
 	/**
 	 * While disabling membership discount price adjustments
 	 *
-	 * @see WC_Memberships_Member_Discounts::disable_price_html_adjustments()
+	 * @internal
+	 * @see \WC_Memberships_Member_Discounts::disable_price_html_adjustments()
 	 *
 	 * @since 1.6.0
 	 */
@@ -164,6 +170,8 @@ class WC_Memberships_Integration_Subscriptions_Discounts {
 	 *
 	 * Utility action callback to prevent discounting the original sign up fee price
 	 *
+	 * @internal
+	 *
 	 * @since 1.6.0
 	 * @param float $original_sign_up_fee
 	 * @return float
@@ -177,8 +185,9 @@ class WC_Memberships_Integration_Subscriptions_Discounts {
 	 * Apply member discounts to subscription product sign up fee as well
 	 * at product level (i.e. when viewing product)
 	 *
-	 * @see enable_discounts_to_sign_up_fees
-	 * @see display_original_sign_up_fees
+	 * @internal
+	 * @see \WC_Memberships_Integration_Subscriptions_Discounts::enable_discounts_to_sign_up_fees()
+	 * @see \WC_Memberships_Integration_Subscriptions_Discounts::display_original_sign_up_fees
 	 *
 	 * @since 1.6.0
 	 * @param float $subscription_sign_up_fee Sign up fee
@@ -190,12 +199,12 @@ class WC_Memberships_Integration_Subscriptions_Discounts {
 		$discounted_fee = null;
 
 		// bail out on any of the following conditions:
-		if ( ! $subscription_product                                         // not a subscription product
-		     || ! $this->enable_subscriptions_sign_up_fees_discount          // sign up fee discounting is disabled
-		     || ! isset( $subscription_product->subscription_sign_up_fee )   // no sign up fee is set
-		     || 0 === (int) $subscription_sign_up_fee                        // the sign up fee is 0
-		     || has_filter( 'woocommerce_subscriptions_product_sign_up_fee', // running Memberships filtering to show the price before discount
-				array( $this, 'display_original_sign_up_fees' ) ) ) {
+		if (    ! $subscription_product                                        // not a subscription product
+		     || ! $this->enable_subscriptions_sign_up_fees_discount            // sign up fee discounting is disabled
+		     || ! isset( $subscription_product->subscription_sign_up_fee )     // no sign up fee is set
+		     ||   0 === (int) $subscription_sign_up_fee                        // the sign up fee is 0
+		     ||   has_filter( 'woocommerce_subscriptions_product_sign_up_fee', // running Memberships filtering to show the price before discount
+				              array( $this, 'display_original_sign_up_fees' ) ) ) {
 
 			$discounted_fee = $subscription_sign_up_fee;
 
@@ -209,7 +218,7 @@ class WC_Memberships_Integration_Subscriptions_Discounts {
 			}
 		}
 
-		return is_numeric( $discounted_fee ) ? (float) $discounted_fee : (float) $subscription_sign_up_fee;;
+		return is_numeric( $discounted_fee ) ? (float) $discounted_fee : (float) $subscription_sign_up_fee;
 	}
 
 
@@ -217,16 +226,21 @@ class WC_Memberships_Integration_Subscriptions_Discounts {
 	 * Apply member discounts to subscription product sign up fee
 	 * at cart level (i.e. when product is added to cart)
 	 *
+	 * @internal
+	 *
 	 * @since 1.6.0
 	 * @param int|float $sign_up_fee
 	 * @return int|float
 	 */
 	public function maybe_adjust_cart_sign_up_fee( $sign_up_fee ) {
 
-		$cart = WC()->cart;
+		$cart             = WC()->cart;
+		$cart_is_empty    = $cart->is_empty();
+		$integration      = wc_memberships()->get_integrations_instance()->get_subscriptions_instance();
+		$contains_renewal = $integration && $integration->is_subscriptions_gte_2_0() ? ! $cart_is_empty && wcs_cart_contains_renewal() : false;
 
 		// bail out if there's no Subscription in cart or it's a renewal (no sign up fee)
-		if ( $cart->is_empty() || wcs_cart_contains_renewal() || ! WC_Subscriptions_Cart::cart_contains_subscription() ) {
+		if ( $cart_is_empty || $contains_renewal || ! WC_Subscriptions_Cart::cart_contains_subscription() ) {
 			return $sign_up_fee;
 		}
 
@@ -247,7 +261,6 @@ class WC_Memberships_Integration_Subscriptions_Discounts {
 				$discounted_sign_up_fee = $discounts->get_discounted_price( $product_sign_up_fee, $cart_item['data'] );
 
 				$sign_up_fee += is_numeric( $discounted_sign_up_fee ) ? (float) $discounted_sign_up_fee : $product_sign_up_fee;
-
 			}
 		}
 

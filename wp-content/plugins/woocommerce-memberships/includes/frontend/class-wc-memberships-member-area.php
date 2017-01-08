@@ -81,12 +81,13 @@ class WC_Memberships_Member_Area {
 		// sanity check to see if we're at the right endpoint
 		if ( isset( $wp_query->query_vars['members_area'] ) && is_account_page() && ( count( $crumbs ) > 0 ) ) {
 
-			// Membership data
+			// get membership data
 			$current_user_id = (int) get_current_user_id();
 			$user_membership = wc_memberships_get_user_membership( $current_user_id, (int) $wp_query->query_vars['members_area'] );
 
-			// check if membership exists and the current logged in user is an active member
-			if ( $user_membership && ( $current_user_id === (int) $user_membership->get_user_id() ) && wc_memberships_is_user_active_member( $current_user_id, $user_membership->get_plan() ) ) {
+			// check if membership exists and the current logged in user is an active or delayed member
+			if (    ( $user_membership && ( $current_user_id === (int) $user_membership->get_user_id() ) )
+			     && ( wc_memberships_is_user_active_member( $current_user_id, $user_membership->get_plan() ) || wc_memberships_is_user_delayed_member( $current_user_id, $user_membership->get_plan() ) ) ) {
 
 				array_push( $crumbs, array(
 					$user_membership->get_plan()->get_name(),
@@ -115,8 +116,9 @@ class WC_Memberships_Member_Area {
 			$user_id         = (int) get_current_user_id();
 			$user_membership = wc_memberships_get_user_membership( $user_id, (int) $wp_query->query_vars['members_area'] );
 
-			// check if membership exists and the current logged in user is an active member
-			if ( $user_membership && ( $user_id === (int) $user_membership->get_user_id() ) && wc_memberships_is_user_active_member( $user_id, $user_membership->get_plan() ) ) {
+			// check if membership exists and the current logged in user is an active or delayed member
+			if (    ( $user_membership && ( $user_id === (int) $user_membership->get_user_id() ) )
+			     && ( wc_memberships_is_user_active_member( $user_id, $user_membership->get_plan() ) || wc_memberships_is_user_delayed_member( $user_id, $user_membership->get_plan() ) ) ) {
 
 				// sections for this membership defined in admin
 				$sections     = (array) $user_membership->get_plan()->get_members_area_sections();
@@ -125,47 +127,62 @@ class WC_Memberships_Member_Area {
 				// Member Area should have at least one section enabled
 				if ( ! empty( $members_area ) ) {
 
-					// load My Account tabbed navigation preventing duplicates
-					if ( did_action( 'woocommerce_account_navigation' ) ) {
-						do_action( 'woocommerce_account_navigation' );
-						remove_action( 'woocommerce_account_navigation', 'woocommerce_account_navigation' );
-					}
-
-					// get the first section to be used as fallback
-					$section = $sections[0];
-
-					// get the queried member area section if set
-					if ( isset( $wp_query->query_vars['members_area_section'] ) && array_key_exists( $wp_query->query_vars['members_area_section'], $members_area ) ) {
-						$section = $wp_query->query_vars['members_area_section'];
-					}
-
-					// get a paged request
-					$paged = isset( $wp_query->query_vars['members_area_section_page'] ) ? absint( $wp_query->query_vars['members_area_section_page'] ) : 1;
-
 					ob_start();
 
 					?>
-					<div id="wc-memberships-members-area" class="woocommerce-MyAccount-content woocommerce my-membership member-<?php echo esc_attr( $user_id ); ?>" data-member="<?php echo esc_attr( $user_id ); ?>" data-membership="<?php echo esc_attr( $user_membership->get_plan()->get_id() ); ?>">
+					<div class="woocommerce">
 						<?php
-							// Members Area navigation tabs
-							wc_get_template( 'myaccount/my-membership-tabs.php', array(
-								'members_area_sections' => $members_area,
-								'current_section'       => $section,
-								'customer_membership'   => $user_membership,
-							) );
+
+						// load My Account tabbed navigation preventing duplicates
+						if ( did_action( 'woocommerce_account_navigation' ) ) {
+
+							// opens and closes .woocommerce-MyAccount-navigation tabs
+							do_action( 'woocommerce_account_navigation' );
+
+							remove_action( 'woocommerce_account_navigation', 'woocommerce_account_navigation' );
+						}
+
+						// get the first section to be used as fallback
+						$section = $sections[0];
+
+						// get the queried member area section if set
+						if ( isset( $wp_query->query_vars['members_area_section'] ) && array_key_exists( $wp_query->query_vars['members_area_section'], $members_area ) ) {
+							$section = $wp_query->query_vars['members_area_section'];
+						}
+
+						// get a paged request
+						$paged = isset( $wp_query->query_vars['members_area_section_page'] ) ? absint( $wp_query->query_vars['members_area_section_page'] ) : 1;
+
 						?>
-						<div id="wc-memberships-members-area-section" class="my-membership-section <?php echo sanitize_html_class( $section ); ?>" data-section="<?php echo esc_attr( $section ); ?>"  data-page="1">
+						<div
+							class="woocommerce-MyAccount-content my-membership member-<?php echo esc_attr( $user_id ); ?>"
+							id="wc-memberships-members-area"
+							data-member="<?php echo esc_attr( $user_id ); ?>"
+							data-membership="<?php echo esc_attr( $user_membership->get_plan()->get_id() ); ?>">
 							<?php
-							// Members Area current section
-							$this->get_template( $section, array(
-								'user_membership' => $user_membership,
-								'user_id'         => $user_id,
-								'paged'           => $paged,
-							) );
+								// Members Area navigation tabs
+								wc_get_template( 'myaccount/my-membership-tabs.php', array(
+									'members_area_sections' => $members_area,
+									'current_section'       => $section,
+									'customer_membership'   => $user_membership,
+								) );
 							?>
-						</div>
-					</div>
-					<?php
+							<div
+								class="my-membership-section <?php echo sanitize_html_class( $section ); ?>"
+								id="wc-memberships-members-area-section"
+								data-section="<?php echo esc_attr( $section ); ?>"
+								data-page="1">
+								<?php
+								// Members Area current section
+								$this->get_template( $section, array(
+									'user_membership' => $user_membership,
+									'user_id'         => $user_id,
+									'paged'           => $paged,
+								) );
+								?>
+							</div>
+						</div><?php // .woocommerce-MyAccount-content ?>
+					</div><?php // .woocommerce container
 
 					$the_content = ob_get_clean();
 				}
@@ -200,7 +217,9 @@ class WC_Memberships_Member_Area {
 		if ( 'my-membership-content' === $section ) {
 
 			wc_get_template( 'myaccount/my-membership-content.php', array(
+				/* @see \WC_Memberships_User_Membership */
 				'customer_membership' => $args['user_membership'],
+				/* @see \WC_Memberships_Membership_Plan::get_restricted_content() */
 				'restricted_content'  => $args['user_membership']->get_plan()->get_restricted_content( $paged ),
 				'user_id'             => $args['user_id'],
 			) );
@@ -208,7 +227,9 @@ class WC_Memberships_Member_Area {
 		} elseif ( 'my-membership-products' === $section ) {
 
 			wc_get_template( 'myaccount/my-membership-products.php', array(
+				/* @see \WC_Memberships_User_Membership */
 				'customer_membership' => $args['user_membership'],
+				/* @see \WC_Memberships_Membership_Plan::get_restricted_products() */
 				'restricted_products' => $args['user_membership']->get_plan()->get_restricted_products( $paged ),
 				'user_id'             => $args['user_id'],
 			) );
@@ -216,7 +237,9 @@ class WC_Memberships_Member_Area {
 		} elseif ( 'my-membership-discounts' === $section ) {
 
 			wc_get_template( 'myaccount/my-membership-discounts.php', array(
+				/* @see \WC_Memberships_User_Membership */
 				'customer_membership' => $args['user_membership'],
+				/* @see \WC_Memberships_Membership_Plan::get_discounted_products() */
 				'discounted_products' => $args['user_membership']->get_plan()->get_discounted_products( $paged ),
 				'user_id'             => $args['user_id'],
 			) );
@@ -225,11 +248,14 @@ class WC_Memberships_Member_Area {
 
 			$dateTime = new DateTime();
 			$dateTime->setTimezone( new DateTimeZone( wc_timezone_string() ) );
+			$timezone = $dateTime->format( 'T' );
 
 			wc_get_template( 'myaccount/my-membership-notes.php', array(
+				/* @see \WC_Memberships_User_Membership */
 				'customer_membership' => $args['user_membership'],
+				/* @see \WC_Memberships_User_Membership::get_notes() */
 				'customer_notes'      => $args['user_membership']->get_notes( 'customer', $paged ),
-				'timezone'            => $dateTime->format( 'T' ),
+				'timezone'            => $timezone,
 				'user_id'             => $args['user_id'],
 			) );
 

@@ -15,9 +15,6 @@ class WC_Subscriptions_Product {
 	/* cache the check on whether the session has an order awaiting payment for a given product */
 	protected static $order_awaiting_payment_for_product = array();
 
-	/* cache whether a given product is purchasable or not to save running lots of queries for the same product in the same request */
-	protected static $is_purchasable_cache = array();
-
 	protected static $subscription_meta_fields = array(
 		'_subscription_price',
 		'_subscription_sign_up_fee',
@@ -66,6 +63,12 @@ class WC_Subscriptions_Product {
 
 		// Handle bulk edits to subscription data in WC 2.4
 		add_action( 'woocommerce_bulk_edit_variations', __CLASS__ . '::bulk_edit_variations', 10, 4 );
+
+		// check product variations for sync'd or trial
+		add_action( 'wp_ajax_wcs_product_has_trial_or_is_synced', __CLASS__ . '::check_product_variations_for_syncd_or_trial' );
+
+		// maybe update the One Time Shipping product setting when users edit variations using bulk actions and the variation level save
+		add_action( 'wp_ajax_wcs_update_one_time_shipping', __CLASS__ . '::maybe_update_one_time_shipping_on_variation_edits' );
 	}
 
 	/**
@@ -581,7 +584,7 @@ class WC_Subscriptions_Product {
 		$first_renewal_timestamp = self::get_first_renewal_payment_time( $product_id, $from_date, $timezone );
 
 		if ( $first_renewal_timestamp > 0 ) {
-			$first_renewal_date = date( 'Y-m-d H:i:s', $first_renewal_timestamp );
+			$first_renewal_date = gmdate( 'Y-m-d H:i:s', $first_renewal_timestamp );
 		} else {
 			$first_renewal_date = 0;
 		}
@@ -620,18 +623,11 @@ class WC_Subscriptions_Product {
 			// If the subscription has a free trial period, the first renewal is the same as the expiration of the free trial
 			if ( $trial_length > 0 ) {
 
-				$first_renewal_timestamp = strtotime( self::get_trial_expiration_date( $product_id, $from_date ) );
+				$first_renewal_timestamp = wcs_date_to_time( self::get_trial_expiration_date( $product_id, $from_date ) );
 
 			} else {
 
-				$from_timestamp = strtotime( $from_date );
-				$billing_period = self::get_period( $product_id );
-
-				if ( 'month' == $billing_period ) {
-					$first_renewal_timestamp = wcs_add_months( $from_timestamp, $billing_interval );
-				} else {
-					$first_renewal_timestamp = strtotime( "+ $billing_interval {$billing_period}s", $from_timestamp );
-				}
+				$first_renewal_timestamp = wcs_add_time( $billing_interval, self::get_period( $product_id ), wcs_date_to_time( $from_date ) );
 
 				if ( 'site' == $timezone ) {
 					$first_renewal_timestamp += ( get_option( 'gmt_offset' ) * HOUR_IN_SECONDS );
@@ -666,7 +662,7 @@ class WC_Subscriptions_Product {
 				$from_date = self::get_trial_expiration_date( $product_id, $from_date );
 			}
 
-			$expiration_date = gmdate( 'Y-m-d H:i:s', wcs_add_time( $subscription_length, self::get_period( $product_id ), strtotime( $from_date ) ) );
+			$expiration_date = gmdate( 'Y-m-d H:i:s', wcs_add_time( $subscription_length, self::get_period( $product_id ), wcs_date_to_time( $from_date ) ) );
 
 		} else {
 
@@ -688,7 +684,6 @@ class WC_Subscriptions_Product {
 	 */
 	public static function get_trial_expiration_date( $product_id, $from_date = '' ) {
 
-		$trial_period = self::get_trial_period( $product_id );
 		$trial_length = self::get_trial_length( $product_id );
 
 		if ( $trial_length > 0 ) {
@@ -697,11 +692,8 @@ class WC_Subscriptions_Product {
 				$from_date = gmdate( 'Y-m-d H:i:s' );
 			}
 
-			if ( 'month' == $trial_period ) {
-				$trial_expiration_date = date( 'Y-m-d H:i:s', wcs_add_months( strtotime( $from_date ), $trial_length ) );
-			} else { // Safe to just add the billing periods
-				$trial_expiration_date = date( 'Y-m-d H:i:s', strtotime( "+ {$trial_length} {$trial_period}s", strtotime( $from_date ) ) );
-			}
+			$trial_expiration_date = gmdate( 'Y-m-d H:i:s', wcs_add_time( $trial_length, self::get_trial_period( $product_id ), wcs_date_to_time( $from_date ) ) );
+
 		} else {
 
 			$trial_expiration_date = 0;
@@ -898,31 +890,6 @@ class WC_Subscriptions_Product {
 	}
 
 	/**
-	 * If a product is being marked as not purchasable because it is limited and the customer has a subscription,
-	 * but the current request is to resubscribe to the subscription, then mark it as purchasable.
-	 *
-	 * @since 2.0
-	 * @return bool
-	 */
-	public static function is_purchasable( $is_purchasable, $product ) {
-		global $wp;
-
-		if ( ! isset( self::$is_purchasable_cache[ $product->id ] ) ) {
-
-			self::$is_purchasable_cache[ $product->id ] = $is_purchasable;
-
-			if ( self::is_subscription( $product->id ) && 'no' != $product->limit_subscriptions && ! wcs_is_order_received_page() && ! wcs_is_paypal_api_page() ) {
-
-				if ( ( ( 'active' == $product->limit_subscriptions && wcs_user_has_subscription( 0, $product->id, 'on-hold' ) ) || wcs_user_has_subscription( 0, $product->id, $product->limit_subscriptions ) ) && ! self::order_awaiting_payment_for_product( $product->id ) ) {
-					self::$is_purchasable_cache[ $product->id ] = false;
-				}
-			}
-		}
-
-		return self::$is_purchasable_cache[ $product->id ];
-	}
-
-	/**
 	 * Save variation meta data when it is bulk edited from the Edit Product screen
 	 *
 	 * @param string $bulk_action The bulk edit action being performed
@@ -933,7 +900,9 @@ class WC_Subscriptions_Product {
 	 */
 	public static function bulk_edit_variations( $bulk_action, $data, $variable_product_id, $variation_ids ) {
 
-		if ( WC_Subscriptions::is_woocommerce_pre( '2.5' ) ) {
+		if ( ! isset( $data['value'] ) ) {
+			return;
+		} elseif ( WC_Subscriptions::is_woocommerce_pre( '2.5' ) ) {
 			// Pre 2.5 we don't have the product type information available so we have to check if it is a subscription - downside here is this only works if the product has already been saved
 			if ( ! self::is_subscription( $variable_product_id ) ) {
 				return;
@@ -956,7 +925,7 @@ class WC_Subscriptions_Product {
 			foreach ( $variation_ids as $variation_id ) {
 				update_post_meta( $variation_id, $meta_key, stripslashes( $data['value'] ) );
 			}
-		} else if ( in_array( $meta_key, array( '_regular_price_increase', '_regular_price_decrease' ) ) ) {
+		} elseif ( in_array( $meta_key, array( '_regular_price_increase', '_regular_price_decrease' ) ) ) {
 			$operator = ( '_regular_price_increase' == $meta_key ) ? '+' : '-';
 			$value    = wc_clean( $data['value'] );
 
@@ -976,12 +945,90 @@ class WC_Subscriptions_Product {
 	}
 
 	/**
+	 * Processes an AJAX request to check if a product has a variation which is either sync'd or has a trial.
+	 * Once at least one variation with a trial or sync date is found, this will terminate and return true, otherwise false.
+	 *
+	 * @since 2.0.18
+	 */
+	public static function check_product_variations_for_syncd_or_trial() {
+
+		check_admin_referer( 'one_time_shipping', 'nonce' );
+
+		$product                = wc_get_product( $_POST['product_id'] );
+		$is_synced_or_has_trial = false;
+
+		if ( WC_Subscriptions_Product::is_subscription( $product ) ) {
+
+			foreach ( $product->get_children() as $variation_id ) {
+
+				if ( isset( $_POST['variations_checked'] ) && in_array( $variation_id, $_POST['variations_checked'] ) ) {
+					continue;
+				}
+
+				$variable_product = wc_get_product( $variation_id );
+
+				if ( $variable_product->subscription_trial_length > 0 ) {
+					$is_synced_or_has_trial = true;
+					break;
+				}
+
+				if ( WC_Subscriptions_Synchroniser::is_syncing_enabled() && ( ( ! is_array( $variable_product->subscription_payment_sync_date ) && $variable_product->subscription_payment_sync_date > 0 ) || ( is_array( $variable_product->subscription_payment_sync_date ) && $variable_product->subscription_payment_sync_date['day'] > 0 ) ) ) {
+					$is_synced_or_has_trial = true;
+					break;
+				}
+			}
+		}
+
+		wp_send_json( array( 'is_synced_or_has_trial' => $is_synced_or_has_trial ) );
+	}
+
+	/**
+	 * Processes an AJAX request to update a product's One Time Shipping setting after a bulk variation edit has been made.
+	 * After bulk edits (variation level saving as well as variation bulk actions), variation data has been updated in the
+	 * database and therefore doesn't require the product global settings to be updated by the user for the changes to take effect.
+	 * This function, triggered after saving variations or triggering the trial length bulk action, ensures one time shipping settings
+	 * are updated after determining if one time shipping is still available to the product.
+	 *
+	 * @since 2.0.18
+	 */
+	public static function maybe_update_one_time_shipping_on_variation_edits() {
+
+		check_admin_referer( 'one_time_shipping', 'nonce' );
+
+		$one_time_shipping_enabled      = $_POST['one_time_shipping_enabled'];
+		$one_time_shipping_selected     = $_POST['one_time_shipping_selected'];
+		$subscription_one_time_shipping = 'no';
+
+		if ( 'false' !== $one_time_shipping_enabled && 'true' === $one_time_shipping_selected ) {
+			$subscription_one_time_shipping = 'yes';
+		}
+
+		update_post_meta( $_POST['product_id'], '_subscription_one_time_shipping', $subscription_one_time_shipping );
+
+		wp_send_json( array( 'one_time_shipping' => $subscription_one_time_shipping ) );
+	}
+
+	/**
+	 * If a product is being marked as not purchasable because it is limited and the customer has a subscription,
+	 * but the current request is to resubscribe to the subscription, then mark it as purchasable.
+	 *
+	 * @since 2.0
+	 * @return bool
+	 */
+	public static function is_purchasable( $is_purchasable, $product ) {
+		_deprecated_function( __METHOD__, '2.1', 'WCS_Limiter::is_purchasable_product' );
+		return WCS_Limiter::is_purchasable_product( $is_purchasable, $product );
+	}
+
+	/**
 	 * Check if the current session has an order awaiting payment for a subscription to a specific product line item.
 	 *
 	 * @return 2.0.13
 	 * @return bool
 	 **/
 	protected static function order_awaiting_payment_for_product( $product_id ) {
+		_deprecated_function( __METHOD__, '2.1', 'WCS_Limiter::order_awaiting_payment_for_product' );
+
 		global $wp;
 
 		if ( ! isset( self::$order_awaiting_payment_for_product[ $product_id ] ) ) {
@@ -995,11 +1042,11 @@ class WC_Subscriptions_Product {
 
 				if ( is_object( $order ) && $order->has_status( array( 'pending', 'failed' ) ) ) {
 					foreach ( $order->get_items() as $item ) {
-						if ( $item['product_id'] == $product->id || $item['variation_id'] == $product->id ) {
+						if ( $item['product_id'] == $product_id || $item['variation_id'] == $product_id ) {
 
 							$subscriptions = wcs_get_subscriptions( array(
 								'order_id'   => $order->id,
-								'product_id' => $product->id,
+								'product_id' => $product_id,
 							) );
 
 							if ( ! empty( $subscriptions ) ) {
@@ -1017,90 +1064,6 @@ class WC_Subscriptions_Product {
 		}
 
 		return self::$order_awaiting_payment_for_product[ $product_id ];
-	}
-
-	/**
-	 * Calculates a price (could be per period price or sign-up fee) for a subscription less tax
-	 * if the subscription is taxable and the prices in the store include tax.
-	 *
-	 * Based on the WC_Product::get_price_excluding_tax() function.
-	 *
-	 * @param float $price The price to adjust based on taxes
-	 * @param WC_Product $product The product the price belongs too (needed to determine tax class)
-	 * @since 1.0
-	 */
-	public static function calculate_tax_for_subscription( $price, $product, $deduct_base_taxes = false ) {
-		_deprecated_function( __METHOD__, '1.5.8', 'WC_Product::get_price_including_tax()' );
-
-		if ( $product->is_taxable() ) {
-
-			$tax = new WC_Tax();
-
-			$base_tax_rates = $tax->get_shop_base_rate( $product->tax_class );
-			$tax_rates      = $tax->get_rates( $product->get_tax_class() ); // This will get the base rate unless we're on the checkout page
-
-			if ( $deduct_base_taxes && wc_prices_include_tax() ) {
-
-				$base_taxes = $tax->calc_tax( $price, $base_tax_rates, true );
-				$taxes      = $tax->calc_tax( $price - array_sum( $base_taxes ), $tax_rates, false );
-
-			} elseif ( get_option( 'woocommerce_prices_include_tax' ) == 'yes' ) {
-
-				$taxes = $tax->calc_tax( $price, $base_tax_rates, true );
-
-			} else {
-
-				$taxes = $tax->calc_tax( $price, $base_tax_rates, false );
-
-			}
-
-			$tax_amount = $tax->get_tax_total( $taxes );
-
-		} else {
-
-			$tax_amount = 0;
-
-		}
-
-		return $tax_amount;
-	}
-
-
-	/**
-	 * Deprecated in favour of native get_price_html() method on the Subscription Product classes (e.g. WC_Product_Subscription)
-	 *
-	 * Output subscription string as the price html
-	 *
-	 * @since 1.0
-	 * @deprecated 1.5.18
-	 */
-	public static function get_price_html( $price, $product ) {
-		_deprecated_function( __METHOD__, '1.5.18', __CLASS__ . '::get_price_string()' );
-
-		if ( self::is_subscription( $product ) ) {
-			$price = self::get_price_string( $product, array( 'price' => $price ) );
-		}
-
-		return $price;
-	}
-
-	/**
-	 * Deprecated in favour of native get_price_html() method on the Subscription Product classes (e.g. WC_Product_Subscription)
-	 *
-	 * Set the subscription string for products which have a $0 recurring fee, but a sign-up fee
-	 *
-	 * @since 1.3.4
-	 * @deprecated 1.5.18
-	 */
-	public static function get_free_price_html( $price, $product ) {
-		_deprecated_function( __METHOD__, '1.5.18', __CLASS__ . '::get_price_string()' );
-
-		// Check if it has a sign-up fee (we already know it has no recurring fee)
-		if ( self::is_subscription( $product ) && self::get_sign_up_fee( $product ) > 0 ) {
-			$price = self::get_price_string( $product, array( 'price' => $price ) );
-		}
-
-		return $price;
 	}
 }
 

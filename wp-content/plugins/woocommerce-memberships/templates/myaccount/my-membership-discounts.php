@@ -31,7 +31,7 @@ defined( 'ABSPATH' ) or exit;
  * @type \WP_Query $discounted_products Query results of products post objects discounted by the membership
  * @type int $user_id The current user ID
  *
- * @version 1.5.1
+ * @version 1.7.1
  * @since 1.4.0
  */
 ?>
@@ -75,11 +75,11 @@ defined( 'ABSPATH' ) or exit;
 		</thead>
 
 		<tbody>
-
 		<?php $available_discounts = 0; ?>
 		<?php foreach ( $discounted_products->posts as $discounted_product ) : ?>
 
 			<?php
+
 			$product = wc_get_product( $discounted_product );
 
 			if ( ! $product ) {
@@ -89,7 +89,6 @@ defined( 'ABSPATH' ) or exit;
 			// Customer capabilities
 			$can_view_product     = wc_memberships_user_can( $user_id, 'view' , array( 'product' => $product->id ) );
 			$can_purchase_product = wc_memberships_user_can( $user_id, 'purchase', array( 'product' => $product->id ) );
-			$view_start_time      = wc_memberships_get_user_access_start_time( $user_id, 'view', array( 'product' => $product->id ) );
 			$purchase_start_time  = wc_memberships_get_user_access_start_time( $user_id, 'purchase', array( 'product' => $product->id ) );
 			$can_have_discount    = wc_memberships_user_has_member_discount( $product->id );
 
@@ -99,15 +98,14 @@ defined( 'ABSPATH' ) or exit;
 			 * @since 1.4.0
 			 * @param bool $show_only_active_discounts Default true
 			 */
-			$show_only_active_discounts = apply_filters( 'wc_memberships_members_area_show_only_active_discounts', true, $user_id, $product->id );
+			$show_only_active_discounts = (bool) apply_filters( 'wc_memberships_members_area_show_only_active_discounts', true, $user_id, $product->id );
 
-			if ( true === $show_only_active_discounts && ! $can_have_discount ) {
+			if ( $show_only_active_discounts && ! $can_have_discount ) {
 				continue;
 			}
 
 			$available_discounts++;
 			?>
-
 			<tr class="membership-discount">
 				<?php foreach ( $my_membership_discounts_columns as $column_id => $column_name ) : ?>
 
@@ -127,7 +125,7 @@ defined( 'ABSPATH' ) or exit;
 							<?php if ( $can_view_product ) : ?>
 								<a href="<?php echo esc_url( get_permalink( $product->id ) ); ?>"><?php echo esc_html( $product->get_title() ); ?></a>
 							<?php else : ?>
-								<?php echo esc_html( $product->get_title( $product->id ) ); ?>
+								<?php echo esc_html( $product->get_title() ); ?>
 							<?php endif; ?>
 						</td>
 
@@ -135,7 +133,7 @@ defined( 'ABSPATH' ) or exit;
 
 						<td class="membership-discount-amount" data-title="<?php echo esc_attr( $column_name ); ?>">
 							<?php if ( $can_have_discount ) : ?>
-								<?php echo esc_html( wc_memberships_get_member_product_discount( $customer_membership, $product ) ); ?>
+								<?php echo wp_kses_post( wc_memberships_get_member_product_discount( $customer_membership, $product, true ) ); ?>
 							<?php else : ?>
 								<time datetime="<?php echo date( 'Y-m-d', $purchase_start_time ); ?>" title="<?php echo esc_attr( $purchase_start_time ); ?>">
 									<?php /* translators: discount available from date */ ?>

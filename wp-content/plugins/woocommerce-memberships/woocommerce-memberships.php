@@ -5,7 +5,7 @@
  * Description: Sell memberships that provide access to restricted content, products, discounts, and more!
  * Author: WooThemes / SkyVerge
  * Author URI: http://www.woothemes.com/
- * Version: 1.6.4
+ * Version: 1.7.3
  * Text Domain: woocommerce-memberships
  * Domain Path: /i18n/languages/
  *
@@ -46,6 +46,9 @@ SV_WC_Framework_Bootstrap::instance()->register_plugin( '4.4.0', __( 'WooCommerc
 	'backwards_compatible' => '4.4.0',
 ) );
 
+// Required Action Scheduler library
+require_once( plugin_dir_path( __FILE__ ) . 'lib/prospress/action-scheduler/action-scheduler.php' );
+
 function init_woocommerce_memberships() {
 
 
@@ -58,7 +61,7 @@ class WC_Memberships extends SV_WC_Plugin {
 
 
 	/** plugin version number */
-	const VERSION = '1.6.4';
+	const VERSION = '1.7.3';
 
 	/** @var WC_Memberships single instance of this plugin */
 	protected static $instance;
@@ -107,7 +110,6 @@ class WC_Memberships extends SV_WC_Plugin {
 	 * Initializes the plugin
 	 *
 	 * @since 1.0.0
-	 * @return \WC_Memberships
 	 */
 	public function __construct() {
 
@@ -116,6 +118,7 @@ class WC_Memberships extends SV_WC_Plugin {
 			self::VERSION,
 			array(
 				'dependencies' => array( 'mbstring' ),
+				'text_domain'  => 'woocommerce-memberships',
 			)
 		);
 
@@ -126,13 +129,8 @@ class WC_Memberships extends SV_WC_Plugin {
 		add_action( 'init', array( $this, 'init' ) );
 
 		// make sure template files are searched for in our plugin
-		// TODO since this seems to affect front end templates only, why not move into front end class? {FN 2016-04-26}
 		add_filter( 'woocommerce_locate_template',      array( $this, 'locate_template' ), 20, 3 );
 		add_filter( 'woocommerce_locate_core_template', array( $this, 'locate_template' ), 20, 3 );
-
-		// TODO move these methods out of the main class {FN 2016-04-26}
-		add_action( 'woocommerce_order_status_completed',  array( $this, 'grant_membership_access' ), 11 );
-		add_action( 'woocommerce_order_status_processing', array( $this, 'grant_membership_access' ), 11 );
 
 		// lifecycle
 		add_action( 'admin_init', array ( $this, 'maybe_activate' ) );
@@ -150,10 +148,8 @@ class WC_Memberships extends SV_WC_Plugin {
 		// load post types
 		require_once( $this->get_plugin_path() . '/includes/class-wc-memberships-post-types.php' );
 
-		// global helper functions
-		require_once( $this->get_plugin_path() . '/includes/wc-memberships-functions.php' );
-		require_once( $this->get_plugin_path() . '/includes/wc-memberships-membership-plan-functions.php' );
-		require_once( $this->get_plugin_path() . '/includes/wc-memberships-user-membership-functions.php' );
+		// load helper functions
+		require_once( $this->get_plugin_path() . '/includes/functions/wc-memberships-functions.php' );
 
 		// init general classes
 		$this->query            = $this->load_class( '/includes/class-wc-memberships-query.php',            'WC_Memberships_Query' );
@@ -181,6 +177,11 @@ class WC_Memberships extends SV_WC_Plugin {
 
 		// load integrations
 		$this->integrations = $this->load_class( '/includes/integrations/class-wc-memberships-integrations.php', 'WC_Memberships_Integrations' );
+
+		// WP CLI support
+		if ( defined( 'WP_CLI' ) && WP_CLI ) {
+			include_once $this->get_plugin_path() . '/includes/class-wc-memberships-cli.php';
+		}
 	}
 
 
@@ -214,9 +215,6 @@ class WC_Memberships extends SV_WC_Plugin {
 	 * @since 1.0.0
 	 */
 	private function frontend_includes() {
-
-		// helper functions
-		require_once( $this->get_plugin_path() . '/includes/wc-memberships-template-functions.php' );
 
 		// init shortcodes
 		require_once( $this->get_plugin_path() . '/includes/class-wc-memberships-shortcodes.php' );
@@ -353,6 +351,7 @@ class WC_Memberships extends SV_WC_Plugin {
 	 * @since 1.0.0
 	 */
 	public function init() {
+
 		WC_Memberships_Post_Types::initialize();
 	}
 
@@ -364,12 +363,15 @@ class WC_Memberships extends SV_WC_Plugin {
 	 * @see \SV_WC_Plugin::load_translation()
 	 */
 	public function load_translation() {
+		// TODO since we are using text_domain in constructor args now, this is likely unnecessary, contents of the method should be removed by WC 2.7 compatibility or by the time the method itself is retired from the FW {FN 2016-10-19}
 		load_plugin_textdomain( 'woocommerce-memberships', false, dirname( plugin_basename( $this->get_file() ) ) . '/i18n/languages' );
 	}
 
 
 	/**
 	 * Locates the WooCommerce template files from our templates directory
+	 *
+	 * @internal
 	 *
 	 * @since 1.0.0
 	 * @param string $template Already found template
@@ -523,10 +525,15 @@ class WC_Memberships extends SV_WC_Plugin {
 	 *
 	 * @since 1.0.0
 	 * @see \SV_WC_Plugin::is_plugin_settings()
-	 * @return boolean true if on the settings page
+	 * @return bool
 	 */
 	public function is_plugin_settings() {
-		return isset( $_GET['page'] ) && 'wc-settings' === $_GET['page'] && isset( $_GET['tab'] ) && 'memberships' === $_GET['tab'];
+
+		return isset( $_GET['page'] ) && 'wc-settings' === $_GET['page'] && isset( $_GET['tab'] )
+		       // the plugin's main settings page
+		       && ( 'memberships' === $_GET['tab']
+		       // the plugin's email settings pages
+		       || ( 'email' === $_GET['tab'] && isset( $_GET['section'] ) && SV_WC_Helper::str_starts_with( $_GET['section'], 'wc_memberships_membership_' ) ) );
 	}
 
 
@@ -600,6 +607,8 @@ class WC_Memberships extends SV_WC_Plugin {
 	/**
 	 * Handle plugin activation
 	 *
+	 * @internal
+	 *
 	 * @since 1.0.0
 	 */
 	public function maybe_activate() {
@@ -625,6 +634,8 @@ class WC_Memberships extends SV_WC_Plugin {
 	/**
 	 * Handle plugin deactivation
 	 *
+	 * @internal
+	 *
 	 * @since 1.0.0
 	 */
 	public function deactivate() {
@@ -639,155 +650,6 @@ class WC_Memberships extends SV_WC_Plugin {
 		do_action( 'wc_memberships_deactivated' );
 
 		flush_rewrite_rules();
-	}
-
-
-	/** Plugin functionality methods ***************************************/
-
-
-	/**
-	 * Grant customer access to membership when making a purchase
-	 *
-	 * This method is run also when an order is made manually in WC admin
-	 *
-	 * TODO move this callback and actions in constructor out of the main class {FN 2016-04-26}
-	 *
-	 * @since 1.0.0
-	 * @param int $order_id \WC_Order id
-	 */
-	public function grant_membership_access( $order_id ) {
-
-		// get the order and its items to check
-		$order       = wc_get_order( $order_id );
-		$order_items = $order->get_items();
-		$user_id     = $order->get_user_id();
-
-		// skip if there is no user associated with this order or there are no items
-		if ( ! $user_id || empty( $order_items ) ) {
-			return;
-		}
-
-		// get membership plans
-		$membership_plans = $this->plans->get_membership_plans();
-
-		// bail out if there are no membership plans
-		if ( empty( $membership_plans ) ) {
-			return;
-		}
-
-		// loop over all available membership plans
-		foreach ( $membership_plans as $plan ) {
-
-			// skip if no products grant access to this plan
-			if ( ! $plan->has_products() ) {
-				continue;
-			}
-
-			$access_granting_product_ids = $this->get_access_granting_purchased_product_ids( $plan, $order, $order_items );
-
-			foreach( $access_granting_product_ids as $product_id ) {
-
-				// sanity check: make sure the selected product ID in fact does grant access
-				if ( ! $plan->has_product( $product_id ) ) {
-					continue;
-				}
-
-				/**
-				 * Grant Access from New Purchase Filter
-				 *
-				 * Allows actors to override if a new order should grant access
-				 * to a membership plan or not
-				 *
-				 * @since 1.3.5
-				 *
-				 * @param bool $grant_access true by default
-				 * @param array $args {
-				 *      @type int|string $user_id user ID for order
-				 *      @type int|string $product_id product ID that grants access
-				 *      @type int|string $order_id order ID
-				 * }
-				 */
-				$grant_access = apply_filters( 'wc_memberships_grant_access_from_new_purchase', true, array(
-					'user_id'    => $user_id,
-					'product_id' => $product_id,
-					'order_id'   => $order_id
-				) );
-
-
-				if ( $grant_access ) {
-
-					// delegate granting access to the membership plan instance
-					$plan->grant_access_from_purchase( $user_id, $product_id, $order_id );
-				}
-			}
-		}
-	}
-
-
-	/**
-	 * Get order products granting access to a membership plan
-	 *
-	 * @since 1.4.0
-	 * @param \WC_Memberships_Membership_Plan $plan Membership plan to check for access
-	 * @param int|\WC_Order|string $order \WC_Order instance or id. Can be empty string if $order_items are provided
-	 * @param array $order_items Array of order items, if empty will try to get those from $order
-	 * @return array|null Array of products granting access, null if $order is not valid
-	 */
-	public function get_access_granting_purchased_product_ids( $plan, $order, $order_items = array() ) {
-
-		if ( empty( $order_items ) ) {
-
-			$order = is_int( $order ) ? wc_get_order( $order ) : $order;
-
-			if ( ! $order instanceof WC_Order ) {
-				return null;
-			}
-
-			$order_items = $order->get_items();
-		}
-
-		$access_granting_product_ids = array();
-
-		// loop over items to see if any of them grant access to any memberships
-		foreach ( $order_items as $key => $item ) {
-
-			// product grants access to this membership
-			if ( $plan->has_product( $item['product_id'] ) ) {
-				$access_granting_product_ids[] = $item['product_id'];
-			}
-
-			// variation access
-			if ( isset( $item['variation_id'] ) && $item['variation_id'] && $plan->has_product( $item['variation_id'] ) ) {
-				$access_granting_product_ids[] = $item['variation_id'];
-			}
-		}
-
-		if ( ! empty( $access_granting_product_ids ) ) {
-
-			// by default we get the first product that grant access...
-			$product_ids = $access_granting_product_ids[0];
-
-			// ...unless option is set, which might trigger a Memberships access length extension
-			if ( wc_memberships_cumulative_granting_access_orders_allowed() ) {
-				$product_ids = $access_granting_product_ids;
-			}
-
-			/**
-			 * Filter the product ID that grants access to the membership plan via purchase
-			 *
-			 * Multiple products from a single order can grant access to a membership plan
-			 * Default behavior is to use the first product that grants access,
-			 * unless overridden by option in settings and/or using this filter
-			 *
-			 * @since 1.0.0
-			 * @param int|array $product_ids
-			 * @param array $access_granting_product_ids Array of product IDs that can grant access to this plan
-			 * @param \WC_Memberships_Membership_Plan $plan Membership plan access will be granted to
-			 */
-			$access_granting_product_ids = (array) apply_filters( 'wc_memberships_access_granting_purchased_product_id', $product_ids, $access_granting_product_ids, $plan );
-		}
-
-		return $access_granting_product_ids;
 	}
 
 
@@ -894,6 +756,7 @@ class WC_Memberships extends SV_WC_Plugin {
 	public function __call( $method, $args ) {
 
 		$deprecated_since_1_6_0 = '1.6.0';
+		$deprecated_since_1_7_0 = '1.7.0';
 
 		switch ( $method ) {
 
@@ -963,6 +826,31 @@ class WC_Memberships extends SV_WC_Plugin {
 				$options = isset( $args[1] ) ? $args[1] : 0;
 				$depth   = isset( $args[2] ) ? $args[2] : 512;
 				return wc_memberships_json_encode( $data, $options, $depth );
+
+			/** @deprecated since 1.7.0 */
+			case 'grant_membership_access' :
+
+				_deprecated_function( 'wc_memberships()->grant_membership_access()', $deprecated_since_1_7_0, 'wc_memberships()->get_plans_instance()->grant_access_to_membership_from_order()' );
+
+				$plans     = wc_memberships()->get_plans_instance();
+				$order_id  = isset( $args[0] ) ? $args[0] : $args;
+
+				if ( $plans ) {
+					$plans->grant_access_to_membership_from_order( $order_id );
+				}
+
+				return null;
+
+			/** @deprecated since 1.7.0 */
+			case 'get_access_granting_purchased_product_ids' :
+
+				_deprecated_function( 'wc_memberships()->get_access_granting_purchased_product_ids()', $deprecated_since_1_7_0, 'wc_memberships_get_order_access_granting_product_ids()' );
+
+				$plan        = isset( $args[0] ) ? $args[0] : null;
+				$order       = isset( $args[1] ) ? $args[1] : null;
+				$order_items = isset( $args[2] ) ? $args[2] : array();
+
+				return wc_memberships_get_order_access_granting_product_ids( $plan, $order, $order_items );
 
 			default :
 

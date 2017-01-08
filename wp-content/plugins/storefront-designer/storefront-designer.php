@@ -3,7 +3,7 @@
  * Plugin Name: Storefront Designer
  * Plugin URI: http://woothemes.com/products/storefront-designer/
  * Description: Adds a bunch of additional design options to the Storefront theme
- * Version: 1.8.3
+ * Version: 1.8.4
  * Author: WooThemes
  * Author URI: http://woothemes.com/
  * Requires at least: 4.0.0
@@ -95,7 +95,7 @@ final class Storefront_Designer {
 		$this->token 			= 'storefront-designer';
 		$this->plugin_url 		= plugin_dir_url( __FILE__ );
 		$this->plugin_path 		= plugin_dir_path( __FILE__ );
-		$this->version 			= '1.8.3';
+		$this->version 			= '1.8.4';
 
 		register_activation_hook( __FILE__, array( $this, 'install' ) );
 
@@ -743,7 +743,9 @@ final class Storefront_Designer {
 			remove_action( 'storefront_header', 'storefront_secondary_navigation', 			30 );
 			add_action( 'storefront_header', 'storefront_secondary_navigation', 			50 );
 			add_action( 'storefront_header', array( $this, 'sd_inline_nav_wrap' ),			30 );
-			add_action( 'storefront_header', array( $this, 'sd_inline_nav_wrap_close' ),	55 );
+			add_action( 'storefront_header', array( $this, 'sd_inline_nav_wrap_close' ),	70 );
+			remove_action( 'storefront_header', 'storefront_header_cart', 					60 );
+			add_action( 'storefront_header', 'storefront_header_cart', 						69 );
 		}
 
 		if ( false == $footer_credit ) {

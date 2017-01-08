@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @class 		WCS_Email_Completed_Switch_Order
  * @version		2.0.0
  * @package		WooCommerce/Classes/Emails
- * @author 		WooThemes
+ * @author 		Prospress
  * @extends 	WC_Email
  */
 class WCS_Email_Completed_Switch_Order extends WC_Email_Customer_Completed_Order {
@@ -63,9 +63,9 @@ class WCS_Email_Completed_Switch_Order extends WC_Email_Customer_Completed_Order
 			$order_date_index = array_search( '{order_date}', $this->find );
 			if ( false === $order_date_index ) {
 				$this->find[] = '{order_date}';
-				$this->replace[] = date_i18n( wc_date_format(), strtotime( $this->object->order_date ) );
+				$this->replace[] = date_i18n( wc_date_format(), wcs_date_to_time( $this->object->order_date ) );
 			} else {
-				$this->replace[ $order_date_index ] = date_i18n( wc_date_format(), strtotime( $this->object->order_date ) );
+				$this->replace[ $order_date_index ] = date_i18n( wc_date_format(), wcs_date_to_time( $this->object->order_date ) );
 			}
 
 			$order_number_index = array_search( '{order_number}', $this->find );
@@ -120,6 +120,9 @@ class WCS_Email_Completed_Switch_Order extends WC_Email_Customer_Completed_Order
 				'order'         => $this->object,
 				'subscriptions' => $this->subscriptions,
 				'email_heading' => $this->get_heading(),
+				'sent_to_admin' => false,
+				'plain_text'    => false,
+				'email'         => $this,
 			),
 			'',
 			$this->template_base
@@ -141,6 +144,9 @@ class WCS_Email_Completed_Switch_Order extends WC_Email_Customer_Completed_Order
 				'order'         => $this->object,
 				'subscriptions' => $this->subscriptions,
 				'email_heading' => $this->get_heading(),
+				'sent_to_admin' => false,
+				'plain_text'    => true,
+				'email'         => $this,
 			),
 			'',
 			$this->template_base

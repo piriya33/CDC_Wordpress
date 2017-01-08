@@ -34,8 +34,10 @@ class WCS_Query extends WC_Query {
 	public function init_query_vars() {
 		$this->query_vars = array(
 			'view-subscription' => get_option( 'woocommerce_myaccount_view_subscriptions_endpoint', 'view-subscription' ),
-			'subscriptions'     => get_option( 'woocommerce_myaccount_subscriptions_endpoint', 'subscriptions' ),
 		);
+		if ( ! WC_Subscriptions::is_woocommerce_pre( '2.6' ) ) {
+			$this->query_vars['subscriptions'] = get_option( 'woocommerce_myaccount_subscriptions_endpoint', 'subscriptions' );
+		}
 	}
 
 	/**
@@ -62,10 +64,13 @@ class WCS_Query extends WC_Query {
 	 */
 	public function change_endpoint_title( $title ) {
 
-		if ( in_the_loop() ) {
+		if ( in_the_loop() && is_account_page() ) {
 			foreach ( $this->query_vars as $key => $query_var ) {
 				if ( $this->is_query( $query_var ) ) {
 					$title = $this->get_endpoint_title( $key );
+
+					// unhook after we've returned our title to prevent it from overriding others
+					remove_filter( 'the_title', array( $this, __FUNCTION__ ), 11 );
 				}
 			}
 		}

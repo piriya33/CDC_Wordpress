@@ -32,7 +32,7 @@ defined( 'ABSPATH' ) or exit;
  * @deprecated
  * @since 1.6.0
  */
-class WC_Memberships_Integration_Subscriptions_1_5 extends WC_Memberships_Integration_Subscriptions {
+class WC_Memberships_Integration_Subscriptions_1_5 extends WC_Memberships_Integration_Subscriptions_Abstract {
 
 
 	/**
@@ -60,9 +60,31 @@ class WC_Memberships_Integration_Subscriptions_1_5 extends WC_Memberships_Integr
 
 
 	/**
+	 * Get a Subscription
+	 *
+	 * @deprecated
+	 *
+	 * @since 1.7.1
+	 * @param int|string|\WC_Subscription $subscription
+	 * @return array|int|\WC_Subscription
+	 */
+	public function get_subscription( $subscription ) {
+
+		if ( is_object( $subscription ) || is_int( $subscription ) ) {
+			$subscription = parent::get_subscription( $subscription );
+		} elseif ( is_string( $subscription ) ) {
+			$subscription = WC_Subscriptions_Manager::get_subscription( $subscription );
+		}
+
+		return $subscription;
+	}
+
+
+	/**
 	 * Handle subscription status change
 	 *
 	 * @deprecated
+	 *
 	 * @since 1.6.0
 	 * @param int $user_id User ID
 	 * @param string $subscription_key Subscription key
@@ -104,6 +126,7 @@ class WC_Memberships_Integration_Subscriptions_1_5 extends WC_Memberships_Integr
 	 * Update membership end date when subscription expiration date is changed
 	 *
 	 * @deprecated
+	 *
 	 * @since 1.6.0
 	 * @param bool $is_set
 	 * @param string $expiration_date Expiration date, as timestamp
@@ -138,6 +161,7 @@ class WC_Memberships_Integration_Subscriptions_1_5 extends WC_Memberships_Integr
 	 * Get a Subscription status
 	 *
 	 * @deprecated
+	 *
 	 * @since 1.5.4
 	 * @param array $subscription
 	 * @return string
@@ -151,6 +175,7 @@ class WC_Memberships_Integration_Subscriptions_1_5 extends WC_Memberships_Integr
 	 * Get a Subscription by order_id and product_id
 	 *
 	 * @deprecated
+	 *
 	 * @since 1.6.0
 	 * @param int $order_id \WC_Order id
 	 * @param int $product_id \WC_Product id
@@ -169,6 +194,7 @@ class WC_Memberships_Integration_Subscriptions_1_5 extends WC_Memberships_Integr
 	 * Get a Subscription from a User Membership
 	 *
 	 * @deprecated
+	 *
 	 * @since 1.6.0
 	 * @param int|\WC_Memberships_User_Membership $user_membership User Membership object or id
 	 * @return null|array Subscription array or null, if not found
@@ -202,6 +228,7 @@ class WC_Memberships_Integration_Subscriptions_1_5 extends WC_Memberships_Integr
 	 * Get user memberships by subscription key
 	 *
 	 * @deprecated
+	 *
 	 * @since 1.6.0
 	 * @param string $subscription_key Subscription key
 	 * @return \WC_Memberships_User_Membership[] Array of user membership objects or null, if none found
@@ -238,39 +265,10 @@ class WC_Memberships_Integration_Subscriptions_1_5 extends WC_Memberships_Integr
 
 
 	/**
-	 * Check if order contains a Subscription
-	 *
-	 * @deprecated
-	 * @since 1.6.0
-	 * @param \WC_Order $order
-	 * @return bool
-	 */
-	protected function order_contains_subscription( $order ) {
-		return WC_Subscriptions_Order::order_contains_subscription( $order );
-	}
-
-
-	/**
-	 * Get a Subscription renewal url for a Subscription-tied Membership
-	 *
-	 * @deprecated
-	 * @since 1.6.0
-	 * @param \WC_Memberships_User_Membership $user_membership
-	 * @return string
-	 */
-	public function get_subscription_renewal_url( $user_membership ) {
-
-		$subscription_key = $this->get_user_membership_subscription_key( $user_membership->get_id() );
-		$url              = WC_Subscriptions_Renewal_Order::get_users_renewal_link( $subscription_key );
-
-		return $url;
-	}
-
-
-	/**
 	 * Check if a Subscription associated to a Membership is renewable
 	 *
 	 * @deprecated
+	 *
 	 * @since 1.6.0
 	 * @param \WC_Subscription $subscription
 	 * @param \WC_Memberships_User_Membership $user_Membership
@@ -285,6 +283,7 @@ class WC_Memberships_Integration_Subscriptions_1_5 extends WC_Memberships_Integr
 	 * Get a Subscription event date or time
 	 *
 	 * @deprecated
+	 *
 	 * @since 1.6.0
 	 * @param array $subscription The Subscription to get the event for
 	 * @param string $event The event to retrieve a date/time for

@@ -64,6 +64,8 @@ class WC_Memberships_Shortcodes {
 	/**
 	 * Restrict content shortcode
 	 *
+	 * @internal
+	 *
 	 * @since 1.0.0
 	 * @param array $atts Shortcode attributes
 	 * @param string|null $content
@@ -95,6 +97,8 @@ class WC_Memberships_Shortcodes {
 
 	/**
 	 * Nonmember content shortcode
+	 *
+	 * @internal
 	 *
 	 * @since 1.1.0
 	 * @param array $atts Shortcode attributes
@@ -128,6 +132,8 @@ class WC_Memberships_Shortcodes {
 
 	/**
 	 * Restricted content messages
+	 *
+	 * @internal 
 	 *
 	 * @since 1.0.0
 	 * @param array $atts Shortcode attributes
@@ -192,5 +198,6 @@ class WC_Memberships_Shortcodes {
 
 		return $output;
 	}
+
 
 }

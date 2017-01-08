@@ -136,8 +136,8 @@ class WCS_Download_Handler {
 	public static function get_item_downloads( $files, $item, $order ) {
 		global $wpdb;
 
-		if ( wcs_order_contains_subscription( $order, 'any' ) ) {
-			$subscriptions = wcs_get_subscriptions_for_order( $order, array( 'order_type' => array( 'any' ) ) );
+		if ( wcs_order_contains_subscription( $order, array( 'parent', 'renewal', 'switch' ) ) ) {
+			$subscriptions = wcs_get_subscriptions_for_order( $order, array( 'order_type' => array( 'parent', 'renewal', 'switch' ) ) );
 		} else {
 			return $files;
 		}
@@ -157,7 +157,7 @@ class WCS_Download_Handler {
 
 	/**
 	 * Repairs a glitch in WordPress's save function. You cannot save a null value on update, see
-	 * https://github.com/woothemes/woocommerce/issues/7861 for more info on this.
+	 * https://github.com/woocommerce/woocommerce/issues/7861 for more info on this.
 	 *
 	 * @param integer $post_id The ID of the subscription
 	 */

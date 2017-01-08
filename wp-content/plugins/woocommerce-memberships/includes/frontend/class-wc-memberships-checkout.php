@@ -185,63 +185,51 @@ class WC_Memberships_Checkout {
 			return false;
 		}
 
-		// Get membership plans
+		// get membership plans
 		$membership_plans = wc_memberships()->get_plans_instance()->get_membership_plans();
 
-		// Bail out if there are no membership plans
+		// bail out if there are no membership plans
 		if ( empty( $membership_plans ) ) {
 			return false;
 		}
 
 		$force = false;
 
-		// Loop over all available membership plans
+		// loop over all available membership plans
 		foreach ( $membership_plans as $plan ) {
 
-			// Skip if no products grant access to this plan
+			// skip if no products grant access to this plan
 			if ( ! $plan->has_products() ) {
 				continue;
 			}
 
-			// Array to store products that grant access to this plan
+			// array to store products that grant access to this plan
 			$access_granting_product_ids = array();
 
-			// Loop over items to see if any of them grant access to any memberships
+			// loop over items to see if any of them grant access to any memberships
 			foreach ( WC()->cart->get_cart() as $key => $item ) {
 
-				// Product grants access to this membership
+				// product grants access to this membership
 				if ( $plan->has_product( $item['product_id'] ) ) {
 					$access_granting_product_ids[] = $item['product_id'];
 				}
 
-				// Variation access
+				// variation access
 				if ( isset( $item['variation_id'] ) && $item['variation_id'] && $plan->has_product( $item['variation_id'] ) ) {
 					$access_granting_product_ids[] = $item['variation_id'];
 				}
 
 			}
 
-			// No products grant access, skip further processing
+			// no products grant access, skip further processing
 			if ( empty( $access_granting_product_ids ) ) {
 				continue;
 			}
 
-			/**
-			 * Filter the product ID that grants access to the membership plan via purchase
-			 *
-			 * Multiple products from a single order can grant access to a membership plan.
-			 * Default behavior is to use the first product that grants access, but this can
-			 * be overriden using this filter.
-			 *
-			 * @since 1.0.0
-			 *
-			 * @param int $product_id
-			 * @param array $access_granting_product_ids Array of product IDs that can grant access to this plan
-			 * @param WC_Memberships_Membership_Plan $plan Membership plan access will be granted to
-			 */
+			/* this filter is documented in /includes/class-wc-memberships-user-memberships.php */
 			$product_id = apply_filters( 'wc_memberships_access_granting_purchased_product_id', $access_granting_product_ids[0], $access_granting_product_ids, $plan );
 
-			// Sanity check: make sure the selected product ID in fact does grant access
+			// sanity check: make sure the selected product ID in fact does grant access
 			if ( ! $plan->has_product( $product_id ) ) {
 				continue;
 			}
