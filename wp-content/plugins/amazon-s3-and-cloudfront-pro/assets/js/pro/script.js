@@ -15,34 +15,6 @@
 	as3cfpro.spinnerUrl = spinnerUrl;
 
 	/**
-	 * Check if the URL settings have changed since page load
-	 *
-	 * @param {object} form
-	 *
-	 * @returns {boolean}
-	 */
-	function urlSettingsChanged( form ) {
-		var formInputs = formInputsToObject( form );
-		var settingsChanged = false;
-		var whitelist = as3cfpro.settings.previous_url_whitelist;
-
-		$.each( formInputs, function( name, value ) {
-			// Only compare URL settings
-			if ( -1 === $.inArray( name, whitelist ) ) {
-				return;
-			}
-
-			// Compare values with originals
-			if ( value !== savedSettings[ name ] ) {
-				settingsChanged = true;
-				return false;
-			}
-		} );
-
-		return settingsChanged;
-	}
-
-	/**
 	 * Convert form inputs to single level object
 	 *
 	 * @param {object} form
@@ -201,12 +173,6 @@
 					$( '.as3cf-sidebar.pro' ).prepend( response.data );
 					var hash = getURLHash();
 					toggleSidebarTools( hash );
-
-					$( '.as3cf-sidebar.pro .block .progress-bar-wrapper .progress-bar' ).each( function() {
-						$( this ).animate( {
-							width: $( this ).parent().data( 'percentage' ) + '%'
-						}, 1200 );
-					} );
 				}
 			}
 		} );
@@ -222,6 +188,8 @@
 
 		$( '.as3cf-sidebar.pro .block' ).not( '.' + tab ).hide();
 		$( '.as3cf-sidebar.pro .block.' + tab ).show();
+
+		as3cfpro.tool.renderPieChart();
 	}
 
 	/**
@@ -249,15 +217,6 @@
 
 		savedSettings = formInputsToObject( $settingsForm );
 
-		// Find and replace on settings change
-		$( 'body' ).on( 'click', '#tab-' + as3cf.tabs.defaultTab + ' .as3cf-main-settings button[type="submit"]', function( e ) {
-
-			if ( urlSettingsChanged( $settingsForm ) && as3cfModal.exists( '.as3cf-find-replace-container' ) ) {
-				e.preventDefault();
-				as3cfFindAndReplaceSettings.open( $settingsForm );
-			}
-		} );
-
 		/**
 		 * Navigate to the support tab when the activate license link is clicked
 		 */
@@ -280,6 +239,7 @@
 			$( '.support-content' ).empty().html( '<p>' + as3cfpro.strings.fetching_license + '</p>' );
 			// Trigger the refresh of the pro tools
 			renderSidebarTools();
+			as3cfpro.tool.renderPieChart();
 			checkLicence( licenceKey );
 		}
 

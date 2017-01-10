@@ -64,6 +64,9 @@ abstract class AS3CF_Background_Process extends AS3CF_Async_Request {
 			update_site_option( $key, $this->data );
 		}
 
+		// Clean out data so that new data isn't prepended with closed session's data.
+		$this->data = array();
+
 		return $this;
 	}
 
@@ -121,6 +124,9 @@ abstract class AS3CF_Background_Process extends AS3CF_Async_Request {
 	 * the process is not already running.
 	 */
 	public function maybe_handle() {
+		// Don't lock up other requests while processing
+		session_write_close();
+
 		if ( $this->is_process_running() ) {
 			// Background process already running
 			wp_die();
@@ -154,7 +160,7 @@ abstract class AS3CF_Background_Process extends AS3CF_Async_Request {
 			$column = 'meta_key';
 		}
 
-		$key    = $this->identifier . '_batch_%';
+		$key = $this->identifier . '_batch_%';
 
 		$count = $wpdb->get_var( $wpdb->prepare( "
 			SELECT COUNT(*)
@@ -215,7 +221,28 @@ abstract class AS3CF_Background_Process extends AS3CF_Async_Request {
 	 * @return stdClass Return the first batch from the queue
 	 */
 	protected function get_batch() {
+		return array_reduce(
+			$this->get_batches( 1 ),
+			function ( $carry, $batch ) {
+				return $batch;
+			},
+			array()
+		);
+	}
+
+	/**
+	 * Get batches
+	 *
+	 * @param int $limit Number of batches to return, defaults to all.
+	 *
+	 * @return array of stdClass
+	 */
+	public function get_batches( $limit = 0 ) {
 		global $wpdb;
+
+		if ( empty( $limit ) || ! is_int( $limit ) ) {
+			$limit = 0;
+		}
 
 		$table        = $wpdb->options;
 		$column       = 'option_name';
@@ -231,19 +258,35 @@ abstract class AS3CF_Background_Process extends AS3CF_Async_Request {
 
 		$key = $this->identifier . '_batch_%';
 
-		$query = $wpdb->get_row( $wpdb->prepare( "
+		$sql = "
 			SELECT *
 			FROM {$table}
 			WHERE {$column} LIKE %s
 			ORDER BY {$key_column} ASC
-			LIMIT 1
-		", $key ) );
+			";
 
-		$batch       = new stdClass();
-		$batch->key  = $query->$column;
-		$batch->data = maybe_unserialize( $query->$value_column );
+		if ( ! empty( $limit ) ) {
+			$sql .= " LIMIT {$limit}";
+		}
 
-		return $batch;
+		$items = $wpdb->get_results( $wpdb->prepare( $sql, $key ) );
+
+		$batches = array();
+
+		if ( ! empty( $items ) ) {
+			$batches = array_map(
+				function ( $item ) use ( $column, $value_column ) {
+					$batch       = new stdClass();
+					$batch->key  = $item->$column;
+					$batch->data = maybe_unserialize( $item->$value_column );
+
+					return $batch;
+				},
+				$items
+			);
+		}
+
+		return $batches;
 	}
 
 	/**
@@ -255,10 +298,20 @@ abstract class AS3CF_Background_Process extends AS3CF_Async_Request {
 	protected function handle() {
 		$this->lock_process();
 
+		/**
+		 * Number of seconds to sleep between batches. Defaults to 0 seconds, minimum 0.
+		 */
+		$throttle_seconds = apply_filters( 'as3cf_seconds_between_batches', 0 );
+
 		do {
 			$batch = $this->get_batch();
 
 			foreach ( $batch->data as $key => $value ) {
+				if ( $this->time_exceeded() || $this->memory_exceeded() ) {
+					// Batch limits reached
+					break;
+				}
+
 				$task = $this->task( $value );
 
 				if ( false !== $task ) {
@@ -267,10 +320,8 @@ abstract class AS3CF_Background_Process extends AS3CF_Async_Request {
 					unset( $batch->data[ $key ] );
 				}
 
-				if ( $this->time_exceeded() || $this->memory_exceeded() ) {
-					// Batch limits reached
-					break;
-				}
+				// Let the server breathe a little.
+				sleep( $throttle_seconds );
 			}
 
 			// Update or delete current batch

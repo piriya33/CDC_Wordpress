@@ -4,16 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
 <link rel="profile" href="http://gmpg.org/xfn/11">
-<link rel="pingback" href="/xmlrpc.php">
+<link rel="pingback" href="http://52.76.37.90/xmlrpc.php">
 
-<title>Chaloke Dot Com &#8211; A Community of Traders and Investers.</title>
-<link rel='dns-prefetch' href='//s0.wp.com' />
+<title>Chaloke Dot Com &#8211; เส้นทางสู่การเป็นนักลงทุนอย่างมีระบบ</title>
 <link rel='dns-prefetch' href='//fonts.googleapis.com' />
 <link rel='dns-prefetch' href='//s.w.org' />
-<link rel="alternate" type="application/rss+xml" title="Chaloke Dot Com &raquo; Feed" href="/feed/" />
-<link rel="alternate" type="application/rss+xml" title="Chaloke Dot Com &raquo; Comments Feed" href="/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Chaloke Dot Com &raquo; Feed" href="http://52.76.37.90/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Chaloke Dot Com &raquo; Comments Feed" href="http://52.76.37.90/comments/feed/" />
 		<script type="text/javascript">
-			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.2.1\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.2.1\/svg\/","svgExt":".svg","source":{"concatemoji":"\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.7"}};
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.2.1\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.2.1\/svg\/","svgExt":".svg","source":{"concatemoji":"http:\/\/52.76.37.90\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.7"}};
 			!function(a,b,c){function d(a){var b,c,d,e,f=String.fromCharCode;if(!k||!k.fillText)return!1;switch(k.clearRect(0,0,j.width,j.height),k.textBaseline="top",k.font="600 32px Arial",a){case"flag":return k.fillText(f(55356,56826,55356,56819),0,0),!(j.toDataURL().length<3e3)&&(k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,57331,65039,8205,55356,57096),0,0),b=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,57331,55356,57096),0,0),c=j.toDataURL(),b!==c);case"emoji4":return k.fillText(f(55357,56425,55356,57341,8205,55357,56507),0,0),d=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55357,56425,55356,57341,55357,56507),0,0),e=j.toDataURL(),d!==e}return!1}function e(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g,h,i,j=b.createElement("canvas"),k=j.getContext&&j.getContext("2d");for(i=Array("flag","emoji4"),c.supports={everything:!0,everythingExceptFlag:!0},h=0;h<i.length;h++)c.supports[i[h]]=d(i[h]),c.supports.everything=c.supports.everything&&c.supports[i[h]],"flag"!==i[h]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[i[h]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
 		</script>
 		<style type="text/css">
@@ -30,9 +29,9 @@ img.emoji {
 	padding: 0 !important;
 }
 </style>
-<link rel='stylesheet' id='bbp-default-css'  href='/wp-content/plugins/bbpress/templates/default/css/bbpress.css?ver=2.5.12-6148' type='text/css' media='screen' />
-<link rel='stylesheet' id='wc-memberships-frontend-css'  href='/wp-content/plugins/woocommerce-memberships/assets/css/frontend/wc-memberships-frontend.min.css?ver=1.7.3' type='text/css' media='all' />
-<link rel='stylesheet' id='storefront-style-css'  href='/wp-content/themes/storefront/style.css?ver=2.1.6' type='text/css' media='all' />
+<link rel='stylesheet' id='bbp-default-css'  href='http://52.76.37.90/wp-content/plugins/bbpress/templates/default/css/bbpress.css?ver=2.5.12-6148' type='text/css' media='screen' />
+<link rel='stylesheet' id='wc-memberships-frontend-css'  href='http://52.76.37.90/wp-content/plugins/woocommerce-memberships/assets/css/frontend/wc-memberships-frontend.min.css?ver=1.7.3' type='text/css' media='all' />
+<link rel='stylesheet' id='storefront-style-css'  href='http://52.76.37.90/wp-content/themes/storefront/style.css?ver=2.1.6' type='text/css' media='all' />
 <style id='storefront-style-inline-css' type='text/css'>
 
 			.plus,
@@ -48,7 +47,7 @@ img.emoji {
 			.sd-sticky-navigation,
 			.sd-sticky-navigation:before,
 			.sd-sticky-navigation:after {
-				background-color:#2c2d33;
+				background-color:#338dc9;
 			}
 		
 
@@ -59,12 +58,12 @@ img.emoji {
 			.site-footer .storefront-handheld-footer-bar a:not(.button),
 			button.menu-toggle,
 			button.menu-toggle:hover {
-				color: #d5d9db;
+				color: #ffffff;
 			}
 
 			button.menu-toggle,
 			button.menu-toggle:hover {
-				border-color: #d5d9db;
+				border-color: #ffffff;
 			}
 
 			.main-navigation ul li a:hover,
@@ -98,28 +97,28 @@ img.emoji {
 			.storefront-handheld-footer-bar ul li.search .site-search,
 			button.menu-toggle,
 			button.menu-toggle:hover {
-				background-color: #2c2d33;
+				background-color: #338dc9;
 			}
 
 			p.site-description,
 			.site-header,
 			.storefront-handheld-footer-bar {
-				color: #9aa0a7;
+				color: #ededed;
 			}
 
 			.storefront-handheld-footer-bar ul li.cart .count,
 			button.menu-toggle:after,
 			button.menu-toggle:before,
 			button.menu-toggle span:before {
-				background-color: #d5d9db;
+				background-color: #ffffff;
 			}
 
 			.storefront-handheld-footer-bar ul li.cart .count {
-				color: #2c2d33;
+				color: #338dc9;
 			}
 
 			.storefront-handheld-footer-bar ul li.cart .count {
-				border-color: #2c2d33;
+				border-color: #338dc9;
 			}
 
 			h1, h2, h3, h4, h5, h6 {
@@ -144,7 +143,7 @@ img.emoji {
 			}
 
 			a  {
-				color: #96588a;
+				color: #338dc9;
 			}
 
 			a:focus,
@@ -156,18 +155,18 @@ img.emoji {
 			input[type="button"]:focus,
 			input[type="reset"]:focus,
 			input[type="submit"]:focus {
-				outline-color: #96588a;
+				outline-color: #338dc9;
 			}
 
 			button, input[type="button"], input[type="reset"], input[type="submit"], .button, .added_to_cart, .widget a.button, .site-header-cart .widget_shopping_cart a.button {
-				background-color: #96588a;
-				border-color: #96588a;
+				background-color: #338dc9;
+				border-color: #338dc9;
 				color: #ffffff;
 			}
 
 			button:hover, input[type="button"]:hover, input[type="reset"]:hover, input[type="submit"]:hover, .button:hover, .added_to_cart:hover, .widget a.button:hover, .site-header-cart .widget_shopping_cart a.button:hover {
-				background-color: #7d3f71;
-				border-color: #7d3f71;
+				background-color: #1a74b0;
+				border-color: #1a74b0;
 				color: #ffffff;
 			}
 
@@ -215,38 +214,58 @@ img.emoji {
 
 			@media screen and ( min-width: 768px ) {
 				.secondary-navigation ul.menu a:hover {
-					color: #b3b9c0;
+					color: #ffffff;
 				}
 
 				.secondary-navigation ul.menu a {
-					color: #9aa0a7;
+					color: #ededed;
 				}
 
 				.site-header-cart .widget_shopping_cart,
 				.main-navigation ul.menu ul.sub-menu,
 				.main-navigation ul.nav-menu ul.children {
-					background-color: #24252b;
+					background-color: #2b85c1;
 				}
 			}
+
+				.sp-fixed-width .site {
+					background-color:#ffffff;
+				}
+			
+
+				.checkout-slides .sp-checkout-control-nav li a:after {
+					background-color:#ffffff;
+					border: 4px solid #d7d7d7;
+				}
+
+				.checkout-slides .sp-checkout-control-nav li:nth-child(2) a.flex-active:after {
+					border: 4px solid #d7d7d7;
+				}
+
+				.checkout-slides .sp-checkout-control-nav li a:before,
+				.checkout-slides .sp-checkout-control-nav li:nth-child(2) a.flex-active:before  {
+					background-color:#d7d7d7;
+				}
+
+				.checkout-slides .sp-checkout-control-nav li:nth-child(2) a:before {
+					background-color:#ebebeb;
+				}
+
+				.checkout-slides .sp-checkout-control-nav li:nth-child(2) a:after {
+					border: 4px solid #ebebeb;
+				}
+			
 </style>
 <link rel='stylesheet' id='storefront-fonts-css'  href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,300italic,400italic,700,900&#038;subset=latin%2Clatin-ext' type='text/css' media='all' />
-<link rel='stylesheet' id='storefront-jetpack-style-css'  href='/wp-content/themes/storefront/assets/sass/jetpack/jetpack.css?ver=2.1.6' type='text/css' media='all' />
-<!-- Inline jetpack_facebook_likebox -->
-<style id='jetpack_facebook_likebox-inline-css' type='text/css'>
-.widget_facebook_likebox {
-	overflow: hidden;
-}
-
-</style>
-<link rel='stylesheet' id='sbc-styles-css'  href='/wp-content/plugins/storefront-blog-customiser/assets/css/style.css?ver=4.7' type='text/css' media='all' />
-<link rel='stylesheet' id='sd-styles-css'  href='/wp-content/plugins/storefront-designer/assets/css/style.css?ver=4.7' type='text/css' media='all' />
-<link rel='stylesheet' id='sd-styles-2-css'  href='/wp-content/plugins/storefront-designer/assets/css/style-2.css?ver=4.7' type='text/css' media='all' />
-<link rel='stylesheet' id='storefront-woocommerce-style-css'  href='/wp-content/themes/storefront/assets/sass/woocommerce/woocommerce.css?ver=4.7' type='text/css' media='all' />
+<link rel='stylesheet' id='sbc-styles-css'  href='http://52.76.37.90/wp-content/plugins/storefront-blog-customiser/assets/css/style.css?ver=4.7' type='text/css' media='all' />
+<link rel='stylesheet' id='sd-styles-css'  href='http://52.76.37.90/wp-content/plugins/storefront-designer/assets/css/style.css?ver=4.7' type='text/css' media='all' />
+<link rel='stylesheet' id='sd-styles-2-css'  href='http://52.76.37.90/wp-content/plugins/storefront-designer/assets/css/style-2.css?ver=4.7' type='text/css' media='all' />
+<link rel='stylesheet' id='storefront-woocommerce-style-css'  href='http://52.76.37.90/wp-content/themes/storefront/assets/sass/woocommerce/woocommerce.css?ver=4.7' type='text/css' media='all' />
 <style id='storefront-woocommerce-style-inline-css' type='text/css'>
 
 			a.cart-contents,
 			.site-header-cart .widget_shopping_cart a {
-				color: #d5d9db;
+				color: #ffffff;
 			}
 
 			table.cart td.product-remove,
@@ -278,12 +297,12 @@ img.emoji {
 			p.stars a:after,
 			.star-rating span:before,
 			#payment .payment_methods li input[type=radio]:first-child:checked+label:before {
-				color: #96588a;
+				color: #338dc9;
 			}
 
 			.widget_price_filter .ui-slider .ui-slider-range,
 			.widget_price_filter .ui-slider .ui-slider-handle {
-				background-color: #96588a;
+				background-color: #338dc9;
 			}
 
 			.woocommerce-breadcrumb,
@@ -314,60 +333,93 @@ img.emoji {
 			p.stars:hover a:before,
 			p.stars.selected a:not(.active):before,
 			p.stars.selected a.active:before {
-				color: #96588a;
+				color: #338dc9;
 			}
 
 			.single-product div.product .woocommerce-product-gallery .woocommerce-product-gallery__trigger {
-				background-color: #96588a;
+				background-color: #338dc9;
 				color: #ffffff;
 			}
 
 			.single-product div.product .woocommerce-product-gallery .woocommerce-product-gallery__trigger:hover {
-				background-color: #7d3f71;
-				border-color: #7d3f71;
+				background-color: #1a74b0;
+				border-color: #1a74b0;
 				color: #ffffff;
 			}
 
 			@media screen and ( min-width: 768px ) {
 				.site-header-cart .widget_shopping_cart,
 				.site-header .product_list_widget li .quantity {
-					color: #9aa0a7;
+					color: #ededed;
 				}
 			}
+
+				.woocommerce-message {
+					background-color: #0f834d !important;
+					color: #ffffff !important;
+				}
+
+				.woocommerce-message a,
+				.woocommerce-message a:hover,
+				.woocommerce-message .button,
+				.woocommerce-message .button:hover {
+					color: #ffffff !important;
+				}
+
+				.woocommerce-info {
+					background-color: #3D9CD2 !important;
+					color: #ffffff !important;
+				}
+
+				.woocommerce-info a,
+				.woocommerce-info a:hover,
+				.woocommerce-info .button,
+				.woocommerce-info .button:hover {
+					color: #ffffff !important;
+				}
+
+				.woocommerce-error {
+					background-color: #e2401c !important;
+					color: #ffffff !important;
+				}
+
+				.woocommerce-error a,
+				.woocommerce-error a:hover,
+				.woocommerce-error .button,
+				.woocommerce-error .button:hover {
+					color: #ffffff !important;
+				}
+
+			
+
+				.star-rating span:before,
+				.star-rating:before {
+					color: #FFA200;
+				}
+
+				.star-rating:before {
+					opacity: 0.25;
+				}
+			
 </style>
-<link rel='stylesheet' id='storefront-child-style-css'  href='/wp-content/themes/sf_cdc/style.css?ver=4.7' type='text/css' media='all' />
-<link rel='stylesheet' id='custom-css-css'  href='/wp-content/plugins/theme-customisations-master/custom/style.css?ver=4.7' type='text/css' media='all' />
-<link rel='stylesheet' id='jetpack_css-css'  href='/wp-content/plugins/jetpack/css/jetpack.css?ver=4.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='sp-header-frontend-css'  href='http://52.76.37.90/wp-content/plugins/storefront-powerpack/includes/customizer/header/assets/css/sp-header-frontend.css?ver=1.3.0' type='text/css' media='all' />
+<link rel='stylesheet' id='sp-styles-css'  href='http://52.76.37.90/wp-content/plugins/storefront-powerpack/includes/customizer/shop/../../../assets/css/style.css?ver=1.3.0' type='text/css' media='all' />
+<link rel='stylesheet' id='custom-css-css'  href='http://52.76.37.90/wp-content/plugins/theme-customisations-master/custom/style.css?ver=4.7' type='text/css' media='all' />
 <script type='text/javascript' src='http://52.76.37.90/wp-includes/js/jquery/jquery.js?ver=1.12.4'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1'></script>
-<script type='text/javascript' src='/wp-content/plugins/theme-customisations-master/custom/custom.js?ver=4.7'></script>
-<link rel='https://api.w.org/' href='/wp-json/' />
-<link rel="EditURI" type="application/rsd+xml" title="RSD" href="/xmlrpc.php?rsd" />
-<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="/wp-includes/wlwmanifest.xml" /> 
+<script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/theme-customisations-master/custom/custom.js?ver=4.7'></script>
+<link rel='https://api.w.org/' href='http://52.76.37.90/wp-json/' />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://52.76.37.90/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://52.76.37.90/wp-includes/wlwmanifest.xml" /> 
 <meta name="generator" content="WordPress 4.7" />
 <meta name="generator" content="WooCommerce 2.6.11" />
-<link rel='shortlink' href='http://wp.me/7Ivng' />
-
-<link rel='dns-prefetch' href='//v0.wordpress.com'>
-<style type='text/css'>img#wpstats{display:none}</style><style type="text/css" id="custom-background-css">
-body.custom-background { background-color: ##ffffff; }
-</style>
-
-<!-- Jetpack Open Graph Tags -->
-<meta property="og:type" content="website" />
-<meta property="og:title" content="Chaloke Dot Com" />
-<meta property="og:description" content="A Community of Traders and Investers." />
-<meta property="og:url" content="/" />
-<meta property="og:site_name" content="Chaloke Dot Com" />
-<meta property="og:image" content="https://s0.wp.com/i/blank.jpg" />
-<meta property="og:locale" content="en_US" />
 <link rel="icon" href="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2016/07/04093950/cropped-CDClogo2015_rev1_A-32x32.png" sizes="32x32" />
 <link rel="icon" href="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2016/07/04093950/cropped-CDClogo2015_rev1_A-192x192.png" sizes="192x192" />
 <link rel="apple-touch-icon-precomposed" href="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2016/07/04093950/cropped-CDClogo2015_rev1_A-180x180.png" />
 <meta name="msapplication-TileImage" content="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2016/07/04093950/cropped-CDClogo2015_rev1_A-270x270.png" />
 </head>
 
-<body class="home blog custom-background right-sidebar woocommerce-active sbc-default-2 sd-header-compact sd-typography-helvetica">
+<body class="home blog wp-custom-logo right-sidebar woocommerce-active sp-shop-alignment-center sbc-meta-hidden-2 sbc-magazine sd-scale-largest sd-header-compact sd-typography-helvetica">
 <div id="page" class="hfeed site">
 	
 	<header id="masthead" class="site-header" role="banner" style="background-image: none; ">
@@ -376,23 +428,23 @@ body.custom-background { background-color: ##ffffff; }
 					<a class="skip-link screen-reader-text" href="#site-navigation">Skip to navigation</a>
 		<a class="skip-link screen-reader-text" href="#content">Skip to content</a>
 				<div class="site-branding">
-			<h1 class="beta site-title"><a href="/" rel="home">Chaloke Dot Com</a></h1><p class="site-description">A Community of Traders and Investers.</p>		</div>
+			<h1 class="logo"><a href="http://52.76.37.90/" class="custom-logo-link" rel="home" itemprop="url"><img width="373" height="110" src="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2016/07/04093947/cropped-CDClogo2015_rev1_A-simple-copy-2.png" class="custom-logo" alt="" itemprop="logo" srcset="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2016/07/04093947/cropped-CDClogo2015_rev1_A-simple-copy-2.png 373w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2016/07/04093947/cropped-CDClogo2015_rev1_A-simple-copy-2-300x88.png 300w" sizes="(max-width: 373px) 100vw, 373px" /></a></h1>		</div>
 				    <nav class="secondary-navigation" role="navigation" aria-label="Secondary Navigation">
-			    <div class="menu-user-control-container"><ul id="menu-user-control" class="menu"><li><a href="/wp-login.php">Log In</a></li><li><a href="/wp-login.php?action=register">Register</a></li></ul></div>		    </nav><!-- #site-navigation -->
+			    <div class="menu-user-control-container"><ul id="menu-user-control" class="menu"><li><a href="http://52.76.37.90/wp-login.php">Log In</a></li><li><a href="http://52.76.37.90/wp-login.php?action=register">Register</a></li></ul></div>		    </nav><!-- #site-navigation -->
 		    <div class="storefront-primary-navigation">		<nav id="site-navigation" class="main-navigation" role="navigation" aria-label="Primary Navigation">
 		<button class="menu-toggle" aria-controls="site-navigation" aria-expanded="false"><span>Menu</span></button>
-			<div class="primary-navigation"><ul id="menu-navigation" class="menu"><li id="menu-item-103" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item menu-item-home menu-item-103"><a href="/">Home</a></li>
-<li id="menu-item-77" class="menu-item menu-item-type-post_type menu-item-object-forum menu-item-77"><a href="/forums/forum/cdc/">Forums</a></li>
-<li id="menu-item-94" class="menu-item menu-item-type-post_type menu-item-object-forum menu-item-94"><a href="/forums/forum/cdc/charity/">ลานบุญ</a></li>
-<li id="menu-item-19" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19"><a href="/shop/">Shop</a></li>
-</ul></div><div class="handheld-navigation"><ul id="menu-navigation-1" class="menu"><li class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item menu-item-home menu-item-103"><a href="/">Home</a></li>
-<li class="menu-item menu-item-type-post_type menu-item-object-forum menu-item-77"><a href="/forums/forum/cdc/">Forums</a></li>
-<li class="menu-item menu-item-type-post_type menu-item-object-forum menu-item-94"><a href="/forums/forum/cdc/charity/">ลานบุญ</a></li>
-<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19"><a href="/shop/">Shop</a></li>
-<li><a href="/wp-login.php">Log In</a></li><li><a href="/wp-login.php?action=register">Register</a></li></ul></div>		</nav><!-- #site-navigation -->
+			<div class="primary-navigation"><ul id="menu-navigation" class="menu"><li id="menu-item-103" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-103"><a href="/">Home</a></li>
+<li id="menu-item-77" class="menu-item menu-item-type-post_type menu-item-object-forum menu-item-77"><a href="http://52.76.37.90/forums/forum/cdc/">Forums</a></li>
+<li id="menu-item-94" class="menu-item menu-item-type-post_type menu-item-object-forum menu-item-94"><a href="http://52.76.37.90/forums/forum/cdc/charity/">ลานบุญ</a></li>
+<li id="menu-item-19" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19"><a href="http://52.76.37.90/shop/">Shop</a></li>
+</ul></div><div class="handheld-navigation"><ul id="menu-navigation-1" class="menu"><li class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-103"><a href="/">Home</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-forum menu-item-77"><a href="http://52.76.37.90/forums/forum/cdc/">Forums</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-forum menu-item-94"><a href="http://52.76.37.90/forums/forum/cdc/charity/">ลานบุญ</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19"><a href="http://52.76.37.90/shop/">Shop</a></li>
+<li><a href="http://52.76.37.90/wp-login.php">Log In</a></li><li><a href="http://52.76.37.90/wp-login.php?action=register">Register</a></li></ul></div>		</nav><!-- #site-navigation -->
 				<ul id="site-header-cart" class="site-header-cart menu">
 			<li class="">
-							<a class="cart-contents" href="/cart/" title="View your shopping cart">
+							<a class="cart-contents" href="http://52.76.37.90/cart/" title="View your shopping cart">
 				<span class="amount">&#3647;0.00</span> <span class="count">0 items</span>
 			</a>
 					</li>
@@ -403,7 +455,10 @@ body.custom-background { background-color: ##ffffff; }
 		</div>
 	</header><!-- #masthead -->
 
-	
+	 
+            <div id="slider">
+                    <div class="soliloquy-outer-container" data-soliloquy-loaded="0"><div aria-live="polite" id="soliloquy-container-143" class="soliloquy-container soliloquy-transition-horizontal soliloquy-slide-horizontal soliloquy-controls-active soliloquy-arrows-active soliloquy-default-slider soliloquy-theme-base" style="max-width:1181px;max-height:300px;margin:0 auto 20px;"><ul id="soliloquy-143" class="soliloquy-slider soliloquy-slides soliloquy-wrap soliloquy-clear"><li aria-hidden="true" class="soliloquy-item soliloquy-item-1 soliloquy-id-144 soliloquy-image-slide" draggable="false" style="list-style:none;"><img id="soliloquy-image-144" class="soliloquy-image soliloquy-image-1" src="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2017/01/07232038/test1.jpg" alt="test1" /></li><li aria-hidden="true" class="soliloquy-item soliloquy-item-2 soliloquy-id-145 soliloquy-image-slide" draggable="false" style="list-style:none;"><img id="soliloquy-image-145" class="soliloquy-image soliloquy-image-2 soliloquy-preload" src="http://52.76.37.90/wp-content/plugins/soliloquy/assets/css/images/holder.gif" data-soliloquy-src="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2017/01/07232049/test2.jpg" alt="test2" /></li><li aria-hidden="true" class="soliloquy-item soliloquy-item-3 soliloquy-id-146 soliloquy-image-slide" draggable="false" style="list-style:none;"><img id="soliloquy-image-146" class="soliloquy-image soliloquy-image-3 soliloquy-preload" src="http://52.76.37.90/wp-content/plugins/soliloquy/assets/css/images/holder.gif" data-soliloquy-src="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2017/01/07232059/test3.jpg" alt="test3" /></li></ul></div><noscript><style type="text/css" scoped>#soliloquy-container-143{opacity:1}#soliloquy-container-143 li > .soliloquy-caption{display:none}#soliloquy-container-143 li:first-child > .soliloquy-caption{display:block}</style><div class="soliloquy-no-js" style="display:none;visibility:hidden;height:0;line-height:0;opacity:0;"><img class="soliloquy-image soliloquy-no-js-image" src="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2017/01/07232038/test1.jpg" alt="test1" /><img class="soliloquy-image soliloquy-no-js-image" src="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2017/01/07232049/test2.jpg" alt="test2" /><img class="soliloquy-image soliloquy-no-js-image" src="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2017/01/07232059/test3.jpg" alt="test3" /></div></noscript></div>            </div> 
+      
 	<div id="content" class="site-content" tabindex="-1">
 		<div class="col-full">
 
@@ -412,22 +467,10 @@ body.custom-background { background-color: ##ffffff; }
 		<main id="main" class="site-main" role="main">
 
 		
-<article id="post-1" class="post-1 post type-post status-publish format-standard hentry category-uncategorized">
+<article id="post-1" class="post-1 post type-post status-publish format-standard hentry category-uncategorized sbc-even">
 
 			<header class="entry-header">
-		<span class="posted-on">Posted on <a href="/2016/06/30/hello-world/" rel="bookmark"><time class="entry-date published" datetime="2016-06-30T09:59:52+00:00">30/06/2016</time> <time class="updated" datetime="2016-07-02T16:32:56+00:00">02/07/2016</time></a></span><h2 class="alpha entry-title"><a href="/2016/06/30/hello-world/" rel="bookmark">Hello world!</a></h2>		</header><!-- .entry-header -->
-				<aside class="entry-meta">
-						<div class="author">
-				<img src="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2016/07/12075502/CDClogo2015_rev1_A1-150x150.png" width="128" height="128" alt="cdc-admin" class="avatar avatar-128 wp-user-avatar wp-user-avatar-128 alignnone photo" /><div class="label">Written by</div><a href="/author/cdc-admin/" title="Posts by cdc-admin" rel="author">cdc-admin</a>			</div>
-							<div class="cat-links">
-					<div class="label">Posted in</div><a href="/category/uncategorized/" rel="category tag">Uncategorized</a>				</div>
-			
-			
-		
-							<div class="comments-link">
-					<div class="label">Comments</div>					<span class="comments-link"><a href="/2016/06/30/hello-world/#comments">3 Comments</a></span>
-				</div>
-					</aside>
+		<span class="posted-on">Posted on <a href="http://52.76.37.90/2016/06/30/hello-world/" rel="bookmark"><time class="entry-date published" datetime="2016-06-30T09:59:52+00:00">30/06/2016</time> <time class="updated" datetime="2016-07-02T16:32:56+00:00">02/07/2016</time></a></span><h2 class="alpha entry-title"><a href="http://52.76.37.90/2016/06/30/hello-world/" rel="bookmark">Hello world!</a></h2>		</header><!-- .entry-header -->
 				<div class="entry-content">
 		<p><img class="alignnone size-medium wp-image-32" src="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2016/06/02163248/MS-EOD-300x200.png" alt="MS-EOD" width="300" height="200" srcset="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2016/06/02163248/MS-EOD-300x200.png 300w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2016/06/02163248/MS-EOD.png 330w" sizes="(max-width: 300px) 100vw, 300px" /></p>
 		</div><!-- .entry-content -->
@@ -439,7 +482,7 @@ body.custom-background { background-color: ##ffffff; }
 
 
 <div id="secondary" class="widget-area" role="complementary">
-	<div id="search-4" class="widget widget_search"><form role="search" method="get" class="search-form" action="/">
+	<div id="search-4" class="widget widget_search"><form role="search" method="get" class="search-form" action="http://52.76.37.90/">
 				<label>
 					<span class="screen-reader-text">Search for:</span>
 					<input type="search" class="search-field" placeholder="Search &hellip;" value="" name="s" />
@@ -450,7 +493,7 @@ body.custom-background { background-color: ##ffffff; }
 
 			
 				<li>
-					<a class="bbp-forum-title" href="/forums/topic/oh-no-topic-is-wonky/">Oh no! Topic is wonky</a>
+					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/oh-no-topic-is-wonky/">Oh no! Topic is wonky</a>
 
 					
 					
@@ -462,12 +505,8 @@ body.custom-background { background-color: ##ffffff; }
 			
 		</ul>
 
-		</div><div id="facebook-likebox-2" class="widget widget_facebook_likebox"><span class="gamma widget-title"><a href="https://www.facebook.com/ChalokeDotCom">Follow us on Facebook!</a></span>		<div id="fb-root"></div>
-		<div class="fb-page" data-href="https://www.facebook.com/ChalokeDotCom" data-width="340"  data-height="130" data-hide-cover="true" data-show-facepile="false" data-show-posts="true">
-		<div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/ChalokeDotCom"><a href="https://www.facebook.com/ChalokeDotCom">Follow us on Facebook!</a></blockquote></div>
-		</div>
-		</div><div id="wpcom_social_media_icons_widget-2" class="widget widget_wpcom_social_media_icons_widget"><span class="gamma widget-title">Also find us on</span><ul><li><a href="https://www.facebook.com/ChalokeDotCom/" class="genericon genericon-facebook" target="_blank"><span class="screen-reader-text">View ChalokeDotCom&#8217;s profile on Facebook</span></a></li><li><a href="https://www.youtube.com/channel/UCxx6Lgcyxs01U1U1p4so8Ng/" class="genericon genericon-youtube" target="_blank"><span class="screen-reader-text">View UCxx6Lgcyxs01U1U1p4so8Ng&#8217;s profile on YouTube</span></a></li></ul></div><div id="archives-2" class="widget widget_archive"><span class="gamma widget-title">Archives</span>		<ul>
-			<li><a href='/2016/06/'>June 2016</a></li>
+		</div><div id="archives-2" class="widget widget_archive"><span class="gamma widget-title">Archives</span>		<ul>
+			<li><a href='http://52.76.37.90/2016/06/'>June 2016</a></li>
 		</ul>
 		</div></div><!-- #secondary -->
 
@@ -487,21 +526,21 @@ body.custom-background { background-color: ##ffffff; }
 		<ul>
 
 			
-				<li><a class="bbp-forum-title" href="/forums/forum/cdc/">CDC Forums</a></li>
+				<li><a class="bbp-forum-title" href="http://52.76.37.90/forums/forum/cdc/">CDC Forums</a></li>
 
 			
-				<li><a class="bbp-forum-title" href="/forums/forum/cdc/official-announcement-and-faq/">Official Announcement and FAQ</a></li>
+				<li><a class="bbp-forum-title" href="http://52.76.37.90/forums/forum/cdc/official-announcement-and-faq/">Official Announcement and FAQ</a></li>
 
 			
-				<li><a class="bbp-forum-title" href="/forums/forum/cdc/the-living-room/">The Living Room</a></li>
+				<li><a class="bbp-forum-title" href="http://52.76.37.90/forums/forum/cdc/the-living-room/">The Living Room</a></li>
 
 			
-				<li><a class="bbp-forum-title" href="/forums/forum/cdc/charity/">ลานบุญ</a></li>
+				<li><a class="bbp-forum-title" href="http://52.76.37.90/forums/forum/cdc/charity/">ลานบุญ</a></li>
 
 			
 		</ul>
 
-		</div><div id="nav_menu-3" class="widget widget_nav_menu"><span class="gamma widget-title">User Menu</span><div class="menu-user-control-container"><ul id="menu-user-control-1" class="menu"><li><a href="/wp-login.php">Log In</a></li><li><a href="/wp-login.php?action=register">Register</a></li></ul></div></div>						</div>
+		</div><div id="nav_menu-3" class="widget widget_nav_menu"><span class="gamma widget-title">User Menu</span><div class="menu-user-control-container"><ul id="menu-user-control-1" class="menu"><li><a href="http://52.76.37.90/wp-login.php">Log In</a></li><li><a href="http://52.76.37.90/wp-login.php?action=register">Register</a></li></ul></div></div>						</div>
 
 					
 						<div class="block footer-widget-2">
@@ -510,7 +549,7 @@ body.custom-background { background-color: ##ffffff; }
 
 			
 				<li>
-					<a class="bbp-forum-title" href="/forums/topic/oh-no-topic-is-wonky/">Oh no! Topic is wonky</a>
+					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/oh-no-topic-is-wonky/">Oh no! Topic is wonky</a>
 
 					
 					
@@ -531,7 +570,7 @@ body.custom-background { background-color: ##ffffff; }
 
 			
 				<li>
-					<a class="bbp-forum-title" href="/forums/topic/oh-no-topic-is-wonky/">Oh no! Topic is wonky</a>
+					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/oh-no-topic-is-wonky/">Oh no! Topic is wonky</a>
 
 					
 					
@@ -552,7 +591,7 @@ body.custom-background { background-color: ##ffffff; }
 
 			
 				<li>
-					<a class="bbp-forum-title" href="/forums/topic/oh-no-topic-is-wonky/">Oh no! Topic is wonky</a>
+					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/oh-no-topic-is-wonky/">Oh no! Topic is wonky</a>
 
 					
 					
@@ -564,64 +603,7 @@ body.custom-background { background-color: ##ffffff; }
 			
 		</ul>
 
-		</div><div id="blog_subscription-2" class="widget jetpack_subscription_widget"><span class="gamma widget-title">Subscribe to Blog via Email</span>
-			<form action="#" method="post" accept-charset="utf-8" id="subscribe-blog-blog_subscription-2">
-				<div id="subscribe-text"><p>Enter your email address to subscribe to this blog and receive notifications of new posts by email.</p>
-</div><p>Join 2 other subscribers</p>
-					<p id="subscribe-email">
-						<label id="jetpack-subscribe-label" for="subscribe-field-blog_subscription-2">
-							Email Address						</label>
-						<input type="email" name="email" required="required" class="required" value="" id="subscribe-field-blog_subscription-2" placeholder="Email Address" />
-					</p>
-
-					<p id="subscribe-submit">
-						<input type="hidden" name="action" value="subscribe" />
-						<input type="hidden" name="source" value="http://52.76.37.90/" />
-						<input type="hidden" name="sub-type" value="widget" />
-						<input type="hidden" name="redirect_fragment" value="blog_subscription-2" />
-												<input type="submit" value="Subscribe" name="jetpack_subscriptions_widget" />
-					</p>
-							</form>
-
-			<script>
-			/*
-			Custom functionality for safari and IE
-			 */
-			(function( d ) {
-				// In case the placeholder functionality is available we remove labels
-				if ( ( 'placeholder' in d.createElement( 'input' ) ) ) {
-					var label = d.querySelector( 'label[for=subscribe-field-blog_subscription-2]' );
-						label.style.clip 	 = 'rect(1px, 1px, 1px, 1px)';
-						label.style.position = 'absolute';
-						label.style.height   = '1px';
-						label.style.width    = '1px';
-						label.style.overflow = 'hidden';
-				}
-
-				// Make sure the email value is filled in before allowing submit
-				var form = d.getElementById('subscribe-blog-blog_subscription-2'),
-					input = d.getElementById('subscribe-field-blog_subscription-2'),
-					handler = function( event ) {
-						if ( '' === input.value ) {
-							input.focus();
-
-							if ( event.preventDefault ){
-								event.preventDefault();
-							}
-
-							return false;
-						}
-					};
-
-				if ( window.addEventListener ) {
-					form.addEventListener( 'submit', handler, false );
-				} else {
-					form.attachEvent( 'onsubmit', handler );
-				}
-			})( document );
-			</script>
-				
-</div>						</div>
+		</div>						</div>
 
 					
 			</div><!-- /.footer-widgets  -->
@@ -631,11 +613,11 @@ body.custom-background { background-color: ##ffffff; }
 				<div class="storefront-handheld-footer-bar">
 			<ul class="columns-3">
 									<li class="my-account">
-						<a href="/my-account/">My Account</a>					</li>
+						<a href="http://52.76.37.90/my-account/">My Account</a>					</li>
 									<li class="search">
 						<a href="">Search</a>			<div class="site-search">
 				<div class="widget woocommerce widget_product_search">
-<form role="search" method="get" class="woocommerce-product-search" action="/">
+<form role="search" method="get" class="woocommerce-product-search" action="http://52.76.37.90/">
 	<label class="screen-reader-text" for="woocommerce-product-search-field">Search for:</label>
 	<input type="search" id="woocommerce-product-search-field" class="search-field" placeholder="Search Products&hellip;" value="" name="s" title="Search for:" />
 	<input type="submit" value="Search" />
@@ -644,7 +626,7 @@ body.custom-background { background-color: ##ffffff; }
 </div>			</div>
 							</li>
 									<li class="cart">
-									<a class="footer-cart-contents" href="/cart/" title="View your shopping cart">
+									<a class="footer-cart-contents" href="http://52.76.37.90/cart/" title="View your shopping cart">
 				<span class="count">0</span>
 			</a>
 							</li>
@@ -657,53 +639,41 @@ body.custom-background { background-color: ##ffffff; }
 	
 </div><!-- #page -->
 
-<script type="application/ld+json">{"@context":"http:\/\/schema.org\/","@type":"BlogPosting","mainEntityOfPage":{"@type":"webpage","@id":"\/2016\/06\/30\/hello-world\/"},"publisher":{"@type":"organization","name":"Chaloke Dot Com","logo":{"@type":"ImageObject","url":"","width":"","height":""}},"author":{"@type":"person","name":"cdc-admin"},"datePublished":"2016-06-30T09:59:52+00:00","dateModified":"2016-07-02T16:32:56+00:00","name":"Hello world!","headline":"Hello world!","description":""}</script><link rel='stylesheet' id='genericons-css'  href='/wp-content/plugins/jetpack/_inc/genericons/genericons/genericons.css?ver=3.1' type='text/css' media='all' />
-<script type='text/javascript' src='/wp-content/plugins/jetpack/modules/shortcodes/js/jquery.cycle.js?ver=2.9999.8'></script>
+<script type="application/ld+json">{"@context":"http:\/\/schema.org\/","@type":"BlogPosting","mainEntityOfPage":{"@type":"webpage","@id":"http:\/\/52.76.37.90\/2016\/06\/30\/hello-world\/"},"publisher":{"@type":"organization","name":"Chaloke Dot Com","logo":{"@type":"ImageObject","url":"http:\/\/s3-ap-southeast-1.amazonaws.com\/cdc-wordpress\/wp-content\/uploads\/2016\/07\/04093947\/cropped-CDClogo2015_rev1_A-simple-copy-2.png","width":"373","height":"110"}},"author":{"@type":"person","name":"cdc-admin"},"datePublished":"2016-06-30T09:59:52+00:00","dateModified":"2016-07-02T16:32:56+00:00","name":"Hello world!","headline":"Hello world!","description":""}</script><link rel='stylesheet' id='soliloquy-style-css-css'  href='http://52.76.37.90/wp-content/plugins/soliloquy/assets/css/soliloquy.css?ver=2.5.2.8' type='text/css' media='all' />
+<script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/bbpress/templates/default/js/editor.js?ver=2.5.12-6148'></script>
 <script type='text/javascript'>
 /* <![CDATA[ */
-var jetpackSlideshowSettings = {"spinner":"\/wp-content\/plugins\/jetpack\/modules\/shortcodes\/img\/slideshow-loader.gif"};
+var wc_add_to_cart_params = {"ajax_url":"\/wp-admin\/admin-ajax.php","wc_ajax_url":"\/?wc-ajax=%%endpoint%%","i18n_view_cart":"View Cart","cart_url":"http:\/\/52.76.37.90\/cart\/","is_cart":"","cart_redirect_after_add":"no"};
 /* ]]> */
 </script>
-<script type='text/javascript' src='/wp-content/plugins/jetpack/modules/shortcodes/js/slideshow-shortcode.js?ver=20121214.1'></script>
-<script type='text/javascript' src='/wp-content/plugins/bbpress/templates/default/js/editor.js?ver=2.5.12-6148'></script>
-<script type='text/javascript' src='http://s0.wp.com/wp-content/js/devicepx-jetpack.js?ver=201701'></script>
-<script type='text/javascript'>
-/* <![CDATA[ */
-var wc_add_to_cart_params = {"ajax_url":"\/wp-admin\/admin-ajax.php","wc_ajax_url":"\/?wc-ajax=%%endpoint%%","i18n_view_cart":"View Cart","cart_url":"\/cart\/","is_cart":"","cart_redirect_after_add":"no"};
-/* ]]> */
-</script>
-<script type='text/javascript' src='/wp-content/plugins/woocommerce/assets/js/frontend/add-to-cart.min.js?ver=2.6.11'></script>
-<script type='text/javascript' src='/wp-content/plugins/woocommerce/assets/js/jquery-blockui/jquery.blockUI.min.js?ver=2.70'></script>
+<script type='text/javascript' src='//52.76.37.90/wp-content/plugins/woocommerce/assets/js/frontend/add-to-cart.min.js?ver=2.6.11'></script>
+<script type='text/javascript' src='//52.76.37.90/wp-content/plugins/woocommerce/assets/js/jquery-blockui/jquery.blockUI.min.js?ver=2.70'></script>
 <script type='text/javascript'>
 /* <![CDATA[ */
 var woocommerce_params = {"ajax_url":"\/wp-admin\/admin-ajax.php","wc_ajax_url":"\/?wc-ajax=%%endpoint%%"};
 /* ]]> */
 </script>
-<script type='text/javascript' src='/wp-content/plugins/woocommerce/assets/js/frontend/woocommerce.min.js?ver=2.6.11'></script>
-<script type='text/javascript' src='/wp-content/plugins/woocommerce/assets/js/jquery-cookie/jquery.cookie.min.js?ver=1.4.1'></script>
+<script type='text/javascript' src='//52.76.37.90/wp-content/plugins/woocommerce/assets/js/frontend/woocommerce.min.js?ver=2.6.11'></script>
+<script type='text/javascript' src='//52.76.37.90/wp-content/plugins/woocommerce/assets/js/jquery-cookie/jquery.cookie.min.js?ver=1.4.1'></script>
 <script type='text/javascript'>
 /* <![CDATA[ */
 var wc_cart_fragments_params = {"ajax_url":"\/wp-admin\/admin-ajax.php","wc_ajax_url":"\/?wc-ajax=%%endpoint%%","fragment_name":"wc_fragments"};
 /* ]]> */
 </script>
-<script type='text/javascript' src='/wp-content/plugins/woocommerce/assets/js/frontend/cart-fragments.min.js?ver=2.6.11'></script>
-<script type='text/javascript' src='/wp-content/themes/storefront/assets/js/navigation.min.js?ver=20120206'></script>
-<script type='text/javascript' src='/wp-content/themes/storefront/assets/js/skip-link-focus-fix.min.js?ver=20130115'></script>
+<script type='text/javascript' src='//52.76.37.90/wp-content/plugins/woocommerce/assets/js/frontend/cart-fragments.min.js?ver=2.6.11'></script>
+<script type='text/javascript' src='http://52.76.37.90/wp-content/themes/storefront/assets/js/navigation.min.js?ver=20120206'></script>
+<script type='text/javascript' src='http://52.76.37.90/wp-content/themes/storefront/assets/js/skip-link-focus-fix.min.js?ver=20130115'></script>
+<script type='text/javascript' src='http://52.76.37.90/wp-content/themes/storefront/assets/js/woocommerce/header-cart.min.js?ver=2.1.6'></script>
+<script type='text/javascript' src='http://52.76.37.90/wp-includes/js/wp-embed.min.js?ver=4.7'></script>
 <script type='text/javascript'>
 /* <![CDATA[ */
-var jpfbembed = {"appid":"249643311490","locale":"en_US"};
+var soliloquy_ajax = {"ajax":"http:\/\/52.76.37.90\/wp-admin\/admin-ajax.php","ajax_nonce":"ca73625f4c"};
 /* ]]> */
 </script>
-<script type='text/javascript' src='/wp-content/plugins/jetpack/_inc/facebook-embed.js'></script>
-<script type='text/javascript' src='/wp-content/themes/storefront/assets/js/woocommerce/header-cart.min.js?ver=2.1.6'></script>
-<script type='text/javascript' src='http://52.76.37.90/wp-includes/js/wp-embed.min.js?ver=4.7'></script>
-<script type='text/javascript' src='http://stats.wp.com/e-201701.js' async defer></script>
-<script type='text/javascript'>
-	_stq = window._stq || [];
-	_stq.push([ 'view', {v:'ext',j:'1:4.4.2',blog:'114041390',post:'0',tz:'0',srv:''} ]);
-	_stq.push([ 'clickTrackerInit', '114041390', '0' ]);
-</script>
-
+<script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/soliloquy/assets/js/min/soliloquy-min.js?ver=2.5.2.8'></script>
+            <script type="text/javascript">
+                if ( typeof soliloquy_slider === 'undefined' || false === soliloquy_slider ) {soliloquy_slider = {};}var soliloquy_width_143 = jQuery('#soliloquy-container-143').width() < 1181 ? 1181 : jQuery('#soliloquy-container-143').width();jQuery('#soliloquy-container-143').css('height', Math.round(soliloquy_width_143/(1181/300))).fadeTo(300, 1);jQuery(document).ready(function($){var soliloquy_container_143 = $('#soliloquy-container-143'),soliloquy_143 = $('#soliloquy-143'),soliloquy_holder_143 = $('#soliloquy-143').find('.soliloquy-preload');if ( 0 !== soliloquy_holder_143.length ) {var soliloquy_src_attr = 'data-soliloquy-src';soliloquy_holder_143.each(function() {var soliloquy_src = $(this).attr(soliloquy_src_attr);if ( typeof soliloquy_src === 'undefined' || false === soliloquy_src ) {return;}var soliloquy_image = new Image();soliloquy_image.src = soliloquy_src;$(this).attr('src', soliloquy_src).removeAttr(soliloquy_src_attr);});}soliloquy_slider['143'] = soliloquy_143.soliloquy({slideSelector: '.soliloquy-item',speed: 400,pause: 5000,auto: 1,keyboard: 1,useCSS: 0,startSlide: 0,autoHover: 1,autoDelay: 0,infiniteLoop: 1,mode: 'horizontal',pager: 1,controls: 1,autoControls: 0,autoControlsCombine: 0,nextText: '',prevText: '',startText: '',stopText: '',onSliderLoad: function(currentIndex){soliloquy_container_143.find('.soliloquy-active-slide').removeClass('soliloquy-active-slide').attr('aria-hidden','true');soliloquy_container_143.css({'height':'auto','background-image':'none'});if ( soliloquy_container_143.find('.soliloquy-slider li').size() > 1 ) {soliloquy_container_143.find('.soliloquy-controls').fadeTo(300, 1);} else {soliloquy_container_143.find('.soliloquy-controls').addClass('soliloquy-hide');}soliloquy_143.find('.soliloquy-item:not(.soliloquy-clone):eq(' + currentIndex + ')').addClass('soliloquy-active-slide').attr('aria-hidden','false');$('.soliloquy-clone .soliloquy-video-holder').remove();soliloquy_container_143.find('.soliloquy-controls-direction').attr('aria-label','carousel buttons').attr('aria-controls', 'soliloquy-container-143');soliloquy_container_143.find('.soliloquy-controls-direction a.soliloquy-prev').attr('aria-label','previous');soliloquy_container_143.find('.soliloquy-controls-direction a.soliloquy-next').attr('aria-label','next');$(window).trigger('resize');soliloquy_container_143.parent().attr('data-soliloquy-loaded', 1);},onSlideBefore: function(element, oldIndex, newIndex, oldelm ){soliloquy_container_143.find('.soliloquy-active-slide').removeClass('soliloquy-active-slide').attr('aria-hidden','true');$(element).addClass('soliloquy-active-slide').attr('aria-hidden','false');},onSlideAfter: function(element, oldIndex, newIndex){}});});            </script>
+            
 </body>
 </html>
 
@@ -712,4 +682,4 @@ var jpfbembed = {"appid":"249643311490","locale":"en_US"};
 Object Caching 0/0 objects using disk
 Page Caching using disk: enhanced
 
- Served from: 52.76.37.90 @ 2017-01-07 12:04:34 by W3 Total Cache -->
+ Served from: 52.76.37.90 @ 2017-01-08 15:50:50 by W3 Total Cache -->

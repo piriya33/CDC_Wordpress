@@ -42,7 +42,9 @@ class AS3CF_Pro_Plugin_Compatibility extends AS3CF_Plugin_Compatibility {
 		add_filter( 'wpos3_compat_addons_notice', array( $this, 'compatibility_addon_notice' ), 10, 2 );
 		add_filter( 'wpos3_compat_addons_notice_args', array( $this, 'compatibility_addon_notice_args' ) );
 
-		$this->plugin_installer = new AS3CF_Pro_Plugin_Installer( 'addons', $this->as3cf->get_plugin_slug( true ), $this->as3cf->get_plugin_file_path() );
+		if ( is_admin() ) {
+			$this->plugin_installer = new AS3CF_Pro_Plugin_Installer( 'addons', $this->as3cf->get_plugin_slug( true ), $this->as3cf->get_plugin_file_path() );
+		}
 	}
 
 	/**
@@ -152,7 +154,8 @@ class AS3CF_Pro_Plugin_Compatibility extends AS3CF_Plugin_Compatibility {
 	 * @return array
 	 */
 	public function compatibility_addon_notice_args( $args ) {
-		$args['class'] = 'as3cf-pro-installer';
+		$args['class']               = 'as3cf-pro-installer';
+		$args['pre_render_callback'] = array( $this->plugin_installer, 'load_installer_assets' );
 
 		return $args;
 	}
