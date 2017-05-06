@@ -14,12 +14,12 @@
  *
  * Do not edit or add to this file if you wish to upgrade WooCommerce Memberships to newer
  * versions in the future. If you wish to customize WooCommerce Memberships for your
- * needs please refer to http://docs.woothemes.com/document/woocommerce-memberships/ for more information.
+ * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @package   WC-Memberships/Frontend/Checkout
  * @author    SkyVerge
  * @category  Frontend
- * @copyright Copyright (c) 2014-2016, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2017, SkyVerge, Inc.
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
@@ -33,6 +33,15 @@ defined( 'ABSPATH' ) or exit;
 class WC_Memberships_Restrictions {
 
 
+	/** @var string The restriction mode as per plugin settings. */
+	private $restriction_mode;
+
+	/** @var bool Whether we are hiding completely products from catalog & search, based on setting. */
+	private $hiding_restricted_products;
+
+	/** @var bool Whether we are showing excerpts on restricted content, based on setting. */
+	private $showing_excerpts;
+
 	/** @var array associative array of content conditions for current user **/
 	private $user_content_access_conditions;
 
@@ -40,7 +49,7 @@ class WC_Memberships_Restrictions {
 	private $content_restriction_applied = array();
 
 	/** @var string Product content restriction password helper **/
-	private $product_restriction_password = null;
+	private $product_restriction_password;
 
 	/** @var bool Product thumbnail removed helper **/
 	private $product_thumbnail_restricted = false;
@@ -52,6 +61,11 @@ class WC_Memberships_Restrictions {
 	 * @since 1.1.0
 	 */
 	public function __construct() {
+
+		// Set restriction mode from options.
+		$this->restriction_mode           = $this->get_restriction_mode();
+		$this->hiding_restricted_products = $this->hiding_restricted_products();
+		$this->showing_excerpts           = $this->showing_excerpts();
 
 		// exclude restricted content (hide restriction mode)
 		add_filter( 'pre_get_posts',  array( $this, 'exclude_restricted_posts' ) );
@@ -72,7 +86,9 @@ class WC_Memberships_Restrictions {
 		add_filter( 'comments_open', array( $this, 'maybe_close_comments' ) );
 
 		// remove restricted comments from comment feeds
-		add_filter( 'the_posts', array( $this, 'exclude_restricted_comments' ), 10, 2 );
+		add_filter( 'the_posts',            array( $this, 'exclude_restricted_comments' ), 10, 2 );
+		// remove restricted comments from comment widget
+		add_filter( 'widget_comments_args', array( $this, 'exclude_restricted_recent_comments' ) );
 
 		// hide prices & thumbnails for view-restricted products
 		add_filter( 'woocommerce_get_price_html',              array( $this, 'hide_restricted_product_price' ), 10, 2 );
@@ -105,6 +121,79 @@ class WC_Memberships_Restrictions {
 
 
 	/**
+	 * Get restriction mode.
+	 *
+	 * @since 1.7.4
+	 * @return string Possible values: 'hide', 'redirect', or 'hide_content'.
+	 */
+	public function get_restriction_mode() {
+
+		$default_mode = 'hide_content';
+
+		if ( null === $this->restriction_mode ) {
+			$this->restriction_mode = get_option( 'wc_memberships_restriction_mode', $default_mode );
+		}
+
+		return in_array( $this->restriction_mode, array( 'hide_content', 'hide', 'redirect' ), true ) ? $this->restriction_mode : $default_mode;
+	}
+
+
+	/**
+	 * Check which restriction mode is being used.
+	 *
+	 * @since 1.7.4
+	 * @param string|array $mode Compare with one (string) or more modes (array).
+	 * @return bool
+	 */
+	public function is_restriction_mode( $mode ) {
+		return is_array( $mode ) ? in_array( $this->get_restriction_mode(), $mode, true ) : $mode === $this->restriction_mode;
+	}
+
+
+	/**
+	 * Get the redirect page ID used when in 'redirect' restriction mode.
+	 *
+	 * @since 1.7.4
+	 * @return int
+	 */
+	public function get_restricted_content_redirect_page_id() {
+		return (int) get_option( 'wc_memberships_redirect_page_id' );
+	}
+
+
+	/**
+	 * Whether it is chosen in settings to hide restricted products from catalog and search.
+	 *
+	 * @since 1.7.4
+	 * @return bool
+	 */
+	public function hiding_restricted_products() {
+
+		if ( null === $this->hiding_restricted_products ) {
+			$this->hiding_restricted_products = 'yes' === get_option( 'wc_memberships_hide_restricted_products' );
+		}
+
+		return $this->hiding_restricted_products;
+	}
+
+
+	/**
+	 * Check whether an option is set to show excerpts for restricted content.
+	 *
+	 * @since 1.7.4
+	 * @return bool
+	 */
+	public function showing_excerpts() {
+
+		if ( null === $this->showing_excerpts ) {
+			$this->showing_excerpts = 'yes' === get_option( 'wc_memberships_show_excerpts' );
+		}
+
+		return $this->showing_excerpts;
+	}
+
+
+	/**
 	 * Hide restricted posts/products based on content/product restriction rules
 	 *
 	 * This method works by modifying the $query object directly.
@@ -118,27 +207,28 @@ class WC_Memberships_Restrictions {
 	 */
 	public function exclude_restricted_posts( WP_Query $wp_query ) {
 
-		// restriction mode is "hide completely"
-		if ( 'hide' === get_option( 'wc_memberships_restriction_mode' ) ) {
+		// Restriction mode is set to "hide completely":
+		if ( $this->is_restriction_mode( 'hide' ) ) {
 
 			$restricted_posts = $this->get_user_restricted_posts();
 
-			// exclude restricted posts and products from queries
+			// Exclude restricted posts and products from queries.
 			if ( ! empty( $restricted_posts ) ) {
 
 				$exclude = array_merge( $wp_query->get('post__not_in'), $restricted_posts );
+
 				$wp_query->set('post__not_in', $exclude );
 			}
 
-		// products should be hidden in the catalog && search
-		} elseif ( 'yes' === get_option( 'wc_memberships_hide_restricted_products' )
-		           && 'product_query' === $wp_query->get( 'wc_query' ) ) {
+		// Products should be hidden in the catalog && search if option is set:
+		} elseif ( $this->hiding_restricted_products() && 'product_query' === $wp_query->get( 'wc_query' ) ) {
 
 			$conditions = $this->get_user_content_access_conditions();
 
 			if ( isset( $conditions['restricted']['posts']['product'] ) ) {
 
 				$exclude = array_merge( $wp_query->get('post__not_in'), $conditions['restricted']['posts']['product'] );
+
 				$wp_query->set('post__not_in', $exclude );
 			}
 		}
@@ -154,8 +244,8 @@ class WC_Memberships_Restrictions {
 	 */
 	public function exclude_restricted_pages( $pages ) {
 
-		// sanity check: if restriction mode is not "hide", return all pages
-		if ( 'hide' !== get_option( 'wc_memberships_restriction_mode' ) ) {
+		// Sanity check: if restriction mode is not to "hide completely", return all pages.
+		if ( ! $this->is_restriction_mode( 'hide' ) ) {
 			return $pages;
 		}
 
@@ -184,9 +274,12 @@ class WC_Memberships_Restrictions {
 	 */
 	public function posts_clauses( $pieces, WP_Query $wp_query ) {
 
-		// sanity check: if restriction mode is not "hide", return all posts
-		if ( 'hide' !== get_option( 'wc_memberships_restriction_mode' )
-		     && ! ( 'yes' === get_option( 'wc_memberships_hide_restricted_products' ) && 'product_query' === $wp_query->get('wc_query') ) ) {
+		// Sanity check:
+		// - we are on products query;
+		// - restriction mode is not "hide" completely;
+		// - we are not hiding restricted products from archive & search;
+		if (    ! $this->is_restriction_mode( 'hide' )
+		     && ! ( $this->hiding_restricted_products() && 'product_query' === $wp_query->get('wc_query') ) ) {
 
 			return $pieces;
 		}
@@ -195,14 +288,13 @@ class WC_Memberships_Restrictions {
 
 		$conditions = $this->get_user_content_access_conditions();
 
-		// Exclude restricted post types
+		// Exclude restricted post types.
 		if ( ! empty( $conditions['restricted']['post_types'] ) ) {
 
 			$post_type_taxonomies = $this->get_taxonomies_for_post_types( $conditions['restricted']['post_types'] );
-
-			$granted_posts      = $this->get_user_granted_posts( $conditions['restricted']['post_types'] );
-			$granted_terms      = $this->get_user_granted_terms( $post_type_taxonomies );
-			$granted_taxonomies = array_intersect( $conditions['granted']['taxonomies'], $post_type_taxonomies );
+			$granted_posts        = $this->get_user_granted_posts( $conditions['restricted']['post_types'] );
+			$granted_terms        = $this->get_user_granted_terms( $post_type_taxonomies );
+			$granted_taxonomies   = array_intersect( $conditions['granted']['taxonomies'], $post_type_taxonomies );
 
 			// Phew! that was easy - no special cases here. Simply restrict access to all the restricted post types
 			if ( empty( $granted_posts ) && empty( $granted_terms ) && empty( $granted_taxonomies ) ) {
@@ -389,8 +481,8 @@ class WC_Memberships_Restrictions {
 	 */
 	public function get_terms_args( $args, $taxonomies ) {
 
-		// Sanity check: if restriction mode is not "hide", return all posts
-		if ( 'hide' !== get_option( 'wc_memberships_restriction_mode' ) ) {
+		// Sanity check: if restriction mode is not to "hide all content", return all posts.
+		if ( ! $this->is_restriction_mode( 'hide' ) ) {
 			return $args;
 		}
 
@@ -421,8 +513,8 @@ class WC_Memberships_Restrictions {
 	 */
 	public function terms_clauses( $pieces, $taxonomies, $args ) {
 
-		// Sanity check: if restriction mode is not "hide", return all posts
-		if ( 'hide' !== get_option( 'wc_memberships_restriction_mode' ) ) {
+		// Sanity check: if restriction mode is not "hide all content", return all posts.
+		if ( ! $this->is_restriction_mode( 'hide' ) ) {
 			return $pieces;
 		}
 
@@ -494,8 +586,8 @@ class WC_Memberships_Restrictions {
 	public function hide_invisible_variations( $is_visible, $product_id, $variation ) {
 
 		// exclude restricted variations
-		if (    ! current_user_can( 'wc_memberships_view_restricted_product', $variation->id )
-		     && ! current_user_can( 'wc_memberships_view_delayed_product',    $variation->id ) ) {
+		if (    ! current_user_can( 'wc_memberships_view_restricted_product', $variation->get_id() )
+		     && ! current_user_can( 'wc_memberships_view_delayed_product',    $variation->get_id() ) ) {
 
 			$is_visible = false;
 		}
@@ -505,35 +597,41 @@ class WC_Memberships_Restrictions {
 
 
 	/**
-	 * Redirect restricted content/products based on content/product restriction rules
+	 * Redirect restricted content/products based on content/product restriction rules.
 	 *
 	 * @since 1.0.0
-	 * @return string
 	 */
 	public function redirect_restricted_content() {
 
-		if ( 'redirect' !== get_option( 'wc_memberships_restriction_mode' ) ) {
+		// Bail out if restriction mode is not to redirect to page.
+		if ( ! $this->is_restriction_mode( 'redirect' ) ) {
 			return;
 		}
 
-		if ( is_singular() && ! is_user_logged_in() ) {
+		if ( is_singular() ) {
 			global $post;
 
 			if ( in_array( $post->post_type, array( 'product', 'product_variation' ), true ) ) {
-				// product is restricted
+				// Product is restricted:
 				$restricted = wc_memberships_is_product_viewing_restricted() && ! current_user_can( 'wc_memberships_view_restricted_product',      $post->ID );
 			} else {
-				// post is restricted
+				// Post is restricted:
 				$restricted = wc_memberships_is_post_content_restricted()    && ! current_user_can( 'wc_memberships_view_restricted_post_content', $post->ID );
 			}
 
 			if ( $restricted ) {
 
-				$redirect_page_id = get_option( 'wc_memberships_redirect_page_id' );
-				$redirect_url     = add_query_arg(
-					array( 'r' => $post->ID ),
-					$redirect_page_id ? get_permalink( $redirect_page_id ) : home_url()
-				);
+				$redirect_page_id   = $this->get_restricted_content_redirect_page_id();
+				$redirect_permalink = $redirect_page_id > 0 ? get_permalink( $redirect_page_id ) : null;
+				$redirect_args      = array( 'r' => $post->ID );
+
+				// Account for when My Account is used as the Redirect Page
+				if ( $redirect_permalink && $redirect_page_id === wc_get_page_id( 'myaccount' ) ) {
+					$redirect_args['wcm_redirect_to'] = is_page( $post ) ? 'page' : 'post';
+					$redirect_args['wcm_redirect_id'] = $post->ID;
+				}
+
+				$redirect_url       = add_query_arg( $redirect_args, ! $redirect_permalink ? home_url() : $redirect_permalink );
 
 				wp_redirect( $redirect_url );
 				exit;
@@ -546,11 +644,11 @@ class WC_Memberships_Restrictions {
 	 * Hide restricted content/product comments
 	 *
 	 * @since 1.0.0
-	 * @return string
 	 */
 	public function hide_restricted_content_comments() {
 
-		if ( 'hide_content' !== get_option( 'wc_memberships_restriction_mode' ) ) {
+		// Bail out if content restriction mode is not 'hide_content' only.
+		if ( ! $this->is_restriction_mode( 'hide_content' ) ) {
 			return;
 		}
 
@@ -558,15 +656,14 @@ class WC_Memberships_Restrictions {
 			global $post, $wp_query;
 
 			if ( in_array( $post->post_type, array( 'product', 'product_variation' ), true ) ) {
-				// product is restricted
+				// Product is restricted:
 				$restricted = wc_memberships_is_product_viewing_restricted() && ! current_user_can( 'wc_memberships_view_restricted_product',      $post->ID );
 			} else {
-				// post is restricted
+				// Post is restricted:
 				$restricted = wc_memberships_is_post_content_restricted()    && ! current_user_can( 'wc_memberships_view_restricted_post_content', $post->ID );
 			}
 
 			if ( $restricted ) {
-
 				$wp_query->comment_count   = 0;
 				$wp_query->current_comment = 999999;
 			}
@@ -603,7 +700,7 @@ class WC_Memberships_Restrictions {
 
 				if ( ! in_array( $post->ID, $this->content_restriction_applied, true ) ) {
 
-					if ( 'yes' === get_option( 'wc_memberships_show_excerpts' ) ) {
+					if ( $this->showing_excerpts() ) {
 						$content = get_the_excerpt();
 					}
 
@@ -620,7 +717,7 @@ class WC_Memberships_Restrictions {
 
 				if ( ! in_array( $post->ID, $this->content_restriction_applied, true ) ) {
 
-					if ( 'yes' === get_option( 'wc_memberships_show_excerpts' ) ) {
+					if ( $this->showing_excerpts() ) {
 						$content = get_the_excerpt();
 					}
 
@@ -713,18 +810,70 @@ class WC_Memberships_Restrictions {
 
 
 	/**
-	 * Hide price if a product is view-restricted in "hide content" mode
+	 * Filter the recent comments widget args to prevent displaying comments from restricted posts
+	 *
+	 * @internal
+	 *
+	 * @since 1.8.2
+	 *
+	 * @param array $args
+	 *
+	 * @return array
+	 */
+	public function exclude_restricted_recent_comments( $args ) {
+
+		if ( ! empty( $args ) ) {
+
+			if ( ! isset( $args['comment__in'] ) ) {
+				$args['comment__in'] = array();
+			}
+
+			remove_filter( 'widget_comments_args', array( $this, 'exclude_restricted_recent_comments' ) );
+
+			/** @var \WP_Comment[] $comments */
+			$comments = get_comments( $args );
+
+			add_filter( 'widget_comments_args', array( $this, 'exclude_restricted_recent_comments' ) );
+
+			foreach ( $comments as $comment ) {
+
+				$post_id = (int) $comment->comment_post_ID;
+
+				if ( in_array( get_post_type( $post_id ), array( 'product', 'product_variation' ), true ) ) {
+					// products
+					$can_view = current_user_can( 'wc_memberships_view_restricted_product', $post_id );
+				} else {
+					// posts
+					$can_view = current_user_can( 'wc_memberships_view_restricted_post_content', $post_id );
+				}
+
+				if ( $can_view ) {
+					$args['comment__in'][] = (int) $comment->comment_ID;
+				}
+			}
+
+			// comment__in must be non empty in order to work for us here
+			if ( empty( $args['comment__in'] ) ) {
+				$args['comment__in'] = array( 0 );
+			}
+		}
+
+		return $args;
+	}
+
+
+	/**
+	 * Hide price if a product is view-restricted in "hide content" mode.
 	 *
 	 * @since 1.0.0
-	 * @param string $price
-	 * @param \WC_Product $product
-	 * @return string
+	 * @param string $price Price label.
+	 * @param \WC_Product $product Product being restricted.
+	 * @return string Maybe the price to be shown or empty string if user can't see it.
 	 */
 	public function hide_restricted_product_price ( $price, WC_Product $product ) {
 
-		if (      'hide_content' === get_option( 'wc_memberships_restriction_mode' )
-		     && ! current_user_can( 'wc_memberships_view_restricted_product', $product->id ) ) {
-
+		// Bail out if user has not capability to view the restricted product (and thus its price).
+		if ( $this->is_restriction_mode( 'hide_content' ) && ! current_user_can( 'wc_memberships_view_restricted_product', $product->get_id() ) ) {
 			$price = '';
 		}
 
@@ -733,7 +882,7 @@ class WC_Memberships_Restrictions {
 
 
 	/**
-	 * Remove product thumbnail in "hide content" mode
+	 * Remove product thumbnail in "hide content" mode.
 	 *
 	 * @since 1.0.0
 	 */
@@ -742,20 +891,20 @@ class WC_Memberships_Restrictions {
 
 		$this->product_thumbnail_restricted = false;
 
-		// skip if the product thumbnail is not shown anyway
+		// Skip if the product thumbnail is not shown anyway.
 		if ( ! has_action( 'woocommerce_before_shop_loop_item_title', 'woocommerce_template_loop_product_thumbnail' ) ) {
 			return;
 		}
 
-		// if in hide content mode and current user is not allowed
-		// to see the product thumbnail, remove it
-		if ( 'hide_content' === get_option( 'wc_memberships_restriction_mode' )
+		// If in hide content mode and current user is not allowed to see
+		// the product thumbnail, remove it from output
+		if (    $this->is_restriction_mode( 'hide_content' )
 		     && ( ! current_user_can( 'wc_memberships_view_restricted_product', $post->ID ) || ! current_user_can( 'wc_memberships_view_delayed_product', $post->ID ) ) ) {
 
-			// indicate that we removed the product thumbnail
+			// Flag that we removed the product thumbnail.
 			$this->product_thumbnail_restricted = true;
 
-			// remove the product thumbnail and replace it with the placeholder image
+			// Remove the product thumbnail and replace it with a placeholder image.
 			remove_action( 'woocommerce_before_shop_loop_item_title', 'woocommerce_template_loop_product_thumbnail' );
 			add_action( 'woocommerce_before_shop_loop_item_title', array( $this, 'template_loop_product_thumbnail_placeholder' ), 10 );
 		}
@@ -779,7 +928,7 @@ class WC_Memberships_Restrictions {
 
 
 	/**
-	 * Return an array of product categories ids to be excluded
+	 * Return an array of product categories ids to be excluded.
 	 *
 	 * @since 1.7.1
 	 * @param array $args Arguments to pass to get_terms()
@@ -796,8 +945,8 @@ class WC_Memberships_Restrictions {
 
 		$exclude_tree = array();
 
-		// if we are not hiding products completely we can safely list categories
-		if ( ! empty( $product_categories ) && 'yes' === get_option( 'wc_memberships_hide_restricted_products' ) ) {
+		// If we are not hiding products completely we can safely list categories.
+		if ( ! empty( $product_categories ) && $this->hiding_restricted_products() ) {
 
 			foreach ( $product_categories as $product_category_id ) {
 
@@ -889,13 +1038,13 @@ class WC_Memberships_Restrictions {
 
 			if ( ! current_user_can( 'wc_memberships_view_restricted_product', $post->ID ) ) {
 
-				$post->post_password = $this->product_restriction_password = uniqid( 'wc_memberships_restricted_' );
+				$post->post_password = $this->product_restriction_password = uniqid( 'wc_memberships_restricted_', false );
 
 				add_filter( 'the_password_form', array( $this, 'restrict_product_content' ) );
 
 			} elseif ( ! current_user_can( 'wc_memberships_view_delayed_product', $post->ID ) ) {
 
-				$post->post_password = $this->product_restriction_password = uniqid( 'wc_memberships_delayed_' );
+				$post->post_password = $this->product_restriction_password = uniqid( 'wc_memberships_delayed_', false );
 
 				add_filter( 'the_password_form', array( $this, 'restrict_product_content' ) );
 			}
@@ -904,10 +1053,10 @@ class WC_Memberships_Restrictions {
 
 
 	/**
-	 * Restrict product content
+	 * Restrict product content.
 	 *
 	 * @since 1.0.0
-	 * @param string $output The content being restricted
+	 * @param string $output The content being restricted.
 	 * @return string
 	 */
 	public function restrict_product_content( $output ) {
@@ -915,10 +1064,10 @@ class WC_Memberships_Restrictions {
 
 		if ( $this->product_restriction_password && $this->product_restriction_password === $post->post_password ) {
 
-			// user does not have access, filter the content
+			// User does not have access, filter the content.
 			$output = '';
 
-			if ( 'yes' === get_option( 'wc_memberships_show_excerpts' ) ) {
+			if ( $this->showing_excerpts() ) {
 
 				ob_start();
 
@@ -959,7 +1108,7 @@ class WC_Memberships_Restrictions {
 	 */
 	public function product_is_purchasable( $purchasable, $product ) {
 
-		$product_id = SV_WC_Plugin_Compatibility::product_get_id( $product );
+		$product_id = $product->get_id();
 
 		// product is not purchasable if the current user can't view or purchase
 		// the product, or they do not have access yet (due to dripping)
@@ -974,7 +1123,8 @@ class WC_Memberships_Restrictions {
 		// if parent is not purchasable, then neither should be the variation
 		if ( $purchasable && $product->is_type( array( 'variation', 'subscription_variation' ) ) ) {
 
-			$purchasable = $product->parent->is_purchasable();
+			$parent      = SV_WC_Product_Compatibility::get_parent( $product );
+			$purchasable = $parent instanceof WC_Product ? $parent->is_purchasable() : $purchasable;
 		}
 
 		return $purchasable;
@@ -982,18 +1132,18 @@ class WC_Memberships_Restrictions {
 
 
 	/**
-	 * Restrict product visibility in catalog based on restriction rules
+	 * Restrict product visibility in catalog based on restriction rules.
 	 *
 	 * @since 1.0.0
-	 * @param bool $visible whether the product is visible
-	 * @param int $product_id the product id
+	 * @param bool $visible Whether the product is visible.
+	 * @param int $product_id The product id.
 	 * @return bool
 	 */
 	public function product_is_visible( $visible, $product_id ) {
 
-		if (      'yes' === get_option( 'wc_memberships_hide_restricted_products' )
-		     && ! current_user_can( 'wc_memberships_view_restricted_product', $product_id ) ) {
-
+		// If we are hiding products from catalog & search and user has
+		// no matching capability, then the product shall not be visible.
+		if ( $this->hiding_restricted_products() && ! current_user_can( 'wc_memberships_view_restricted_product', $product_id ) ) {
 			$visible = false;
 		}
 
@@ -1007,23 +1157,27 @@ class WC_Memberships_Restrictions {
 	 * @since 1.0.0
 	 */
 	public function single_product_purchasing_restricted_message() {
+		/** @type \WC_Product $product */
 		global $product;
 
-		if ( ! current_user_can( 'wc_memberships_purchase_restricted_product', $product->id ) ) {
+		$product_id = $product instanceof WC_Product ? $product->get_id() : 0;
+
+		if ( ! current_user_can( 'wc_memberships_purchase_restricted_product', $product_id ) ) {
 
 			// purchasing is restricted
-			echo '<div class="woocommerce"><div class="woocommerce-info wc-memberships-restriction-message wc-memberships-product-purchasing-restricted-message">' . wp_kses_post( wc_memberships()->get_frontend_instance()->get_product_purchasing_restricted_message( $product->id ) ) . '</div></div>';
+			echo '<div class="woocommerce"><div class="woocommerce-info wc-memberships-restriction-message wc-memberships-product-purchasing-restricted-message">' . wp_kses_post( wc_memberships()->get_frontend_instance()->get_product_purchasing_restricted_message( $product_id ) ) . '</div></div>';
 
-		} elseif ( ! current_user_can( 'wc_memberships_purchase_delayed_product', $product->id ) ) {
+		} elseif ( ! current_user_can( 'wc_memberships_purchase_delayed_product', $product_id ) ) {
 
-				// purchasing is delayed
-			echo '<div class="woocommerce"><div class="woocommerce-info wc-memberships-restriction-message wc-memberships-product-purchasing-delayed-message">' . wp_kses_post( wc_memberships()->get_frontend_instance()->get_content_delayed_message( get_current_user_id(), $product->id, 'purchase' ) ) . '</div></div>';
+			// purchasing is delayed
+			echo '<div class="woocommerce"><div class="woocommerce-info wc-memberships-restriction-message wc-memberships-product-purchasing-delayed-message">' . wp_kses_post( wc_memberships()->get_frontend_instance()->get_content_delayed_message( get_current_user_id(), $product_id, 'purchase' ) ) . '</div></div>';
 
 		} elseif ( $product->is_type( 'variable' ) && $product->has_child() ) {
 
 			// variation-specific messages
 			$variations_restricted = false;
 
+			/* @type \WC_Product_Variable $product */
 			foreach ( $product->get_available_variations() as $variation ) {
 
 				if ( ! $variation['is_purchasable'] ) {
@@ -1071,13 +1225,12 @@ class WC_Memberships_Restrictions {
 	 * @since 1.0.0
 	 */
 	public function single_product_member_discount_message() {
-
 		global $product;
 
 		// if the main/parent product needs the message, just display it normally
 		if ( wc_memberships_product_has_member_discount() && ! wc_memberships_user_has_member_discount() ) {
 
-			if ( $message = wc_memberships()->get_frontend_instance()->get_member_discount_message( $product->id ) ) {
+			if ( $message = wc_memberships()->get_frontend_instance()->get_member_discount_message( $product->get_id() ) ) {
 				echo '<div class="woocommerce"><div class="woocommerce-info wc-memberships-member-discount-message">' . wp_kses_post( $message ) . '</div></div>';
 			}
 
@@ -1086,6 +1239,7 @@ class WC_Memberships_Restrictions {
 
 			$variations_discounted = false;
 
+			/* @type \WC_Product_Variable $product */
 			foreach ( $product->get_available_variations() as $variation ) {
 
 				$variation_id = $variation['variation_id'];
@@ -1257,15 +1411,16 @@ class WC_Memberships_Restrictions {
 					// find posts that are either restricted or granted access to
 					if ( 'post_type' === $rule->get_content_type() && $rule->has_objects() ) {
 
-						$post_type = $rule->get_content_type_name();
-						$post_ids  = array();
+						$post_type  = $rule->get_content_type_name();
+						$post_ids   = array();
+						$object_ids = $rule->get_object_ids();
 
 						// leave out posts that have restrictions disabled
-						foreach ( $rule->get_object_ids() as $post_id ) {
-
-							if ( 'yes' !== get_post_meta( $post_id, '_wc_memberships_force_public', true ) ) {
-
-								$post_ids[] = $post_id;
+						if ( is_array( $object_ids ) ) {
+							foreach ( $rule->get_object_ids() as $post_id ) {
+								if ( 'yes' !== wc_memberships_get_content_meta( $post_id, '_wc_memberships_force_public', true ) ) {
+									$post_ids[] = $post_id;
+								}
 							}
 						}
 
@@ -1448,8 +1603,8 @@ class WC_Memberships_Restrictions {
 		if ( is_string( $content_type_name ) ) {
 
 			return isset( $conditions[ $condition ][ $content_type ][ $content_type_name ] )
-					 ? $conditions[ $condition ][ $content_type ][ $content_type_name ]
-					 : null;
+				? $conditions[ $condition ][ $content_type ][ $content_type_name ]
+				: null;
 		}
 
 		$objects = array();

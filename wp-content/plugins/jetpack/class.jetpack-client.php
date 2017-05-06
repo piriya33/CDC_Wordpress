@@ -20,6 +20,7 @@ class Jetpack_Client {
 			'headers' => array(),
 			'stream' => false,
 			'filename' => null,
+			'sslverify' => true,
 		);
 
 		$args = wp_parse_args( $args, $defaults );
@@ -42,8 +43,9 @@ class Jetpack_Client {
 		$redirection = $args['redirection'];
 		$stream = $args['stream'];
 		$filename = $args['filename'];
+		$sslverify = $args['sslverify'];
 
-		$request = compact( 'method', 'body', 'timeout', 'redirection', 'stream', 'filename' );
+		$request = compact( 'method', 'body', 'timeout', 'redirection', 'stream', 'filename', 'sslverify' );
 
 		@list( $token_key, $secret ) = explode( '.', $token->secret );
 		if ( empty( $token ) || empty( $secret ) ) {
@@ -130,9 +132,14 @@ class Jetpack_Client {
 			'Authorization' => "X_JETPACK " . join( ' ', $header_pieces ),
 		) );
 
-		// Make sure we keep the host when we do JETPACK__WPCOM_JSON_API_HOST requests.
 		$host = parse_url( $url, PHP_URL_HOST );
-		if ( $host === JETPACK__WPCOM_JSON_API_HOST ) {
+
+		// If we have a JETPACK__WPCOM_JSON_API_HOST_HEADER set, then let's use
+		// that, otherwise, let's fallback to the standard.
+		if ( defined( 'JETPACK__WPCOM_JSON_API_HOST_HEADER' ) && JETPACK__WPCOM_JSON_API_HOST_HEADER ) {
+			$request['headers']['Host'] = JETPACK__WPCOM_JSON_API_HOST_HEADER;
+
+		} elseif ( $host === JETPACK__WPCOM_JSON_API_HOST ) {
 			$request['headers']['Host'] = 'public-api.wordpress.com';
 		}
 
@@ -276,6 +283,7 @@ class Jetpack_Client {
 			'redirection' => 'int',
 			'stream'      => 'boolean',
 			'filename'    => 'string',
+			'sslverify'   => 'boolean',
 		) );
 
 		/**
@@ -291,11 +299,7 @@ class Jetpack_Client {
 		$_path = preg_replace( '/^\//', '', $path );
 
 		// Use GET by default whereas `remote_request` uses POST
-		if ( isset( $filtered_args['method'] ) && strtoupper( $filtered_args['method'] === 'POST' ) ) {
-			$request_method = 'POST';
-		} else {
-			$request_method = 'GET';
-		}
+		$request_method = ( isset( $filtered_args['method'] ) ) ? $filtered_args['method'] : 'GET';
 
 		$validated_args = array_merge( $filtered_args, array(
 			'url'     => sprintf( '%s://%s/rest/v%s/%s', $proto, JETPACK__WPCOM_JSON_API_HOST, $version, $_path ),

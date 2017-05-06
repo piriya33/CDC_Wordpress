@@ -14,12 +14,12 @@
  *
  * Do not edit or add to this file if you wish to upgrade WooCommerce Memberships to newer
  * versions in the future. If you wish to customize WooCommerce Memberships for your
- * needs please refer to http://docs.woothemes.com/document/woocommerce-memberships/ for more information.
+ * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @package   WC-Memberships/Admin/Meta-Boxes
  * @author    SkyVerge
  * @category  Admin
- * @copyright Copyright (c) 2014-2016, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2017, SkyVerge, Inc.
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
@@ -54,8 +54,10 @@ class WC_Memberships_Meta_Box_View_Purchasing_Discount_Rule extends WC_Membershi
 
 						<?php if ( $this->rule->current_user_can_edit() && $this->rule->current_context_allows_editing() ) : ?>
 
-							<input type="checkbox"
-							       id="_purchasing_discount_rules_<?php echo esc_attr( $index ); ?>_checkbox"  />
+							<input
+								type="checkbox"
+								id="_purchasing_discount_rules_<?php echo esc_attr( $index ); ?>_checkbox"
+							/>
 
 						<?php endif; ?>
 
@@ -140,32 +142,57 @@ class WC_Memberships_Meta_Box_View_Purchasing_Discount_Rule extends WC_Membershi
 						<p class="form-field">
 							<label for="_purchasing_discount_rules<?php echo esc_attr( $index ); ?>_object_ids"><?php esc_html_e( 'Title', 'woocommerce-memberships' ); ?>:</label>
 
-							<input
-								type="hidden"
-								name="_purchasing_discount_rules[<?php echo esc_attr( $index ); ?>][object_ids]"
-								id="_purchasing_discount_rules_<?php echo esc_attr( $index ); ?>_object_ids"
-								class="wc-memberships-object-search js-object-ids"
-								style="width: 50%;"
-								data-placeholder="<?php esc_attr_e( 'Search&hellip; or leave blank to apply to all', 'woocommerce-memberships' ); ?>"
-								data-action="<?php echo esc_attr( $this->rule->get_object_search_action_name() ); ?>"
-								data-multiple="true"
-								data-selected="<?php
-							       $json_ids = array();
+							<?php if ( SV_WC_Plugin_Compatibility::is_wc_version_gte_3_0() ) : ?>
 
-							       if ( $this->rule->has_objects() ) {
+								<select
+									name="_purchasing_discount_rules[<?php echo esc_attr( $index ); ?>][object_ids][]"
+									id="_purchasing_discount_rules_<?php echo esc_attr( $index ); ?>_object_ids"
+									class="wc-memberships-object-search js-object-ids"
+									style="width: 50%;"
+									multiple="multiple"
+									data-placeholder="<?php esc_attr_e( 'Search&hellip; or leave blank to apply to all', 'woocommerce-memberships' ); ?>"
+									data-action="<?php echo esc_attr( $this->rule->get_object_search_action_name() ); ?>"
+									<?php if ( ! $this->rule->current_user_can_edit() ) : ?>disabled<?php endif; ?>>
+									<?php if ( $this->rule->has_objects() ) : ?>
+										<?php foreach ( $this->rule->get_object_ids() as $object_id ) : ?>
+											<?php if ( $this->rule->get_object_label( $object_id ) ) : ?>
+												<option value="<?php echo $object_id; ?>" selected><?php echo esc_html( $this->rule->get_object_label( $object_id ) ); ?></option>
+											<?php endif; ?>
+										<?php endforeach; ?>
+									<?php endif; ?>
+								</select>
 
-								       foreach ( $this->rule->get_object_ids() as $object_id ) {
+							<?php else : ?>
 
-									       if ( $this->rule->get_object_label( $object_id ) ) {
-										       $json_ids[ $object_id ] = wp_kses_post( html_entity_decode( $this->rule->get_object_label( $object_id ) ) );
-									       }
-								       }
-							       }
+								<input
+									type="hidden"
+									name="_purchasing_discount_rules[<?php echo esc_attr( $index ); ?>][object_ids]"
+									id="_purchasing_discount_rules_<?php echo esc_attr( $index ); ?>_object_ids"
+									class="wc-memberships-object-search js-object-ids"
+									style="width: 50%;"
+									data-placeholder="<?php esc_attr_e( 'Search&hellip; or leave blank to apply to all', 'woocommerce-memberships' ); ?>"
+									data-action="<?php echo esc_attr( $this->rule->get_object_search_action_name() ); ?>"
+									data-multiple="true"
+									data-selected="<?php
+										$json_ids = array();
 
-							       echo esc_attr( wc_memberships_json_encode( $json_ids ) );?>"
-								value="<?php echo esc_attr( implode( ',', array_keys( $json_ids ) ) ); ?>"
-								<?php if ( ! $this->rule->current_user_can_edit() ) : ?>disabled<?php endif; ?>
-							/>
+										if ( $this->rule->has_objects() ) {
+
+											foreach ( $this->rule->get_object_ids() as $object_id ) {
+
+												if ( $this->rule->get_object_label( $object_id ) ) {
+													$json_ids[ $object_id ] = wp_kses_post( html_entity_decode( $this->rule->get_object_label( $object_id ) ) );
+												}
+											}
+										}
+
+										echo esc_attr( wp_json_encode( $json_ids ) );?>"
+									value="<?php echo esc_attr( implode( ',', array_keys( $json_ids ) ) ); ?>"
+									<?php if ( ! $this->rule->current_user_can_edit() ) : ?>disabled<?php endif; ?>
+								/>
+
+							<?php endif; ?>
+
 						</p>
 					</td>
 

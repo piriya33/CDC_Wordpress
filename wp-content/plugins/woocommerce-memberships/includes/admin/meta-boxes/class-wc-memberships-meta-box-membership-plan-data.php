@@ -14,12 +14,12 @@
  *
  * Do not edit or add to this file if you wish to upgrade WooCommerce Memberships to newer
  * versions in the future. If you wish to customize WooCommerce Memberships for your
- * needs please refer to http://docs.woothemes.com/document/woocommerce-memberships/ for more information.
+ * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @package   WC-Memberships/Admin/Meta-Boxes
  * @author    SkyVerge
  * @category  Admin
- * @copyright Copyright (c) 2014-2016, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2017, SkyVerge, Inc.
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
@@ -286,16 +286,12 @@ class WC_Memberships_Meta_Box_Membership_Plan_Data extends WC_Memberships_Meta_B
 		<div id="membership-plan-data-general" class="panel woocommerce_options_panel">
 
 			<div class="options_group">
-				<?php
-
-				// membership plan slug
+				<?php // membership plan slug
 				woocommerce_wp_text_input( array(
 					'id' => 'post_name',
 					'label' => __( 'Slug', 'woocommerce-memberships' ),
 					'value' => $post->post_name,
-				) );
-
-				?>
+				) ); ?>
 			</div>
 
 			<div class="options_group">
@@ -326,7 +322,7 @@ class WC_Memberships_Meta_Box_Membership_Plan_Data extends WC_Memberships_Meta_B
 
 						endforeach;
 
-						echo SV_WC_Plugin_Compatibility::wc_help_tip( __( 'Choose how customers will gain access to this membership plan. Memberships can always be manually assigned.', 'woocommerce-memberships' ) );
+						echo wc_help_tip( __( 'Choose how customers will gain access to this membership plan. Memberships can always be manually assigned.', 'woocommerce-memberships' ) );
 
 						?>
 					</span>
@@ -335,31 +331,53 @@ class WC_Memberships_Meta_Box_Membership_Plan_Data extends WC_Memberships_Meta_B
 				<p class="form-field js-show-if-access-method-purchase <?php if ( 'purchase' !== $current_access_type ) : ?>hide<?php endif; ?>">
 					<label for="_product_ids"><?php esc_html_e( 'Products', 'woocommerce-memberships' ); ?></label>
 
-					<input
-						type="hidden"
-						name="_product_ids"
-						id="_product_ids"
-						class="js-ajax-select-products"
-						style="width: 50%;"
-						data-placeholder="<?php esc_attr_e( 'Search for a product&hellip;', 'woocommerce-memberships' ); ?>"
-						data-multiple="true"
-						data-selected="<?php
-					       $product_ids = array_filter( array_map( 'absint', $membership_plan->get_product_ids() ) );
-					       $json_ids    = array();
+					<?php if ( SV_WC_Plugin_Compatibility::is_wc_version_gte_3_0() ) : ?>
 
-					       foreach ( $product_ids as $product_id ) {
+						<select
+							name="_product_ids[]"
+							id="_product_ids"
+							class="js-ajax-select-products"
+							style="width: 50%;"
+							multiple="multiple"
+							data-placeholder="<?php esc_attr_e( 'Search for a product&hellip;', 'woocommerce-memberships' ); ?>">
+							<?php $product_ids = $membership_plan->get_product_ids(); ?>
+							<?php foreach ( $product_ids as $product_id ) : ?>
+								<?php if ( $product = wc_get_product( $product_id ) ) : ?>
+									<option value="<?php echo $product_id; ?>" selected><?php echo esc_html( $product->get_formatted_name() ); ?></option>
+								<?php endif; ?>
+							<?php endforeach; ?>
+						</select>
 
-						       $product = wc_get_product( $product_id );
+					<?php else : ?>
 
-						       if ( is_object( $product ) ) {
-							       $json_ids[ $product_id ] = wp_kses_post( html_entity_decode( $product->get_formatted_name() ) );
-						       }
-					       }
+						<input
+							type="hidden"
+							name="_product_ids"
+							id="_product_ids"
+							class="js-ajax-select-products"
+							style="width: 50%;"
+							data-placeholder="<?php esc_attr_e( 'Search for a product&hellip;', 'woocommerce-memberships' ); ?>"
+							data-multiple="true"
+							data-selected="<?php
+							$product_ids = array_filter( array_map( 'absint', $membership_plan->get_product_ids() ) );
+							$json_ids    = array();
 
-					       echo esc_attr( wc_memberships_json_encode( $json_ids ) ); ?>"
-						value="<?php echo esc_attr( implode( ',', array_keys( $json_ids ) ) ); ?>"
-					/>
-					<?php echo SV_WC_Plugin_Compatibility::wc_help_tip( __( 'Leave empty to only allow members you manually assign.', 'woocommerce-memberships' ) ); ?>
+							foreach ( $product_ids as $product_id ) {
+
+								$product = wc_get_product( $product_id );
+
+								if ( is_object( $product ) ) {
+									$json_ids[ $product_id ] = wp_kses_post( html_entity_decode( $product->get_formatted_name() ) );
+								}
+							}
+
+							echo esc_attr( wp_json_encode( $json_ids ) ); ?>"
+							value="<?php echo esc_attr( implode( ',', array_keys( $json_ids ) ) ); ?>"
+						/>
+
+					<?php endif; ?>
+
+					<?php echo wc_help_tip( __( 'Leave empty to only allow members you manually assign.', 'woocommerce-memberships' ) ); ?>
 				</p>
 
 			</div>
@@ -392,7 +410,7 @@ class WC_Memberships_Meta_Box_Membership_Plan_Data extends WC_Memberships_Meta_B
 
 						endforeach;
 
-						echo SV_WC_Plugin_Compatibility::wc_help_tip( __( 'When does the membership expire?', 'woocommerce-memberships' ) )
+						echo wc_help_tip( __( 'When does the membership expire?', 'woocommerce-memberships' ) )
 
 						?>
 					</span>
@@ -507,7 +525,7 @@ class WC_Memberships_Meta_Box_Membership_Plan_Data extends WC_Memberships_Meta_B
 			<?php
 
 			if ( $public_posts = wc_memberships()->get_rules_instance()->get_public_posts() ) {
-				printf( '<p>' . __( 'These posts are public, and will be excluded from all restriction rules: %s', 'woocommerce-memberships' ) . '<p>', wc_memberships()->admin_list_post_links( $public_posts ) );
+				printf( '<p>' . __( 'These posts are public, and will be excluded from all restriction rules: %s', 'woocommerce-memberships' ) . '<p>', $this->list_post_links( $public_posts ) );
 			}
 
 			/**
@@ -551,7 +569,7 @@ class WC_Memberships_Meta_Box_Membership_Plan_Data extends WC_Memberships_Meta_B
 			<?php
 
 			if ( $public_products = wc_memberships()->get_rules_instance()->get_public_products() ) {
-				printf( '<p>' . __( 'These products are public, and will be excluded from all restriction rules: %s', 'woocommerce-memberships' ) . '</p>', wc_memberships()->admin_list_post_links( $public_products ) );
+				printf( '<p>' . __( 'These products are public, and will be excluded from all restriction rules: %s', 'woocommerce-memberships' ) . '</p>', $this->list_post_links( $public_products ) );
 			}
 
 			/**
@@ -608,9 +626,9 @@ class WC_Memberships_Meta_Box_Membership_Plan_Data extends WC_Memberships_Meta_B
 
 
 	/**
-	 * Output the member area panel
+	 * Output the members area panel.
 	 *
-	 * @see WC_Memberships_Meta_Box_Membership_Plan_Data::output()
+	 * @see \WC_Memberships_Meta_Box_Membership_Plan_Data::output()
 	 *
 	 * @since 1.7.0
 	 * @param \WC_Memberships_Membership_Plan $membership_plan
@@ -628,13 +646,13 @@ class WC_Memberships_Meta_Box_Membership_Plan_Data extends WC_Memberships_Meta_B
 
 				<?php
 
-				// get member area sections for the current plan
-				$member_area_sections = wc_memberships_get_members_area_sections( $post->ID );
+				// get members area sections for the current plan
+				$members_area_sections = wc_memberships_get_members_area_sections( $post->ID );
 
 				if ( 'auto-draft' === $post->post_status ) {
-					$member_area_selected_sections = array_keys( $member_area_sections );
+					$members_area_selected_sections = array_keys( $members_area_sections );
 				} else {
-					$member_area_selected_sections = $membership_plan->get_members_area_sections();
+					$members_area_selected_sections = $membership_plan->get_members_area_sections();
 				}
 
 				?>
@@ -643,30 +661,32 @@ class WC_Memberships_Meta_Box_Membership_Plan_Data extends WC_Memberships_Meta_B
 					id="_members_area_sections"
 					class="wc-enhanced-select-nostd"
 					multiple="multiple"
+					data-allow_clear="true"
+					data-placeholder="<?php esc_html_e( 'Choose sections for this plan&hellip;', 'woocommerce-memberships' ); ?>"
 					style="width: 50%;">
-					<?php foreach( $member_area_sections as $section_id => $section_name ) : ?>
-						<option value="<?php echo esc_attr( $section_id ); ?>" <?php selected( true, in_array( $section_id, $member_area_selected_sections, true ) ); ?>><?php echo esc_html( $section_name ); ?></option>
+					<?php foreach( $members_area_sections as $section_id => $section_name ) : ?>
+						<option value="<?php echo esc_attr( $section_id ); ?>" <?php selected( true, in_array( $section_id, $members_area_selected_sections, true ) ); ?>><?php echo esc_html( $section_name ); ?></option>
 					<?php endforeach;  ?>
 				</select>
-				<?php echo SV_WC_Plugin_Compatibility::wc_help_tip( __( 'Leave empty to hide members area for this membership.', 'woocommerce-memberships' ) ); ?>
+				<?php echo wc_help_tip( __( 'Leave empty to hide members area for this membership.', 'woocommerce-memberships' ) ); ?>
 
 			</p>
 
 			<p><!-- // legend -->
 
-				<?php if ( array_key_exists( 'my-membership-content', $member_area_sections ) ) : ?>
+				<?php if ( array_key_exists( 'my-membership-content', $members_area_sections ) ) : ?>
 					<em><?php esc_html_e( '"My Content" will show all pages, posts and other content.', 'woocommerce-memberships' ); ?></em><br>
 				<?php endif; ?>
 
-				<?php if ( array_key_exists( 'my-membership-products', $member_area_sections ) ) : ?>
+				<?php if ( array_key_exists( 'my-membership-products', $members_area_sections ) ) : ?>
 					<em><?php esc_html_e( '"My Products" will show products that are viewable or purchaseable.', 'woocommerce-memberships' ); ?></em><br>
 				<?php endif; ?>
 
-				<?php if ( array_key_exists( 'my-membership-discounts', $member_area_sections ) ) : ?>
+				<?php if ( array_key_exists( 'my-membership-discounts', $members_area_sections ) ) : ?>
 					<em><?php esc_html_e( '"My Discounts" will list products carrying membership discounts.', 'woocommerce-memberships' ); ?></em><br>
 				<?php endif; ?>
 
-				<?php if ( array_key_exists( 'my-membership-notes', $member_area_sections ) ) : ?>
+				<?php if ( array_key_exists( 'my-membership-notes', $members_area_sections ) ) : ?>
 					<em><?php esc_html_e( '"Membership Notes" will only display notes that have been emailed to the customer (no internal membership notes).', 'woocommerce-memberships' ); ?></em>
 				<?php endif; ?>
 
@@ -738,26 +758,52 @@ class WC_Memberships_Meta_Box_Membership_Plan_Data extends WC_Memberships_Meta_B
 
 
 	/**
+	 * Return a list of edit post links for the provided posts.
+	 *
+	 * @since 1.8.0
+	 * @param \WP_Post[] $posts Array of post objects.
+	 * @return string
+	 */
+	private function list_post_links( $posts ) {
+
+		$post_links = '';
+
+		if ( ! empty( $posts ) ) {
+
+			$items = array();
+
+			foreach ( $posts as $post ) {
+				$items[] = '<a href="' . get_edit_post_link( $post->ID ) . '">' . get_the_title( $post->ID ) . '</a>';
+			}
+
+			$post_links = wc_memberships_list_items( $items, __( 'and', 'woocommerce-memberships' ) );
+		}
+
+		return $post_links;
+	}
+
+
+	/**
 	 * Add dismissible admin notices for content & product restriction tabs
 	 *
 	 * @since 1.7.0
 	 */
 	private function add_admin_notices() {
 
-		$admin_notice_params = array(
-			'always_show_on_settings' => false,
-			'notice_class' => 'updated force-hide js-memberships-restrict-notice js-memberships-restrict-content-notice'
-		);
+		$notice_classes = 'updated force-hide js-memberships-restrict-notice';
 
 		wc_memberships()->get_admin_notice_handler()->add_admin_notice(
 			/* translators: %1$s - line break, %2$s - opening <a> link tag, %3$s - closing </a> tag */
 			sprintf( __( 'When you add a restriction rule for content, it will no longer be public on your site. By adding a rule for a page, post, or taxonomy, it will become restricted, and can only be accessed by members of this plan, or by members of another plan that grants access to the content.%1$sLearn more about %2$srestriction rules in the documentation%3$s.', 'woocommerce-memberships' ),
 				'<br />',
-				'<em><a href="http://docs.woothemes.com/document/woocommerce-memberships-restrict-content/">',
+				'<em><a href="https://docs.woocommerce.com/document/woocommerce-memberships-restrict-content/">',
 				'</a></em>'
 			),
 			'restrict-content-notice',
-			$admin_notice_params
+			array(
+				'always_show_on_settings' => false,
+				'notice_class'            => $notice_classes . ' ' . 'js-memberships-restrict-content-notice',
+			)
 		);
 
 		wc_memberships()->get_admin_notice_handler()->add_admin_notice(
@@ -767,7 +813,10 @@ class WC_Memberships_Meta_Box_Membership_Plan_Data extends WC_Memberships_Meta_B
 				'<strong>',	'</strong>'
 			),
 			'restrict-products-notice',
-			$admin_notice_params
+			array(
+				'always_show_on_settings' => false,
+				'notice_class'            => $notice_classes . ' ' . 'js-memberships-restrict-products-notice',
+			)
 		);
 	}
 
@@ -805,7 +854,7 @@ class WC_Memberships_Meta_Box_Membership_Plan_Data extends WC_Memberships_Meta_B
 		$access_methods  = wc_memberships()->get_plans_instance()->get_membership_plans_access_methods();
 
 		// save membership plan data
-		if ( $membership_plan
+		if (    $membership_plan
 		     && isset( $_POST['_access_method'] )
 		     && in_array( $_POST['_access_method'], $access_methods, true ) ) {
 
@@ -836,7 +885,7 @@ class WC_Memberships_Meta_Box_Membership_Plan_Data extends WC_Memberships_Meta_B
 				           && ( $access_start_date = wc_memberships_parse_date( $_POST['_access_start_date'], 'mysql' ) )
 				           && ( $access_end_date   = wc_memberships_parse_date( $_POST['_access_end_date'], 'mysql' ) ) ) {
 
-					$timezone   = wc_timezone_string();
+					$timezone   = 'UTC'; // there is no need to use wc_timezone_string();
 					$time_start = strtotime( 'today', strtotime( $access_start_date ) );
 					$time_end   = strtotime( 'today', strtotime( $access_end_date ) );
 
@@ -890,13 +939,13 @@ class WC_Memberships_Meta_Box_Membership_Plan_Data extends WC_Memberships_Meta_B
 			}
 		}
 
-		// save the Member Area sections defined for the current plan
+		// save the Members Area sections defined for the current plan
 		$members_area_sections = isset( $_POST['_members_area_sections'] ) ? array_map( 'sanitize_key', (array) $_POST['_members_area_sections'] ) : null;
 
 		if ( ! empty( $members_area_sections ) ) {
-			$membership_plan->set_member_area_sections( $members_area_sections );
+			$membership_plan->set_members_area_sections( $members_area_sections );
 		} else {
-			$membership_plan->delete_member_area_sections();
+			$membership_plan->delete_members_area_sections();
 		}
 
 		// update emails content
@@ -912,6 +961,62 @@ class WC_Memberships_Meta_Box_Membership_Plan_Data extends WC_Memberships_Meta_B
 
 		// update restriction & discount rules
 		wc_memberships()->get_admin_instance()->update_rules( $post_id, array( 'content_restriction', 'product_restriction', 'purchasing_discount' ), 'plan' );
+
+		// perform a check for conflicts between restricted products and products that grant access
+		$this->check_for_conflicting_products( $membership_plan );
+	}
+
+
+	/**
+	 * Check if there is any product that could grant access among restricted products in plan rules.
+	 *
+	 * Raises an admin notice message if conflicting products are found.
+	 *
+	 * @since 1.8.2
+	 *
+	 * @param WC_Memberships_Membership_Plan $membership_plan
+	 */
+	private function check_for_conflicting_products( $membership_plan ) {
+
+		if ( $access_products = $membership_plan->get_product_ids() ) {
+
+			add_filter( 'wc_memberships_get_restricted_posts_query_args', array( $this, 'query_product_ids' ), 100 );
+
+			$restricted_products = $membership_plan->get_restricted_products( -1 );
+			$restricted_products = $restricted_products instanceof WP_Query ? $restricted_products->get_posts() : $restricted_products;
+
+			remove_filter( 'wc_memberships_get_restricted_posts_query_args', array( $this, 'query_product_ids' ), 100 );
+
+			if ( is_array( $restricted_products ) ) {
+
+				$conflicting_products = array_intersect( $access_products, $restricted_products );
+
+				if ( ! empty( $conflicting_products ) ) {
+					wc_memberships()->get_admin_instance()->get_message_handler()->add_error(
+						__( 'It looks like that you have restricted one or more products that could grant access to this membership plan: this could make it impossible for shop customers to become members via purchase. Please double check your plan rules and the chosen products that grant access.', 'woocommerce-memberships' )
+					);
+				}
+			}
+		}
+	}
+
+
+	/**
+	 * Filter query args to get a plan's restricted posts.
+	 *
+	 * @internal
+	 *
+	 * @since 1.8.2
+	 *
+	 * @param array $query_args
+	 *
+	 * @return array
+	 */
+	public function query_product_ids( $query_args ) {
+
+		$query_args['fields'] = 'ids';
+
+		return $query_args;
 	}
 
 

@@ -14,18 +14,18 @@
  *
  * Do not edit or add to this file if you wish to upgrade WooCommerce Memberships to newer
  * versions in the future. If you wish to customize WooCommerce Memberships for your
- * needs please refer to http://docs.woothemes.com/document/woocommerce-memberships/ for more information.
+ * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @package   WC-Memberships/Classes
  * @author    SkyVerge
- * @copyright Copyright (c) 2014-2016, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2017, SkyVerge, Inc.
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
 defined( 'ABSPATH' ) or exit;
 
 /**
- * Helper object to get subscription-specific properties of a membership plan
+ * Helper object to get subscription-specific properties of a membership plan.
  *
  * @since 1.7.0
  */
@@ -37,10 +37,10 @@ class WC_Memberships_Integration_Subscriptions_Membership_Plan extends WC_Member
 
 
 	/**
-	 * Subscription-tied Membership Plan constructor
+	 * Subscription-tied Membership Plan constructor.
 	 *
 	 * @since 1.7.0
-	 * @param int|\WP_Post $membership_plan id or post object
+	 * @param int|\WP_Post $membership_plan id or post object.
 	 */
 	public function __construct( $membership_plan ) {
 
@@ -58,7 +58,7 @@ class WC_Memberships_Integration_Subscriptions_Membership_Plan extends WC_Member
 
 
 	/**
-	 * Get access length type (overrides parent method)
+	 * Get access length type (overrides parent method).
 	 *
 	 * @since 1.7.0
 	 * @return string
@@ -81,7 +81,7 @@ class WC_Memberships_Integration_Subscriptions_Membership_Plan extends WC_Member
 
 
 	/**
-	 * Check if the plan has a subscription product that can grant access
+	 * Check if the plan has a subscription product that can grant access.
 	 *
 	 * @since 1.7.0
 	 * @return bool
@@ -92,7 +92,7 @@ class WC_Memberships_Integration_Subscriptions_Membership_Plan extends WC_Member
 
 
 	/**
-	 * Whether the subscription-tied membership follows an installment plan option
+	 * Whether the subscription-tied membership follows an installment plan option.
 	 *
 	 * @since 1.7.0
 	 * @return bool
@@ -104,7 +104,7 @@ class WC_Memberships_Integration_Subscriptions_Membership_Plan extends WC_Member
 
 	/**
 	 * Set the subscription-tied membership to have an installment plan
-	 * regulated by the subscription's length and billing cycle
+	 * regulated by the subscription's length and billing cycle.
 	 *
 	 * @since 1.7.0
 	 */
@@ -115,7 +115,7 @@ class WC_Memberships_Integration_Subscriptions_Membership_Plan extends WC_Member
 
 
 	/**
-	 * Delete the installment plan option
+	 * Delete the installment plan option.
 	 *
 	 * @since 1.7.0
 	 */
@@ -126,10 +126,10 @@ class WC_Memberships_Integration_Subscriptions_Membership_Plan extends WC_Member
 
 
 	/**
-	 * Get subscription products ids
+	 * Get subscription products ids.
 	 *
 	 * @since 1.7.0
-	 * @return int[] Array of subscription product ids
+	 * @return int[] Array of subscription product ids.
 	 */
 	public function get_subscription_product_ids() {
 
@@ -140,10 +140,10 @@ class WC_Memberships_Integration_Subscriptions_Membership_Plan extends WC_Member
 
 
 	/**
-	 * Get subscription products that grant access to plan
+	 * Get subscription products that grant access to plan.
 	 *
 	 * @since 1.7.0
-	 * @return \WC_Product[] Array of subscription products
+	 * @return \WC_Product[] Array of subscription products.
 	 */
 	public function get_subscription_products() {
 
@@ -174,7 +174,7 @@ class WC_Memberships_Integration_Subscriptions_Membership_Plan extends WC_Member
 
 
 	/**
-	 * Check if this plan has any products that grant access
+	 * Check if this plan has any products that grant access.
 	 *
 	 * @since 1.0.0
 	 * @return bool
@@ -188,18 +188,18 @@ class WC_Memberships_Integration_Subscriptions_Membership_Plan extends WC_Member
 
 
 	/**
-	 * Get membership expiration date (overrides parent method)
+	 * Get membership expiration date (overrides parent method).
 	 *
-	 * Calculates when a subscription-tied membership plan will expire relatively to a start date
+	 * Calculates when a subscription-tied membership plan will expire relatively to a start date.
 	 *
 	 * @since 1.7.0
-	 * @param int|string $start Optional: a date string or timestamp (default current time)
-	 * @param array $args Optional: additional arguments
-	 * @return string Date in Y-m-d H:i:s format or empty for unlimited plans
+	 * @param int|string $start Optional: a date string or timestamp (default current time).
+	 * @param array $args Optional: additional arguments.
+	 * @return string Date in Y-m-d H:i:s format or empty for unlimited plans.
 	 */
 	public function get_expiration_date( $start = '', $args = array() ) {
 
-		// get the start time to get the relative end time later
+		// Get the start time to get the relative end time later.
 		if ( empty( $start ) ) {
 			if ( ! empty( $args['start'] ) ) {
 				$start = is_numeric( $args['start'] ) ? (int) $args['start'] : strtotime( $args['start'] );
@@ -216,27 +216,26 @@ class WC_Memberships_Integration_Subscriptions_Membership_Plan extends WC_Member
 
 		if ( ! $this->has_subscription() ) {
 
-			// if there's no subscription product, then use the parent method
+			// If there's no subscription product, then use the parent method.
 			$end_date = parent::get_expiration_date( $start, $args );
 
 		} elseif ( isset( $args['product_id'] ) && is_numeric( $args['product_id'] ) && ! $this->has_installment_plan() ) {
 
-			// purchase type: get the product that granted access
+			// Purchase type: get the product that granted access.
 			$access_product = wc_get_product( $args['product_id'] );
 
-			// check if the product that grants access is a subscription
+			// Check if the product that grants access is a subscription.
 			if ( $access_product && $access_product->is_type( array( 'subscription', 'subscription_variation', 'variable-subscription' ) ) ) {
 
-				$product_id      = $access_product->is_type( 'subscription_variation' ) ? $access_product->variation_id : $access_product->id;
-				$expiration_date = WC_Subscriptions_Product::get_expiration_date( $product_id, date( 'Y-m-d H:i:s', (int) $start ) );
-				// note: undefined subscription expiration date is 0 in WC Subscriptions
-				// but in WC Memberships we use empty string to mark "unlimited" time
+				$expiration_date = WC_Subscriptions_Product::get_expiration_date( $access_product->get_id(), date( 'Y-m-d H:i:s', (int) $start ) );
+				// Note: undefined subscription expiration date is 0 in WC Subscriptions
+				// but in WC Memberships we use empty string to mark "unlimited" time.
 				$expiration_date = ! empty( $expiration_date ) ? wc_memberships_parse_date( (string) $expiration_date, 'mysql' ) : '';
 				$end_date        = ! empty( $expiration_date ) ? $expiration_date : '';
 
 			} else {
 
-				// if not a subscription product, then must be a regular product
+				// If not a subscription product, then must be a regular product.
 				$end_date = parent::get_expiration_date( $start, $args );
 			}
 
@@ -262,7 +261,7 @@ class WC_Memberships_Integration_Subscriptions_Membership_Plan extends WC_Member
 
 		} else {
 
-			// sanity fallback to standard method in parent class
+			// Sanity fallback to standard method in parent class.
 			$end_date = parent::get_expiration_date( $start, $args );
 		}
 

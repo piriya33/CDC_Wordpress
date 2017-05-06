@@ -14,11 +14,11 @@
  *
  * Do not edit or add to this file if you wish to upgrade WooCommerce Memberships to newer
  * versions in the future. If you wish to customize WooCommerce Memberships for your
- * needs please refer to http://docs.woothemes.com/document/woocommerce-memberships/ for more information.
+ * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @package   WC-Memberships/Classes
  * @author    SkyVerge
- * @copyright Copyright (c) 2014-2016, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2017, SkyVerge, Inc.
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
@@ -64,7 +64,7 @@ function wc_memberships_get_free_membership_plans( $args = array() ) {
 
 
 /**
- * Get member area sections
+ * Get members area sections
  *
  * @since 1.4.0
  * @param int|string $membership_plan Optional: membership plan id for filtering purposes
@@ -73,10 +73,10 @@ function wc_memberships_get_free_membership_plans( $args = array() ) {
 function wc_memberships_get_members_area_sections( $membership_plan = '' ) {
 
 	/**
-	 * Filters the available choices for the member area sections of a membership plan
+	 * Filters the available choices for the members area sections of a membership plan
 	 *
 	 * @since 1.4.0
-	 * @param array $member_area_sections Associative array with member area id and label of each section
+	 * @param array $members_area_sections Associative array with members area id and label of each section
 	 * @param int|string $membership_plan Optional, the current membership plan, might be empty
 	 */
 	return apply_filters( 'wc_membership_plan_members_area_sections', array(

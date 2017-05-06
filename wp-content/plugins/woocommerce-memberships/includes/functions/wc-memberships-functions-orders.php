@@ -14,11 +14,11 @@
  *
  * Do not edit or add to this file if you wish to upgrade WooCommerce Memberships to newer
  * versions in the future. If you wish to customize WooCommerce Memberships for your
- * needs please refer to http://docs.woothemes.com/document/woocommerce-memberships/ for more information.
+ * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @package   WC-Memberships/Classes
  * @author    SkyVerge
- * @copyright Copyright (c) 2014-2016, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2017, SkyVerge, Inc.
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
@@ -35,15 +35,11 @@ defined( 'ABSPATH' ) or exit;
  */
 function wc_memberships_get_order_access_granted_memberships( $order ) {
 
-	$order_id = 0;
-
 	if ( is_numeric( $order ) ) {
-		$order_id = (int) $order;
-	} elseif ( $order instanceof WC_Order ) {
-		$order_id = $order->id;
+		$order = wc_get_order( (int) $order );
 	}
 
-	$meta = get_post_meta( $order_id, '_wc_memberships_access_granted', true );
+	$meta = $order instanceof WC_Order ? SV_WC_Order_Compatibility::get_meta( $order, '_wc_memberships_access_granted', true ) : false;
 
 	return ! is_array( $meta ) ? array() : $meta;
 }
@@ -112,6 +108,7 @@ function wc_memberships_has_order_granted_access( $order, $args ) {
  * Set memberships an order granted access to meta
  *
  * @since 1.7.0
+ *
  * @param int|\WC_Order $order
  * @param int|\WC_Memberships_User_Membership $user_membership
  * @param array $args Meta value details to save (optional)
@@ -122,9 +119,7 @@ function wc_memberships_set_order_access_granted_membership( $order, $user_membe
 		$order = wc_get_order( (int) $order );
 	}
 
-	if ( $order instanceof WC_Order ) {
-		$order_id = $order->id;
-	} else {
+	if ( ! $order instanceof WC_Order ) {
 		return;
 	}
 
@@ -146,7 +141,7 @@ function wc_memberships_set_order_access_granted_membership( $order, $user_membe
 
 	$meta[ $user_membership_id ] = $details;
 
-	update_post_meta( $order_id, '_wc_memberships_access_granted', $meta );
+	SV_WC_Order_Compatibility::update_meta_data( $order, '_wc_memberships_access_granted', $meta );
 }
 
 
@@ -177,7 +172,7 @@ function wc_memberships_get_order_access_granting_product_ids( $plan, $order, $o
 
 	if ( empty( $order_items ) ) {
 
-		$order = is_int( $order ) ? wc_get_order( $order ) : $order;
+		$order = is_numeric( $order ) ? wc_get_order( (int) $order ) : $order;
 
 		if ( $order instanceof WC_Order ) {
 			$order_items = $order->get_items();
@@ -245,4 +240,79 @@ function wc_memberships_get_order_access_granting_product_ids( $plan, $order, $o
 	}
 
 	return $access_granting_product_ids;
+}
+
+
+/**
+ * Returns HTML for the thank you page / order emails to display links to relevant members areas.
+ *
+ * @since 1.8.4
+ *
+ * @param int|\WC_order $order_id the order ID or order object that granted access
+ * @return string $message the HTML for the thank you message
+ */
+function wc_memberships_get_order_thank_you_links( $order_id ) {
+
+	if ( $order_id instanceof WC_Order ) {
+		$order_id = SV_WC_Order_Compatibility::get_prop( $order_id, 'id' );
+	} elseif ( ! is_numeric( $order_id ) ) {
+		return '';
+	}
+
+	$message     = '';
+	$memberships = wc_memberships_get_order_access_granted_memberships( $order_id );
+
+	if ( ! empty( $memberships ) ) {
+
+		$memberships_with_members_area = array();
+
+		foreach( $memberships as $membership_id => $data ) {
+
+			if ( 'yes' === $data['already_granted'] ) {
+
+				$user_membership       = wc_memberships_get_user_membership( (int) $membership_id );
+				$members_area_sections = $user_membership->get_plan()->get_members_area_sections();
+
+				if ( ! empty( $members_area_sections ) ) {
+					$memberships_with_members_area[ $user_membership->get_plan_id() ] = $user_membership->get_plan()->get_name();
+				}
+			}
+		}
+
+		if ( ! empty( $memberships_with_members_area ) ) {
+
+			// start building!
+			$message = '<p>' . __( 'Thanks for purchasing a membership!', 'woocommerce-memberships' );
+
+			if ( 1 === count( $memberships_with_members_area ) ) {
+
+				/* translators: Placeholders: %1$s - <a> tag, %2$s - </a> tag */
+				$message .= ' ' . sprintf( __( 'You can view more details about your membership from %1$syour account%2$s.', 'woocommerce-memberships' ), '<a href="' . esc_url( wc_memberships_get_members_area_url( key( $memberships_with_members_area ) ) ) . '">', '</a>' );
+
+			} else {
+
+				$message .= ' ' . __( 'You can view details for each membership in your account:', 'woocommerce-memberships' );
+				$message .= '<ul>';
+
+				foreach( $memberships_with_members_area as $plan_id => $plan_name ) {
+					$message .= '<li><a href="' . esc_url( wc_memberships_get_members_area_url( $plan_id ) ) . '">' . esc_html( $plan_name ) . '</a></li>';
+				}
+
+				$message .= '</ul>';
+			}
+
+			// ship it!
+			$message .= '</p>';
+		}
+	}
+
+	/**
+	 * Filters the thank you page / email message when a membership with members area sections is purchased.
+	 *
+	 * @since 1.8.4
+	 *
+	 * @param string $message the thank you message HTML
+	 * @param int $order_id the order ID from the purchase
+	 */
+	return apply_filters( 'woocommerce_memberships_thank_you_message', $message, $order_id );
 }

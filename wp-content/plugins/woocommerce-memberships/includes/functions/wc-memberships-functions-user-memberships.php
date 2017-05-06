@@ -14,11 +14,11 @@
  *
  * Do not edit or add to this file if you wish to upgrade WooCommerce Memberships to newer
  * versions in the future. If you wish to customize WooCommerce Memberships for your
- * needs please refer to http://docs.woothemes.com/document/woocommerce-memberships/ for more information.
+ * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @package   WC-Memberships/Classes
  * @author    SkyVerge
- * @copyright Copyright (c) 2014-2016, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2017, SkyVerge, Inc.
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
@@ -149,13 +149,14 @@ function wc_memberships_is_user_delayed_member( $user_id = null, $plan = null, $
  * Check if user is a member with either active or delayed status
  * of either a particular or any membership plan
  *
- * @since 1.7.0
+ * @since 1.8.0
  * @param int|\WP_User $user_id Optional, defaults to current user
  * @param int|string $plan Membership Plan slug, post object or related post ID
+ * @param bool $cache Whether to use cache results (default true)
  * @return bool
  */
-function wc_memberships_is_user_non_inactive_member( $user_id = null, $plan = null ) {
-	return wc_memberships()->get_user_memberships_instance()->is_user_non_inactive_member( $user_id, $plan );
+function wc_memberships_is_user_active_or_delayed_member( $user_id = null, $plan = null, $cache = true ) {
+	return wc_memberships()->get_user_memberships_instance()->is_user_active_or_delayed_member( $user_id, $plan, $cache );
 }
 
 
@@ -177,15 +178,14 @@ function wc_memberships_user_can( $user_id, $action, $target, $when = '' ) {
 
 
 /**
- * Create a new user membership programmatically
+ * Create a new user membership programmatically.
  *
- * Returns a new user membership object on success
- * which can then be used to add additional data,
- * but will return WP_Error on failure
+ * Returns a new user membership object on success which can then be used to add
+ * additional data, but will return WP_Error on failure.
  *
  * @since 1.3.0
  * @param array $args Array of arguments
- * @param string $action Action - either 'create' or 'renew' -- when in doubt, use 'create'
+ * @param string $action Action - either 'create' or 'renew' -- when in doubt, use 'create'.
  * @return \WC_Memberships_User_Membership|\WP_Error
  */
 function wc_memberships_create_user_membership( $args = array(), $action = 'create' ) {
@@ -214,16 +214,16 @@ function wc_memberships_create_user_membership( $args = array(), $action = 'crea
 	}
 
 	/**
-	 * Filter new membership data, used when a product purchase grants access
+	 * Filter new membership data, used when a product purchase grants access.
 	 *
 	 * @since 1.0.0
 	 * @param array $data
 	 * @param array $args {
 	 *     Array of User Membership arguments
 	 *
-	 *     @type int $user_id The user id the membership is assigned to
-	 *     @type int $product_id The product id that grants access (optional)
-	 *     @type int $order_id The order id that contains the product that granted access (optional)
+	 *     @type int $user_id The user id the membership is assigned to.
+	 *     @type int $product_id The product id that grants access (optional).
+	 *     @type int $order_id The order id that contains the product that granted access (optional).
 	 * }
 	 */
 	$new_post_data = apply_filters( 'wc_memberships_new_membership_data', $new_membership_data, array(
@@ -233,39 +233,45 @@ function wc_memberships_create_user_membership( $args = array(), $action = 'crea
 	) );
 
 	if ( $updating ) {
+
+		// Do not modify the post status yet on renewals.
+		unset( $new_post_data['post_status'] );
+
 		$user_membership_id = wp_update_post( $new_post_data );
+
 	} else {
+
 		$user_membership_id = wp_insert_post( $new_post_data );
 	}
 
-	// bail out on error
+	// Bail out on error.
 	if ( is_wp_error( $user_membership_id ) ) {
 		return $user_membership_id;
 	}
 
-	// get the user membership object to set properties on
+	// Get the user membership object to set properties on.
 	$user_membership = wc_memberships_get_user_membership( $user_membership_id );
 
-	// save/update product id that granted access
+	// Save/Update product id that granted access.
 	if ( (int) $args['product_id'] > 0 ) {
 		$user_membership->set_product_id( $args['product_id'] );
 	}
 
-	// save/update the order id that contained the access granting product
+	// Save/Update the order id that contained the access granting product.
 	if ( (int) $args['order_id'] > 0 ) {
 		$user_membership->set_order_id( $args['order_id'] );
 	}
 
-	// get the user membership object again, since the product and the order
+	// Get the user membership object again, since the product and the order
 	// just set might influence the object filtering (e.g. subscriptions)
 	/** @see \WC_Memberships_Integration_Subscriptions_Abstract::get_user_membership() */
 	$user_membership = wc_memberships_get_user_membership( $user_membership_id );
-	// get the membership plan object to get some properties from
+	// Get the membership plan object to get some properties from.
 	$membership_plan = wc_memberships_get_membership_plan( (int) $args['plan_id'], $user_membership );
 
-	// save or update the membership start date,
-	// but only if the membership is not active (ie. is not being renewed);
-	// also do a sanity check for delayed memberships
+	// Save or update the membership start date,
+	// but only if the membership is not active yet (ie. is not being renewed);
+	// also do a sanity check for delayed memberships:
 	if ( 'renew' !== $action ) {
 
 		$start_date = $membership_plan->is_access_length_type( 'fixed' ) ? $membership_plan->get_access_start_date() : current_time( 'mysql', true );
@@ -277,19 +283,27 @@ function wc_memberships_create_user_membership( $args = array(), $action = 'crea
 		$user_membership->update_status( 'delayed' );
 	}
 
-	// calculate membership end date based on membership length,
+	// Calculate membership end date based on membership length,
 	// early renewals add to the existing membership length,
-	// normal cases calculate membership length from "now" (UTC)
-	if ( 'renew' === $action ) {
-		$now = $user_membership->get_end_date();
-	} else {
-		$now = current_time( 'timestamp', true );
+	// normal cases calculate membership length from "now" (UTC).
+	$now        = current_time( 'timestamp', true );
+	$is_expired = $user_membership->is_expired();
+
+	if ( 'renew' === $action && ! $is_expired ) {
+		$end = $user_membership->get_end_date( 'timestamp' );
+		$now = ! empty( $end ) ? $end : $now;
 	}
 
+	// Obtain the relative end date based on the membership plan.
 	$end_date = $membership_plan->get_expiration_date( $now, $args );
 
-	// save/update end date
+	// Save/Update the membership end date.
 	$user_membership->set_end_date( $end_date );
+
+	// Finally re-activate successfully renewed memberships after setting new dates.
+	if ( 'renew' === $action && $is_expired && $user_membership->is_in_active_period() ) {
+		$user_membership->update_status( 'active' );
+	}
 
 	/**
 	 * Fires after a user has been granted membership access

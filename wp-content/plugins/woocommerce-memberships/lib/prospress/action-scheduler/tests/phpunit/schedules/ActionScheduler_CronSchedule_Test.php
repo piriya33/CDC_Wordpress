@@ -8,7 +8,7 @@ class ActionScheduler_CronSchedule_Test extends ActionScheduler_UnitTestCase {
 	public function test_creation() {
 		$time = as_get_datetime_object('tomorrow');
 		$cron = CronExpression::factory('@daily');
-		$schedule = new ActionScheduler_CronSchedule($time, $cron);
+		$schedule = new ActionScheduler_CronSchedule(as_get_datetime_object(), $cron);
 		$this->assertEquals( $time, $schedule->next() );
 	}
 
@@ -17,6 +17,11 @@ class ActionScheduler_CronSchedule_Test extends ActionScheduler_UnitTestCase {
 		$cron = CronExpression::factory('@daily');
 		$schedule = new ActionScheduler_CronSchedule($time, $cron);
 		$this->assertEquals( as_get_datetime_object('tomorrow'), $schedule->next( as_get_datetime_object() ) );
+	}
+
+	public function test_is_recurring() {
+		$schedule = new ActionScheduler_CronSchedule(as_get_datetime_object('2013-06-14'), CronExpression::factory('@daily'));
+		$this->assertTrue( $schedule->is_recurring() );
 	}
 
 	public function test_cron_format() {

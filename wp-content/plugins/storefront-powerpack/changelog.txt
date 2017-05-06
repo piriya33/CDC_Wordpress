@@ -1,5 +1,9 @@
 *** Storefront Powerpack Changelog ***
 
+2017.02.10 - version 1.3.1
+* Fix - Further compatibility with the Jetpack mobile theme.
+* Fix - Output of custom product data tabs.
+
 2016.12.06 - version 1.3.0
 * Fix - Compatibility with WordPress 4.7
 

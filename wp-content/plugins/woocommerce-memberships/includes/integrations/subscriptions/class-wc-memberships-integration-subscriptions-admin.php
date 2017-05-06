@@ -14,11 +14,11 @@
  *
  * Do not edit or add to this file if you wish to upgrade WooCommerce Memberships to newer
  * versions in the future. If you wish to customize WooCommerce Memberships for your
- * needs please refer to http://docs.woothemes.com/document/woocommerce-memberships/ for more information.
+ * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @package   WC-Memberships/Classes
  * @author    SkyVerge
- * @copyright Copyright (c) 2014-2016, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2017, SkyVerge, Inc.
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
@@ -198,28 +198,7 @@ class WC_Memberships_Integration_Subscriptions_Admin {
 	 * @return string
 	 */
 	private function get_subscription_expiration( $subscription = null ) {
-
-		$integration = wc_memberships()->get_integrations_instance()->get_subscriptions_instance();
-		$expiration  = '';
-
-		if ( $subscription instanceof WC_Subscription ) {
-
-			if ( $integration->is_subscriptions_gte_2_0() ) {
-
-				$expiration = $subscription->get_date_to_display( 'end' );
-
-			} else {
-
-				// note: subs 1.5.x doesn't account for the site timezone
-				if ( isset( $subscription['expiry_date'] ) && $subscription['expiry_date'] ) {
-					$expiration = date_i18n( wc_date_format(), strtotime( $subscription['expiry_date'] ) );
-				} else {
-					$expiration = __( 'Subscription not yet ended', 'woocommerce-memberships' );
-				}
-			}
-		}
-
-		return $expiration;
+		return $subscription instanceof WC_Subscription ? $subscription->get_date_to_display( 'end' ) : '';
 	}
 
 
@@ -235,48 +214,49 @@ class WC_Memberships_Integration_Subscriptions_Admin {
 	 */
 	private function get_edit_subscription_input( $user_membership, $subscription = null ) {
 
-		$integration       = wc_memberships()->get_integrations_instance()->get_subscriptions_instance();
-		$subscription_link = esc_html__( 'Membership not linked to a Subscription', 'woocommerce-subscription' );
-
 		if ( $subscription && $subscription instanceof WC_Subscription ) {
-
-			if ( $integration->is_subscription_lt_2_0() ) {
-				$subscription_key = $integration->get_user_membership_subscription_key( $user_membership->get_id() );
-				$subscription_url = admin_url( 'admin.php?page=subscriptions&s=' . $subscription['order_id'] );
-				$subscription_id  = $subscription_key;
-			} else {
-				$subscription_url = get_edit_post_link( $subscription->id );
-				$subscription_id  = $subscription->id;
-			}
-
+			$subscription_id   = SV_WC_Order_Compatibility::get_prop( $subscription, 'id' );
+			$subscription_url  = get_edit_post_link( $subscription_id );
 			$subscription_link = '<a href="' . esc_url( $subscription_url ) . '">' . esc_html( $subscription_id ) . '</a>';
-		}
-
-		// Subscriptions versions above v2.0 allow updating tied Subscription information via enhanced dropdown
-		if ( $integration->is_subscriptions_gte_2_0() ) {
-
-			/* translators: Placeholders: %1$s - link to a Subscription, %2$s - opening <a> HTML tag, %3%s - closing </a> HTML tag */
-			$input = sprintf( __( '%1$s - %2$sEdit Link%3$s', 'woocommerce-memberships' ),
-				$subscription_link,
-				'<a href="#" class="js-edit-subscription-link-toggle">',
-				'</a>'
+			$selected          = array(
+				$subscription_id => wc_memberships()->get_integrations_instance()->get_subscriptions_instance()->get_formatted_subscription_id_holder_name( $subscription ),
 			);
-
-			ob_start();
-
+		} else {
 			$selected        = array();
 			$subscription_id = '';
+			$subscription_link = esc_html__( 'Membership not linked to a Subscription', 'woocommerce-subscription' );
+		}
 
-			if ( $subscription instanceof WC_Subscription ) {
+		/* translators: Placeholders: %1$s - link to a Subscription, %2$s - opening <a> HTML tag, %3%s - closing </a> HTML tag */
+		$input = sprintf( __( '%1$s - %2$sEdit Link%3$s', 'woocommerce-memberships' ),
+			$subscription_link,
+			'<a href="#" class="js-edit-subscription-link-toggle">',
+			'</a>'
+		);
 
-				$subscription_id = (string) $subscription->id;
-				$selected        = array(
-					$subscription_id => $integration->get_formatted_subscription_id_holder_name( $subscription ),
-				);
-			}
+		ob_start();
 
-			?><br>
-			<span class="wc-memberships-edit-subscription-link-field" style="display: none;">
+		?><br>
+		<span class="wc-memberships-edit-subscription-link-field" style="display: none;">
+
+			<?php if ( SV_WC_Plugin_Compatibility::is_wc_version_gte_3_0() ) : ?>
+
+				<select
+					class="sv-wc-enhanced-search"
+					id="_subscription_id"
+					name="_subscription_id"
+					style="min-width: 300px; max-width: 400px;"
+					data-action="wc_memberships_edit_membership_subscription_link"
+					data-nonce="<?php echo wp_create_nonce( 'edit-membership-subscription-link' ); ?>"
+					data-placeholder="<?php esc_attr_e( 'Link to a Subscription or keep empty to leave unlinked', 'woocommerce-memberships' ); ?>"
+					data-allow_clear="true">
+					<?php if ( $subscription instanceof WC_Subscription ) : ?>
+						<option value="<?php echo $subscription_id; ?>"><?php echo $subscription_id; ?></option>
+					<?php endif; ?>
+				</select>
+
+			<?php else : ?>
+
 				<input
 					type="hidden"
 					class="sv-wc-enhanced-search"
@@ -290,23 +270,20 @@ class WC_Memberships_Integration_Subscriptions_Admin {
 					data-selected="<?php echo esc_html( current( $selected ) ); ?>"
 					value="<?php echo esc_attr( $subscription_id ); ?>"
 				/>
-			</span>
-			<?php
 
-			SV_WC_Helper::render_select2_ajax();
+			<?php endif; ?>
 
-			$input .= ob_get_clean();
+		</span>
+		<?php
 
-			// toggle editing of subscription id link
-			wc_enqueue_js( '
-				$( ".js-edit-subscription-link-toggle" ).on( "click", function() { $( ".wc-memberships-edit-subscription-link-field" ).toggle(); } );
-			' );
+		SV_WC_Helper::render_select2_ajax();
 
-		// Subscriptions versions before v2.0 only show an uneditable link to the current subscription
-		} else {
+		$input .= ob_get_clean();
 
-			$input = $subscription_link;
-		}
+		// toggle editing of subscription id link
+		wc_enqueue_js( '
+			$( ".js-edit-subscription-link-toggle" ).on( "click", function() { $( ".wc-memberships-edit-subscription-link-field" ).toggle(); } );
+		' );
 
 		return $input;
 	}
@@ -331,15 +308,8 @@ class WC_Memberships_Integration_Subscriptions_Admin {
 		$user_membership = new WC_Memberships_Integration_Subscriptions_User_Membership( $user_membership->post );
 		$next_payment    = '';
 
-		if (    $user_membership->has_installment_plan()
-		     && ( $subscription = $user_membership->get_subscription() ) ) {
-
-			if ( $integration->is_subscriptions_gte_2_0() ) {
-				$next_payment     = $subscription->get_time( 'next_payment' );
-			} else {
-				$subscription_key = $integration->get_user_membership_subscription_key( $this->id );
-				$next_payment     = WC_Subscriptions_Manager::get_next_payment_date( $subscription_key, $this->user_id, 'timestamp' );
-			}
+		if ( $user_membership->has_installment_plan() && ( $subscription = $user_membership->get_subscription() ) ) {
+			$next_payment = $subscription->get_time( 'next_payment' );
 		}
 
 		$edit_subscription_input = $this->get_edit_subscription_input( $user_membership, $subscription );
@@ -356,7 +326,7 @@ class WC_Memberships_Integration_Subscriptions_Admin {
 		<?php
 
 		// maybe replace the expiration date input
-		if ( $subscription && $user_membership->get_plan_id() && ! $integration->plan_grants_access_while_subscription_active( $user_membership->get_plan_id() ) ) {
+		if ( $subscription && $user_membership->get_plan_id() && ! $integration->get_plans_instance()->grant_access_while_subscription_active( $user_membership->get_plan_id() ) ) {
 
 			$subscription_expires = $this->get_subscription_expiration( $subscription );
 
@@ -381,7 +351,7 @@ class WC_Memberships_Integration_Subscriptions_Admin {
 		$integration      = wc_memberships()->get_integrations_instance()->get_subscriptions_instance();
 		$has_subscription = $integration->has_membership_plan_subscription( $post->ID );
 
-		if ( ! $integration->plan_grants_access_while_subscription_active( $post->ID ) ) {
+		if ( ! $integration->get_plans_instance()->grant_access_while_subscription_active( $post->ID ) ) {
 			return;
 		}
 
@@ -425,19 +395,19 @@ class WC_Memberships_Integration_Subscriptions_Admin {
 
 				endforeach;
 
-				echo SV_WC_Plugin_Compatibility::wc_help_tip( __( 'When does the membership tied to a subscription expire?', 'woocommerce-memberships' ) );
+				echo wc_help_tip( __( 'When does the membership tied to a subscription expire?', 'woocommerce-memberships' ) );
 
 				?>
 			</span>
 
 			<span class="subscription-access-notice description js-show-if-subscription-access-length-unlimited" <?php if ( 'unlimited' !== $current_subscription_access_length_type ) : ?>style="display: none;"<?php endif; ?>>
 				<?php esc_html_e( 'The membership will be active indefinitely, even after the subscription billing cycle is complete, as long as it has been fully paid.', 'woocommerce-memberships' ); ?>
-					<?php echo SV_WC_Plugin_Compatibility::wc_help_tip( __( 'When unlimited access is granted via the purchase of a subscription, the membership will be active for the period of the subscription length, and will stay active beyond that as long as the customer successfully completed the subscription billing cycle.', 'woocommerce-memberships' ) ); ?>
+					<?php echo wc_help_tip( __( 'When unlimited access is granted via the purchase of a subscription, the membership will be active for the period of the subscription length, and will stay active beyond that as long as the customer successfully completed the subscription billing cycle.', 'woocommerce-memberships' ) ); ?>
 			</span>
 
 			<span class="subscription-access-notice description js-show-if-subscription-access-length-subscription" <?php if ( 'subscription' !== $current_subscription_access_length_type ) : ?>style="display: none;"<?php endif; ?>>
 				<?php esc_html_e( 'The membership will be active as long as the purchased subscription stays active.', 'woocommerce-memberships' ); ?>
-				<?php echo SV_WC_Plugin_Compatibility::wc_help_tip( __( 'When access is granted via the purchase of a subscription, the membership length becomes tied to the length of the subscription.', 'woocommerce-memberships' ) ); ?>
+				<?php echo wc_help_tip( __( 'When access is granted via the purchase of a subscription, the membership length becomes tied to the length of the subscription.', 'woocommerce-memberships' ) ); ?>
 			</span>
 
 			<span class="plan-access-length-specific plan-subscription-access-length-specific js-show-if-subscription-access-length-specific <?php if ( 'specific' !== $current_subscription_access_length_type ) : ?>hide<?php endif;?>">
@@ -471,7 +441,7 @@ class WC_Memberships_Integration_Subscriptions_Admin {
 
 				<span class="subscription-access-notice description">
 					<?php esc_html_e( 'The membership will be active for the length specified above, regardless of billing dates, so long as the subscription has been fully paid.', 'woocommerce-memberships' ); ?>
-					<?php echo SV_WC_Plugin_Compatibility::wc_help_tip( __( 'When membership access is granted via the purchase of a subscription, then membership length will last for the specified period, regardless of the subscription length, as long as the customer pays for the subscription costs.', 'woocommerce-memberships' ) ); ?>
+					<?php echo wc_help_tip( __( 'When membership access is granted via the purchase of a subscription, then membership length will last for the specified period, regardless of the subscription length, as long as the customer pays for the subscription costs.', 'woocommerce-memberships' ) ); ?>
 				</span>
 
 			</span>
@@ -509,7 +479,7 @@ class WC_Memberships_Integration_Subscriptions_Admin {
 
 				<span class="subscription-access-notice description">
 					<?php esc_html_e( 'The membership will be active between the selected dates, regardless of billing dates, so long as the subscription has been fully paid.', 'woocommerce-memberships' ); ?>
-					<?php echo SV_WC_Plugin_Compatibility::wc_help_tip( __( 'When membership access is granted via the purchase of a subscription, the membership will last until the specified date, regardless of the subscription sign up date and the subscription length, as long as the customer pays for the subscription costs.', 'woocommerce-memberships' ) ); ?>
+					<?php echo wc_help_tip( __( 'When membership access is granted via the purchase of a subscription, the membership will last until the specified date, regardless of the subscription sign up date and the subscription length, as long as the customer pays for the subscription costs.', 'woocommerce-memberships' ) ); ?>
 				</span>
 
 			</span>
@@ -687,7 +657,7 @@ class WC_Memberships_Integration_Subscriptions_Admin {
 
 				if ( $subscription instanceof WC_Subscription ) {
 
-					$actions['delete-with-subscription'] = '<a class="delete-membership-and-subscription" title="' . esc_attr__( 'Delete this membership permanently and the subscription associated with it', 'woocommerce-memberships' ) . '" href="#" data-user-membership-id="' . esc_attr( $user_membership->get_id() ) . '" data-subscription-id="' . esc_attr( $subscription->id ) . '">' . esc_html__( 'Delete with subscription', 'woocommerce-memberships' ) . '</a>';
+					$actions['delete-with-subscription'] = '<a class="delete-membership-and-subscription" title="' . esc_attr__( 'Delete this membership permanently and the subscription associated with it', 'woocommerce-memberships' ) . '" href="#" data-user-membership-id="' . esc_attr( $user_membership->get_id() ) . '" data-subscription-id="' . esc_attr( SV_WC_Order_Compatibility::get_prop( $subscription, 'id' ) ) . '">' . esc_html__( 'Delete with subscription', 'woocommerce-memberships' ) . '</a>';
 				}
 			}
 		}
@@ -762,7 +732,7 @@ class WC_Memberships_Integration_Subscriptions_Admin {
 						'text'              => __( 'Delete User Membership with Subscription', 'woocommerce-memberships' ),
 						'custom_attributes' => array(
 							'data-user-membership-id' => $user_membership_id,
-							'data-subscription-id'    => $subscription->id,
+							'data-subscription-id'    => SV_WC_Order_Compatibility::get_prop( $subscription, 'id' ),
 							'data-tip'                => __( 'Delete this membership permanently and the subscription associated with it', 'woocommerce-memberships' ),
 						),
 					),
@@ -786,55 +756,50 @@ class WC_Memberships_Integration_Subscriptions_Admin {
 	 */
 	public function update_user_membership_data( $posted_data, $meta_box_id, $post_id ) {
 
-		if ( 'wc-memberships-user-membership-data' !== $meta_box_id ) {
+		// Note: we need to instantiate plan object via post object
+		// and not simply the id in this metabox context.
+		$membership_post = get_post( $post_id );
+
+		// Bail out if we are in the wrong meta box or for some reason post is invalid.
+		if ( 'wc-memberships-user-membership-data' !== $meta_box_id || ! $membership_post instanceof WP_Post ) {
 			return;
 		}
 
+		$subscription_membership = new WC_Memberships_Integration_Subscriptions_User_Membership( $membership_post );
+		$new_subscription_id     = ! empty( $posted_data['_subscription_id'] ) ? (int) $posted_data['_subscription_id'] : null;
+		$subscription            = ! empty( $new_subscription_id ) ? wcs_get_subscription( $new_subscription_id ) : null;
 		$integration             = wc_memberships()->get_integrations_instance()->get_subscriptions_instance();
-		// note: instantiate plan object via post object and not simply the id in this metabox context
-		$subscription_membership = new WC_Memberships_Integration_Subscriptions_User_Membership( get_post( $post_id ) );
 
-		// we support updating subscription links via meta box from Subscriptions v2.0 and above
-		if ( $subscription_membership && $integration->is_subscriptions_gte_2_0() ) {
+		// The membership is already linked to a subscription.
+		if ( $integration->is_membership_linked_to_subscription( $subscription_membership ) ) {
 
-			$new_subscription_id = ! empty( $posted_data['_subscription_id'] ) ? (int) $posted_data['_subscription_id'] : null;
-			$subscription        = null;
+			$old_subscription_id = $subscription_membership->get_subscription_id();
 
-			if ( ! empty( $new_subscription_id ) ) {
-				$subscription = wcs_get_subscription( $new_subscription_id );
-			}
+			if ( empty( $new_subscription_id ) ) {
 
-			// the membership is already linked to a subscription
-			if ( $integration->is_membership_linked_to_subscription( $subscription_membership ) ) {
+				// new id is void, unlink the membership from the subscription
+				$integration->unlink_membership( $subscription_membership->get_id(), $old_subscription_id );
 
-				$old_subscription_id = $subscription_membership->get_subscription_id();
+			} elseif ( $new_subscription_id !== $old_subscription_id && $subscription ) {
 
-				if ( empty( $new_subscription_id ) ) {
-
-					// new id is void, unlink the membership from the subscription
-					$integration->unlink_membership( $subscription_membership->get_id(), $old_subscription_id );
-
-				} elseif ( $new_subscription_id !== $old_subscription_id && $subscription ) {
-
-					// the two ids differ, link the membership to a new subscription
-					$subscription_membership->set_subscription_id( $new_subscription_id );
-
-					// maybe update the trial end date
-					if ( $trial_end = wc_memberships()->get_integrations_instance()->get_subscriptions_instance()->get_subscription_event_date( $subscription, 'trial_end' ) ) {
-						$subscription_membership->set_free_trial_end_date( $trial_end );
-					}
-				}
-
-			// the membership is not linked to a subscription
-			} elseif ( ! empty( $new_subscription_id ) && $subscription ) {
-
-				// link the subscription to the membership
+				// the two ids differ, link the membership to a new subscription
 				$subscription_membership->set_subscription_id( $new_subscription_id );
 
 				// maybe update the trial end date
 				if ( $trial_end = wc_memberships()->get_integrations_instance()->get_subscriptions_instance()->get_subscription_event_date( $subscription, 'trial_end' ) ) {
 					$subscription_membership->set_free_trial_end_date( $trial_end );
 				}
+			}
+
+		// the membership is not linked to a subscription
+		} elseif ( ! empty( $new_subscription_id ) && $subscription ) {
+
+			// link the subscription to the membership
+			$subscription_membership->set_subscription_id( $new_subscription_id );
+
+			// maybe update the trial end date
+			if ( $trial_end = wc_memberships()->get_integrations_instance()->get_subscriptions_instance()->get_subscription_event_date( $subscription, 'trial_end' ) ) {
+				$subscription_membership->set_free_trial_end_date( $trial_end );
 			}
 		}
 	}

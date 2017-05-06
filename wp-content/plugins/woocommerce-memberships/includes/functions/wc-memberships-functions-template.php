@@ -14,11 +14,11 @@
  *
  * Do not edit or add to this file if you wish to upgrade WooCommerce Memberships to newer
  * versions in the future. If you wish to customize WooCommerce Memberships for your
- * needs please refer to http://docs.woothemes.com/document/woocommerce-memberships/ for more information.
+ * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @package   WC-Memberships/Classes
  * @author    SkyVerge
- * @copyright Copyright (c) 2014-2016, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2017, SkyVerge, Inc.
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
@@ -119,6 +119,8 @@ if ( ! function_exists( 'wc_memberships_restrict' ) ) {
 			} else {
 
 				$message = __( 'This content is part of your membership, but not yet! You will gain access on {date}', 'woocommerce-memberships' );
+
+				// TODO remove the deprecated filter and notice triggered by version 1.9.0 {FN 2017-04-18}
 
 				// apply the deprecated filter
 				if ( has_filter( 'get_content_delayed_message' ) ) {
@@ -265,7 +267,7 @@ if ( ! function_exists( 'wc_memberships_product_has_member_discount' ) ) {
 		if ( ! $product_id ) {
 			global $product;
 
-			$product_id = isset( $product->id ) ? $product->id : null;
+			$product_id = $product instanceof WC_Product ? $product->get_id() : null;
 		}
 
 		if ( ! $product_id || 'product' !== get_post_type( $product_id ) || wc_memberships_is_product_excluded_from_member_discounts( $product_id ) ) {
@@ -418,25 +420,26 @@ if ( ! function_exists( 'wc_memberships_get_member_product_discount' ) ) {
 if ( ! function_exists( 'wc_memberships_get_members_area_url' ) ) {
 
 	/**
-	 * Get members area URL
+	 * Get the members area URL.
 	 *
 	 * @since 1.4.0
-	 * @param int|\WC_Memberships_Membership_Plan $membership_plan Object or id
-	 * @param string $member_area_section Optional, which section of the member area to point to
-	 * @param int|string $paged Optional, for paged sections
-	 * @return string Unescaped URL
+	 * @param int|\WC_Memberships_Membership_Plan $membership_plan Object or id.
+	 * @param string $members_area_section Optional, which section of the members area to point to.
+	 * @param int|string $paged Optional, for paged sections.
+	 * @return string Unescaped URL.
 	 */
-	function wc_memberships_get_members_area_url( $membership_plan, $member_area_section = '', $paged = '' ) {
+	function wc_memberships_get_members_area_url( $membership_plan, $members_area_section = '', $paged = '' ) {
 
-		$page_id            = wc_get_page_id( 'myaccount' );
+		$my_account_page_id = wc_get_page_id( 'myaccount' );
 		$membership_plan_id = is_object( $membership_plan ) ? $membership_plan->get_id() : (int) $membership_plan;
 
-		if ( ! $page_id || ! $membership_plan_id || 0 === $membership_plan_id ) {
+		// Bail out if something is wrong.
+		if ( ! $my_account_page_id || ! $membership_plan_id || 0 === $membership_plan_id ) {
 			return '';
 		}
 
-		// if unspecified, will get the first tab as set in membership plan in admin
-		if ( empty( $member_area_section ) ) {
+		// If unspecified, will get the first tab as set in membership plan in admin.
+		if ( empty( $members_area_section ) ) {
 
 			$membership_plan = is_int( $membership_plan ) ? wc_memberships_get_membership_plan( $membership_plan_id ) : $membership_plan;
 
@@ -446,32 +449,58 @@ if ( ! function_exists( 'wc_memberships_get_members_area_url' ) ) {
 
 			$plan_sections       = (array) $membership_plan->get_members_area_sections();
 			$available_sections  = array_intersect_key( wc_memberships_get_members_area_sections(), array_flip( $plan_sections ) );
-			$member_area_section = key( $available_sections );
+			$members_area_section = key( $available_sections );
 		}
 
 		if ( ! empty( $paged ) ) {
 			$paged = max( absint( $paged ), 1 );
 		}
 
-		if ( get_option( 'permalink_structure' ) ) {
-
-			$myaccount_url = wc_get_page_permalink( 'myaccount' );
-			$endpoint      = get_option( 'woocommerce_myaccount_members_area_endpoint', 'members-area' );
-
-			// e.g. /my-account/members-area/123/my-membership-content/2
-			return $myaccount_url . $endpoint . '/' . $membership_plan_id . '/' . $member_area_section . '/' . $paged;
+		// Grab the base URL according to rewrite structure used.
+		if ( $using_permalinks = get_option( 'permalink_structure' ) ) {
+			$my_account_url = wc_get_page_permalink( 'myaccount' );
+		} else {
+			$my_account_url = get_home_url();
 		}
 
-		// e.g. /?page_id=123&members_area=456&members_area_section=my-membership-content&members_area_section_page=2
-		return add_query_arg(
-			array(
-				'page_id'                   => $page_id,
-				'members_area'              => $membership_plan_id,
-				'members_area_section'      => $member_area_section,
-				'members_area_section_page' => $paged,
-			),
-			get_home_url()
-		);
+		// Grab any query strings (sometimes set by translation plugins, e.g. ?lang=it).
+		$url_pieces     = parse_url( $my_account_url );
+		$query_strings  = ! empty( $url_pieces['query'] ) && is_string( $url_pieces['query'] ) ? explode( '&', $url_pieces['query'] ) : array();
+		$my_account_url = preg_replace( '/\?.*/', '', $my_account_url );
+
+		// Return an URL according to rewrite structure used:
+		if ( $using_permalinks ) {
+
+			$endpoint = get_option( 'woocommerce_myaccount_members_area_endpoint', 'members-area' );
+
+			// Using permalinks:
+			// e.g. /my-account/members-area/123/my-membership-content/2
+			$url = trailingslashit( $my_account_url ) . $endpoint . '/' . $membership_plan_id . '/' . $members_area_section . '/' . $paged;
+
+		} else {
+
+			// Not using permalinks:
+			// e.g. /?page_id=123&members_area=456&members_area_section=my_membership_content&members_area_section_page=2
+			$url = add_query_arg(
+				array(
+					'page_id'                   => $my_account_page_id,
+					'members_area'              => $membership_plan_id,
+					'members_area_section'      => $members_area_section,
+					'members_area_section_page' => $paged,
+				),
+				$my_account_url
+			);
+		}
+
+		// Puts back any query arg at the end of the Members Area URL.
+		if ( ! empty( $query_strings ) ) {
+			foreach ( $query_strings as $query_string ) {
+				$arg = explode( '=', $query_string );
+				$url = add_query_arg( array( $arg[0] => isset( $arg[1] ) ? $arg[1] : '' ), $url );
+			}
+		}
+
+		return $url;
 	}
 
 }
@@ -491,6 +520,13 @@ if ( ! function_exists( 'wc_memberships_get_members_area_action_links' ) ) {
 	function wc_memberships_get_members_area_action_links( $section, $user_membership, $object ) {
 
 		$default_actions = array();
+		$object_id       = 0;
+
+		if ( $object instanceof WC_Product ) {
+			$object_id = $object->get_id();
+		} elseif ( $object instanceof WP_Post || isset( $object->ID ) ) {
+			$object_id = $object->ID;
+		}
 
 		switch ( $section ) {
 
@@ -534,10 +570,10 @@ if ( ! function_exists( 'wc_memberships_get_members_area_action_links' ) ) {
 
 			case 'my-membership-content'   :
 
-				if ( wc_memberships_user_can( $user_membership->get_user_id(), 'view', array( 'post' => $object->ID ) ) ) {
+				if ( ! empty( $object_id ) && wc_memberships_user_can( $user_membership->get_user_id(), 'view', array( 'post' => $object_id ) ) ) {
 
 					$default_actions['view'] = array(
-						'url'  => get_permalink( $object->ID ),
+						'url'  => get_permalink( $object_id ),
 						'name' => __( 'View', 'woocommerce-memberships' ),
 					);
 				}
@@ -547,13 +583,13 @@ if ( ! function_exists( 'wc_memberships_get_members_area_action_links' ) ) {
 			case 'my-membership-products'  :
 			case 'my-membership-discounts' :
 
-				$can_view_product     = wc_memberships_user_can( $user_membership->get_user_id(), 'view', array( 'product' => $object->id ) );
-				$can_purchase_product = wc_memberships_user_can( $user_membership->get_user_id(), 'purchase', array( 'product' => $object->id ) );
+				$can_view_product     = wc_memberships_user_can( $user_membership->get_user_id(), 'view',     array( 'product' => $object_id ) );
+				$can_purchase_product = wc_memberships_user_can( $user_membership->get_user_id(), 'purchase', array( 'product' => $object_id ) );
 
 				if ( $can_view_product ) {
 
 					$default_actions['view'] = array(
-						'url'  => get_permalink( $object->id ),
+						'url'  => get_permalink( $object_id ),
 						'name' => __( 'View', 'woocommerce-memberships' ),
 					);
 				}
@@ -580,8 +616,14 @@ if ( ! function_exists( 'wc_memberships_get_members_area_action_links' ) ) {
 		 */
 		$actions = apply_filters( "wc_memberships_members_area_{$section}_actions", $default_actions, $user_membership, $object );
 
-		// can be removed once we no longer support the hook below
-		if ( 'my-memberships' === $section ) {
+		// TODO throw a deprecation notice for now, later remove the deprecated filter by version 2.0.0 or earlier {FN 2017-03-20}
+		if ( 'my-memberships' === $section && has_filter( 'wc_memberships_my_account_my_memberships_actions' ) ) {
+
+			_deprecated_function(
+				'The "wc_memberships_my_account_my_memberships_actions" filter',
+				'1.8.0',
+				'"wc_memberships_members_area_my-memberships_actions"'
+			);
 
 			/**
 			 * Filter membership actions on my account page

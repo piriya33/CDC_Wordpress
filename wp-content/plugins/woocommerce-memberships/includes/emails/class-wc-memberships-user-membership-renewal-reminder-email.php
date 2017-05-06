@@ -14,11 +14,11 @@
  *
  * Do not edit or add to this file if you wish to upgrade WooCommerce Memberships to newer
  * versions in the future. If you wish to customize WooCommerce Memberships for your
- * needs please refer to http://docs.woothemes.com/document/woocommerce-memberships/ for more information.
+ * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @package   WC-Memberships/Classes
  * @author    SkyVerge
- * @copyright Copyright (c) 2014-2016, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2017, SkyVerge, Inc.
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
@@ -86,7 +86,7 @@ class WC_Memberships_User_Membership_Renewal_Reminder_Email extends WC_Membershi
 				$this->recipient = $member->user_email;
 			}
 
-			$is_inactive_plan_member = ! wc_memberships_is_user_non_inactive_member( $member_id, $this->object->get_plan_id() );
+			$is_inactive_plan_member = ! wc_memberships_is_user_active_or_delayed_member( $member_id, $this->object->get_plan_id() );
 
 			$this->body = $this->object instanceof WC_Memberships_User_Membership ? $this->object->get_plan()->get_email_content( $this->id ) : '';
 

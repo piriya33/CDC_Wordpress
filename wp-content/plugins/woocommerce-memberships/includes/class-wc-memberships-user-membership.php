@@ -14,11 +14,11 @@
  *
  * Do not edit or add to this file if you wish to upgrade WooCommerce Memberships to newer
  * versions in the future. If you wish to customize WooCommerce Memberships for your
- * needs please refer to http://docs.woothemes.com/document/woocommerce-memberships/ for more information.
+ * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @package   WC-Memberships/Classes
  * @author    SkyVerge
- * @copyright Copyright (c) 2014-2016, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2017, SkyVerge, Inc.
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
@@ -29,10 +29,6 @@ defined( 'ABSPATH' ) or exit;
  *
  * This class represents a single user's membership, ie. a user belonging
  * to a User Membership. A single user can have multiple memberships.
- *
- * Technically, it's a wrapper around an instance of WP_Post with the
- * 'wc_user_membership' custom post type, similar to how \WC_Product
- * or \WC_Order are implemented.
  *
  * @since 1.0.0
  */
@@ -327,7 +323,7 @@ class WC_Memberships_User_Membership {
 		if ( ! empty( $end_timestamp ) ) {
 
 			// for fixed date memberships set end date to the end of the day
-			$end_timestamp = $this->get_plan() && $this->plan->is_access_length_type( 'fixed' ) ? wc_memberships_adjust_date_by_timezone( strtotime( 'tomorrow', $end_timestamp ), 'timestamp', wc_timezone_string() ) : $end_timestamp;
+			$end_timestamp = $this->get_plan() && $this->plan->is_access_length_type( 'fixed' ) ? wc_memberships_adjust_date_by_timezone( strtotime( 'midnight', $end_timestamp ), 'timestamp', wc_timezone_string() ) : $end_timestamp;
 
 			$end_date = date( 'Y-m-d H:i:s', (int) $end_timestamp );
 		}
@@ -808,10 +804,8 @@ class WC_Memberships_User_Membership {
 	public function set_order_id( $order_id ) {
 
 		$order_id = is_numeric( $order_id ) ? (int) $order_id : 0;
-		$order    = $order_id > 0 ? wc_get_order( $order_id ) : null;
 
-		// check that the order id belongs to an actual order
-		if ( $order ) {
+		if ( $order = $order_id > 0 ? wc_get_order( $order_id ) : null ) {
 
 			update_post_meta( $this->id, $this->order_id_meta, $order_id );
 
@@ -1365,7 +1359,7 @@ class WC_Memberships_User_Membership {
 		// make sure the original product is the first in array
 		if ( $original_product && $original_product->is_purchasable() ) {
 
-			$renewal_products[ SV_WC_Plugin_Compatibility::product_get_id( $original_product ) ] = $original_product;
+			$renewal_products[ $original_product->get_id() ] = $original_product;
 		}
 
 		$plan = $this->get_plan();

@@ -2,3 +2,4 @@
 01-04-2017 @ 02:40:25 - v2.1: Set _schedule_cancelled date to post_modified_gmt column value for 0 subscriptions with wc-pending-cancel status.
 01-04-2017 @ 02:40:25 - v2.1: Set _schedule_cancelled date to post_modified_gmt column value for 0 subscriptions with wc-cancelled status.
 01-04-2017 @ 02:40:25 - Upgrade complete. Scheduling log cleanup for 2017-03-01 02:40:25 GMT/UTC
+05-06-2017 @ 23:09:33 - 2.2.6 upgrade complete.

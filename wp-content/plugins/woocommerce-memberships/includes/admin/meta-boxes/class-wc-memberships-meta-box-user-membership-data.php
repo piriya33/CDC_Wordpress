@@ -14,12 +14,12 @@
  *
  * Do not edit or add to this file if you wish to upgrade WooCommerce Memberships to newer
  * versions in the future. If you wish to customize WooCommerce Memberships for your
- * needs please refer to http://docs.woothemes.com/document/woocommerce-memberships/ for more information.
+ * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @package   WC-Memberships/Admin/Meta-Boxes
  * @author    SkyVerge
  * @category  Admin
- * @copyright Copyright (c) 2014-2016, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2017, SkyVerge, Inc.
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
@@ -102,9 +102,8 @@ class WC_Memberships_Meta_Box_User_Membership_Data extends WC_Memberships_Meta_B
 					// only add plan to options if user is not a member of this plan or
 					// if the current membership has this plan.
 					// TODO: instead of removing, disable the option once {FN 2016-07-04}
-					// see: https://github.com/woothemes/woocommerce/pull/8024 lands in stable (maybe WC 3.0?)
+					// see: https://github.com/woocommerce/woocommerce/pull/8024 lands in stable (maybe WC 3.0?)
 					if ( ! $exists || $user_membership->get_plan_id() === $membership_plan->get_id() ) {
-
 						$membership_plan_options[ $membership_plan->get_id() ] = $membership_plan->get_name();
 					}
 				}
@@ -471,12 +470,11 @@ class WC_Memberships_Meta_Box_User_Membership_Data extends WC_Memberships_Meta_B
 
 				if ( $order ) {
 
-					/* translators: Placeholider: %s - order number */
-					$order_ref = '<a href="' . esc_url( get_edit_post_link( $order->id ) ) . '">' . sprintf(  __( 'Order %s', 'woocommerce-memberships' ), $order->get_order_number() ) . '</a>';
-
-					$billing_fields = array(
+					/* translators: Placeholder: %s - order number */
+					$order_ref       = '<a href="' . esc_url( get_edit_post_link( SV_WC_Order_Compatibility::get_prop( $order, 'id' ) ) ) . '">' . sprintf(  __( 'Order %s', 'woocommerce-memberships' ), $order->get_order_number() ) . '</a>';
+					$billing_fields  = array(
 						__( 'Purchased in:', 'woocommerce-memberships' ) => $order_ref,
-						__( 'Order Date:', 'woocommerce-memberships' )   => date_i18n( wc_date_format(), strtotime( $order->order_date ) ),
+						__( 'Order Date:', 'woocommerce-memberships' )   => date_i18n( wc_date_format(), SV_WC_Order_Compatibility::get_date_created( $order )->getTimestamp() ),
 						__( 'Order Total:', 'woocommerce-memberships' )  => $order->get_formatted_order_total(),
 					);
 
@@ -523,11 +521,11 @@ class WC_Memberships_Meta_Box_User_Membership_Data extends WC_Memberships_Meta_B
 
 
 	/**
-	 * Save user membership data
+	 * Save user membership data.
 	 *
 	 * @since 1.0.0
-	 * @param int $post_id
-	 * @param \WP_Post $post
+	 * @param int $post_id The post id of the corresponding user membership post.
+	 * @param \WP_Post $post The user membership post object.
 	 */
 	public function update_data( $post_id, WP_Post $post ) {
 

@@ -14,12 +14,12 @@
  *
  * Do not edit or add to this file if you wish to upgrade WooCommerce Memberships to newer
  * versions in the future. If you wish to customize WooCommerce Memberships for your
- * needs please refer to http://docs.woothemes.com/document/woocommerce-memberships/ for more information.
+ * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @package   WC-Memberships/Frontend
  * @author    SkyVerge
  * @category  Frontend
- * @copyright Copyright (c) 2014-2016, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2017, SkyVerge, Inc.
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
@@ -33,17 +33,24 @@ defined( 'ABSPATH' ) or exit;
 class WC_Memberships_Query {
 
 
+	/** @var array Custom query vars used in Memberships endpoints. */
+	private $query_vars = array();
+
+
 	/**
-	 * Constructor
+	 * Constructor.
 	 *
 	 * @since 1.6.0
 	 */
 	public function __construct() {
 
-		// add rewrite rules
-		add_action( 'init', array( $this, 'add_endpoints' ), 1 );
+		$this->init_endpoints();
 
-		// comments (user membership notes) handling
+		// Add new endpoints.
+		add_action( 'init',       array( $this, 'add_endpoints' ), 1 );
+		add_filter( 'query_vars', array( $this, 'add_query_vars' ), 0 );
+
+		// User Membership Notes (comments on user memberships posts) handling.
 		add_filter( 'comments_clauses',   array( $this, 'exclude_membership_notes_from_queries' ), 10, 1 );
 		add_action( 'comment_feed_join',  array( $this, 'exclude_membership_notes_from_feed_join' ) );
 		add_action( 'comment_feed_where', array( $this, 'exclude_membership_notes_from_feed_where' ) );
@@ -51,47 +58,55 @@ class WC_Memberships_Query {
 
 
 	/**
-	 * Add endpoints for the Member Area
+	 * Init query vars used by Memberships.
+	 *
+	 * @see \WC_Query::init_query_vars()
+	 * @see \WC_Query::add_endpoints()
+	 *
+	 * @since 1.7.4
+	 */
+	private function init_endpoints() {
+
+		$this->query_vars = array(
+			'members_area' => get_option( 'woocommerce_myaccount_members_area_endpoint', 'members-area' ),
+		);
+	}
+
+
+	/**
+	 * Add endpoints.
 	 *
 	 * @internal
 	 *
-	 * @see \WC_Memberships_Member_Area
+	 * @see \WC_Query
+	 * @see \WC_Memberships_Members_Area
 	 *
 	 * @since 1.6.0
 	 */
 	public function add_endpoints() {
 
-		// Membership Plan id (numeric)
-		add_rewrite_tag( '%members_area%', '([^&]+)' );
-		// Members Area section (string)
-		add_rewrite_tag( '%members_area_section%', '([^&]+)' );
-		// Members Area section page (numeric, optional)
-		add_rewrite_tag( '%members_area_section_page%', '([^&]+)' );
+		WC()->query->query_vars = array_merge( WC()->query->query_vars, $this->query_vars );
+	}
 
-		$page_id = wc_get_page_id( 'myaccount' );
-		$page    = get_post( $page_id );
 
-		// sanity check
-		if ( ! $page instanceof WP_Post ) {
-			return;
+	/**
+	 * Add query vars.
+	 *
+	 * @internal
+	 *
+	 * @since 1.7.4
+	 * @param string[] $query_vars WordPress query vars.
+	 * @return string[]
+	 */
+	public function add_query_vars( $query_vars ) {
+
+		foreach ( array_keys( $this->query_vars ) as $query_var ) {
+			if ( ! in_array( $query_var, $query_vars, true ) ) {
+				$query_vars[] = $query_var;
+			}
 		}
 
-		$page_slug = $page->post_name;
-		$endpoint  = get_option( 'woocommerce_myaccount_members_area_endpoint', 'members-area' );
-
-		// e.g. domain.tld/*/my-account/members-area/123/my-membership-discounts/
-		add_rewrite_rule(
-			"(.+/)*{$page_slug}/{$endpoint}/([0-9]{1,})/([^/]*)/?$",
-			'index.php?page_id=' . $page_id . '&members_area=$matches[2]&members_area_section=$matches[3]&members_area_section_page=1',
-			'top'
-		);
-
-		// paged, e.g. domain.tld/*/my-account/members-area/123/my-membership-discounts/2
-		add_rewrite_rule(
-			"(.+/)*{$page_slug}/{$endpoint}/([0-9]{1,})/([^/]*)/([0-9]{1,})/?$",
-			'index.php?page_id=' . $page_id . '&members_area=$matches[2]&members_area_section=$matches[3]&members_area_section_page=$matches[4]',
-			'top'
-		);
+		return $query_vars;
 	}
 
 

@@ -14,7 +14,7 @@
  *
  * Do not edit or add to this file if you wish to upgrade WooCommerce Memberships to newer
  * versions in the future. If you wish to customize WooCommerce Memberships for your
- * needs please refer to http://docs.woothemes.com/document/woocommerce-memberships/ for more information.
+ * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @package   WC-Memberships/Templates
  * @author    SkyVerge
@@ -31,7 +31,7 @@ defined( 'ABSPATH' ) or exit;
  * @type \WP_Query $discounted_products Query results of products post objects discounted by the membership
  * @type int $user_id The current user ID
  *
- * @version 1.7.1
+ * @version 1.8.0
  * @since 1.4.0
  */
 ?>
@@ -86,11 +86,18 @@ defined( 'ABSPATH' ) or exit;
 				continue;
 			}
 
+			if ( $product->is_type( 'variation' ) ) {
+				$parent     = SV_WC_Product_Compatibility::get_parent( $product );
+				$product_id = $parent->get_id();
+			} else {
+				$product_id = $product->get_id();
+			}
+
 			// Customer capabilities
-			$can_view_product     = wc_memberships_user_can( $user_id, 'view' , array( 'product' => $product->id ) );
-			$can_purchase_product = wc_memberships_user_can( $user_id, 'purchase', array( 'product' => $product->id ) );
-			$purchase_start_time  = wc_memberships_get_user_access_start_time( $user_id, 'purchase', array( 'product' => $product->id ) );
-			$can_have_discount    = wc_memberships_user_has_member_discount( $product->id );
+			$can_view_product     = wc_memberships_user_can( $user_id, 'view' , array( 'product' => $product_id ) );
+			$can_purchase_product = wc_memberships_user_can( $user_id, 'purchase', array( 'product' => $product_id ) );
+			$purchase_start_time  = wc_memberships_get_user_access_start_time( $user_id, 'purchase', array( 'product' => $product_id ) );
+			$can_have_discount    = wc_memberships_user_has_member_discount( $product_id );
 
 			/**
 			 * Show only active discounts
@@ -98,7 +105,7 @@ defined( 'ABSPATH' ) or exit;
 			 * @since 1.4.0
 			 * @param bool $show_only_active_discounts Default true
 			 */
-			$show_only_active_discounts = (bool) apply_filters( 'wc_memberships_members_area_show_only_active_discounts', true, $user_id, $product->id );
+			$show_only_active_discounts = (bool) apply_filters( 'wc_memberships_members_area_show_only_active_discounts', true, $user_id, $product_id );
 
 			if ( $show_only_active_discounts && ! $can_have_discount ) {
 				continue;
@@ -113,7 +120,7 @@ defined( 'ABSPATH' ) or exit;
 
 						<td class="membership-discount-image" style="min-width: 84px;" data-title="<?php echo esc_attr( $column_name ); ?>">
 							<?php if ( $can_view_product ) : ?>
-								<a href="<?php echo esc_url( get_permalink( $product->id ) ); ?>"><?php echo $product->get_image(); ?></a>
+								<a href="<?php echo esc_url( get_permalink( $product_id ) ); ?>"><?php echo $product->get_image(); ?></a>
 							<?php else : ?>
 								<?php echo wc_placeholder_img( 'shop_thumbnail' ); ?>
 							<?php endif; ?>
@@ -123,7 +130,7 @@ defined( 'ABSPATH' ) or exit;
 
 						<td class="membership-discount-title" data-title="<?php echo esc_attr( $column_name ); ?>">
 							<?php if ( $can_view_product ) : ?>
-								<a href="<?php echo esc_url( get_permalink( $product->id ) ); ?>"><?php echo esc_html( $product->get_title() ); ?></a>
+								<a href="<?php echo esc_url( get_permalink( $product_id ) ); ?>"><?php echo esc_html( $product->get_title() ); ?></a>
 							<?php else : ?>
 								<?php echo esc_html( $product->get_title() ); ?>
 							<?php endif; ?>

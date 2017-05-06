@@ -14,12 +14,12 @@
  *
  * Do not edit or add to this file if you wish to upgrade WooCommerce Memberships to newer
  * versions in the future. If you wish to customize WooCommerce Memberships for your
- * needs please refer to http://docs.woothemes.com/document/woocommerce-memberships/ for more information.
+ * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @package   WC-Memberships/Admin
  * @author    SkyVerge
  * @category  Admin
- * @copyright Copyright (c) 2014-2016, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2017, SkyVerge, Inc.
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
@@ -286,7 +286,16 @@ class WC_Memberships_Admin_User_Memberships {
 			break;
 
 			case 'plan':
-				echo '<a href="' . esc_url( get_edit_post_link( $user_membership->get_plan_id() ) ) . '">' . $user_membership->get_plan()->get_name() . '</a>';
+
+				// It shouldn't normally ever happen that the plan can't be found,
+				// but prevents fatal errors on borked installations where the
+				// associated plan disappeared.
+				if ( $plan = $user_membership->get_plan() ) {
+					echo '<a href="' . esc_url( get_edit_post_link( $user_membership->get_plan_id() ) ) . '">' . $plan->get_name() . '</a>';
+				} else {
+					echo '-';
+				}
+
 			break;
 
 			case 'status':
@@ -302,8 +311,8 @@ class WC_Memberships_Admin_User_Memberships {
 
 				$since_time = $user_membership->get_local_start_date( 'timestamp' );
 
-				$date = esc_html( date_i18n( $date_format, $since_time ) );
-				$time = esc_html( date_i18n( $time_format, $since_time ) );
+				$date = esc_html( date_i18n( $date_format, (int) $since_time ) );
+				$time = esc_html( date_i18n( $time_format, (int) $since_time ) );
 
 				printf( '%1$s %2$s', $date, $time );
 
@@ -314,8 +323,8 @@ class WC_Memberships_Admin_User_Memberships {
 				$end_time = $user_membership->get_local_end_date( 'timestamp' );
 
 				if ( ! empty( $end_time ) && is_numeric( $end_time ) ) {
-					$date = esc_html( date_i18n( $date_format, $end_time ) );
-					$time = esc_html( date_i18n( $time_format, $end_time ) );
+					$date = esc_html( date_i18n( $date_format, (int) $end_time ) );
+					$time = esc_html( date_i18n( $time_format, (int) $end_time ) );
 				} else {
 					$date = esc_html__( 'Never', 'woocommerce-memberships' );
 					$time = '';
@@ -339,7 +348,7 @@ class WC_Memberships_Admin_User_Memberships {
 
 		?>
 		<style type="text/css">
-			#post-body-content, #titlediv, #major-publishing-actions, #minor-publishing-actions, #visibility, #submitdiv { display:none }
+			#post-body-content, #titlediv, #major-publishing-actions, #minor-publishing-actions, #visibility, #submitdiv { display:none; }
 		</style>
 		<?php
 	}
@@ -478,15 +487,16 @@ class WC_Memberships_Admin_User_Memberships {
 				$join_users = true;
 				$keyword    = '%' . $keyword . '%';
 
-				// do a LIKE search in user fields
+				// Do a LIKE search in user fields:
 				$where_post_type    = "$wpdb->posts.post_type = 'wc_user_membership'";
 				$where_post_status  = "$wpdb->posts.post_status = 'wcm-active' OR $wpdb->posts.post_status = 'wcm-free_trial' OR $wpdb->posts.post_status = 'wcm-delayed' OR $wpdb->posts.post_status = 'wcm-complimentary' OR $wpdb->posts.post_status = 'wcm-pending' OR $wpdb->posts.post_status = 'wcm-paused' OR $wpdb->posts.post_status = 'wcm-expired' OR $wpdb->posts.post_status = 'wcm-cancelled'";
 				$where_title        = $wpdb->prepare( "$wpdb->posts.post_title LIKE %s", $keyword );
 				$where_user_login   = $wpdb->prepare( "$wpdb->users.user_login LIKE %s", $keyword );
 				$where_user_email   = $wpdb->prepare( "$wpdb->users.user_email LIKE %s", $keyword );
 				$where_display_name = $wpdb->prepare( "$wpdb->users.display_name LIKE %s", $keyword );
+				$where_user_id      = $wpdb->prepare( "$wpdb->users.id LIKE %s", $keyword );
 
-				$where = " AND $where_post_type AND ($where_post_status) AND (($where_title) OR ($where_user_login) OR ($where_user_email) OR ($where_display_name))";
+				$where = " AND $where_post_type AND ($where_post_status) AND ( ($where_title) OR ($where_user_login) OR ($where_user_email) OR ($where_display_name) OR ($where_user_id) )";
 
 				// replace the where clauses
 				$pieces['where'] = $where;
@@ -603,7 +613,7 @@ class WC_Memberships_Admin_User_Memberships {
 
 		?>
 		<select name="post_parent">
-			<option value=""><?php _e( 'All plans', 'woocommerce-memberships' ); ?></option>
+			<option value=""><?php esc_html_e( 'All plans', 'woocommerce-memberships' ); ?></option>
 			<?php
 				if ( ! empty( $membership_plans ) ) {
 					foreach ( $membership_plans as $membership_plan ) {
@@ -614,22 +624,22 @@ class WC_Memberships_Admin_User_Memberships {
 		</select>
 
 		<select name="post_status">
-			<option value=""><?php _e( 'All statuses', 'woocommerce-memberships' ); ?></option>
+			<option value=""><?php esc_html_e( 'All statuses', 'woocommerce-memberships' ); ?></option>
 			<?php
 				if ( ! empty( $statuses ) ) {
 					foreach ( $statuses as $status => $labels ) {
-						echo "\t<option value='" . esc_attr( $status ) . "'" . selected( $status, $selected_status, false ) . '>' . esc_html( $labels['label'] ) . '</option>' . PHP_EOL;
+						echo "\t<option value='" . esc_attr( $status ) . "' " . selected( $status, $selected_status, false ) . '>' . esc_html( $labels['label'] ) . '</option>' . PHP_EOL;
 					}
 				}
 			?>
 		</select>
 
 		<select name="expires">
-			<option value=""><?php _e( 'Expires', 'woocommerce-memberships' ); ?></option>
+			<option value=""><?php esc_html_e( 'Expires', 'woocommerce-memberships' ); ?></option>
 			<?php
 				if ( ! empty( $expires ) ) {
 					foreach ( $expires as $expiry_term => $label ) {
-						echo "\t<option value='" . esc_attr( $expiry_term ) . "'" . selected( $expiry_term, $selected_expiry_term, false ) . '>' . esc_html( $label ) . '</option>' . PHP_EOL;
+						echo "\t<option value='" . esc_attr( $expiry_term ) . "' " . selected( $expiry_term, $selected_expiry_term, false ) . '>' . esc_html( $label ) . '</option>' . PHP_EOL;
 					}
 				}
 			?>
@@ -782,7 +792,7 @@ class WC_Memberships_Admin_User_Memberships {
 	 * @since 1.0.0
 	 */
 	public function admin_notices() {
-		global $post_type, $pagenow;
+		global $pagenow;
 
 		if ( 'edit.php' === $pagenow ) {
 

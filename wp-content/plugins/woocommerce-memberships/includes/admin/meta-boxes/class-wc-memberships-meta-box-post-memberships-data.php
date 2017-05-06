@@ -14,12 +14,12 @@
  *
  * Do not edit or add to this file if you wish to upgrade WooCommerce Memberships to newer
  * versions in the future. If you wish to customize WooCommerce Memberships for your
- * needs please refer to http://docs.woothemes.com/document/woocommerce-memberships/ for more information.
+ * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @package   WC-Memberships/Admin/Meta-Boxes
  * @author    SkyVerge
  * @category  Admin
- * @copyright Copyright (c) 2014-2016, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2017, SkyVerge, Inc.
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
@@ -120,7 +120,7 @@ class WC_Memberships_Meta_Box_Post_Memberships_Data extends WC_Memberships_Meta_
 			'description' => __( 'Check this box if you want to force the content to be public regardless of any restriction rules that may apply now or in the future.', 'woocommerce-memberships' ),
 		) ); ?>
 
-		<div class="js-restrictions <?php if ( 'yes' === get_post_meta( $post->ID, '_wc_memberships_force_public', true ) ) : ?>hide<?php endif; ?>">
+		<div class="js-restrictions <?php if ( 'yes' === wc_memberships_get_content_meta( $post, '_wc_memberships_force_public', true ) ) : ?>hide<?php endif; ?>">
 			<?php
 
 			// load content restriction rules view
@@ -149,19 +149,14 @@ class WC_Memberships_Meta_Box_Post_Memberships_Data extends WC_Memberships_Meta_
 				'description' => __( 'Check this box if you want to customize the content restricted message for this content.', 'woocommerce-memberships' ),
 			) ); ?>
 
-			<div class="js-custom-message-editor-container <?php if ( get_post_meta( $post->ID, '_wc_memberships_use_custom_content_restricted_message', true ) !== 'yes' ) : ?>hide<?php endif; ?>">
-				<?php $message = get_post_meta( $post->ID, '_wc_memberships_content_restricted_message', true ); ?>
+			<div class="js-custom-message-editor-container <?php if ( wc_memberships_get_content_meta( $post->ID, '_wc_memberships_use_custom_content_restricted_message', true ) !== 'yes' ) : ?>hide<?php endif; ?>">
+				<?php $message = wc_memberships_get_content_meta( $post->ID, '_wc_memberships_content_restricted_message', true ); ?>
 				<p>
-					<?php
-
-					/* translators: %1$s and %2$s placeholders are meant for {products} and {login_url} merge tags */
-					printf(
-						__( '%1$s automatically inserts the product(s) needed to gain access. %2$s inserts the URL to my account page. HTML is allowed.', 'woocommerce-memberships' ),
+					<?php /* translators: %1$s and %2$s placeholders are meant for {products} and {login_url} merge tags */
+					printf( __( '%1$s automatically inserts the product(s) needed to gain access. %2$s inserts the URL to my account page. HTML is allowed.', 'woocommerce-memberships' ),
 						'<strong><code>{products}</code></strong>',
 						'<strong><code>{login_url}</code></strong>'
-					);
-
-					?>
+					); ?>
 				</p>
 				<?php
 
@@ -193,7 +188,7 @@ class WC_Memberships_Meta_Box_Post_Memberships_Data extends WC_Memberships_Meta_
 		$admin->update_rules( $post_id, array( 'content_restriction' ), 'post' );
 		$admin->update_custom_message( $post_id, array( 'content_restricted' ) );
 
-		update_post_meta( $post_id, '_wc_memberships_force_public', isset( $_POST[ '_wc_memberships_force_public' ] ) ? 'yes' : 'no' );
+		wc_memberships_set_content_meta(  $post_id, '_wc_memberships_force_public', isset( $_POST[ '_wc_memberships_force_public' ] ) ? 'yes' : 'no' );
 	}
 
 

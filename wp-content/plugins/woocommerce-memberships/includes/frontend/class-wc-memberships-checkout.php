@@ -14,12 +14,12 @@
  *
  * Do not edit or add to this file if you wish to upgrade WooCommerce Memberships to newer
  * versions in the future. If you wish to customize WooCommerce Memberships for your
- * needs please refer to http://docs.woothemes.com/document/woocommerce-memberships/ for more information.
+ * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @package   WC-Memberships/Frontend/Checkout
  * @author    SkyVerge
  * @category  Frontend
- * @copyright Copyright (c) 2014-2016, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2017, SkyVerge, Inc.
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
@@ -68,8 +68,10 @@ class WC_Memberships_Checkout {
 	/**
 	 * If shopping cart contains subscriptions, make sure a user can register on the checkout page
 	 *
-	 * @param \WC_Checkout $checkout instance
+	 * TODO since WC 3.0 many of the properties in this method are soft deprecated, they may need an update to checkout methods in the near future {FN 2017-03-10}
+	 *
 	 * @since 1.0.0
+	 * @param null|\WC_Checkout $checkout instance
 	 */
 	public function maybe_enable_registration( $checkout = null ) {
 
@@ -99,8 +101,10 @@ class WC_Memberships_Checkout {
 	/**
 	 * Restore the original checkout registration settings after checkout has loaded
 	 *
-	 * @param \WC_Checkout $checkout instance
+	 * TODO since WC 3.0 many of the properties in this method are soft deprecated, they may need an update to checkout methods in the near future {FN 2017-03-10}
+	 *
 	 * @since 1.0.0
+	 * @param null|\WC_Checkout $checkout instance
 	 */
 	public function restore_registration_settings( $checkout = null ) {
 
@@ -149,7 +153,10 @@ class WC_Memberships_Checkout {
 	 */
 	public function remove_guest_checkout_js_param( $params ) {
 
-		if ( $this->force_registration() && isset( $params['option_guest_checkout'] ) && 'yes' == $params['option_guest_checkout'] ) {
+		if (    isset( $params['option_guest_checkout'] )
+		     && 'yes' === $params['option_guest_checkout']
+		     && $this->force_registration() ) {
+
 			$params['option_guest_checkout'] = 'no';
 		}
 

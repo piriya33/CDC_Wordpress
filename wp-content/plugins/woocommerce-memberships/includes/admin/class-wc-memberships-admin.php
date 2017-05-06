@@ -14,12 +14,12 @@
  *
  * Do not edit or add to this file if you wish to upgrade WooCommerce Memberships to newer
  * versions in the future. If you wish to customize WooCommerce Memberships for your
- * needs please refer to http://docs.woothemes.com/document/woocommerce-memberships/ for more information.
+ * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @package   WC-Memberships/Admin
  * @author    SkyVerge
  * @category  Admin
- * @copyright Copyright (c) 2014-2016, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2017, SkyVerge, Inc.
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
@@ -45,13 +45,16 @@ class WC_Memberships_Admin {
 	/** @var \WC_Memberships_Admin_Membership_Plans instance */
 	protected $membership_plans;
 
+	/** @var \WC_Memberships_Admin_Users instance */
+	protected $users;
+
 	/** @var array Array of valid post types for content restriction rules */
 	private $valid_post_types_for_content_restriction;
 
 	/** @var array Array of valid taxonomies for rule types */
 	private $valid_rule_type_taxonomies = array();
 
-	/** @var stdClass Container of meta box classes instances */
+	/** @var \WC_Memberships_Meta_Box[] Object container of meta box classes instances */
 	protected $meta_boxes;
 
 
@@ -85,14 +88,6 @@ class WC_Memberships_Admin {
 		// list user memberships on individual "edit order" screen
 		add_action( 'woocommerce_admin_order_data_after_order_details', array( $this, 'render_order_data' ) );
 
-		// show user memberships in Users list screen
-		add_filter( 'manage_users_columns',       array( $this, 'add_user_columns' ), 11 );
-		add_filter( 'manage_users_custom_column', array( $this, 'user_column_values' ), 11, 3 );
-
-		// list user memberships in individual WordPress User Profile page
-		add_action( 'show_user_profile', array( $this, 'show_user_memberships' ) );
-		add_action( 'edit_user_profile', array( $this, 'show_user_memberships' ) );
-
 		// display admin messages
 		add_action( 'admin_notices', array( $this, 'show_admin_messages' ) );
 
@@ -103,7 +98,11 @@ class WC_Memberships_Admin {
 		add_action( 'admin_menu', array( $this, 'remove_submenu_link' ) );
 
 		// duplicate memberships settings for products
-		add_action( 'woocommerce_duplicate_product', array( $this, 'duplicate_product_memberships_data' ), 10, 2 );
+		if ( SV_WC_Plugin_Compatibility::is_wc_version_gte_3_0() ) {
+			add_action( 'woocommerce_product_duplicate', array( $this, 'duplicate_product_memberships_data' ), 10, 2 );
+		} else {
+			add_action( 'woocommerce_duplicate_product', array( $this, 'duplicate_product_memberships_data' ), 10, 2 );
+		}
 
 		// process import / export submission form
 		add_action( 'admin_post_wc_memberships_csv_import_user_memberships', array( $this, 'process_import_export_form' ) );
@@ -120,6 +119,17 @@ class WC_Memberships_Admin {
 	public function get_message_handler() {
 		// note: this property is public since it needs to be passed from the main class
 		return $this->message_handler;
+	}
+
+
+	/**
+	 * Get the Users instance.
+	 *
+	 * @since 1.7.4
+	 * @return \WC_Memberships_Admin_Users
+	 */
+	public function get_users_instance() {
+		return $this->users;
 	}
 
 
@@ -157,16 +167,24 @@ class WC_Memberships_Admin {
 
 
 	/**
-	 * Get admin screen ids
+	 * Get Memberships admin screen IDs.
 	 *
 	 * @since 1.0.0
-	 * @return array
+	 * @return string[] List (array) with admin screen IDs where Memberships does something.
 	 */
 	public function get_screen_ids() {
 		return array(
+			// User screens:
+			'users',
+			'user-edit',
+			'profile',
+			// User Membership screens:
 			'wc_user_membership',
-			'wc_membership_plan',
 			'edit-wc_user_membership',
+			// Membership Plan screens:
+			'wc_membership_plan',
+			'edit-wc_membership_plan',
+			// User Memberships Import/Export screens:
 			'wc_memberships_import_export',
 			'admin_page_wc_memberships_import_export',
 			'admin_page_wc-memberships-settings',
@@ -288,22 +306,27 @@ class WC_Memberships_Admin {
 
 		switch ( $screen->id ) {
 
-			case 'wc_membership_plan':
-			case 'edit-wc_membership_plan':
+			case 'wc_membership_plan' :
+			case 'edit-wc_membership_plan' :
 				$this->membership_plans = wc_memberships()->load_class( '/includes/admin/class-wc-memberships-admin-membership-plans.php',  'WC_Memberships_Admin_Membership_Plans');
 			break;
 
-			case 'wc_user_membership':
-			case 'edit-wc_user_membership':
+			case 'wc_user_membership' :
+			case 'edit-wc_user_membership' :
 				$this->user_memberships = wc_memberships()->load_class( '/includes/admin/class-wc-memberships-admin-user-memberships.php',  'WC_Memberships_Admin_User_Memberships' );
 				// the import / export handler runs bulk export on User Memberships screen
 				$this->import_export    = wc_memberships()->load_class( '/includes/admin/class-wc-memberships-import-export-handler.php', 'WC_Memberships_Admin_Import_Export_Handler' );
 			break;
 
-			case 'admin_page_wc_memberships_import_export':
+			case 'admin_page_wc_memberships_import_export' :
 				$this->import_export    = wc_memberships()->load_class( '/includes/admin/class-wc-memberships-import-export-handler.php', 'WC_Memberships_Admin_Import_Export_Handler' );
 			break;
 
+			case 'users' :
+			case 'user-edit' :
+			case 'profile' :
+				$this->users            = wc_memberships()->load_class( '/includes/admin/class-wc-memberships-admin-users.php', 'WC_Memberships_Admin_Users' );
+			break;
 		}
 
 		$this->load_meta_boxes();
@@ -379,7 +402,7 @@ class WC_Memberships_Admin {
 	 * Get the admin meta boxes
 	 *
 	 * @since 1.0.0
-	 * @return stdClass Object of \WC_Memberships_Meta_Box objects
+	 * @return \WC_Memberships_Meta_Box[] Object of \WC_Memberships_Meta_Box objects
 	 */
 	public function get_meta_boxes() {
 		return $this->meta_boxes;
@@ -387,10 +410,10 @@ class WC_Memberships_Admin {
 
 
 	/**
-	 * Get the admin meta box IDs
+	 * Get the admin meta box IDs.
 	 *
 	 * @since 1.0.0
-	 * @return array meta box IDs
+	 * @return string[] Array of meta box IDs.
 	 */
 	public function get_meta_box_ids() {
 
@@ -443,46 +466,72 @@ class WC_Memberships_Admin {
 	 * @param string $hook_suffix The current URL filename, ie edit.php, post.php, etc
 	 */
 	public function enqueue_scripts_and_styles( $hook_suffix ) {
-		global $typenow, $pagenow;
 
-		// only load scripts on appropriate screens
-		if ( ! $this->is_memberships_admin_screen( $hook_suffix ) ) {
-			return;
+		// Only load scripts on appropriate screens.
+		if ( $this->is_memberships_admin_screen( $hook_suffix ) ) {
+
+			$screen = get_current_screen();
+
+			// Load the WP Pointers script on some screens.
+			if ( $screen && ( 'edit-wc_user_membership' === $screen->id || 'wc_user_membership' === $screen->id ) ) {
+				wp_enqueue_style( 'wp-pointer' );
+				wp_enqueue_script( 'wp-pointer' );
+			}
+
+			$this->enqueue_styles();
+			$this->enqueue_scripts();
 		}
+	}
+
+
+	/**
+	 * Enqueue admin styles.
+	 *
+	 * @since 1.8.0
+	 */
+	private function enqueue_styles() {
+
+		wp_enqueue_style( 'wc-memberships-admin', wc_memberships()->get_plugin_url() . '/assets/css/admin/wc-memberships-admin.min.css', array(), WC_Memberships::VERSION );
+	}
+
+
+	/**
+	 * Enqueue admin scripts.
+	 *
+	 * @since 1.8.0
+	 */
+	private function enqueue_scripts() {
 
 		$screen = get_current_screen();
+		$path   = wc_memberships()->get_plugin_url() . '/assets/js/admin/';
+		$ver    = WC_Memberships::VERSION;
+		$deps   = array( 'jquery' );
 
-		if ( 'edit-wc_user_membership' === $screen->id || 'wc_user_membership' === $screen->id ) {
+		// Base scripts.
+		wp_register_script( 'wc-memberships-enhanced-select',   $path . 'wc-memberships-enhanced-select.min.js',   array_merge( $deps, array( 'select2' ) ), $ver );
+		wp_register_script( 'wc-memberships-rules',             $path . 'wc-memberships-rules.min.js',             array_merge( $deps, array( 'wc-memberships-enhanced-select' ) ), $ver );
+		wp_register_script( 'wc-memberships-customers-pointer', $path . 'wc-memberships-customers-pointer.min.js', array_merge( $deps, array( 'wc-memberships-enhanced-select' ) ), $ver );
+		wp_enqueue_script(  'wc-memberships-admin',             $path . 'wc-memberships-admin.min.js',             array_merge( $deps, array( 'wc-memberships-enhanced-select', 'wc-memberships-rules' ) ), $ver );
 
-			// load the WP Pointers script on some screens
-			wp_enqueue_style( 'wp-pointer' );
-			wp_enqueue_script( 'wp-pointer' );
+		// Load additional scripts selectively according to current Memberships admin page.
+		if ( $screen && in_array( $screen->id, array( 'wc_membership_plan', 'edit-wc_membership_plan' ), false ) ) {
+			wp_enqueue_script( 'wc-memberships-membership-plans', $path . 'wc-memberships-plans.min.js', array_merge( $deps, array( 'wc-memberships-admin', 'jquery-ui-datepicker' ) ), $ver );
+		} elseif ( $screen && in_array( $screen->id, array( 'wc_user_membership', 'edit-wc_user_membership' ), false ) ) {
+			wp_enqueue_script( 'wc-memberships-user-memberships', $path . 'wc-memberships-user-memberships.min.js', array_merge( $deps, array( 'wc-memberships-admin', 'jquery-ui-datepicker', 'wc-memberships-customers-pointer' ) ), $ver );
+		} elseif ( $this->is_import_export_admin_page( $screen ) ) {
+			wp_enqueue_script( 'wc-memberships-import-export', $path . 'wc-memberships-import-export.min.js', array_merge( $deps, array( 'jquery-ui-datepicker' ) ), $ver );
+		} elseif ( wc_memberships()->is_plugin_settings() ) {
+			wp_enqueue_script( 'wc-memberships-settings', $path . 'wc-memberships-settings.min.js', array_merge( $deps, array( 'wc-memberships-admin' ) ), $ver );
 		}
 
-		// enqueue admin styles
-		wp_enqueue_style( 'wc-memberships-admin', wc_memberships()->get_plugin_url() . '/assets/css/admin/wc-memberships-admin.min.css', WC_Memberships::VERSION );
-
-		// enqueue admin scripts
-		$dependencies = array( 'jquery' );
-
-		// load a datepicker on admin pages (except on restrictable content edit screens)
-		if (    $this->is_import_export_admin_page( $screen )
-		     || ( in_array( $typenow, array( 'wc_user_membership', 'wc_membership_plan' ), true ) && in_array( $pagenow, array( 'post.php', 'post-new.php' ), true ) ) ) {
-
-			$dependencies[] = 'jquery-ui-datepicker';
-		}
-
-		$restrictable_post_types   = array_keys( $this->get_valid_post_types_for_content_restriction() );
-		$restrictable_post_types[] = 'product';
-
-		wp_enqueue_script( 'wc-memberships-admin', wc_memberships()->get_plugin_url() . '/assets/js/admin/wc-memberships-admin.min.js', $dependencies, WC_Memberships::VERSION );
-
+		// Localize the main admin script to add variable properties and localization strings.
 		wp_localize_script( 'wc-memberships-admin', 'wc_memberships_admin', array(
 
 			// add any config/state properties here, for example:
 			// 'is_user_logged_in' => is_user_logged_in()
 
-			'ajax_url'                                  => admin_url('admin-ajax.php'),
+			'ajax_url'                                  => admin_url( 'admin-ajax.php' ),
+			'select2_version'                           => SV_WC_Plugin_Compatibility::is_wc_version_gte_3_0() ? '4.0.3' : '3.5.3',
 			'search_products_nonce'                     => wp_create_nonce( 'search-products' ),
 			'search_posts_nonce'                        => wp_create_nonce( 'search-posts' ),
 			'search_terms_nonce'                        => wp_create_nonce( 'search-terms' ),
@@ -496,7 +545,7 @@ class WC_Memberships_Admin {
 			'delete_user_membership_note_nonce'         => wp_create_nonce( 'delete-user-membership-note' ),
 			'transfer_user_membership_nonce'            => wp_create_nonce( 'transfer-user-membership' ),
 			'delete_user_membership_subscription_nonce' => wp_create_nonce( 'delete-user-membership-with-subscription' ),
-			'restrictable_post_types'                   => $restrictable_post_types,
+			'restrictable_post_types'                   => array_merge( array_keys( $this->get_valid_post_types_for_content_restriction() ), array( 'product') ),
 
 			'i18n' => array(
 
@@ -510,6 +559,8 @@ class WC_Memberships_Admin {
 				'transfer_membership'        => __( 'Transfer Membership', 'woocommerce-memberships' ),
 				'cancel'                     => __( 'Cancel', 'woocommerce-memberships' ),
 				'search_for_user'            => __( 'Search for a user&hellip;', 'woocommerce-memberships' ),
+				/* translators: Placeholders: %1$s - opening <a> HTML tag, %2$s closing </a> HTML tag */
+				'search_or_create_user'      => sprintf( __( 'Search for an existing user, or %1$sadd a new user%2$s to give them a membership.', 'woocommerce-memberships'), '<a href="' . esc_url( admin_url( 'user-new.php' ) ) . '">', '</a>' ),
 			),
 		) );
 	}
@@ -783,7 +834,9 @@ class WC_Memberships_Admin {
 	 */
 	public function render_order_data( $order ) {
 
-		if ( empty( $order->customer_user ) ) {
+		$customer_user = $order instanceof WC_Order ? get_user_by( 'id', $order->get_user_id() ) : null;
+
+		if ( empty( $customer_user ) ) {
 			return;
 		}
 
@@ -792,157 +845,35 @@ class WC_Memberships_Admin {
 			<label for="customer_memberships"><?php esc_html_e( 'Active Memberships:', 'woocommerce-memberships' ); ?></label>
 			<?php
 
-				$user_id = absint( $order->customer_user );
-
-				// Get all active memberships
-				$memberships = wc_memberships()->get_user_memberships_instance()->get_user_memberships( $user_id );
-
-				// count the memberships displayed
-				$count = 0;
-
-				if ( ! empty( $memberships ) ) {
-
-					foreach ( $memberships as $membership ) {
-
-						$plan = $membership->get_plan();
-
-						if ( $plan && wc_memberships_is_user_active_member( $user_id, $plan ) ) {
-
-							edit_post_link( esc_html( $plan->name ), '', '<br />', $membership->id );
-							$count++;
-						}
-					}
-				}
-
-	            if ( empty( $memberships ) || ! $count ) {
-					esc_html_e( 'none', 'woocommerce-memberships' );
-				}
-
-			?>
-		</p>
-		<?php
-	}
-
-
-	/**
-	 * Add the "Memberships" column to the User's admin table
-	 *
-	 * @internal
-	 *
-	 * @since 1.3.8
-	 * @param array $columns the array of Users columns
-	 * @return array $columns the updated column layout
-	 */
-	public function add_user_columns( $columns ) {
-
-		if ( current_user_can( 'manage_woocommerce' ) ) {
-
-			// Move Memberships before Orders for aesthetics
-			$last_column = array_slice( $columns, -1, 1, true );
-			array_pop( $columns );
-			$columns['wc_memberships_user_memberships'] = __( 'Active Memberships', 'woocommerce-memberships' );
-			$columns += $last_column;
-		}
-
-		return $columns;
-	}
-
-
-	/**
-	 * Display membership plan name(s) if a given user has a membership for the plan.
-	 *
-	 * @internal
-	 *
-	 * @since 1.3.8
-	 * @param string $output The string to output in the column specified with $column_name
-	 * @param string $column_name The string key for the current column in an admin table
-	 * @param int $user_id The ID of the user to which this row relates
-	 * @return string $output Links to active user memberships
-	 */
-	public function user_column_values( $output, $column_name, $user_id ) {
-
-		if ( 'wc_memberships_user_memberships' === $column_name ) {
+			$user_id = $order->get_user_id();
 
 			// Get all active memberships
 			$memberships = wc_memberships()->get_user_memberships_instance()->get_user_memberships( $user_id );
 
-			if ( empty( $memberships ) ) {
-				return '-';
-			}
+			// count the memberships displayed
+			$count = 0;
 
-			$membership_links = array();
+			if ( ! empty( $memberships ) ) {
 
-			foreach ( $memberships as $membership ) {
+				foreach ( $memberships as $membership ) {
 
-				$plan = $membership->get_plan();
+					$plan = $membership->get_plan();
 
-				if ( $plan && wc_memberships_is_user_active_member( $user_id, $plan ) ) {
+					if ( $plan && wc_memberships_is_user_active_member( $user_id, $plan ) ) {
 
-					$membership_links[] = '<a href="' . esc_url( get_edit_post_link( $membership->id ) ) . '">' . esc_html( $plan->name ) . '</a>';
+						edit_post_link( esc_html( $plan->name ), '', '<br />', $membership->id );
+						$count++;
+					}
 				}
 			}
 
-			$output = implode( '<br />', $membership_links );
-		}
-
-		return $output;
-	}
-
-
-	/**
-	 * Show user memberships on user profile page
-	 *
-	 * @internal
-	 *
-	 * @since 1.0.0
-	 * @param \WP_User $user
-	 */
-	public function show_user_memberships( WP_User $user ) {
-
-		$user_memberships          = wc_memberships()->get_user_memberships_instance()->get_user_memberships( $user->ID );
-		$can_edit_user_memberships = current_user_can( 'manage_woocommerce' );
-
-		echo '<div class="wc-memberships user-memberships" style="padding-bottom: 15px;">';
-
-		echo '<h3>' . esc_html__( 'User memberships', 'woocommerce-memberships' ) . '</h3>';
-
-		echo '<p>';
-
-		if ( ! empty( $user_memberships ) ) {
-
-			$plan_links = array();
-
-			foreach ( $user_memberships as $membership ) {
-
-				if ( $membership->get_plan() ) {
-					$plan_links[] = true === $can_edit_user_memberships ? '<a href="' . esc_url( get_edit_post_link( $membership->get_id() ) ) . '">' . wp_kses_post( $membership->get_plan()->get_name() ) . '</a>' : wp_kses_post( $membership->get_plan()->get_name() );
-				}
+            if ( empty( $memberships ) || ! $count ) {
+				esc_html_e( 'none', 'woocommerce-memberships' );
 			}
 
-			if ( ! empty( $plan_links ) ) {
-
-				printf( /* translators: Placeholders: %1$s - Membership Plan(s), %2$s Link to add more memberships manually */
-					__( 'This user is a member of %1$s. %2$s', 'woocommerce-memberships' ),
-					wc_memberships_list_items( $plan_links, __( 'and', 'woocommerce-memberships' ) ),
-					true === $can_edit_user_memberships ? '<a href="' . esc_url( admin_url( 'post-new.php?post_type=wc_user_membership&user=' . $user->ID ) ) . '"><strong>' . esc_html__( 'Add another membership.', 'woocommerce-memberships' ) . '</strong></a>' : ''
-				);
-
-			} else {
-
-				esc_html_e( 'This user is already a member of every plan.', 'woocommerce-memberships' );
-			}
-
-		} else {
-
-			printf( /* translators: Placeholder: %s - link to add a membership manually */
-				__( 'This user has no memberships yet. %s', 'woocommerce-memberships' ),
-				true === $can_edit_user_memberships ? '<a href="' . esc_url( admin_url( 'post-new.php?post_type=wc_user_membership&user=' . $user->ID ) ) . '"><strong>' . esc_html__( 'Add a membership manually.', 'woocommerce-memberships' ) . '</strong></a>' : ''
-			);
-		}
-
-		echo '</p>';
-
-		echo '</div>';
+			?>
+		</p>
+		<?php
 	}
 
 
@@ -968,7 +899,7 @@ class WC_Memberships_Admin {
 	 */
 	public function update_rules( $post_id, $rule_types, $target = 'plan' ) {
 
-		$rules = get_option( 'wc_memberships_rules' );
+		$rules = get_option( 'wc_memberships_rules', array() );
 
 		foreach ( $rule_types as $rule_type ) {
 
@@ -1003,7 +934,7 @@ class WC_Memberships_Admin {
 
 				// Make sure each rule has an ID
 				if ( ! isset( $rule['id'] ) || ! $rule['id'] ) {
-					$rule['id'] = uniqid( 'rule_' );
+					$rule['id'] = uniqid( 'rule_', false );
 				}
 
 				// Make sure each rule has the rule type set
@@ -1017,11 +948,13 @@ class WC_Memberships_Admin {
 					$rule['membership_plan_id'] = $post_id;
 
 					// Normalize content type: break content_type_key into parts
-					$content_type_parts        = explode( '|', $rule['content_type_key'] );
-					$rule['content_type']      = $content_type_parts[0];
-					$rule['content_type_name'] = $content_type_parts[1];
+					$content_type_parts        = explode( '|', isset( $rule['content_type_key'] ) ? $rule['content_type_key'] : '' );
+					$rule['content_type']      = isset( $content_type_parts[0] )                  ? $content_type_parts[0]    : '';
+					$rule['content_type_name'] = isset( $content_type_parts[1] )                  ? $content_type_parts[1]    : '';
 
-					unset( $rule['content_type_key'] );
+					if ( isset( $rule['content_type_key'] ) ) {
+						unset( $rule['content_type_key'] );
+					}
 
 					// Normalize object IDs
 					if ( isset( $rule['object_ids'] ) && $rule['object_ids'] && ! is_array( $rule['object_ids'] ) ) {
@@ -1044,7 +977,7 @@ class WC_Memberships_Admin {
 					$rule['content_type_name'] = get_post_type( $post_id );
 				}
 
-				// Content restriction & product restricion:
+				// Content restriction & product restriction:
 				if ( in_array( $rule_type, array( 'content_restriction', 'product_restriction' ), true ) ) {
 
 					// Make sure access_schedule_exclude_trial is set, even if it's a no
@@ -1206,14 +1139,18 @@ class WC_Memberships_Admin {
 
 		foreach ( $message_types as $message_type ) {
 
-			$message = isset( $_POST["_wc_memberships_{$message_type}_message"] )
-				? wp_unslash( sanitize_post_field( 'post_content', $_POST["_wc_memberships_{$message_type}_message"], 0, 'db' ) )
-				: null;
+			$message    = '';
+			$use_custom = 'no';
 
-			$use_custom = ( isset( $_POST["_wc_memberships_use_custom_{$message_type}_message"] ) && 'yes' == $_POST["_wc_memberships_use_custom_{$message_type}_message"] ) ? 'yes' : 'no';
+			if ( isset( $_POST["_wc_memberships_{$message_type}_message"] ) ) {
+				$message    = wp_unslash( sanitize_post_field( 'post_content', $_POST["_wc_memberships_{$message_type}_message"], 0, 'db' ) );
+			}
+			if ( isset( $_POST["_wc_memberships_use_custom_{$message_type}_message"] ) && 'yes' === $_POST["_wc_memberships_use_custom_{$message_type}_message"] ) {
+				$use_custom = 'yes';
+			}
 
-			update_post_meta( $post_id, "_wc_memberships_{$message_type}_message", $message );
-			update_post_meta( $post_id, "_wc_memberships_use_custom_{$message_type}_message", $use_custom );
+			wc_memberships_set_content_meta( $post_id, "_wc_memberships_use_custom_{$message_type}_message", $use_custom );
+			wc_memberships_set_content_meta( $post_id, "_wc_memberships_{$message_type}_message", $message );
 		}
 	}
 
@@ -1234,35 +1171,50 @@ class WC_Memberships_Admin {
 	/**
 	 * Duplicate memberships data for a product
 	 *
+	 * TODO update phpdoc and method when WC 3.0 is the minimal requirement {FN 2017-01-13}
+	 *
+	 * @internal
+	 *
 	 * @since 1.3.0
-	 * @param int $new_id
-	 * @param \WP_Post $post
+	 * @param int|\WC_Product $new_product New product (was product id in WC versions earlier than 2.7).
+	 * @param \WP_Post|\WC_Product $old_product Old product (was old post object in WC versions earlier than 2.7).
 	 */
-	public function duplicate_product_memberships_data( $new_id, $post ) {
+	public function duplicate_product_memberships_data( $new_product, $old_product ) {
 
-		// get product restriction rules
+		if ( SV_WC_Plugin_Compatibility::is_wc_version_gte_3_0() ) {
+			$new_product_id        = $new_product->get_id();
+			$old_product_id        = $old_product->get_id();
+			$old_product_post_type = get_post_type( $old_product );
+		} else {
+			$new_product_id        = $new_product;
+			$new_product           = wc_get_product( $new_product_id );
+			$old_product_id        = $old_product->ID;
+			$old_product_post_type = $old_product->post_type;
+		}
+
+		// Get product restriction rules.
 		$product_restriction_rules = wc_memberships()->get_rules_instance()->get_rules( array(
 			'rule_type'         => 'product_restriction',
-			'object_id'         => $post->ID,
+			'object_id'         => $old_product_id,
 			'content_type'      => 'post_type',
-			'content_type_name' => $post->post_type,
+			'content_type_name' => $old_product_post_type,
 			'exclude_inherited' => true,
 			'plan_status'       => 'any',
 		) );
 
-		// get purchasing discount rules
+		// Get purchasing discount rules.
 		$purchasing_discount_rules = wc_memberships()->get_rules_instance()->get_rules( array(
 			'rule_type'         => 'purchasing_discount',
-			'object_id'         => $post->ID,
+			'object_id'         => $old_product_id,
 			'content_type'      => 'post_type',
-			'content_type_name' => $post->post_type,
+			'content_type_name' => $old_product_post_type,
 			'exclude_inherited' => true,
 			'plan_status'       => 'any',
 		) );
 
 		$product_rules = array_merge( $product_restriction_rules, $purchasing_discount_rules );
 
-		// duplicate rules
+		// Duplicate rules.
 		if ( ! empty( $product_rules ) ) {
 
 			$all_rules = get_option( 'wc_memberships_rules' );
@@ -1270,25 +1222,22 @@ class WC_Memberships_Admin {
 			foreach ( $product_rules as $rule ) {
 
 				$new_rule               = $rule->get_raw_data();
-				$new_rule['object_ids'] = array( $new_id );
+				$new_rule['object_ids'] = array( $new_product_id );
 				$all_rules[]            = $new_rule;
 			}
 
 			update_option( 'wc_memberships_rules', $all_rules );
 		}
 
-		// duplicate custom messages
+		// Duplicate custom messages.
 		foreach ( array( 'product_viewing_restricted', 'product_purchasing_restricted' ) as $message_type ) {
 
-			$message    = get_post_meta( $post->ID, "_wc_memberships_{$message_type}_message", true );
-			$use_custom = get_post_meta( $post->ID, "_wc_memberships_use_custom_{$message_type}_message", true );
-
-			if ( $message ) {
-				update_post_meta( $new_id, "_wc_memberships_{$message_type}_message", $message );
+			if ( $use_custom = wc_memberships_get_content_meta( $old_product, "_wc_memberships_use_custom_{$message_type}_message", true ) ) {
+				wc_memberships_set_content_meta( $new_product, "_wc_memberships_use_custom_{$message_type}_message", $use_custom );
 			}
 
-			if ( $use_custom ) {
-				update_post_meta( $new_id, "_wc_memberships_use_custom_{$message_type}_message", $use_custom );
+			if ( $message = wc_memberships_get_content_meta( $old_product, "_wc_memberships_{$message_type}_message", true ) ) {
+				wc_memberships_set_content_meta( $new_product, "_wc_memberships_{$message_type}_message", $message );
 			}
 		}
 
@@ -1299,16 +1248,16 @@ class WC_Memberships_Admin {
 			// duplicate 'grants access to'
 			foreach ( $plans as $plan ) {
 
-				if ( $plan->has_product( $post->ID ) ) {
+				if ( $plan->has_product( $old_product_id ) ) {
 					// add new product id to product ids
-					$plan->set_product_ids( $new_id, true );
+					$plan->set_product_ids( $new_product_id, true );
 				}
 			}
 		}
 
-		// duplicate other settings
-		update_post_meta( $new_id, '_wc_memberships_force_public',      get_post_meta( $post->ID, '_wc_memberships_force_public', true ) );
-		update_post_meta( $new_id, '_wc_memberships_exclude_discounts', get_post_meta( $post->ID, '_wc_memberships_exclude_discounts', true ) );
+		// Duplicate other settings.
+		wc_memberships_set_content_meta( $new_product, '_wc_memberships_force_public', wc_memberships_get_content_meta( $old_product, '_wc_memberships_force_public', true ) );
+		wc_memberships_set_content_meta( $new_product, '_wc_memberships_exclude_discounts', wc_memberships_get_content_meta( $old_product, '_wc_memberships_exclude_discounts', true ) );
 	}
 
 
@@ -1408,6 +1357,24 @@ class WC_Memberships_Admin {
 				_deprecated_function( "WC_Memberships_Admin::{$method}()", '1.6.0', 'wc_memberships()->get_admin_instance()->render_tabs()' );
 				$this->render_tabs();
 				return null;
+
+			/** @deprecated since 1.7.4 */
+			case 'add_user_columns' :
+				_deprecated_function( "WC_Memberships_Admin::{$method}()", '1.7.4', 'wc_memberships()->get_admin_instance()->get_users_instance()->add_user_columns()' );
+				return $this->get_users_instance()->add_user_columns( $args );
+
+			/** @deprecated since 1.7.4 */
+			case 'user_column_values' :
+				_deprecated_function( "WC_Memberships_Admin::{$method}()", '1.7.4', 'wc_memberships()->get_admin_instance()->get_users_instance()->user_column_values()' );
+				$output      = isset( $args[0] ) ? $args[0] : $args;
+				$column_name = isset( $args[1] ) ? $args[1] : '';
+				$user_id     = isset( $args[2] ) ? $args[2] : 0;
+				return $this->get_users_instance()->user_column_values( $output, $column_name, $user_id );
+
+			/** @deprecated since 1.7.4 */
+			case 'show_user_memberships' :
+				_deprecated_function( "WC_Memberships_Admin::{$method}()", '1.7.4', 'wc_memberships()->get_admin_instance()->get_users_instance()->show_user_memberships()' );
+				return $this->get_users_instance()->show_user_memberships( $args );
 
 			default :
 				// you're probably doing it wrong

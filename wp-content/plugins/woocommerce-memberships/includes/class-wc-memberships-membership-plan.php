@@ -14,11 +14,11 @@
  *
  * Do not edit or add to this file if you wish to upgrade WooCommerce Memberships to newer
  * versions in the future. If you wish to customize WooCommerce Memberships for your
- * needs please refer to http://docs.woothemes.com/document/woocommerce-memberships/ for more information.
+ * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @package   WC-Memberships/Classes
  * @author    SkyVerge
- * @copyright Copyright (c) 2014-2016, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2017, SkyVerge, Inc.
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
@@ -29,10 +29,6 @@ defined( 'ABSPATH' ) or exit;
  *
  * This class represents a single membership plan, eg "silver" or "gold"
  * with it's specific configuration.
- *
- * Technically, it's a wrapper around an instance of WP_Post with the
- * 'wc_membership_plan' custom post type, similar to how WC_Product or
- * WC_Order are implemented.
  *
  * @since 1.0.0
  */
@@ -69,8 +65,8 @@ class WC_Memberships_Membership_Plan {
 	/** @var string product ids meta */
 	protected $product_ids_meta = '';
 
-	/** @var string member area sections meta */
-	protected $member_area_meta = '';
+	/** @var string members area sections meta */
+	protected $members_area_meta = '';
 
 	/** @var string email content meta */
 	protected $email_content_meta = '';
@@ -120,7 +116,7 @@ class WC_Memberships_Membership_Plan {
 		$this->access_start_date_meta = '_access_start_date';
 		$this->access_end_date_meta   = '_access_end_date';
 		$this->product_ids_meta       = '_product_ids';
-		$this->member_area_meta       = '_members_area_sections';
+		$this->members_area_meta      = '_members_area_sections';
 		$this->email_content_meta     = '_email_content';
 
 		// set the default access method
@@ -806,19 +802,19 @@ class WC_Memberships_Membership_Plan {
 
 
 	/**
-	 * Set member area sections for this plan
+	 * Set members area sections for this plan.
 	 *
-	 * @see wc_memberships_get_members_area_sections()
+	 * @see \wc_memberships_get_members_area_sections()
 	 *
 	 * @since 1.7.0
-	 * @param null|string|array $sections Array of section keys or single section key (string)
+	 * @param null|string|array $sections Array of section keys or single section key (string).
 	 */
-	public function set_member_area_sections( $sections = null ) {
+	public function set_members_area_sections( $sections = null ) {
 
 		$default_sections = wc_memberships_get_members_area_sections( $this->id );
 		$sections         = null === $sections ? array_keys( $default_sections ) : $sections;
 
-		// validate sections
+		// Validate sections.
 		if ( is_string( $sections ) ) {
 			$sections = array_key_exists( $sections, $default_sections ) ? (array) $sections : array();
 		} elseif ( ! empty( $sections ) && is_array( $sections ) ) {
@@ -827,34 +823,66 @@ class WC_Memberships_Membership_Plan {
 			$sections = array();
 		}
 
-		update_post_meta( $this->id, $this->member_area_meta, $sections );
+		update_post_meta( $this->id, $this->members_area_meta, $sections );
 	}
 
 
 	/**
-	 * Get member area sections for this plan
+	 * Set members area sections for this plan.
 	 *
-	 * @see wc_memberships_get_members_area_sections()
+	 * TODO remove this method by version 2.0.0 or before WC 2.8 compatibility release update {FN 2016-12-27}
+	 *
+	 * @deprecated since 1.7.4
+	 * @see \WC_Memberships_Membership_Plan::set_members_area_sections()
+	 *
+	 * @since 1.7.0
+	 * @param null|string|array $sections
+	 */
+	public function set_member_area_sections( $sections = null ) {
+		_deprecated_function( __CLASS__ . '::set_member_area_sections()', '1.7.4', __CLASS__ . 'set_members_area_sectinos()' );
+		$this->set_members_area_sections( $sections );
+	}
+
+
+	/**
+	 * Get members area sections for this plan.
+	 *
+	 * @see \wc_memberships_get_members_area_sections()
 	 *
 	 * @since 1.4.0
 	 * @return array
 	 */
 	public function get_members_area_sections() {
 
-		$member_area_sections = get_post_meta( $this->id, $this->member_area_meta, true );
+		$members_area_sections = get_post_meta( $this->id, $this->members_area_meta, true );
 
-		return is_array( $member_area_sections ) ? $member_area_sections : array();
+		return is_array( $members_area_sections ) ? $members_area_sections : array();
+	}
+
+	/**
+	 * Remove the members area sections for this plan.
+	 *
+	 * @since 1.7.4
+	 */
+	public function delete_members_area_sections() {
+
+		delete_post_meta( $this->id, $this->members_area_meta );
 	}
 
 
 	/**
-	 * Remove the member area sections for this plan
+	 * Remove the members area sections for this plan.
+	 *
+	 * TODO remove this method by version 2.0.0 or before WC 2.8 compatibility release update {FN 2016-12-27}
+	 *
+	 * @deprecated since 1.7.4
+	 * @see \WC_Memberships_Membership_Plan::delete_members_area_sections()
 	 *
 	 * @since 1.7.0
 	 */
 	public function delete_member_area_sections() {
-
-		delete_post_meta( $this->id, $this->member_area_meta );
+		_deprecated_function( __CLASS__ . '::delete_member_area_sections()', '1.7.4',  __CLASS__ . '::delete_members_area_sections()' );
+		$this->delete_members_area_sections();
 	}
 
 
@@ -1132,24 +1160,28 @@ class WC_Memberships_Membership_Plan {
 
 					if ( $product = wc_get_product( $post_id ) ) {
 
-						if ( ! empty( $product->parent ) && $product->is_type( 'variation' ) && $product->parent->is_type( 'variable' ) ) {
+						$product_id = $post_id;
+						$parent     = SV_WC_Product_Compatibility::get_parent( $product );
+
+						if ( ! empty( $parent ) && $product->is_type( 'variation' ) && $parent->is_type( 'variable' ) ) {
+
+							$parent_id        = SV_WC_Product_Compatibility::get_prop( $parent, 'id' );
+							$can_list_product = true;
 
 							// sanity check: maybe a variation is included in this plan
 							// but the parent variable product is being restricted
 							// by the rules of another plan the user is not member of
-							if ( ! in_array( $product->parent->id, $post_ids, false ) ) {
-								$can_list_product = wc_memberships_user_can( get_current_user_id(), 'view', array( 'product' => $product->parent->id ) );
-							} else {
-								$can_list_product = true;
+							if ( ! in_array( $parent_id, $post_ids, false ) ) {
+								$can_list_product = wc_memberships_user_can( get_current_user_id(), 'view', array( 'product' => $parent_id ) );
 							}
 
 							if ( $can_list_product ) {
-								$parent_ids[] = $product->parent->id;
+								$parent_ids[] = $parent_id;
 							}
 
-						} elseif ( $this->has_product_discount( $product ) || ( 'product_restriction' === $type && wc_memberships_user_can( get_current_user_id(), 'view', array( 'product' => $product->id ) ) ) ) {
+						} elseif ( $this->has_product_discount( $product ) || ( 'product_restriction' === $type && wc_memberships_user_can( get_current_user_id(), 'view', array( 'product' => $product_id ) ) ) ) {
 
-							$parent_ids[] = $product->id;
+							$parent_ids[] = $product_id;
 						}
 					}
 				}
@@ -1311,7 +1343,7 @@ class WC_Memberships_Membership_Plan {
 		$member_discount = '';
 
 		// get all available discounts for this product
-		$product_id    = is_object( $product ) ? $product->id : $product;
+		$product_id    = $product instanceof WC_Product ? SV_WC_Product_Compatibility::get_prop( $product, 'id' ) : $product;
 		$all_discounts = wc_memberships()->get_rules_instance()->get_product_purchasing_discount_rules( $product_id );
 
 		foreach ( $all_discounts as $discount ) {
@@ -1496,13 +1528,16 @@ class WC_Memberships_Membership_Plan {
 
 		if ( ! empty( $post_status ) ) {
 
-			$members = $this->get_memberships( array(
+			$members = get_posts( array(
+				'post_type'   => 'wc_user_membership',
 				'post_status' => $post_status,
+				'post_parent' => $this->id,
 				'fields'      => 'ids',
+				'nopaging'    => true,
 			) );
 		}
 
-		return count( $members );
+		return is_array( $members ) ? count( $members ) : 0;
 	}
 
 
@@ -1538,7 +1573,7 @@ class WC_Memberships_Membership_Plan {
 			return null;
 		}
 
-		$product_id     = SV_WC_Plugin_Compatibility::product_get_id( $product );
+		$product_id     = $product->get_id();
 		$order_status   = $order->get_status();
 		$access_granted = wc_memberships_get_order_access_granted_memberships( $order_id );
 
@@ -1609,14 +1644,31 @@ class WC_Memberships_Membership_Plan {
 			'plan_id'            => $this->id,
 		), $action );
 
-		// add a membership note
-		$user_membership->add_note(
-			/* translators: Placeholders: %1$s - product name, %2$s - order number */
-			sprintf( __( 'Membership access granted from purchasing %1$s (Order %2$s)' ),
-				$product->get_title(),
-				$order->get_order_number()
-			)
-		);
+		// Add a membership note.
+		if ( 'create' === $action ) {
+
+			$user_membership->add_note(
+				/* translators: Placeholders: %1$s - product name, %2$s - order number. */
+				sprintf(__('Membership access granted from purchasing %1$s (Order %2$s)'),
+					$product->get_title(),
+					$order->get_order_number()
+				)
+			);
+
+		} elseif ( 'renew' === $action ) {
+
+			// Do not bother if the membership is fixed and is ended.
+			if ( ! ( $this->is_access_length_type( 'fixed' ) && ! $user_membership->is_active() && ! $user_membership->is_delayed() ) ) {
+
+				$user_membership->add_note(
+					/* translators: Placeholders: %1$s - product name, %2$s - order number. */
+					sprintf(__('Membership access renewed from purchasing %1$s (Order %2$s)'),
+						$product->get_title(),
+						$order->get_order_number()
+					)
+				);
+			}
+		}
 
 		// save a post meta with the initial order status to check for later order status changes
 		if ( ! isset( $access_granted[ $user_membership->get_id() ] ) ) {

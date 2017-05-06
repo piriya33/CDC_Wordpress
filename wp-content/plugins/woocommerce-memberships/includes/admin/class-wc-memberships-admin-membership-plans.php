@@ -14,12 +14,12 @@
  *
  * Do not edit or add to this file if you wish to upgrade WooCommerce Memberships to newer
  * versions in the future. If you wish to customize WooCommerce Memberships for your
- * needs please refer to http://docs.woothemes.com/document/woocommerce-memberships/ for more information.
+ * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @package   WC-Memberships/Admin
  * @author    SkyVerge
  * @category  Admin
- * @copyright Copyright (c) 2014-2016, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2017, SkyVerge, Inc.
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
@@ -227,12 +227,13 @@ class WC_Memberships_Admin_Membership_Plans {
 	private function get_edit_product_link( $product ) {
 
 		if ( $product->is_type( 'variation' ) ) {
-			$product_link = get_edit_post_link( $product->parent->id );
-		} else {
-			$product_link = get_edit_post_link( $product->id );
+			$product = $product instanceof WC_Product ? SV_WC_Product_Compatibility::get_parent( $product ) : null;
 		}
 
-		return sprintf( '<a href="%1$s">%2$s</a>', $product_link, $product->get_formatted_name() );
+		$product_id   = $product instanceof WC_Product ? $product->get_id() : null;
+		$product_link = $product_id ? get_edit_post_link( $product_id ) : null;
+
+		return $product_link ? sprintf( '<a href="%1$s">%2$s</a>', $product_link, $product->get_formatted_name() ) : '';
 	}
 
 
@@ -459,6 +460,8 @@ class WC_Memberships_Admin_Membership_Plans {
 	 * Grant access to a non-free membership plan
 	 * to users which have previously purchased a product that grants access
 	 *
+	 * TODO this method uses a direct DB query to fetch orders, it should be converted to use WC Data stores introduced in WC 3.0 {FN 2017-02-24}
+	 *
 	 * @since 1.7.0
 	 * @param \WC_Memberships_Membership_Plan $plan Membership Plan to grant users access to
 	 * @return int The user memberships created or 0 if none or fail
@@ -534,6 +537,12 @@ class WC_Memberships_Admin_Membership_Plans {
 	 */
 	private function get_valid_order_statuses_for_granting_access( $plan ) {
 
+		if ( SV_WC_Plugin_Compatibility::is_wc_version_gte_3_0() ) {
+			$paid_statuses = wc_get_is_paid_statuses();
+		} else {
+			$paid_statuses = apply_filters( 'woocommerce_order_is_paid_statuses', array( 'completed', 'processing' ) );
+		}
+
 		/**
 		 * Filter the array of valid order statuses that grant access
 		 *
@@ -545,12 +554,7 @@ class WC_Memberships_Admin_Membership_Plans {
 		 * @param array $valid_order_statuses_for_grant array of order statuses
 		 * @param \WC_Memberships_Membership_Plan $plan the associated membership plan object
 		 */
-		$valid_order_statuses_for_grant = apply_filters( 'wc_memberships_grant_access_from_existing_purchase_order_statuses', array(
-			'processing',
-			'completed',
-		), $plan );
-
-		return (array) $valid_order_statuses_for_grant;
+		return (array) apply_filters( 'wc_memberships_grant_access_from_existing_purchase_order_statuses', $paid_statuses, $plan );
 	}
 
 

@@ -14,12 +14,12 @@
  *
  * Do not edit or add to this file if you wish to upgrade WooCommerce Memberships to newer
  * versions in the future. If you wish to customize WooCommerce Memberships for your
- * needs please refer to http://docs.woothemes.com/document/woocommerce-memberships/ for more information.
+ * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @package   WC-Memberships/Admin/Meta-Boxes
  * @author    SkyVerge
  * @category  Admin
- * @copyright Copyright (c) 2014-2016, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2017, SkyVerge, Inc.
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
@@ -31,6 +31,10 @@ defined( 'ABSPATH' ) or exit;
  * @since 1.0.0
  */
 class WC_Memberships_Meta_Box_Product_Memberships_Data extends WC_Memberships_Meta_Box {
+
+
+	/** @var bool Flag to address saving product data on WC 3.0+. */
+	private static $updated;
 
 
 	/**
@@ -227,7 +231,7 @@ class WC_Memberships_Meta_Box_Product_Memberships_Data extends WC_Memberships_Me
 					$class = isset( $tab['class'] ) ? $tab['class'] : array();
 					?>
 					<li class="<?php echo sanitize_html_class( $key ); ?>_options <?php echo sanitize_html_class( $key ); ?>_tab <?php echo implode( ' ' , array_map( 'sanitize_html_class', $class ) ); ?>">
-						<a href="#<?php echo esc_attr( $tab['target'] ); ?>"><?php echo esc_html( $tab['label'] ); ?></a>
+						<a href="#<?php echo esc_attr( $tab['target'] ); ?>"><span><?php echo esc_html( $tab['label'] ); ?></span></a>
 					</li>
 					<?php
 
@@ -282,19 +286,20 @@ class WC_Memberships_Meta_Box_Product_Memberships_Data extends WC_Memberships_Me
 
 		?>
 		<div id="memberships-data-restrict-product" class="panel woocommerce_options_panel">
-
 			<p class="variable-notice <?php if ( ! $product->is_type( 'variable' ) ) : ?>hide<?php endif; ?>">
 				<?php esc_html_e( 'These rules affect all variations. For variation-level control use the membership plan screen.', 'woocommerce-memberships' ); ?>
 			</p>
+			<?php
 
-			<?php woocommerce_wp_checkbox( array(
+			woocommerce_wp_checkbox( array(
 				'id'          => '_wc_memberships_force_public',
 				'class'       => 'js-toggle-rules',
 				'label'       => __( 'Disable restrictions', 'woocommerce-memberships' ),
 				'description' => __( 'Check this box if you want to force this product to be public regardless of any restriction rules that may apply now or in the future.', 'woocommerce-memberships' ),
-			) ); ?>
+			) );
 
-			<div class="js-restrictions <?php if ( 'yes' === get_post_meta( $post->ID, '_wc_memberships_force_public', true ) ) : ?>hide<?php endif; ?>">
+			?>
+			<div class="js-restrictions <?php if ( 'yes' === wc_memberships_get_content_meta( $post->ID, '_wc_memberships_force_public', true ) ) : ?>hide<?php endif; ?>">
 
 				<div class="options_group">
 					<div class="table-wrap">
@@ -323,15 +328,17 @@ class WC_Memberships_Meta_Box_Product_Memberships_Data extends WC_Memberships_Me
 
 				?>
 				<div class="options_group">
+					<?php
 
-					<?php woocommerce_wp_checkbox( array(
+					woocommerce_wp_checkbox( array(
 						'id'          => '_wc_memberships_use_custom_product_viewing_restricted_message',
 						'class'       => 'js-toggle-custom-message',
 						'label'       => __( 'Use custom message', 'woocommerce-memberships' ),
 						'description' => __( 'Check this box if you want to customize the <strong>viewing restricted message</strong> for this product.', 'woocommerce-memberships' )
-					) ); ?>
+					) );
 
-					<div class="js-custom-message-editor-container <?php if ( get_post_meta( $post->ID, '_wc_memberships_use_custom_product_viewing_restricted_message', true ) !== 'yes' ) : ?>hide<?php endif; ?>">
+					?>
+					<div class="js-custom-message-editor-container <?php if ( 'yes' !== wc_memberships_get_content_meta( $post->ID, '_wc_memberships_use_custom_product_viewing_restricted_message', true ) ) : ?>hide<?php endif; ?>">
 						<?php
 
 						/* translators: Placeholders: %1$s and %2$s are placeholders meant for {products} and {login_url} merge tags */
@@ -340,40 +347,37 @@ class WC_Memberships_Meta_Box_Product_Memberships_Data extends WC_Memberships_Me
 							'<strong><code>{login_url}</code></strong>'
 						);
 
-						// get viewing restricted product message
-						$message = get_post_meta( $post->ID, '_wc_memberships_product_viewing_restricted_message', true );
-
-						wp_editor( $message, '_wc_memberships_product_viewing_restricted_message', array(
+						wp_editor( wc_memberships_get_content_meta( $post->ID, '_wc_memberships_product_viewing_restricted_message', true ), '_wc_memberships_product_viewing_restricted_message', array(
 							'textarea_rows' => 5,
 							'teeny'         => true,
 						) );
+
 						?>
 					</div>
 
 				</div>
 
 				<div class="options_group">
+					<?php
 
-					<?php woocommerce_wp_checkbox( array(
+					woocommerce_wp_checkbox( array(
 						'id'          => '_wc_memberships_use_custom_product_purchasing_restricted_message',
 						'class'       => 'js-toggle-custom-message',
 						'label'       => __( 'Use custom message', 'woocommerce-memberships' ),
 						'description' => __( 'Check this box if you want to customize the <strong>purchasing restricted message</strong> for this product.', 'woocommerce-memberships' )
-					) ); ?>
+					) );
 
-					<div class="js-custom-message-editor-container <?php if ( get_post_meta( $post->ID, '_wc_memberships_use_custom_product_purchasing_restricted_message', true ) !== 'yes' ) : ?>hide<?php endif; ?>">
+					?>
+					<div class="js-custom-message-editor-container <?php if ( 'yes' !== wc_memberships_get_content_meta( $post->ID, '_wc_memberships_use_custom_product_purchasing_restricted_message', true ) ) : ?>hide<?php endif; ?>">
 						<?php
 
-						/* translators: Placeholders: %1$s and %2$s are placeholders meant for {products} and {login_url} merge tags */
+						/* translators: Placeholders: %1$s and %2$s are placeholders meant for {products} and {login_url} merge tags. */
 						printf( '<p>' . __( '%1$s automatically inserts the product(s) needed to gain access. %2$s inserts the URL to my account page. HTML is allowed.', 'woocommerce-memberships' ) . '</p>',
 							'<strong><code>{products}</code></strong>',
 							'<strong><code>{login_url}</code></strong>'
 						);
 
-						// get purchasing product restricted message
-						$message = get_post_meta( $post->ID, '_wc_memberships_product_purchasing_restricted_message', true );
-
-						wp_editor( $message, '_wc_memberships_product_purchasing_restricted_message', array(
+						wp_editor( wc_memberships_get_content_meta( $post->ID, '_wc_memberships_product_purchasing_restricted_message', true ), '_wc_memberships_product_purchasing_restricted_message', array(
 							'textarea_rows' => 5,
 							'teeny'         => true,
 						) );
@@ -410,7 +414,7 @@ class WC_Memberships_Meta_Box_Product_Memberships_Data extends WC_Memberships_Me
 		// get available plans
 		$membership_plans      = $this->get_available_membership_plans();
 		// get plans this product grants access to
-		$grant_access_to_plans = $this->get_product_membership_plans( SV_WC_Plugin_Compatibility::product_get_id( $product ) );
+		$grant_access_to_plans = $this->get_product_membership_plans( $product->get_id() );
 
 		?>
 		<div id="memberships-data-grant-access" class="panel woocommerce_options_panel">
@@ -429,32 +433,53 @@ class WC_Memberships_Meta_Box_Product_Memberships_Data extends WC_Memberships_Me
 				<?php else : ?>
 
 					<p class="form-field"><label for="_wc_memberships_membership_plan_ids"><?php esc_html_e( 'Purchasing grants access to', 'woocommerce-memberships' ); ?></label>
-						<input
-							type="hidden"
-							name="_wc_memberships_membership_plan_ids"
-							id="_wc_memberships_membership_plan_ids"
-							class="js-membership-plan-ids"
-							style="width: 50%;"
-							data-placeholder="<?php esc_attr_e( 'Search for a membership plan&hellip;', 'woocommerce-memberships' ); ?>"
-							data-action="wc_memberships_search_membership_plans"
-							data-multiple="true"
-							data-selected="<?php
-						       $json_ids = array();
 
-						       if ( ! empty( $grant_access_to_plans ) ) {
+						<?php if ( SV_WC_Plugin_Compatibility::is_wc_version_gte_3_0() ) : ?>
 
-							       foreach ( $grant_access_to_plans as $plan ) {
+							<select
+								name="_wc_memberships_membership_plan_ids[]"
+								id="_wc_memberships_membership_plan_ids"
+								class="js-membership-plan-ids"
+								style="width: 50%;"
+								multiple="multiple"
+								data-placeholder="<?php esc_attr_e( 'Search for a membership plan&hellip;', 'woocommerce-memberships' ); ?>"
+								data-action="wc_memberships_search_membership_plans">
+								<?php foreach ( $grant_access_to_plans as $plan ) : ?>
+									<option value="<?php echo $plan->get_id() ?>" selected><?php echo esc_html( $plan->get_name() ); ?></option>
+								<?php endforeach; ?>
+							</select>
 
-								       if ( is_object( $plan ) ) {
-									       $json_ids[ $plan->get_id() ] = wp_kses_post( html_entity_decode( $plan->get_name() ) );
-								       }
-							       }
-						       }
+						<?php else : ?>
 
-						       echo esc_attr( wc_memberships_json_encode( $json_ids ) ); ?>"
-							value="<?php echo esc_attr( implode( ',', array_keys( $json_ids ) ) ); ?>"
-						/>
-						<?php echo SV_WC_Plugin_Compatibility::wc_help_tip( __( 'Select which membership plans does purchasing this product grant access tp.', 'woocommerce-memberships' ) ); ?>
+							<input
+								type="hidden"
+								name="_wc_memberships_membership_plan_ids"
+								id="_wc_memberships_membership_plan_ids"
+								class="js-membership-plan-ids"
+								style="width: 50%;"
+								data-placeholder="<?php esc_attr_e( 'Search for a membership plan&hellip;', 'woocommerce-memberships' ); ?>"
+								data-action="wc_memberships_search_membership_plans"
+								data-multiple="true"
+								data-selected="<?php
+								$json_ids = array();
+
+								if ( ! empty( $grant_access_to_plans ) ) {
+
+									foreach ( $grant_access_to_plans as $plan ) {
+
+										if ( is_object( $plan ) ) {
+											$json_ids[ $plan->get_id() ] = wp_kses_post( html_entity_decode( $plan->get_name() ) );
+										}
+									}
+								}
+
+								echo esc_attr( wp_json_encode( $json_ids ) ); ?>"
+								value="<?php echo esc_attr( implode( ',', array_keys( $json_ids ) ) ); ?>"
+							/>
+
+						<?php endif; ?>
+
+						<?php echo wc_help_tip( __( 'Select which membership plans does purchasing this product grant access tp.', 'woocommerce-memberships' ) ); ?>
 					</p>
 
 					<p><em><?php esc_html_e( 'Need to add or edit a plan?', 'woocommerce-memberships' ); ?></em> <a target="_blank" href="<?php echo esc_url( admin_url( 'edit.php?post_type=wc_membership_plan' ) ); ?>"><?php esc_html_e( 'Manage Membership Plans', 'woocommerce-memberships' ); ?></a></p>
@@ -488,19 +513,20 @@ class WC_Memberships_Meta_Box_Product_Memberships_Data extends WC_Memberships_Me
 
 		?>
 		<div id="memberships-data-purchasing-discounts" class="panel woocommerce_options_panel">
-
 			<p class="variable-notice <?php if ( ! $product->is_type( 'variable' ) ) : ?>hide<?php endif; ?>">
 				<?php esc_html_e( 'These rules affect all variations. For variation-level control use the membership plan screen', 'woocommerce-memberships' ); ?>
 			</p>
+			<?php
 
-			<?php woocommerce_wp_checkbox( array(
+			woocommerce_wp_checkbox( array(
 				'id'          => '_wc_memberships_exclude_discounts',
 				'class'       => 'js-toggle-discounts',
 				'label'       => __( 'Disable discounts', 'woocommerce-memberships' ),
 				'description' => __( 'Check this box if you want to exclude this product from member discounts of any membership plan, regardless of discount rules that may apply now or in the future.', 'woocommerce-memberships' ),
-			) ); ?>
+			) );
 
-			<div class="js-discounts table-wrap <?php if ( 'yes' === get_post_meta( $post->ID, '_wc_memberships_exclude_discounts', true ) ) : ?>hide<?php endif; ?>">
+			?>
+			<div class="js-discounts table-wrap <?php if ( 'yes' === wc_memberships_get_content_meta( $post, '_wc_memberships_exclude_discounts', true ) ) : ?>hide<?php endif; ?>">
 				<?php
 
 				// load purchasing discounts rules view
@@ -536,16 +562,28 @@ class WC_Memberships_Meta_Box_Product_Memberships_Data extends WC_Memberships_Me
 	 */
 	public function update_data( $post_id, WP_Post $post ) {
 
+		// For some reason WC 3.0 triggers this method twice, creating issues in the rules array.
+		if ( SV_WC_Plugin_Compatibility::is_wc_version_gte_3_0() ) {
+
+			$has_updated = self::$updated;
+
+			if ( ! $has_updated ) {
+				self::$updated = true;
+			} else {
+				return;
+			}
+		}
+
 		$admin = wc_memberships()->get_admin_instance();
 
 		// update restriction & discount rules
 		$admin->update_rules( $post_id, array( 'product_restriction', 'purchasing_discount' ), 'post' );
 		$admin->update_custom_message( $post_id, array( 'product_viewing_restricted', 'product_purchasing_restricted' ) );
 
-		// maybe force product public
-		update_post_meta( $post_id, '_wc_memberships_force_public',      isset( $_POST[ '_wc_memberships_force_public' ] ) ? 'yes' : 'no' );
-		// maybe exclude product from member discounts
-		update_post_meta( $post_id, '_wc_memberships_exclude_discounts', isset( $_POST[ '_wc_memberships_exclude_discounts' ] ) ? 'yes' : 'no' );
+		// Maybe force product public.
+		wc_memberships_set_content_meta( $post, '_wc_memberships_force_public', isset( $_POST[ '_wc_memberships_force_public' ] ) ? 'yes' : 'no' );
+		// Maybe exclude product from member discounts.
+		wc_memberships_set_content_meta( $post, '_wc_memberships_exclude_discounts', isset( $_POST[ '_wc_memberships_exclude_discounts' ] ) ? 'yes' : 'no' );
 
 		// update membership plans that this product grants access to
 		$plan_ids        = $this->get_product_membership_plans( $post->ID, 'id' );
@@ -568,13 +606,17 @@ class WC_Memberships_Meta_Box_Product_Memberships_Data extends WC_Memberships_Me
 			if ( ! empty( $removed ) ) {
 
 				foreach ( $removed as $plan_id ) {
-					$product_ids = get_post_meta( $plan_id, '_product_ids', true );
 
-					if ( ( $key = array_search( $post_id, $product_ids, false ) ) !== false ) {
-						unset( $product_ids[ $key ] );
+					if ( $plan = wc_memberships_get_membership_plan( $plan_id ) ) {
+
+						$product_ids = $plan->get_product_ids();
+
+						if ( ( $key = array_search( $post_id, $product_ids, false ) ) !== false ) {
+							unset( $product_ids[ $key ] );
+						}
+
+						$plan->set_product_ids( $product_ids );
 					}
-
-					update_post_meta( $plan_id, '_product_ids', $product_ids );
 				}
 			}
 
@@ -583,10 +625,14 @@ class WC_Memberships_Meta_Box_Product_Memberships_Data extends WC_Memberships_Me
 
 				foreach ( $new as $plan_id ) {
 
-					$product_ids   = get_post_meta( $plan_id, '_product_ids', true );
-					$product_ids[] = $post_id;
+					if ( $plan = wc_memberships_get_membership_plan( $plan_id ) ) {
 
-					update_post_meta( $plan_id, '_product_ids', $product_ids );
+						$product_ids   = $plan->get_product_ids();
+						$product_ids   = ! is_array( $product_ids ) && ! empty( $product_ids ) ? (array) $product_ids : array();
+						$product_ids[] = $post_id;
+
+						$plan->set_product_ids( $product_ids );
+					}
 				}
 			}
 		}

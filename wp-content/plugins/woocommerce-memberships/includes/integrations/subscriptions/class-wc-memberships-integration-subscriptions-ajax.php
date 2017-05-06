@@ -14,11 +14,11 @@
  *
  * Do not edit or add to this file if you wish to upgrade WooCommerce Memberships to newer
  * versions in the future. If you wish to customize WooCommerce Memberships for your
- * needs please refer to http://docs.woothemes.com/document/woocommerce-memberships/ for more information.
+ * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @package   WC-Memberships/Classes
  * @author    SkyVerge
- * @copyright Copyright (c) 2014-2016, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2017, SkyVerge, Inc.
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
@@ -33,13 +33,13 @@ class WC_Memberships_Integration_Subscriptions_Ajax {
 
 
 	/**
-	 * Add ajax callbacks
+	 * Add ajax callbacks.
 	 *
 	 * @since 1.6.0
 	 */
 	public function __construct() {
 
-		// admin only
+		// Admin-only callbacks:
 		add_action( 'wp_ajax_wc_memberships_membership_plan_has_subscription_product', array( $this, 'ajax_plan_has_subscription' ) );
 		add_action( 'wp_ajax_wc_memberships_delete_membership_and_subscription',       array( $this, 'delete_membership_with_subscription' ) );
 		add_action( 'wp_ajax_wc_memberships_edit_membership_subscription_link',        array( $this, 'search_subscriptions_by_id_or_customers' ) );
@@ -47,9 +47,9 @@ class WC_Memberships_Integration_Subscriptions_Ajax {
 
 
 	/**
-	 * Check if a plan has a subscription product
+	 * Check if a plan has a subscription product.
 	 *
-	 * Responds with an array of subscription products, if any
+	 * Responds with an array of subscription products, if any.
 	 *
 	 * @internal
 	 *
@@ -75,7 +75,7 @@ class WC_Memberships_Integration_Subscriptions_Ajax {
 			}
 
 			if ( $product->is_type( array( 'subscription', 'variable-subscription', 'subscription_variation' ) ) ) {
-				$subscription_products[] = $product->id;
+				$subscription_products[] = $product->get_id();
 			}
 		}
 
@@ -84,10 +84,10 @@ class WC_Memberships_Integration_Subscriptions_Ajax {
 
 
 	/**
-	 * Delete a membership with its associated subscription
+	 * Delete a membership with its associated subscription.
 	 *
 	 * Ajax callback to delete both a membership and a subscription
-	 * from the user memberships admin edit screen
+	 * from the user memberships admin edit screen.
 	 *
 	 * @internal
 	 *
@@ -97,7 +97,7 @@ class WC_Memberships_Integration_Subscriptions_Ajax {
 
 		check_ajax_referer( 'delete-user-membership-with-subscription', 'security' );
 
-		if ( isset( $_POST['user_membership_id'] ) && isset( $_POST['subscription_id'] ) ) {
+		if ( isset( $_POST['user_membership_id'], $_POST['subscription_id'] ) ) {
 
 			$subscription_id    = (int) $_POST['subscription_id'];
 			$user_membership_id = (int) $_POST['user_membership_id'];
@@ -105,9 +105,9 @@ class WC_Memberships_Integration_Subscriptions_Ajax {
 			if ( $user_membership = wc_memberships_get_user_membership( $user_membership_id ) ) {
 
 				$integration  = wc_memberships()->get_integrations_instance()->get_subscriptions_instance();
-				$subscription = $integration->get_subscription_from_membership( $user_membership->id );
+				$subscription = $integration->get_subscription_from_membership( $user_membership->get_id() );
 
-				if ( $subscription instanceof WC_Subscription && ( $subscription_id === (int) $subscription->id ) ) {
+				if ( $subscription instanceof WC_Subscription && $subscription_id === (int) SV_WC_Order_Compatibility::get_prop( $subscription, 'id' ) ) {
 
 					$results = array(
 						'delete-subscription' => wp_delete_post( $subscription_id ),
@@ -124,8 +124,7 @@ class WC_Memberships_Integration_Subscriptions_Ajax {
 
 
 	/**
-	 * Returns Subscriptions by looking at the Subscription id
-	 * or at the Subscription's holder name
+	 * Returns Subscriptions by looking at the Subscription ID or at the Subscription's holder name.
 	 *
 	 * @internal
 	 *

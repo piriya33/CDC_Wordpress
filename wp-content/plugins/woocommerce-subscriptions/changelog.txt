@@ -1,5 +1,104 @@
 *** WooCommerce Subscriptions Changelog ***
 
+2017.05.05 - version 2.2.6
+* Fix: WooCommerce 3.0: Guard against infinite loops caused by 3rd party code calling order methods with a post object by making sure we have an order object, not just an object. PR#2100
+* Fix: WooCommerce 3.0: Improve compatibility with 3rd party code that adds custom address fields by making sure we check address method is callable before calling it, and falling back to meta data if that method doesn't exist. PR#2102
+* Fix: WooCommerce 3.0: Set correct line item meta names when paying for a renewal or resubscribe order by not relying on WooCommerce 3.0's array access implementation. PR#2105
+* Fix: WooCommerce 3.0: Assorted issues with dates not being scheduled and/or not being set at the correct time when running WooCommerce 3.0 by making sure we only save date properties after updating or deleting dates rather than also saving status transitions. PR#2091
+* Fix: WooCommerce 3.0: Match WooCommerce 3.0 approach to adding variation attributes to cart/order line item name by making sure we use the line item name rather than product title to alter renewal cart item names. PR#2109
+* Fix: WooCommerce 3.0: Match WooCommerce 3.0 filters for sign-up fee prices. Fixes compatibility with sign-up fees and Memberships. PR#2110
+* Fix: Make sure a variable product is purchasable even if the variations tab wasn't loaded before saving the product, and make sure we sync the variable product's prices even if the variation's tabe wasn't loaded. PR#2111
+* Fix: Make sure subscription is seen as having a zero total when customer completes the Change Payment Method flow to avoid charging anything at the time of changing payment method. PR#2082
+* Fix: Fix resubscribing to products for 1 payment cuased by inconsistent variable type being returned by WC_Subscription::get_billing_interval(). PR#2098
+* Fix: "Trying to get property of non-object" notice by checking order_type property exists before trying to access it. PR#2099
+* Fix: Correct subscription variation field alignmenton WooCommerce > Edit Product screen. PR#2104
+* Tweak: Improve upgrade logging by recording version at upgrade and not deleting logs after 6 weeks so we can trace time and day of upgrades in support and better diagnose issues. PR#2070
+* Tweak: Adds more flexibility to next payment date recalculation on activation of a subscription with new 'woocommerce_subscription_activation_next_payment_date_threshold' hook. PR#1860
+* Tweak: Improve when variations are saved by moving them to save on the 'woocommerce_save_product_variation' hook. PR#2111
+* Tweak: Update Action Scheduler to v1.5.3. PR#2113
+
+2017.04.21 - version 2.2.5
+* Fix: WooCommerce 3.0: Only call get_id() if product is an object and has not been deleted. PR#2071
+* Fix: WooCommerce 3.0: Do not attempt to access WC()->payment_gateways->payment_gateways() when reading the subscription object and setting the payment method, because there is no guarantee WC() will be setup yet (and we only need to do it when the method is called not when it is being instantiated. PR#2084
+* Fix: WooCommerce 3.0: Do not set payment method title in set payment method function when instantiating subscription (i.e. prior to it being read). PR#2084
+* Fix: WooCommerce 3.0: Calculate the next payment date using either last order paid date or the last order date, whichever is the later, to maintain backward compatiblity with versions prior to WooCommerce 3.0 support. PR#2087
+* Fix: WooCommerce 3.0: Replace use of deprecated WooCommerce function removed in WC 3.0. PR#2088
+* Fix: PHP 7.1 notices with products with empty signup fees and other properties after WooCommerce 3.0 changes for getting meta on products. PR#2064
+* Fix: Allow dynamically setting properties on a subscription via WC_Subscription::__set() for backwards compatibility. PR#2079
+* Fix: Do not validate admin payment method changes which will not result in a change to allow for changing meta on a payment method that is not active. PR#2085
+* Tweak: Add wc_input_price class to subscription product price inputs to make sure they use decimal separator and other store settings for validation. PR#2068
+
+2017.04.12 - version 2.2.4
+* Fix: WooCommerce 3.0: Correctly handle switching between grouped products in WooCommerce 3.0 where a product can have more than one parent grouped product. PR#2063
+* Fix: Do not incorrectly create pending renewal orders and suspend PayPal Standard Subscriptions at the time their payment is due. PayPal controls the billing schedule for these subscriptions. PR#2069
+* Tweak: Add 'woocommerce_subscriptions_order_type_dropdown' filter. PR#2065
+* Tweak: Include only Subscriptions strings in POT file.
+
+2017.04.07 - version 2.2.3
+* Fix: WooCommerce 3.0: Improve backward compatibility of get_date( 'start' ) calls for subscriptions without a date created set by WooCommerce 3.0 (which happens when manually adding a new subscriptions). PR#2047
+* Fix: WooCommerce 3.0: Prevent saving subscriptions with a 0 start date/date created by making sure we set a default date created value when manually adding a new subscription. PR#2048
+* Fix: WooCommerce 3.0: Remove the correct 3.0 core function responsible for sending order emails to avoid sending both WooCommerce order emails and Subscriptions order emails. PR#2045
+* Fix: WooCommerce 3.0: Make sure synchronised product meta data is set correctly on subscription line items by using WooCommerce 3.0 compatible hook. PR#2049
+* Fix: Make sure filters are applied when getting customer subscriptions with REST API endpoints by using WC_API_Subscriptions::get_subscriptions() instead of a custom query to get customer subscriptions. PR#1806
+* Fix: Display correct variable subscription product "From" prices and grouped subscription products prices to match tax settings. PR#2054
+* Fix: Don't attempt to save shipping and billing fields which aren't set when submitting the Edit Subscription screen to avoid notices. PR#2053
+* Fix: Don't use method return value in write context in REST API to avoid errors on certain versions of PHP. PR#2051
+
+2017.04.04 - version 2.2.2
+* Fix: WooCommerce 3.0: Fix using $this when in a static context on newer versions of PHP affecting Edit Subscription and Edit Order screens. PR#2043
+* Fix: WooCommerce 3.0: Grant new product download permissions to all subscriptions because WooCommerce no longer does it for orders (and subscriptions are a custom order type). PR#2039
+* Fix: WooCommerce 3.0: Display subscription related System Status fields in the System Status page on 3.0 which removed old hooks. PR#2039
+* Fix: WooCommerce 3.0: Fix updating payment method and elsewhere via the Edit Subscription administration screen. PR#2037
+* Fix: WooCommerce 3.0: Store correct prorated price for switches against the order line item so it can be used for future switches. PR#2032
+
+2017.04.04 - version 2.2.1
+* Fix: WooCommerce 3.0: Add subscription shipping line item tax the same way WooCommerce 3.0 does it. PR#2023
+* Fix: WooCommerce 3.0: Fix division by zero error when manually paying for renewal with offsite payment methods like PayPal. PR#2036
+* Fix: Send customer renewal invoice emails for manual renewals and when creating a pending renewal. PR#2035
+* Fix: Replace use of undefined variable within WC_Subscription::get_failed_payment_count(). PR#2025
+
+2017.04.03 - version 2.2.0
+* WooCommerce 3.0 Compatibility Release
+* Tweak: add new getters for subscription related product meta data to conform to WooCommerce 3.0's new CRUD system and also prepare for subscription related product meta data to be moved to schemes that can be applied to any product instead of only subscription product types
+* Tweak: add new subscription data store to abstract data storage of subscription data from the subscription class, matching WooCommerce 3.0's new approach to data abstraction.
+* Tweak: add new subscription getters and setters for all subscription data to conform to WooCommerce 3.0's new CRUD architecture
+* Tweak: add new subscription date APIs to work with dates as date/time objects and with nomclementure that aligns with WooCommerce 3.0
+* Tweak: deprecate subscription last payment date APIs because they actual returned the last order date, forcing us to also update the last order date whenever a payment was processed. Two new APIs can now be used: last order date and last order date paid.
+* Tweak: improve variable subscription product sync performance by using cache. Also align it with the approach WooCommerce takes.
+* Tweak: update Select2 to version 4 to work with the version used by WooCommerce 3.0.
+* Tweak: show recurring fees in the recurring totals section on Cart & Checkout pages if 3rd party extensions, like Checkout Add Ons, are adding fees to recurring carts. (PR#2005)
+* Fix: don't show Subscription Data metabox title div on WooCommerce > Edit Subscription administration screen with WordPress 4.4. (PR#1998)
+* Fix: remove option to order the WooCommerce > Subscriptions administration screen by Status, because this option is not supported. (PR#1996)
+
+2017.03.06 - version 2.1.4
+* Tweak: Lengthen PayPal IPN lock to 5 days to prevent creating duplicate renewal orders when a fatal error occurs in processing the IPN. Prevoiusly the lock was set to 5 minutes, meaning on the 2nd IPN would be ignored. Given fatal errors will rarely be fixed within 5 minutes, Subscriptions will now ignore 5 days worth of IPN retries.(PR#1838
+* Tweak: Log exceptions caught while updating subscription statuses to make it easier to diagnose issues with 3rd party code and hosting environment that occur during status transitions. PR#1842
+* Tweak: Remove lingering compatibility code for WooCommerce prior to version 2.4 as version 2.3 and older have not been supported since v2.1. PR#1750
+* Fix: Changing payment method on manually added subscriptions. When manually creating a subscription via the WooCommerce > Add Subscription administration screen, make sure the order key meta data is set so its available when changing payment methods on that subscription. PR#1849
+* Fix: Make sure customer and admin retry emails are always sent after the initial retry by making sure the WooCommerce mailer has be setup. PR#1840
+* Fix: Do not suspend subscriptions using PayPal Standard as the payment method when switching using PayPal Reference Transactions as the payment method. PR#1831
+* Fix: Calculate correct next payment date for subscriptions suspended for more than 30 billing periods e.g. 1 month for a daily subscription, 2.5 years for a month subscription etc. PR#1846
+* Fix: Do not update the status of a failed or pending renewal order when changing the payment method on a subscription. PR#1720
+* Fix: Make sure free shipping is available as a recurring shipping method for subscription products with a free trial or synced to a date in the future if the recurring total exceeds the Minimum Order Amount required for free shipping. PR#1830
+* Fix: Do not incorrectly double slash some JavaScript file URLs. Fixes JavaScript on the WooCommerce > Edit Subscription administration screen with some hosts. PR#1853
+* Fix: Do not copy backorder line item meta data to subscriptions or renewal orders for in-stock products. PR#1855
+* Fix: Do not apply dynamic discounts from the WooCommerce Dynamic Pricing extension to renewal or resubcribe carts to avoid discounts being compounded when manually renewing or resubscribing. PR#1852
+* Fix: Do not switch to staging mode when site is using the WP_SITEURL constant to set the site URL to a value that differs to the URL stored in the database. Uses WP_SITEURL constant now for site url when it is set, and get_site_url() only its not set. PR#1717
+* Fix: Correct typo on the Customer Suspensions tooltip on the WooCommerce > Settings > Subscriptions > Miscellaneous administration screen. PR#1868
+* Fix: Only setup automatic payments after switching if automatic payments are enabled. PR#1865
+
+2017.01.24 - version 2.1.3
+* Tweak: Set renewal order's status to 'pending' before payment retry to make sure that the status change hooks are triggered by WC_Order::update_status(). Fixes compatibility with custom retry rules that use an order status other than pending. (PR#1818)
+* Tweak: Automatically transition resubscribe orders for $0 to 'complete' rather than 'processing', because the existing subscription had the pending-cancellation status and the new subscriptions first renewal will be when the first shipment is due to be sent. (PR#1796)
+* Tweak: Update Action Scheduler to v1.5.2. (PR#1773)
+* Tweak: Exclude Action Scheduler comments from comments RSS feed. (PR#1773 & Prospress/action-scheduler#66)
+* Fix: Never reschedule single actions in Action Scheduler, even if the action has a scheduled date in the future. Fixes a duplicate payment processed when PHP's default timezone was being set to a time other than UTC, and Subscriptions < 2.1 scheduled the next payment in that timezone, then when the payment becomes due, PHP's default timezone has been changed back to UTC. (PR#1773 & Prospress/action-scheduler#69)
+* Fix: Update renewal order line item cart data when renewal line item IDs are updated. Fixes assorted PHP warnings and notices that resulted from outdated item IDs, including "Division by zero" and "Undefined offset" notices. (PR#1814)
+* Fix: Cancel & trash retries when corresponding renewal order is trashed/deleted to make sure the retry is not attempted (with no ill effect). (PR#1768)
+* Fix: Undefined variable notice on occasion when viewing WooCommerce > Add Order screen when the retry system is enabled. (PR#1803)
+* Fix: Display correct "New Subscription Details" in emails sent when switching (upgrading/downgrading) a subscription. (PR#1819)
+* Fix: Responsiveness of recurring totals sections of checkout table. (PR#1809)
+
 2016.12.12 - version 2.1.2
 * Tweak: Reword the description on the Disable Automatic Payments option to make it clear it does not change existing subscriptions. (PR#1771)
 * Fix: Renewal issues with servers running Memcached, which does not handle expiration times greater than 30 days, by no longer using TLC transients, which sets all transient expiration dates to 1 year in future. (PR#1776)

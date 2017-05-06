@@ -14,18 +14,18 @@
  *
  * Do not edit or add to this file if you wish to upgrade WooCommerce Memberships to newer
  * versions in the future. If you wish to customize WooCommerce Memberships for your
- * needs please refer to http://docs.woothemes.com/document/woocommerce-memberships/ for more information.
+ * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @package   WC-Memberships/Classes
  * @author    SkyVerge
- * @copyright Copyright (c) 2014-2016, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2017, SkyVerge, Inc.
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
 defined( 'ABSPATH' ) or exit;
 
 /**
- * Free Trial integration class for WooCommerce Subscriptions
+ * Free Trial integration class for WooCommerce Subscriptions.
  *
  * @since 1.6.0
  */
@@ -33,13 +33,13 @@ class WC_Memberships_Integration_Subscriptions_Free_Trial {
 
 
 	/**
-	 * Enable Free Trial Memberships
+	 * Enable Free Trial Memberships.
 	 *
 	 * @since 1.6.0
 	 */
 	public function __construct() {
 
-		// add a free_trial membership status
+		// Add a free_trial membership status.
 		add_filter( 'wc_memberships_user_membership_statuses',                   array( $this, 'add_free_trial_status' ) );
 		add_filter( 'wc_memberships_active_access_membership_statuses',          array( $this, 'mark_free_trial_for_active_access' ) );
 		add_filter( 'wc_memberships_valid_membership_statuses_for_cancel',       array( $this, 'enable_cancel_for_free_trial' ) );
@@ -49,12 +49,12 @@ class WC_Memberships_Integration_Subscriptions_Free_Trial {
 
 
 	/**
-	 * Add free trial status to membership statuses
+	 * Add free trial status to membership statuses.
 	 *
 	 * @internal
 	 *
 	 * @since 1.6.0
-	 * @param array $statuses Associative array of statuses and labels
+	 * @param array $statuses Associative array of statuses and labels.
 	 * @return array
 	 */
 	public function add_free_trial_status( $statuses ) {
@@ -71,12 +71,12 @@ class WC_Memberships_Integration_Subscriptions_Free_Trial {
 
 
 	/**
-	 * Add the free trial status to the list of statuses that have access
+	 * Add the free trial status to the list of statuses that have access.
 	 *
 	 * @internal
 	 *
 	 * @since 1.7.0
-	 * @param string[] $statuses Array of statuses
+	 * @param string[] $statuses Array of statuses.
 	 * @return array
 	 */
 	public function mark_free_trial_for_active_access( $statuses ) {
@@ -88,7 +88,7 @@ class WC_Memberships_Integration_Subscriptions_Free_Trial {
 
 
 	/**
-	 * Add free trial status to valid statuses for membership cancellation
+	 * Add free trial status to valid statuses for membership cancellation.
 	 *
 	 * @internal
 	 *
@@ -105,15 +105,15 @@ class WC_Memberships_Integration_Subscriptions_Free_Trial {
 
 
 	/**
-	 * Remove free trial status from status options, unless the membership
-	 * actually is on free trial.
+	 * Remove free trial status from status options,
+	 * unless the membership actually is on free trial.
 	 *
 	 * @internal
 	 *
 	 * @since 1.6.0
-	 * @param array $statuses Array of status options
-	 * @param int $user_membership_id User Membership ID
-	 * @return array Modified array of status options
+	 * @param array $statuses Array of status options.
+	 * @param int $user_membership_id User Membership ID.
+	 * @return array Modified array of status options.
 	 */
 	public function edit_user_membership_screen_status_options( $statuses, $user_membership_id ) {
 
@@ -128,13 +128,13 @@ class WC_Memberships_Integration_Subscriptions_Free_Trial {
 
 
 	/**
-	 * Remove free trial from bulk edit status options
+	 * Remove free trial from bulk edit status options.
 	 *
 	 * @internal
 	 *
 	 * @since 1.6.0
-	 * @param array $statuses Array of statuses
-	 * @return array Modified array of statuses
+	 * @param array $statuses Array of statuses.
+	 * @return array Modified array of statuses.
 	 */
 	public function remove_free_trial_from_bulk_edit( $statuses ) {
 

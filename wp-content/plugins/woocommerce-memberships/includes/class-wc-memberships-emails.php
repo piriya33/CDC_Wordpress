@@ -14,11 +14,11 @@
  *
  * Do not edit or add to this file if you wish to upgrade WooCommerce Memberships to newer
  * versions in the future. If you wish to customize WooCommerce Memberships for your
- * needs please refer to http://docs.woothemes.com/document/woocommerce-memberships/ for more information.
+ * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @package   WC-Memberships/Classes
  * @author    SkyVerge
- * @copyright Copyright (c) 2014-2016, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2017, SkyVerge, Inc.
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
@@ -43,6 +43,9 @@ class WC_Memberships_Emails {
 
 		// add emails
 		add_filter( 'woocommerce_email_classes', array( $this, 'get_email_classes' ) );
+
+		// add links to members area if active for the purchased plan(s)
+		add_action( 'woocommerce_email_order_meta', array( $this, 'maybe_render_thank_you_content' ), 5, 2 );
 
 		// add triggers
 		foreach ( $this->get_email_class_names() as $email ) {
@@ -247,22 +250,18 @@ class WC_Memberships_Emails {
 
 
 	/**
-	 * Add custom memberships emails to WC emails
+	 * Renders a thank you message in order emails when a membership is purchased.
 	 *
-	 * TODO remove this method as part of WC 2.7 compatibility future release {FN 2016-07-21}
+	 * @since 1.8.4
 	 *
-	 * @deprecated since 1.7.0
-	 * @see \WC_Memberships_Emails::get_email_classes()
-	 *
-	 * @since 1.0.0
-	 * @param array $emails Optional, associative array of email objects
-	 * @return \WC_Memberships_User_Membership_Email[]
+	 * @param \WC_Order $order the order for the given email
+	 * @param bool $sent_to_admin true if the email is sent to admins
 	 */
-	public function memberships_emails( array $emails ) {
+	public function maybe_render_thank_you_content( $order, $sent_to_admin ) {
 
-		_deprecated_function( __CLASS__ . '::membership_emails()', '1.7.0', 'wc_memberships()->get_emails_instance()->get_email_classes()' );
-
-		return $this->get_email_classes( $emails );
+		if ( ! $sent_to_admin ) {
+			echo '<br />' . wp_kses_post( wc_memberships_get_order_thank_you_links( $order ) );
+		}
 	}
 
 

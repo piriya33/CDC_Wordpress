@@ -14,12 +14,12 @@
  *
  * Do not edit or add to this file if you wish to upgrade WooCommerce Memberships to newer
  * versions in the future. If you wish to customize WooCommerce Memberships for your
- * needs please refer to http://docs.woothemes.com/document/woocommerce-memberships/ for more information.
+ * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @package   WC-Memberships/Admin
  * @author    SkyVerge
  * @category  Admin
- * @copyright Copyright (c) 2014-2016, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2017, SkyVerge, Inc.
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
@@ -74,7 +74,7 @@ class WC_Memberships_CSV_Import_User_Memberships extends WC_Memberships_Import_E
 		 */
 		$this->enclosure = apply_filters( 'wc_memberships_csv_import_enclosure', '"', $this );
 
-		$docs_button = '<p><a class="button" href="https://docs.woothemes.com/document/woocommerce-memberships-import-and-export/">' . esc_html__( 'See Documentation', 'woocommerce-memberships' ). '</a>';
+		$docs_button = '<p><a class="button" href="https://docs.woocommerce.com/document/woocommerce-memberships-import-and-export/">' . esc_html__( 'See Documentation', 'woocommerce-memberships' ). '</a>';
 
 		wc_memberships()->get_admin_notice_handler()->add_admin_notice(
 			'<p>' . __( '<strong>Members CSV Import</strong> - Importing members will create or update automatically User Memberships in bulk. Importing members <strong>does not</strong> create any associated billing, subscription or order records.', 'woocommerce-memberships' ) . '</p>' . $docs_button,
@@ -111,7 +111,7 @@ class WC_Memberships_CSV_Import_User_Memberships extends WC_Memberships_Import_E
 	 */
 	protected function get_fields() {
 
-		$documentation_url = 'https://docs.woothemes.com/document/woocommerce-memberships-import-and-export/';
+		$documentation_url = 'https://docs.woocommerce.com/document/woocommerce-memberships-import-and-export/';
 		$max_upload_size   = size_format( wc_let_to_num( ini_get( 'post_max_size' ) ) );
 
 		if ( ! $site_timezone = wc_timezone_string() ) {
