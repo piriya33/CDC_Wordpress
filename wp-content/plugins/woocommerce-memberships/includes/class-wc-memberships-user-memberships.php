@@ -203,7 +203,7 @@ class WC_Memberships_User_Memberships {
 
 		if ( is_numeric( $order ) ) {
 			$order_id = (int) $order;
-		} elseif ( $order instanceof WC_Order ) {
+		} elseif ( $order instanceof WC_Order || $order instanceof WC_Order_Refund ) {
 			$order_id = (int) SV_WC_Order_Compatibility::get_prop( $order, 'id' );
 		} else {
 			return null;

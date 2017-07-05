@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: "
 "https://github.com/woothemes/storefront-powerpack/issues\n"
-"POT-Creation-Date: 2017-02-10 12:08:14+00:00\n"
+"POT-Creation-Date: 2017-06-23 14:40:26+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -60,6 +60,7 @@ msgid ""
 msgstr ""
 
 #: includes/class-sp-admin.php:124
+#: includes/customizer/integrations/composite-products/customizer.php:205
 msgid "Stacked"
 msgstr ""
 
@@ -133,43 +134,6 @@ msgstr ""
 
 #: includes/class-sp-customizer.php:126
 msgid "Powerpack ⚡"
-msgstr ""
-
-#: includes/class-sp-integrations.php:134
-msgid "Composite Products"
-msgstr ""
-
-#: includes/class-sp-integrations.php:135
-msgid "Customise the look & feel of Composite product pages"
-msgstr ""
-
-#: includes/class-sp-integrations.php:147
-msgid "Component options columns"
-msgstr ""
-
-#: includes/class-sp-integrations.php:148
-#: includes/class-sp-integrations.php:171
-msgid "In effect when the %sProduct Thumbnails%s options style is active"
-msgstr ""
-
-#: includes/class-sp-integrations.php:170
-msgid "Component options per page"
-msgstr ""
-
-#: includes/class-sp-integrations.php:212
-msgid "Max columns in Summary"
-msgstr ""
-
-#: includes/class-sp-integrations.php:213
-msgid "In effect when using the %1$sStepped%2$s or %1$sComponentized%2$s layout"
-msgstr ""
-
-#: includes/class-sp-integrations.php:238
-msgid "Toggle-box view"
-msgstr ""
-
-#: includes/class-sp-integrations.php:239
-msgid "Apply the toggle-box Component view to the following layout(s)"
 msgstr ""
 
 #: includes/customizer/checkout/customizer.php:55
@@ -494,6 +458,7 @@ msgid "Border Style"
 msgstr ""
 
 #: includes/customizer/designer/includes/class-sp-designer-css-control.php:269
+#: includes/customizer/integrations/composite-products/customizer.php:208
 msgid "None"
 msgstr ""
 
@@ -824,6 +789,95 @@ msgstr ""
 msgid ""
 "Add a url to append a \"view more\" button beneath the best selling "
 "products."
+msgstr ""
+
+#: includes/customizer/homepage/template.php:32
+msgid "View more product categories"
+msgstr ""
+
+#: includes/customizer/homepage/template.php:43
+msgid "View more new products"
+msgstr ""
+
+#: includes/customizer/homepage/template.php:54
+msgid "View more featured products"
+msgstr ""
+
+#: includes/customizer/homepage/template.php:65
+msgid "View more popular products"
+msgstr ""
+
+#: includes/customizer/homepage/template.php:76
+msgid "View more products on sale"
+msgstr ""
+
+#: includes/customizer/homepage/template.php:87
+msgid "View more best selling products"
+msgstr ""
+
+#: includes/customizer/integrations/composite-products/customizer.php:54
+msgid "Composite Product Details"
+msgstr ""
+
+#: includes/customizer/integrations/composite-products/customizer.php:69
+msgid ""
+"These settings do not affect the page you're currently previewing. Visit a "
+"Composite product page to see their effects."
+msgstr ""
+
+#: includes/customizer/integrations/composite-products/customizer.php:87
+msgid "Options columns"
+msgstr ""
+
+#: includes/customizer/integrations/composite-products/customizer.php:88
+#: includes/customizer/integrations/composite-products/customizer.php:111
+msgid "Applicable when the %1$sThumbnails%2$s style is active."
+msgstr ""
+
+#: includes/customizer/integrations/composite-products/customizer.php:110
+msgid "Options per page"
+msgstr ""
+
+#: includes/customizer/integrations/composite-products/customizer.php:152
+msgid "Options pagination"
+msgstr ""
+
+#: includes/customizer/integrations/composite-products/customizer.php:153
+msgid ""
+"Turn off pagination and replace it with a %1$sLoad More%2$s button. "
+"Applicable when the %1$sThumbnails%2$s style is active."
+msgstr ""
+
+#: includes/customizer/integrations/composite-products/customizer.php:159
+msgid "On"
+msgstr ""
+
+#: includes/customizer/integrations/composite-products/customizer.php:160
+msgid "Off"
+msgstr ""
+
+#: includes/customizer/integrations/composite-products/customizer.php:172
+msgid "Max columns in Summary"
+msgstr ""
+
+#: includes/customizer/integrations/composite-products/customizer.php:173
+msgid "Applicable when using the %1$sStepped%2$s or %1$sComponentized%2$s layout."
+msgstr ""
+
+#: includes/customizer/integrations/composite-products/customizer.php:198
+msgid "Toggle-box view"
+msgstr ""
+
+#: includes/customizer/integrations/composite-products/customizer.php:199
+msgid "Apply the toggle-box Component view to the following layout(s):"
+msgstr ""
+
+#: includes/customizer/integrations/composite-products/customizer.php:206
+msgid "Progressive"
+msgstr ""
+
+#: includes/customizer/integrations/composite-products/customizer.php:207
+msgid "Both"
 msgstr ""
 
 #: includes/customizer/layout/customizer.php:53

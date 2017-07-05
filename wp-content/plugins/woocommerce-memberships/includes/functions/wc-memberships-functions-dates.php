@@ -193,9 +193,9 @@ function wc_memberships_format_date( $date, $format = 'mysql' ) {
 function wc_memberships_adjust_date_by_timezone( $date, $format = 'mysql', $timezone = 'UTC' ) {
 
 	if ( is_numeric( $date ) ) {
-		$src_date = date( 'Y-m-d H:i:s', $date );
+		$src_date = date( 'Y-m-d H:i:s', (int) $date );
 	} else {
-		$src_date = (int) $date;
+		$src_date = $date;
 	}
 
 	if ( 'mysql' === $format ) {

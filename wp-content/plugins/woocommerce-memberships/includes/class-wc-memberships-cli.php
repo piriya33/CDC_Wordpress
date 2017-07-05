@@ -36,7 +36,7 @@ if ( ! class_exists( 'WP_CLI_Command' ) ) {
 	return;
 }
 
-// WooCommerce v2.7 implementation is different.
+// WooCommerce v3.0 CLI implementation is different
 if ( SV_WC_Plugin_Compatibility::is_wc_version_gte_3_0() && ! class_exists( 'WC_CLI_Command' ) ) {
 
 	/**

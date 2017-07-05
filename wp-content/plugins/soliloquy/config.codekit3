@@ -1048,6 +1048,12 @@
 		"oAP": "\/includes\/admin\/posttype.php",
 		"oF": 0
 		},
+	"\/includes\/admin\/review.php": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/includes\/admin\/review.php",
+		"oF": 0
+		},
 	"\/includes\/admin\/serialization.php": {
 		"ft": 8192,
 		"oA": 0,

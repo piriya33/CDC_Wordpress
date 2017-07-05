@@ -27,6 +27,7 @@ defined( 'ABSPATH' ) or exit;
 /**
  * Class handling integrations and compatibility issues with third party plugins:
  *
+ * - bbPress: https://bbpress.org/
  * - WooCommerce Bookings: https://woocommerce.com/products/woocommerce-bookings/
  * - Groups: https://wordpress.org/plugins/groups/
  * - qTranslate X: https://wordpress.org/plugins/qtranslate-x/
@@ -37,6 +38,9 @@ defined( 'ABSPATH' ) or exit;
  */
 class WC_Memberships_Integrations {
 
+
+	/** @var \WC_Memberships_Integration_Bbpress instance */
+	private $bbpress;
 
 	/* @var null|WC_Memberships_Integration_Bookings instance */
 	private $bookings;
@@ -57,6 +61,11 @@ class WC_Memberships_Integrations {
 	 * @since 1.6.0
 	 */
 	public function __construct() {
+
+		// bbPress
+		if ( $this->is_bbpress_active() ) {
+			$this->bbpress = wc_memberships()->load_class( '/includes/integrations/bbpress/class-wc-memberships-integration-bbpress.php', 'WC_Memberships_Integration_Bbpress' );
+		}
 
 		// Bookings
 		if ( $this->is_bookings_active() ) {
@@ -82,6 +91,18 @@ class WC_Memberships_Integrations {
 		if ( $this->is_user_switching_active() ) {
 			$this->user_switching = wc_memberships()->load_class( '/includes/integrations/user-switching/class-wc-memberships-integration-user-switching.php', 'WC_Memberships_Integration_User_Switching' );
 		}
+	}
+
+
+	/**
+	 * Get bbPress integration instance
+	 *
+	 * @since 1.8.5
+	 *
+	 * @return null|\WC_Memberships_Integration_Bbpress
+	 */
+	public function get_bbpress_instance() {
+		return $this->bbpress;
 	}
 
 
@@ -126,6 +147,18 @@ class WC_Memberships_Integrations {
 	 */
 	public function get_user_switching_instance() {
 		return $this->user_switching;
+	}
+
+
+	/**
+	 * Check if bbPress is active.
+	 *
+	 * @since 1.8.5
+	 *
+	 * @return bool
+	 */
+	public function is_bbpress_active() {
+		return wc_memberships()->is_plugin_active( 'bbpress.php' );
 	}
 
 

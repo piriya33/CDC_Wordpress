@@ -101,9 +101,10 @@ jQuery( document ).ready( function( $ ) {
                     action:     'soliloquy_insert_slides',
                     nonce:      soliloquy_metabox.insert_nonce,
                     post_id:    soliloquy_metabox.id,
-					images:     JSON.stringify(images),
+					images:     JSON.stringify( images ),
 				},
                 function( response ) {
+
                     // Response should be a JSON success with the HTML for the image grid
                     if ( response  ) {
 

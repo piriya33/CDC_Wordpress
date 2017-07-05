@@ -1244,7 +1244,9 @@ class WC_Memberships_User_Membership {
 			$default_note = __( 'Membership activated.', 'woocommerce-memberships' );
 		}
 
-		$is_delayed = $this->get_start_date( 'timestamp' ) > current_time( 'timestamp', true );
+		$start_date = $this->get_start_date();
+		$start_time = $start_date ? strtotime( 'today', strtotime( $start_date ) ) : null;
+		$is_delayed = $start_time && $start_time > current_time( 'timestamp', true );
 
 		// sanity check for delayed start
 		if ( ! $was_delayed && $is_delayed ) {

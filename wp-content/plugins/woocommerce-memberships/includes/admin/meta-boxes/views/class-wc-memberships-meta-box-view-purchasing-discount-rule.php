@@ -48,7 +48,7 @@ class WC_Memberships_Meta_Box_View_Purchasing_Discount_Rule extends WC_Membershi
 
 			<tr>
 
-				<td class="check-column">
+				<th scope="row" class="check-column">
 					<p class="form-field">
 						<label for="_purchasing_discount_rules<?php echo esc_attr( $index ); ?>_checkbox"><?php esc_html_e( 'Select', 'woocommerce-memberships' ); ?>:</label>
 
@@ -93,7 +93,7 @@ class WC_Memberships_Meta_Box_View_Purchasing_Discount_Rule extends WC_Membershi
 
 						<?php endif; ?>
 					</p>
-				</td>
+				</th>
 
 				<?php if ( (int) $this->rule->get_membership_plan_id() === (int) $this->post->ID ) : ?>
 
@@ -148,7 +148,7 @@ class WC_Memberships_Meta_Box_View_Purchasing_Discount_Rule extends WC_Membershi
 									name="_purchasing_discount_rules[<?php echo esc_attr( $index ); ?>][object_ids][]"
 									id="_purchasing_discount_rules_<?php echo esc_attr( $index ); ?>_object_ids"
 									class="wc-memberships-object-search js-object-ids"
-									style="width: 50%;"
+									style="width: 90%;"
 									multiple="multiple"
 									data-placeholder="<?php esc_attr_e( 'Search&hellip; or leave blank to apply to all', 'woocommerce-memberships' ); ?>"
 									data-action="<?php echo esc_attr( $this->rule->get_object_search_action_name() ); ?>"
@@ -169,7 +169,7 @@ class WC_Memberships_Meta_Box_View_Purchasing_Discount_Rule extends WC_Membershi
 									name="_purchasing_discount_rules[<?php echo esc_attr( $index ); ?>][object_ids]"
 									id="_purchasing_discount_rules_<?php echo esc_attr( $index ); ?>_object_ids"
 									class="wc-memberships-object-search js-object-ids"
-									style="width: 50%;"
+									style="width: 90%;"
 									data-placeholder="<?php esc_attr_e( 'Search&hellip; or leave blank to apply to all', 'woocommerce-memberships' ); ?>"
 									data-action="<?php echo esc_attr( $this->rule->get_object_search_action_name() ); ?>"
 									data-multiple="true"

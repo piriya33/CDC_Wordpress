@@ -1,5 +1,15 @@
 *** Storefront Powerpack Changelog ***
 
+2017.06.23 - version 1.4.1
+* Fix - Sticky Header scroll when there's a checkout error.
+* Fix - Hide gallery option in single product pages.
+* Fix - Homepage sections descriptions are now translatable.
+* Tweak - Better integration with WooCommerce Composite Products.
+
+2017.05.17 - version 1.4.0
+* Fix - Compatibility with Storefront 2.2.
+* Fix - Conflict with WooCommerce Email Customizer.
+
 2017.02.10 - version 1.3.1
 * Fix - Further compatibility with the Jetpack mobile theme.
 * Fix - Output of custom product data tabs.

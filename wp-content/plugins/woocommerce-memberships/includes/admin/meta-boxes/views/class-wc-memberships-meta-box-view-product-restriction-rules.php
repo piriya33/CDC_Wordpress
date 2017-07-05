@@ -47,36 +47,36 @@ class WC_Memberships_Meta_Box_View_Product_Restriction_Rules extends WC_Membersh
 			<thead>
 				<tr>
 
-					<th class="check-column">
+					<td class="check-column" style="width: 5%;">
+						<label class="screen-reader-text" for="product-restriction-rules-select-all"> <?php esc_html_e( 'Select all', 'woocommerce-memberships' ); ?></label>
 						<input type="checkbox"
 						       id="product-restriction-rules-select-all">
-						<label for="product-restriction-rules-select-all"> <?php esc_html_e( 'Select all', 'woocommerce-memberships' ); ?></label>
-					</th>
+					</td>
 
 					<?php if ( 'wc_membership_plan' === $this->post->post_type ) : ?>
 
-						<th class="product-restriction-content-type content-type-column">
+						<th scope="col" class="product-restriction-content-type content-type-column" style="width: 15%;">
 							<?php esc_html_e( 'Type', 'woocommerce-memberships' ); ?>
 						</th>
 
-						<th class="product-restriction-objects objects-column">
+						<th scope="col" class="product-restriction-objects objects-column" style="width: 40%;">
 							<?php esc_html_e( 'Title', 'woocommerce-memberships' ); ?>
 							<?php echo wc_help_tip( __( 'Search&hellip; or leave blank to apply to all', 'woocommerce-memberships' ) ); ?>
 						</th>
 
 					<?php else : ?>
 
-						<th class="product-restriction-membership-plan membership-plan-column">
+						<th scope="col" class="product-restriction-membership-plan membership-plan-column" style="width: 30%;">
 							<?php esc_html_e( 'Plan', 'woocommerce-memberships' ); ?>
 						</th>
 
 					<?php endif; ?>
 
-					<th class="product-restriction-access-type access-type-column">
+					<th scope="col" class="product-restriction-access-type access-type-column" style="width: 15%;">
 						<?php esc_html_e( 'Only Members Can', 'woocommerce-memberships' ); ?>
 					</th>
 
-					<th class="product-restriction-access-schedule access-schedule-column">
+					<th scope="col" class="product-restriction-access-schedule access-schedule-column" style="<?php echo 'product' === $this->post->post_type ? 'width: 40%;' : 'width: 25%;'; ?>">
 						<?php esc_html_e( 'Accessible', 'woocommerce-memberships' ); ?>
 						<?php echo wc_help_tip( __( 'When will members gain access to products?', 'woocommerce-memberships' ) ); ?>
 					</th>

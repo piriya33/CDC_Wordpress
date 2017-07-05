@@ -46,34 +46,34 @@ class WC_Memberships_Meta_Box_View_Content_Restriction_Rules extends WC_Membersh
 
 			<thead>
 				<tr>
-					<th class="check-column">
+					<td class="check-column" style="width: 5%;">
+						<label class="screen-reader-text" for="content-restriction-rules-select-all"> <?php esc_html_e( 'Select all', 'woocommerce-memberships' ); ?></label>
 						<input
 							type="checkbox"
 							id="content-restriction-rules-select-all"
 						>
-						<label for="content-restriction-rules-select-all"> <?php esc_html_e( 'Select all', 'woocommerce-memberships' ); ?></label>
-					</th>
+					</td>
 
 					<?php if ( 'wc_membership_plan' === $this->post->post_type ) : ?>
 
-						<th class="content-restriction-content-type">
+						<th scope="col" class="content-restriction-content-type" style="width: 15%;">
 							<?php esc_html_e( 'Type', 'woocommerce-memberships' ); ?>
 						</th>
 
-						<th class="content-restriction-objects">
+						<th scope="col" class="content-restriction-objects" style="width: 60%;">
 							<?php esc_html_e( 'Title', 'woocommerce-memberships' ); ?>
 							<?php echo wc_help_tip( __( 'Search&hellip; or leave blank to apply to all', 'woocommerce-memberships' ) ); ?>
 						</th>
 
 					<?php else : ?>
 
-						<th class="content-restriction-membership-plan">
+						<th scope="col" class="content-restriction-membership-plan" style="width: 30%;">
 							<?php esc_html_e( 'Plan', 'woocommerce-memberships' ); ?>
 						</th>
 
 					<?php endif; ?>
 
-					<th class="content-restriction-access-schedule">
+					<th scope="col" class="content-restriction-access-schedule" style="<?php echo 'wc_membership_plan' === $this->post->post_type ? 'width: 25%;' : 'width: 65%;' ?>">
 						<?php esc_html_e( 'Accessible', 'woocommerce-memberships' ); ?>
 						<?php echo wc_help_tip( __( 'When will members gain access to content?', 'woocommerce-memberships' ) ); ?>
 					</th>

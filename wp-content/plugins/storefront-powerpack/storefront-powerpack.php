@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: Storefront Powerpack
- * Plugin URI: http://woothemes.com/products/storefront-powerpack/
+ * Plugin URI: https://woocommerce.com/products/storefront-powerpack/
  * Description: Up your game with Storefront Powerpack and get access to host of neat gadgets that enable effortless customisation of your Storefront.
- * Version: 1.3.1
- * Author: WooThemes
- * Author URI: http://woothemes.com/
+ * Version: 1.4.1
+ * Author: WooCommerce
+ * Author URI: https://woocommerce.com/
  * Requires at least: 4.4
  * Tested up to: 4.7.2
  *
@@ -86,7 +86,7 @@ final class Storefront_Powerpack {
 	 */
 	public function __construct() {
 		$this->token   = 'storefront-powerpack';
-		$this->version = '1.3.1';
+		$this->version = '1.4.1';
 		$this->define_constants();
 		$this->init_hooks();
 	} // End __construct()

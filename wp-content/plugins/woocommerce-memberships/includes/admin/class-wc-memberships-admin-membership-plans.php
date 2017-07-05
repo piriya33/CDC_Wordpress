@@ -499,7 +499,7 @@ class WC_Memberships_Admin_Membership_Plans {
 					$order = wc_get_order( $order_id );
 
 					// skip if purchase doesn't have a valid status
-					if (    ! $order
+					if (    ! $order instanceof WC_Order
 					     || ! $order->has_status( $valid_order_statuses_for_grant ) ) {
 
 						continue;
@@ -687,37 +687,39 @@ class WC_Memberships_Admin_Membership_Plans {
 		$post = $this->get_plan_to_duplicate( $id );
 
 		// copy the plan and insert it
-		if ( ! empty( $post ) ) {
+		if ( is_object( $post ) ) {
 
 			$new_id = $this->duplicate_plan( $post );
 
-			/**
-			 * Fires after a membership plan has been duplicated
-			 *
-			 * If you have written a plugin which uses non-WP database tables to save
-			 * information about a page you can hook this action to duplicate that data.
-			 *
-			 * @since 1.0.0
-			 * @param int $new_id New plan ID
-			 * @param \WP_Post $post Original plan object
-			 */
-			do_action( 'wc_memberships_duplicate_membership_plan', $new_id, $post );
+			if ( $new_id > 0 ) {
 
-			wc_memberships()->get_admin_instance()->get_message_handler()->add_message( __( 'Membership plan copied.', 'woocommerce-memberships' ) );
+				/**
+				 * Fires after a membership plan has been duplicated
+				 *
+				 * If you have written a plugin which uses non-WP database tables to save
+				 * information about a page you can hook this action to duplicate that data.
+				 *
+				 * @since 1.0.0
+				 * @param int $new_id New plan ID
+				 * @param \WP_Post $post Original plan object
+				 */
+				do_action( 'wc_memberships_duplicate_membership_plan', $new_id, $post );
 
-			// redirect to the edit screen for the new draft page
-			wp_redirect( admin_url( 'post.php?action=edit&post=' . $new_id ) );
-			exit;
+				wc_memberships()->get_admin_instance()->get_message_handler()->add_message( __( 'Membership plan copied.', 'woocommerce-memberships' ) );
 
-		} else {
-
-			wp_die( __( 'Membership plan creation failed, could not find original product:', 'woocommerce-memberships' ) . ' ' . $id );
+				// redirect to the edit screen for the new draft page
+				wp_redirect( admin_url( 'post.php?action=edit&post=' . $new_id ) );
+				exit;
+			}
 		}
+
+		/* translators: Placeholder: %d - membership plan ID */
+		wp_die( sprintf( __( 'Membership plan creation failed, could not find original plan to copy: %d', 'woocommerce-memberships' ), (int) $id ) );
 	}
 
 
 	/**
-	 * Create a duplicate membership plan
+	 * Create a duplicate membership plan.
 	 *
 	 * @internal
 	 *
@@ -728,55 +730,59 @@ class WC_Memberships_Admin_Membership_Plans {
 	 * @return int
 	 */
 	public function duplicate_plan( $post, $parent = 0, $post_status = 'publish' ) {
-		global $wpdb;
 
-		$new_post_author   = wp_get_current_user();
-		$new_post_date     = current_time( 'mysql' );
-		$new_post_date_gmt = get_gmt_from_date( $new_post_date );
+		$new_post_id = 0;
 
-		if ( $parent > 0 ) {
-			$post_parent = $parent;
-			$suffix      = '';
-		} else {
-			$post_parent = $post->post_parent;
-			$suffix      = ' ' . __( '(Copy)', 'woocommerce-memberships' );
+		if ( is_object( $post ) ) {
+
+			$new_post_author   = wp_get_current_user();
+			$new_post_date     = current_time( 'mysql' );
+			$new_post_date_gmt = get_gmt_from_date( $new_post_date );
+
+			if ( $parent > 0 ) {
+				$post_parent = $parent;
+				$suffix      = '';
+			} else {
+				$post_parent = $post->post_parent;
+				$suffix      = ' ' . __( '(Copy)', 'woocommerce-memberships' );
+			}
+
+			// insert the new template in the post table
+			$new_post_id = wp_insert_post(
+				array(
+					'post_author'               => $new_post_author->ID,
+					'post_date'                 => $new_post_date,
+					'post_date_gmt'             => $new_post_date_gmt,
+					'post_content'              => $post->post_content,
+					'post_content_filtered'     => $post->post_content_filtered,
+					'post_title'                => $post->post_title . $suffix,
+					'post_excerpt'              => $post->post_excerpt,
+					'post_status'               => $post_status,
+					'post_type'                 => $post->post_type,
+					'comment_status'            => $post->comment_status,
+					'ping_status'               => $post->ping_status,
+					'post_password'             => $post->post_password,
+					'to_ping'                   => $post->to_ping,
+					'pinged'                    => $post->pinged,
+					'post_modified'             => $new_post_date,
+					'post_modified_gmt'         => $new_post_date_gmt,
+					'post_parent'               => $post_parent,
+					'menu_order'                => $post->menu_order,
+					'post_mime_type'            => $post->post_mime_type
+				),
+				false
+			);
+
+			if ( $new_post_id > 0 ) {
+
+				// copy the meta information
+				$this->duplicate_post_meta( $post->ID, $new_post_id );
+				// copy rules
+				$this->duplicate_plan_rules( $post->ID, $new_post_id );
+			}
 		}
 
-		// insert the new template in the post table
-		$wpdb->insert(
-			$wpdb->posts,
-			array(
-				'post_author'               => $new_post_author->ID,
-				'post_date'                 => $new_post_date,
-				'post_date_gmt'             => $new_post_date_gmt,
-				'post_content'              => $post->post_content,
-				'post_content_filtered'     => $post->post_content_filtered,
-				'post_title'                => $post->post_title . $suffix,
-				'post_excerpt'              => $post->post_excerpt,
-				'post_status'               => $post_status,
-				'post_type'                 => $post->post_type,
-				'comment_status'            => $post->comment_status,
-				'ping_status'               => $post->ping_status,
-				'post_password'             => $post->post_password,
-				'to_ping'                   => $post->to_ping,
-				'pinged'                    => $post->pinged,
-				'post_modified'             => $new_post_date,
-				'post_modified_gmt'         => $new_post_date_gmt,
-				'post_parent'               => $post_parent,
-				'menu_order'                => $post->menu_order,
-				'post_mime_type'            => $post->post_mime_type
-			)
-		);
-
-		$new_post_id = $wpdb->insert_id;
-
-		// copy the meta information
-		$this->duplicate_post_meta( $post->ID, $new_post_id );
-
-		// copy rules
-		$this->duplicate_plan_rules( $post->ID, $new_post_id );
-
-		return $new_post_id;
+		return (int) $new_post_id;
 	}
 
 

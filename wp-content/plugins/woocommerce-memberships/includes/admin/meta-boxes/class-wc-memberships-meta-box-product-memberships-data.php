@@ -440,7 +440,7 @@ class WC_Memberships_Meta_Box_Product_Memberships_Data extends WC_Memberships_Me
 								name="_wc_memberships_membership_plan_ids[]"
 								id="_wc_memberships_membership_plan_ids"
 								class="js-membership-plan-ids"
-								style="width: 50%;"
+								style="width: 90%;"
 								multiple="multiple"
 								data-placeholder="<?php esc_attr_e( 'Search for a membership plan&hellip;', 'woocommerce-memberships' ); ?>"
 								data-action="wc_memberships_search_membership_plans">
@@ -456,7 +456,7 @@ class WC_Memberships_Meta_Box_Product_Memberships_Data extends WC_Memberships_Me
 								name="_wc_memberships_membership_plan_ids"
 								id="_wc_memberships_membership_plan_ids"
 								class="js-membership-plan-ids"
-								style="width: 50%;"
+								style="width: 90%;"
 								data-placeholder="<?php esc_attr_e( 'Search for a membership plan&hellip;', 'woocommerce-memberships' ); ?>"
 								data-action="wc_memberships_search_membership_plans"
 								data-multiple="true"
@@ -628,7 +628,6 @@ class WC_Memberships_Meta_Box_Product_Memberships_Data extends WC_Memberships_Me
 					if ( $plan = wc_memberships_get_membership_plan( $plan_id ) ) {
 
 						$product_ids   = $plan->get_product_ids();
-						$product_ids   = ! is_array( $product_ids ) && ! empty( $product_ids ) ? (array) $product_ids : array();
 						$product_ids[] = $post_id;
 
 						$plan->set_product_ids( $product_ids );

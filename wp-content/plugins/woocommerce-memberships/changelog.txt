@@ -1,5 +1,15 @@
 *** WooCommerce Memberships Changelog ***
 
+2017.05.31 - version 1.8.5
+ * Fix - Incorrect Subscription signup fees when excluded from member discounts
+ * Fix - Really long membership plan names may have caused Membership panels on post and product pages to hide some options
+ * Fix - Ensure member discount badges aren't hidden by the product zoom icon in WooCommerce 3.0+
+ * Fix - Ensure hidden or private bbPress forums are included in the Members Area if restricted
+ * Fix - Address a timezone conversion issue that may have resulted in inaccurate start or end time of day for a user membership
+ * Fix - Ensure that adding an access-granting product from the "Edit product" page doesn't clear other access-granting products for the plan
+ * Dev - Introduce filter to toggle listing of products hidden from catalog in Members Area
+ * Dev - Updated Action Scheduler library to version 1.5.3
+
 2017.04.28 - version 1.8.4
  * Fix - Address out of memory errors happening in some installations as the outcome of possible infinite loops while excluding member discounts from products on sale
  * Fix - Product name display issue when an access-granting product was a specific variation

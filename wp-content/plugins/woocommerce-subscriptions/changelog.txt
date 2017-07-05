@@ -1,5 +1,48 @@
 *** WooCommerce Subscriptions Changelog ***
 
+2017.06.22 - version 2.2.8
+* Fix: WooCommerce 3.0: Update use of deprecated 'woocommerce_stock_html' filter by using new wc_get_stock_html() method. PR#2175 & PR#2193
+* Fix: Make sure subscriptions suspended at PayPal.com are also correctly suspended in WooCommerce. PR#2199
+* Fix: Do not display manual gateways when paying for failed renewal with an automatic retry. PR#2177
+* Fix: Compare the site URL stored by Subscriptions against the WP_SITEURL constant when that constant is set, instead of always comparing against the 'siteurl' option value. PR#2167
+* Fix: Apply discounts from renewal orders rather than subscriptions for renewal carts so that any code or manual application of a discount to the renewal order is applied correctly. PR#2156
+* Fix: Do not cancel auto-draft subscriptions before post deletion as they do not need to be cancelled and cancellation emails can cause confusion. PR#2173
+* Fix: Add 3rd param to 'woocommerce_order_item_name' filter calls to make sure they match parameters on WooCommerce filters. PR#2159
+* Fix: Only return parent product IDs if a parent product exists. Fixes broken switch URLs for grouped products. PR#2160
+* Fix: Update subscription payment method when renewal has been paid and has pending status and retry. PR#2141
+* Fix: Make sure trial calculations for synced variation products are correct with  PayPal Standard. PR#2168
+* Fix: Set correct PHPDoc for returned type in WC_Subscription::get_parent(). Props @davefx. PR#2169
+* Fix: Set correct PHPDoc return type in wcs-renewal-functions.php. PR#2198
+* Fix: Copy custom, non-prefixed, subscription meta data to renewal orders. PR#2157
+* Fix: Take sale price into account when displaying "From" price for variable products. PR#2176
+* Fix: Take sale price into account when switching. PR#2171
+* Fix: Fix undefined var $switched_subscriptions. PR#2192
+
+2017.05.26 - version 2.2.7
+* Tweak: Integrate with My Account > Payment Methods actions to make sure when a customer deletes a payment method, subscriptions using that payment method are automatically updated to use a different token. Or if there are no other payment methods on the customer's account, a customer can't delete the payment method used for automatic payments. PR#1866
+* Tweak: Do not display 'Free' on free shipping methods to improve compatibility with the approached used in WooCommerce 2.6 and newer. PR#1766
+* Tweak: Call 'wcs_get_retry_rule_raw' even if no rule is defined so that it can be used to add additional rules beyond default rule set. PR#2138
+* Tweak: Do not get products for non product post IDs to save performance overhead. PR#2034
+* Fix: WooCommerce 3.0: Repair pending cancelled subscriptions that have not got a scheduled action or been correctly transitioned to cancelled as part of the 2.2.7 upgrade process. PR#2129
+* Fix: WooCommerce 3.0: Fixes infinite loops when using a coupon for manual renewal via cart by storing coupon properties rather than full coupon objects in the session. PR#2116
+* Fix: WooCommerce 3.0: Fix updating a subscription address after paying manual renewal that uses a different address to avoid addresses being incorrectly deleted and not udpated. PR#2145
+* Fix: Register subscription report scripts on top level Reports admin screens for uses without store manage capability, but with capability to view reports. PR#2153
+* Fix: Make sure login is required when purchasing subscriptions products and "Registration on checkout" is disabled. PR#1822
+* Fix: Use more than 'ipn_track_id' for different PayPal IPN messages now that PayPal has suddently begun to use the same 'ipn_track_id' for different IPN messages. PR#2090
+* Fix: Trigger order.created webhook when creating renewal orders by Subscriptions with WC < 3.0. PR#1793
+* Fix: Lookup one time shipping setting value on the parent product on variations rather than on the variations to make sure we find the correct value. PR#2125
+* Fix: Do not cancel subscriptions that are not using PayPal as the payment method when a PayPal Billing Agreement is cancelled (including subscriptions using manual renewal). PR#2127
+* Fix: Allow single payment subscriptions to be cancelled by customer if that single payment is still in future (because there was a free trial). PR#2060
+* Fix: Avoid errors by making sure deleted subscriptions are not returned in set of switched and users subscriptions by respective functions for getting those subscriptions. PR#2075 and PR#2131
+* Fix: Change Edit Subscriptions admin screen "This order is no longer editable" text to avoid confusion. PR#2128
+* Fix: Do not ignore variations with empty prices during min/max calculations to improve compatibility with 3rd party plugins, like Name Your Price. PR#2120
+* Fix: Check status can be changed on payment failure to avoid throwing exceptions/errors when the status can't be changed, which is also almost always signifies that the status doesn't need to be changed to reflect the failure. PR#2140
+* Fix: Make it is possible to change payment method to PayPal Standard for subscriptions imported or manually added (meaning they do not have a parent order). PR#1956
+* Fix: Restore previous v3 customer/{id}/subscriptions response structure to REST API. PR#2150
+* Fix: Add support for filtering subscriptions by customer ID in v3 legacy REST API. PR#2144
+* Fix: Show General tab for variable subscription product edit page on page load. PR#2044
+* Fix: Delete the retry date after subscription status changed. PR#2143
+
 2017.05.05 - version 2.2.6
 * Fix: WooCommerce 3.0: Guard against infinite loops caused by 3rd party code calling order methods with a post object by making sure we have an order object, not just an object. PR#2100
 * Fix: WooCommerce 3.0: Improve compatibility with 3rd party code that adds custom address fields by making sure we check address method is callable before calling it, and falling back to meta data if that method doesn't exist. PR#2102

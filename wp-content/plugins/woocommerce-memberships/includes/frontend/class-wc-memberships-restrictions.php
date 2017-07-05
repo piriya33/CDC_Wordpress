@@ -104,7 +104,7 @@ class WC_Memberships_Restrictions {
 
 		// restrict product visibility
 		add_filter( 'woocommerce_product_is_visible',        array( $this, 'product_is_visible' ), 10, 2 );
-		add_filter( 'woocommerce_variation_is_visible',      array( $this, 'variation_is_visible' ), 10, 2 );
+		add_filter( 'woocommerce_variation_is_visible',      array( $this, 'variation_is_visible' ), 10, 3 );
 		add_filter( 'woocommerce_hide_invisible_variations', array( $this, 'hide_invisible_variations' ), 10, 3 );
 
 		// restrict product purchasing
@@ -274,12 +274,11 @@ class WC_Memberships_Restrictions {
 	 */
 	public function posts_clauses( $pieces, WP_Query $wp_query ) {
 
-		// Sanity check:
-		// - we are on products query;
-		// - restriction mode is not "hide" completely;
-		// - we are not hiding restricted products from archive & search;
-		if (    ! $this->is_restriction_mode( 'hide' )
-		     && ! ( $this->hiding_restricted_products() && 'product_query' === $wp_query->get('wc_query') ) ) {
+		// bail out if:
+		// - a) query is for user memberships or membership plans post types
+		// - b) we are on products query; restriction mode is not "hide" completely; we are not hiding restricted products from archive & search;
+		if (    in_array( $wp_query->get( 'post_type' ), array( 'wc_user_membership', 'wc_membership_plan' ), true )
+			 || ( ! $this->is_restriction_mode( 'hide' ) && ! ( $this->hiding_restricted_products() && 'product_query' === $wp_query->get('wc_query' ) ) ) ) {
 
 			return $pieces;
 		}
@@ -556,18 +555,25 @@ class WC_Memberships_Restrictions {
 	/**
 	 * Exclude view-restricted variations
 	 *
+	 * In 1.8.5-dev added $parent_id param
+	 *
 	 * @since 1.0.0
 	 * @param bool $is_visible
 	 * @param int $variation_id
+	 * @param int $parent_id
 	 * @return bool
 	 */
-	public function variation_is_visible( $is_visible, $variation_id ) {
+	public function variation_is_visible( $is_visible, $variation_id, $parent_id ) {
 
 		// exclude restricted variations
 		if (    ! current_user_can( 'wc_memberships_view_restricted_product', $variation_id )
 		     && ! current_user_can( 'wc_memberships_view_delayed_product',    $variation_id ) ) {
 
 			$is_visible = false;
+		}
+
+		if ( ! $is_visible && $parent_id ) {
+			$is_visible = 'yes' === wc_memberships_get_content_meta( $parent_id, '_wc_memberships_force_public', true );
 		}
 
 		return $is_visible;
@@ -1119,12 +1125,17 @@ class WC_Memberships_Restrictions {
 			$purchasable = false;
 		}
 
-		// double-check for variations:
-		// if parent is not purchasable, then neither should be the variation
-		if ( $purchasable && $product->is_type( array( 'variation', 'subscription_variation' ) ) ) {
+		// double-check for variations
+		if ( $product->is_type( array( 'variation', 'subscription_variation' ) ) ) {
 
-			$parent      = SV_WC_Product_Compatibility::get_parent( $product );
-			$purchasable = $parent instanceof WC_Product ? $parent->is_purchasable() : $purchasable;
+			$parent = SV_WC_Product_Compatibility::get_parent( $product );
+
+			if ( $parent instanceof WC_Product  ) {
+
+				// if parent is not purchasable, then neither should be the variation,
+				// if parent is forced public, ensure the variation is as well
+				$purchasable = $purchasable ? $parent->is_purchasable() : 'yes' === wc_memberships_get_content_meta( $parent->get_id(), '_wc_memberships_force_public', true );
+			}
 		}
 
 		return $purchasable;

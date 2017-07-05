@@ -32,7 +32,10 @@ defined( 'ABSPATH' ) or exit;
 class WC_Memberships_Integration_Subscriptions_Discounts {
 
 
-	/** @var array Memoized discounted sign up fees for caching and to avoid double filtering. */
+	/** @var bool Whether to apply discounts to sign up fees (user setting) */
+	private $apply_member_discounts_to_sign_up_fees = false;
+
+	/** @var array Memoized discounted sign up fees for caching and to avoid double filtering */
 	private $sign_up_fee = array();
 
 
@@ -63,6 +66,8 @@ class WC_Memberships_Integration_Subscriptions_Discounts {
 
 		// process discounts only if there's a member logged in
 		if ( wc_memberships()->get_member_discounts_instance()->applying_discounts() ) {
+
+			$this->apply_member_discounts_to_sign_up_fees = 'yes' === get_option( 'wc_memberships_enable_subscriptions_sign_up_fees_discounts', 'no' );
 
 			// make sure the price of subscription renewal cart items is honoured (i.e. not discounted)
 			add_action( 'woocommerce_before_calculate_totals',                     array( $this, 'disable_price_adjustments_for_renewal' ), 11 );
@@ -245,8 +250,7 @@ class WC_Memberships_Integration_Subscriptions_Discounts {
 
 		if ( ! isset( $this->sign_up_fee[ $subscription_product->get_id() ] ) ) {
 
-			if (   'yes' === get_option( 'wc_memberships_enable_subscriptions_sign_up_fees_discounts', 'no' )
-			     && wc_memberships()->get_member_discounts_instance()->user_has_member_discount( $subscription_product ) ) {
+			if ( $this->apply_member_discounts_to_sign_up_fees && wc_memberships()->get_member_discounts_instance()->user_has_member_discount( $subscription_product ) ) {
 				$this->sign_up_fee[ $subscription_product->get_id() ] = $sign_up_fee;
 			} else {
 				$this->sign_up_fee[ $subscription_product->get_id() ] = $this->get_original_sign_up_fee( $sign_up_fee, $subscription_product, get_current_user_id() );
@@ -275,52 +279,59 @@ class WC_Memberships_Integration_Subscriptions_Discounts {
 	 */
 	private function get_original_sign_up_fee( $discounted_sign_up_fee, $subscription_product, $member_id ) {
 
-		$discount_rules = array();
+		if ( $this->apply_member_discounts_to_sign_up_fees ) {
 
-		if ( $subscription_product instanceof WC_Product && $member_id > 0 ) {
-			$discount_rules = wc_memberships()->get_rules_instance()->get_user_product_purchasing_discount_rules( $member_id, $subscription_product->get_id() );
-		}
+			$discount_rules = array();
 
-		if ( ! empty( $discount_rules ) ) {
+			if ( $subscription_product instanceof WC_Product && $member_id > 0 ) {
+				$discount_rules = wc_memberships()->get_rules_instance()->get_user_product_purchasing_discount_rules( $member_id, $subscription_product->get_id() );
+			}
 
-			/** this filter is documented in includes/class-wc-memberships-member-discounts.php */
-			$cumulative_discounts  = apply_filters( 'wc_memberships_allow_cumulative_member_discounts', true, $member_id, $subscription_product );
-			$original_sign_up_fees = array();
-			$original_sign_up_fee  = 0;
+			if ( ! empty( $discount_rules ) ) {
 
-			// find out the discounted price for the current user
-			foreach ( $discount_rules as $rule ) {
+				/** this filter is documented in includes/class-wc-memberships-member-discounts.php */
+				$cumulative_discounts  = apply_filters( 'wc_memberships_allow_cumulative_member_discounts', true, $member_id, $subscription_product );
+				$original_sign_up_fees = array();
+				$original_sign_up_fee  = 0;
 
-				$discount_amount = (float) $rule->get_discount_amount();
+				// find out the discounted price for the current user
+				foreach ( $discount_rules as $rule ) {
 
-				switch ( $rule->get_discount_type() ) {
+					$discount_amount = (float) $rule->get_discount_amount();
 
-					case 'percentage':
-						$original_sign_up_fee = 100 * ( $discounted_sign_up_fee / ( 100 - $discount_amount ) );
-					break;
+					switch ( $rule->get_discount_type() ) {
 
-					case 'amount':
-						$original_sign_up_fee = $discounted_sign_up_fee + $discount_amount;
-					break;
-				}
+						case 'percentage':
+							$original_sign_up_fee = 100 * ( $discounted_sign_up_fee / ( 100 - $discount_amount ) );
+						break;
 
-				// Make sure that the lowest price gets applied and doesn't become negative.
-				if ( $original_sign_up_fee > $discounted_sign_up_fee ) {
-					if ( false === $cumulative_discounts ) {
-						$original_sign_up_fee    = max( $original_sign_up_fee, 0 );
-					} else {
-						$original_sign_up_fees[] = max( $original_sign_up_fee, 0 );
+						case 'amount':
+							$original_sign_up_fee = $discounted_sign_up_fee + $discount_amount;
+						break;
+					}
+
+					// Make sure that the lowest price gets applied and doesn't become negative.
+					if ( $original_sign_up_fee > $discounted_sign_up_fee ) {
+						if ( false === $cumulative_discounts ) {
+							$original_sign_up_fee    = max( $original_sign_up_fee, 0 );
+						} else {
+							$original_sign_up_fees[] = max( $original_sign_up_fee, 0 );
+						}
 					}
 				}
-			}
 
-			// pick the highest price
-			if ( ! empty( $original_sign_up_fees ) ) {
-				$original_sign_up_fee = max( $original_sign_up_fees );
-			}
+				// pick the highest price
+				if ( ! empty( $original_sign_up_fees ) ) {
+					$original_sign_up_fee = max( $original_sign_up_fees );
+				}
 
-			// sanity check
-			if ( $original_sign_up_fee <= $discounted_sign_up_fee ) {
+				// sanity check
+				if ( $original_sign_up_fee <= $discounted_sign_up_fee ) {
+					$original_sign_up_fee = $discounted_sign_up_fee;
+				}
+
+			} else {
+
 				$original_sign_up_fee = $discounted_sign_up_fee;
 			}
 
@@ -328,6 +339,7 @@ class WC_Memberships_Integration_Subscriptions_Discounts {
 
 			$original_sign_up_fee = $discounted_sign_up_fee;
 		}
+
 
 		return $original_sign_up_fee;
 	}

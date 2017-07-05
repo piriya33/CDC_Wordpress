@@ -47,42 +47,42 @@ class WC_Memberships_Meta_Box_View_Purchasing_Discount_Rules extends WC_Membersh
 			<thead>
 				<tr>
 
-					<th class="check-column">
+					<td class="check-column">
+						<label class="screen-reader-text" for="product-discount-rules-select-all"><?php esc_html_e( 'Select all', 'woocommerce-memberships' ); ?></label>
 						<input
 							type="checkbox"
 							id="product-discount-rules-select-all"
 						>
-						<label for="product-discount-rules-select-all"><?php esc_html_e( 'Select all', 'woocommerce-memberships' ); ?></label>
-					</th>
+					</td>
 
 					<?php if ( 'wc_membership_plan' === $this->post->post_type ) : ?>
 
-						<th class="purchasing-discount-content-type content-type-column">
+						<th scope="col" class="purchasing-discount-content-type content-type-column">
 							<?php esc_html_e( 'Discount', 'woocommerce-memberships' ); ?>
 						</th>
 
-						<th class="purchasing-discount-objects objects-column">
+						<th scope="col" class="purchasing-discount-objects objects-column">
 							<?php esc_html_e( 'Title', 'woocommerce-memberships' ); ?>
 							<?php echo wc_help_tip( __( 'Search&hellip; or leave blank to apply to all', 'woocommerce-memberships' ) ); ?>
 						</th>
 
 					<?php else : ?>
 
-						<th class="purchasing-discount-membership-plan membership-plan-column">
+						<th scope="col" class="purchasing-discount-membership-plan membership-plan-column">
 							<?php esc_html_e( 'Plan', 'woocommerce-memberships' ); ?>
 						</th>
 
 					<?php endif; ?>
 
-					<th class="purchasing-discount-discount-type discount-type-column">
+					<th scope="col" class="purchasing-discount-discount-type discount-type-column">
 						<?php esc_html_e( 'Type', 'woocommerce-memberships' ); ?>
 					</th>
 
-					<th class="purchasing-discount-discount-amount amount-column">
+					<th scope="col" class="purchasing-discount-discount-amount amount-column">
 						<?php esc_html_e( 'Amount', 'woocommerce-memberships' ); ?>
 					</th>
 
-					<th class="purchasing-discount-active active-column">
+					<th scope="col" class="purchasing-discount-active active-column">
 						<?php esc_html_e( 'Active', 'woocommerce-memberships' ); ?>
 					</th>
 

@@ -1156,6 +1156,15 @@ class WC_Memberships_Membership_Plan {
 				$post_types = array( 'product' );
 				$parent_ids = array();
 
+				/**
+				 * Filter to show hidden products when queried from plan.
+				 *
+				 * @since 1.8.5
+				 *
+				 * @param bool $exclude_hidden Whether to show products marked hidden from catalog or not (default false: show all products, including hidden ones)
+				 */
+				$exclude_hidden = (bool) apply_filters( 'wc_memberships_plan_exclude_hidden_products', false );
+
 				foreach ( $post_ids as $post_id ) {
 
 					if ( $product = wc_get_product( $post_id ) ) {
@@ -1163,7 +1172,15 @@ class WC_Memberships_Membership_Plan {
 						$product_id = $post_id;
 						$parent     = SV_WC_Product_Compatibility::get_parent( $product );
 
+						if ( $exclude_hidden && ! $product->is_visible() ) {
+							continue;
+						}
+
 						if ( ! empty( $parent ) && $product->is_type( 'variation' ) && $parent->is_type( 'variable' ) ) {
+
+							if ( $exclude_hidden && ! $parent->is_visible() ) {
+								continue;
+							}
 
 							$parent_id        = SV_WC_Product_Compatibility::get_prop( $parent, 'id' );
 							$can_list_product = true;

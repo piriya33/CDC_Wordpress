@@ -337,7 +337,7 @@ class WC_Memberships_Meta_Box_Membership_Plan_Data extends WC_Memberships_Meta_B
 							name="_product_ids[]"
 							id="_product_ids"
 							class="js-ajax-select-products"
-							style="width: 50%;"
+							style="width: 90%;"
 							multiple="multiple"
 							data-placeholder="<?php esc_attr_e( 'Search for a product&hellip;', 'woocommerce-memberships' ); ?>">
 							<?php $product_ids = $membership_plan->get_product_ids(); ?>
@@ -355,7 +355,7 @@ class WC_Memberships_Meta_Box_Membership_Plan_Data extends WC_Memberships_Meta_B
 							name="_product_ids"
 							id="_product_ids"
 							class="js-ajax-select-products"
-							style="width: 50%;"
+							style="width: 90%;"
 							data-placeholder="<?php esc_attr_e( 'Search for a product&hellip;', 'woocommerce-memberships' ); ?>"
 							data-multiple="true"
 							data-selected="<?php
@@ -663,7 +663,7 @@ class WC_Memberships_Meta_Box_Membership_Plan_Data extends WC_Memberships_Meta_B
 					multiple="multiple"
 					data-allow_clear="true"
 					data-placeholder="<?php esc_html_e( 'Choose sections for this plan&hellip;', 'woocommerce-memberships' ); ?>"
-					style="width: 50%;">
+					style="width: 90%;">
 					<?php foreach( $members_area_sections as $section_id => $section_name ) : ?>
 						<option value="<?php echo esc_attr( $section_id ); ?>" <?php selected( true, in_array( $section_id, $members_area_selected_sections, true ) ); ?>><?php echo esc_html( $section_name ); ?></option>
 					<?php endforeach;  ?>

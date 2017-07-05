@@ -129,6 +129,7 @@ class SV_WC_Order_Compatibility extends SV_WC_Data_Compatibility {
 	 */
 	public static function get_date_prop( WC_Order $order, $type, $context = 'edit' ) {
 
+		$date = null;
 		$prop = "date_{$type}";
 
 		if ( SV_WC_Plugin_Compatibility::is_wc_version_gte_3_0() ) {
@@ -319,7 +320,7 @@ class SV_WC_Order_Compatibility extends SV_WC_Data_Compatibility {
 
 		} else {
 
-			// convert 2.7.0+ args for backwards compatibility
+			// convert WC 3.0+ args for backwards compatibility
 			if ( isset( $args['discount'] ) ) {
 				$args['discount_amount'] = $args['discount'];
 			}
@@ -378,7 +379,7 @@ class SV_WC_Order_Compatibility extends SV_WC_Data_Compatibility {
 
 
 	/**
-	 * Backports wc_reduce_stock_levels() to pre-2.7.0
+	 * Backports wc_reduce_stock_levels() to pre-3.0.
 	 *
 	 * @since 4.6.0
 	 * @param \WC_Order $order the order object
@@ -394,7 +395,7 @@ class SV_WC_Order_Compatibility extends SV_WC_Data_Compatibility {
 
 
 	/**
-	 * Backports wc_update_total_sales_counts() to pre-2.7.0
+	 * Backports wc_update_total_sales_counts() to pre-3.0.
 	 *
 	 * @since 4.6.0
 	 * @param \WC_Order $order the order object
@@ -406,6 +407,28 @@ class SV_WC_Order_Compatibility extends SV_WC_Data_Compatibility {
 		} else {
 			$order->record_product_sales();
 		}
+	}
+
+
+	/**
+	 * Determines if an order has an available shipping address.
+	 *
+	 * WooCommerce 3.0+ no longer fills the shipping address with the billing if
+	 * a shipping address was never set by the customer at checkout, as is the
+	 * case with virtual orders. This method is helpful for gateways that may
+	 * reject such transactions with blank shipping information.
+	 *
+	 * TODO: Remove when WC 3.0.4 can be required {CW 2017-04-17}
+	 *
+	 * @since 4.6.1
+	 *
+	 * @param \WC_Order $order order object
+	 *
+	 * @return bool
+	 */
+	public static function has_shipping_address( WC_Order $order ) {
+
+		return self::get_prop( $order, 'shipping_address_1' ) || self::get_prop( $order, 'shipping_address_2' );
 	}
 
 

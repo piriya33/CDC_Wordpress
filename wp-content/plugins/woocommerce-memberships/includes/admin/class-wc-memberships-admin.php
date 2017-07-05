@@ -830,11 +830,11 @@ class WC_Memberships_Admin {
 	 * @internal
 	 *
 	 * @since 1.3.8
-	 * @param \WC_Order $order the WooCommerce order
+	 * @param \WC_Order|\WC_Order_Refund $order the WooCommerce order
 	 */
 	public function render_order_data( $order ) {
 
-		$customer_user = $order instanceof WC_Order ? get_user_by( 'id', $order->get_user_id() ) : null;
+		$customer_user = $order instanceof WC_Order || $order instanceof WC_Order_Refund ? get_user_by( 'id', $order->get_user_id() ) : null;
 
 		if ( empty( $customer_user ) ) {
 			return;

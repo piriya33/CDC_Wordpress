@@ -1717,8 +1717,10 @@ class WC_Subscription extends WC_Order {
 
 		// Allow a short circuit for plugins & payment gateways to force max failed payments exceeded
 		if ( 'cancelled' == $new_status || apply_filters( 'woocommerce_subscription_max_failed_payments_exceeded', false, $this ) ) {
-			$this->update_status( 'cancelled', __( 'Subscription Cancelled: maximum number of failed payments reached.', 'woocommerce-subscriptions' ) );
-		} else {
+			if ( $this->can_be_updated_to( 'cancelled' ) ) {
+				$this->update_status( 'cancelled', __( 'Subscription Cancelled: maximum number of failed payments reached.', 'woocommerce-subscriptions' ) );
+			}
+		} elseif ( $this->can_be_updated_to( $new_status ) ) {
 			$this->update_status( $new_status );
 		}
 
@@ -1788,7 +1790,7 @@ class WC_Subscription extends WC_Order {
 	/**
 	 * Get parent order object.
 	 *
-	 * @return int
+	 * @return WC_Order
 	 */
 	public function get_parent() {
 		return wc_get_order( $this->get_parent_id() );

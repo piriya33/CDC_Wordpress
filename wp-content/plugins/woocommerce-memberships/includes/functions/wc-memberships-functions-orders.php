@@ -29,7 +29,7 @@ defined( 'ABSPATH' ) or exit;
  * Get memberships granted access from order
  *
  * @since 1.7.0
- * @param int|WC_Order $order
+ * @param int|\WC_Order|\WC_Order_Refund $order Order object
  * @return false|array False if order didn't grant access to a membership
  *                     or associative array of membership ids and granting access details
  */
@@ -39,7 +39,7 @@ function wc_memberships_get_order_access_granted_memberships( $order ) {
 		$order = wc_get_order( (int) $order );
 	}
 
-	$meta = $order instanceof WC_Order ? SV_WC_Order_Compatibility::get_meta( $order, '_wc_memberships_access_granted', true ) : false;
+	$meta = $order instanceof WC_Order || $order instanceof WC_Order_Refund ? SV_WC_Order_Compatibility::get_meta( $order, '_wc_memberships_access_granted', true ) : false;
 
 	return ! is_array( $meta ) ? array() : $meta;
 }
@@ -271,7 +271,8 @@ function wc_memberships_get_order_thank_you_links( $order_id ) {
 			if ( 'yes' === $data['already_granted'] ) {
 
 				$user_membership       = wc_memberships_get_user_membership( (int) $membership_id );
-				$members_area_sections = $user_membership->get_plan()->get_members_area_sections();
+				$membership_plan       = $user_membership->get_plan();
+				$members_area_sections = $membership_plan ? $membership_plan->get_members_area_sections() : array();
 
 				if ( ! empty( $members_area_sections ) ) {
 					$memberships_with_members_area[ $user_membership->get_plan_id() ] = $user_membership->get_plan()->get_name();
