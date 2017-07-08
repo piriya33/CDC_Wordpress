@@ -1,0 +1,10 @@
+%REPORT_AUTHOR% reported '%REPORT_TITLE%' in forum: '%FORUM_TITLE%'.
+You can see this post here: %REPORT_LINK%
+
+Report content:
+%REPORT_CONTENT%
+
+List of all reports:
+%REPORTS_LIST%
+-----------
+Do not reply to this email!

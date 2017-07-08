@@ -1,0 +1,7 @@
+=== Dev4Press Updater ===
+== List of included languages ==
+
+=== de_DE [Deutsch] ===
+Plugin Version: 3.4
+Translated by: Tobias Bischof
+URL: http://www.pocketnavigation.de

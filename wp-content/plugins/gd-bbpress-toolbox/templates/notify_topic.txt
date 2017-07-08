@@ -1,0 +1,9 @@
+%REPLY_AUTHOR% replied to topic: %TOPIC_TITLE%.
+You can see his reply here: %REPLY_LINK%
+
+-----------
+You are receiving this email because you subscribed to a forum topic. Login and visit the topic to unsubscribe from these emails.
+
+Topic Link: %TOPIC_LINK%
+-----------
+Do not reply to this email!

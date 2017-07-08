@@ -1,0 +1,9 @@
+%TOPIC_AUTHOR% created new topic: %TOPIC_TITLE%
+In the forum: %FORUM_TITLE%
+You can see the topic here: %TOPIC_LINK%
+
+-----------
+This email is sent to keymasters and moderators when new topic is created.
+
+-----------
+Do not reply to this email!

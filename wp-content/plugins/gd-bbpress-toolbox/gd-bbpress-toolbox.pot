@@ -1,0 +1,5855 @@
+#: theme/gdbbx-widget-onlineusers.php:4
+#: forms/meta/dashboard.online.php:4
+#: theme/gdbbx-forums-statistics.php:23
+msgid "There is <strong>%s</strong> user online"
+msgid_plural "There are <strong>%s</strong> users online"
+msgstr[0] ""
+msgstr[1] ""
+
+#: theme/gdbbx-thanks-list.php:8
+msgid "%s user thanked author for this post."
+msgid_plural "%s users thanked author for this post."
+msgstr[0] ""
+msgstr[1] ""
+
+#: theme/gdbbx-forums-statistics.php:24
+#: theme/gdbbx-widget-onlineusers.php:5
+#: forms/meta/dashboard.online.php:5
+msgid "<strong>%s</strong> registered"
+msgid_plural "<strong>%s</strong> registered"
+msgstr[0] ""
+msgstr[1] ""
+
+#: forms/meta/dashboard.online.php:6
+#: theme/gdbbx-forums-statistics.php:25
+#: theme/gdbbx-widget-onlineusers.php:6
+msgid "<strong>%s</strong> guest"
+msgid_plural "<strong>%s</strong> guests"
+msgstr[0] ""
+msgstr[1] ""
+
+#: theme/gdbbx-forums-welcome.php:11
+msgid "%s new reply"
+msgid_plural "%s new replies"
+msgstr[0] ""
+msgstr[1] ""
+
+#: theme/gdbbx-forums-welcome.php:10
+msgid "%s new topic"
+msgid_plural "%s new topics"
+msgstr[0] ""
+msgstr[1] ""
+
+#: core/objects/core.icons.php:77
+#: core/objects/core.icons.php:75
+#: modules/attachments/front.php:671
+#: modules/attachments/front.php:669
+msgid "attachment"
+msgid_plural "attachments"
+msgstr[0] ""
+msgstr[1] ""
+
+#: forms/panels/db.php:38
+msgid "%s forum"
+msgid_plural "%s forums"
+msgstr[0] ""
+msgstr[1] ""
+
+#: modules/integrate.php:182
+#: modules/integrate.php:191
+msgid "time"
+msgid_plural "times"
+msgstr[0] ""
+msgstr[1] ""
+
+#: core/admin/internal.php:46
+msgid "These are styles for the plugin widgets. It will be loaded everywhere, not only on bbPress pages, because widgets can be used on any WordPress page."
+msgstr ""
+
+#: core/admin/internal.php:45
+msgid "Own CSS"
+msgstr ""
+
+#: core/admin/internal.php:45
+msgid "Load built in CSS file needed for plugin on the front end."
+msgstr ""
+
+#: core/admin/internal.php:49
+#: core/admin/internal.php:50
+msgid "FontAwesome 4.2 is needed for BBCodes Toolbar."
+msgstr ""
+
+#: core/admin/internal.php:44
+msgid "CSS Files Loading"
+msgstr ""
+
+#: core/admin/internal.php:48
+msgid "FontAwesome Loading"
+msgstr ""
+
+#: core/admin/internal.php:49
+msgid "FontAwesome"
+msgstr ""
+
+#: core/admin/internal.php:46
+msgid "Own Widgets CSS"
+msgstr ""
+
+#: core/admin/internal.php:87
+msgid "Allow Participants to use Media Library"
+msgstr ""
+
+#: core/admin/internal.php:84
+#: core/admin/internal.php:88
+#: core/admin/internal.php:62
+#: core/admin/internal.php:122
+#: core/admin/internal.php:233
+#: core/admin/internal.php:243
+#: core/admin/internal.php:256
+#: core/admin/internal.php:272
+#: core/admin/internal.php:795
+#: core/admin/internal.php:808
+msgid "KB"
+msgstr ""
+
+#: core/admin/internal.php:85
+msgid "Fix the 404 Errors"
+msgstr ""
+
+#: core/admin/internal.php:89
+msgid "If you use TinyMCE editor, Participants can't use Media Library and Add Media button. By enabling this option, you allow Participants to do this. This operation is not reccommended, and you are doing it on your own risk. Check out the Knowledge Base for more information before enabling this option."
+msgstr ""
+
+#: core/admin/internal.php:66
+#: core/admin/internal.php:63
+#: core/admin/internal.php:78
+#: core/admin/internal.php:74
+#: core/admin/internal.php:70
+#: core/admin/internal.php:123
+#: core/admin/internal.php:140
+#: core/admin/internal.php:148
+#: core/admin/internal.php:187
+#: core/admin/internal.php:167
+#: core/admin/internal.php:171
+#: core/admin/internal.php:163
+#: core/admin/internal.php:175
+#: core/admin/internal.php:181
+#: core/admin/internal.php:378
+#: core/admin/internal.php:659
+#: forms/panels/about.php:6
+#: core/grids/reports.php:75
+#: widgets/topicinfo.php:124
+msgid "Status"
+msgstr ""
+
+#: core/admin/internal.php:89
+#: core/admin/internal.php:257
+msgid "Add Media button in TinyMCE"
+msgstr ""
+
+#: core/admin/internal.php:61
+#: core/admin/internal.php:121
+msgid "Activity"
+msgstr ""
+
+#: core/admin/internal.php:57
+msgid "Always Load"
+msgstr ""
+
+#: core/admin/internal.php:57
+msgid "If you use shortcodes to embed forums, and you rely on plugin to add JS and CSS, you also need to enable this option to skip checking for bbPress specific pages."
+msgstr ""
+
+#: core/admin/internal.php:65
+msgid "Topic Views RSS"
+msgstr ""
+
+#: core/admin/internal.php:56
+msgid "Forced load of CSS and JS files"
+msgstr ""
+
+#: core/admin/internal.php:57
+msgid "This option is not needed anymore, but if you still have issues with loaded files, enable it."
+msgstr ""
+
+#: core/admin/install.php:76
+msgid "Some columns are missing."
+msgstr ""
+
+#: core/admin/install.php:81
+msgid "Table missing."
+msgstr ""
+
+#: core/admin/internal.php:36
+msgid "Icons"
+msgstr ""
+
+#: core/admin/internal.php:37
+msgid "For Icons Use"
+msgstr ""
+
+#: core/admin/internal.php:39
+msgid "FitVids for Responsive Videos"
+msgstr ""
+
+#: core/admin/internal.php:40
+msgid "Enable FitVids"
+msgstr ""
+
+#: core/admin/internal.php:40
+msgid "FitVids will be applied to the topic and reply content and it will make YouTube and Vimeo videos responsive."
+msgstr ""
+
+#: core/admin/internal.php:83
+msgid "Status Header 404"
+msgstr ""
+
+#: core/admin/internal.php:74
+#: core/admin/internal.php:78
+#: core/admin/internal.php:66
+#: core/admin/internal.php:70
+msgid "Disable Feed"
+msgstr ""
+
+#: core/admin/internal.php:79
+#: core/admin/internal.php:75
+#: core/admin/internal.php:67
+#: core/admin/internal.php:71
+#: core/admin/internal.php:172
+#: core/admin/internal.php:168
+#: core/admin/internal.php:176
+#: core/admin/internal.php:164
+msgid "Redirect to"
+msgstr ""
+
+#: core/admin/internal.php:69
+msgid "Forums RSS"
+msgstr ""
+
+#: core/admin/internal.php:217
+msgid "Private Topics and Replies"
+msgstr ""
+
+#: core/admin/internal.php:213
+#: core/admin/internal.php:200
+#: core/admin/internal.php:195
+#: core/admin/internal.php:209
+#: core/admin/internal.php:204
+msgid "Replace with Custom Text"
+msgstr ""
+
+#: core/admin/internal.php:211
+#: core/admin/internal.php:202
+msgid "Override Default"
+msgstr ""
+
+#: core/admin/internal.php:215
+#: core/admin/internal.php:197
+#: core/admin/internal.php:206
+msgid "Meta Description Tag"
+msgstr ""
+
+#: core/admin/internal.php:77
+msgid "Replies RSS"
+msgstr ""
+
+#: core/admin/internal.php:145
+msgid "Icon"
+msgstr ""
+
+#: core/admin/internal.php:214
+#: core/admin/internal.php:205
+msgid "Private topic content will be replaced with this text. You can use special tags that will be replaced with actual values"
+msgstr ""
+
+#: core/admin/internal.php:96
+msgid "HTML Maximum Title Length"
+msgstr ""
+
+#: core/admin/internal.php:93
+msgid "This must be enabled to enable use of Quote feature for all user roles. If this is disabled, bbPress will not allow DIV tags in the content, and quote will get messed up."
+msgstr ""
+
+#: core/admin/internal.php:92
+#: core/admin/internal.php:253
+#: core/admin/internal.php:398
+msgid "Allowed tags list"
+msgstr ""
+
+#: core/admin/internal.php:94
+msgid "By default 'class' attribute in IMG tag will be stripped by bbPress from the post content. Enable this to allow 'class' attribute in content."
+msgstr ""
+
+#: core/admin/internal.php:85
+msgid "Due to the WordPress query limitations, user profile and views pages in bbPress return with 404 status."
+msgstr ""
+
+#: core/admin/internal.php:91
+msgid "Expand KSES allowed HTML tags and attributes"
+msgstr ""
+
+#: core/admin/internal.php:94
+msgid "Allow IMG tag class attribute"
+msgstr ""
+
+#: core/admin/internal.php:92
+#: core/admin/internal.php:253
+#: core/admin/internal.php:398
+msgid "By default, only some HTML tags and attributes are allowed when adding HTML in topics or replies. This option allows you to expand list of supported tags and attributes."
+msgstr ""
+
+#: core/admin/internal.php:73
+msgid "Topics RSS"
+msgstr ""
+
+#: core/admin/internal.php:93
+msgid "Allow DIV tag"
+msgstr ""
+
+#: core/admin/internal.php:52
+msgid "JS Files Loading"
+msgstr ""
+
+#: core/admin/internal.php:107
+#: core/admin/internal.php:117
+#: widgets/statistics.php:25
+msgid "Statistics"
+msgstr ""
+
+#: core/admin/internal.php:106
+#: widgets/userprofile.php:33
+msgid "User Profile"
+msgstr ""
+
+#: core/admin/internal.php:106
+msgid "Logged in user profile with useful links and stats."
+msgstr ""
+
+#: core/admin/internal.php:108
+#: widgets/topicinfo.php:32
+msgid "Topic Information"
+msgstr ""
+
+#: core/admin/internal.php:105
+msgid "Plugin Widgets"
+msgstr ""
+
+#: core/admin/internal.php:107
+msgid "Enhanced list of important forum statistics."
+msgstr ""
+
+#: core/admin/internal.php:107
+#: core/admin/internal.php:106
+#: core/admin/internal.php:110
+#: core/admin/internal.php:108
+#: core/admin/internal.php:109
+msgid "Enable Widget"
+msgstr ""
+
+#: core/admin/internal.php:132
+#: core/admin/internal.php:128
+msgid "Label Plural"
+msgstr ""
+
+#: core/admin/internal.php:130
+msgid "Category"
+msgstr ""
+
+#: core/admin/internal.php:135
+msgid "Canned Replies box will auto close when you click to insert reply into editor."
+msgstr ""
+
+#: core/admin/internal.php:115
+#: core/admin/internal.php:110
+msgid "Topics Views List"
+msgstr ""
+
+#: core/admin/internal.php:134
+msgid "Additional Options"
+msgstr ""
+
+#: core/admin/internal.php:135
+msgid "Auto close on insert"
+msgstr ""
+
+#: core/admin/internal.php:113
+#: core/admin/internal.php:114
+#: core/admin/internal.php:117
+#: core/admin/internal.php:115
+#: core/admin/internal.php:116
+msgid "Disable Widget"
+msgstr ""
+
+#: core/admin/internal.php:112
+msgid "Default bbPress Widgets"
+msgstr ""
+
+#: core/admin/internal.php:113
+msgid "Recent Topics"
+msgstr ""
+
+#: core/admin/internal.php:114
+msgid "Recent Replies"
+msgstr ""
+
+#: core/admin/internal.php:114
+#: core/admin/internal.php:113
+msgid "If you use this plugin 'New Posts List' widget, you can disable default one."
+msgstr ""
+
+#: core/admin/internal.php:97
+msgid "Custom Length"
+msgstr ""
+
+#: core/admin/internal.php:97
+msgid "This value is set for title HTML tag through default bbPress filter."
+msgstr ""
+
+#: core/admin/internal.php:98
+msgid "Maximum Length Allowed"
+msgstr ""
+
+#: core/admin/internal.php:100
+msgid "bbPress Breadcrumbs"
+msgstr ""
+
+#: core/admin/internal.php:101
+msgid "Disable Breadcrumbs"
+msgstr ""
+
+#: core/admin/internal.php:101
+msgid "This option will disable default bbPress breadcrumbs."
+msgstr ""
+
+#: core/admin/internal.php:101
+msgid "Disable"
+msgstr ""
+
+#: core/admin/internal.php:127
+#: core/admin/internal.php:131
+msgid "Label Singular"
+msgstr ""
+
+#: core/admin/internal.php:124
+msgid "Use Categories"
+msgstr ""
+
+#: core/admin/internal.php:126
+msgid "Post Type"
+msgstr ""
+
+#: core/admin/internal.php:116
+#: forms/meta/navmenu.extras.php:12
+msgid "Login"
+msgstr ""
+
+#: core/admin/internal.php:124
+msgid "If you plan to add many canned replies, it is a good idea to keep them categorized."
+msgstr ""
+
+#: core/admin/internal.php:53
+msgid "Own JavaScript"
+msgstr ""
+
+#: core/admin/internal.php:50
+msgid "Load from"
+msgstr ""
+
+#: core/admin/internal.php:54
+msgid "Load FitVids library for making YouTube and Vimeo videos responsive."
+msgstr ""
+
+#: core/admin/internal.php:53
+msgid "Load built in JavaScript file needed for plugin on the front end."
+msgstr ""
+
+#: core/admin/internal.php:54
+msgid "FitVids"
+msgstr ""
+
+#: core/admin/internal.php:144
+msgid "This is related to new topics only, not edits."
+msgstr ""
+
+#: core/admin/internal.php:142
+msgid "If anonymous (visitor) creates private topic only administrators and moderators can read the topic."
+msgstr ""
+
+#: core/admin/internal.php:144
+#: core/admin/internal.php:153
+#: core/admin/internal.php:971
+#: forms/meta/forum.php:4
+#: forms/meta/forum.php:13
+msgid "Default"
+msgstr ""
+
+#: core/admin/internal.php:139
+msgid "Private Topics"
+msgstr ""
+
+#: core/admin/internal.php:143
+#: core/admin/internal.php:152
+#: core/admin/internal.php:267
+#: core/admin/internal.php:357
+#: core/admin/internal.php:347
+#: core/admin/internal.php:406
+#: core/admin/internal.php:444
+#: core/admin/internal.php:395
+#: core/admin/internal.php:501
+#: core/admin/internal.php:619
+#: core/admin/internal.php:616
+#: core/admin/internal.php:683
+msgid "Available to roles"
+msgstr ""
+
+#: core/admin/internal.php:141
+#: core/admin/internal.php:150
+#: core/admin/internal.php:265
+#: core/admin/internal.php:356
+#: core/admin/internal.php:346
+#: core/admin/internal.php:404
+#: core/admin/internal.php:442
+#: core/admin/internal.php:394
+#: core/admin/internal.php:500
+#: core/admin/internal.php:682
+#: core/admin/internal.php:688
+msgid "Available to super admin"
+msgstr ""
+
+#: core/admin/internal.php:116
+msgid "If you use this plugin 'User Profile' widget, you can disable default one."
+msgstr ""
+
+#: core/admin/internal.php:115
+msgid "If you use this plugin 'Topics Views List' widget, you can disable default one."
+msgstr ""
+
+#: core/admin/internal.php:117
+msgid "If you use this plugin 'Statistics' widget, you can disable default one."
+msgstr ""
+
+#: core/admin/internal.php:142
+#: core/admin/internal.php:151
+#: core/admin/internal.php:266
+#: core/admin/internal.php:405
+#: core/admin/internal.php:443
+#: core/admin/internal.php:684
+msgid "Available to visitors"
+msgstr ""
+
+#: core/admin/internal.php:212
+#: core/admin/internal.php:203
+msgid "Excerpt Length"
+msgstr ""
+
+#: core/admin/internal.php:157
+#: core/admin/internal.php:180
+#: core/admin/internal.php:573
+msgid "Topic Form"
+msgstr ""
+
+#: core/admin/internal.php:154
+msgid "Hide using CSS/JS"
+msgstr ""
+
+#: core/admin/internal.php:156
+#: core/admin/internal.php:502
+#: core/admin/internal.php:572
+msgid "Form Position"
+msgstr ""
+
+#: core/admin/internal.php:151
+msgid "If anonymous (visitor) creates private reply only administrators and moderators can read the reply."
+msgstr ""
+
+#: core/admin/internal.php:154
+msgid "Hide private reply in the topic thread from users with no access rights using CSS and JavaScript (this might not work with every theme)."
+msgstr ""
+
+#: core/admin/internal.php:190
+#: core/admin/internal.php:184
+msgid "If the form is locked, this message will be displayed instead."
+msgstr ""
+
+#: core/admin/internal.php:188
+#: core/admin/internal.php:182
+msgid "Allowed to super admin"
+msgstr ""
+
+#: core/admin/internal.php:190
+#: core/admin/internal.php:184
+msgid "Lock message"
+msgstr ""
+
+#: core/admin/internal.php:153
+msgid "This is related to new replies only, not edits."
+msgstr ""
+
+#: core/admin/internal.php:189
+#: core/admin/internal.php:183
+msgid "Allowed to roles"
+msgstr ""
+
+#: core/admin/internal.php:171
+msgid "Any user trying to access private forum, and has no rights to do that, will be redirected to custom URL. If this option is disabled, user will see 404 page."
+msgstr ""
+
+#: core/admin/internal.php:168
+#: core/admin/internal.php:172
+#: core/admin/internal.php:176
+#: core/admin/internal.php:164
+msgid "If empty, it will redirect to website home page."
+msgstr ""
+
+#: core/admin/internal.php:166
+msgid "Redirect hidden forums access attempt to custom URL"
+msgstr ""
+
+#: core/admin/internal.php:170
+msgid "Redirect private forums access attempt to custom URL"
+msgstr ""
+
+#: core/admin/internal.php:167
+msgid "Any user trying to access hidden forum, and has no rights to do that, will be redirected to custom URL. If this option is disabled, user will see 404 page."
+msgstr ""
+
+#: core/admin/internal.php:149
+msgid "Threaded Replies"
+msgstr ""
+
+#: core/admin/internal.php:145
+msgid "Show icon in the forum or views topics list"
+msgstr ""
+
+#: core/admin/internal.php:147
+msgid "Private Replies"
+msgstr ""
+
+#: core/admin/internal.php:149
+msgid "If enabled, plugin will support threaded replies. Authort of parent reply will see private replies to his replies. Currently, this works only for direct descendant replies only."
+msgstr ""
+
+#: core/admin/internal.php:186
+#: core/admin/internal.php:158
+#: core/admin/internal.php:574
+msgid "Reply Form"
+msgstr ""
+
+#: core/admin/internal.php:174
+msgid "Redirect blocked users to custom URL"
+msgstr ""
+
+#: core/admin/internal.php:181
+msgid "Topic form (edit or new) will be disabled. Only user roles listed bellow can create or edit topics."
+msgstr ""
+
+#: core/admin/internal.php:819
+#: core/admin/internal.php:350
+#: core/admin/internal.php:801
+#: core/admin/internal.php:796
+#: core/admin/internal.php:813
+#: core/admin/internal.php:824
+#: core/admin/internal.php:885
+#: forms/panels/export.php:3
+#: forms/panels/import.php:1
+#: forms/panels/remove.php:1
+#: forms/panels/close.php:1
+#: forms/panels/wp44_update.php:8
+msgid "Important"
+msgstr ""
+
+#: core/admin/internal.php:816
+msgid "Mark replies in topic thread"
+msgstr ""
+
+#: core/admin/internal.php:814
+msgid "Add icon and link to the first new reply in topic."
+msgstr ""
+
+#: core/admin/internal.php:818
+msgid "New Topics"
+msgstr ""
+
+#: core/admin/internal.php:181
+msgid "Disable Topic Form"
+msgstr ""
+
+#: core/admin/internal.php:816
+msgid "When topic is opened, all new replies will get a 'new reply' badge."
+msgstr ""
+
+#: core/admin/internal.php:200
+#: core/admin/internal.php:195
+#: core/admin/internal.php:209
+msgid "Meta Title"
+msgstr ""
+
+#: core/admin/internal.php:199
+#: core/functions/bbcodes.php:36
+#: modules/bbcodes/toolbar.php:125
+#: modules/toolbar.php:119
+#: theme/gdbbx-dashboard-activity-post.php:7
+msgid "Topic"
+msgstr ""
+
+#: core/admin/internal.php:187
+msgid "Reply form (edit or new) will be disabled. Only user roles listed bellow can create or edit replies."
+msgstr ""
+
+#: core/admin/internal.php:187
+msgid "Disable Reply Form"
+msgstr ""
+
+#: core/admin/internal.php:194
+#: core/grids/attachments.php:54
+#: core/grids/reports.php:77
+#: core/grids/errors.php:55
+#: modules/toolbar.php:113
+#: widgets/topicinfo.php:94
+msgid "Forum"
+msgstr ""
+
+#: core/admin/internal.php:175
+msgid "Any blocked user trying to access forums, will be redirected to custom URL. If this option is disabled, user will see 404 page."
+msgstr ""
+
+#: core/admin/internal.php:196
+#: core/admin/internal.php:210
+#: core/admin/internal.php:201
+#: core/admin/internal.php:289
+#: core/admin/internal.php:313
+#: core/admin/internal.php:288
+#: core/admin/internal.php:326
+#: core/admin/internal.php:319
+#: core/admin/internal.php:337
+#: core/admin/internal.php:320
+#: core/admin/internal.php:325
+#: core/admin/internal.php:314
+#: core/admin/internal.php:386
+#: core/admin/internal.php:385
+#: core/admin/internal.php:338
+#: core/admin/internal.php:331
+#: core/admin/internal.php:332
+msgid "You can use special tags that will be replaced with actual values"
+msgstr ""
+
+#: core/admin/internal.php:162
+msgid "Redirect visitors to custom URL"
+msgstr ""
+
+#: core/admin/internal.php:211
+#: core/admin/internal.php:202
+msgid "Use this only if you want to take private content into account or have extra control, or your SEO plugin has problems with getting proper excerpt."
+msgstr ""
+
+#: core/admin/internal.php:211
+#: core/admin/internal.php:202
+#: core/admin/internal.php:1062
+msgid "Excerpt"
+msgstr ""
+
+#: core/admin/internal.php:208
+#: core/functions/bbcodes.php:37
+#: modules/bbcodes/toolbar.php:126
+#: modules/toolbar.php:125
+#: theme/gdbbx-dashboard-activity-post.php:16
+msgid "Reply"
+msgstr ""
+
+#: core/admin/internal.php:239
+#: core/admin/internal.php:249
+msgid "WPAutoP Filter"
+msgstr ""
+
+#: core/admin/internal.php:236
+#: core/admin/internal.php:246
+msgid "Compact Editor Toolbar"
+msgstr ""
+
+#: core/admin/internal.php:234
+#: core/admin/internal.php:244
+#: core/admin/internal.php:660
+msgid "bbPress Settings"
+msgstr ""
+
+#: core/admin/internal.php:238
+#: core/admin/internal.php:248
+msgid "Quicktags"
+msgstr ""
+
+#: core/admin/internal.php:223
+msgid "Reply Content"
+msgstr ""
+
+#: core/admin/internal.php:237
+#: core/admin/internal.php:247
+msgid "Media Buttons"
+msgstr ""
+
+#: core/admin/internal.php:222
+#: core/admin/internal.php:223
+#: core/admin/internal.php:225
+#: core/admin/internal.php:224
+msgid "Enabled NoFollow"
+msgstr ""
+
+#: core/admin/internal.php:221
+msgid "bbPress NoFollow for Links"
+msgstr ""
+
+#: core/admin/internal.php:218
+#: core/admin/internal.php:219
+msgid "Robots Meta NoIndex"
+msgstr ""
+
+#: core/admin/internal.php:222
+msgid "bbPress modifies all links in topic content and adds (and overrides) 'nofollow' rel attribute."
+msgstr ""
+
+#: core/admin/internal.php:213
+msgid "Private Reply Excerpt"
+msgstr ""
+
+#: core/admin/internal.php:218
+#: core/objects/core.icons.php:27
+#: core/objects/core.icons.php:29
+msgid "Private Topic"
+msgstr ""
+
+#: core/admin/internal.php:222
+msgid "Topic Content"
+msgstr ""
+
+#: core/admin/internal.php:219
+msgid "Private Reply"
+msgstr ""
+
+#: core/admin/internal.php:204
+msgid "Private Topics Excerpt"
+msgstr ""
+
+#: core/admin/internal.php:234
+#: core/admin/internal.php:244
+msgid "Enable Enhancements"
+msgstr ""
+
+#: core/admin/internal.php:234
+#: core/admin/internal.php:244
+msgid "For this to work, Fancy Editor must be enabled in bbPress settings. To enable it, enable settings under Post Formatting in the bbPress Forum settings:"
+msgstr ""
+
+#: core/admin/internal.php:232
+msgid "Topic Editor"
+msgstr ""
+
+#: core/admin/internal.php:224
+msgid "Topic Author Link"
+msgstr ""
+
+#: core/admin/internal.php:227
+msgid "Rich Snippets"
+msgstr ""
+
+#: core/admin/internal.php:163
+msgid "If non-logged user (or visitor) attempts to access any forum page, it will be redirected to custom URL or home page."
+msgstr ""
+
+#: core/admin/internal.php:228
+msgid "Breadcrumbs"
+msgstr ""
+
+#: core/admin/internal.php:228
+msgid "This option will modify bbPress generated breadcrumbs to make them Google Rich Snippet compatible. This will work only if you have not modified bbPress breadcrumbs in some other way. Also, make sure breadcrumbs are enabled (this plugin has option to disable the breadcrumbs)."
+msgstr ""
+
+#: core/admin/internal.php:163
+msgid "Redirect non-logged visitors"
+msgstr ""
+
+#: core/admin/internal.php:245
+#: core/admin/internal.php:235
+msgid "TinyMCE Editor"
+msgstr ""
+
+#: core/admin/internal.php:245
+#: core/admin/internal.php:235
+msgid "Full rich text editor."
+msgstr ""
+
+#: core/admin/internal.php:240
+#: core/admin/internal.php:250
+msgid "Editor rows"
+msgstr ""
+
+#: core/admin/internal.php:242
+msgid "Reply Editor"
+msgstr ""
+
+#: core/admin/internal.php:225
+msgid "bbPress modifies reply author links and adds (and overrides) 'nofollow' rel attribute."
+msgstr ""
+
+#: core/admin/internal.php:224
+msgid "bbPress modifies topic author links and adds (and overrides) 'nofollow' rel attribute."
+msgstr ""
+
+#: core/admin/internal.php:223
+msgid "bbPress modifies all links in reply content and adds (and overrides) 'nofollow' rel attribute."
+msgstr ""
+
+#: core/admin/internal.php:225
+msgid "Reply Author Link"
+msgstr ""
+
+#: core/admin/internal.php:257
+msgid "If you use TinyMCE editor, Participants and Moderators can't use Media Library and Add Media button. By enabling this option, you allow Participants and Moderators to do this. This operation is not reccommended, and you are doing it on your own risk. Check out the Knowledge Base for more information before enabling this option."
+msgstr ""
+
+#: core/admin/internal.php:282
+#: core/admin/internal.php:351
+msgid "Super admin"
+msgstr ""
+
+#: core/admin/internal.php:301
+msgid "Plugin will add new block with checkboxes to send notifications to reply author and/or topic subscribers when the reply was edited."
+msgstr ""
+
+#: core/admin/internal.php:263
+msgid "Available to author"
+msgstr ""
+
+#: core/admin/internal.php:261
+msgid "Topic and Reply Revisions"
+msgstr ""
+
+#: core/admin/internal.php:303
+msgid "Notifications Sender"
+msgstr ""
+
+#: core/admin/internal.php:300
+msgid "Notify on Reply edit"
+msgstr ""
+
+#: core/admin/internal.php:305
+msgid "Sender name"
+msgstr ""
+
+#: core/admin/internal.php:313
+#: core/admin/internal.php:288
+#: core/admin/internal.php:325
+#: core/admin/internal.php:337
+#: core/admin/internal.php:319
+#: core/admin/internal.php:385
+#: core/admin/internal.php:331
+msgid "Notification content"
+msgstr ""
+
+#: core/admin/internal.php:298
+msgid "Plugin will add new block with checkboxes to send notifications to topic author and/or subscribers when the topic was edited."
+msgstr ""
+
+#: core/admin/internal.php:304
+msgid "Modify notification sender"
+msgstr ""
+
+#: core/admin/internal.php:301
+#: core/admin/internal.php:298
+msgid "Include in edit form"
+msgstr ""
+
+#: core/admin/internal.php:277
+msgid "Available for Topics"
+msgstr ""
+
+#: core/admin/internal.php:252
+#: core/admin/internal.php:397
+msgid "HTML Tags and Attributes allowed"
+msgstr ""
+
+#: core/admin/internal.php:276
+msgid "Allow thanks removal"
+msgstr ""
+
+#: core/admin/internal.php:281
+msgid "Available for roles"
+msgstr ""
+
+#: core/admin/internal.php:278
+msgid "Available for Replies"
+msgstr ""
+
+#: core/admin/internal.php:275
+msgid "Controls"
+msgstr ""
+
+#: core/admin/internal.php:255
+msgid "Allow Participants and Moderators to use Media Library"
+msgstr ""
+
+#: core/admin/internal.php:262
+msgid "Protection"
+msgstr ""
+
+#: core/admin/internal.php:262
+#: core/admin/internal.php:498
+msgid "If this is enabled, only users and roles enabled here will be able to see revisions. Revisions will be hidden for everyone else."
+msgstr ""
+
+#: core/admin/internal.php:293
+msgid "Notify when new topic is added"
+msgstr ""
+
+#: core/admin/internal.php:294
+msgid "Notify Keymasters"
+msgstr ""
+
+#: core/admin/internal.php:373
+msgid "Display Control"
+msgstr ""
+
+#: core/admin/internal.php:295
+msgid "When a new topic is added, moderators will be notified."
+msgstr ""
+
+#: core/admin/internal.php:297
+msgid "Notify on Topic edit"
+msgstr ""
+
+#: core/admin/internal.php:294
+msgid "When a new topic is added, keymasters will be notified."
+msgstr ""
+
+#: core/admin/internal.php:451
+msgid "Show thanks given count"
+msgstr ""
+
+#: core/admin/internal.php:448
+msgid "Show registration date"
+msgstr ""
+
+#: core/admin/internal.php:449
+msgid "Show topics count"
+msgstr ""
+
+#: core/admin/internal.php:457
+#: core/admin/internal.php:464
+msgid "Load for Forum index"
+msgstr ""
+
+#: core/admin/internal.php:447
+msgid "Only if online status tracking is enabled."
+msgstr ""
+
+#: core/admin/internal.php:452
+msgid "Show thanks received count"
+msgstr ""
+
+#: core/admin/internal.php:456
+msgid "User welcome overview"
+msgstr ""
+
+#: core/admin/internal.php:450
+#: forms/widgets/topicinfo-content.php:31
+msgid "Show replies count"
+msgstr ""
+
+#: core/admin/internal.php:310
+msgid "Topic Subscribe Notifications Email"
+msgstr ""
+
+#: core/admin/internal.php:311
+#: core/admin/internal.php:323
+#: core/admin/internal.php:335
+#: core/admin/internal.php:317
+#: core/admin/internal.php:329
+msgid "Modify notification content"
+msgstr ""
+
+#: core/admin/internal.php:287
+#: core/admin/internal.php:312
+#: core/admin/internal.php:324
+#: core/admin/internal.php:336
+#: core/admin/internal.php:318
+#: core/admin/internal.php:384
+#: core/admin/internal.php:330
+msgid "Process shortcodes"
+msgstr ""
+
+#: core/admin/internal.php:306
+msgid "Sender email"
+msgstr ""
+
+#: core/admin/internal.php:314
+#: core/admin/internal.php:289
+#: core/admin/internal.php:320
+#: core/admin/internal.php:326
+#: core/admin/internal.php:386
+#: core/admin/internal.php:332
+#: core/admin/internal.php:338
+msgid "Notification subject"
+msgstr ""
+
+#: core/admin/internal.php:286
+#: core/admin/internal.php:381
+msgid "Send"
+msgstr ""
+
+#: core/admin/internal.php:295
+msgid "Notify Moderators"
+msgstr ""
+
+#: core/admin/internal.php:285
+#: core/admin/internal.php:380
+#: forms/settings.php:39
+#: forms/settings.php:38
+msgid "Notifications"
+msgstr ""
+
+#: core/admin/internal.php:286
+msgid "Send notification to topic or reply authors when they get new thanks."
+msgstr ""
+
+#: core/admin/internal.php:283
+#: core/admin/internal.php:352
+#: core/admin/internal.php:371
+msgid "Roles"
+msgstr ""
+
+#: core/admin/internal.php:279
+msgid "Select where the thanks button will be displayed."
+msgstr ""
+
+#: core/admin/internal.php:343
+#: core/admin/internal.php:355
+#: core/admin/internal.php:369
+#: core/admin/internal.php:403
+#: core/admin/internal.php:441
+#: core/admin/internal.php:391
+#: core/admin/internal.php:565
+#: core/admin/internal.php:593
+#: core/admin/internal.php:704
+#: core/admin/internal.php:709
+#: core/admin/internal.php:714
+#: core/admin/internal.php:719
+#: core/admin/internal.php:726
+#: core/admin/internal.php:731
+#: core/admin/internal.php:736
+#: core/admin/internal.php:751
+#: core/admin/internal.php:741
+#: core/admin/internal.php:746
+#: core/admin/internal.php:766
+#: core/admin/internal.php:756
+#: core/admin/internal.php:761
+#: core/admin/internal.php:773
+#: core/admin/internal.php:783
+#: core/admin/internal.php:788
+#: core/admin/internal.php:778
+#: core/admin/internal.php:809
+#: core/admin/internal.php:838
+#: core/admin/internal.php:831
+#: core/admin/internal.php:860
+#: core/grids/users.php:58
+msgid "Active"
+msgstr ""
+
+#: core/admin/internal.php:362
+msgid "Convert Smilies"
+msgstr ""
+
+#: core/admin/internal.php:322
+msgid "Topic Edit Notify Subscribers"
+msgstr ""
+
+#: core/admin/internal.php:362
+msgid "Convert smilies characters into inline images."
+msgstr ""
+
+#: core/admin/internal.php:359
+msgid "Editor Type"
+msgstr ""
+
+#: core/admin/internal.php:363
+msgid "Run standard WordPress unicode chars conversion and cleanup."
+msgstr ""
+
+#: core/admin/internal.php:370
+msgid "Mode"
+msgstr ""
+
+#: core/admin/internal.php:358
+msgid "Make sure to read <a href='%s' target='_blank'>this article</a> before configuring this option to understand limitations related to frontend signature editing."
+msgstr ""
+
+#: core/admin/internal.php:363
+msgid "Convert Chars"
+msgstr ""
+
+#: core/admin/internal.php:361
+msgid "Display Processing"
+msgstr ""
+
+#: core/admin/internal.php:358
+msgid "If the editor type is set to TinyMCE, HTML will be allowed regardless of this option."
+msgstr ""
+
+#: core/admin/internal.php:342
+msgid "User Signatures"
+msgstr ""
+
+#: core/admin/internal.php:316
+msgid "Forum Subscribe Notifications Email"
+msgstr ""
+
+#: core/admin/internal.php:354
+msgid "Enhanced Signatures"
+msgstr ""
+
+#: core/admin/internal.php:358
+msgid "Allowed Content"
+msgstr ""
+
+#: core/admin/internal.php:271
+msgid "Activation"
+msgstr ""
+
+#: core/admin/internal.php:273
+#: forms/modules.php:13
+msgid "Say Thanks"
+msgstr ""
+
+#: core/admin/internal.php:279
+#: core/admin/internal.php:374
+#: core/admin/internal.php:392
+#: core/admin/internal.php:512
+#: core/admin/internal.php:521
+msgid "Button Location"
+msgstr ""
+
+#: core/admin/internal.php:264
+#: core/admin/internal.php:499
+msgid "If the post is reply, this will take into account author of the topic too."
+msgstr ""
+
+#: core/admin/internal.php:264
+#: core/admin/internal.php:499
+msgid "Available to topic author"
+msgstr ""
+
+#: core/admin/internal.php:364
+msgid "Run standard WordPress AutoP function."
+msgstr ""
+
+#: core/admin/internal.php:368
+msgid "Reporting Basics"
+msgstr ""
+
+#: core/admin/internal.php:364
+msgid "Convert AutoP"
+msgstr ""
+
+#: core/admin/internal.php:371
+msgid "Only users with selected roles can post reports."
+msgstr ""
+
+#: core/admin/internal.php:349
+msgid "Signatures Editing"
+msgstr ""
+
+#: core/admin/internal.php:345
+msgid "Maximum Length"
+msgstr ""
+
+#: core/admin/internal.php:350
+msgid "You can limit ability to edit the signatures to selected roles. That way, signatures will be enabled, but only some users will be able to edit them. You can set only for admins to be able to set signatures for other users."
+msgstr ""
+
+#: core/admin/internal.php:344
+msgid "Use JavaScript to show signature length and limit. This will not work if the TinyMCE editor is used for signatures."
+msgstr ""
+
+#: core/admin/internal.php:344
+msgid "Limit Counter"
+msgstr ""
+
+#: core/admin/internal.php:461
+msgid "Show important links for a user"
+msgstr ""
+
+#: core/admin/internal.php:383
+msgid "Send to Moderators"
+msgstr ""
+
+#: core/admin/internal.php:382
+msgid "Send to Keymasters"
+msgstr ""
+
+#: core/admin/internal.php:426
+msgid "Dashboard Widgets"
+msgstr ""
+
+#: core/admin/internal.php:423
+#: core/admin/internal.php:419
+msgid "Column with number of attachments."
+msgstr ""
+
+#: core/admin/internal.php:424
+msgid "Private reply column"
+msgstr ""
+
+#: core/admin/internal.php:427
+#: core/admin/internal.php:428
+msgid "Add Widget"
+msgstr ""
+
+#: core/admin/internal.php:423
+#: core/admin/internal.php:419
+msgid "Attachments count column"
+msgstr ""
+
+#: core/admin/internal.php:427
+msgid "Online Users widget"
+msgstr ""
+
+#: core/admin/internal.php:427
+msgid "This will add Online Users dashboard widget."
+msgstr ""
+
+#: core/admin/internal.php:424
+#: core/admin/internal.php:420
+msgid "Column with privacy status."
+msgstr ""
+
+#: core/admin/internal.php:398
+msgid "It is recommended to switch this option to second or third option for quotes to work with complex content."
+msgstr ""
+
+#: core/admin/internal.php:378
+msgid "For each reported topic or reply show the notice that it is reported."
+msgstr ""
+
+#: core/admin/internal.php:375
+msgid "Scroll to Form"
+msgstr ""
+
+#: core/admin/internal.php:374
+msgid "Select where the report button will be displayed."
+msgstr ""
+
+#: core/admin/internal.php:377
+msgid "Display Report Information"
+msgstr ""
+
+#: core/admin/internal.php:416
+msgid "Column with the user last activity date and time."
+msgstr ""
+
+#: core/admin/internal.php:418
+msgid "Topics Panel"
+msgstr ""
+
+#: core/admin/internal.php:420
+msgid "Private topic column"
+msgstr ""
+
+#: core/admin/internal.php:422
+msgid "Replies Panel"
+msgstr ""
+
+#: core/admin/internal.php:108
+msgid "Show information about the topic currently displayed."
+msgstr ""
+
+#: core/admin/internal.php:109
+msgid "New posts List"
+msgstr ""
+
+#: core/admin/internal.php:109
+msgid "List of new topics or topics with new replies."
+msgstr ""
+
+#: core/admin/internal.php:110
+msgid "Selectable list of topics views."
+msgstr ""
+
+#: core/admin/internal.php:428
+msgid "Latest Activity widget"
+msgstr ""
+
+#: core/admin/internal.php:428
+msgid "This will add Latest Activity dashboard widget that includes recent topics and replies."
+msgstr ""
+
+#: core/admin/internal.php:429
+msgid "Right now in Forums widget"
+msgstr ""
+
+#: core/admin/internal.php:429
+msgid "This will remove bbPress default 'Right now in the forums' dashboard widget."
+msgstr ""
+
+#: core/admin/internal.php:429
+msgid "Remove Widget"
+msgstr ""
+
+#: core/admin/internal.php:431
+msgid "Navigation Menus"
+msgstr ""
+
+#: core/admin/internal.php:414
+msgid "Users Panel"
+msgstr ""
+
+#: core/admin/internal.php:408
+msgid "Additional Settings"
+msgstr ""
+
+#: core/admin/internal.php:409
+msgid "Menu Title"
+msgstr ""
+
+#: core/admin/internal.php:416
+msgid "Last activity column"
+msgstr ""
+
+#: core/admin/internal.php:415
+msgid "Topics/Replies columns"
+msgstr ""
+
+#: core/admin/internal.php:415
+msgid "Two columns for topics and replies with counts and links to filter them by user."
+msgstr ""
+
+#: core/admin/internal.php:410
+msgid "Information Submenu"
+msgstr ""
+
+#: core/admin/internal.php:402
+msgid "Toolbar Control"
+msgstr ""
+
+#: core/admin/internal.php:464
+#: core/admin/internal.php:457
+msgid "Main forums index, underneath the list of forums, will show the basic forums statistics."
+msgstr ""
+
+#: core/admin/internal.php:440
+msgid "Show User Statistics with each Topic and Reply"
+msgstr ""
+
+#: core/admin/internal.php:446
+msgid "Choose what to show"
+msgstr ""
+
+#: core/admin/internal.php:447
+msgid "Show online status"
+msgstr ""
+
+#: core/admin/internal.php:485
+msgid "Save Topic - Title and Content length"
+msgstr ""
+
+#: core/admin/internal.php:479
+msgid "Show statistics block"
+msgstr ""
+
+#: core/admin/internal.php:480
+msgid "Show totals counts"
+msgstr ""
+
+#: core/admin/internal.php:486
+#: core/admin/internal.php:529
+msgid "Set value to zero to ignore it."
+msgstr ""
+
+#: core/admin/internal.php:478
+msgid "Statistics Block"
+msgstr ""
+
+#: core/admin/internal.php:486
+#: core/admin/internal.php:529
+msgid "Length control"
+msgstr ""
+
+#: core/admin/internal.php:486
+msgid "When new topic is saved, minimal and maximal length for title and content will be enforced."
+msgstr ""
+
+#: core/admin/internal.php:481
+msgid "Show newest user"
+msgstr ""
+
+#: core/admin/internal.php:458
+#: core/admin/internal.php:465
+msgid "Location"
+msgstr ""
+
+#: core/admin/internal.php:459
+#: core/admin/internal.php:466
+msgid "Show to roles"
+msgstr ""
+
+#: core/admin/internal.php:435
+msgid "Tools Panels"
+msgstr ""
+
+#: core/admin/internal.php:463
+msgid "Forums statistics overview"
+msgstr ""
+
+#: core/admin/internal.php:460
+msgid "Welcome Back Block"
+msgstr ""
+
+#: core/admin/internal.php:436
+#: forms/update.php:43
+msgid "WordPress 4.4 Update"
+msgstr ""
+
+#: core/admin/internal.php:433
+msgid "Views Metabox"
+msgstr ""
+
+#: core/admin/internal.php:436
+msgid "Hide this Panel"
+msgstr ""
+
+#: core/admin/internal.php:432
+msgid "Show metabox with extra items to add to Nav Menu related to bbPress."
+msgstr ""
+
+#: core/admin/internal.php:436
+msgid "If you used this tool once, it will be automatically hidden. Uncheck this option to show the panel again."
+msgstr ""
+
+#: core/admin/internal.php:433
+msgid "Show metabox with views to add to Nav Menu related to bbPress."
+msgstr ""
+
+#: core/admin/internal.php:432
+msgid "Extras Metabox"
+msgstr ""
+
+#: core/admin/internal.php:473
+msgid "Show users color coded"
+msgstr ""
+
+#: core/admin/internal.php:473
+msgid "Each user will be displayed with different color according to user role."
+msgstr ""
+
+#: core/admin/internal.php:474
+msgid "Show users avatars"
+msgstr ""
+
+#: core/admin/internal.php:475
+msgid "Show users linked"
+msgstr ""
+
+#: core/admin/internal.php:476
+msgid "Limit displayed users"
+msgstr ""
+
+#: core/admin/internal.php:476
+msgid "Showing long list of users can be performance intensive."
+msgstr ""
+
+#: core/admin/internal.php:477
+msgid "Show colors legend"
+msgstr ""
+
+#: core/admin/internal.php:393
+msgid "Quote Method"
+msgstr ""
+
+#: core/admin/internal.php:390
+msgid "Quote Topics and Replies"
+msgstr ""
+
+#: core/admin/internal.php:393
+msgid "If you want to use BBCode method, you need to enable BBCodes support also."
+msgstr ""
+
+#: core/admin/internal.php:392
+msgid "Select where the quote button will be displayed."
+msgstr ""
+
+#: core/admin/internal.php:487
+#: core/admin/internal.php:530
+msgid "Min Title Length"
+msgstr ""
+
+#: core/admin/internal.php:488
+#: core/admin/internal.php:531
+msgid "Max Title Length"
+msgstr ""
+
+#: core/admin/internal.php:489
+#: core/admin/internal.php:532
+msgid "Min Content Length"
+msgstr ""
+
+#: core/admin/internal.php:490
+#: core/admin/internal.php:533
+msgid "Max Content Length"
+msgstr ""
+
+#: core/admin/internal.php:492
+msgid "Topic Actions"
+msgstr ""
+
+#: core/admin/internal.php:493
+msgid "Action Link: Merge"
+msgstr ""
+
+#: core/admin/internal.php:493
+msgid "Remove 'Merge' link from the list of topic action links."
+msgstr ""
+
+#: core/admin/internal.php:469
+msgid "Show active users block"
+msgstr ""
+
+#: core/admin/internal.php:467
+msgid "Show to visitors"
+msgstr ""
+
+#: core/admin/internal.php:472
+msgid "Show active users"
+msgstr ""
+
+#: core/admin/internal.php:470
+msgid "Show online users overview"
+msgstr ""
+
+#: core/admin/internal.php:471
+msgid "Show most online users"
+msgstr ""
+
+#: core/admin/internal.php:468
+msgid "Users Block"
+msgstr ""
+
+#: core/admin/internal.php:494
+#: core/admin/internal.php:537
+msgid "Move 'Edit' link into footer action links area."
+msgstr ""
+
+#: core/admin/internal.php:497
+msgid "Close topic checkbox in reply form"
+msgstr ""
+
+#: core/admin/internal.php:494
+#: core/admin/internal.php:537
+msgid "Action Link: Edit"
+msgstr ""
+
+#: core/admin/internal.php:495
+#: core/admin/internal.php:494
+#: core/admin/internal.php:537
+#: core/admin/internal.php:538
+msgid "Link in Footer"
+msgstr ""
+
+#: core/admin/internal.php:493
+#: core/admin/internal.php:536
+msgid "Remove Link"
+msgstr ""
+
+#: core/admin/internal.php:515
+msgid "Logged in user replied in topic"
+msgstr ""
+
+#: core/admin/internal.php:498
+msgid "Show checkbox"
+msgstr ""
+
+#: core/admin/internal.php:505
+msgid "Show main thread topic on top separated from replies."
+msgstr ""
+
+#: core/admin/internal.php:510
+msgid "Button for Topic Lock"
+msgstr ""
+
+#: core/admin/internal.php:514
+msgid "Topic List Icons/Marks"
+msgstr ""
+
+#: core/admin/internal.php:505
+msgid "Display Lead Topic"
+msgstr ""
+
+#: core/admin/internal.php:508
+#: core/admin/internal.php:546
+msgid "Disable Mention filter"
+msgstr ""
+
+#: core/admin/internal.php:506
+msgid "Reversed replies Order"
+msgstr ""
+
+#: core/admin/internal.php:504
+#: core/admin/internal.php:543
+msgid "Various Settings"
+msgstr ""
+
+#: core/admin/internal.php:515
+msgid "Reply Mark"
+msgstr ""
+
+#: core/admin/internal.php:495
+#: core/admin/internal.php:538
+msgid "Action Link: Reply"
+msgstr ""
+
+#: core/admin/internal.php:495
+#: core/admin/internal.php:538
+msgid "Move 'Reply' link into footer action links area."
+msgstr ""
+
+#: core/admin/internal.php:511
+msgid "This option will allow you to temporarily lock topics for new replies. Only keymasters and moderators can use this option."
+msgstr ""
+
+#: core/admin/internal.php:515
+msgid "In the topics list, mark topics where current user replies at least once."
+msgstr ""
+
+#: core/admin/internal.php:512
+msgid "Select where the lock button will be displayed."
+msgstr ""
+
+#: core/admin/internal.php:511
+msgid "Show Lock Button"
+msgstr ""
+
+#: core/admin/internal.php:516
+msgid "In the topics list, mark topics that are set as stick or front stick."
+msgstr ""
+
+#: core/admin/internal.php:516
+msgid "Topic is sticked, or front sticked"
+msgstr ""
+
+#: core/admin/internal.php:520
+msgid "Duplicate Topic Only"
+msgstr ""
+
+#: core/admin/internal.php:516
+msgid "Stick Mark"
+msgstr ""
+
+#: core/admin/internal.php:517
+msgid "Topic is temporarily locked"
+msgstr ""
+
+#: core/admin/internal.php:519
+msgid "Topic Duplication"
+msgstr ""
+
+#: core/admin/internal.php:517
+msgid "Lock Mark"
+msgstr ""
+
+#: core/admin/internal.php:524
+msgid "Show Thumbnail"
+msgstr ""
+
+#: core/admin/internal.php:521
+msgid "Select where the Duplicate Topic button will be displayed."
+msgstr ""
+
+#: core/admin/internal.php:606
+#: forms/settings.php:10
+msgid "Basic Settings"
+msgstr ""
+
+#: core/admin/internal.php:520
+msgid "This will make a new topic with content of the old topic."
+msgstr ""
+
+#: core/admin/internal.php:524
+msgid "If there is a thumbnail (featured image) set for topic, or plugin can find image in topic content, it will display the thumbnail before topic title in the topics list."
+msgstr ""
+
+#: core/admin/internal.php:528
+msgid "Save Reply - Title and Content length"
+msgstr ""
+
+#: core/admin/internal.php:523
+msgid "Forum Topics List"
+msgstr ""
+
+#: core/admin/internal.php:529
+msgid "When new reply is saved, minimal and maximal length for title and content will be enforced."
+msgstr ""
+
+#: core/admin/internal.php:535
+msgid "Reply Actions"
+msgstr ""
+
+#: core/admin/internal.php:536
+msgid "Remove 'Split' link from the list of topic action links."
+msgstr ""
+
+#: core/admin/internal.php:517
+msgid "In the topics list, mark topics that are temporarily locked."
+msgstr ""
+
+#: core/admin/internal.php:536
+msgid "Action Link: Split"
+msgstr ""
+
+#: core/admin/internal.php:507
+#: core/admin/internal.php:545
+msgid "Disable Make Clickable filter"
+msgstr ""
+
+#: core/admin/internal.php:540
+msgid "Topic tags in reply form"
+msgstr ""
+
+#: core/admin/internal.php:544
+msgid "By default, replies don't have titles. But, with this option, reply editor will have an extra field to set the reply title."
+msgstr ""
+
+#: core/admin/internal.php:551
+msgid "Extensions (Vertical pipe separated)"
+msgstr ""
+
+#: core/admin/internal.php:544
+msgid "Reply Titles"
+msgstr ""
+
+#: core/admin/internal.php:541
+msgid "Only for topic author"
+msgstr ""
+
+#: core/admin/internal.php:551
+msgid "MIME Type"
+msgstr ""
+
+#: core/admin/internal.php:550
+msgid "Additional MIME Types"
+msgstr ""
+
+#: core/admin/internal.php:592
+msgid "Show as Thumbnails"
+msgstr ""
+
+#: core/admin/internal.php:551
+msgid "Add New MIME Type"
+msgstr ""
+
+#: core/admin/internal.php:551
+msgid "MIME Types"
+msgstr ""
+
+#: core/admin/internal.php:556
+msgid "Filter by MIME Type"
+msgstr ""
+
+#: core/admin/internal.php:560
+msgid "Allowed MIME Types"
+msgstr ""
+
+#: core/admin/internal.php:567
+msgid "Visible to moderators"
+msgstr ""
+
+#: core/admin/internal.php:555
+msgid "Basic Control"
+msgstr ""
+
+#: core/admin/internal.php:559
+msgid "MIME Types allowed to upload"
+msgstr ""
+
+#: core/admin/internal.php:556
+msgid "If this option is active, only MIME Types selected bellow will be allowed to upload."
+msgstr ""
+
+#: core/admin/internal.php:551
+#: core/admin.php:595
+#: forms/tools.php:28
+msgid "Remove"
+msgstr ""
+
+#: core/admin/internal.php:568
+msgid "Visible to author"
+msgstr ""
+
+#: core/admin/internal.php:541
+msgid "Reply form contains topic tags box, and any one replying can change the tags assigned. If enabled, this option will show this field only for topic author."
+msgstr ""
+
+#: core/admin/internal.php:564
+msgid "Errors Logging"
+msgstr ""
+
+#: core/admin/internal.php:566
+msgid "Visible to administrators"
+msgstr ""
+
+#: core/admin/internal.php:560
+msgid "List shows extensions allowed by WordPress, and if you hover over the extensions names you will see which MIME type they belong to."
+msgstr ""
+
+#: core/admin/internal.php:576
+msgid "Files List"
+msgstr ""
+
+#: core/admin/internal.php:577
+msgid "Embed Position"
+msgstr ""
+
+#: core/admin/internal.php:580
+msgid "Download Attribute"
+msgstr ""
+
+#: core/admin/internal.php:579
+msgid "Link opens blank page"
+msgstr ""
+
+#: core/admin/internal.php:579
+msgid "All displayed attachments links will lead to open blank page to display attachment (for images or documents)."
+msgstr ""
+
+#: core/admin/internal.php:578
+msgid "Hide attachements from visitors"
+msgstr ""
+
+#: core/admin/internal.php:586
+msgid "Auto generate featured image"
+msgstr ""
+
+#: core/admin/internal.php:582
+msgid "Attachment Icons"
+msgstr ""
+
+#: core/admin/internal.php:583
+msgid "Attachment Icon"
+msgstr ""
+
+#: core/admin/internal.php:506
+msgid "When displayling topic, replies will be reversed, and on top you will see latest reply. If the Lead topic is enabled, topic post will remain on the top, if not, topic post will be the last."
+msgstr ""
+
+#: core/admin/internal.php:580
+msgid "Each link will have download attribute set, and for supported browser will force click on the link to download the file."
+msgstr ""
+
+#: core/admin/internal.php:587
+msgid "For Topic"
+msgstr ""
+
+#: core/admin/internal.php:587
+msgid "First image uploaded to topic, will be set as featured (if topic has no featured image set already)."
+msgstr ""
+
+#: core/admin/internal.php:584
+msgid "File Type Icons"
+msgstr ""
+
+#: core/admin/internal.php:588
+msgid "For Reply"
+msgstr ""
+
+#: core/admin/internal.php:588
+msgid "First image uploaded to reply, will be set as featured (if reply has no featured image set already)."
+msgstr ""
+
+#: core/admin/internal.php:596
+msgid "Thumbnails Size"
+msgstr ""
+
+#: core/admin/internal.php:587
+#: core/admin/internal.php:588
+msgid "For this to work, theme must have Post Thumbnails support."
+msgstr ""
+
+#: core/admin/internal.php:595
+msgid "Display control"
+msgstr ""
+
+#: core/admin/internal.php:601
+msgid "CSS class"
+msgstr ""
+
+#: core/admin/internal.php:597
+msgid "With caption"
+msgstr ""
+
+#: core/admin/internal.php:598
+msgid "In line"
+msgstr ""
+
+#: core/admin/internal.php:578
+msgid "If enabled, only logged in users will be able to see attachments list."
+msgstr ""
+
+#: core/admin/internal.php:596
+msgid "Changing thumbnails size affects only new image attachments. To use new size for old attachments, resize them using Regenerate Thumbnails plugin."
+msgstr ""
+
+#: core/admin/internal.php:602
+msgid "REL attribute"
+msgstr ""
+
+#: core/admin/internal.php:602
+msgid "You can use these tags"
+msgstr ""
+
+#: core/admin/internal.php:600
+msgid "Thumbnail attributes"
+msgstr ""
+
+#: core/admin/internal.php:687
+msgid "Restricted Codes"
+msgstr ""
+
+#: core/admin/internal.php:608
+msgid "Enhanced Interface"
+msgstr ""
+
+#: core/admin/internal.php:608
+msgid "Enables validation of attachments added by user: size and file type allowed, and will not allow form to submit if validation fails. Uploaded file (image) preview and validation works only with modern browsers with HTML5 support."
+msgstr ""
+
+#: core/admin/internal.php:614
+msgid "Maximum file size"
+msgstr ""
+
+#: core/admin/internal.php:607
+msgid "Attachments active"
+msgstr ""
+
+#: core/admin/internal.php:611
+msgid "With this option, plugin will show button for inserting file shortcode insertion option for each valid attachment."
+msgstr ""
+
+#: core/admin/internal.php:613
+msgid "Default Limits"
+msgstr ""
+
+#: core/admin/internal.php:610
+msgid "Attachment Form"
+msgstr ""
+
+#: core/admin/internal.php:618
+msgid "No Limits Upload"
+msgstr ""
+
+#: core/admin/internal.php:614
+#: core/admin/internal.php:619
+msgid "Current server configuration allows maximum file size of <strong>%s KB</strong>."
+msgstr ""
+
+#: core/admin/internal.php:615
+#: forms/meta/forum.attachments.php:29
+msgid "Maximum files to upload"
+msgstr ""
+
+#: core/admin/internal.php:641
+msgid "Content: Normal"
+msgstr ""
+
+#: core/admin/internal.php:614
+msgid "Size set in KB."
+msgstr ""
+
+#: core/admin/internal.php:619
+msgid "Users with these roles will be able to upload files regardless of the limits. These users will be able to upload files of any size and any number of files and any file type allowed by the system."
+msgstr ""
+
+#: core/admin/internal.php:623
+msgid "Attachments deletion"
+msgstr ""
+
+#: core/admin/internal.php:624
+msgid "Method"
+msgstr ""
+
+#: core/admin/internal.php:629
+msgid "Deletion of Attachments"
+msgstr ""
+
+#: core/admin/internal.php:627
+msgid "Action"
+msgstr ""
+
+#: core/admin/internal.php:627
+msgid "This control what happens to attachments once the topic or reply with attachments is deleted."
+msgstr ""
+
+#: core/admin/internal.php:624
+msgid "This will control how the options to delete attachments are presented."
+msgstr ""
+
+#: core/admin/internal.php:637
+msgid "Color Theme"
+msgstr ""
+
+#: core/admin/internal.php:631
+msgid "Moderators"
+msgstr ""
+
+#: core/admin/internal.php:632
+#: widgets/topicinfo.php:101
+msgid "Author"
+msgstr ""
+
+#: core/admin/internal.php:611
+msgid "Button: Insert into content"
+msgstr ""
+
+#: core/admin/internal.php:630
+msgid "Administrators"
+msgstr ""
+
+#: core/admin/internal.php:639
+#: core/functions/bbcodes.php:35
+#: modules/bbcodes/toolbar.php:124
+#: modules/bbcodes/load.php:245
+msgid "Hide"
+msgstr ""
+
+#: core/admin/internal.php:640
+#: core/admin/internal.php:705
+#: core/admin/internal.php:710
+#: core/admin/internal.php:715
+#: core/admin/internal.php:720
+#: core/admin/internal.php:727
+#: core/admin/internal.php:732
+#: core/admin/internal.php:737
+#: core/admin/internal.php:752
+#: core/admin/internal.php:747
+#: core/admin/internal.php:767
+#: core/admin/internal.php:762
+#: core/admin/internal.php:742
+#: core/admin/internal.php:784
+#: core/admin/internal.php:779
+#: core/admin/internal.php:774
+#: core/admin/internal.php:789
+#: core/admin/internal.php:757
+#: forms/widgets/shared-global.php:5
+msgid "Title"
+msgstr ""
+
+#: core/admin/internal.php:636
+#: core/functions/bbcodes.php:24
+#: modules/bbcodes/toolbar.php:115
+#: modules/bbcodes/load.php:180
+msgid "Source Code"
+msgstr ""
+
+#: core/admin/internal.php:641
+msgid "When HIDE is set with no value, user must be logged in to see hidden content."
+msgstr ""
+
+#: core/admin/internal.php:642
+#: core/admin/internal.php:643
+msgid "Content: Counts"
+msgstr ""
+
+#: core/admin/internal.php:642
+msgid "When HIDE is set to integer value, user must be logged in and have at least the amount of posts in the forum as specified to see the content."
+msgstr ""
+
+#: core/admin/internal.php:643
+msgid "When HIDE is set to 'reply', user must reply to the topic to see the content."
+msgstr ""
+
+#: core/admin/internal.php:644
+msgid "Content: Say Thanks"
+msgstr ""
+
+#: core/admin/internal.php:644
+msgid "When HIDE is set to 'thanks', user must say thanks to the topic author to see the content."
+msgstr ""
+
+#: core/admin/internal.php:646
+#: core/functions/bbcodes.php:34
+#: modules/bbcodes/toolbar.php:123
+#: modules/bbcodes/load.php:249
+msgid "Spoiler"
+msgstr ""
+
+#: core/admin/internal.php:647
+msgid "Main Color"
+msgstr ""
+
+#: core/admin/internal.php:648
+msgid "Hover Background Color"
+msgstr ""
+
+#: core/admin/internal.php:650
+#: core/functions/bbcodes.php:13
+#: modules/bbcodes/load.php:253
+#: modules/bbcodes/toolbar.php:114
+msgid "Highlight"
+msgstr ""
+
+#: core/admin/internal.php:651
+msgid "Text Color"
+msgstr ""
+
+#: core/admin/internal.php:652
+msgid "Background Color"
+msgstr ""
+
+#: core/admin/internal.php:654
+#: core/functions/bbcodes.php:12
+#: modules/bbcodes/load.php:257
+#: modules/bbcodes/toolbar.php:113
+msgid "Heading"
+msgstr ""
+
+#: core/admin/internal.php:655
+msgid "Default Size"
+msgstr ""
+
+#: core/admin/internal.php:655
+msgid "Heading will render H{size} tag."
+msgstr ""
+
+#: core/admin/internal.php:660
+msgid "BBCodes Toolbar Active"
+msgstr ""
+
+#: core/admin/internal.php:660
+msgid "This toolbar will appear only if you don't use any editor toolbars normally added by bbPress. To disable these, disable checkbox under 'Post Formatting' on this page:"
+msgstr ""
+
+#: core/admin/internal.php:661
+msgid "Toolbar Icons Size"
+msgstr ""
+
+#: core/admin/internal.php:662
+msgid "Apply editor styling fix"
+msgstr ""
+
+#: core/admin/internal.php:662
+msgid "By default, editor textarea is not styled as fixed and it can look bad if the toolbar is active. This fix will apply styling changes to textarea editor to fit better with the toolbar and most themes."
+msgstr ""
+
+#: core/admin/internal.php:664
+msgid "Hide BBCodes"
+msgstr ""
+
+#: core/admin/internal.php:665
+msgid "Hide Rarely used BBCodes"
+msgstr ""
+
+#: core/admin/internal.php:665
+#: core/admin/internal.php:667
+#: core/admin/internal.php:668
+#: core/admin/internal.php:669
+msgid "This will hide several BBCodes from toolbar"
+msgstr ""
+
+#: core/admin/internal.php:666
+msgid "Hide Image BBCode"
+msgstr ""
+
+#: core/admin/internal.php:666
+msgid "This will hide image BBCode from toolbar."
+msgstr ""
+
+#: core/admin/internal.php:667
+msgid "Hide Video related BBCodes"
+msgstr ""
+
+#: core/admin/internal.php:626
+msgid "Deletion of Topics and Replies"
+msgstr ""
+
+#: core/admin/internal.php:669
+msgid "Hide Restricted BBCodes"
+msgstr ""
+
+#: core/admin/internal.php:676
+msgid "Standard Settings"
+msgstr ""
+
+#: core/admin/internal.php:668
+msgid "Hide Media related BBCodes"
+msgstr ""
+
+#: core/admin/internal.php:672
+msgid "Show only available BBCodes"
+msgstr ""
+
+#: core/admin/internal.php:672
+msgid "This will hide disabled BBCodes, or BBCodes that are not available to current user role."
+msgstr ""
+
+#: core/admin/internal.php:679
+msgid "Processing of the bbcodes can be limited only to bbPress implemented forums, topics and replies."
+msgstr ""
+
+#: core/admin/internal.php:678
+msgid "Form Notice"
+msgstr ""
+
+#: core/admin/internal.php:678
+msgid "If the BBCodes support is active, you can display notice in the new topic/reply form."
+msgstr ""
+
+#: core/admin/internal.php:677
+msgid "BBCodes Active"
+msgstr ""
+
+#: core/admin/internal.php:681
+msgid "Advanced Codes"
+msgstr ""
+
+#: core/admin/internal.php:679
+msgid "bbPress Only"
+msgstr ""
+
+#: core/admin/internal.php:685
+msgid "Restriction action"
+msgstr ""
+
+#: core/admin/internal.php:693
+msgid "Deactivate Selected Codes"
+msgstr ""
+
+#: core/admin/internal.php:689
+msgid "Available to administrators"
+msgstr ""
+
+#: core/admin/internal.php:685
+msgid "If the advanced codes are used when not allowed, plugin can delete it or replace it with notice."
+msgstr ""
+
+#: core/admin/internal.php:699
+msgid "Enabled"
+msgstr ""
+
+#: core/admin/internal.php:698
+msgid "Views That Required Account"
+msgstr ""
+
+#: core/admin/internal.php:699
+msgid "Hide Views"
+msgstr ""
+
+#: core/admin/internal.php:671
+msgid "Filter BBCodes"
+msgstr ""
+
+#: core/admin/internal.php:694
+msgid "Deactivate"
+msgstr ""
+
+#: core/admin/internal.php:703
+msgid "Topics with most replies"
+msgstr ""
+
+#: core/admin/internal.php:699
+msgid "Some views can work only if logged in user is accessing them. If a visitor not logged in is accessing view, it will return no results. With this option you can disable such views for not logged in visitors."
+msgstr ""
+
+#: core/admin/internal.php:706
+#: core/admin/internal.php:711
+#: core/admin/internal.php:716
+#: core/admin/internal.php:721
+#: core/admin/internal.php:728
+#: core/admin/internal.php:733
+#: core/admin/internal.php:753
+#: core/admin/internal.php:790
+#: core/admin/internal.php:748
+#: core/admin/internal.php:768
+#: core/admin/internal.php:763
+#: core/admin/internal.php:743
+#: core/admin/internal.php:785
+#: core/admin/internal.php:780
+#: core/admin/internal.php:775
+#: core/admin/internal.php:758
+#: core/admin/internal.php:738
+msgid "URL Slug"
+msgstr ""
+
+#: core/admin/internal.php:706
+#: core/admin/internal.php:711
+#: core/admin/internal.php:716
+#: core/admin/internal.php:721
+#: core/admin/internal.php:728
+#: core/admin/internal.php:733
+#: core/admin/internal.php:790
+#: core/admin/internal.php:748
+#: core/admin/internal.php:768
+#: core/admin/internal.php:738
+#: core/admin/internal.php:743
+#: core/admin/internal.php:763
+#: core/admin/internal.php:785
+#: core/admin/internal.php:780
+#: core/admin/internal.php:775
+#: core/admin/internal.php:753
+#: core/admin/internal.php:758
+msgid "Only letters, numbers and dashes."
+msgstr ""
+
+#: core/admin/internal.php:708
+msgid "Latest topics"
+msgstr ""
+
+#: core/admin/internal.php:713
+msgid "Topics by freshness"
+msgstr ""
+
+#: core/admin/internal.php:718
+msgid "Most thanked topics"
+msgstr ""
+
+#: core/admin/internal.php:725
+msgid "My active topics"
+msgstr ""
+
+#: core/admin/internal.php:730
+msgid "All my topics"
+msgstr ""
+
+#: core/admin/internal.php:735
+msgid "Topics with my reply"
+msgstr ""
+
+#: core/admin/internal.php:750
+msgid "My most thanked topics"
+msgstr ""
+
+#: core/admin/internal.php:740
+msgid "My topics with no replies"
+msgstr ""
+
+#: core/admin/internal.php:794
+#: widgets/newposts.php:35
+msgid "New Posts"
+msgstr ""
+
+#: core/admin/internal.php:765
+#: modules/front.php:55
+msgid "New posts since last visit"
+msgstr ""
+
+#: core/admin/internal.php:755
+msgid "My favorite topics"
+msgstr ""
+
+#: core/admin/internal.php:745
+msgid "My topics with most replies"
+msgstr ""
+
+#: core/admin/internal.php:772
+msgid "New posts: Last day"
+msgstr ""
+
+#: core/admin/internal.php:1063
+msgid "Custom Fields"
+msgstr ""
+
+#: core/admin/internal.php:1069
+msgid "Before Forum Index"
+msgstr ""
+
+#: core/admin/internal.php:1070
+msgid "After Forum Index"
+msgstr ""
+
+#: core/admin/internal.php:857
+msgid "If enabled, special capabilities will be added to forum 'keymaster' and 'moderator' roles. Moderators will be able to access some of the admin side plugin panels."
+msgstr ""
+
+#: core/admin/internal.php:782
+msgid "New posts: Last week"
+msgstr ""
+
+#: core/admin/internal.php:798
+#: core/admin/internal.php:803
+msgid "Wrap the forum title in the STRONG to attempt display it as bold to stand out in the list."
+msgstr ""
+
+#: core/admin/internal.php:800
+#: modules/tracking.php:166
+msgid "Unread Forum"
+msgstr ""
+
+#: core/admin/internal.php:787
+msgid "New posts: Last month"
+msgstr ""
+
+#: core/admin/internal.php:798
+#: core/admin/internal.php:815
+#: core/admin/internal.php:803
+#: core/admin/internal.php:821
+#: core/admin/internal.php:826
+msgid "Wrap title in strong tag"
+msgstr ""
+
+#: core/admin/internal.php:777
+msgid "New posts: Last 3 days"
+msgstr ""
+
+#: core/admin/internal.php:796
+msgid "If the new topic or reply is posted since the last user visit, forum this topic belongs to, will be marked. For this to work, you need to enable user activity tracking."
+msgstr ""
+
+#: core/admin/internal.php:797
+msgid "Add new posts badge"
+msgstr ""
+
+#: core/admin/internal.php:797
+#: core/admin/internal.php:802
+msgid "Add badge before the forum title."
+msgstr ""
+
+#: core/admin/internal.php:813
+msgid "If one or more new replies are added to the topic since the last time user visited a topic, this topic will be marked and link placed to lead to the first new reply for the current user."
+msgstr ""
+
+#: core/admin/internal.php:814
+msgid "Add new replies icon"
+msgstr ""
+
+#: core/admin/internal.php:812
+msgid "New Replies"
+msgstr ""
+
+#: core/admin/internal.php:802
+msgid "Add unread forum badge"
+msgstr ""
+
+#: core/admin/internal.php:809
+msgid "Track users access to topics, latest reply for topic and use it to mark unread content."
+msgstr ""
+
+#: core/admin/internal.php:846
+msgid "Forum Features"
+msgstr ""
+
+#: core/admin/internal.php:846
+msgid "These will be added when registering forum post type."
+msgstr ""
+
+#: core/admin/internal.php:841
+msgid "Value is in seconds."
+msgstr ""
+
+#: core/admin/internal.php:845
+msgid "Forum Extra WordPress Features"
+msgstr ""
+
+#: core/admin/internal.php:810
+msgid "Use cutoff timestamp"
+msgstr ""
+
+#: core/admin/internal.php:810
+msgid "Tracking data begins storing when plugin version 4.5 is installed. This moment will be stored to serve as cutoff for displaying unread topics to users. If this is not used, all old topics will be initially marked as 'unread' to all users."
+msgstr ""
+
+#: core/admin/internal.php:825
+msgid "Add unread topic badge"
+msgstr ""
+
+#: core/admin/internal.php:824
+msgid "If the topic is not read by the user (taking into account the cutoff timestamp), it will be marked as unread."
+msgstr ""
+
+#: core/admin/internal.php:821
+#: core/admin/internal.php:815
+#: core/admin/internal.php:826
+msgid "Wrap the topic title in the STRONG to attempt display it as bold to stand out in the list."
+msgstr ""
+
+#: core/admin/internal.php:823
+msgid "Unread Topics"
+msgstr ""
+
+#: core/admin/internal.php:819
+msgid "If the new topic is posted since the last user visit, they will be marked. For this to work, you need to enable user activity tracking."
+msgstr ""
+
+#: core/admin/internal.php:820
+msgid "Add new topic badge"
+msgstr ""
+
+#: core/admin/internal.php:801
+msgid "If the forum is not read by the user (taking into account the cutoff timestamp), forum will be marked as unread."
+msgstr ""
+
+#: core/admin/internal.php:807
+msgid "User read status tracking"
+msgstr ""
+
+#: core/admin/internal.php:820
+#: core/admin/internal.php:825
+msgid "Add badge before the topic title."
+msgstr ""
+
+#: core/admin/internal.php:839
+msgid "Track Users"
+msgstr ""
+
+#: core/admin/internal.php:839
+msgid "If enabled, plugin will track online status logged in users."
+msgstr ""
+
+#: core/admin/internal.php:832
+msgid "Value is in days."
+msgstr ""
+
+#: core/admin/internal.php:837
+msgid "Track online status for users and guests"
+msgstr ""
+
+#: core/admin/internal.php:760
+msgid "My subscribed topics"
+msgstr ""
+
+#: core/admin/internal.php:834
+msgid "Current session cookie"
+msgstr ""
+
+#: core/admin/internal.php:835
+msgid "Expiration"
+msgstr ""
+
+#: core/admin/internal.php:835
+msgid "Value is in minutes."
+msgstr ""
+
+#: core/admin/internal.php:852
+msgid "These will be added when registering reply post type."
+msgstr ""
+
+#: core/admin/internal.php:856
+msgid "User Roles Capabilities"
+msgstr ""
+
+#: core/admin/internal.php:857
+msgid "Moderation Capabilities"
+msgstr ""
+
+#: core/admin/internal.php:848
+msgid "Topic Extra WordPress Features"
+msgstr ""
+
+#: core/admin/internal.php:840
+msgid "Track Guests"
+msgstr ""
+
+#: core/admin/internal.php:840
+msgid "If enabled, plugin will track online status for guests - users that are not logged in."
+msgstr ""
+
+#: core/admin/internal.php:841
+msgid "Online period"
+msgstr ""
+
+#: core/admin/internal.php:852
+msgid "Reply Features"
+msgstr ""
+
+#: core/admin/internal.php:831
+msgid "Everytime user opens any forum, topic or reply page plugin will save activity timestamp."
+msgstr ""
+
+#: core/admin/internal.php:832
+msgid "Cookie Expiration"
+msgstr ""
+
+#: core/admin/internal.php:830
+msgid "User activity tracking"
+msgstr ""
+
+#: core/admin/internal.php:849
+msgid "Topic Features"
+msgstr ""
+
+#: core/admin/internal.php:849
+msgid "These will be added when registering topic post type."
+msgstr ""
+
+#: core/admin/internal.php:851
+msgid "Reply Extra WordPress Features"
+msgstr ""
+
+#: core/admin/internal.php:885
+msgid "The plugin adds specialized 'Signature Textarea' field type. Please, do not use this field for other extended profile fields, it should be used only for the field created by this plugin."
+msgstr ""
+
+#: core/admin/internal.php:891
+#: core/admin/internal.php:894
+#: core/admin/internal.php:897
+msgid "XProfile Field"
+msgstr ""
+
+#: core/admin/internal.php:874
+msgid "BuddyPress Overriding URL's"
+msgstr ""
+
+#: core/admin/internal.php:859
+msgid "Limit bbPress Access on Admin Side"
+msgstr ""
+
+#: core/admin/internal.php:860
+msgid "Access to admin side for forums will be restricted. Select bellow who has access."
+msgstr ""
+
+#: core/admin/internal.php:884
+#: modules/buddypress/load.php:63
+#: theme/gdbbx-form-signature-generic.php:1
+msgid "Forum Signature"
+msgstr ""
+
+#: core/admin/internal.php:977
+msgid "Midnight"
+msgstr ""
+
+#: core/admin/internal.php:978
+msgid "Dark"
+msgstr ""
+
+#: core/admin/internal.php:979
+msgid "Swift"
+msgstr ""
+
+#: core/admin/internal.php:925
+msgid "Reply or Topic header"
+msgstr ""
+
+#: core/admin/internal.php:875
+msgid "Stop Profile Override"
+msgstr ""
+
+#: core/admin/internal.php:876
+msgid "Stop Favorites Override"
+msgstr ""
+
+#: core/admin/internal.php:877
+msgid "Stop Subscriptions Override"
+msgstr ""
+
+#: core/admin/internal.php:917
+msgid "Standard form with required message"
+msgstr ""
+
+#: core/admin/internal.php:918
+msgid "Simple confirmation dialog to send report"
+msgstr ""
+
+#: core/admin/internal.php:919
+msgid "Send report without any confirmation"
+msgstr ""
+
+#: core/admin/internal.php:900
+msgid "Signatures Disabled"
+msgstr ""
+
+#: core/admin/internal.php:891
+msgid "The signature field for Extended profile is not added to the BuddyPress yet. Use the option below to create this field if you want for your users to be able to edit forum signature from their BuddyPress Extended profile."
+msgstr ""
+
+#: core/admin/internal.php:892
+#: core/admin/internal.php:895
+msgid "Create Field"
+msgstr ""
+
+#: core/admin/internal.php:911
+msgid "Wide range of tags and attributes as for WordPress posts"
+msgstr ""
+
+#: core/admin/internal.php:871
+msgid "Extended Profile Support"
+msgstr ""
+
+#: core/admin/internal.php:872
+msgid "XProfile Integration"
+msgstr ""
+
+#: core/admin/internal.php:861
+msgid "Access for super admin"
+msgstr ""
+
+#: core/admin/internal.php:862
+msgid "Access for roles"
+msgstr ""
+
+#: core/admin/internal.php:900
+msgid "The signatures module is disbaled."
+msgstr ""
+
+#: core/admin/internal.php:909
+msgid "Default bbPress list of tags and attributes"
+msgstr ""
+
+#: core/admin/internal.php:910
+msgid "Expanded range of tags and attributes"
+msgstr ""
+
+#: core/admin/internal.php:955
+msgid "Plain Text"
+msgstr ""
+
+#: core/admin/internal.php:965
+msgid "Remove from content"
+msgstr ""
+
+#: core/admin/internal.php:940
+msgid "Moderator"
+msgstr ""
+
+#: core/admin/internal.php:946
+msgid "Normal Textarea"
+msgstr ""
+
+#: core/admin/internal.php:926
+msgid "Reply or Topic footer"
+msgstr ""
+
+#: core/admin/internal.php:939
+msgid "Keymaster"
+msgstr ""
+
+#: core/admin/internal.php:972
+msgid "Django"
+msgstr ""
+
+#: core/admin/internal.php:557
+msgid "Display allowed types"
+msgstr ""
+
+#: core/admin/internal.php:557
+msgid "If active, plugin will show list of allowed types in the upload form as notice."
+msgstr ""
+
+#: core/admin/internal.php:958
+msgid "HTML and BBCodes"
+msgstr ""
+
+#: core/admin/internal.php:964
+msgid "Replace with notice"
+msgstr ""
+
+#: core/admin/internal.php:956
+msgid "HTML"
+msgstr ""
+
+#: core/admin/internal.php:957
+#: core/admin.php:170
+#: forms/bbcodes.php:43
+#: modules/toolbar.php:219
+msgid "BBCodes"
+msgstr ""
+
+#: core/admin/internal.php:985
+msgid "Small"
+msgstr ""
+
+#: core/admin/internal.php:1011
+msgid "Attach at the end of post content"
+msgstr ""
+
+#: core/admin/internal.php:1012
+msgid "Place after the post content"
+msgstr ""
+
+#: core/admin/internal.php:975
+msgid "Fade To Grey"
+msgstr ""
+
+#: core/admin/internal.php:976
+msgid "MD Ultra"
+msgstr ""
+
+#: core/admin/internal.php:973
+msgid "Eclipse"
+msgstr ""
+
+#: core/admin/internal.php:974
+msgid "Emacs"
+msgstr ""
+
+#: core/admin/internal.php:1018
+msgid "Before title"
+msgstr ""
+
+#: core/admin/internal.php:947
+msgid "TinyMCE Full"
+msgstr ""
+
+#: core/admin/internal.php:948
+msgid "TinyMCE Compact"
+msgstr ""
+
+#: core/admin/internal.php:949
+msgid "BBCodes Toolbar"
+msgstr ""
+
+#: core/admin/internal.php:1004
+#: forms/attachments.php:16
+msgid "Images"
+msgstr ""
+
+#: core/admin/internal.php:1005
+msgid "Font Icons"
+msgstr ""
+
+#: core/admin/internal.php:986
+msgid "Medium"
+msgstr ""
+
+#: core/admin/internal.php:987
+msgid "Large"
+msgstr ""
+
+#: core/admin/internal.php:894
+msgid "The signature field for Extended profile was created earlied, but it is missing now. Use the option below to create this field again if you want for your users to be able to edit forum signature from their BuddyPress Extended profile."
+msgstr ""
+
+#: core/admin/internal.php:1046
+msgid "Hide deletion options"
+msgstr ""
+
+#: core/admin/internal.php:1052
+msgid "Don't allow to delete"
+msgstr ""
+
+#: core/admin/internal.php:1053
+msgid "Only detach from topic/reply"
+msgstr ""
+
+#: core/admin/internal.php:1036
+msgid "Leave attachments in media library"
+msgstr ""
+
+#: core/admin/internal.php:1019
+msgid "After title"
+msgstr ""
+
+#: core/admin/internal.php:1020
+#: core/admin/internal.php:1028
+msgid "Before content"
+msgstr ""
+
+#: core/admin/internal.php:1021
+#: core/admin/internal.php:1029
+msgid "After content"
+msgstr ""
+
+#: core/admin/internal.php:1045
+msgid "Advanced, through edit pages"
+msgstr ""
+
+#: core/functions/bbcodes.php:19
+#: modules/bbcodes/load.php:172
+#: modules/bbcodes/toolbar.php:108
+msgid "Superscript"
+msgstr ""
+
+#: core/functions/bbcodes.php:20
+#: modules/bbcodes/toolbar.php:139
+#: modules/bbcodes/load.php:184
+msgid "Reverse"
+msgstr ""
+
+#: core/functions/bbcodes.php:21
+#: modules/bbcodes/load.php:233
+#: modules/bbcodes/toolbar.php:111
+msgid "Font Size"
+msgstr ""
+
+#: core/admin/internal.php:1099
+msgid "Currently online"
+msgstr ""
+
+#: core/admin/internal.php:1037
+msgid "Delete attachments"
+msgstr ""
+
+#: core/admin/internal.php:1038
+msgid "Do nothing"
+msgstr ""
+
+#: core/admin/internal.php:1044
+msgid "Default, inline links"
+msgstr ""
+
+#: core/admin/internal.php:1086
+msgid "Parent Page"
+msgstr ""
+
+#: core/admin/internal.php:1092
+msgid "The plugin"
+msgstr ""
+
+#: core/admin/internal.php:1093
+msgid "MaxCDN"
+msgstr ""
+
+#: core/admin/internal.php:1076
+msgid "Unchecked"
+msgstr ""
+
+#: core/admin/internal.php:1054
+msgid "Delete from Media Library"
+msgstr ""
+
+#: core/admin/internal.php:1055
+msgid "Allow both delete and detach"
+msgstr ""
+
+#: core/admin/internal.php:1061
+msgid "Thumbnail"
+msgstr ""
+
+#: core/admin/internal.php:1085
+msgid "Main Forums Page"
+msgstr ""
+
+#: core/admin/internal.php:1030
+#: core/admin/internal.php:1022
+msgid "At the end"
+msgstr ""
+
+#: core/admin/internal.php:1077
+msgid "Checked"
+msgstr ""
+
+#: core/admin/internal.php:1083
+#: core/admin.php:643
+msgid "Home Page"
+msgstr ""
+
+#: core/admin/internal.php:1084
+msgid "Error 404 Page"
+msgstr ""
+
+#: core/functions/bbcodes.php:7
+#: modules/bbcodes/load.php:225
+#: modules/bbcodes/toolbar.php:110
+msgid "Horizontal Line"
+msgstr ""
+
+#: core/admin/internal.php:1102
+msgid "Active in the past 2 hours"
+msgstr ""
+
+#: core/admin/internal.php:1103
+msgid "Active in the past 12 hours"
+msgstr ""
+
+#: core/admin/internal.php:1100
+msgid "Active in the past 30 minutes"
+msgstr ""
+
+#: core/admin/internal.php:1101
+msgid "Active in the past 60 minutes"
+msgstr ""
+
+#: core/functions/bbcodes.php:14
+#: modules/bbcodes/toolbar.php:103
+msgid "Align: Center"
+msgstr ""
+
+#: core/admin/internal.php:897
+msgid "The signature field for Extended profile configured properly. You can modify the field to change it's name, but make sure it is always set to use 'Signature Textarea' field type, or the field will not work as expected."
+msgstr ""
+
+#: core/functions/bbcodes.php:10
+#: modules/bbcodes/load.php:139
+#: modules/bbcodes/toolbar.php:101
+msgid "Underline"
+msgstr ""
+
+#: core/functions/bbcodes.php:11
+#: modules/bbcodes/load.php:144
+#: modules/bbcodes/toolbar.php:102
+msgid "Strikethrough"
+msgstr ""
+
+#: core/functions/bbcodes.php:8
+#: modules/bbcodes/load.php:131
+#: modules/bbcodes/toolbar.php:99
+msgid "Bold"
+msgstr ""
+
+#: core/functions/bbcodes.php:9
+#: modules/bbcodes/load.php:135
+#: modules/bbcodes/toolbar.php:100
+msgid "Italic"
+msgstr ""
+
+#: core/functions/bbcodes.php:22
+#: modules/bbcodes/load.php:237
+#: modules/bbcodes/toolbar.php:112
+msgid "Font Color"
+msgstr ""
+
+#: core/functions/bbcodes.php:27
+#: modules/bbcodes/toolbar.php:142
+#: modules/bbcodes/load.php:209
+msgid "Area"
+msgstr ""
+
+#: core/functions/bbcodes.php:28
+#: modules/bbcodes/toolbar.php:143
+#: modules/bbcodes/load.php:189
+msgid "List"
+msgstr ""
+
+#: core/functions/bbcodes.php:17
+#: modules/bbcodes/toolbar.php:106
+msgid "Align: Justify"
+msgstr ""
+
+#: core/functions/bbcodes.php:18
+#: modules/bbcodes/load.php:168
+#: modules/bbcodes/toolbar.php:107
+msgid "Subscript"
+msgstr ""
+
+#: core/functions/bbcodes.php:15
+#: modules/bbcodes/toolbar.php:104
+msgid "Align: Right"
+msgstr ""
+
+#: core/functions/bbcodes.php:16
+#: modules/bbcodes/toolbar.php:105
+msgid "Align: Left"
+msgstr ""
+
+#: core/functions/bbcodes.php:29
+#: modules/bbcodes/toolbar.php:118
+#: modules/bbcodes/load.php:193
+msgid "List: Ordered"
+msgstr ""
+
+#: core/admin/internal.php:1104
+msgid "Active in the past 24 hours"
+msgstr ""
+
+#: core/admin/internal.php:1105
+msgid "Active in the past 7 days"
+msgstr ""
+
+#: core/functions/bbcodes.php:6
+#: modules/bbcodes/load.php:221
+#: modules/bbcodes/toolbar.php:109
+msgid "Line Break"
+msgstr ""
+
+#: core/functions/bbcodes.php:25
+#: modules/bbcodes/toolbar.php:117
+#: modules/bbcodes/load.php:205
+msgid "Blockquote"
+msgstr ""
+
+#: core/functions/bbcodes.php:26
+#: modules/bbcodes/load.php:213
+#: modules/bbcodes/toolbar.php:141
+msgid "Border"
+msgstr ""
+
+#: core/functions/bbcodes.php:23
+#: modules/bbcodes/toolbar.php:116
+#: modules/bbcodes/load.php:176
+msgid "Preformatted"
+msgstr ""
+
+#: core/functions/bbcodes.php:44
+#: modules/bbcodes/toolbar.php:150
+msgid "Embed using oEmbed"
+msgstr ""
+
+#: core/functions/bbcodes.php:41
+#: modules/bbcodes/toolbar.php:130
+#: modules/bbcodes/load.php:294
+msgid "Image"
+msgstr ""
+
+#: core/functions/bbcodes.php:38
+#: modules/bbcodes/load.php:279
+#: modules/bbcodes/toolbar.php:145
+msgid "NFO"
+msgstr ""
+
+#: core/functions/bbcodes.php:43
+#: modules/bbcodes/load.php:304
+#: modules/bbcodes/toolbar.php:149
+msgid "Webshot"
+msgstr ""
+
+#: core/functions/bbcodes.php:32
+#: modules/bbcodes/load.php:229
+#: modules/bbcodes/toolbar.php:140
+msgid "Anchor"
+msgstr ""
+
+#: core/functions/bbcodes.php:42
+#: modules/bbcodes/load.php:299
+msgid "Attachment"
+msgstr ""
+
+#: core/functions/bbcodes.php:39
+#: forms/panels/translations.php:17
+#: forms/panels/translations.php:6
+#: forms/panels/translations.php:28
+#: forms/panels/translations.php:39
+#: modules/bbcodes/toolbar.php:121
+#: modules/bbcodes/load.php:269
+msgid "URL"
+msgstr ""
+
+#: core/grids/attachments.php:110
+#: core/grids/attachments.php:31
+#: core/grids/errors.php:31
+#: core/grids/errors.php:113
+#: core/grids/reports.php:42
+#: core/grids/users.php:32
+msgid "Filter"
+msgstr ""
+
+#: core/grids/attachments.php:73
+#: core/grids/attachments.php:86
+msgid "Unattach"
+msgstr ""
+
+#: core/grids/attachments.php:85
+#: core/grids/attachments.php:72
+#: core/grids/errors.php:89
+#: core/grids/errors.php:73
+#: modules/attachments/front.php:368
+msgid "Delete"
+msgstr ""
+
+#: core/grids/attachments.php:128
+#: core/grids/attachments.php:111
+#: core/grids/errors.php:114
+#: core/grids/errors.php:131
+#: core/grids/reports.php:171
+#: core/grids/reports.php:117
+msgid "Visit"
+msgstr ""
+
+#: core/functions/bbcodes.php:40
+#: modules/bbcodes/toolbar.php:122
+msgid "Email"
+msgstr ""
+
+#: core/grids/attachments.php:112
+#: core/grids/attachments.php:129
+#: core/grids/errors.php:132
+#: core/grids/errors.php:115
+#: core/grids/reports.php:139
+#: core/grids/users.php:128
+#: modules/canned.php:39
+#: modules/canned.php:37
+#: modules/canned.php:63
+#: modules/toolbar.php:131
+msgid "Edit"
+msgstr ""
+
+#: core/functions/features.php:269
+msgid "Topic Tags"
+msgstr ""
+
+#: core/functions/features.php:266
+msgid "Posts"
+msgstr ""
+
+#: core/functions/features.php:263
+msgid "Open Topics"
+msgstr ""
+
+#: core/functions/features.php:268
+msgid "Hidden Replies"
+msgstr ""
+
+#: core/functions/bbcodes.php:47
+#: modules/bbcodes/toolbar.php:151
+msgid "Google Search URL"
+msgstr ""
+
+#: core/functions/features.php:262
+#: core/grids/attachments.php:130
+#: core/grids/errors.php:133
+#: core/grids/users.php:55
+#: core/grids/reports.php:172
+#: forms/settings.php:23
+#: modules/admin.php:175
+#: modules/integrate.php:164
+#: modules/toolbar.php:143
+msgid "Topics"
+msgstr ""
+
+#: core/functions/features.php:267
+#: core/grids/users.php:56
+#: forms/settings.php:26
+#: modules/admin.php:176
+#: modules/integrate.php:173
+#: modules/toolbar.php:149
+#: widgets/topicinfo.php:131
+msgid "Replies"
+msgstr ""
+
+#: core/functions/features.php:264
+msgid "Hidden Topics"
+msgstr ""
+
+#: core/functions/bbcodes.php:33
+#: modules/bbcodes/load.php:241
+#: modules/bbcodes/toolbar.php:144
+#: modules/quote.php:58
+#: modules/quote.php:60
+msgid "Quote"
+msgstr ""
+
+#: core/functions/bbcodes.php:30
+#: modules/bbcodes/toolbar.php:119
+#: modules/bbcodes/load.php:197
+msgid "List: Unordered"
+msgstr ""
+
+#: core/functions/bbcodes.php:31
+#: modules/bbcodes/toolbar.php:120
+#: modules/bbcodes/load.php:201
+msgid "List: Item"
+msgstr ""
+
+#: core/functions/features.php:265
+msgid "Closed Topics"
+msgstr ""
+
+#: core/grids/attachments.php:53
+#: core/grids/errors.php:54
+#: core/grids/reports.php:72
+msgid "Topic / Reply"
+msgstr ""
+
+#: core/grids/attachments.php:49
+#: core/grids/errors.php:50
+#: core/grids/reports.php:70
+#: core/grids/users.php:50
+msgid "ID"
+msgstr ""
+
+#: core/grids/attachments.php:55
+#: core/grids/errors.php:56
+#: forms/panels/about.php:5
+msgid "Date"
+msgstr ""
+
+#: core/functions/notify.php:159
+msgid "[%s] Topic edited: %s"
+msgstr ""
+
+#: core/grids/attachments.php:51
+#: core/grids/errors.php:51
+msgid "File"
+msgstr ""
+
+#: forms/meta/navmenu.extras.php:9
+#: theme/gdbbx-widget-userprofile.php:52
+msgid "Favorites"
+msgstr ""
+
+#: forms/meta/navmenu.extras.php:10
+#: theme/gdbbx-widget-userprofile.php:56
+msgid "Subscriptions"
+msgstr ""
+
+#: forms/meta/navmenu.views.php:30
+msgid "Registered Views"
+msgstr ""
+
+#: core/grids/attachments.php:52
+#: core/grids/errors.php:53
+msgid "Uploader"
+msgstr ""
+
+#: forms/meta/navmenu.extras.php:13
+msgid "Logout"
+msgstr ""
+
+#: forms/meta/navmenu.extras.php:14
+#: theme/gdbbx-widget-userprofile.php:99
+msgid "Register"
+msgstr ""
+
+#: core/grids/errors.php:24
+#: core/grids/attachments.php:24
+#: core/grids/reports.php:35
+msgid "For Replies Only"
+msgstr ""
+
+#: core/grids/errors.php:22
+#: core/grids/attachments.php:22
+#: core/grids/reports.php:33
+msgid "For Topics And Replies"
+msgstr ""
+
+#: core/functions/notify.php:254
+msgid "[%s] New topic posted: %s"
+msgstr ""
+
+#: core/functions/features.php:270
+msgid "Empty Topic Tags"
+msgstr ""
+
+#: core/functions/notify.php:57
+msgid "[%s] Reply edited: %s"
+msgstr ""
+
+#: core/grids/errors.php:23
+#: core/grids/attachments.php:23
+#: core/grids/reports.php:34
+msgid "For Topics Only"
+msgstr ""
+
+#: core/functions/bbcodes.php:46
+#: modules/bbcodes/load.php:314
+#: modules/bbcodes/toolbar.php:135
+msgid "Vimeo Video"
+msgstr ""
+
+#: core/objects/core.icons.php:53
+#: core/objects/core.icons.php:51
+msgid "This is sticky topic"
+msgstr ""
+
+#: core/objects/core.icons.php:39
+#: core/objects/core.icons.php:41
+msgid "Replied to this topic"
+msgstr ""
+
+#: core/objects/core.icons.php:17
+#: core/objects/core.icons.php:15
+#: modules/tracking.php:248
+msgid "First new reply"
+msgstr ""
+
+#: core/grids/reports.php:154
+#: forms/tools.php:11
+msgid "Close"
+msgstr ""
+
+#: core/grids/reports.php:135
+#: forms/meta/navmenu.extras.php:6
+#: theme/gdbbx-widget-userprofile.php:67
+msgid "Profile"
+msgstr ""
+
+#: core/grids/reports.php:76
+#: modules/report.php:72
+#: modules/report.php:25
+msgid "Reported"
+msgstr ""
+
+#: core/grids/errors.php:52
+msgid "Message"
+msgstr ""
+
+#: core/grids/reports.php:132
+msgid "User not found"
+msgstr ""
+
+#: core/objects/core.duplicate.php:13
+msgid "Copy of"
+msgstr ""
+
+#: core/grids/users.php:116
+msgid "None"
+msgstr ""
+
+#: core/grids/users.php:24
+msgid "All User Roles"
+msgstr ""
+
+#: core/functions/features.php:261
+#: forms/widgets/newposts-content.php:24
+#: forms/settings.php:19
+#: modules/toolbar.php:9
+#: modules/toolbar.php:137
+#: modules/toolbar.php:67
+msgid "Forums"
+msgstr ""
+
+#: core/functions/bbcodes.php:48
+#: modules/bbcodes/toolbar.php:155
+msgid "Iframe"
+msgstr ""
+
+#: core/functions/bbcodes.php:45
+#: modules/bbcodes/toolbar.php:134
+#: modules/bbcodes/load.php:309
+msgid "YouTube Video"
+msgstr ""
+
+#: core/functions/features.php:260
+#: core/admin.php:173
+#: modules/toolbar.php:247
+msgid "Users"
+msgstr ""
+
+#: core/grids/users.php:57
+#: forms/profile/signature.php:3
+#: theme/gdbbx-form-signature-bbpress.php:6
+msgid "Signature"
+msgstr ""
+
+#: core/functions/bbcodes.php:49
+#: modules/bbcodes/toolbar.php:156
+msgid "Hidden Note"
+msgstr ""
+
+#: core/admin.php:93
+msgid "or"
+msgstr ""
+
+#: core/admin.php:93
+msgid "click here"
+msgstr ""
+
+#: core/admin.php:93
+msgid "open plugins page"
+msgstr ""
+
+#: core/admin.php:93
+msgid "to disable them manually"
+msgstr ""
+
+#: core/objects/core.icons.php:63
+#: core/objects/core.icons.php:65
+msgid "Locked Topic"
+msgstr ""
+
+#: core/grids/users.php:54
+#: theme/gdbbx-widget-userprofile.php:35
+msgid "Role"
+msgstr ""
+
+#: core/grids/users.php:53
+msgid "Email And Name"
+msgstr ""
+
+#: core/admin.php:91
+msgid "GD bbPress Toolbox Pro detected that following plugins are still active: %s. They need to be disabled before you can use GD bbPress Toolbox."
+msgstr ""
+
+#: core/admin.php:93
+msgid "You can"
+msgstr ""
+
+#: core/grids/users.php:52
+msgid "Username"
+msgstr ""
+
+#: forms/meta/navmenu.extras.php:11
+msgid "Profile Edit"
+msgstr ""
+
+#: core/admin.php:156
+#: core/admin.php:146
+#: core/admin.php:126
+#: core/admin.php:136
+msgid "Rows"
+msgstr ""
+
+#: core/admin.php:166
+msgid "Overview"
+msgstr ""
+
+#: core/admin.php:167
+#: forms/about.php:26
+msgid "About"
+msgstr ""
+
+#: core/admin.php:168
+#: forms/modules.php:79
+#: modules/toolbar.php:207
+msgid "Modules"
+msgstr ""
+
+#: core/admin.php:169
+#: modules/toolbar.php:213
+#: modules/toolbar.php:86
+#: forms/views.php:35
+msgid "Views"
+msgstr ""
+
+#: core/admin.php:171
+#: forms/meta/forum.php:22
+#: forms/attachments.php:44
+#: modules/attachments/admin.php:36
+#: modules/attachments/front.php:465
+#: modules/toolbar.php:225
+#: theme/gdbbx-form-attachment.php:1
+msgid "Attachments"
+msgstr ""
+
+#: forms/meta/forum.attachments.php:40
+msgid "Uncheck All"
+msgstr ""
+
+#: forms/meta/forum.attachments.php:33
+msgid "Allowed MIME types"
+msgstr ""
+
+#: forms/meta/forum.locking.php:8
+msgid "Lock reply form"
+msgstr ""
+
+#: forms/meta/forum.attachments.php:24
+msgid "Number of files"
+msgstr ""
+
+#: forms/meta/forum.locking.php:2
+msgid "Lock forum for posting"
+msgstr ""
+
+#: forms/meta/forum.locking.php:4
+msgid "Lock topic form"
+msgstr ""
+
+#: forms/meta/forum.attachments.php:39
+msgid "Check All"
+msgstr ""
+
+#: core/admin.php:596
+msgid "Preview"
+msgstr ""
+
+#: core/admin.php:597
+msgid "Select Image"
+msgstr ""
+
+#: core/admin.php:598
+msgid "Use Selected Image"
+msgstr ""
+
+#: core/admin.php:599
+msgid "Are you sure you want to do this?"
+msgstr ""
+
+#: core/admin.php:600
+msgid "Image not selected."
+msgstr ""
+
+#: core/admin.php:644
+#: modules/toolbar.php:315
+msgid "Knowledge Base"
+msgstr ""
+
+#: core/admin.php:111
+#: core/admin.php:102
+msgid "Click Here"
+msgstr ""
+
+#: core/admin.php:101
+msgid "GD bbPress Toolbox Pro is updated, and you need to review the update process."
+msgstr ""
+
+#: core/admin.php:93
+msgid "to disabled them automatically"
+msgstr ""
+
+#: core/admin.php:110
+msgid "GD bbPress Toolbox Pro is activated and it needs to finish installation."
+msgstr ""
+
+#: forms/meta/attachments.list.php:23
+#: modules/attachments/front.php:610
+msgid "Upload Errors"
+msgstr ""
+
+#: forms/meta/dashboard.activity.php:43
+msgid "No posts found."
+msgstr ""
+
+#: forms/meta/forum.attachments.php:4
+msgid "Attachments Status"
+msgstr ""
+
+#: forms/meta/forum.attachments.php:6
+msgid "Enable Attachments"
+msgstr ""
+
+#: forms/meta/forum.attachments.php:11
+msgid "Hide uploaded files from visitors"
+msgstr ""
+
+#: forms/meta/forum.attachments.php:15
+msgid "Allowed size"
+msgstr ""
+
+#: forms/meta/forum.attachments.php:20
+msgid "Maximum file size allowed"
+msgstr ""
+
+#: forms/modules.php:47
+msgid "New and Unread Topics Tracking"
+msgstr ""
+
+#: modules/report.php:26
+msgid "Are you sure you want to report this post?"
+msgstr ""
+
+#: modules/report.php:43
+msgid "This topic has been reported."
+msgstr ""
+
+#: modules/report.php:44
+msgid "This reply has been reported."
+msgstr ""
+
+#: modules/report.php:70
+#: core/grids/reports.php:74
+msgid "Report"
+msgstr ""
+
+#: modules/signature.php:146
+msgid "You can use only plain text. HTML and BBCodes will be stripped."
+msgstr ""
+
+#: modules/signature.php:149
+msgid "You can use HTML."
+msgstr ""
+
+#: forms/meta/forum.php:5
+#: forms/meta/forum.php:14
+msgid "Inherit"
+msgstr ""
+
+#: forms/meta/forum.php:6
+#: forms/widgets/newposts-content.php:4
+msgid "Yes"
+msgstr ""
+
+#: forms/meta/forum.php:7
+#: forms/widgets/newposts-content.php:4
+#: modules/canned.php:43
+#: modules/canned.php:44
+#: modules/canned.php:71
+msgid "No"
+msgstr ""
+
+#: forms/meta/forum.php:15
+msgid "Override"
+msgstr ""
+
+#: core/loader.php:66
+msgid "GD bbPress Toolbox Pro requires bbPress plugin for WordPress version 2.5 or newer. Plugin will now be disabled. To use this plugin, make sure you are using bbPress 2.5 or newer version."
+msgstr ""
+
+#: core/admin.php:655
+msgid "Getting Help"
+msgstr ""
+
+#: core/admin.php:656
+msgid "To get help with this plugin, you can start with Knowledge Base list of frequently asked questions and articles. If you have any questions, or you want to report a bug, or you have a suggestion, you can use support forum. All important links for this are on the right side of this help dialog."
+msgstr ""
+
+#: forms/meta/attachments.list.php:13
+msgid "edit"
+msgstr ""
+
+#: core/admin.php:645
+#: modules/toolbar.php:322
+msgid "Support Forum"
+msgstr ""
+
+#: core/loader.php:239
+msgid "Are you sure? Operation is not reversible."
+msgstr ""
+
+#: forms/meta/attachments.list.php:5
+msgid "No attachments here."
+msgstr ""
+
+#: core/loader.php:54
+msgid "GD Topic Polls Pro requires WordPress 4.3 or newer. Plugin will now be disabled. To use this plugin, upgrade WordPress to 4.3 or newer version."
+msgstr ""
+
+#: forms/meta/navmenu.extras.php:5
+msgid "Forums Home"
+msgstr ""
+
+#: forms/meta/navmenu.extras.php:53
+msgid "Logged user Profile"
+msgstr ""
+
+#: forms/meta/navmenu.extras.php:62
+msgid "Account Access"
+msgstr ""
+
+#: forms/meta/navmenu.extras.php:8
+#: theme/gdbbx-widget-userprofile.php:40
+#: theme/gdbbx-widget-userprofile.php:48
+msgid "Replies Created"
+msgstr ""
+
+#: forms/meta/navmenu.extras.php:44
+msgid "General Links"
+msgstr ""
+
+#: forms/meta/navmenu.extras.php:7
+#: theme/gdbbx-widget-userprofile.php:39
+#: theme/gdbbx-widget-userprofile.php:44
+msgid "Topics Started"
+msgstr ""
+
+#: forms/meta/navmenu.extras.php:74
+#: forms/meta/navmenu.views.php:44
+msgid "Add to Menu"
+msgstr ""
+
+#: forms/panels/db.php:12
+msgid "Database Tables Check"
+msgstr ""
+
+#: forms/panels/db.php:20
+msgid "ERROR"
+msgstr ""
+
+#: forms/panels/db.php:22
+msgid "OK"
+msgstr ""
+
+#: forms/panels/dev4press.php:1
+msgid "Plugins"
+msgstr ""
+
+#: forms/panels/dev4press.php:22
+msgid "Plugins with Addons"
+msgstr ""
+
+#: forms/panels/export.php:5
+msgid "With this tool you export all plugin settings into plain text file (PHP serialized content). Do not modify export file, any change you make can make it unusable."
+msgstr ""
+
+#: forms/panels/about.php:7
+msgid "Build"
+msgstr ""
+
+#: forms/panels/about.php:4
+#: forms/panels/changelog.php:606
+#: forms/panels/changelog.php:1
+#: forms/panels/changelog.php:950
+#: forms/panels/changelog.php:977
+#: forms/panels/translations.php:15
+#: forms/panels/translations.php:26
+#: forms/panels/translations.php:37
+#: forms/panels/translations.php:4
+#: forms/front.php:37
+msgid "Version"
+msgstr ""
+
+#: forms/panels/about.php:16
+msgid "On Dev4Press"
+msgstr ""
+
+#: forms/meta/forum.php:23
+msgid "Privacy"
+msgstr ""
+
+#: forms/meta/forum.php:24
+msgid "Locking"
+msgstr ""
+
+#: forms/meta/forum.privacy.php:4
+msgid "Private Content Checkbox"
+msgstr ""
+
+#: forms/meta/forum.privacy.php:6
+msgid "Enable for topic form"
+msgstr ""
+
+#: forms/meta/forum.privacy.php:10
+msgid "Enable for reply form"
+msgstr ""
+
+#: forms/meta/navmenu.extras.php:41
+msgid "Extra Pages"
+msgstr ""
+
+#: forms/panels/db.php:30
+msgid "Individual forum settings"
+msgstr ""
+
+#: forms/panels/close.php:16
+msgid "Close all topics that were created"
+msgstr ""
+
+#: forms/panels/close.php:17
+#: forms/panels/close.php:10
+msgid "or more days ago"
+msgstr ""
+
+#: forms/panels/db.php:8
+msgid "Database Upgrade Notices"
+msgstr ""
+
+#: forms/panels/close.php:14
+msgid "Close old topics"
+msgstr ""
+
+#: forms/panels/db.php:36
+msgid "Converted forum settings for"
+msgstr ""
+
+#: forms/panels/db.php:40
+msgid "Nothing to convert."
+msgstr ""
+
+#: forms/panels/db.php:0
+msgid "Additional database tables"
+msgstr ""
+
+#: core/admin.php:172
+#: forms/bbcodes.php:10
+#: forms/attachments.php:10
+#: forms/settings.php:67
+#: forms/views.php:10
+#: modules/toolbar.php:231
+#: modules/toolbar.php:162
+msgid "Settings"
+msgstr ""
+
+#: core/admin.php:174
+msgid "Reported Posts"
+msgstr ""
+
+#: core/admin.php:175
+#: modules/attachments/admin.php:51
+#: modules/attachments/admin.php:52
+#: modules/toolbar.php:253
+msgid "Attachments List"
+msgstr ""
+
+#: core/admin.php:176
+#: modules/toolbar.php:259
+msgid "Errors Log"
+msgstr ""
+
+#: core/admin.php:177
+#: forms/tools.php:52
+#: modules/toolbar.php:265
+msgid "Tools"
+msgstr ""
+
+#: core/admin.php:251
+msgid "Only administrators can use export features."
+msgstr ""
+
+#: forms/panels/import.php:10
+msgid "Select file you want to import"
+msgstr ""
+
+#: forms/panels/import.php:3
+msgid "With this tool you import all plugin settings from plain text file made using the Export tool. If you made changes to this file, it is very likely that import will fail."
+msgstr ""
+
+#: forms/panels/remove.php:4
+msgid "Deletion operations are not reversible, and it is highly recommended to create database backup before proceeding with this tool."
+msgstr ""
+
+#: forms/panels/export.php:6
+msgid "This will not export meta settings for individual forums, or users tracking and signatures data."
+msgstr ""
+
+#: forms/panels/remove.php:3
+msgid "This tool can remove plugin settings saved in the WordPress options table, individual settings for forums related to this plugin and individual settings for users related to this plugin (tracking and signature)."
+msgstr ""
+
+#: forms/panels/import.php:8
+msgid "Import File"
+msgstr ""
+
+#: forms/panels/close.php:3
+msgid "This tool changes status of topics to 'close' based on the selected criteria. Closed topics don't allow new replies."
+msgstr ""
+
+#: forms/panels/close.php:7
+msgid "Close inactive topics"
+msgstr ""
+
+#: forms/panels/close.php:9
+msgid "Close all topics that were last active"
+msgstr ""
+
+#: forms/panels/translations.php:5
+#: forms/panels/translations.php:27
+#: forms/panels/translations.php:16
+#: forms/panels/translations.php:38
+msgid "Translator"
+msgstr ""
+
+#: forms/widgets/newposts-content.php:17
+msgid "Get new posts from"
+msgstr ""
+
+#: forms/widgets/newposts-content.php:29
+msgid "Include forums by forum ID"
+msgstr ""
+
+#: forms/widgets/newposts-content.php:32
+msgid "Comma separated list of forum ID's."
+msgstr ""
+
+#: forms/widgets/newposts-content.php:38
+msgid "Exclude forums by forum ID"
+msgstr ""
+
+#: forms/widgets/newposts-content.php:41
+msgid "Comma separated list of forum ID's. This list will be used only if Include forums list is empty."
+msgstr ""
+
+#: forms/widgets/newposts-content.php:47
+msgid "Check user access rights"
+msgstr ""
+
+#: forms/panels/wp44_update.php:15
+msgid "Disclaimer"
+msgstr ""
+
+#: forms/panels/wp44_update.php:16
+msgid "This operation is not reversible, and before using this tool, make sure you have backup of your database (or at least 'posts' table) so you can restore it if something goes wrong."
+msgstr ""
+
+#: forms/panels/wp44_update.php:21
+msgid "List of SQL queries"
+msgstr ""
+
+#: forms/profile/signature.php:0
+#: theme/gdbbx-form-signature-bbpress.php:0
+#: theme/gdbbx-form-signature-bbpress.php:2
+msgid "Your Forum Signature"
+msgstr ""
+
+#: forms/profile/signature.php:0
+#: theme/gdbbx-form-signature-bbpress.php:0
+#: theme/gdbbx-form-signature-bbpress.php:2
+msgid "User Forum Signature"
+msgstr ""
+
+#: forms/shared/top.php:8
+#: forms/front.php:14
+#: forms/modules.php:9
+#: modules/toolbar.php:239
+#: theme/gdbbx-list-canned-replies.php:6
+msgid "Canned Replies"
+msgstr ""
+
+#: forms/panels/remove.php:5
+msgid "If you choose to remove plugin settings, that will also reinitialize all plugin settings to default values."
+msgstr ""
+
+#: forms/panels/remove.php:9
+msgid "Choose what you want to delete"
+msgstr ""
+
+#: forms/panels/remove.php:12
+msgid "All Plugin Settings"
+msgstr ""
+
+#: forms/panels/remove.php:15
+msgid "All Forums Meta Settings"
+msgstr ""
+
+#: forms/panels/remove.php:18
+msgid "All Users Tracking Data"
+msgstr ""
+
+#: forms/panels/remove.php:21
+msgid "All Users Signatures"
+msgstr ""
+
+#: forms/widgets/newposts-content.php:8
+msgid "Topics and Reply Filtering"
+msgstr ""
+
+#: forms/shared/top.php:62
+msgid "Attachment deleted from media library."
+msgstr ""
+
+#: forms/shared/top.php:53
+msgid "Selected attachments are now unattached."
+msgstr ""
+
+#: forms/shared/top.php:68
+msgid "Error record deleted from database."
+msgstr ""
+
+#: forms/shared/top.php:34
+msgid "Free plugins are now disabled."
+msgstr ""
+
+#: forms/shared/top.php:50
+msgid "Total %s topics closed."
+msgstr ""
+
+#: forms/shared/top.php:65
+msgid "Selected errors records deleted from database."
+msgstr ""
+
+#: forms/shared/top.php:56
+msgid "Attachment is now unattached."
+msgstr ""
+
+#: forms/front.php:60
+msgid "Expand bbPress powered forums with polls attached to topics, and prefixes assigned to topics. Learn more: %s and %s."
+msgstr ""
+
+#: forms/front.php:52
+msgid "To learn more about the plugin, check out plugin %s articles and FAQ. To get additional help, you can use %s."
+msgstr ""
+
+#: forms/front.php:53
+msgid "knowledge base"
+msgstr ""
+
+#: forms/install.php:17
+msgid "Installation"
+msgstr ""
+
+#: forms/shared/top.php:59
+msgid "Selected attachments deleted from media library."
+msgstr ""
+
+#: forms/front.php:61
+#: forms/front.php:58
+msgid "GD Topic Polls Pro"
+msgstr ""
+
+#: forms/front.php:62
+#: forms/front.php:58
+msgid "GD Topic Prefix Pro"
+msgstr ""
+
+#: forms/widgets/newposts-content.php:72
+#: forms/widgets/topicinfo-content.php:12
+msgid "Show author"
+msgstr ""
+
+#: forms/widgets/newposts-content.php:57
+msgid "Display Options"
+msgstr ""
+
+#: forms/widgets/newposts-content.php:62
+msgid "Show date"
+msgstr ""
+
+#: forms/widgets/newposts-content.php:2
+msgid "Last 6 months"
+msgstr ""
+
+#: forms/widgets/newposts-content.php:50
+msgid "If you use this option, it will work only with widget cache disabled, so make sure to set Cache Period on the Global tab to '0'."
+msgstr ""
+
+#: forms/widgets/newposts-content.php:76
+msgid "With avatar image"
+msgstr ""
+
+#: forms/widgets/newposts-content.php:2
+msgid "Last year"
+msgstr ""
+
+#: forms/widgets/newposts-content.php:66
+msgid "Limit list of topics"
+msgstr ""
+
+#: forms/shared/top.php:37
+msgid "Settings are saved."
+msgstr ""
+
+#: forms/shared/top.php:30
+msgid "Database updated."
+msgstr ""
+
+#: forms/shared/top.php:31
+msgid "Total of %s posts are updated."
+msgstr ""
+
+#: forms/shared/top.php:46
+msgid "Nothing done."
+msgstr ""
+
+#: forms/widgets/newposts-content.php:13
+msgid "Period to get posts"
+msgstr ""
+
+#: forms/shared/top.php:40
+msgid "Removal operation completed."
+msgstr ""
+
+#: forms/shared/top.php:43
+msgid "Import operation completed."
+msgstr ""
+
+#: forms/panels/wp44_update.php:14
+msgid "If you use run update through the plugin, once it is done, this update panel will be hidden. You can enable it again from plugin Advanced Settings."
+msgstr ""
+
+#: forms/widgets/onlineusers-content.php:43
+msgid "Show avatar"
+msgstr ""
+
+#: forms/widgets/topicinfo-content.php:0
+msgid "Information to Show"
+msgstr ""
+
+#: forms/widgets/statistics-content.php:0
+msgid "Select Statistics"
+msgstr ""
+
+#: forms/widgets/newposts-content.php:3
+msgid "Topics only"
+msgstr ""
+
+#: forms/widgets/newposts-content.php:3
+msgid "Replies only"
+msgstr ""
+
+#: forms/widgets/newposts-content.php:2
+msgid "Last month"
+msgstr ""
+
+#: forms/widgets/shared-wrapper.php:5
+msgid "Before"
+msgstr ""
+
+#: forms/widgets/topicinfo-content.php:39
+msgid "Show participants"
+msgstr ""
+
+#: forms/widgets/topicinfo-content.php:35
+msgid "Show voices count"
+msgstr ""
+
+#: forms/widgets/shared-wrapper.php:11
+msgid "After"
+msgstr ""
+
+#: forms/widgets/topicinfo-content.php:8
+msgid "Show forum"
+msgstr ""
+
+#: forms/widgets/shared-wrapper.php:0
+msgid "Before and After Content"
+msgstr ""
+
+#: forms/widgets/userprofile-content.php:5
+msgid "Avatar Size"
+msgstr ""
+
+#: forms/widgets/onlineusers-content.php:40
+msgid "Extra user information"
+msgstr ""
+
+#: forms/widgets/onlineusers-content.php:35
+msgid "User information to show"
+msgstr ""
+
+#: forms/widgets/onlineusers-content.php:16
+msgid "Show current online users"
+msgstr ""
+
+#: forms/widgets/onlineusers-content.php:18
+msgid "Limit users per role"
+msgstr ""
+
+#: forms/widgets/onlineusers-content.php:22
+msgid "Show max users count and date"
+msgstr ""
+
+#: forms/widgets/onlineusers-content.php:25
+msgid "Show maximum number of users online with date and time"
+msgstr ""
+
+#: forms/widgets/onlineusers-content.php:36
+msgid "User information"
+msgstr ""
+
+#: forms/widgets/newposts-content.php:2
+msgid "Last two weeks"
+msgstr ""
+
+#: forms/widgets/newposts-content.php:2
+msgid "Last week"
+msgstr ""
+
+#: forms/widgets/newposts-content.php:2
+msgid "Last day"
+msgstr ""
+
+#: forms/widgets/onlineusers-content.php:13
+msgid "Show online users"
+msgstr ""
+
+#: forms/widgets/newposts-content.php:2
+msgid "Last Hour"
+msgstr ""
+
+#: forms/widgets/newposts-content.php:3
+msgid "Topics and Replies"
+msgstr ""
+
+#: forms/widgets/shared-display.php:25
+msgid "Visibility Hook"
+msgstr ""
+
+#: forms/widgets/shared-display.php:5
+msgid "Everyone"
+msgstr ""
+
+#: forms/widgets/shared-display.php:4
+#: widgets/newposts.php:44
+#: widgets/topicsviews.php:34
+#: widgets/onlineusers.php:39
+#: widgets/userprofile.php:42
+#: widgets/statistics.php:34
+#: widgets/topicinfo.php:41
+msgid "Global"
+msgstr ""
+
+#: forms/widgets/shared-display.php:31
+msgid "Additional CSS Class"
+msgstr ""
+
+#: forms/widgets/shared-display.php:5
+msgid "Only Visitors"
+msgstr ""
+
+#: forms/widgets/shared-global.php:0
+msgid "Basic"
+msgstr ""
+
+#: forms/widgets/shared-display.php:6
+msgid "User Roles"
+msgstr ""
+
+#: forms/widgets/newposts-content.php:2
+msgid "Last 3 months"
+msgstr ""
+
+#: forms/panels/wp44_update.php:10
+msgid "Problem Description"
+msgstr ""
+
+#: forms/panels/wp44_update.php:11
+#: forms/update.php:44
+msgid "WordPress 4.4 introduced some changes in the way it parses shortcodes, and this affected some of the BBCodes added by GD bbPress Toolbox Pro."
+msgstr ""
+
+#: forms/panels/wp44_update.php:12
+msgid "Solution"
+msgstr ""
+
+#: forms/panels/wp44_update.php:13
+msgid "To fix the issue, plugin is updated to handle changes. But, all topics and replies created before contain BBCodes used in the way WordPress 4.4 no longer allows. The only way to fix this is to update all old topics and replies and replace old BBCodes with new BBCodes format. You can do it automatically using this tool (just click Update button), or you can use SQL queries listed below and run them directly on your database."
+msgstr ""
+
+#: forms/widgets/topicinfo-content.php:27
+msgid "Show status"
+msgstr ""
+
+#: forms/widgets/shared-cache.php:9
+msgid "To use cache and speed up the widget, enter number of hours for cached results to be kept. Leave 0 to disable cache."
+msgstr ""
+
+#: forms/widgets/topicinfo-content.php:16
+msgid "Show post date"
+msgstr ""
+
+#: forms/widgets/userprofile-content.php:0
+msgid "Avatar"
+msgstr ""
+
+#: forms/widgets/topicsviews-content.php:0
+msgid "Select Views to Show"
+msgstr ""
+
+#: forms/widgets/topicinfo-content.php:20
+msgid "Show last activity"
+msgstr ""
+
+#: forms/widgets/shared-cache.php:5
+msgid "Cache Period"
+msgstr ""
+
+#: forms/widgets/shared-cache.php:0
+msgid "Results Caching"
+msgstr ""
+
+#: forms/widgets/onlineusers-content.php:4
+msgid "Display Name"
+msgstr ""
+
+#: forms/widgets/shared-display.php:5
+msgid "All Users"
+msgstr ""
+
+#: forms/widgets/onlineusers-content.php:47
+msgid "Show user roles"
+msgstr ""
+
+#: forms/widgets/shared-display.php:21
+msgid "Display To"
+msgstr ""
+
+#: forms/widgets/shared-display.php:16
+msgid "Visibility"
+msgstr ""
+
+#: forms/widgets/onlineusers-content.php:3
+msgid "Profile Link"
+msgstr ""
+
+#: forms/front.php:54
+msgid "support forum"
+msgstr ""
+
+#: forms/about.php:37
+#: forms/about.php:12
+msgid "Translations"
+msgstr ""
+
+#: forms/widgets/userprofile-content.php:76
+msgid "Show edit profile link"
+msgstr ""
+
+#: forms/widgets/userprofile-content.php:64
+msgid "Show posted replies link"
+msgstr ""
+
+#: forms/about.php:36
+#: forms/about.php:9
+msgid "Changelog"
+msgstr ""
+
+#: forms/widgets/userprofile-content.php:30
+msgid "Show login &amp; registration"
+msgstr ""
+
+#: forms/widgets/userprofile-content.php:57
+msgid "Show started topics link"
+msgstr ""
+
+#: forms/widgets/userprofile-content.php:68
+msgid "Show favorite topics link"
+msgstr ""
+
+#: forms/bbcodes.php:6
+msgid "BBCodes Index"
+msgstr ""
+
+#: forms/bbcodes.php:9
+#: forms/attachments.php:9
+msgid "General"
+msgstr ""
+
+#: forms/widgets/userprofile-content.php:72
+msgid "Show subscribed topics link"
+msgstr ""
+
+#: forms/bbcodes.php:7
+msgid "Settings for BBCodes and lists of available BBCodes."
+msgstr ""
+
+#: forms/attachments.php:7
+msgid "Attachment settings are split into several panels, and you access each starting from the right."
+msgstr ""
+
+#: forms/attachments.php:58
+#: forms/bbcodes.php:58
+#: forms/modules.php:93
+#: forms/settings.php:81
+#: forms/views.php:49
+msgid "Return to top"
+msgstr ""
+
+#: forms/attachments-list.php:20
+#: forms/errors.php:20
+#: modules/canned.php:42
+#: modules/canned.php:60
+#: forms/users.php:20
+msgid "Search"
+msgstr ""
+
+#: forms/attachments.php:6
+msgid "Attachments Index"
+msgstr ""
+
+#: forms/about.php:16
+msgid "Check out other Dev4Press products."
+msgstr ""
+
+#: forms/attachments.php:85
+#: forms/bbcodes.php:69
+#: forms/modules.php:120
+#: forms/settings.php:108
+#: forms/views.php:76
+msgid "Settings Panel"
+msgstr ""
+
+#: forms/widgets/userprofile-content.php:37
+msgid "Other Settings"
+msgstr ""
+
+#: forms/widgets/userprofile-content.php:15
+msgid "Login and Logout"
+msgstr ""
+
+#: forms/widgets/userprofile-content.php:23
+msgid "Show logout link"
+msgstr ""
+
+#: forms/widgets/userprofile-content.php:53
+msgid "Show user forum role"
+msgstr ""
+
+#: forms/attachments.php:54
+#: forms/bbcodes.php:53
+#: forms/modules.php:89
+#: forms/settings.php:77
+#: forms/settings.php:133
+#: forms/views.php:45
+msgid "Save Settings"
+msgstr ""
+
+#: forms/widgets/userprofile-content.php:45
+msgid "Show profile title"
+msgstr ""
+
+#: forms/widgets/userprofile-content.php:49
+msgid "Show user statistics"
+msgstr ""
+
+#: forms/attachments.php:29
+msgid "MIME"
+msgstr ""
+
+#: forms/attachments.php:30
+msgid "From here you can add additional MIME Types (file extensions) for attachments upload."
+msgstr ""
+
+#: forms/attachments.php:26
+msgid "These are settings for options related to attachments deletion."
+msgstr ""
+
+#: forms/attachments.php:28
+msgid "Extra MIME Types"
+msgstr ""
+
+#: forms/attachments.php:11
+msgid "These are basic settings for control over attachments in the forums."
+msgstr ""
+
+#: forms/attachments.php:13
+msgid "Integration"
+msgstr ""
+
+#: forms/attachments.php:20
+msgid "Here you can select which MIME types are allowed for upload."
+msgstr ""
+
+#: forms/attachments.php:22
+#: forms/bbcodes.php:26
+#: forms/settings.php:46
+msgid "Advanced"
+msgstr ""
+
+#: forms/attachments.php:23
+msgid "These are settings for additional attachments features."
+msgstr ""
+
+#: forms/attachments.php:25
+msgid "Deletion"
+msgstr ""
+
+#: core/grids/reports.php:73
+msgid "Reported by"
+msgstr ""
+
+#: forms/bbcodes.php:20
+#: forms/bbcodes.php:17
+msgid "These are settings for control of individual BBCodes default settings."
+msgstr ""
+
+#: forms/bbcodes.php:22
+#: forms/settings.php:16
+msgid "Standard"
+msgstr ""
+
+#: forms/bbcodes.php:19
+msgid "Disable BBCodes"
+msgstr ""
+
+#: forms/bbcodes.php:11
+msgid "These are settings for control basics of BBCodes implementation."
+msgstr ""
+
+#: forms/bbcodes.php:13
+msgid "Toolbar"
+msgstr ""
+
+#: forms/attachments.php:19
+msgid "Allowed Types"
+msgstr ""
+
+#: forms/attachments.php:14
+msgid "These are settings for control over attachments integration into bbPress."
+msgstr ""
+
+#: forms/attachments.php:17
+msgid "These are settings for control over image based attachments display."
+msgstr ""
+
+#: forms/bbcodes.php:14
+msgid "These are settings for control over BBCodes Toolbar."
+msgstr ""
+
+#: forms/bbcodes.php:16
+msgid "Defaults"
+msgstr ""
+
+#: forms/about.php:7
+msgid "Get more information about this plugin."
+msgstr ""
+
+#: forms/front.php:31
+msgid "Edition"
+msgstr ""
+
+#: forms/front.php:98
+#: widgets/topicinfo.php:125
+msgid "Open"
+msgstr ""
+
+#: forms/front.php:50
+msgid "Knowledge Base and Support Forums"
+msgstr ""
+
+#: forms/modules.php:29
+msgid "Integrations"
+msgstr ""
+
+#: forms/modules.php:25
+msgid "Report Posts"
+msgstr ""
+
+#: forms/modules.php:26
+msgid "These are settings for content report topics and replies feature."
+msgstr ""
+
+#: forms/modules.php:34
+msgid "Privacy and Users Related"
+msgstr ""
+
+#: forms/modules.php:30
+msgid "These settings are for the BuddyPress related features."
+msgstr ""
+
+#: forms/modules.php:33
+msgid "Forums Locking"
+msgstr ""
+
+#: forms/install.php:68
+msgid "Installation completed."
+msgstr ""
+
+#: forms/install.php:27
+msgid "Previous Plugin Version"
+msgstr ""
+
+#: forms/install.php:57
+msgid "Older version settings not found."
+msgstr ""
+
+#: forms/install.php:20
+msgid "Before you continue, make sure plugin installation was successful."
+msgstr ""
+
+#: forms/install.php:71
+#: forms/update.php:36
+msgid "Click here to continue."
+msgstr ""
+
+#: forms/install.php:51
+msgid "Import from <strong>%s</strong> completed, %s records imported."
+msgstr ""
+
+#: forms/install.php:62
+#: forms/update.php:27
+msgid "All Done"
+msgstr ""
+
+#: forms/bbcodes.php:24
+msgid "These codes are safe to use and releated to content formatting."
+msgstr ""
+
+#: forms/bbcodes.php:27
+msgid "These codes are used embedding external content: videos, links..."
+msgstr ""
+
+#: forms/bbcodes.php:29
+msgid "Restricted"
+msgstr ""
+
+#: forms/bbcodes.php:30
+msgid "These codes are not available to users, and only administrators can choose to use them."
+msgstr ""
+
+#: forms/bbcodes.php:69
+msgid "View BBCodes"
+msgstr ""
+
+#: forms/modules.php:23
+msgid "These are settings for content quoting feature."
+msgstr ""
+
+#: forms/modules.php:19
+msgid "Signatures"
+msgstr ""
+
+#: forms/modules.php:14
+msgid "These are settings for control over thanks for topics and replies."
+msgstr ""
+
+#: forms/modules.php:22
+msgid "Quotes"
+msgstr ""
+
+#: forms/modules.php:6
+msgid "Modules Index"
+msgstr ""
+
+#: forms/modules.php:20
+msgid "These are settings for user signatures."
+msgstr ""
+
+#: forms/modules.php:16
+msgid "SEO"
+msgstr ""
+
+#: forms/about.php:15
+msgid "Dev4Press"
+msgstr ""
+
+#: forms/about.php:10
+msgid "Check out full changelog for this plugin."
+msgstr ""
+
+#: forms/about.php:6
+msgid "About Plugin"
+msgstr ""
+
+#: forms/about.php:13
+msgid "List of translations included for this plugin."
+msgstr ""
+
+#: forms/modules.php:17
+msgid "These are settings for some basic search engine optimization."
+msgstr ""
+
+#: forms/bbcodes.php:23
+msgid "BBCodes List"
+msgstr ""
+
+#: forms/modules.php:46
+msgid "Users Tracking"
+msgstr ""
+
+#: forms/modules.php:41
+#: forms/modules.php:38
+msgid "These settings can be used to add private topics and replies where only administrators and moderators can read and post."
+msgstr ""
+
+#: forms/modules.php:37
+msgid "Private Topics & Replies"
+msgstr ""
+
+#: forms/modules.php:44
+msgid "These settings are used to prevent non-logged users (visitors) to view any of the forum pages."
+msgstr ""
+
+#: forms/modules.php:28
+msgid "BuddyPress"
+msgstr ""
+
+#: forms/modules.php:35
+msgid "These settings can lock down your forums for new topics or replies (useful for maintenance)."
+msgstr ""
+
+#: forms/modules.php:43
+msgid "Visitors Redirect"
+msgstr ""
+
+#: forms/modules.php:7
+msgid "Settings for plugin modules are listed here, and you access each starting from the right"
+msgstr ""
+
+#: forms/modules.php:11
+msgid "These are settings for control over canned replies."
+msgstr ""
+
+#: forms/modules.php:40
+msgid "User Stats"
+msgstr ""
+
+#: forms/modules.php:10
+msgid "Features"
+msgstr ""
+
+#: forms/modules.php:60
+msgid "Disable RSS Feeds"
+msgstr ""
+
+#: forms/modules.php:61
+msgid "These settings are for disabling the RSS feeds for forums and topics."
+msgstr ""
+
+#: forms/settings.php:50
+msgid "These settings are for expanding post types registered by bbPress for forums, topics and replies."
+msgstr ""
+
+#: forms/settings.php:52
+msgid "Additional"
+msgstr ""
+
+#: forms/tools.php:7
+msgid "All plugin tools are split into several panels, and you access each starting from the right."
+msgstr ""
+
+#: forms/settings.php:49
+msgid "Objects"
+msgstr ""
+
+#: forms/tools.php:89
+msgid "Tools Panel"
+msgstr ""
+
+#: forms/tools.php:6
+msgid "Tools Index"
+msgstr ""
+
+#: forms/settings.php:53
+msgid "These settings are for the features that are not used very often and only for experienced users."
+msgstr ""
+
+#: forms/settings.php:17
+msgid "These are some common plugin settings that don't fit anywhere else."
+msgstr ""
+
+#: forms/settings.php:20
+msgid "Enhance bbPress"
+msgstr ""
+
+#: forms/settings.php:21
+msgid "These are settings for adding extra features to forums."
+msgstr ""
+
+#: forms/settings.php:24
+msgid "These are settings for adding extra features to topics in the forums."
+msgstr ""
+
+#: forms/modules.php:54
+msgid "These settings are used to control display of topics activity inside the forums list."
+msgstr ""
+
+#: forms/modules.php:50
+msgid "For Topics"
+msgstr ""
+
+#: forms/modules.php:51
+msgid "These settings are used to control display of topics activity inside the topics list."
+msgstr ""
+
+#: forms/modules.php:58
+msgid "These are settings for adding forums specific toolbar menu."
+msgstr ""
+
+#: forms/modules.php:48
+msgid "These settings are used for control over user activity tracking in the forums."
+msgstr ""
+
+#: forms/modules.php:56
+msgid "Toolbar Menu"
+msgstr ""
+
+#: forms/modules.php:57
+msgid "Helpers"
+msgstr ""
+
+#: forms/modules.php:53
+msgid "For Forums"
+msgstr ""
+
+#: forms/settings.php:40
+msgid "These are settings for additional notification system settings."
+msgstr ""
+
+#: forms/settings.php:42
+msgid "Notify Templates"
+msgstr ""
+
+#: forms/settings.php:43
+msgid "These are settings for control over notifications content sent to users."
+msgstr ""
+
+#: forms/settings.php:45
+msgid "JS/CSS Files"
+msgstr ""
+
+#: forms/settings.php:47
+msgid "These settings control JavaScript and CSS files used by the plugin."
+msgstr ""
+
+#: forms/tools.php:9
+msgid "Close Topics"
+msgstr ""
+
+#: forms/tools.php:10
+#: modules/toolbar.php:156
+msgid "bbPress"
+msgstr ""
+
+#: forms/tools.php:12
+msgid "Close old and inactive topics."
+msgstr ""
+
+#: forms/tools.php:14
+msgid "Recheck and Update"
+msgstr ""
+
+#: forms/tools.php:15
+msgid "Maintenance"
+msgstr ""
+
+#: forms/tools.php:17
+msgid "Recheck plugin database tables and update plugin settings."
+msgstr ""
+
+#: forms/settings.php:33
+msgid "These settings are used to control who can view the topic/reply revisions list."
+msgstr ""
+
+#: forms/settings.php:29
+msgid "Editors"
+msgstr ""
+
+#: forms/settings.php:30
+msgid "These are settings for additional control over topic and reply editors."
+msgstr ""
+
+#: forms/settings.php:27
+msgid "These are settings for adding extra features to replies in the forums."
+msgstr ""
+
+#: forms/settings.php:35
+msgid "Various Tweaks"
+msgstr ""
+
+#: forms/settings.php:36
+msgid "These settings include all sorts of various tweaks for bbPress."
+msgstr ""
+
+#: forms/settings.php:32
+msgid "Revisions"
+msgstr ""
+
+#: forms/tools.php:32
+#: forms/tools.php:33
+#: forms/update.php:17
+#: modules/canned.php:65
+msgid "Update"
+msgstr ""
+
+#: forms/tools.php:34
+msgid "Update topics and replies content to resolve problems with WordPress 4.4 update."
+msgstr ""
+
+#: forms/update.php:20
+msgid "Before you continue, make sure plugin was successfully updated."
+msgstr ""
+
+#: forms/update.php:33
+msgid "Update completed."
+msgstr ""
+
+#: modules/attachments/front.php:104
+msgid "Insert into content"
+msgstr ""
+
+#: modules/attachments/front.php:101
+msgid "The file is too big."
+msgstr ""
+
+#: modules/attachments/front.php:102
+msgid "File type not allowed."
+msgstr ""
+
+#: modules/attachments/front.php:113
+msgid "Your account has the ability to upload any attachment regardless of size and type."
+msgstr ""
+
+#: modules/attachments/front.php:100
+msgid "Error!"
+msgstr ""
+
+#: modules/attachments/front.php:105
+msgid "Set file caption"
+msgstr ""
+
+#: modules/attachments/front.php:106
+msgid "Caption..."
+msgstr ""
+
+#: modules/attachments/front.php:103
+msgid "Remove this file"
+msgstr ""
+
+#: forms/views.php:6
+#: forms/settings.php:6
+msgid "Settings Index"
+msgstr ""
+
+#: forms/views.php:7
+#: forms/settings.php:7
+msgid "All plugin settings are split into several panels, and you access each starting from the right."
+msgstr ""
+
+#: forms/views.php:9
+msgid "Views Settings"
+msgstr ""
+
+#: forms/tools.php:25
+msgid "Import all plugin settings from export file."
+msgstr ""
+
+#: forms/tools.php:21
+msgid "Export all plugin settings into file."
+msgstr ""
+
+#: forms/tools.php:23
+msgid "Import Settings"
+msgstr ""
+
+#: forms/tools.php:29
+msgid "Remove selected plugin settings and information."
+msgstr ""
+
+#: forms/tools.php:20
+msgid "Export"
+msgstr ""
+
+#: forms/tools.php:27
+msgid "Remove Settings"
+msgstr ""
+
+#: forms/tools.php:24
+msgid "Import"
+msgstr ""
+
+#: modules/attachments/front.php:96
+#: theme/gdbbx-form-attachment.php:10
+#: theme/gdbbx-form-attachment.php:7
+msgid "Select File"
+msgstr ""
+
+#: modules/attachments/front.php:97
+#: modules/canned.php:70
+msgid "Name"
+msgstr ""
+
+#: modules/attachments/front.php:98
+msgid "Size"
+msgstr ""
+
+#: modules/attachments/front.php:99
+msgid "Extension"
+msgstr ""
+
+#: forms/tools.php:19
+msgid "Export Settings"
+msgstr ""
+
+#: forms/settings.php:9
+msgid "Administration"
+msgstr ""
+
+#: forms/settings.php:11
+msgid "These settings are for enhancing administration side of WordPress and bbPress."
+msgstr ""
+
+#: forms/settings.php:13
+msgid "Widgets"
+msgstr ""
+
+#: forms/settings.php:14
+msgid "These settings are to control default and plugin added widgets."
+msgstr ""
+
+#: modules/attachments/front.php:117
+msgid "Maximum file size allowed is"
+msgstr ""
+
+#: modules/attachments/front.php:122
+msgid "File types allowed for upload"
+msgstr ""
+
+#: modules/attachments/front.php:365
+msgid "Do Nothing"
+msgstr ""
+
+#: modules/attachments/front.php:372
+msgid "Detach"
+msgstr ""
+
+#: modules/attachments/front.php:395
+msgid "insert into content"
+msgstr ""
+
+#: modules/attachments/front.php:419
+msgid "Attachment Actions"
+msgstr ""
+
+#: forms/views.php:17
+msgid "Personal Views"
+msgstr ""
+
+#: forms/views.php:13
+msgid "Basic Views"
+msgstr ""
+
+#: forms/views.php:14
+msgid "Views Control"
+msgstr ""
+
+#: forms/views.php:21
+#: forms/views.php:18
+#: forms/views.php:15
+msgid "These are settings for controlling additional topic views."
+msgstr ""
+
+#: forms/views.php:11
+msgid "These are settings for additional controll over added views."
+msgstr ""
+
+#: forms/views.php:20
+msgid "New Posts Views"
+msgstr ""
+
+#: modules/bbcodes/load.php:148
+msgid "Align Center"
+msgstr ""
+
+#: modules/bbcodes/load.php:153
+msgid "Align Right"
+msgstr ""
+
+#: modules/bbcodes/load.php:324
+msgid "iframe"
+msgstr ""
+
+#: modules/bbcodes/load.php:158
+msgid "Align Left"
+msgstr ""
+
+#: modules/bbcodes/load.php:463
+msgid "BBCode you used is not allowed."
+msgstr ""
+
+#: modules/bbcodes/load.php:519
+msgid "Your account can't use Advanced BBCodes, they will be stripped before saving."
+msgstr ""
+
+#: modules/bbcodes/load.php:516
+msgid "You can use BBCodes to format your content."
+msgstr ""
+
+#: modules/bbcodes/load.php:319
+msgid "Note"
+msgstr ""
+
+#: modules/bbcodes/load.php:217
+msgid "Block"
+msgstr ""
+
+#: modules/attachments/front.php:500
+msgid "delete"
+msgstr ""
+
+#: modules/bbcodes/load.php:163
+msgid "Align Justify"
+msgstr ""
+
+#: modules/attachments/front.php:468
+msgid "You must be <a href='%s'>logged in</a> to view attached files."
+msgstr ""
+
+#: modules/attachments/front.php:504
+msgid "detach"
+msgstr ""
+
+#: modules/bbcodes/load.php:274
+msgid "eMail"
+msgstr ""
+
+#: modules/bbcodes/load.php:284
+msgid "Embed"
+msgstr ""
+
+#: core/admin/internal.php:334
+msgid "New Topic for Keymasters and Moderators"
+msgstr ""
+
+#: core/admin/internal.php:328
+msgid "Reply Edit Notify Subscribers"
+msgstr ""
+
+#: modules/bbcodes/load.php:782
+#: modules/quote.php:21
+msgid "wrote"
+msgstr ""
+
+#: modules/bbcodes/load.php:265
+msgid "Link Reply"
+msgstr ""
+
+#: modules/bbcodes/load.php:289
+msgid "Google Search"
+msgstr ""
+
+#: modules/bbcodes/load.php:261
+msgid "Link Topic"
+msgstr ""
+
+#: modules/admin.php:180
+msgid "Last Forum Activity"
+msgstr ""
+
+#: modules/admin.php:138
+#: modules/admin.php:130
+msgid "Private"
+msgstr ""
+
+#: modules/bbpress.php:92
+msgid "<strong>ERROR</strong>: You can't duplicate topics."
+msgstr ""
+
+#: modules/bbpress.php:184
+msgid "<strong>ERROR</strong>: Your topic is too short."
+msgstr ""
+
+#: modules/bbpress.php:242
+msgid "Close this topic"
+msgstr ""
+
+#: modules/admin.php:91
+msgid "GD bbPress Toolbox"
+msgstr ""
+
+#: modules/buddypress/signature.php:99
+msgid "Signatures module is disabled. If you don't use this field, remove it from the Extended Profiles."
+msgstr ""
+
+#: modules/buddypress/signature.php:103
+msgid "Extended Profiles support in GD bbPress Toolbox Pro is disabled. You should remove this field."
+msgstr ""
+
+#: modules/buddypress/signature.php:32
+msgid "This field is disabled."
+msgstr ""
+
+#: modules/admin.php:38
+msgid "Latest Forum Topics and Replies"
+msgstr ""
+
+#: modules/admin.php:42
+msgid "Online Users in the Forums"
+msgstr ""
+
+#: modules/buddypress/signature.php:8
+msgid "GD bbPress Toolbox Pro"
+msgstr ""
+
+#: modules/bbpress.php:118
+msgid "Duplicate Topic"
+msgstr ""
+
+#: modules/bbpress.php:164
+msgid "<strong>ERROR</strong>: Your topic title is too short."
+msgstr ""
+
+#: modules/bbpress.php:96
+#: modules/lock.php:96
+#: modules/thanks.php:104
+msgid "<strong>ERROR</strong>: Are you sure you wanted to do that?"
+msgstr ""
+
+#: modules/bbpress.php:190
+msgid "<strong>ERROR</strong>: Your topic is too long."
+msgstr ""
+
+#: modules/bbpress.php:204
+msgid "<strong>ERROR</strong>: Your reply title is too short."
+msgstr ""
+
+#: modules/bbpress.php:170
+msgid "<strong>ERROR</strong>: Your topic title is too long."
+msgstr ""
+
+#: modules/buddypress/signature.php:28
+msgid "Signatures module is disabled."
+msgstr ""
+
+#: modules/buddypress/signature.php:9
+msgid "Signature Text Area"
+msgstr ""
+
+#: modules/canned.php:40
+#: modules/canned.php:70
+#: modules/toolbar.php:107
+msgid "New"
+msgstr ""
+
+#: modules/canned.php:41
+#: modules/canned.php:64
+msgid "View"
+msgstr ""
+
+#: modules/canned.php:44
+msgid "Found In Trash"
+msgstr ""
+
+#: modules/canned.php:43
+msgid "Found"
+msgstr ""
+
+#: modules/integrate.php:155
+msgid "Registered On"
+msgstr ""
+
+#: modules/integrate.php:182
+msgid "Has thanked"
+msgstr ""
+
+#: modules/integrate.php:191
+msgid "Been thanked"
+msgstr ""
+
+#: modules/lock.php:92
+msgid "<strong>ERROR</strong>: You can't lock topics."
+msgstr ""
+
+#: modules/canned.php:68
+msgid "Choose from the most used"
+msgstr ""
+
+#: modules/canned.php:66
+#: modules/canned.php:36
+#: modules/canned.php:38
+msgid "Add New"
+msgstr ""
+
+#: modules/canned.php:69
+#: modules/canned.php:59
+#: modules/canned.php:45
+msgid "Parent"
+msgstr ""
+
+#: modules/canned.php:67
+msgid "Add or remove"
+msgstr ""
+
+#: modules/bbpress.php:210
+msgid "<strong>ERROR</strong>: Your reply title is too long."
+msgstr ""
+
+#: modules/bbpress.php:224
+msgid "<strong>ERROR</strong>: Your reply is too short."
+msgstr ""
+
+#: modules/bbpress.php:230
+msgid "<strong>ERROR</strong>: Your reply is too long."
+msgstr ""
+
+#: modules/bbpress.php:397
+msgid "Reply Title (Maximum Length: %d):"
+msgstr ""
+
+#: modules/front.php:114
+msgid "12 hours"
+msgstr ""
+
+#: modules/front.php:111
+msgid "30 minutes"
+msgstr ""
+
+#: modules/front.php:112
+msgid "60 minutes"
+msgstr ""
+
+#: modules/front.php:119
+msgid "Users active in the past %s"
+msgstr ""
+
+#: modules/front.php:102
+msgid "Users currently online"
+msgstr ""
+
+#: modules/front.php:115
+msgid "24 hours"
+msgstr ""
+
+#: modules/front.php:116
+msgid "7 days"
+msgstr ""
+
+#: modules/front.php:113
+msgid "2 hours"
+msgstr ""
+
+#: theme/gdbbx-widget-userprofile.php:95
+msgid "Log In"
+msgstr ""
+
+#: widgets/newposts.php:34
+msgid "New topics or topics with new replies."
+msgstr ""
+
+#: widgets/newposts.php:45
+#: widgets/topicsviews.php:35
+#: widgets/onlineusers.php:40
+#: widgets/userprofile.php:43
+#: widgets/statistics.php:35
+#: widgets/topicinfo.php:42
+msgid "Content"
+msgstr ""
+
+#: modules/notify.php:280
+#: modules/notify.php:307
+#: modules/notify.php:285
+#: modules/notify.php:323
+#: modules/notify.php:345
+#: modules/notify.php:318
+msgid "No log saved."
+msgstr ""
+
+#: modules/lock.php:129
+msgid "Lock"
+msgstr ""
+
+#: modules/navmenu.php:18
+msgid "bbPress Specific"
+msgstr ""
+
+#: modules/lock.php:125
+msgid "Unlock"
+msgstr ""
+
+#: modules/notify.php:302
+msgid "This topic was modified by %s. Reason: %s"
+msgstr ""
+
+#: modules/navmenu.php:74
+msgid "bbPress Topic Views"
+msgstr ""
+
+#: modules/canned.php:71
+msgid "found"
+msgstr ""
+
+#: modules/canned.php:72
+msgid "Separate"
+msgstr ""
+
+#: modules/canned.php:72
+msgid "with commas"
+msgstr ""
+
+#: modules/front.php:60
+msgid "All latest topics"
+msgstr ""
+
+#: modules/front.php:63
+msgid "My user profile page"
+msgstr ""
+
+#: modules/private.php:188
+msgid "This topic has been set as private."
+msgstr ""
+
+#: modules/private.php:196
+msgid "This reply has been set as private."
+msgstr ""
+
+#: modules/private.php:134
+msgid "This topic is marked as private"
+msgstr ""
+
+#: modules/report.php:24
+msgid "Report message is required."
+msgstr ""
+
+#: modules/toolbar.php:191
+msgid "Toolbox"
+msgstr ""
+
+#: modules/toolbar.php:197
+msgid "Front Page"
+msgstr ""
+
+#: modules/thanks.php:216
+msgid "Thanks"
+msgstr ""
+
+#: modules/signature.php:157
+msgid "HTML will be stripped."
+msgstr ""
+
+#: modules/signature.php:161
+msgid "BBCodes will be stripped."
+msgstr ""
+
+#: modules/signature.php:153
+msgid "You can use BBCodes."
+msgstr ""
+
+#: modules/thanks.php:218
+msgid "Remove Thanks"
+msgstr ""
+
+#: modules/thanks.php:220
+msgid "Thanks Saved"
+msgstr ""
+
+#: modules/notify.php:340
+msgid "This reply was modified by %s. Reason: %s"
+msgstr ""
+
+#: modules/private.php:231
+msgid "Set this as private topic"
+msgstr ""
+
+#: modules/private.php:245
+msgid "Set this as private reply"
+msgstr ""
+
+#: modules/private.php:106
+msgid "Topic is marked as private."
+msgstr ""
+
+#: modules/private.php:114
+msgid "Reply is marked as private."
+msgstr ""
+
+#: modules/toolbar.php:180
+msgid "Reset Forums"
+msgstr ""
+
+#: modules/toolbar.php:168
+msgid "Repair Forums"
+msgstr ""
+
+#: modules/toolbar.php:174
+msgid "Import Forums"
+msgstr ""
+
+#: modules/canned.php:46
+#: modules/canned.php:62
+msgid "All"
+msgstr ""
+
+#: modules/canned.php:61
+msgid "Popular"
+msgstr ""
+
+#: modules/toolbar.php:301
+msgid "Dev4Press Homepage"
+msgstr ""
+
+#: modules/toolbar.php:279
+msgid "Information"
+msgstr ""
+
+#: modules/toolbar.php:294
+msgid "bbPress Homepage"
+msgstr ""
+
+#: widgets/newposts.php:46
+#: widgets/onlineusers.php:41
+#: widgets/topicinfo.php:43
+#: widgets/topicsviews.php:36
+#: widgets/userprofile.php:44
+#: widgets/statistics.php:36
+msgid "Extra"
+msgstr ""
+
+#: modules/tracking.php:166
+#: modules/tracking.php:208
+msgid "unread"
+msgstr ""
+
+#: modules/tracking.php:198
+msgid "New Topic"
+msgstr ""
+
+#: modules/tracking.php:198
+#: modules/tracking.php:138
+msgid "new"
+msgstr ""
+
+#: modules/tracking.php:208
+msgid "Unread Topic"
+msgstr ""
+
+#: modules/tracking.php:414
+msgid "Online"
+msgstr ""
+
+#: theme/gdbbx-forums-statistics.php:66
+msgid "Total posts"
+msgstr ""
+
+#: theme/gdbbx-forums-statistics.php:18
+msgid "Who is online"
+msgstr ""
+
+#: theme/gdbbx-forums-statistics.php:60
+msgid "Forum Statistics"
+msgstr ""
+
+#: theme/gdbbx-forums-statistics.php:34
+msgid "Most users ever online was <strong>%s</strong> on %s"
+msgstr ""
+
+#: theme/gdbbx-form-signature-generic.php:7
+#: theme/gdbbx-form-signature-bbpress.php:12
+msgid "Signature length is limited to %s characters."
+msgstr ""
+
+#: theme/gdbbx-forums-statistics.php:67
+msgid "Total topics"
+msgstr ""
+
+#: theme/gdbbx-forums-statistics.php:68
+msgid "Total users"
+msgstr ""
+
+#: theme/gdbbx-forums-statistics.php:65
+msgid "Total forums"
+msgstr ""
+
+#: theme/gdbbx-form-attachment.php:14
+msgid "Add another file"
+msgstr ""
+
+#: theme/gdbbx-form-lock.php:2
+msgid "This topic is temporarily locked."
+msgstr ""
+
+#: theme/gdbbx-form-notify-on-reply-edit.php:1
+#: theme/gdbbx-form-notify-on-topic-edit.php:1
+msgid "On edit notifications"
+msgstr ""
+
+#: theme/gdbbx-form-notify-on-reply-edit.php:5
+msgid "Notify reply author"
+msgstr ""
+
+#: theme/gdbbx-form-notify-on-reply-edit.php:10
+#: theme/gdbbx-form-notify-on-topic-edit.php:10
+msgid "Notify topic subscribers"
+msgstr ""
+
+#: modules/toolbar.php:308
+msgid "Plugin Homepage"
+msgstr ""
+
+#: modules/tracking.php:156
+msgid "Forum has new posts"
+msgstr ""
+
+#: modules/tracking.php:156
+msgid "new posts"
+msgstr ""
+
+#: modules/tracking.php:138
+msgid "New Reply"
+msgstr ""
+
+#: forms/update.php:38
+msgid "Important Notice"
+msgstr ""
+
+#: forms/update.php:39
+msgid "Before you can use the plugin, clear the website and browser cache to make sure that latest JS and CSS files are loaded."
+msgstr ""
+
+#: forms/update.php:45
+msgid "Click here to run Update tool."
+msgstr ""
+
+#: theme/gdbbx-forums-statistics.php:46
+msgid "Legend"
+msgstr ""
+
+#: theme/gdbbx-forums-statistics.php:74
+msgid "Our newest member is"
+msgstr ""
+
+#: theme/gdbbx-forums-welcome.php:2
+msgid "Welcome back"
+msgstr ""
+
+#: theme/gdbbx-forums-welcome.php:9
+msgid "There have been %s and %s since your last visit at %s on %s."
+msgstr ""
+
+#: theme/gdbbx-list-canned-replies.php:1
+msgid "Show Canned Replies List"
+msgstr ""
+
+#: theme/gdbbx-list-canned-replies.php:2
+msgid "Hide Canned Replies List"
+msgstr ""
+
+#: theme/gdbbx-form-report-post.php:8
+msgid "Send Report"
+msgstr ""
+
+#: theme/gdbbx-form-report-post.php:4
+msgid "Report Message"
+msgstr ""
+
+#: theme/gdbbx-form-report-post.php:15
+msgid "Thank you, your report has been sent."
+msgstr ""
+
+#: theme/gdbbx-form-notify-on-topic-edit.php:5
+msgid "Notify topic author"
+msgstr ""
+
+#: theme/gdbbx-form-report-post.php:9
+msgid "Cancel"
+msgstr ""
+
+#: theme/gdbbx-form-report-post.php:12
+msgid "Please wait, sending report."
+msgstr ""
+
+#: theme/gdbbx-form-report-post.php:7
+msgid "Use this only to report spam, harassment, fighting, or rude content."
+msgstr ""
+
+#: theme/gdbbx-widget-userprofile.php:107
+msgid "Login &amp; Registration"
+msgstr ""
+
+#: widgets/topicsviews.php:24
+msgid "List of the selected topic views."
+msgstr ""
+
+#: widgets/topicinfo.php:138
+msgid "Voices"
+msgstr ""
+
+#: widgets/topicinfo.php:125
+msgid "Closed"
+msgstr ""
+
+#: widgets/topicsviews.php:25
+msgid "Topics Views"
+msgstr ""
+
+#: widgets/topicinfo.php:154
+msgid "Participants"
+msgstr ""
+
+#: widgets/newposts.php:151
+msgid "No topics found"
+msgstr ""
+
+#: widgets/onlineusers.php:29
+msgid "List of current online users."
+msgstr ""
+
+#: widgets/onlineusers.php:30
+msgid "Online Users"
+msgstr ""
+
+#: widgets/statistics.php:24
+msgid "Forum statistics information."
+msgstr ""
+
+#: theme/gdbbx-widget-userprofile.php:18
+msgid "edit profile"
+msgstr ""
+
+#: theme/gdbbx-widget-newposts.php:16
+#: theme/gdbbx-dashboard-activity-post.php:27
+msgid "by"
+msgstr ""
+
+#: theme/gdbbx-widget-onlineusers.php:42
+msgid "Users online"
+msgstr ""
+
+#: theme/gdbbx-widget-userprofile.php:79
+msgid "Important Links"
+msgstr ""
+
+#: theme/gdbbx-thanks-list.php:6
+msgid "Total of %s users thanked author for this post. Here are last %s listed."
+msgstr ""
+
+#: theme/gdbbx-widget-userprofile.php:24
+msgid "log out"
+msgstr ""
+
+#: theme/gdbbx-widget-onlineusers.php:58
+msgid "Most users ever online was <strong>%s</strong> on %s."
+msgstr ""
+
+#: widgets/topicinfo.php:110
+msgid "Posted"
+msgstr ""
+
+#: widgets/topicinfo.php:117
+msgid "Last Activity"
+msgstr ""
+
+#: theme/gdbbx-list-canned-replies.php:31
+msgid "Uncategorized"
+msgstr ""
+
+#: modules/tracking.php:414
+msgid "Offline"
+msgstr ""
+
+#: theme/gdbbx-dashboard-activity-post.php:26
+msgid "%s ago"
+msgstr ""
+
+#: theme/gdbbx-form-attachment-edit.php:1
+msgid "Current Attachments"
+msgstr ""
+
+#: widgets/topicsviews.php:101
+msgid "Topic View: %s"
+msgstr ""
+
+#: widgets/userprofile.php:32
+msgid "Logged in user profile and links."
+msgstr ""
+
+#: widgets/topicinfo.php:31
+msgid "Information about current topic."
+msgstr ""
+

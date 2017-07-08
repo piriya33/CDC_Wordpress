@@ -1,0 +1,12 @@
+%TOPIC_EDITOR% edited topic: %TOPIC_TITLE%.
+
+Edit log:
+%TOPIC_EDIT%
+
+You can see edited topic: %TOPIC_LINK%
+
+-----------
+You are receiving this email because you subscribed to a forum topic. Login and visit the topic to unsubscribe from these emails.
+
+-----------
+Do not reply to this email!

@@ -1,0 +1,22 @@
+=== GD bbPress Toolbox ===
+== List of included languages ==
+
+=== fa_IR [Persian – Farsi] ===
+Plugin Version: 4.4.3
+Translated by: Saiyed Mohammad Sadegh Hosseini
+URL: http://sitet.net
+
+=== sv_SE [Svenska] ===
+Plugin Version: 4.4
+Translated by: Mattias Tengblad, WordPress Sverige
+URL: http://wpsv.se
+
+= pt_BR (Português Brasileiro) =
+Plugin Version: 4.0
+Translated by: Moisés Back Böll
+URL: http://www.facebook.com/PegaDesconto
+
+=== de_DE [Deutsch] ===
+Plugin Version: 3.8
+Translated by: E-Vance
+URL: http://www.e-vance.net/

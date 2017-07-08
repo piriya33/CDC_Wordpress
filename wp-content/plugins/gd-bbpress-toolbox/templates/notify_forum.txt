@@ -1,0 +1,9 @@
+%TOPIC_AUTHOR% created new topic '%TOPIC_TITLE%' in forum: %FORUM_TITLE%.
+You can see this topic here: %TOPIC_LINK%
+
+-----------
+You are receiving this email because you subscribed to a forum. Login and visit your profile page to unsubscribe from these emails.
+
+Forum Link: %FORUM_LINK%
+-----------
+Do not reply to this email!

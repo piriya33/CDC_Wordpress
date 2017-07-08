@@ -1,0 +1,5 @@
+%THANKS_AUTHOR% said thanks for '%POST_TITLE%' in forum: '%FORUM_TITLE%'.
+
+You can see this post here: %POST_LINK%
+-----------
+Do not reply to this email!
