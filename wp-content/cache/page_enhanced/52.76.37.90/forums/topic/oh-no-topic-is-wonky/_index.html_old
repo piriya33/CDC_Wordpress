@@ -7,7 +7,9 @@
 <link rel="pingback" href="http://52.76.37.90/xmlrpc.php">
 
 <title>Oh no! Topic is wonky &#8211; Chaloke Dot Com</title>
+<link rel='dns-prefetch' href='//maxcdn.bootstrapcdn.com' />
 <link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<link rel='dns-prefetch' href='//cdn.jsdelivr.net' />
 <link rel='dns-prefetch' href='//s.w.org' />
 <link rel="alternate" type="application/rss+xml" title="Chaloke Dot Com &raquo; Feed" href="http://52.76.37.90/feed/" />
 <link rel="alternate" type="application/rss+xml" title="Chaloke Dot Com &raquo; Comments Feed" href="http://52.76.37.90/comments/feed/" />
@@ -29,7 +31,20 @@ img.emoji {
 	padding: 0 !important;
 }
 </style>
+<link rel='stylesheet' id='fontawesome-css'  href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css?ver=4.7.0' type='text/css' media='all' />
+<link rel='stylesheet' id='gdbbx-front-core-css'  href='http://52.76.37.90/wp-content/plugins/gd-bbpress-toolbox/css/front-core.min.css?ver=4.7.2.625' type='text/css' media='all' />
+<link rel='stylesheet' id='gdbbx-front-widgets-css'  href='http://52.76.37.90/wp-content/plugins/gd-bbpress-toolbox/css/front-widgets.min.css?ver=4.7.2.625' type='text/css' media='all' />
 <link rel='stylesheet' id='bbp-default-css'  href='http://52.76.37.90/wp-content/plugins/bbpress/templates/default/css/bbpress.css?ver=2.5.12-6148' type='text/css' media='screen' />
+<link rel='stylesheet' id='cptch_stylesheet-css'  href='http://52.76.37.90/wp-content/plugins/captcha/css/front_end_style.css?ver=4.3.0' type='text/css' media='all' />
+<link rel='stylesheet' id='dashicons-css'  href='http://52.76.37.90/wp-includes/css/dashicons.min.css?ver=4.8' type='text/css' media='all' />
+<link rel='stylesheet' id='cptch_desktop_style-css'  href='http://52.76.37.90/wp-content/plugins/captcha/css/desktop_style.css?ver=4.3.0' type='text/css' media='all' />
+<link rel='stylesheet' id='wp_html5video_css-css'  href='http://52.76.37.90/wp-content/plugins/html5-videogallery-plus-player/assets/css/video-js.css?ver=2.1.3' type='text/css' media='all' />
+<link rel='stylesheet' id='wp_html5video_colcss-css'  href='http://52.76.37.90/wp-content/plugins/html5-videogallery-plus-player/assets/css/video-style.css?ver=2.1.3' type='text/css' media='all' />
+<link rel='stylesheet' id='wp_html5video_popup-css'  href='http://52.76.37.90/wp-content/plugins/html5-videogallery-plus-player/assets/css/magnific-popup.css?ver=2.1.3' type='text/css' media='all' />
+<link rel='stylesheet' id='wptu-front-style-css'  href='http://52.76.37.90/wp-content/plugins/ticker-ultimate/assets/css/wptu-front.css?ver=1.0.0' type='text/css' media='all' />
+<link rel='stylesheet' id='wpfcas-font-awesome-css'  href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css?ver=1.2.5' type='text/css' media='all' />
+<link rel='stylesheet' id='wpfcas_style-css'  href='http://52.76.37.90/wp-content/plugins/wp-featured-content-and-slider/assets/css/featured-content-style.css?ver=1.2.5' type='text/css' media='all' />
+<link rel='stylesheet' id='wpfcas_slick_style-css'  href='http://52.76.37.90/wp-content/plugins/wp-featured-content-and-slider/assets/css/slick.css?ver=1.2.5' type='text/css' media='all' />
 <link rel='stylesheet' id='wc-memberships-frontend-css'  href='http://52.76.37.90/wp-content/plugins/woocommerce-memberships/assets/css/frontend/wc-memberships-frontend.min.css?ver=1.8.5' type='text/css' media='all' />
 <link rel='stylesheet' id='storefront-style-css'  href='http://52.76.37.90/wp-content/themes/storefront/style.css?ver=2.2.4' type='text/css' media='all' />
 <style id='storefront-style-inline-css' type='text/css'>
@@ -40,7 +55,7 @@ img.emoji {
 			}
 
 			.sd-fixed-width .site {
-				background-color:#fcfcfc;
+				background-color:#f7f7f7;
 			}
 
 			.sticky-wrapper,
@@ -249,7 +264,7 @@ img.emoji {
 			}
 
 				.sp-fixed-width .site {
-					background-color:#ffffff;
+					background-color:#f2f2f2;
 				}
 			
 
@@ -278,11 +293,10 @@ img.emoji {
 </style>
 <link rel='stylesheet' id='storefront-icons-css'  href='http://52.76.37.90/wp-content/themes/storefront/assets/sass/base/icons.css?ver=2.2.4' type='text/css' media='all' />
 <link rel='stylesheet' id='storefront-fonts-css'  href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,300italic,400italic,600,700,900&#038;subset=latin%2Clatin-ext' type='text/css' media='all' />
-<link rel='stylesheet' id='d4p-bbtools-css'  href='http://52.76.37.90/wp-content/plugins/gd-bbpress-tools/css/gd-bbpress-tools.css?ver=1.9_b2144_free' type='text/css' media='all' />
-<link rel='stylesheet' id='d4p-bbattachments-css-css'  href='http://52.76.37.90/wp-content/plugins/gd-bbpress-attachments/css/gd-bbpress-attachments.css?ver=2.4_b2148_free' type='text/css' media='all' />
 <link rel='stylesheet' id='sbc-styles-css'  href='http://52.76.37.90/wp-content/plugins/storefront-blog-customiser/assets/css/style.css?ver=4.8' type='text/css' media='all' />
 <link rel='stylesheet' id='sd-styles-css'  href='http://52.76.37.90/wp-content/plugins/storefront-designer/assets/css/style.css?ver=4.8' type='text/css' media='all' />
 <link rel='stylesheet' id='sd-styles-2-css'  href='http://52.76.37.90/wp-content/plugins/storefront-designer/assets/css/style-2.css?ver=4.8' type='text/css' media='all' />
+<link rel='stylesheet' id='bfa-font-awesome-css'  href='//cdn.jsdelivr.net/fontawesome/4.7.0/css/font-awesome.min.css?ver=4.7.0' type='text/css' media='all' />
 <link rel='stylesheet' id='storefront-woocommerce-style-css'  href='http://52.76.37.90/wp-content/themes/storefront/assets/sass/woocommerce/woocommerce.css?ver=2.2.4' type='text/css' media='all' />
 <style id='storefront-woocommerce-style-inline-css' type='text/css'>
 
@@ -433,11 +447,14 @@ img.emoji {
 			
 </style>
 <link rel='stylesheet' id='sp-header-frontend-css'  href='http://52.76.37.90/wp-content/plugins/storefront-powerpack/includes/customizer/header/assets/css/sp-header-frontend.css?ver=1.4.1' type='text/css' media='all' />
+<link rel='stylesheet' id='sp-layout-css'  href='http://52.76.37.90/wp-content/plugins/storefront-powerpack/includes/customizer/layout/assets/css/layout.css?ver=1.4.1' type='text/css' media='all' />
 <link rel='stylesheet' id='sp-styles-css'  href='http://52.76.37.90/wp-content/plugins/storefront-powerpack/includes/customizer/shop/../../../assets/css/style.css?ver=1.4.1' type='text/css' media='all' />
 <link rel='stylesheet' id='custom-css-css'  href='http://52.76.37.90/wp-content/plugins/theme-customisations-master/custom/style.css?ver=4.8' type='text/css' media='all' />
 <script type='text/javascript' src='http://52.76.37.90/wp-includes/js/jquery/jquery.js?ver=1.12.4'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/theme-customisations-master/custom/custom.js?ver=4.8'></script>
+<script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/storefront-designer/assets/js/jquery-sticky.min.js?ver=1.0.0'></script>
+<script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/storefront-designer/assets/js/sticky-navigation.min.js?ver=1.0.0'></script>
 <link rel='https://api.w.org/' href='http://52.76.37.90/wp-json/' />
 <link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://52.76.37.90/xmlrpc.php?rsd" />
 <link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://52.76.37.90/wp-includes/wlwmanifest.xml" /> 
@@ -448,28 +465,34 @@ img.emoji {
 <link rel='shortlink' href='http://52.76.37.90/?p=105' />
 <link rel="alternate" type="application/json+oembed" href="http://52.76.37.90/wp-json/oembed/1.0/embed?url=http%3A%2F%2F52.76.37.90%2Fforums%2Ftopic%2Foh-no-topic-is-wonky%2F" />
 <link rel="alternate" type="text/xml+oembed" href="http://52.76.37.90/wp-json/oembed/1.0/embed?url=http%3A%2F%2F52.76.37.90%2Fforums%2Ftopic%2Foh-no-topic-is-wonky%2F&#038;format=xml" />
+<meta name="generator" content="GD bbPress Toolbox Pro 4.7.2, Build 625" />
+
 <script type="text/javascript">
-            /* <![CDATA[ */
-            var gdbbPressToolsInit = {
-                quote_method: "bbcode",
-                quote_wrote: "wrote",
-                bbpress_version: 25,
-                wp_version: 48,
-                wp_editor: 1            };
-            /* ]]> */
-        </script><script type="text/javascript">
-                /* <![CDATA[ */
-                var gdbbPressAttachmentsInit = {
-                    max_files: 4                };
-                /* ]]> */
-        </script>	<noscript><style>.woocommerce-product-gallery{ opacity: 1 !important; }</style></noscript>
-	<link rel="icon" href="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2016/07/04093950/cropped-CDClogo2015_rev1_A-32x32.png" sizes="32x32" />
+    /* <![CDATA[ */
+    var gdbxRender_Data = { url: "http://52.76.37.90/wp-admin/admin-ajax.php", run_quote: true, run_report: false, run_thanks: false, run_attachments: true, run_canned_replies: false, run_bbcodes: true, run_fitvids: true, wp_editor: true, wp_version: 48, last_cookie: 1499618232, bbpress_version: 25, text_are_you_sure: "Are you sure? Operation is not reversible.", now: 1499614632, validate_attachments: true, insert_into_content: true, max_files: 5, max_size: 5120000, limiter: true, allowed_extensions: "jpg jpeg jpe gif png bmp tiff tif ico asf asx wmv wmx wm avi divx flv mov qt mpeg mpg mpe mp4 m4v ogv webm mkv 3gp 3gpp 3g2 3gp2 txt asc c cc h srt csv tsv ics rtx css vtt dfxp mp3 m4a m4b ra ram wav ogg oga mid midi wma wax mka rtf js pdf class tar zip gz gzip rar 7z psd xcf doc pot pps ppt wri xla xls xlt xlw mdb mpp docx docm dotx dotm xlsx xlsm xlsb xltx xltm xlam pptx pptm ppsx ppsm potx potm ppam sldx sldm onetoc onetoc2 onetmp onepkg oxps xps odt odp ods odg odc odb odf wp wpd key numbers pages afl", text_select_file: "Select File", text_file_name: "Name", text_file_size: "Size", text_file_type: "Extension", text_file_validation: "Error!", text_file_validation_size: "The file is too big.", text_file_validation_type: "File type not allowed.", text_file_remove: "Remove this file", text_file_shortcode: "Insert into content", text_file_caption: "Set file caption", text_file_caption_placeholder: "Caption..." };
+    /* ]]> */
+</script>
+
+        	<noscript><style>.woocommerce-product-gallery{ opacity: 1 !important; }</style></noscript>
+	        <style type="text/css">
+            #wpadminbar #wp-admin-bar-gdbb-toolbar .ab-icon:before {
+                content: "\f477";
+                top: 2px;
+            }
+
+            @media screen and ( max-width: 782px ) {
+                #wpadminbar li#wp-admin-bar-gdbb-toolbar {
+                    display: block;
+                }
+            }
+        </style>
+    <link rel="icon" href="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2016/07/04093950/cropped-CDClogo2015_rev1_A-32x32.png" sizes="32x32" />
 <link rel="icon" href="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2016/07/04093950/cropped-CDClogo2015_rev1_A-192x192.png" sizes="192x192" />
 <link rel="apple-touch-icon-precomposed" href="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2016/07/04093950/cropped-CDClogo2015_rev1_A-180x180.png" />
 <meta name="msapplication-TileImage" content="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2016/07/04093950/cropped-CDClogo2015_rev1_A-270x270.png" />
 </head>
 
-<body class="topic bbpress topic-template-default single single-topic postid-105 wp-custom-logo right-sidebar woocommerce-active sp-shop-alignment-center sbc-meta-inline-top-2 sd-fixed-width sd-buttons-rounded sd-scale-largest sd-header-compact sd-typography-helvetica">
+<body class="topic bbpress topic-template-default single single-topic postid-105 wp-custom-logo right-sidebar woocommerce-active sp-max-width sp-shop-alignment-center sbc-meta-inline-top-2 sd-fixed-width sd-buttons-rounded sd-buttons-flat sd-buttons-shadows sd-scale-largest sd-button-size-smaller sd-header-compact sd-typography-helvetica">
 
 
 <div id="page" class="hfeed site">
@@ -480,10 +503,10 @@ img.emoji {
 					<a class="skip-link screen-reader-text" href="#site-navigation">Skip to navigation</a>
 		<a class="skip-link screen-reader-text" href="#content">Skip to content</a>
 				<div class="site-branding">
-			<a href="http://52.76.37.90/" class="custom-logo-link" rel="home" itemprop="url"><img width="373" height="110" src="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2016/07/04093947/cropped-CDClogo2015_rev1_A-simple-copy-2.png" class="custom-logo" alt="Chaloke Dot Com" itemprop="logo" srcset="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2016/07/04093947/cropped-CDClogo2015_rev1_A-simple-copy-2.png 373w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2016/07/04093947/cropped-CDClogo2015_rev1_A-simple-copy-2-300x88.png 300w" sizes="(max-width: 373px) 100vw, 373px" /></a>		</div>
+			<a href="http://52.76.37.90/" class="custom-logo-link" rel="home" itemprop="url"><img width="326" height="110" src="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2016/07/04093949/cropped-CDClogo2015_rev1100px_A-simple-copy-2.png" class="custom-logo" alt="Chaloke Dot Com" itemprop="logo" srcset="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2016/07/04093949/cropped-CDClogo2015_rev1100px_A-simple-copy-2.png 326w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2016/07/04093949/cropped-CDClogo2015_rev1100px_A-simple-copy-2-300x101.png 300w" sizes="(max-width: 326px) 100vw, 326px" /></a>		</div>
 				    <nav class="secondary-navigation" role="navigation" aria-label="Secondary Navigation">
 			    <div class="menu-user-control-container"><ul id="menu-user-control" class="menu"><li><a href="http://52.76.37.90/wp-login.php">Log In</a></li><li><a href="http://52.76.37.90/wp-login.php?action=register">Register</a></li></ul></div>		    </nav><!-- #site-navigation -->
-		    <div class="storefront-primary-navigation">		<nav id="site-navigation" class="main-navigation" role="navigation" aria-label="Primary Navigation">
+		    <div class="storefront-primary-navigation"><section class="sd-sticky-navigation fixedsticky">		<nav id="site-navigation" class="main-navigation" role="navigation" aria-label="Primary Navigation">
 		<button class="menu-toggle" aria-controls="site-navigation" aria-expanded="false"><span>Menu</span></button>
 			<div class="primary-navigation"><ul id="menu-navigation" class="menu"><li id="menu-item-103" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-103"><a href="/">Home</a></li>
 <li id="menu-item-77" class="menu-item menu-item-type-post_type menu-item-object-forum menu-item-77"><a href="http://52.76.37.90/forums/forum/cdc/">Forums</a></li>
@@ -503,7 +526,7 @@ img.emoji {
 			<li>
 				<div class="widget woocommerce widget_shopping_cart"><div class="widget_shopping_cart_content"></div></div>			</li>
 		</ul>
-		</div>
+		</section></div>
 		</div>
 	</header><!-- #masthead -->
 
@@ -523,11 +546,11 @@ img.emoji {
 			
 <div id="bbpress-forums">
 
-	<div class="bbp-breadcrumb"><p><a href="http://52.76.37.90/" class="bbp-breadcrumb-home">Welcome</a> <span class="bbp-breadcrumb-sep">&rsaquo;</span> <a href="http://52.76.37.90/forums/" class="bbp-breadcrumb-root">Forums</a> <span class="bbp-breadcrumb-sep">&rsaquo;</span> <a href="http://52.76.37.90/forums/forum/cdc/" class="bbp-breadcrumb-forum">CDC Forums</a> <span class="bbp-breadcrumb-sep">&rsaquo;</span> <a href="http://52.76.37.90/forums/forum/cdc/the-living-room/" class="bbp-breadcrumb-forum">The Living Room</a> <span class="bbp-breadcrumb-sep">&rsaquo;</span> <span class="bbp-breadcrumb-current">Oh no! Topic is wonky</span></p></div>
+	<div xmlns:v="http://rdf.data-vocabulary.org/#" class="bbp-breadcrumb"><p><span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" href="http://52.76.37.90/" class="bbp-breadcrumb-home">Home</a></span> <span class="bbp-breadcrumb-sep">&rsaquo;</span> <span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" href="http://52.76.37.90/forums/" class="bbp-breadcrumb-root">Forums</a></span> <span class="bbp-breadcrumb-sep">&rsaquo;</span> <span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" href="http://52.76.37.90/forums/forum/cdc/" class="bbp-breadcrumb-forum">CDC Forums</a></span> <span class="bbp-breadcrumb-sep">&rsaquo;</span> <span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" href="http://52.76.37.90/forums/forum/cdc/the-living-room/" class="bbp-breadcrumb-forum">The Living Room</a></span> <span class="bbp-breadcrumb-sep">&rsaquo;</span> <span class="bbp-breadcrumb-current">Oh no! Topic is wonky</span></p></div>
 	
 	
 		
-		<div class="bbp-template-notice info"><p class="bbp-topic-description">This topic contains 0 replies, has 1 voice, and was last updated by <a href="http://52.76.37.90/forums/users/cdc-admin/" title="View cdc-admin&#039;s profile" class="bbp-author-avatar" rel="nofollow"><img src="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2016/07/12075502/CDClogo2015_rev1_A1-150x150.png" width="14" height="14" alt="cdc-admin" class="avatar avatar-14 wp-user-avatar wp-user-avatar-14 alignnone photo" /></a>&nbsp;<a href="http://52.76.37.90/forums/users/cdc-admin/" title="View cdc-admin&#039;s profile" class="bbp-author-name" rel="nofollow">cdc-admin</a> <a href="http://52.76.37.90/forums/topic/oh-no-topic-is-wonky/" title="Oh no! Topic is wonky">11 months, 2 weeks ago</a>.</p></div>
+		<div class="bbp-template-notice info"><p class="bbp-topic-description">This topic contains 1 reply, has 1 voice, and was last updated by <a href="http://52.76.37.90/forums/users/cdc-admin/" title="View cdc-admin&#039;s profile" class="bbp-author-avatar" rel="nofollow"><img src="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2016/07/12075502/CDClogo2015_rev1_A1-150x150.png" width="14" height="14" alt="cdc-admin" class="avatar avatar-14 wp-user-avatar wp-user-avatar-14 alignnone photo" /></a>&nbsp;<a href="http://52.76.37.90/forums/users/cdc-admin/" title="View cdc-admin&#039;s profile" class="bbp-author-name" rel="nofollow">cdc-admin</a> <a href="http://52.76.37.90/forums/topic/oh-no-topic-is-wonky/#post-16207" title="Reply To: Oh no! Topic is wonky">10 hours, 57 minutes ago</a>.</p></div>
 		
 		
 			
@@ -598,8 +621,71 @@ img.emoji {
 	<div class="bbp-reply-content">
 
 		
-		<p>Guess I should see that fixed!</p>
+		<p><a class="d4pbbc-attachment" target="_blank" title="2015-11-16-1" href="http://52.76.37.90/wp-content/uploads/2017/07/2015-11-16-1.png" rel="nofollow"><img class="d4pbbc-attachment-image" alt="2015-11-16-1" src="http://52.76.37.90/wp-content/uploads/2017/07/2015-11-16-1.png" /></a></p>
+<p>Guess I should see that fixed!</p>
 
+
+<ul id="bbp-topic-revision-log-105" class="bbp-topic-revision-log">
+
+	<li id="bbp-topic-revision-log-105-item-16208" class="bbp-topic-revision-log-item">
+		This topic was modified 10 hours, 52 minutes ago by <a href="http://52.76.37.90/forums/users/cdc-admin/" title="View cdc-admin&#039;s profile"><img src="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2016/07/12075502/CDClogo2015_rev1_A1-150x150.png" width="14" height="14" alt="cdc-admin" class="avatar avatar-14 wp-user-avatar wp-user-avatar-14 alignnone photo" /></a>&nbsp;<a href="http://52.76.37.90/forums/users/cdc-admin/" title="View cdc-admin&#039;s profile">cdc-admin</a>.
+	</li>
+	<li id="bbp-topic-revision-log-105-item-16210" class="bbp-topic-revision-log-item">
+		This topic was modified 10 hours, 47 minutes ago by <a href="http://52.76.37.90/forums/users/cdc-admin/" title="View cdc-admin&#039;s profile"><img src="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2016/07/12075502/CDClogo2015_rev1_A1-150x150.png" width="14" height="14" alt="cdc-admin" class="avatar avatar-14 wp-user-avatar wp-user-avatar-14 alignnone photo" /></a>&nbsp;<a href="http://52.76.37.90/forums/users/cdc-admin/" title="View cdc-admin&#039;s profile">cdc-admin</a>.
+	</li>
+
+</ul>
+
+<div class="bbp-attachments"><h6>Attachments:</h6>You must be <a href='http://52.76.37.90/wp-login.php?redirect_to=http%3A%2F%2F52.76.37.90%2Fforums%2Ftopic%2Foh-no-topic-is-wonky%2F'>logged in</a> to view attached files.</div>
+		
+	</div><!-- .bbp-reply-content -->
+
+</div><!-- .reply -->
+</li>
+<li>
+
+<div id="post-16207" class="bbp-reply-header">
+
+	<div class="bbp-meta">
+
+		<span class="bbp-reply-post-date">09/07/2017 at 11:40 am</span>
+
+		
+		<a href="http://52.76.37.90/forums/topic/oh-no-topic-is-wonky/#post-16207" class="bbp-reply-permalink">#16207</a>
+
+		
+		<span class="bbp-admin-links"></span>
+		
+	</div><!-- .bbp-meta -->
+
+</div><!-- #post-16207 -->
+
+<div class="even bbp-parent-forum-79 bbp-parent-topic-105 bbp-reply-position-2 user-id-1 topic-author post-16207 reply type-reply status-publish hentry">
+
+	<div class="bbp-reply-author">
+
+		
+		<a href="http://52.76.37.90/forums/users/cdc-admin/" title="View cdc-admin&#039;s profile" class="bbp-author-avatar" rel="nofollow"><img src="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2016/07/12075502/CDClogo2015_rev1_A1-150x150.png" width="80" height="80" alt="cdc-admin" class="avatar avatar-80 wp-user-avatar wp-user-avatar-80 alignnone photo" /></a><br /><a href="http://52.76.37.90/forums/users/cdc-admin/" title="View cdc-admin&#039;s profile" class="bbp-author-name" rel="nofollow">cdc-admin</a><br /><div class="bbp-author-role">Keymaster</div>
+		
+		
+	</div><!-- .bbp-reply-author -->
+
+	<div class="bbp-reply-content">
+
+		
+		<p>Testing image upload</p>
+<p>YAY!</p>
+
+
+<ul id="bbp-reply-revision-log-16207" class="bbp-reply-revision-log">
+
+	<li id="bbp-reply-revision-log-16207-item-16211" class="bbp-reply-revision-log-item">
+		This reply was modified 10 hours, 47 minutes ago by <a href="http://52.76.37.90/forums/users/cdc-admin/" title="View cdc-admin&#039;s profile"><img src="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2016/07/12075502/CDClogo2015_rev1_A1-150x150.png" width="14" height="14" alt="cdc-admin" class="avatar avatar-14 wp-user-avatar wp-user-avatar-14 alignnone photo" /></a>&nbsp;<a href="http://52.76.37.90/forums/users/cdc-admin/" title="View cdc-admin&#039;s profile">cdc-admin</a>.
+	</li>
+
+</ul>
+
+<div class="bbp-attachments"><h6>Attachments:</h6>You must be <a href='http://52.76.37.90/wp-login.php?redirect_to=http%3A%2F%2F52.76.37.90%2Fforums%2Ftopic%2Foh-no-topic-is-wonky%2F'>logged in</a> to view attached files.</div>
 		
 	</div><!-- .bbp-reply-content -->
 
@@ -674,11 +760,44 @@ img.emoji {
 
 			
 				<li>
+					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/%e0%b8%a2%e0%b9%89%e0%b8%b2%e0%b8%a2%e0%b9%80%e0%b8%82%e0%b9%89%e0%b8%b2%e0%b8%9a%e0%b9%89%e0%b8%b2%e0%b8%99%e0%b9%83%e0%b8%ab%e0%b8%a1%e0%b9%88-%e0%b8%aa%e0%b8%a1%e0%b8%b2%e0%b8%8a%e0%b8%b4%e0%b8%81/">ย้ายเข้าบ้านใหม่ สมาชิกต้องทำอะไรบ้าง</a>
+
+					
+					
+						<div>2 days, 13 hours ago</div>
+
+					
+				</li>
+
+			
+				<li>
+					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/cdc-atr-trailing-stop/">CDC ATR Trailing Stop</a>
+
+					
+					
+						<div>2 days, 23 hours ago</div>
+
+					
+				</li>
+
+			
+				<li>
+					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/cdc-action-zone-basic-default/">CDC Action Zone Basic / Default</a>
+
+					
+					
+						<div>3 days, 7 hours ago</div>
+
+					
+				</li>
+
+			
+				<li>
 					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/oh-no-topic-is-wonky/">Oh no! Topic is wonky</a>
 
 					
 					
-						<div>11 months, 2 weeks ago</div>
+						<div>10 hours, 57 minutes ago</div>
 
 					
 				</li>
@@ -686,8 +805,16 @@ img.emoji {
 			
 		</ul>
 
-		</div><div id="archives-2" class="widget widget_archive"><span class="gamma widget-title">Archives</span>		<ul>
-			<li><a href='http://52.76.37.90/2016/06/'>June 2016</a></li>
+		</div><div id="d4p_bbw_newposts-2" class="widget cls_d4p_bbw_newposts"><span class="gamma widget-title">New Posts</span><div class="d4p-bbw-widget bbx-newposts">
+<ul>
+<li>
+<a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/oh-no-topic-is-wonky/#post-16207" title="Reply To: Oh no! Topic is wonky">Reply To: Oh no! Topic is wonky</a>
+<em class="bbp-last-active">10 hours, 57 minutes ago</em>
+</li>
+</ul>
+</div></div><div id="archives-2" class="widget widget_archive"><span class="gamma widget-title">Archives</span>		<ul>
+			<li><a href='http://52.76.37.90/2017/07/'>July 2017</a></li>
+	<li><a href='http://52.76.37.90/2016/06/'>June 2016</a></li>
 		</ul>
 		</div></div><!-- #secondary -->
 
@@ -710,6 +837,12 @@ img.emoji {
 				<li><a class="bbp-forum-title" href="http://52.76.37.90/forums/forum/cdc/official-announcement-and-faq/">Official Announcement and FAQ</a></li>
 
 			
+				<li><a class="bbp-forum-title" href="http://52.76.37.90/forums/forum/cdc/the-kitchen/">The Kitchen &#8211; รวบรวมสูตร และระบบการเทรด</a></li>
+
+			
+				<li><a class="bbp-forum-title" href="http://52.76.37.90/forums/forum/cdc/courses-and-events/">Courses and Events</a></li>
+
+			
 				<li><a class="bbp-forum-title" href="http://52.76.37.90/forums/forum/cdc/the-living-room/">The Living Room</a></li>
 
 			
@@ -718,7 +851,7 @@ img.emoji {
 			
 		</ul>
 
-		</div><div id="nav_menu-3" class="widget widget_nav_menu"><span class="gamma widget-title">User Menu</span><div class="menu-user-control-container"><ul id="menu-user-control-1" class="menu"><li><a href="http://52.76.37.90/wp-login.php">Log In</a></li><li><a href="http://52.76.37.90/wp-login.php?action=register">Register</a></li></ul></div></div>							</div>
+		</div>							</div>
 							<div class="block footer-widget-2">
 								<div id="bbp_topics_widget-4" class="widget widget_display_topics"><span class="gamma widget-title">Most Popular Topics</span>
 		<ul>
@@ -729,7 +862,40 @@ img.emoji {
 
 					
 					
-						<div>11 months, 2 weeks ago</div>
+						<div>10 hours, 57 minutes ago</div>
+
+					
+				</li>
+
+			
+				<li>
+					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/cdc-action-zone-basic-default/">CDC Action Zone Basic / Default</a>
+
+					
+					
+						<div>3 days, 7 hours ago</div>
+
+					
+				</li>
+
+			
+				<li>
+					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/cdc-atr-trailing-stop/">CDC ATR Trailing Stop</a>
+
+					
+					
+						<div>2 days, 23 hours ago</div>
+
+					
+				</li>
+
+			
+				<li>
+					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/%e0%b8%a2%e0%b9%89%e0%b8%b2%e0%b8%a2%e0%b9%80%e0%b8%82%e0%b9%89%e0%b8%b2%e0%b8%9a%e0%b9%89%e0%b8%b2%e0%b8%99%e0%b9%83%e0%b8%ab%e0%b8%a1%e0%b9%88-%e0%b8%aa%e0%b8%a1%e0%b8%b2%e0%b8%8a%e0%b8%b4%e0%b8%81/">ย้ายเข้าบ้านใหม่ สมาชิกต้องทำอะไรบ้าง</a>
+
+					
+					
+						<div>2 days, 13 hours ago</div>
 
 					
 				</li>
@@ -744,11 +910,44 @@ img.emoji {
 
 			
 				<li>
+					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/%e0%b8%a2%e0%b9%89%e0%b8%b2%e0%b8%a2%e0%b9%80%e0%b8%82%e0%b9%89%e0%b8%b2%e0%b8%9a%e0%b9%89%e0%b8%b2%e0%b8%99%e0%b9%83%e0%b8%ab%e0%b8%a1%e0%b9%88-%e0%b8%aa%e0%b8%a1%e0%b8%b2%e0%b8%8a%e0%b8%b4%e0%b8%81/">ย้ายเข้าบ้านใหม่ สมาชิกต้องทำอะไรบ้าง</a>
+
+					
+					
+						<div>2 days, 13 hours ago</div>
+
+					
+				</li>
+
+			
+				<li>
+					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/cdc-atr-trailing-stop/">CDC ATR Trailing Stop</a>
+
+					
+					
+						<div>2 days, 23 hours ago</div>
+
+					
+				</li>
+
+			
+				<li>
+					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/cdc-action-zone-basic-default/">CDC Action Zone Basic / Default</a>
+
+					
+					
+						<div>3 days, 7 hours ago</div>
+
+					
+				</li>
+
+			
+				<li>
 					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/oh-no-topic-is-wonky/">Oh no! Topic is wonky</a>
 
 					
 					
-						<div>11 months, 2 weeks ago</div>
+						<div>10 hours, 57 minutes ago</div>
 
 					
 				</li>
@@ -767,7 +966,40 @@ img.emoji {
 
 					
 					
-						<div>11 months, 2 weeks ago</div>
+						<div>10 hours, 57 minutes ago</div>
+
+					
+				</li>
+
+			
+				<li>
+					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/%e0%b8%a2%e0%b9%89%e0%b8%b2%e0%b8%a2%e0%b9%80%e0%b8%82%e0%b9%89%e0%b8%b2%e0%b8%9a%e0%b9%89%e0%b8%b2%e0%b8%99%e0%b9%83%e0%b8%ab%e0%b8%a1%e0%b9%88-%e0%b8%aa%e0%b8%a1%e0%b8%b2%e0%b8%8a%e0%b8%b4%e0%b8%81/">ย้ายเข้าบ้านใหม่ สมาชิกต้องทำอะไรบ้าง</a>
+
+					
+					
+						<div>2 days, 13 hours ago</div>
+
+					
+				</li>
+
+			
+				<li>
+					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/cdc-atr-trailing-stop/">CDC ATR Trailing Stop</a>
+
+					
+					
+						<div>2 days, 23 hours ago</div>
+
+					
+				</li>
+
+			
+				<li>
+					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/cdc-action-zone-basic-default/">CDC Action Zone Basic / Default</a>
+
+					
+					
+						<div>3 days, 7 hours ago</div>
 
 					
 				</li>
@@ -777,7 +1009,7 @@ img.emoji {
 
 		</div>							</div>
 				</div><!-- .footer-widgets.row-1 -->		<div class="site-info">
-			&copy; Chaloke Dot Com 2017						<br /> Storefront designed by <a href="http://www.woocommerce.com" title="WooCommerce - The Best eCommerce Platform for WordPress" rel="author">WooCommerce</a>.					</div><!-- .site-info -->
+			&copy; Chaloke Dot Com 2017					</div><!-- .site-info -->
 				<div class="storefront-handheld-footer-bar">
 			<ul class="columns-3">
 									<li class="my-account">
@@ -806,14 +1038,28 @@ img.emoji {
 	
 </div><!-- #page -->
 
-<div style="text-align: center;"><a href="https://www.w3-edge.com/products/" rel="external">Optimization WordPress Plugins &amp; Solutions by W3 EDGE</a></div><script type="application/ld+json">{"@context":"http:\/\/schema.org\/","@type":"BlogPosting","mainEntityOfPage":{"@type":"webpage","@id":"http:\/\/52.76.37.90\/forums\/topic\/oh-no-topic-is-wonky\/"},"publisher":{"@type":"organization","name":"Chaloke Dot Com","logo":{"@type":"ImageObject","url":"http:\/\/s3-ap-southeast-1.amazonaws.com\/cdc-wordpress\/wp-content\/uploads\/2016\/07\/04093947\/cropped-CDClogo2015_rev1_A-simple-copy-2.png","width":"373","height":"110"}},"author":{"@type":"person","name":"cdc-admin"},"datePublished":"","dateModified":"2016-07-19T11:51:58+00:00","name":"Oh no! Topic is wonky","headline":"Oh no! Topic is wonky","description":"Welcome &rsaquo; Forums &rsaquo; CDC Forums &rsaquo; The Living Room &rsaquo; Oh no! Topic is wonky This topic contains 0 replies, has 1 voice, and was last updated by &nbsp;cdc-admin 11 months, 2 weeks ago. Author Posts 19\/07\/2016 at 11:51 am #105 cdc-adminKeymaster Guess I should see that fixed! Author Posts You must be logged [&hellip;]"}</script><script type="application/ld+json">{"@context":"https:\/\/schema.org\/","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":"1","item":{"name":"Home","@id":"http:\/\/52.76.37.90"}},{"@type":"ListItem","position":"2","item":{"name":"Topic","@id":"http:\/\/52.76.37.90\/topics\/"}},{"@type":"ListItem","position":"3","item":{"name":"Oh no! Topic is wonky"}}]}</script><script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/bbpress/templates/default/js/editor.js?ver=2.5.12-6148'></script>
+<div style="text-align: center;"><a href="https://www.w3-edge.com/products/" rel="external">Optimization WordPress Plugins &amp; Solutions by W3 EDGE</a></div>
 <script type='text/javascript'>
 /* <![CDATA[ */
-var bbpTopicJS = {"bbp_ajaxurl":"http:\/\/52.76.37.90\/forums\/topic\/oh-no-topic-is-wonky\/?bbp-ajax=true","generic_ajax_error":"Something went wrong. Refresh your browser and try again.","is_user_logged_in":"","fav_nonce":"cc0b872d00","subs_nonce":"8ebece03b4"};
+r3f5x9JS=escape(document['referrer']);
+hf4N='fc66f490205d60501b53820a4e3992e6';
+hf4V='55eb273332a10d9ea58c3db634cff77d';
+jQuery(document).ready(function($){var e="#commentform, .comment-respond form, .comment-form, #lostpasswordform, #registerform, #loginform, #login_form, #wpss_contact_form";$(e).submit(function(){$("<input>").attr("type","hidden").attr("name","r3f5x9JS").attr("value",r3f5x9JS).appendTo(e);return true;});var h="form[method='post']";$(h).submit(function(){$("<input>").attr("type","hidden").attr("name",hf4N).attr("value",hf4V).appendTo(h);return true;});});
+/* ]]> */
+</script> 
+<script type="application/ld+json">{"@context":"http:\/\/schema.org\/","@type":"BlogPosting","mainEntityOfPage":{"@type":"webpage","@id":"http:\/\/52.76.37.90\/forums\/topic\/oh-no-topic-is-wonky\/"},"publisher":{"@type":"organization","name":"Chaloke Dot Com","logo":{"@type":"ImageObject","url":"http:\/\/s3-ap-southeast-1.amazonaws.com\/cdc-wordpress\/wp-content\/uploads\/2016\/07\/04093949\/cropped-CDClogo2015_rev1100px_A-simple-copy-2.png","width":"326","height":"110"}},"author":{"@type":"person","name":"cdc-admin"},"datePublished":"","dateModified":"2017-07-09T11:55:38+00:00","name":"Oh no! Topic is wonky","headline":"Oh no! Topic is wonky","description":"Home &rsaquo; Forums &rsaquo; CDC Forums &rsaquo; The Living Room &rsaquo; Oh no! Topic is wonky This topic contains 1 reply, has 1 voice, and was last updated by &nbsp;cdc-admin 10 hours, 57 minutes ago. Author Posts 19\/07\/2016 at 11:51 am #105 cdc-adminKeymaster Guess I should see that fixed! This topic was modified 10 hours, [&hellip;]"}</script><script type="application/ld+json">{"@context":"https:\/\/schema.org\/","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":"1","item":{"name":"Home","@id":"http:\/\/52.76.37.90"}},{"@type":"ListItem","position":"2","item":{"name":"Topic","@id":"http:\/\/52.76.37.90\/topics\/"}},{"@type":"ListItem","position":"3","item":{"name":"Oh no! Topic is wonky"}}]}</script><script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/gd-bbpress-toolbox/d4pjs/fitvids/jquery.fitvids.js?ver=4.7.2.625'></script>
+<script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/gd-bbpress-toolbox/js/front-core.min.js?ver=4.7.2.625'></script>
+<script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/bbpress/templates/default/js/editor.js?ver=2.5.12-6148'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var bbpTopicJS = {"bbp_ajaxurl":"http:\/\/52.76.37.90\/forums\/topic\/oh-no-topic-is-wonky\/?bbp-ajax=true","generic_ajax_error":"Something went wrong. Refresh your browser and try again.","is_user_logged_in":"","fav_nonce":"2e07cfccb5","subs_nonce":"dc5f3c119b"};
 /* ]]> */
 </script>
 <script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/bbpress/templates/default/js/topic.js?ver=2.5.12-6148'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/bbpress/templates/default/js/reply.js?ver=2.5.12-6148'></script>
+<script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/html5-videogallery-plus-player/assets/js/video.js?ver=2.1.3'></script>
+<script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/html5-videogallery-plus-player/assets/js/jquery.magnific-popup.min.js?ver=2.1.3'></script>
+<script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/html5-videogallery-plus-player/assets/js/wp-html5vp-public.js?ver=2.1.3'></script>
 <script type='text/javascript'>
 /* <![CDATA[ */
 var wc_add_to_cart_params = {"ajax_url":"\/wp-admin\/admin-ajax.php","wc_ajax_url":"\/forums\/topic\/oh-no-topic-is-wonky\/?wc-ajax=%%endpoint%%","i18n_view_cart":"View cart","cart_url":"http:\/\/52.76.37.90\/cart\/","is_cart":"","cart_redirect_after_add":"no"};
@@ -836,12 +1082,11 @@ var wc_cart_fragments_params = {"ajax_url":"\/wp-admin\/admin-ajax.php","wc_ajax
 <script type='text/javascript' src='//52.76.37.90/wp-content/plugins/woocommerce/assets/js/frontend/cart-fragments.min.js?ver=3.1.0'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-content/themes/storefront/assets/js/navigation.min.js?ver=20120206'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-content/themes/storefront/assets/js/skip-link-focus-fix.min.js?ver=20130115'></script>
-<script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/gd-bbpress-tools/js/gd-bbpress-tools.js?ver=1.9_b2144_free'></script>
-<script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/gd-bbpress-attachments/js/gd-bbpress-attachments.js?ver=2.4_b2148_free'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-content/themes/storefront/assets/js/woocommerce/header-cart.min.js?ver=2.2.4'></script>
+<script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/wp-spamshield/js/jscripts-ftr2-min.js'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-includes/js/wp-embed.min.js?ver=4.8'></script>
 
 </body>
 </html>
 
-<!-- Served from: 52.76.37.90 @ 2017-06-29 22:08:56 by W3 Total Cache -->
+<!-- Served from: 52.76.37.90 @ 2017-07-09 22:37:12 by W3 Total Cache -->
