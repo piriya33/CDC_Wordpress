@@ -4,7 +4,7 @@ Tags: code, php, function, snippet, custom, execute, edit, editing, editor, func
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8A88KC7TFF6CS
 Requires at least: 3.9
 Tested up to: 4.8
-Stable tag: 4.4.1
+Stable tag: 4.6
 License: GPL3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -45,7 +45,7 @@ An easy to use, with intuitive interface, WordPress plugin that gives you the ab
 * Ability to collapse/expand the certain fields with code
 * Well documented
 
-[Get the PRO version now!](https://www.arthurgareginyan.com/plugin-my-custom-functions-pro.html)
+[Get the PRO version now!](https://www.spacexchimp.com/plugins/my-custom-functions-pro.html)
 
 **Coming soon:*** Reload the settings page at same position after pushing the save button* Multisite network support
 
@@ -54,7 +54,7 @@ An easy to use, with intuitive interface, WordPress plugin that gives you the ab
 This plugin is ready for translation and has already been translated into several languages.
 
 * English (default)
-* Russian
+* Russian (translation by [Milena Kiseleva](https://www.instagram.com/milava_kiseleva/))
 * Chinese-Taiwan (translation by Gordon Yu)
 * Spanish (translation by [Ramiro Garcés](http://www.ramirogarces.com.ve/))
 * French (translation by Theophil Bethel)
@@ -191,10 +191,30 @@ Commercial licensing (e.g. for projects that can’t use an open-source license)
 
 * [Developer Website](https://www.arthurgareginyan.com)
 * [Dedicated Plugin Page on GitHub](https://github.com/ArthurGareginyan/my-custom-functions)
-* [Premium Version](https://www.arthurgareginyan.com/plugin-my-custom-functions-pro.html)
+* [Premium Version](https://www.spacexchimp.com/plugins/my-custom-functions-pro.html)
 
 
 == Changelog ==
+
+= 4.6 =
+* Russian translation updated.
+* The navigation of the tabs is rearranged.
+* Fixed an issue due to which the sidebar was not hiding on mobile devices.
+* Code of sidebar moved to separate file 'sidebar.php'.
+* Support page tab moved from external source to plugin code.
+* My avatar moved from external source to plugin folder.
+* Banner moved from external source to plugin folder.
+* Code of PayPal button updated.
+
+= 4.5 =
+* Stylesheet in the admin.css file improved.
+* The '!important' declarations in the admin.css file removed.
+* Code formatting in the admin.js file improved.
+* Code commenting improved.
+* Load of the additional remote CSS file removed from the admin.js file.
+* Changed the sorting of enqueueing of scripts.
+* The ''Family' page tab renamed to 'Store'.
+* Added ad banner of my store website.
 
 = 4.4.1 =
 * The HTTPS mixed content issue fixed by changing all links to HTTPS.

@@ -4,8 +4,8 @@ Donate link: https://www.paypal.me/WesternDeal
 Author URL: https://profiles.wordpress.org/westerndeal/
 Tags: cf7, contact form 7, Contact Form 7 Integrations, contact forms, Google Sheets, Google Sheets Integrations, Google, Sheets
 Requires at least: 3.6
-Tested up to: 4.7.4
-Stable tag: 1.6
+Tested up to: 4.8.1
+Stable tag: 1.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -47,6 +47,7 @@ Enjoy!
 
 1. Installation step 3 - Google Sheets Connect Page.  
 2. Edit form - Google Sheets tab. 
+3. Google Sheet with special mail tags
 
 == Frequently Asked Questions ==
 
@@ -67,6 +68,10 @@ Please double-check those items and hopefully getting them right will fix the is
 * Now you can paste this code back on the `Admin Panel > Contact form 7 > Google Sheets` screen. 
 
 == Changelog ==
+= 1.7 (26/08/2017) =
+* Integrated Special Mail Tags with Spread Sheet without (_)underscores(Refer screenshot).
+* Fixed Date Format as per wordpress standards.
+
 = 1.6 =
 * Updated Google Spread Sheet Library
 * Changed classes name for PHP Google Auth library.

@@ -4,7 +4,7 @@ Plugin Name: Cimy Swift SMTP
 Plugin URI: http://www.marcocimmino.net/cimy-wordpress-plugins/cimy-swift-smtp/
 Description: Send email via SMTP (Compatible with GMAIL)
 Author: Marco Cimmino
-Version: 2.6.3
+Version: 3.0.2
 Author URI: mailto:cimmino.marco@gmail.com
 
 Copyright (c) 2007-2017 Marco Cimmino
@@ -36,6 +36,7 @@ The full copy of the GNU General Public License is available here: http://www.gn
 
 $cimy_swift_plugin_path = plugin_basename(dirname(__FILE__))."/";
 $cimy_swift_plugin_fullpath = WP_PLUGIN_DIR.'/'.$cimy_swift_plugin_path;
+$cimy_swift_plugin_webpath = plugins_url($cimy_swift_plugin_path);
 
 include('swift_engine.php');
 
@@ -77,7 +78,7 @@ function st_smtp_add_pages() {
 }
 
 function st_smtp_options_page() {
-	global $cimy_swift_domain, $cimy_swift_plugin_fullpath;
+	global $cimy_swift_domain, $cimy_swift_plugin_fullpath, $cimy_swift_plugin_webpath;
 
 	if (isset($_GET['error']) || (!current_user_can('manage_options')))
 		return;
@@ -96,6 +97,9 @@ function st_smtp_options_page() {
 	$st_smtp_config['sender_name'] = esc_attr($st_smtp_config['sender_name']);
 	$st_smtp_config['sender_mail'] = esc_attr($st_smtp_config['sender_mail']);
 	$suggested_ports = array("25", "465", "587");
+	$donate_bitcoin = "<a href=\"bitcoin:1EjLejbgHaXhdDoeoeRGtgCKRgWHAdgDvd\">".__("Donate Bitcoin", $cimy_swift_domain)."</a>";
+	$donate_ethereum = "<a href=\"ethereum:0x7ee77571012408a8A526C695f634982788D901Bd\">".__("Donate Ethereum", $cimy_swift_domain)."</a>";
+	$donate_litecoin = "<a href=\"litecoin:LR1LvSUTErugqbM2ff66bvr3FSEvg9JTFE\">".__("Donate Litecoin", $cimy_swift_domain)."</a>";
 
 	?>
 	<div class="wrap">
@@ -104,6 +108,30 @@ function st_smtp_options_page() {
 			screen_icon();
 	?>
 		<h2>Cimy Swift SMTP</h2>
+		<table width="600">
+			<tr>
+				<td>
+					<img src="<?php echo $cimy_swift_plugin_webpath; ?>images/bitcoin.png" width="100" height="100" />
+				</td>
+				<td>
+					<img src="<?php echo $cimy_swift_plugin_webpath; ?>images/ethereum.png" width="100" height="100" />
+				</td>
+				<td>
+					<img src="<?php echo $cimy_swift_plugin_webpath; ?>images/litecoin.png" width="100" height="100" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<?php echo $donate_bitcoin; ?>
+				</td>
+				<td>
+					<?php echo $donate_ethereum; ?>
+				</td>
+				<td>
+					<?php echo $donate_litecoin; ?>
+				</td>
+			</tr>
+		</table>
 		<p><?php _e("Add here your SMTP server details", $cimy_swift_domain); ?><br /><?php printf(__("<strong>Note:</strong> Gmail users need to use the server 'smtp.gmail.com' with TLS enabled and port %s", $cimy_swift_domain), "587"); ?></p>
 		<form method="post" autocomplete="off" action="<?php echo admin_url("options-general.php?page=swift_smtp&amp;updated=true"); ?>">
 		<?php wp_nonce_field('cimy_swift_smtp', 'cimy_swift_smtp_adminnonce', false); ?>
@@ -229,8 +257,11 @@ function st_smtp_options_page() {
 				$email = form_option('admin_email');
 			
 			$text = __("This is a test mail sent using the Cimy Swift SMTP Plugin. If you've received this email it means your connection has been set up properly! Cool!", $cimy_swift_domain);
-			
-			if (wp_mail($email, 'Cimy Swift SMTP Test', $text, '', array($cimy_swift_plugin_fullpath.'test_attachment.txt'), true)) {
+			$text .= "<br/><br/>".$donate_bitcoin;
+			$text .= "<br/>".$donate_ethereum;
+			$text .= "<br/>".$donate_litecoin;
+
+			if (wp_mail($email, 'Cimy Swift SMTP Test', $text, 'Content-type: text/html', array($cimy_swift_plugin_fullpath.'test_attachment.txt'), true)) {
 				echo "<p><strong>".__("TEST EMAIL SENT - Connection Verified.", $cimy_swift_domain)."<br />".__("If you don't receive the e-mail check also the spam folder.", $cimy_swift_domain)."</strong></p>";
 			}
 		}

@@ -1,7 +1,7 @@
 <?php
 /**
  *  WP-SpamShield Security
- *  File Version 1.9.15
+ *  File Version 1.9.16
  */
 
 /* Make sure file remains secure if called directly */
@@ -31,7 +31,7 @@ class WPSS_Security extends WP_SpamShield {
 	 *  Run early security protocols
 	 *  @dependencies	...
 	 *  @used by		WP_SpamShield->__construct()
-	 *  @action			'plugins_loaded' / priority WPSS_F0
+	 *  @hook			action|plugins_loaded|WPSS_F0
 	 *  @since			1.9.9.9.9
 	 */
 	static public function security_init() {
@@ -322,12 +322,22 @@ class WPSS_Security extends WP_SpamShield {
 				}
 			}
 		}
+
+		/* Integrate with Server Firewalls */
+
+		$firewall_threat_keys = array( 'WPSS_SEC_THREAT', 'BHCS_SEC_THREAT', 'X_KNOWN_SEC_THREAT', 'X_SITE_ATTACKER', 'X_KNOWN_ATTACKER', );
+		foreach( $firewall_threat_keys as $i => $k ) {
+			if( !empty( $_SERVER[$k] ) ) { $_SERVER['WPSS_SEC_THREAT'] = TRUE; return TRUE; }
+		}
+
+		/* No more tests */
+
 		return FALSE;
 	}
 
 	/**
 	 *  Ban users by IP address or check if they have been banned
-	 *  @param			$method		'set'|'chk'
+	 *  @param			string		$method		'set'|'chk'
 	 *  @dependencies	...
 	 *  @used by		...
 	 *  @since			1.9.4
@@ -394,11 +404,11 @@ class WPSS_Security extends WP_SpamShield {
 		$wpss_hta_data .= '<IfModule mod_setenvif.c>'.WPSS_EOL."\t".'SetEnvIf Remote_Addr '.$ip_ban_rgx.' WPSS_SEC_THREAT'.WPSS_EOL.'</IfModule>';
 		$wpss_hta_data .= WPSS_EOL.WPSS_EOL.'# END WP-SpamShield'.WPSS_EOL.WPSS_EOL;
 		$wpss_hta_data_wp = '# BEGIN WordPress';
-		
+
 		@clearstatcache();
 		if( @file_exists( $hta_file ) ) {
 			if( ! @file_exists( $hta_wpss_bak_dir ) ) {
-				wp_mkdir_p( $hta_wpss_bak_dir );
+				@wp_mkdir_p( $hta_wpss_bak_dir );
 				WPSS_PHP::chmod( $hta_wpss_bak_dir,	750 );
 				WPSS_PHP::chmod( $hta_bak_dir,		750 );
 				@copy ( $bak_dir_hta_file,	$hta_wpss_bak_dir.WPSS_DS.'.htaccess'	);
@@ -457,7 +467,7 @@ class WPSS_Security extends WP_SpamShield {
 
 		if( @file_exists( $hta_file ) ) {
 			if( ! @file_exists( $hta_wpss_bak_dir ) ) {
-				wp_mkdir_p( $hta_wpss_bak_dir );
+				@wp_mkdir_p( $hta_wpss_bak_dir );
 				@copy ( $bak_dir_hta_file, $hta_wpss_bak_dir.WPSS_DS.'.htaccess' );
 				@copy ( $wpss_index_file, $hta_wpss_bak_dir.WPSS_DS.'index.php' );
 				@copy ( $bak_dir_hta_file, $hta_bak_dir.WPSS_DS.'.htaccess' );
@@ -480,9 +490,9 @@ class WPSS_Security extends WP_SpamShield {
 	/**
 	 *  Admin Security Checks
 	 *  Check for specific plugin security issues and apply fix or workaround
-	 *  @dependencies	rs_wpss_is_admin_sproc(), rs_wpss_is_doing_ajax()
+	 *  @dependencies	rs_wpss_is_admin_sproc(), rs_wpss_is_user_logged_in()
 	 *  @used by		WP_SpamShield->__construct()
-	 *  @hook at		'admin_init' / priority -1000
+	 *  @hook			action|admin_init|-1000
 	 *  @since			1.9.5.8
 	 */
 	static public function check_admin_sec() {
@@ -509,7 +519,7 @@ class WPSS_Security extends WP_SpamShield {
 	 *  Only allow for certain specific conditions
 	 *  @dependencies	...
 	 *  @used by		WP_SpamShield->__construct()
-	 *  @hook at		'xmlrpc_methods' / priority 100
+	 *  @hook			filter|xmlrpc_methods|100
 	 *  @since			1.9.7.8
 	 */
 	static public function disable_xmlrpc_multicall( $methods ) {
@@ -613,7 +623,7 @@ class WPSS_Security extends WP_SpamShield {
 	 *  Misc Form Spam Check - Layer 2
 	 *  @dependencies	rs_wpss_is_login_page(), rs_wpss_is_doing_ajax(), WPSS_Security::early_admin_intercept(), rs_wpss_is_local_request(), WPSS_Security::get_raw_post_data(), rs_wpss_whitelist_check(), WPSS_Func::lower(), rs_wpss_get_query_string(), rs_wpss_is_login_page(), WPSS_Compatibility::misc_form_bypass(), ...
 	 *  @used by		WP_SpamShield->__construct()
-	 *  @hook at		'init' / priority -990
+	 *  @hook			action|init|-990
 	 *  @since			1.9.7.8
 	 */
 	static public function early_post_intercept() {
@@ -674,13 +684,13 @@ class WPSS_Security extends WP_SpamShield {
 
 		$blocked	= FALSE;
 		$c 			= array(
-			'name'		=> '', 
-			'value'		=> '1', 
-			'expire'	=> time() + 60*60*24*365*1, /* 1 year */ 
-			'path'		=> '/', 
-			'domain'	=> rs_wpss_get_cookie_domain(), 
-			'secure'	=> FALSE, 
-			'httponly'	=> FALSE, 
+			'name'		=> '',
+			'value'		=> '1',
+			'expire'	=> time() + YEAR_IN_SECONDS,
+			'path'		=> '/',
+			'domain'	=> rs_wpss_get_cookie_domain(),
+			'secure'	=> FALSE,
+			'httponly'	=> FALSE,
 		);
 
 		if( rs_wpss_is_xmlrpc() ) {
@@ -832,11 +842,11 @@ class WPSS_Security extends WP_SpamShield {
 	 *  SECURITY - Checks all incoming requests for malicious/vulnerable request methods
 	 *  @dependencies	rs_wpss_is_admin_sproc()
 	 *  @used by		WP_SpamShield->__construct()
-	 *  @hook at		'init' / priority -1000
+	 *  @hook			action|init|-1000
 	 *  @since			1.9.8.2
 	 */
 	static public function check_request_method() {
-		if( rs_wpss_is_admin_sproc() || rs_wpss_is_doing_cron() ) { return FALSE; }
+		if( rs_wpss_is_admin_sproc() || rs_wpss_is_doing_cron() || rs_wpss_is_cli() ) { return FALSE; }
 
 		/* BYPASS - HOOK */
 		$rmc_bypass = apply_filters( 'wpss_request_method_check_bypass', FALSE );
@@ -873,7 +883,7 @@ class WPSS_Security extends WP_SpamShield {
 	 *	Uses WP_Automatic_Updater class ( class-wp-automatic.php )
 	 *  @dependencies	rs_wpss_is_admin_sproc()
 	 *  @used by		...
-	 *  @hook at		...
+	 *  @hook			...
 	 *  @since			1.9.7.8
 	 *  @modified		1.9.9.8.6	Added option to disable, Added advanced option
 	 */

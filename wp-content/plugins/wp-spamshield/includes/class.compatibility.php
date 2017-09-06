@@ -1,7 +1,7 @@
 <?php
 /**
  *  WP-SpamShield Compatibility
- *  File Version 1.9.15
+ *  File Version 1.9.16
  */
 
 /* Make sure file remains secure if called directly */
@@ -106,7 +106,7 @@ final class WPSS_Compatibility extends WP_SpamShield {
 
 	/**
 	 *	Check if supported 3rd party plugins are active that require exceptions
-	 *	@hook			'plugins_loaded':-100
+	 *	@hook			action|plugins_loaded|-100
 	 *	@dependencies	...
 	 *	@since			...
 	 */
@@ -152,7 +152,7 @@ final class WPSS_Compatibility extends WP_SpamShield {
 
 	/**
 	 *	Check if unsupported 3rd party plugins are active, then deconflict
-	 *	@hook			'plugins_loaded':-90
+	 *	@hook			action|plugins_loaded|-90
 	 *	@since			1.9.15
 	 */
 	static public function unsupported() {
@@ -173,7 +173,7 @@ final class WPSS_Compatibility extends WP_SpamShield {
 
 	/**
 	 *	Check if plugins with known conflicts/issues are active, then deconflict using workarounds
-	 *	@hook			'plugins_loaded':100
+	 *	@hook			action|plugins_loaded|100
 	 *	@dependencies	...
 	 *	@since			...
 	 */
@@ -400,7 +400,7 @@ final class WPSS_Compatibility extends WP_SpamShield {
 			) { return TRUE; }
 		}
 
-		/* WooCommerce Payment Gateways / Endpoints */
+		/* WooCommerce Payment Gateways / Endpoints / AJAX / REST */
 		if( self::is_woocom_enabled() ) {
 			if( ( $user_agent === 'PayPal IPN ( https://www.paypal.com/ipn )' && parent::preg_match( "~^(ipn|ipnpb|notify|reports)(\.sandbox)?\.paypal\.com$~", $rev_dns ) ) || strpos( $req_uri, 'WC_Gateway_Paypal' ) !== FALSE ) { return TRUE; }
 			/* Plugin: 'woocommerce-gateway-payfast/gateway-payfast.php' */
@@ -412,7 +412,8 @@ final class WPSS_Compatibility extends WP_SpamShield {
 			foreach( $wc_funcs as $i => $f ) {
 				if( function_exists( $f ) && (bool) @$f() ) { return TRUE; }
 			}
-			if( rs_wpss_is_wc_ajax_request() ) { return TRUE; }
+			if( rs_wpss_is_wc_ajax_request() || self::is_wc_doing_rest() ) { return TRUE; }
+			if( rs_wpss_is_doing_nojax_rest() && rs_wpss_is_json_request() && 0 === strpos( $user_agent, $wc_rest_api_ua ) ) { return TRUE; }
 		}
 
 		/* Easy Digital Downloads Payment Gateways */
@@ -708,6 +709,36 @@ final class WPSS_Compatibility extends WP_SpamShield {
 		$req_uri	= WPSS_Func::lower( $_SERVER['REQUEST_URI'] );
 		$set_pass	= ( FALSE === $chk_set || parent::preg_match( "~jetpack/v[\d\.]+/settings~i", $req_uri ) );
 		return ( FALSE !== strpos( $req_uri, '/jetpack/v' ) && TRUE === $set_pass && self::is_jp_active() && rs_wpss_is_doing_rest() );
+	}
+
+	/**
+	 *	Check if WooCommerce is doing REST
+	 *	@dependencies	WPSS_Func::lower(), WPSS_Compatibility::is_woocom_enabled(), rs_wpss_is_doing_rest(), ...
+	 *	@since			1.9.16
+	 */
+	static public function is_wc_doing_rest() {
+		$req_uri = WPSS_Func::lower( $_SERVER['REQUEST_URI'] );
+		return ( FALSE !== strpos( $req_uri, '/wc/v' ) && self::is_woocom_enabled() && rs_wpss_is_doing_rest() );
+	}
+
+	/**
+	 *	Check if WooCommerce API Request
+	 *	@dependencies	WPSS_Func::lower(), WPSS_Compatibility::is_woocom_enabled(), rs_wpss_is_doing_rest(), ...
+	 *	@since			1.9.16
+	 */
+	static public function is_wc_api_request() {
+		return ( self::is_wc_api_ua() && self::is_woocom_enabled() && rs_wpss_is_doing_nojax_rest() && rs_wpss_is_json_request() );
+	}
+
+	/**
+	 *	Check if WooCommerce API User Agent
+	 *	@dependencies	rs_wpss_get_user_agent()
+	 *	@since			1.9.16
+	 */
+	static public function is_wc_api_ua() {
+		$user_agent	= rs_wpss_get_user_agent();
+		$wc_api_ua	= 'WooCommerce API Client';
+		return ( 0 === strpos( $user_agent, $wc_api_ua ) );
 	}
 
 	/* Add next... */

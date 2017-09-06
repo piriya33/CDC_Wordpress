@@ -6,10 +6,10 @@ Uses Swift Mailer engine - http://swiftmailer.org/
 
 
 REQUIREMENTS:
-- PHP >= 5.3.0
+- PHP >= 7.0.x
   for SSL and TLS support you need to have PHP compiled with openSSL support
   http://www.php.net/openssl
-- WORDPRESS >= 3.0.x
+- WORDPRESS >= 4.0.x
 
 INSTALLATION:
 - just copy whole cimy-swift-smtp subdir into your plug-in directory and activate it
@@ -61,6 +61,16 @@ A lot of times I cannot reproduce the problem and I need more details, so if you
 
 
 CHANGELOG:
+v3.0.2 - 06/09/2017
+- Fixed PHP Parse error regression on older PHP 5.x (try #2, thanks to Andrew Bruce)
+
+v3.0.1 - 06/09/2017
+- Fixed PHP Parse error regression on older PHP 5.x (despite they are now unsupported, thanks to Andrew Bruce)
+
+v3.0.0 - 02/09/2017
+- Updated Swift Mailer to 6.0.1 (dropped support for PHP <=5.x and WordPress <= 3.x)
+- Fixed XSS security vulnerability that can be triggered by other admin users (credit to Zach Julian)
+
 v2.6.3 - 10/05/2017
 - Updated Swift Mailer to 5.4.8
 

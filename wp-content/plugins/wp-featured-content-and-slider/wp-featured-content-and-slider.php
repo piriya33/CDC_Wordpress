@@ -6,7 +6,7 @@
  * Domain Path: /languages/
  * Description: Easy to add and display what features your company, product or service offers, using our shortcode OR template code.
  * Author: WP Online Support
- * Version: 1.2.5
+ * Version: 1.2.7
  * Author URI: http://www.wponlinesupport.com/
  *
  * @package WordPress
@@ -16,7 +16,7 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 if( !defined( 'WPFCAS_VERSION' ) ) {
-	define( 'WPFCAS_VERSION', '1.2.5' ); // Version of plugin
+	define( 'WPFCAS_VERSION', '1.2.7' ); // Version of plugin
 }
 if( !defined( 'WPFCAS_DIR' ) ) {
     define( 'WPFCAS_DIR', dirname( __FILE__ ) ); // Plugin dir

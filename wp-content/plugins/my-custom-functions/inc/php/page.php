@@ -10,7 +10,7 @@ defined( 'ABSPATH' ) or die( "Restricted access!" );
 /**
  * Render Settings Page
  *
- * @since 4.4.1
+ * @since 4.6
  */
 function MCFunctions_render_submenu_page() {
 
@@ -49,17 +49,18 @@ function MCFunctions_render_submenu_page() {
                 <li class="active"><a href="#tab-core" data-toggle="tab"><?php _e( 'Main', $text ); ?></a></li>
                 <li><a href="#tab-usage" data-toggle="tab"><?php _e( 'Usage', $text ); ?></a></li>
                 <li><a href="#tab-faq" data-toggle="tab"><?php _e( 'F.A.Q.', $text ); ?></a></li>
-                <li><a href="#tab-author" data-toggle="tab"><?php _e( 'Author', $text ); ?></a></li>
                 <li><a href="#tab-support" data-toggle="tab"><?php _e( 'Support', $text ); ?></a></li>
-                <li><a href="#tab-family" data-toggle="tab"><?php _e( 'Family', $text ); ?></a></li>
+                <li><a href="#tab-author" data-toggle="tab"><?php _e( 'Author', $text ); ?></a></li>
+                <li><a href="#tab-store" data-toggle="tab"><?php _e( 'Store', $text ); ?></a></li>
             </ul>
             <!-- END-TABS NAVIGATION MENU -->
 
             <!-- TAB 1 -->
             <div class="tab-page fade active in" id="tab-core">
-
+                <!-- INCLUDE SIDEBAR -->
+                <?php require_once( MCFUNC_PATH . 'inc/php/sidebar.php' ); ?>
+                <!-- INCLUDE SETTINGS -->
                 <?php require_once( MCFUNC_PATH . 'inc/php/settings.php' ); ?>
-
             </div>
             <!-- END-TAB 1 -->
 
@@ -74,9 +75,9 @@ function MCFunctions_render_submenu_page() {
                             <li><?php _e( 'Place your PHP code in the field.', $text ); ?><br><br>
                                 <?php _e( 'Example of PHP code:', $text ); ?>
 <pre><code>function NameOfYourFunction {
-    
+
     ...
-    
+
 }</code></pre>
                                 <p class="note"><b><?php _e( 'Note!', $text ); ?></b> <?php _e( 'Please do not wrap your PHP code in the <code>&lt;?php</code>...<code>?&gt;</code> HTML tags.', $text ); ?></p>
                                 <p class="note"><b><?php _e( 'Note!', $text ); ?></b> <?php _e( 'Before use, please read the instructions on the F.A.Q. tab on what to do in case of a website crash.', $text ); ?></p>
@@ -140,11 +141,11 @@ function MCFunctions_render_submenu_page() {
                         <div class="question-4"><?php _e( 'Can I use HTML/CSS/JS code integrated in PHP code?', $text ); ?></div>
                         <div class="answer-4"><?php _e( 'Yes. But you need to do it properly, like this:', $text ); ?><br>
 <pre><code>function NameOfYourFunction {
-    
+
     echo "&lt;script&gt;
                 // Your JS code
           &lt;/script&gt;";
-    
+
 }</code></pre>
 </div>
 
@@ -219,30 +220,39 @@ function MCFunctions_render_submenu_page() {
             <!-- END-TAB 3 -->
 
             <!-- TAB 4 -->
+            <div class="tab-page fade" id="tab-support">
+                <div class="postbox">
+                    <h3 class="title"><?php _e( 'Support', $text ); ?></h3>
+                    <div class="inside">
+                        <img src="<?php echo MCFUNC_URL . 'inc/img/thanks.png'; ?>" alt="Thanks!" class="pull-right">
+                            <p><?php _e( 'If you appreciate my work, you can buy me a coffee!', $text ); ?></p>
+                            <p><?php _e( 'I spend a lot of time and effort trying to make sure that the themes, plugins and another things I build are useful, and the ultimate proof of that for me is that you actually want to use them. But, I’m an independent developer, without a regular income, so every little contribution helps cover my costs and lets me spend more time building things for people like you to enjoy.', $text ); ?></p>
+                            <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8A88KC7TFF6CS" target="_blank" class="btn btn-default btn-labeled">
+                                    <span class="btn-label">
+                                        <img src="<?php echo MCFUNC_URL . 'inc/img/paypal.svg'; ?>" alt="PayPal">
+                                    </span>
+                                    <?php _e( 'Donate with PayPal', $text ); ?>
+                            </a>
+                            <p><?php _e( 'Thank you for your support!', $text ); ?></p>
+                    </div>
+                </div>
+            </div>
+            <!-- END-TAB 4 -->
+
+            <!-- TAB 5 -->
             <div class="tab-page fade" id="tab-author">
                 <div class="postbox">
                     <h3 class="title"><?php _e( 'Author', $text ); ?></h3>
                     <div class="inside include-tab-author"></div>
                 </div>
             </div>
-            <!-- END-TAB 4 -->
-
-            <!-- TAB 5 -->
-            <div class="tab-page fade" id="tab-support">
-                <div class="postbox">
-                    <h3 class="title"><?php _e( 'Support', $text ); ?></h3>
-                    <div class="inside include-tab-support"></div>
-                </div>
-            </div>
             <!-- END-TAB 5 -->
 
             <!-- TAB 6 -->
-            <div class="tab-page fade" id="tab-family">
-                <div class="include-tab-family"></div>
+            <div class="tab-page fade" id="tab-store">
+                <div class="include-tab-store"></div>
             </div>
             <!-- END-TAB 6 -->
-
-            <div class="additional-css"></div>
 
         </div>
 

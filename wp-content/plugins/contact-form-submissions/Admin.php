@@ -20,13 +20,13 @@ class WPCF7SAdmin
 
         add_filter('views_edit-wpcf7s', array($this, 'views'), 999);
 
-        add_filter('gettext', array($this, 'custom_status'), 20, 3);
+        add_filter('gettext', array($this, 'custom_status'), 20, 2);
     }
 
     /**
      * Replace the default post status
      */
-    public function custom_status($translations = '', $text = '', $domain = '')
+    public function custom_status($translations = '', $text = '')
     {
         global $pagenow, $post_type;
         if ('wpcf7s' === $post_type && is_admin() && 'edit.php' == $pagenow && 'Published' === $text) {
@@ -38,7 +38,7 @@ class WPCF7SAdmin
     /**
      * Change the default post sort
      */
-    public function set_post_order($query = false)
+    public function set_post_order($query)
     {
         global $pagenow, $post_type;
         if ('wpcf7s' === $post_type && is_admin() && 'edit.php' == $pagenow && !isset($_GET['orderby'])) {
@@ -57,7 +57,7 @@ class WPCF7SAdmin
         }
         $keep_views = array('all', 'publish', 'trash');
         // remove others
-        foreach ($views as $key => $view) {
+        foreach (array_keys($views) as $key) {
             if (!in_array($key, $keep_views)) {
                 unset($views[$key]);
             }
@@ -227,12 +227,15 @@ class WPCF7SAdmin
     public function mail_meta_box($post)
     {
         $form_id = get_post_meta($post->ID, 'form_id', true);
-        $sender = get_post_meta($post->ID, 'sender', true);
+        $sender = esc_html(get_post_meta($post->ID, 'sender', true));
         $sender_mailto = preg_replace('/([a-zA-Z0-9_\-\.]*@\\S+\\.\\w+)/', '<a href="mailto:$1">$1</a>', $sender);
-        $recipient = get_post_meta($post->ID, 'recipient', true);
+        $recipient = esc_html(get_post_meta($post->ID, 'recipient', true));
         $recipient_mailto = preg_replace('/([a-zA-Z0-9_\-\.]*@\\S+\\.\\w+)/', '<a href="mailto:$1">$1</a>', $recipient);
+        $subject = esc_html(get_post_meta($post->ID, 'subject', true));
 
-        $additional_headers = get_post_meta($post->ID, 'additional_headers', true); ?>
+        $body = apply_filters('the_content', esc_html($post->post_content));
+
+        $additional_headers = esc_html(get_post_meta($post->ID, 'additional_headers', true)); ?>
         <table class="form-table contact-form-submission">
             <tbody>
                 <tr>
@@ -249,17 +252,17 @@ class WPCF7SAdmin
                 </tr>
                 <tr>
                     <th scope="row"><?php _e('Subject', 'contact-form-submissions'); ?></th>
-                    <td><?php echo get_post_meta($post->ID, 'subject', true); ?></td>
+                    <td><?php echo $subject; ?></td>
                 </tr>
                 <tr>
                     <th scope="row"><?php _e('Body', 'contact-form-submissions'); ?></th>
-                    <td><?php echo apply_filters('the_content', $post->post_content); ?></td>
+                    <td><?php echo $body; ?></td>
                 </tr>
                 <?php if (!empty($additional_headers)) {
             ?>
                     <tr>
                         <th scope="row"><?php _e('Additional Headers', 'contact-form-submissions'); ?></th>
-                        <td><?php echo get_post_meta($post->ID, 'additional_headers', true); ?></td>
+                        <td><?php echo nl2br($additional_headers); ?></td>
                     </tr>
                 <?php
         } ?>
@@ -278,10 +281,13 @@ class WPCF7SAdmin
         <table class="form-table contact-form-submission">
             <tbody>
                 <?php foreach ($values as $key => $value) {
+                  // check if the value is serialized and unserialize it
+                  $posted_field = is_serialized($value[0]) ? implode(', ', unserialize($value[0])) : $value[0];
+                  $posted_field = esc_html($posted_field);
             ?>
                     <tr>
                         <th scope="row"><?php _e(str_replace('wpcf7s_posted-', '', $key), 'contact-form-submissions'); ?></th>
-                        <td><?php echo is_serialized($value[0]) ? implode(', ', unserialize($value[0])) : $value[0]; ?></td>
+                        <td><?php echo $posted_field; ?></td>
                     </tr>
                 <?php
         } ?>
@@ -418,18 +424,15 @@ class WPCF7SAdmin
      * @param  string $which top or bottom of the table
      *
      */
-    public function extra_tablenav($which = '')
+    public function extra_tablenav()
     {
         $screen = get_current_screen();
         if ('wpcf7s' === $screen->post_type){
-            $capability = apply_filters('wpcf7s_export_capatability','export');
-            if($capability){
-                ?>
-                <div class="alignleft actions wpcf7s-export">
-                    <button type="submit" name="wpcf7s-export" value="1" class="button-primary" title="<?php _e('Export the current set of results as CSV', 'contact-form-submissions'); ?>"><?php _e('Export to CSV', 'contact-form-submissions'); ?></button>
-                </div>
-                <?php
-            }
+            ?>
+            <div class="alignleft actions wpcf7s-export">
+                <button type="submit" name="wpcf7s-export" value="1" class="button-primary" title="<?php _e('Export the current set of results as CSV', 'contact-form-submissions'); ?>"><?php _e('Export to CSV', 'contact-form-submissions'); ?></button>
+            </div>
+            <?php
         }
     }
 
@@ -437,8 +440,7 @@ class WPCF7SAdmin
      * Handle requests to export all submissions from the admin view
      */
     public function export_request(){
-        $capability = apply_filters('wpcf7s_export_capatability','export');
-        if(isset($_GET['wpcf7s-export']) && !empty($_GET['wpcf7s-export']) && current_user_can($capability)) {
+        if(isset($_GET['wpcf7s-export']) && !empty($_GET['wpcf7s-export']) && is_admin()) {
 
             // output headers so that the file is downloaded rather than displayed
             header('Content-Type: text/csv; charset=utf-8');
@@ -467,6 +469,7 @@ class WPCF7SAdmin
                             }
                         }
                     }
+                    $value = sanitize_text_field($value);
                     $values[$key] = mb_convert_encoding(implode(',', $value), 'UTF-16LE');
 
                     // if we havent already stored this column, save it now
@@ -515,7 +518,7 @@ class WPCF7SAdmin
                 fputcsv($output,$row_values);
             }
 
-            die;
+            exit();
         }
     }
 }

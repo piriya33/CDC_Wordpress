@@ -1,7 +1,7 @@
 <?php
 /**
  *  WP-SpamShield Admin Settings Page
- *  File Version 1.9.15
+ *  File Version 1.9.17
  */
 
 /* Make sure file remains secure if called directly */
@@ -552,7 +552,11 @@ if( TRUE !== WPSS_DEBUG && TRUE !== WP_DEBUG ) { @ini_set( 'display_errors', 0 )
             </form>
 			</p>
 			<?php 
-			echo '<p><strong><a href="'.WPSS_DONATE_URL.'" target="_blank" rel="external" >' . rs_wpss_donate_txt() . '</a></strong><br />' . __( 'WP-SpamShield is provided for free.', 'wp-spamshield' ) . ' ' . __( 'If you like the plugin, consider a donation to help further its development.', 'wp-spamshield' ) . '</p>';
+			echo '<p><strong><a href="'.WPSS_DONATE_URL.'" target="_blank" rel="external" >' . rs_wpss_donate_txt() . '</a></strong><br />' . __( 'WP-SpamShield is provided for free.', 'wp-spamshield' ) . ' ' . __( 'If you like the plugin, consider a donation to help further its development.', 'wp-spamshield' ) . '<br />
+			<strong>Donate with <a href="https://www.redsandmarketing.com/go/donate/wp-spamshield/" rel="nofollow external" target="_blank">PayPal</a></strong><br />
+			<strong>Bitcoin:</strong>&nbsp; 1PYyD8Fu9DBV9gj4chYkfDDa77fSHMFTfm<br />
+			<strong>Litecoin:</strong>&nbsp; LMAw3ugXsVMSobbJjeTP4WYFjvXT3Ku9hr<br />
+			<strong>Ethereum:</strong>&nbsp; 0xB76085AFb961C5c4562c7Abe92C34DEAd44f258d</p>';
 			?>
 
 			<p><div style="float:right;font-size:12px;">[ <a href="#wpss_top"><?php _e( 'BACK TO TOP', 'wp-spamshield' ); ?></a> ]</div></p>

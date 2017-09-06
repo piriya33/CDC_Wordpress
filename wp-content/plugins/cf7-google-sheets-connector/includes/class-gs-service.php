@@ -93,7 +93,30 @@ class Gs_Connector_Service {
             $doc->auth();
             $doc->settitleSpreadsheet( $form_data[0]['sheet-name'] );
             $doc->settitleWorksheet( $form_data[0]['sheet-tab-name'] );
-            $data["date"] = date_i18n( 'j F Y H:i:s', current_time('timestamp') );
+            
+            // Special Mail Tags
+            $timestamp = $submission->get_meta( 'timestamp' );
+            $data["date"] = date_i18n( get_option( 'date_format' ), $timestamp );
+            $data["time"] = date_i18n( get_option( 'time_format' ), $timestamp );
+            
+            $data["remote-ip"]  = $submission->get_meta( 'remote_ip' );
+            $data["user-agent"] = $submission->get_meta( 'user_agent' );
+            $data["url"] = $submission->get_meta( 'url' );
+            
+            $post_id = (int) $submission->get_meta( 'container_post_id' );
+            
+            if ( $post = get_post( $post_id ) ) {
+               $data["post-id"] =  $post->ID;
+               $data["post-name"] = $post->post_name;
+               $data["post-title"] = $post->post_title;
+               $data["post-url"] = get_permalink( $post->ID );
+
+               $user = new WP_User( $post->post_author );
+               $data["post-author"] = $user->display_name;
+               $data["post-author-email"] = $user->user_email;
+            }
+            
+            
             foreach ( $posted_data as $key => $value ) {
                // exclude the default wpcf7 fields in object
                if ( strpos($key, '_wpcf7') !== false || strpos($key, '_wpnonce') !== false ) {

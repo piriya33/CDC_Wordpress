@@ -11,7 +11,7 @@ function wp_mail($to, $subject, $message, $headers = '', $attachments = array(),
 	if ( !is_array($attachments) )
 		$attachments = explode( "\n", str_replace( "\r\n", "\n", $attachments ) );
 
-	require_once 'Swift/lib/swift_required.php';
+	require_once 'vendor/autoload.php';
 	$sender_email = "";
 	$sender_name = "";
 	$reply_to = ""; // mixed
@@ -169,20 +169,20 @@ function wp_mail($to, $subject, $message, $headers = '', $attachments = array(),
 		$sender_email = $st_smtp_config['sender_mail'];
 	}
 
-	//Create a message
-	$message = Swift_Message::newInstance($subject)
-		->setFrom(array(apply_filters('wp_mail_from', $from_email) => apply_filters('wp_mail_from_name', $from_name)))
+	// Create a message
+	$swift_message = new Swift_Message($subject);
+	$swift_message->setFrom(array(apply_filters('wp_mail_from', $from_email) => apply_filters('wp_mail_from_name', $from_name)))
 		->setBody($message)
 	;
 
 	// Set the sender, which may be different than the from field
 	if (!empty($sender_email)) {
-		$message->setSender(array($sender_email => $sender_name));
+		$swift_message->setSender(array($sender_email => $sender_name));
 	}
 
 	// Set the reply-to
 	if (!empty($reply_to)) {
-		$message->setReplyTo($reply_to);
+		$swift_message->setReplyTo($reply_to);
 	}
 
 	// Set destination addresses
@@ -200,10 +200,10 @@ function wp_mail($to, $subject, $message, $headers = '', $attachments = array(),
 		}
 		// leave the name null if empty
 		if (empty($recipient_name)) {
-			$message->addTo(trim($recipient));
+			$swift_message->addTo(trim($recipient));
 		}
 		else {
-			$message->addTo(trim($recipient), $recipient_name);
+			$swift_message->addTo(trim($recipient), $recipient_name);
 		}
 		
 	}
@@ -221,10 +221,10 @@ function wp_mail($to, $subject, $message, $headers = '', $attachments = array(),
 			}
 			// leave the name null if empty
 			if (empty($recipient_name)) {
-				$message->addCc(trim($recipient));
+				$swift_message->addCc(trim($recipient));
 			}
 			else {
-				$message->addCc(trim($recipient), $recipient_name);
+				$swift_message->addCc(trim($recipient), $recipient_name);
 			}
 		}
 	}
@@ -241,10 +241,10 @@ function wp_mail($to, $subject, $message, $headers = '', $attachments = array(),
 			}
 			// leave the name null if empty
 			if (empty($recipient_name)) {
-				$message->addBcc(trim($recipient));
+				$swift_message->addBcc(trim($recipient));
 			}
 			else {
-				$message->addBcc(trim($recipient), $recipient_name);
+				$swift_message->addBcc(trim($recipient), $recipient_name);
 			}
 		}
 	}
@@ -256,7 +256,7 @@ function wp_mail($to, $subject, $message, $headers = '', $attachments = array(),
 
 	$content_type = apply_filters('wp_mail_content_type', $content_type);
 
-	$message->setContentType($content_type);
+	$swift_message->setContentType($content_type);
 
 	// If we don't have a charset from the input headers
 	if ( !isset( $charset ) )
@@ -267,7 +267,7 @@ function wp_mail($to, $subject, $message, $headers = '', $attachments = array(),
 
 	// Set custom headers
 	if ( !empty( $headers ) ) {
-		$msg_headers = $message->getHeaders();
+		$msg_headers = $swift_message->getHeaders();
 
 		foreach((array) $headers as $name => $content) {
 			$msg_headers->addTextHeader($name, $content);
@@ -285,7 +285,7 @@ function wp_mail($to, $subject, $message, $headers = '', $attachments = array(),
 			if (!is_readable($attachment))
 				continue;
 			try {
-				$message->attach(Swift_Attachment::fromPath($attachment));
+				$swift_message->attach(Swift_Attachment::fromPath($attachment));
 			} catch (Swift_IoException $e) {
 				continue;
 			}
@@ -303,7 +303,7 @@ function wp_mail($to, $subject, $message, $headers = '', $attachments = array(),
 	// we should try first and _maybe_ echo failure error
 	try {
 		// Create the Transport then call setUsername() and setPassword()
-		$transport = Swift_SmtpTransport::newInstance($st_smtp_config['server'], $st_smtp_config['port']);
+		$transport = new Swift_SmtpTransport($st_smtp_config['server'], $st_smtp_config['port']);
 
 		if (!empty($st_smtp_config['ssl']))
 			$transport->setEncryption($st_smtp_config['ssl']);
@@ -315,15 +315,16 @@ function wp_mail($to, $subject, $message, $headers = '', $attachments = array(),
 			$transport->setPassword($st_smtp_config['password']);
 
 		// Create the Mailer using your created Transport
-		$mailer = Swift_Mailer::newInstance($transport);
+		$mailer = new Swift_Mailer($transport);
 
 		// Send!
-		$result = $mailer->send($message, $failures);
+		$result = $mailer->send($swift_message, $failures);
 	}
 	catch (Exception $e) {
 		$result = false;
-		if ($echo_error)
-			echo $e->getMessage();
+		if ($echo_error) {
+			esc_html_e($e->getMessage());
+		}
 	}
 
 	return $result;

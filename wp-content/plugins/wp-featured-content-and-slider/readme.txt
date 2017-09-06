@@ -2,7 +2,7 @@
 Contributors: wponlinesupport, anoopranawat 
 Tags: content slider, slider, featured, features, services, custom post slider, custom post type display, featured content, featured services, featured content rotator, featured content slider, content gallery, content slideshow, featured content slideshow, featured posts, featured content slider, shortcode
 Requires at least: 3.1
-Tested up to: 4.8
+Tested up to: 4.8.1
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -13,9 +13,9 @@ A quick, easy way to add and display what features your company, product or serv
 Many CMS site needs to display Featured Content/Featured services on website. "WP Featured Content and Slider" is a clean and easy-to-use features showcase
 management system for WordPress. Display Featured Content/Featured services, features your product, company or services offers, and display them via a shortcode OR template code.
 
-View [DEMO](http://wponlinesupport.com/wp-plugin/wp-featured-content-and-slider/) for more details.
+View [DEMO](http://wponlinesupport.com/wp-plugin/wp-featured-content-and-slider/) | [PRO DEMO and Features](http://wponlinesupport.com/wp-plugin/wp-featured-content-and-slider/) for additional information.
 
-Check [PRO DEMO and Features](http://wponlinesupport.com/wp-plugin/wp-featured-content-and-slider/) for more details.
+Checkout our new plugin - [PowerPack - Need of Every Website](http://powerpack.wponlinesupport.com/?utm_source=wp)
 
 Now added Custom Post Type support where you can display custom post type content with this plugin.
 <code>[featured-content post_type="featured_post"]  and
@@ -148,6 +148,13 @@ You can also select design theme from "Featured Content -> Featured Content Desi
 
 == Changelog ==
 
+= 1.2.7 (25 Aug, 2017) =
+* [*] Fixed design-4 issue mac sfari browser
+
+= 1.2.6 (24 Aug, 2017) =
+* [*] Fixed design-4 issue in responsive and display content in vertical 
+* [*] Fixed css issues
+
 = 1.2.5 (16 Jan, 2017) =
 * [+] Added 'taxonomy' shortcode parameter for custom category.
 * [*] Grouped 'Fa Icon' and 'Read More Link' metabox options.
@@ -186,6 +193,13 @@ You can also select design theme from "Featured Content -> Featured Content Desi
 
 
 == Upgrade Notice ==
+
+= 1.2.7 (25 Aug, 2017) =
+* [*] Fixed design-4 issue mac sfari browser
+
+= 1.2.6 (24 Aug, 2017) =
+* [*] Fixed design-4 issue in responsive and display content in vertical 
+* [*] Fixed css issues
 
 = 1.2.5 (16 Jan, 2017) =
 * [+] Added 'taxonomy' shortcode parameter for custom category.

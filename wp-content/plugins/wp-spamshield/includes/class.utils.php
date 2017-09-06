@@ -1,7 +1,7 @@
 <?php
 /**
  *  WP-SpamShield Utilities
- *  File Version 1.9.15
+ *  File Version 1.9.16
  */
 
 /* Make sure file remains secure if called directly */
@@ -442,7 +442,7 @@ class WPSS_Utils extends WP_SpamShield {
 	 *	As of RSSD.20170607.01, web hosts detected: 100+
 	 *	@dependencies	WPSS_Utils::get_option(), WPSS_Utils::update_option(), WPSS_Utils::get_server_hostname(), WPSS_Utils::get_ip_dns_params(), WPSS_Utils::get_reverse_dns(), WP_SpamShield::is_valid_ip(), WPSS_Utils::get_ns(), WPSS_Utils::sort_unique()
 	 *	@used by		...
-	 *	@func_ver		RSSD.20170607.01
+	 *	@func_ver		RSSD.20170707.01
 	 *	@since			WPSS 1.9.9.8.2, RSSD 1.0.3
 	 */
 	static public function get_web_host( $params = array() ) {
@@ -588,35 +588,6 @@ class WPSS_Utils extends WP_SpamShield {
 		$web_hosts_ns = $web_hosts_st;
 
 		/* Start Tests*/
-		foreach( $web_hosts_ev as $wh => $data ) {
-			$envars = explode( ',', $data['envars'] );
-			foreach( $envars as $ev ) {
-				if( empty( $_SERVER[$ev] ) ) { continue; }
-				if( empty( $data['deps'] ) ) {
-					self::$web_host = $data['webhost'];
-				} elseif( FALSE !== strpos( $data['deps'], $_SERVER[$ev] ) ) {
-					self::$web_host = $data['webhost'];
-				}
-			}
-		}
-		foreach( $web_hosts_cn as $wh => $data ) {
-			if( !empty( self::$web_host ) ) { break; }
-			$constants = explode( ',', $data['constants'] );
-			foreach( $constants as $cn ) {
-				if( defined( $cn ) ) {
-					self::$web_host = $data['webhost'];
-				}
-			}
-		}
-		foreach( $web_hosts_cl as $wh => $data ) {
-			if( !empty( self::$web_host ) ) { break; }
-			$classes = explode( ',', $data['classes'] );
-			foreach( $classes as $cl ) {
-				if( class_exists( $cl ) ) {
-					self::$web_host = $data['webhost'];
-				}
-			}
-		}
 		$server_rev_dns = self::get_reverse_dns( $server_addr );
 		$server_rev_dns = ( !self::is_valid_ip( $server_rev_dns ) ) ? $server_rev_dns : ''; /* If IP, will skip the check */
 		foreach( $web_hosts_st as $wh => $data ) {
@@ -665,6 +636,36 @@ class WPSS_Utils extends WP_SpamShield {
 				self::$web_host = $data['webhost']; 
 			}
 		}
+		foreach( $web_hosts_ev as $wh => $data ) {
+			if( !empty( self::$web_host ) ) { break; }
+			$envars = explode( ',', $data['envars'] );
+			foreach( $envars as $ev ) {
+				if( empty( $_SERVER[$ev] ) ) { continue; }
+				if( empty( $data['deps'] ) ) {
+					self::$web_host = $data['webhost'];
+				} elseif( FALSE !== strpos( $data['deps'], $_SERVER[$ev] ) ) {
+					self::$web_host = $data['webhost'];
+				}
+			}
+		}
+		foreach( $web_hosts_cn as $wh => $data ) {
+			if( !empty( self::$web_host ) ) { break; }
+			$constants = explode( ',', $data['constants'] );
+			foreach( $constants as $cn ) {
+				if( defined( $cn ) ) {
+					self::$web_host = $data['webhost'];
+				}
+			}
+		}
+		foreach( $web_hosts_cl as $wh => $data ) {
+			if( !empty( self::$web_host ) ) { break; }
+			$classes = explode( ',', $data['classes'] );
+			foreach( $classes as $cl ) {
+				if( class_exists( $cl ) ) {
+					self::$web_host = $data['webhost'];
+				}
+			}
+		}
 		if( !empty( self::$web_host ) ) {
 			$options = array( 'web_host' => self::$web_host, );
 			self::update_option( $options );
@@ -676,7 +677,7 @@ class WPSS_Utils extends WP_SpamShield {
 	 *	Try to identify web host proxies: Proxies, CDNs, Web Application Firewalls (WAFs), etc.
 	 *	@dependencies	WPSS_Utils::get_option(), WPSS_Utils::update_option(), WPSS_Utils::get_server_hostname(), WPSS_Utils::get_ip_dns_params(), WPSS_Utils::get_reverse_dns(), WP_SpamShield::is_valid_ip(), WPSS_Utils::get_ns(), WPSS_Utils::is_user_admin(), WPSS_Utils::sort_unique()
 	 *	@used by		...
-	 *	@func_ver		RSSD.20170122.01
+	 *	@func_ver		RSSD.20170707.01
 	 *	@since			WPSS 1.9.9.8.2, RSSD 1.0.3
 	 */
 	static public function get_web_proxy( $params = array() ) {
@@ -841,6 +842,28 @@ class WPSS_PHP extends WPSS_Utils {
 	}
 
 	/**
+	 *  Drop-in replacement for native PHP function base64_decode() with built-in sanitization
+	 *  @dependencies	WP_SpamShield::sanitize_string()
+	 *  @used by		...
+	 *  @since			1.9.16
+	 *  @reference		https://secure.php.net/manual/en/function.base64-decode.php
+	 */
+	static public function base64_decode( $str, $strict = FALSE ) {
+		return @base64_decode( WP_SpamShield::sanitize_string( $str ), $strict );
+	}
+
+	/**
+	 *  Drop-in replacement for native PHP function base64_encode() with built-in sanitization
+	 *  @dependencies	WP_SpamShield::sanitize_string()
+	 *  @used by		...
+	 *  @since			1.9.16
+	 *  @reference		https://secure.php.net/manual/en/function.base64-encode.php
+	 */
+	static public function base64_encode( $str ) {
+		return @base64_encode( WP_SpamShield::sanitize_string( $str ) );
+	}
+
+	/**
 	 *  Drop-in replacement for native PHP function chmod()
 	 *  Provides built-in error correction for $mode
 	 *  $mode is input as octal integers to match standard file permissions (644, 755, etc.)
@@ -920,6 +943,29 @@ class WPSS_PHP extends WPSS_Utils {
 	}
 
 	/**
+	 *	Drop-in replacement for native PHP function setcookie()
+	 *  @dependencies	WP_SpamShield::is_https()
+	 *  @used by		...
+	 *  @since			1.9.16
+	 *  @reference		https://secure.php.net/manual/en/function.setcookie.php
+	 *	@param 			string		$name			The name of the cookie.
+	 *	@param 			string		$value			The value of the cookie.
+	 *	@param 			int			$expire			The time the cookie expires. This is a Unix timestamp so is in number of seconds since the epoch.
+	 *	@param 			string		$path			The path on the server in which the cookie will be available on.
+	 *	@param 			string		$domain			The (sub)domain that the cookie is available to.
+	 *	@param 			boolean		$secure			Indicates that the cookie should only be transmitted over a secure HTTPS connection from the client.
+	 *	@param 			boolean		$httponly		When TRUE the cookie will be made accessible only through the HTTP protocol.
+	 *	@param 			boolean		$check_if_set	When TRUE, only set the cookie if not already set.
+	 *	@return			void
+	 */
+	static public function setcookie( $name, $value = '', $expire = 0, $path = '', $domain = '', $secure = FALSE, $httponly = FALSE, $check_if_set = FALSE ) {
+		if( headers_sent() ) { return; }
+		if( FALSE === $check_if_set || !isset( $_COOKIE[$name] ) ) {
+			@setcookie( $name, $value, $expire, $path, $domain, ( $secure && WP_SpamShield::is_https() ), $httponly );
+		}
+	}
+
+	/**
 	 *  Drop-in replacement for native PHP function strpos()
 	 *	Can process an array of needles to check in haystack. For a short list, this is more efficient than using PCRE Regex ( `preg_match()` etc ).
 	 *	Built-in error correction.
@@ -960,6 +1006,28 @@ class WPSS_Func extends WPSS_PHP {
 		/**
 		 *  Do nothing...for now
 		 */
+	}
+
+	/**
+	 *  Alias of WP_SpamShield::base64_decode()
+	 *  @dependencies	WP_SpamShield::base64_decode()
+	 *  @used by		...
+	 *  @since			1.9.16
+	 *  @reference		https://secure.php.net/manual/en/function.base64-decode.php
+	 */
+	static public function b64de( $str, $strict = FALSE ) {
+		return parent::base64_decode( $str, $strict );
+	}
+
+	/**
+	 *  Alias of WP_SpamShield::base64_encode()
+	 *  @dependencies	WP_SpamShield::base64_encode()
+	 *  @used by		...
+	 *  @since			1.9.16
+	 *  @reference		https://secure.php.net/manual/en/function.base64-encode.php
+	 */
+	static public function b64en( $str ) {
+		return parent::base64_encode( $str );
 	}
 
 	/**

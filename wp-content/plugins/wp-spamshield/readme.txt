@@ -4,6 +4,7 @@ Donate link: https://www.redsandmarketing.com/go/donate/wp-spamshield/
 Tags: anti-spam, antispam, comments, security, spam
 Requires at least: 4.0
 Tested up to: 4.8
+Requires PHP: 5.3
 Stable tag: trunk
 License: GPLv2
 
@@ -83,11 +84,11 @@ No cost, no hidden fees. This powerful anti-spam plugin is **free** for **both C
 If you have any issues with the plugin, we are here to help. Simply submit a support request at the [WP-SpamShield Support Page](https://www.redsandmarketing.com/plugins/wp-spamshield/support/), and we'll help you diagnose and fix the issue quickly. Don't take our word for it though - look through our plugin ratings/reviews and notice the high percentage of resolved support threads and satisfied users.
 
 = Additional Features =
-1. Now WP-SpamShield provides *automatic anti-spam protection* for: Contact Form 7 forms, Gravity Forms, Ninja Forms, JetPack Contact Forms; BuddyPress, bbPress and WooCommerce registration forms; Mailchimp signup forms; *almost all* other WordPress forms; and *almost all* registration forms!
+1. WP-SpamShield provides *automatic anti-spam protection* for: Contact Form 7 forms, Gravity Forms, Ninja Forms, JetPack Contact Forms; BuddyPress, bbPress and WooCommerce registration forms; Mailchimp signup forms; *almost all* other WordPress forms; and *almost all* registration forms!
 2. As of version 1.9.2, WP-SpamShield protects JetPack Comments from spam. (Making it one of the few anti-spam plugins that works with JetPack Comments.)
 3. A counter on your dashboard to keep track of all the spam it's blocking. The numbers will show how effective this plugin is.
 4. See what's been blocked with "Blocked Comment Logging Mode", a temporary diagnostic mode that logs blocked spam (comments, trackbacks, registrations, and contact form submissions) for 7 days, then turns off automatically. If you want to see what spam has been blocked, or verify that everything is working, turn this on and see what WP-SpamShield is protecting your site from.
-5. Multiple languages available and more on the way. Currently includes Dutch (nl_NL), French (fr_FR), German (de_DE), Indonesian (id_ID), Italian (it_IT), and Serbian (sr_RS) translations. Ready for translation into other languages.
+5. Multiple languages available and more on the way. Currently includes Dutch (nl_NL), French (fr_FR), German (de_DE), Indonesian (id_ID), Italian (it_IT), Serbian (sr_RS), and Swedish (sv_SE) translations. Ready for translation into other languages. Want to help translate? Join [the project!](https://translate.wordpress.org/projects/wp-plugins/wp-spamshield)
 6. Easy to install - truly plug and play. Just upload and activate. (*Installation Status* on the plugin admin page to let you know if plugin is installed correctly.)
 7. Compatible with, and optimized for *all* major cache plugins, including WP Super Cache and many others. Not all anti-spam plugins can say that.
 8. Display your blocked spam stats on your site. Customizable widgets for graphic counters to display spam stats, in multiple colors, sizes and options.
@@ -285,6 +286,14 @@ If you have any further questions, please submit them on the main [WP-SpamShield
 
 **A:** The short answer: Yes! WP-SpamShield is 100% compliant with European Cookie and Privacy Laws. The long answer... *[Continue reading FAQ 18 »](https://www.redsandmarketing.com/plugins/wp-spamshield/faqs/?faqs=18#faqs_18)*
 
+= FAQ 19 - Q: I'm a web developer, and something does not seem to be working right in my local testing environment. What might be causing this? =
+
+**A:** When something does not seem to work properly in a local testing environment, but works without issue on a live site, almost 100% of the time it is due to... *[Continue reading FAQ 19 »](https://www.redsandmarketing.com/plugins/wp-spamshield/faqs/?faqs=19#faqs_19)*
+
+= FAQ 20 - Q: How do I upgrade my site's PHP version? =
+
+**A:** Upgrading PHP is not hard at all. Please see this... *[Continue reading FAQ 20 »](https://www.redsandmarketing.com/plugins/wp-spamshield/faqs/?faqs=20#faqs_20)*
+
 == Screenshots ==
 
 1. WP-SpamShield Settings page
@@ -299,6 +308,22 @@ If you have any further questions, please submit them on the main [WP-SpamShield
 10. Widget - WP-SpamShield Counter - Graphic: Style 9
 
 == Changelog ==
+
+= 1.9.17 =
+*released 07/17/17*
+
+* Made various code enhancements and improvements.
+* Removed the French (fr_FR) translation from the plugin package since the language pack is now used instead.
+* Improved some of the spam filters for the built-in WP-SpamShield contact form.
+* Maintenance: Updated existing spam filters.
+
+= 1.9.16 =
+*released 07/11/17*
+
+* Made various code enhancements and improvements.
+* Fixed a compatibility issue with JetPack Comments.
+* Fixed a compatibility issue with certain WooCommerce Payment Gateways.
+* Maintenance: Updated existing spam filters.
 
 = 1.9.15 =
 *released 06/30/17*
@@ -1076,7 +1101,7 @@ If you have any further questions, please submit them on the main [WP-SpamShield
 For a complete list of changes to the plugin, view the [Changelog](https://www.redsandmarketing.com/plugins/wp-spamshield/changelog/).
 
 == Upgrade Notice ==
-= 1.9.15 =
+= 1.9.17 =
 
-* Made various code enhancements and improvements, fixed a compatibility issue with Easy Digital Downloads, and updated the spam filters. Please see Changelog for details.
+* Made various code enhancements and improvements, removed packaged French translation as it is replaced by language pack, and improved/updated the spam filters. Please see Changelog for details.
 
