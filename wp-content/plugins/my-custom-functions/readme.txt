@@ -4,7 +4,7 @@ Tags: code, php, function, snippet, custom, execute, edit, editing, editor, func
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8A88KC7TFF6CS
 Requires at least: 3.9
 Tested up to: 4.8
-Stable tag: 4.6
+Stable tag: 4.10
 License: GPL3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -29,7 +29,7 @@ An easy to use, with intuitive interface, WordPress plugin that gives you the ab
 **Key features include...**
 
 * Checks the entered code for fatal errors
-* Ability to temporary disable all custom functions
+* Ability to temporarily disable all custom functions
 * Easy disable option for WSOD
 * Syntax highlighting (by CodeMirror)
 * Line numbering
@@ -41,7 +41,7 @@ An easy to use, with intuitive interface, WordPress plugin that gives you the ab
 
 * Unlimited number of fields
 * Automatic backup of all functions to a file
-* Ability to temporary disable the certain function
+* Ability to temporarily disable the certain function
 * Ability to collapse/expand the certain fields with code
 * Well documented
 
@@ -56,7 +56,7 @@ This plugin is ready for translation and has already been translated into severa
 * English (default)
 * Russian (translation by [Milena Kiseleva](https://www.instagram.com/milava_kiseleva/))
 * Chinese-Taiwan (translation by Gordon Yu)
-* Spanish (translation by [Ramiro Garcés](http://www.ramirogarces.com.ve/))
+* Spanish (translation by Ramiro Garcés and Patricio Toledo)
 * French (translation by Theophil Bethel)
 
 If you want to help translate this plugin then please visit the [translation page](https://translate.wordpress.org/projects/wp-plugins/my-custom-functions).
@@ -89,7 +89,7 @@ Manually via FTP access:
 4. Log into Admin Panel of your WordPress website.
 5. Activate this plugin through the "`Plugins`" tab.
 
-After installation and activation, the "`Custom Functions`" menu item will appear in the "`Appearance`" section. Click on this in order to view plugin administration page.
+After installation and activation, the "`PHP Inserter`" menu item will appear in the "`Settings`" section of Admin Panel. Click on it in order to view the plugin settings page.
 
 [More help installing plugins](http://codex.wordpress.org/Managing_Plugins#Installing_Plugins "WordPress Codex: Installing Plugins")
 
@@ -104,7 +104,7 @@ A. Yes. This plugin is ready for translation and has already been translated int
 
 = Q. How does it work? =
 A. Simply go to the plugin settings page, place your PHP code in the field, switch the toggle to the "ON" position and click the "Save changes" button. Enjoy the result of applying your PHP code. It's that simple!
-You can find the plugin settings page at "`WP Admin Panel`" -> "`Appearance`" -> "`Custom Functions`".
+You can find the plugin settings page at "`WP Admin Panel`" -> "`Settings`" -> "`PHP Inserter`".
 
 = Q. Can I use HTML/CSS/JS code integrated in PHP code? =
 A. Yes. But you need to do it properly, like this:
@@ -195,6 +195,35 @@ Commercial licensing (e.g. for projects that can’t use an open-source license)
 
 
 == Changelog ==
+
+= 4.10 =
+* At the request of some users, plugin settings page moved to the submenu item in the top-level menu item "Settings", like before.
+* In the "_register_submenu_page" function, "$capability" changed from the 'edit_theme_options' to 'manage_options'.
+
+= 4.9 =
+* Fixed the issue due tof which the 'Space X-Chimp' sub menu item in the brand menu item was displayed.
+* Added branded footer text on the plugin's settings page.
+
+= 4.8 =
+* Added the top level menu item of the brand.
+* The submenu item of the plugin has moved to the menu item of the brand.
+* The menu item of the plugin is renamed.
+* The "Author" tab on the settings page is removed.
+* Content of the "Support" tab on the settings page is updated.
+* Copyright of plugin files is changed to the "Space X-Chimp Studio".
+* The "Support" tab renamed to the "Support Me".
+* The "Usage" tab renamed to the "Usage Instructions".
+
+= 4.7 =
+* Added Spanish translation. (Thanks Patricio Toledo)
+* The group name of the '_service_info' option renamed to '_settings_group_si'.
+* The 'admin.css' file improved.
+* The "Font Awesome" library is integrated for use on the plugin settings page.
+* The ON/OFF switch replaced with new.
+* The 'bootstrap-checkbox.js' JavaScript plugin added.
+* Prefixes of the PHP functions changed to ''spacexchimp_p001_.
+* Prefixes of the PHP constants changed to ''SPACEXCHIMP_P001_.
+* Plugin data that saved in the database upgraded to version 0001.
 
 = 4.6 =
 * Russian translation updated.
@@ -340,7 +369,7 @@ Commercial licensing (e.g. for projects that can’t use an open-source license)
 * The _enqueue_codemirror_scripts function renamed to mcfunctions_load_scripts.
 
 = 2.4 =
-* Added a toggle for temporary disable the custom functions.
+* Added a toggle for temporarily disable the custom functions.
 * Functions _prepare, _duplicates, and _exec optimized.
 
 = 2.3 =
@@ -426,7 +455,7 @@ Commercial licensing (e.g. for projects that can’t use an open-source license)
 * Beta version.
 
 = 0.1 =
-* Alfa version.
+* Alpha version.
 
 
 == Upgrade Notice ==

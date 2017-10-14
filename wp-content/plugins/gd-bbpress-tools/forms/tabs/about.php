@@ -21,9 +21,9 @@
     <?php
 
         _e("WordPress: ", "gd-bbpress-tools");
-        echo '<strong>3.2 or newer</strong><br/>';
+        echo '<strong>4.2 or newer</strong><br/>';
         _e("bbPress: ", "gd-bbpress-tools");
-        echo '<strong>2.0 or newer</strong>';
+        echo '<strong>2.5 or newer</strong>';
 
     ?><br/><br/><br/><br/>
 </div>
@@ -39,5 +39,5 @@
 </div>
 <div class="d4p-clear"></div>
 <div class="d4p-copyright">
-    Dev4Press &copy; 2008 - 2016 <a target="_blank" href="https://www.dev4press.com">www.dev4press.com</a> | Golden Dragon WebStudio <a target="_blank" href="http://www.gdragon.info">www.gdragon.info</a>
+    Dev4Press &copy; 2008 - 2017 <a target="_blank" href="https://www.dev4press.com">www.dev4press.com</a> | Golden Dragon WebStudio <a target="_blank" href="http://www.gdragon.info">www.gdragon.info</a>
 </div>

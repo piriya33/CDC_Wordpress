@@ -299,7 +299,6 @@ msgid "Official Website"
 msgstr ""
 
 #: code/admin.php:39
-#: forms/tabs/toolbox.php:9
 msgid "Dev4Press Plugins Pack"
 msgstr ""
 
@@ -357,7 +356,7 @@ msgid "Support Forum on WordPress.org"
 msgstr ""
 
 #: code/admin.php:129
-msgid "Plugin Support Sources"
+msgid "Support Forum on Dev4Press"
 msgstr ""
 
 #: code/admin.php:134
@@ -373,34 +372,18 @@ msgid "We have more than 10 plugins available, some of them are commercial and s
 msgstr ""
 
 #: code/admin.php:136
-msgid "Themes"
+msgid "Knowledge Base"
 msgstr ""
 
 #: code/admin.php:136
-msgid "All our themes are based on our own xScape Theme Framework, and only available as premium."
-msgstr ""
-
-#: code/admin.php:137
-msgid "Tutorials"
-msgstr ""
-
-#: code/admin.php:137
 msgid "Premium and free tutorials for our plugins themes, and many general and practical WordPress tutorials."
 msgstr ""
 
-#: code/admin.php:138
-msgid "Central Documentation"
-msgstr ""
-
-#: code/admin.php:138
-msgid "Growing collection of functions, classes, hooks, constants with examples for our plugins and themes."
-msgstr ""
-
-#: code/admin.php:139
+#: code/admin.php:137
 msgid "Support Forums"
 msgstr ""
 
-#: code/admin.php:139
+#: code/admin.php:137
 msgid "Premium support forum for all with valid licenses to get help. Also, report bugs and leave suggestions."
 msgstr ""
 
@@ -589,21 +572,19 @@ msgstr ""
 
 #: forms/tabs/d4p.php:3
 #: forms/tabs/d4p.php:8
-#: forms/tabs/d4p.php:13
 msgid "Plugin Home Website"
 msgstr ""
 
 #: forms/tabs/d4p.php:4
 #: forms/tabs/d4p.php:9
-#: forms/tabs/d4p.php:14
-msgid "Home on Dev4Press"
+msgid "Plugin Demo"
 msgstr ""
 
-#: forms/tabs/d4p.php:19
+#: forms/tabs/d4p.php:14
 msgid "Other Premium Plugins"
 msgstr ""
 
-#: forms/tabs/d4p.php:27
+#: forms/tabs/d4p.php:23
 msgid "More Free Plugins"
 msgstr ""
 
@@ -621,6 +602,10 @@ msgstr ""
 
 #: forms/tabs/toolbox.php:8
 msgid "Toolbox Pro vs Free plugins"
+msgstr ""
+
+#: forms/tabs/toolbox.php:9
+msgid "Dev4Press PLugins Club Membership"
 msgstr ""
 
 #: forms/tabs/toolbox.php:13

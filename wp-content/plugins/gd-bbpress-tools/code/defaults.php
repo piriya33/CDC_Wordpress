@@ -4,9 +4,9 @@ if (!defined('ABSPATH')) exit;
 
 class gdbbPressTools_Defaults {
     var $default_options = array(
-        'version' => '1.9',
-        'date' => '2016.09.24.',
-        'build' => 2144,
+        'version' => '1.9.1',
+        'date' => '2017.09.20.',
+        'build' => 2147,
         'status' => 'stable',
         'update_wp44' => 0,
         'product_id' => 'gd-bbpress-tools',

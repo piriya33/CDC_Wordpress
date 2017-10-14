@@ -1,3 +1,5 @@
+<br />
+<b>Notice</b>:  wpcf7_add_shortcode is <strong>deprecated</strong> since Contact Form 7 version 4.6! Use wpcf7_add_form_tag instead. in <b>/var/www/staging/wp-content/plugins/contact-form-7/includes/functions.php</b> on line <b>355</b><br />
 <!doctype html>
 <html lang="en-US">
 <head>
@@ -33,9 +35,9 @@ img.emoji {
 </style>
 <link rel='stylesheet' id='gdbbx-front-widgets-css'  href='http://52.76.37.90/wp-content/plugins/gd-bbpress-toolbox/css/front-widgets.min.css?ver=4.7.2.625' type='text/css' media='all' />
 <link rel='stylesheet' id='bbp-default-css'  href='http://52.76.37.90/wp-content/plugins/bbpress/templates/default/css/bbpress.css?ver=2.5.13-6410' type='text/css' media='screen' />
-<link rel='stylesheet' id='cptch_stylesheet-css'  href='http://52.76.37.90/wp-content/plugins/captcha/css/front_end_style.css?ver=4.3.1' type='text/css' media='all' />
+<link rel='stylesheet' id='cptch_stylesheet-css'  href='http://52.76.37.90/wp-content/plugins/captcha/css/front_end_style.css?ver=4.3.5' type='text/css' media='all' />
 <link rel='stylesheet' id='dashicons-css'  href='http://52.76.37.90/wp-includes/css/dashicons.min.css?ver=4.8.1' type='text/css' media='all' />
-<link rel='stylesheet' id='cptch_desktop_style-css'  href='http://52.76.37.90/wp-content/plugins/captcha/css/desktop_style.css?ver=4.3.1' type='text/css' media='all' />
+<link rel='stylesheet' id='cptch_desktop_style-css'  href='http://52.76.37.90/wp-content/plugins/captcha/css/desktop_style.css?ver=4.3.5' type='text/css' media='all' />
 <link rel='stylesheet' id='contact-form-7-css'  href='http://52.76.37.90/wp-content/plugins/contact-form-7/includes/css/styles.css?ver=4.9' type='text/css' media='all' />
 <link rel='stylesheet' id='cf7cf-style-css'  href='http://52.76.37.90/wp-content/plugins/cf7-conditional-fields/style.css?ver=1.3.4' type='text/css' media='all' />
 <link rel='stylesheet' id='wp_html5video_css-css'  href='http://52.76.37.90/wp-content/plugins/html5-videogallery-plus-player/assets/css/video-js.css?ver=2.1.3' type='text/css' media='all' />
@@ -150,13 +152,13 @@ img.emoji {
 			.secondary-navigation a,
 			.onsale,
 			.pagination .page-numbers li .page-numbers:not(.current), .woocommerce-pagination .page-numbers li .page-numbers:not(.current) {
-				color: #6d6d6d;
+				color: #383838;
 			}
 
 			.widget-area .widget a,
 			.hentry .entry-header .posted-on a,
 			.hentry .entry-header .byline a {
-				color: #9f9f9f;
+				color: #6a6a6a;
 			}
 
 			a  {
@@ -201,7 +203,7 @@ img.emoji {
 
 			.pagination .page-numbers li .page-numbers.current, .woocommerce-pagination .page-numbers li .page-numbers.current {
 				background-color: #e6e6e6;
-				color: #6d6d6d;
+				color: #383838;
 			}
 
 			#comments .comment-list .comment-content .comment-text {
@@ -316,17 +318,17 @@ img.emoji {
 			.onsale,
 			.widget_search form:before,
 			.widget_product_search form:before {
-				color: #6d6d6d;
+				color: #383838;
 			}
 
 			.woocommerce-breadcrumb a,
 			a.woocommerce-review-link,
 			.product_meta a {
-				color: #9f9f9f;
+				color: #6a6a6a;
 			}
 
 			.onsale {
-				border-color: #6d6d6d;
+				border-color: #383838;
 			}
 
 			.star-rating span:before,
@@ -359,7 +361,7 @@ img.emoji {
 			p.stars a:before,
 			p.stars a:hover~a:before,
 			p.stars.selected a.active~a:before {
-				color: #6d6d6d;
+				color: #383838;
 			}
 
 			p.stars.selected a.active:before,
@@ -465,7 +467,7 @@ img.emoji {
 
 <script type="text/javascript">
     /* <![CDATA[ */
-    var gdbxRender_Data = { url: "http://52.76.37.90/wp-admin/admin-ajax.php", run_quote: true, run_report: false, run_thanks: false, run_attachments: true, run_canned_replies: false, run_bbcodes: true, run_fitvids: true, wp_editor: true, wp_version: 48, last_cookie: 1504706193, bbpress_version: 25, text_are_you_sure: "Are you sure? Operation is not reversible.", now: 1504702593, thanks_thanks: "Thanks", thanks_unthanks: "Remove Thanks", thanks_saved: "Thanks Saved", thanks_removal: true, validate_attachments: true, insert_into_content: true, max_files: 5, max_size: 5120000, limiter: true, allowed_extensions: "jpg jpeg jpe gif png bmp tiff tif ico asf asx wmv wmx wm avi divx flv mov qt mpeg mpg mpe mp4 m4v ogv webm mkv 3gp 3gpp 3g2 3gp2 txt asc c cc h srt csv tsv ics rtx css vtt dfxp mp3 m4a m4b ra ram wav ogg oga mid midi wma wax mka rtf js pdf class tar zip gz gzip rar 7z psd xcf doc pot pps ppt wri xla xls xlt xlw mdb mpp docx docm dotx dotm xlsx xlsm xlsb xltx xltm xlam pptx pptm ppsx ppsm potx potm ppam sldx sldm onetoc onetoc2 onetmp onepkg oxps xps odt odp ods odg odc odb odf wp wpd key numbers pages afl", text_select_file: "Select File", text_file_name: "Name", text_file_size: "Size", text_file_type: "Extension", text_file_validation: "Error!", text_file_validation_size: "The file is too big.", text_file_validation_type: "File type not allowed.", text_file_remove: "Remove this file", text_file_shortcode: "Insert into content", text_file_caption: "Set file caption", text_file_caption_placeholder: "Caption..." };
+    var gdbxRender_Data = { url: "http://52.76.37.90/wp-admin/admin-ajax.php", run_quote: true, run_report: false, run_thanks: false, run_attachments: true, run_canned_replies: false, run_bbcodes: true, run_fitvids: true, wp_editor: true, wp_version: 48, last_cookie: 1506063682, bbpress_version: 25, text_are_you_sure: "Are you sure? Operation is not reversible.", now: 1506060082, thanks_thanks: "Thanks", thanks_unthanks: "Remove Thanks", thanks_saved: "Thanks Saved", thanks_removal: true, validate_attachments: true, insert_into_content: true, max_files: 5, max_size: 5120000, limiter: true, allowed_extensions: "jpg jpeg jpe gif png bmp tiff tif ico asf asx wmv wmx wm avi divx flv mov qt mpeg mpg mpe mp4 m4v ogv webm mkv 3gp 3gpp 3g2 3gp2 txt asc c cc h srt csv tsv ics rtx css vtt dfxp mp3 m4a m4b ra ram wav ogg oga mid midi wma wax mka rtf js pdf class tar zip gz gzip rar 7z psd xcf doc pot pps ppt wri xla xls xlt xlw mdb mpp docx docm dotx dotm xlsx xlsm xlsb xltx xltm xlam pptx pptm ppsx ppsm potx potm ppam sldx sldm onetoc onetoc2 onetmp onepkg oxps xps odt odp ods odg odc odb odf wp wpd key numbers pages afl", text_select_file: "Select File", text_file_name: "Name", text_file_size: "Size", text_file_type: "Extension", text_file_validation: "Error!", text_file_validation_size: "The file is too big.", text_file_validation_type: "File type not allowed.", text_file_remove: "Remove this file", text_file_shortcode: "Insert into content", text_file_caption: "Set file caption", text_file_caption_placeholder: "Caption..." };
     /* ]]> */
 </script>
 
@@ -541,20 +543,80 @@ img.emoji {
 				<h1 class="page-title">Year: 2017</h1>			</header><!-- .page-header -->
 
 			
-<article id="post-17138" class="post-17138 post type-post status-publish format-standard has-post-thumbnail hentry category-uncategorized">
+<article id="post-17621" class="post-17621 post type-post status-publish format-standard has-post-thumbnail hentry category-uncategorized">
 
 			<header class="entry-header">
-		<span class="posted-on">Posted on <a href="http://52.76.37.90/2017/08/22/cdcbasicbitcoin32017/" rel="bookmark"><time class="entry-date published" datetime="2017-08-22T09:49:43+00:00">22/08/2017</time> <time class="updated" datetime="2017-08-28T17:19:28+00:00">28/08/2017</time></a></span><h2 class="alpha entry-title"><a href="http://52.76.37.90/2017/08/22/cdcbasicbitcoin32017/" rel="bookmark">ปิดรับสมัครแล้ว CDC Basic Bitcoin รุ่นที่3/2017</a></h2>		</header><!-- .entry-header -->
+		<span class="posted-on">Posted on <a href="http://52.76.37.90/2017/09/20/ef-12017/" rel="bookmark"><time class="entry-date published" datetime="2017-09-20T16:43:39+00:00">20/09/2017</time> <time class="updated" datetime="2017-09-20T17:35:11+00:00">20/09/2017</time></a></span><h2 class="alpha entry-title"><a href="http://52.76.37.90/2017/09/20/ef-12017/" rel="bookmark">เปิดรับสมัครแล้ว CDC Mastering Elliott Wave &#038; Fibnacci 1/2017</a></h2>		</header><!-- .entry-header -->
 				<div class="entry-content">
-		<img width="840" height="485" src="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2017/08/20211931/bitcoin1.jpg" class="attachment- size- wp-post-image" alt="" srcset="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2017/08/20211931/bitcoin1.jpg 840w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2017/08/20211931/bitcoin1-500x289.jpg 500w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2017/08/20211931/bitcoin1-768x443.jpg 768w" sizes="(max-width: 840px) 100vw, 840px" /><p>ปิดรับสมัครแล้ว</p>
-<p>ปิดรับสมัครแล้ว</p>
-<p>ปิดรับสมัครแล้ว</p>
-<p>ปิดรับสมัครแล้ว CDC Basic Bitcoin รุ่นที่3/2017<br />
+		<img width="1600" height="837" src="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2017/09/20161010/CDC-Elliot-Wave.jpg" class="attachment- size- wp-post-image" alt="" srcset="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2017/09/20161010/CDC-Elliot-Wave.jpg 1600w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2017/09/20161010/CDC-Elliot-Wave-500x262.jpg 500w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2017/09/20161010/CDC-Elliot-Wave-768x402.jpg 768w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2017/09/20161010/CDC-Elliot-Wave-1024x536.jpg 1024w" sizes="(max-width: 1600px) 100vw, 1600px" /><p>เปิดรับสมัครแล้ว CDC Mastering Elliott Wave &amp; Fibnacci 1/2017<br />
 ( ระยะเวลา 2 วัน โดยเรียนที่อาคาร CDC Foundation )<br />
-วันแรก: วันเสาร์ที่ 16 กันยายน 2560<br />
-วันที่สอง: วันอาทิตย์ที่ 17 กันยายน 2560<br />
+วันแรก: วันเสาร์ที่ 7 ตุลาคม 2560<br />
+วันที่สอง: วันอาทิตย์ที่ 8 ตุลาคม 2560<br />
 ตั้งแต่เวลา 9:30 – 16:30 น.</p>
-<p> <a href="http://52.76.37.90/2017/08/22/cdcbasicbitcoin32017/#more-17138" class="more-link">Continue reading <span class="screen-reader-text">ปิดรับสมัครแล้ว CDC Basic Bitcoin รุ่นที่3/2017</span></a></p>
+<p>&nbsp;</p>
+<p>ค่าเรียน CDC Mastering Elliott Wave &amp; Fibnacci</p>
+<p>สมาชิกสนับสนุน = 7,200 บาท/คน*<br />
+(ช่วยแจ้งหรือระบุ username ของสมาชิกสนับสนุน เพื่อใช้สิทธิด้วยนะครับ<br />
+และใช้สิทธิได้เฉพาะตนเองเท่านั้น)<br />
+สมาชิกทั่วไป = 8,000 บาท/คน*</p>
+<p>&nbsp;</p>
+<p>*ราคานี้รวมอาหารว่างช่วงพักเบรค และอาหารกลางวัน แล้ว</p>
+<p>&nbsp;</p>
+<p>ผู้ที่สนใจสมัครเรียน กรุณาทำตามขั้นตอนดังนี้<br />
+1.) โอนเงินค่าเรียน<br />
+ธนาคาร : ไทยพาณิชย์<br />
+บัญชี : ออมทรัพย์</p>
+<p>สาขา: ลาดพร้าว 59<br />
+เลขที่บัญชี : 0104348910<br />
+ชื่อบัญชี : งานสัมนา 3 โดยนาย โฉลก สัมพันธารักษ์<br />
+ต้องโอนก่อนแจ้งโพสต์ด้านล่าง และให้โอนมีเศษสตางค์ เช่น 7,200.01<br />
+เพื่อความสะดวกในการตรวจสอบ (เศษสตางค์ เป็นเงินสูญเปล่า ใช้ยืนยันบุคคลเท่านั้น)</p>
+<p>&nbsp;</p>
+<p>2.) โพสแจ้งโอนเงินตาม URL ด้านล่างนี้<br />
+(การจัดลำดับคิว จะนับจากการโพสที่ Google Docs ตาม URL ด้านล่างนี้เป็นหลัก<br />
+ไม่ได้จัดตามเวลาโอน ซึ่งถ้าโอนเงินแล้วไม่ได้เข้าไปโพส ก็จะยังไม่ได้คิว)</p>
+<p>&nbsp;</p>
+<p><a href="https://goo.gl/forms/KHK5u76882nSeba33">https://goo.gl/forms/KHK5u76882nSeba33</a></p>
+<p><a href="https://goo.gl/forms/KHK5u76882nSeba33">https://goo.gl/forms/KHK5u76882nSeba33</a></p>
+<p><a href="https://goo.gl/forms/KHK5u76882nSeba33">https://goo.gl/forms/KHK5u76882nSeba33</a></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>รายละเอียดของหลักสูตร CDC Mastering Elliott Wave &amp; Fibnacci<br />
+วัน – เวลาเรียน:</p>
+<p>วันแรก: วันเสาร์ที่ 7 ตุลาคม 2560<br />
+วันที่สอง: วันอาทิตย์ที่ 8 ตุลาคม 2560<br />
+ตั้งแต่เวลา 9:30 – 16:30 น.</p>
+<p>ลงทะเบียน 09:00<br />
+เวลาเรียน 09:30 – 16:30<br />
+Coffee break 10:30 และ 14:30<br />
+รับประทานอาหารกลางวัน 12:00 – 13:00</p>
+<p>&nbsp;</p>
+<p>สถานที่เรียน: (Click URL ด้านล่างเพื่อดู Google Maps)</p>
+<p>&nbsp;</p>
+<p>แผนที่ <a href="https://goo.gl/UC1t1b" target="_blank" rel="noopener">CDC Chaloke Foundation</a></p>
+<p>&nbsp;</p>
+<p>สิ่งที่ต้องเตรียมมา<br />
+1. Notebook/Netbook/Ultrabook/Laptop/mobile</p>
+<p>2. ปลั๊กพ่วง ที่ชาร์แบต แว่นสายตา แผ่นรองเม้าส์ ที่สำคัญมาก คือ เม้าส์</p>
+<p>3.โปรแกรมที่สามารถเปิดกราฟได้เช่น Metastock Amibroker Efin ฯ</p>
+<p>เนื้อหาหลักสูตร</p>
+<ul>
+<li>พื้นฐานความรู้ Elliott Wave &amp; Fibnacci</li>
+<li>เทคนิคการวัด Retracement และ Projection</li>
+<li>การวัดเพื่อหาแนวรับแนวต้านของกราฟนั้นเพื่อเป็นเป้าหมายในการวางแผนการลงทุน</li>
+<li>Workshop เพื่อให้เห็นภาพในการใช้งานจริง</li>
+<li>การนำมาประยุกต์ใช้งานในตลาดต่างๆเช่น ทองคำ bitcoin forex เป็นต้น</li>
+<li><span data-ft="{&quot;tn&quot;:&quot;K&quot;}"><span class="UFICommentBody">การจัด Trading Portfolio แบบระยะสั้นและระยะยาว</span></span></li>
+</ul>
+<p>&nbsp;</p>
+<p>สอบถามข้อมูลเพิ่มเติม<br />
+สามารถโทรติดต่อสอบถามข้อมูลได้ที่หมายเลขโทรศัพท์: 098-765-5641<br />
+หรือ ติดต่อที่</p>
+<p>e-mail: i&#x6e;&#x66;o&#x40;&#x63;h&#x61;&#x6c;o&#x6b;&#x65;.&#x63;&#x6f;m</p>
+<p>FB : CDC ChalokeDotCom</p>
+<p>Youtube : CDC chaloke dot com</p>
+<p>@Line : @chalokedotcom</p>
 		</div><!-- .entry-content -->
 		
 </article><!-- #post-## -->
@@ -621,7 +683,7 @@ img.emoji {
 
 					
 					
-						<div>1 week ago</div>
+						<div>3 weeks, 2 days ago</div>
 
 					
 				</li>
@@ -632,18 +694,18 @@ img.emoji {
 
 					
 					
-						<div>1 week, 2 days ago</div>
+						<div>3 weeks, 4 days ago</div>
 
 					
 				</li>
 
 			
 				<li>
-					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/cdc-d1718/">CDC-D1718 ทำบุญโรงทานอาหารและเครื่องดื่ม วัดโมลีโลกยาราม จ.กรุงเทพฯ</a>
+					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/cdc-d1718/">CDC-D1718 ทำบุญโรงทานอาหารและเครื่องดื่ม วัดโมลีโลกยาราม จ.กรุงเทพฯ**ปิดแล้ว**</a>
 
 					
 					
-						<div>1 week, 2 days ago</div>
+						<div>3 weeks, 4 days ago</div>
 
 					
 				</li>
@@ -654,7 +716,7 @@ img.emoji {
 
 					
 					
-						<div>1 month, 1 week ago</div>
+						<div>1 month, 3 weeks ago</div>
 
 					
 				</li>
@@ -665,7 +727,7 @@ img.emoji {
 
 					
 					
-						<div>1 month, 1 week ago</div>
+						<div>1 month, 3 weeks ago</div>
 
 					
 				</li>
@@ -678,88 +740,88 @@ img.emoji {
 
 			
 				<li>
-					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/%e0%b8%a3%e0%b8%9a%e0%b8%81%e0%b8%a7%e0%b8%99%e0%b8%82%e0%b8%ad%e0%b8%aa%e0%b8%b9%e0%b8%95%e0%b8%a3-trade-gold-%e0%b8%84%e0%b8%a3%e0%b8%b1%e0%b8%9a/">รบกวนขอสูตร Trade Gold ครับ</a>
+					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/%e0%b8%84%e0%b8%ad%e0%b8%a3%e0%b9%8c%e0%b8%aa-cdc-basic-metastock-%e0%b8%97%e0%b8%b5%e0%b9%88%e0%b8%88%e0%b8%b0%e0%b9%80%e0%b8%9b%e0%b8%b4%e0%b8%94%e0%b8%84%e0%b8%a3%e0%b8%b1%e0%b9%89%e0%b8%87/">คอร์ส CDC Basic Metastock ที่จะเปิดครั้งต่อไป วันไหนครับ ???</a>
 
 					
 					
-						<div>9 hours, 42 minutes ago</div>
-
-					
-				</li>
-
-			
-				<li>
-					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/%e0%b9%82%e0%b8%ad%e0%b8%99%e0%b9%80%e0%b8%87%e0%b8%b4%e0%b8%99-supporting-member-%e0%b9%84%e0%b8%9b%e0%b9%80%e0%b8%a1%e0%b8%b7%e0%b9%88%e0%b8%ad-392017-%e0%b9%81%e0%b8%95%e0%b9%88%e0%b8%a2%e0%b8%b1/">โอนเงิน Supporting member ไปเมื่อ 3/9/2017 แต่ยังเข้า forum ไม่ได้ครับ</a>
-
-					
-					
-						<div>9 hours, 51 minutes ago</div>
+						<div>1 day, 3 hours ago</div>
 
 					
 				</li>
 
 			
 				<li>
-					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/expert-%e0%b9%83%e0%b8%99-metastock-%e0%b8%a1%e0%b8%ad%e0%b8%87%e0%b9%84%e0%b8%a1%e0%b9%88%e0%b9%80%e0%b8%ab%e0%b9%87%e0%b8%99-action-zone-%e0%b8%97%e0%b8%b3%e0%b8%ad%e0%b8%a2%e0%b9%88%e0%b8%b2/">Expert ใน metastock มองไม่เห็น action zone ทำอย่างไร</a>
+					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/%e0%b8%a3%e0%b8%b0%e0%b8%9a%e0%b8%9a-download-market-%e0%b9%81%e0%b8%88%e0%b9%89%e0%b8%87%e0%b8%a7%e0%b9%88%e0%b8%b2-incorect-usernamr-or-password/">ระบบ download market แจ้งว่า Incorect usernamr or password </a>
 
 					
 					
-						<div>20 hours, 43 minutes ago</div>
-
-					
-				</li>
-
-			
-				<li>
-					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/down-lode-metastock-%e0%b8%97%e0%b8%b5%e0%b9%88%e0%b9%84%e0%b8%ab%e0%b8%99%e0%b8%84%e0%b8%a3%e0%b8%b1%e0%b8%9a/">down lode Metastock ที่ไหนครับ</a>
-
-					
-					
-						<div>6 days, 20 hours ago</div>
+						<div>1 day, 14 hours ago</div>
 
 					
 				</li>
 
 			
 				<li>
-					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/cdc-d1720/">CDC-D1720 ทอดกฐินบูรณะโบสถ์ วัดนิยมธรรมวราราม จ.นครปฐม</a>
+					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/download-market-%e0%b9%84%e0%b8%a1%e0%b9%88%e0%b9%84%e0%b8%94%e0%b9%89/">Download market ไม่ได้</a>
 
 					
 					
-						<div>1 week ago</div>
-
-					
-				</li>
-
-			
-				<li>
-					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/cdc-d1719/">CDC-D1719 กฐินสามัคคี วัดป่าหนองรัง ตำบลคำเหมือดแก้ว จ.กาฬสินธุ์</a>
-
-					
-					
-						<div>1 week, 2 days ago</div>
+						<div>1 day, 14 hours ago</div>
 
 					
 				</li>
 
 			
 				<li>
-					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/cdc-d1718/">CDC-D1718 ทำบุญโรงทานอาหารและเครื่องดื่ม วัดโมลีโลกยาราม จ.กรุงเทพฯ</a>
+					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/%e0%b8%82%e0%b8%ad%e0%b8%aa%e0%b8%b9%e0%b8%95%e0%b8%a3-td-sequential-%e0%b8%ab%e0%b8%99%e0%b9%88%e0%b8%ad%e0%b8%a2%e0%b8%84%e0%b8%a3%e0%b8%b1%e0%b8%9a/">ขอสูตร td sequential หน่อยครับ</a>
 
 					
 					
-						<div>1 week, 2 days ago</div>
+						<div>5 days, 18 hours ago</div>
 
 					
 				</li>
 
 			
 				<li>
-					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/%e0%b9%82%e0%b8%ad%e0%b8%99%e0%b9%80%e0%b8%87%e0%b8%b4%e0%b8%99-supporting-member-21%e0%b8%aa%e0%b8%84-60-%e0%b9%81%e0%b8%a5%e0%b9%89%e0%b8%a7%e0%b8%84%e0%b8%a3%e0%b8%b1%e0%b8%9a-%e0%b8%a2%e0%b8%b1/">โอนเงิน supporting member 21สค 60 แล้วครับ ยังเข้า forum ไม่ได้ครับ</a>
+					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/%e0%b8%82%e0%b8%b1%e0%b9%89%e0%b8%99%e0%b8%95%e0%b8%ad%e0%b8%99%e0%b8%81%e0%b8%b2%e0%b8%a3%e0%b8%95%e0%b8%b4%e0%b8%94%e0%b8%95%e0%b8%b1%e0%b9%89%e0%b8%87%e0%b9%81%e0%b8%a5%e0%b8%b0%e0%b9%83%e0%b8%8a/">ขั้นตอนการติดตั้งและใช้งานโปรแกรม CDCDL</a>
 
 					
 					
-						<div>1 week, 6 days ago</div>
+						<div>1 week, 1 day ago</div>
+
+					
+				</li>
+
+			
+				<li>
+					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/%e0%b8%82%e0%b8%b1%e0%b9%89%e0%b8%99%e0%b8%95%e0%b8%ad%e0%b8%99%e0%b8%81%e0%b8%b2%e0%b8%a3-import-%e0%b8%82%e0%b9%89%e0%b8%ad%e0%b8%a1%e0%b8%b9%e0%b8%a5%e0%b9%80%e0%b8%82%e0%b9%89%e0%b8%b2-amibroker/">ขั้นตอนการ Import ข้อมูลเข้า Amibroker โดยครูอภินพ</a>
+
+					
+					
+						<div>1 week, 1 day ago</div>
+
+					
+				</li>
+
+			
+				<li>
+					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/%e0%b8%aa%e0%b8%b1%e0%b8%8d%e0%b8%a5%e0%b8%b1%e0%b8%81%e0%b8%a9%e0%b8%93%e0%b9%8c%e0%b8%82%e0%b8%ad%e0%b8%87%e0%b8%82%e0%b9%89%e0%b8%ad%e0%b8%a1%e0%b8%b9%e0%b8%a5%e0%b9%83%e0%b8%99-usfu/">สัญลักษณ์ข้อมูลใน USFU</a>
+
+					
+					
+						<div>1 week, 1 day ago</div>
+
+					
+				</li>
+
+			
+				<li>
+					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/%e0%b8%a7%e0%b8%b4%e0%b8%98%e0%b8%b5%e0%b9%81%e0%b8%81%e0%b9%89%e0%b9%84%e0%b8%82-cdcdl-error-%e0%b8%95%e0%b9%88%e0%b8%b2%e0%b8%87%e0%b9%86/">วิธีแก้ไข CDCDL error 0 (แต่ไม่ download)</a>
+
+					
+					
+						<div>1 week, 1 day ago</div>
 
 					
 				</li>
@@ -770,28 +832,24 @@ img.emoji {
 		</div><div id="d4p_bbw_newposts-4" class="widget cls_d4p_bbw_newposts"><span class="gamma widget-title">New Posts</span><div class="d4p-bbw-widget bbx-newposts">
 <ul>
 <li>
-<a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/%e0%b8%a3%e0%b8%9a%e0%b8%81%e0%b8%a7%e0%b8%99%e0%b8%82%e0%b8%ad%e0%b8%aa%e0%b8%b9%e0%b8%95%e0%b8%a3-trade-gold-%e0%b8%84%e0%b8%a3%e0%b8%b1%e0%b8%9a/" title="รบกวนขอสูตร Trade Gold ครับ">รบกวนขอสูตร Trade Gold ครับ</a>
-<em class="bbp-last-active">9 hours, 42 minutes ago</em>
+<a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/%e0%b8%84%e0%b8%ad%e0%b8%a3%e0%b9%8c%e0%b8%aa-cdc-basic-metastock-%e0%b8%97%e0%b8%b5%e0%b9%88%e0%b8%88%e0%b8%b0%e0%b9%80%e0%b8%9b%e0%b8%b4%e0%b8%94%e0%b8%84%e0%b8%a3%e0%b8%b1%e0%b9%89%e0%b8%87/" title="คอร์ส CDC Basic Metastock ที่จะเปิดครั้งต่อไป วันไหนครับ ???">คอร์ส CDC Basic Metastock ที่จะเปิดครั้งต่อไป วันไหนครับ ???</a>
+<em class="bbp-last-active">1 day, 3 hours ago</em>
 </li>
 <li>
-<a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/%e0%b9%82%e0%b8%ad%e0%b8%99%e0%b9%80%e0%b8%87%e0%b8%b4%e0%b8%99-supporting-member-%e0%b9%84%e0%b8%9b%e0%b9%80%e0%b8%a1%e0%b8%b7%e0%b9%88%e0%b8%ad-392017-%e0%b9%81%e0%b8%95%e0%b9%88%e0%b8%a2%e0%b8%b1/#post-17376" title="Reply To: โอนเงิน Supporting member ไปเมื่อ 3/9/2017 แต่ยังเข้า forum ไม่ได้ครับ">Reply To: โอนเงิน Supporting member ไปเมื่อ 3/9/2017 แต่ยังเข้า forum ไม่ได้ครับ</a>
-<em class="bbp-last-active">9 hours, 51 minutes ago</em>
+<a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/%e0%b8%a3%e0%b8%b0%e0%b8%9a%e0%b8%9a-download-market-%e0%b9%81%e0%b8%88%e0%b9%89%e0%b8%87%e0%b8%a7%e0%b9%88%e0%b8%b2-incorect-usernamr-or-password/" title="ระบบ download market แจ้งว่า Incorect usernamr or password ">ระบบ download market แจ้งว่า Incorect usernamr or password </a>
+<em class="bbp-last-active">1 day, 14 hours ago</em>
 </li>
 <li>
-<a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/expert-%e0%b9%83%e0%b8%99-metastock-%e0%b8%a1%e0%b8%ad%e0%b8%87%e0%b9%84%e0%b8%a1%e0%b9%88%e0%b9%80%e0%b8%ab%e0%b9%87%e0%b8%99-action-zone-%e0%b8%97%e0%b8%b3%e0%b8%ad%e0%b8%a2%e0%b9%88%e0%b8%b2/#post-17364" title="Reply To: Expert ใน metastock มองไม่เห็น action zone ทำอย่างไร">Reply To: Expert ใน metastock มองไม่เห็น action zone ทำอย่างไร</a>
-<em class="bbp-last-active">20 hours, 43 minutes ago</em>
+<a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/download-market-%e0%b9%84%e0%b8%a1%e0%b9%88%e0%b9%84%e0%b8%94%e0%b9%89/" title="Download market ไม่ได้">Download market ไม่ได้</a>
+<em class="bbp-last-active">1 day, 14 hours ago</em>
 </li>
 <li>
-<a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/cdc-downloader/#post-17346" title="Reply To: CDC Downloader">Reply To: CDC Downloader</a>
-<em class="bbp-last-active">1 day, 22 hours ago</em>
-</li>
-<li>
-<a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/%e0%b8%82%e0%b8%ad%e0%b8%aa%e0%b8%b9%e0%b8%95%e0%b8%a3-amibroker/#post-17331" title="Reply To: ขอสูตร amibroker">Reply To: ขอสูตร amibroker</a>
-<em class="bbp-last-active">3 days, 10 hours ago</em>
+<a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/%e0%b8%82%e0%b8%ad%e0%b8%aa%e0%b8%b9%e0%b8%95%e0%b8%a3-td-sequential-%e0%b8%ab%e0%b8%99%e0%b9%88%e0%b8%ad%e0%b8%a2%e0%b8%84%e0%b8%a3%e0%b8%b1%e0%b8%9a/" title="ขอสูตร td sequential หน่อยครับ">ขอสูตร td sequential หน่อยครับ</a>
+<em class="bbp-last-active">5 days, 18 hours ago</em>
 </li>
 </ul>
 </div></div><div id="archives-2" class="widget widget_archive"><span class="gamma widget-title">Archives</span>		<ul>
-			<li><a href='http://52.76.37.90/2017/08/'>August 2017</a></li>
+			<li><a href='http://52.76.37.90/2017/09/'>September 2017</a></li>
 	<li><a href='http://52.76.37.90/2017/07/'>July 2017</a></li>
 		</ul>
 		</div></div><!-- #secondary -->
@@ -840,7 +898,7 @@ img.emoji {
 
 					
 					
-						<div>1 day, 22 hours ago</div>
+						<div>2 weeks, 3 days ago</div>
 
 					
 				</li>
@@ -851,7 +909,7 @@ img.emoji {
 
 					
 					
-						<div>1 week, 5 days ago</div>
+						<div>4 weeks ago</div>
 
 					
 				</li>
@@ -862,7 +920,7 @@ img.emoji {
 
 					
 					
-						<div>3 days, 10 hours ago</div>
+						<div>2 weeks, 5 days ago</div>
 
 					
 				</li>
@@ -873,18 +931,18 @@ img.emoji {
 
 					
 					
-						<div>1 month, 2 weeks ago</div>
+						<div>2 months ago</div>
 
 					
 				</li>
 
 			
 				<li>
-					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/%e0%b8%82%e0%b8%ad%e0%b8%aa%e0%b8%b9%e0%b8%95%e0%b8%a3-amibroker/">ขอสูตร amibroker</a>
+					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/%e0%b8%a3%e0%b8%9a%e0%b8%81%e0%b8%a7%e0%b8%99%e0%b8%82%e0%b8%ad%e0%b8%aa%e0%b8%b9%e0%b8%95%e0%b8%a3-trade-gold-%e0%b8%84%e0%b8%a3%e0%b8%b1%e0%b8%9a/">รบกวนขอสูตร Trade Gold ครับ</a>
 
 					
 					
-						<div>3 days, 10 hours ago</div>
+						<div>1 week, 2 days ago</div>
 
 					
 				</li>
@@ -899,55 +957,55 @@ img.emoji {
 
 			
 				<li>
-					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/%e0%b8%a3%e0%b8%9a%e0%b8%81%e0%b8%a7%e0%b8%99%e0%b8%82%e0%b8%ad%e0%b8%aa%e0%b8%b9%e0%b8%95%e0%b8%a3-trade-gold-%e0%b8%84%e0%b8%a3%e0%b8%b1%e0%b8%9a/">รบกวนขอสูตร Trade Gold ครับ</a>
+					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/%e0%b8%84%e0%b8%ad%e0%b8%a3%e0%b9%8c%e0%b8%aa-cdc-basic-metastock-%e0%b8%97%e0%b8%b5%e0%b9%88%e0%b8%88%e0%b8%b0%e0%b9%80%e0%b8%9b%e0%b8%b4%e0%b8%94%e0%b8%84%e0%b8%a3%e0%b8%b1%e0%b9%89%e0%b8%87/">คอร์ส CDC Basic Metastock ที่จะเปิดครั้งต่อไป วันไหนครับ ???</a>
 
 					
 					
-						<div>9 hours, 42 minutes ago</div>
-
-					
-				</li>
-
-			
-				<li>
-					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/%e0%b9%82%e0%b8%ad%e0%b8%99%e0%b9%80%e0%b8%87%e0%b8%b4%e0%b8%99-supporting-member-%e0%b9%84%e0%b8%9b%e0%b9%80%e0%b8%a1%e0%b8%b7%e0%b9%88%e0%b8%ad-392017-%e0%b9%81%e0%b8%95%e0%b9%88%e0%b8%a2%e0%b8%b1/">โอนเงิน Supporting member ไปเมื่อ 3/9/2017 แต่ยังเข้า forum ไม่ได้ครับ</a>
-
-					
-					
-						<div>9 hours, 51 minutes ago</div>
+						<div>1 day, 3 hours ago</div>
 
 					
 				</li>
 
 			
 				<li>
-					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/expert-%e0%b9%83%e0%b8%99-metastock-%e0%b8%a1%e0%b8%ad%e0%b8%87%e0%b9%84%e0%b8%a1%e0%b9%88%e0%b9%80%e0%b8%ab%e0%b9%87%e0%b8%99-action-zone-%e0%b8%97%e0%b8%b3%e0%b8%ad%e0%b8%a2%e0%b9%88%e0%b8%b2/">Expert ใน metastock มองไม่เห็น action zone ทำอย่างไร</a>
+					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/%e0%b8%a3%e0%b8%b0%e0%b8%9a%e0%b8%9a-download-market-%e0%b9%81%e0%b8%88%e0%b9%89%e0%b8%87%e0%b8%a7%e0%b9%88%e0%b8%b2-incorect-usernamr-or-password/">ระบบ download market แจ้งว่า Incorect usernamr or password </a>
 
 					
 					
-						<div>20 hours, 43 minutes ago</div>
-
-					
-				</li>
-
-			
-				<li>
-					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/down-lode-metastock-%e0%b8%97%e0%b8%b5%e0%b9%88%e0%b9%84%e0%b8%ab%e0%b8%99%e0%b8%84%e0%b8%a3%e0%b8%b1%e0%b8%9a/">down lode Metastock ที่ไหนครับ</a>
-
-					
-					
-						<div>6 days, 20 hours ago</div>
+						<div>1 day, 14 hours ago</div>
 
 					
 				</li>
 
 			
 				<li>
-					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/cdc-d1720/">CDC-D1720 ทอดกฐินบูรณะโบสถ์ วัดนิยมธรรมวราราม จ.นครปฐม</a>
+					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/download-market-%e0%b9%84%e0%b8%a1%e0%b9%88%e0%b9%84%e0%b8%94%e0%b9%89/">Download market ไม่ได้</a>
 
 					
 					
-						<div>1 week ago</div>
+						<div>1 day, 14 hours ago</div>
+
+					
+				</li>
+
+			
+				<li>
+					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/%e0%b8%82%e0%b8%ad%e0%b8%aa%e0%b8%b9%e0%b8%95%e0%b8%a3-td-sequential-%e0%b8%ab%e0%b8%99%e0%b9%88%e0%b8%ad%e0%b8%a2%e0%b8%84%e0%b8%a3%e0%b8%b1%e0%b8%9a/">ขอสูตร td sequential หน่อยครับ</a>
+
+					
+					
+						<div>5 days, 18 hours ago</div>
+
+					
+				</li>
+
+			
+				<li>
+					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/%e0%b8%82%e0%b8%b1%e0%b9%89%e0%b8%99%e0%b8%95%e0%b8%ad%e0%b8%99%e0%b8%81%e0%b8%b2%e0%b8%a3%e0%b8%95%e0%b8%b4%e0%b8%94%e0%b8%95%e0%b8%b1%e0%b9%89%e0%b8%87%e0%b9%81%e0%b8%a5%e0%b8%b0%e0%b9%83%e0%b8%8a/">ขั้นตอนการติดตั้งและใช้งานโปรแกรม CDCDL</a>
+
+					
+					
+						<div>1 week, 1 day ago</div>
 
 					
 				</li>
@@ -962,55 +1020,55 @@ img.emoji {
 
 			
 				<li>
-					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/%e0%b8%a3%e0%b8%9a%e0%b8%81%e0%b8%a7%e0%b8%99%e0%b8%82%e0%b8%ad%e0%b8%aa%e0%b8%b9%e0%b8%95%e0%b8%a3-trade-gold-%e0%b8%84%e0%b8%a3%e0%b8%b1%e0%b8%9a/">รบกวนขอสูตร Trade Gold ครับ</a>
+					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/%e0%b8%84%e0%b8%ad%e0%b8%a3%e0%b9%8c%e0%b8%aa-cdc-basic-metastock-%e0%b8%97%e0%b8%b5%e0%b9%88%e0%b8%88%e0%b8%b0%e0%b9%80%e0%b8%9b%e0%b8%b4%e0%b8%94%e0%b8%84%e0%b8%a3%e0%b8%b1%e0%b9%89%e0%b8%87/">คอร์ส CDC Basic Metastock ที่จะเปิดครั้งต่อไป วันไหนครับ ???</a>
 
 					
 					
-						<div>9 hours, 42 minutes ago</div>
-
-					
-				</li>
-
-			
-				<li>
-					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/%e0%b9%82%e0%b8%ad%e0%b8%99%e0%b9%80%e0%b8%87%e0%b8%b4%e0%b8%99-supporting-member-%e0%b9%84%e0%b8%9b%e0%b9%80%e0%b8%a1%e0%b8%b7%e0%b9%88%e0%b8%ad-392017-%e0%b9%81%e0%b8%95%e0%b9%88%e0%b8%a2%e0%b8%b1/">โอนเงิน Supporting member ไปเมื่อ 3/9/2017 แต่ยังเข้า forum ไม่ได้ครับ</a>
-
-					
-					
-						<div>9 hours, 51 minutes ago</div>
+						<div>1 day, 3 hours ago</div>
 
 					
 				</li>
 
 			
 				<li>
-					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/expert-%e0%b9%83%e0%b8%99-metastock-%e0%b8%a1%e0%b8%ad%e0%b8%87%e0%b9%84%e0%b8%a1%e0%b9%88%e0%b9%80%e0%b8%ab%e0%b9%87%e0%b8%99-action-zone-%e0%b8%97%e0%b8%b3%e0%b8%ad%e0%b8%a2%e0%b9%88%e0%b8%b2/">Expert ใน metastock มองไม่เห็น action zone ทำอย่างไร</a>
+					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/%e0%b8%a3%e0%b8%b0%e0%b8%9a%e0%b8%9a-download-market-%e0%b9%81%e0%b8%88%e0%b9%89%e0%b8%87%e0%b8%a7%e0%b9%88%e0%b8%b2-incorect-usernamr-or-password/">ระบบ download market แจ้งว่า Incorect usernamr or password </a>
 
 					
 					
-						<div>20 hours, 43 minutes ago</div>
-
-					
-				</li>
-
-			
-				<li>
-					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/cdc-downloader/">CDC Downloader</a>
-
-					
-					
-						<div>1 day, 22 hours ago</div>
+						<div>1 day, 14 hours ago</div>
 
 					
 				</li>
 
 			
 				<li>
-					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/%e0%b8%82%e0%b8%ad%e0%b8%aa%e0%b8%b9%e0%b8%95%e0%b8%a3-amibroker/">ขอสูตร amibroker</a>
+					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/download-market-%e0%b9%84%e0%b8%a1%e0%b9%88%e0%b9%84%e0%b8%94%e0%b9%89/">Download market ไม่ได้</a>
 
 					
 					
-						<div>3 days, 10 hours ago</div>
+						<div>1 day, 14 hours ago</div>
+
+					
+				</li>
+
+			
+				<li>
+					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/%e0%b8%82%e0%b8%ad%e0%b8%aa%e0%b8%b9%e0%b8%95%e0%b8%a3-td-sequential-%e0%b8%ab%e0%b8%99%e0%b9%88%e0%b8%ad%e0%b8%a2%e0%b8%84%e0%b8%a3%e0%b8%b1%e0%b8%9a/">ขอสูตร td sequential หน่อยครับ</a>
+
+					
+					
+						<div>5 days, 18 hours ago</div>
+
+					
+				</li>
+
+			
+				<li>
+					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/%e0%b8%82%e0%b8%b1%e0%b9%89%e0%b8%99%e0%b8%95%e0%b8%ad%e0%b8%99%e0%b8%81%e0%b8%b2%e0%b8%a3%e0%b8%95%e0%b8%b4%e0%b8%94%e0%b8%95%e0%b8%b1%e0%b9%89%e0%b8%87%e0%b9%81%e0%b8%a5%e0%b8%b0%e0%b9%83%e0%b8%8a/">ขั้นตอนการติดตั้งและใช้งานโปรแกรม CDCDL</a>
+
+					
+					
+						<div>1 week, 1 day ago</div>
 
 					
 				</li>
@@ -1068,12 +1126,6 @@ var wpcf7 = {"apiSettings":{"root":"http:\/\/52.76.37.90\/wp-json\/contact-form-
 <script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/html5-videogallery-plus-player/assets/js/video.js?ver=2.1.3'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/html5-videogallery-plus-player/assets/js/jquery.magnific-popup.min.js?ver=2.1.3'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/html5-videogallery-plus-player/assets/js/wp-html5vp-public.js?ver=2.1.3'></script>
-<script type='text/javascript'>
-/* <![CDATA[ */
-var wc_add_to_cart_params = {"ajax_url":"\/wp-admin\/admin-ajax.php","wc_ajax_url":"\/2017\/?wc-ajax=%%endpoint%%","i18n_view_cart":"View cart","cart_url":"http:\/\/52.76.37.90\/cart\/","is_cart":"","cart_redirect_after_add":"no"};
-/* ]]> */
-</script>
-<script type='text/javascript' src='//52.76.37.90/wp-content/plugins/woocommerce/assets/js/frontend/add-to-cart.min.js?ver=3.1.2'></script>
 <script type='text/javascript' src='//52.76.37.90/wp-content/plugins/woocommerce/assets/js/jquery-blockui/jquery.blockUI.min.js?ver=2.70'></script>
 <script type='text/javascript' src='//52.76.37.90/wp-content/plugins/woocommerce/assets/js/js-cookie/js.cookie.min.js?ver=2.1.4'></script>
 <script type='text/javascript'>
@@ -1104,5 +1156,3 @@ jQuery(document).ready(function(jQuery){jQuery.datepicker.setDefaults({"closeTex
 
 </body>
 </html>
-
-<!-- Served from: 52.76.37.90 @ 2017-09-06 19:56:34 by W3 Total Cache -->

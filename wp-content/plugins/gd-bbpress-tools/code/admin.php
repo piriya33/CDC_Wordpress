@@ -36,8 +36,8 @@ class gdbbT_Admin {
                 echo __("Thank you for using this plugin. Please, take a few minutes and check out the GD bbPress Toolbox Pro plugin with many new and improved features.", "gd-bbpress-tools");
                 echo '<br/>'.__("Buy GD bbPress Toolbox Pro version or Dev4Press Plugins Pack and get 15% discount using this coupon", "gd-bbpress-tools");
                 echo ': <strong style="color: #c00;">GDBBPTOPRO</strong><br/>';
-                echo '<strong><a href="https://bbpress.dev4press.com/" target="_blank">'.__("Official Website", "gd-bbpress-tools")."</a></strong> &middot; ";
-                echo '<strong><a href="https://pack.dev4press.com/" target="_blank">'.__("Dev4Press Plugins Pack", "gd-bbpress-tools")."</a></strong> &middot; ";
+                echo '<strong><a href="https://plugins.dev4press.com/gd-bbpress-toolbox/" target="_blank">'.__("Official Website", "gd-bbpress-tools")."</a></strong> &middot; ";
+                echo '<strong><a href="https://club.dev4press.com/" target="_blank">'.__("Dev4Press Club Membership", "gd-bbpress-tools")."</a></strong> &middot; ";
                 echo '<a href="'.$no_thanks.'">'.__("Hide this message", "gd-bbpress-tools")."</a>.";
             echo '</div>';
         }
@@ -103,7 +103,7 @@ class gdbbT_Admin {
     function plugin_links($links, $file) {
         if ($file == 'gd-bbpress-tools/gd-bbpress-tools.php'){
             $links[] = '<a href="edit.php?post_type=forum&page=gdbbpress_tools&tab=faq">'.__("FAQ", "gd-bbpress-tools").'</a>';
-            $links[] = '<a target="_blank" style="color: #cc0000; font-weight: bold;" href="https://bbpress.dev4press.com/">'.__("Upgrade to GD bbPress Toolbox Pro", "gd-bbpress-tools").'</a>';
+            $links[] = '<a target="_blank" style="color: #cc0000; font-weight: bold;" href="https://plugins.dev4press.com/gd-bbpress-toolbox/">'.__("Upgrade to GD bbPress Toolbox Pro", "gd-bbpress-tools").'</a>';
         }
 
         return $links;
@@ -133,9 +133,9 @@ class gdbbT_Admin {
             "id" => "gdpt-screenhelp-website",
             "title" => "Dev4Press", "sfc",
             "content" => '<p>'.__("On Dev4Press website you can find many useful plugins, themes and tutorials, all for WordPress. Please, take a few minutes to browse some of these resources, you might find some of them very useful.", "gd-bbpress-tools").'</p>
-                <p><a href="https://plugins.dev4press.com/plugins/" target="_blank"><strong>'.__("Plugins", "gd-bbpress-attachments").'</strong></a> - '.__("We have more than 10 plugins available, some of them are commercial and some are available for free.", "gd-bbpress-attachments").'</p>
-                <p><a href="https://support.dev4press.com/kb/" target="_blank"><strong>'.__("Knowledge Base", "gd-bbpress-attachments").'</strong></a> - '.__("Premium and free tutorials for our plugins themes, and many general and practical WordPress tutorials.", "gd-bbpress-attachments").'</p>
-                <p><a href="https://support.dev4press.com/forums/" target="_blank"><strong>'.__("Support Forums", "gd-bbpress-attachments").'</strong></a> - '.__("Premium support forum for all with valid licenses to get help. Also, report bugs and leave suggestions.", "gd-bbpress-attachments").'</p>'));
+                <p><a href="https://plugins.dev4press.com/" target="_blank"><strong>'.__("Plugins", "gd-bbpress-tools").'</strong></a> - '.__("We have more than 10 plugins available, some of them are commercial and some are available for free.", "gd-bbpress-tools").'</p>
+                <p><a href="https://support.dev4press.com/kb/" target="_blank"><strong>'.__("Knowledge Base", "gd-bbpress-tools").'</strong></a> - '.__("Premium and free tutorials for our plugins themes, and many general and practical WordPress tutorials.", "gd-bbpress-tools").'</p>
+                <p><a href="https://support.dev4press.com/forums/" target="_blank"><strong>'.__("Support Forums", "gd-bbpress-tools").'</strong></a> - '.__("Premium support forum for all with valid licenses to get help. Also, report bugs and leave suggestions.", "gd-bbpress-tools").'</p>'));
     }
 
     public function menu_tools() {
