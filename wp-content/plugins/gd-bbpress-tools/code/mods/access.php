@@ -29,5 +29,3 @@ class gdbbMod_Access {
         return $args;
     }
 }
-
-?>

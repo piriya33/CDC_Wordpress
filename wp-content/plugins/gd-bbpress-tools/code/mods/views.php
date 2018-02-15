@@ -81,5 +81,3 @@ class gdbbMod_Views {
                 false);
     }
 }
-
-?>

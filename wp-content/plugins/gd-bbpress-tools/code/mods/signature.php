@@ -180,5 +180,3 @@ class gdbbMod_Signature {
         return $content;
     }
 }
-
-?>

@@ -247,8 +247,13 @@ class gdbbMod_Shortcodes {
     }
 
     private function _simple($code, $tag, $name, $atts, $content = null) {
-        if (is_null($content)) return '';
-        if (!$this->_scope()) return $content;
+        if (is_null($content)) {
+            return '';
+        }
+
+        if (!$this->_scope()) {
+            return $content;
+        }
 
         $atts = $this->_atts($code, $atts);
         $args = isset($this->shortcodes[$code]['args']) ? $this->shortcodes[$code]['args'] : array();
@@ -395,8 +400,13 @@ class gdbbMod_Shortcodes {
     }
 
     public function shortcode_size($atts, $content = null) {
-        if (is_null($content)) return '';
-        if (!$this->_scope()) return $content;
+        if (is_null($content)) {
+            return '';
+        }
+
+        if (!$this->_scope()) {
+            return $content;
+        }
 
         $atts = $this->_atts('size', $atts);
         $args = isset($this->shortcodes['size']['args']) ? $this->shortcodes['size']['args'] : array();
@@ -415,8 +425,13 @@ class gdbbMod_Shortcodes {
     }
 
     public function shortcode_color($atts, $content = null) {
-        if (is_null($content)) return '';
-        if (!$this->_scope()) return $content;
+        if (is_null($content)) {
+            return '';
+        }
+
+        if (!$this->_scope()) {
+            return $content;
+        }
 
         $atts = $this->_atts('color', $atts);
         $args = isset($this->shortcodes['color']['args']) ? $this->shortcodes['color']['args'] : array();
@@ -431,8 +446,13 @@ class gdbbMod_Shortcodes {
     }
 
     public function shortcode_area($atts, $content = null) {
-        if (is_null($content)) return '';
-        if (!$this->_scope()) return $content;
+        if (is_null($content)) {
+            return '';
+        }
+
+        if (!$this->_scope()) {
+            return $content;
+        }
 
         $atts = $this->_atts('area', $atts);
         $args = isset($this->shortcodes['area']['args']) ? $this->shortcodes['area']['args'] : array();
@@ -451,26 +471,48 @@ class gdbbMod_Shortcodes {
     }
 
     public function shortcode_quote($atts, $content = null) {
-        if (is_null($content)) return '';
-        if (!$this->_scope()) return $content;
+        if (is_null($content)) {
+            return '';
+        }
+
+        if (!$this->_scope()) {
+            return $content;
+        }
 
         $atts = $this->_atts('quote', $atts);
         $args = isset($this->shortcodes['quote']['args']) ? $this->shortcodes['quote']['args'] : array();
 
         $title = '';
         if ($atts['quote'] != '') {
-            $id = intval($atts['quote']);
-            $url = bbp_get_reply_url($id);
-            $ath = bbp_get_reply_author_display_name($id);
-            $title = '<div class="d4p-bbt-quote-title"><a href="'.$url.'">'.$ath.' '.__("wrote", "gd-bbpress-tools").':</a></div>';
+            $url = '';
+            $ath = '';
+
+            $id = absint($atts['quote']);
+
+            if (bbp_is_topic($id)) {
+                $url = get_permalink($id);
+                $ath = bbp_get_topic_author_display_name($id);
+            } else if (bbp_is_reply($id)) {
+                $url = bbp_get_reply_url($id);
+                $ath = bbp_get_reply_author_display_name($id);
+            }
+
+            if (!empty($url)) {
+                $title = '<div class="d4p-bbt-quote-title"><a href="'.$url.'">'.$ath.' '.__("wrote", "gd-bbpress-tools").':</a></div>';
+            }
         }
 
         return $this->_tag('blockquote', 'quote', $title.$content, $atts, $args);
     }
 
     public function shortcode_url($atts, $content = null) {
-        if (is_null($content)) return '';
-        if (!$this->_scope()) return $content;
+        if (is_null($content)) {
+            return '';
+        }
+
+        if (!$this->_scope()) {
+            return $content;
+        }
 
         $atts = $this->_atts('url', $atts);
         $args = isset($this->shortcodes['url']['args']) ? $this->shortcodes['url']['args'] : array();
@@ -485,8 +527,13 @@ class gdbbMod_Shortcodes {
     }
 
     public function shortcode_img($atts, $content = null) {
-        if (is_null($content)) return '';
-        if (!$this->_scope()) return $content;
+        if (is_null($content)) {
+            return '';
+        }
+
+        if (!$this->_scope()) {
+            return $content;
+        }
 
         $atts = $this->_atts('img', $atts);
         $args = isset($this->shortcodes['img']['args']) ? $this->shortcodes['img']['args'] : array();
@@ -505,8 +552,13 @@ class gdbbMod_Shortcodes {
     }
 
     public function shortcode_google($atts, $content = null) {
-        if (is_null($content)) return '';
-        if (!$this->_scope()) return $content;
+        if (is_null($content)) {
+            return '';
+        }
+
+        if (!$this->_scope()) {
+            return $content;
+        }
 
         $atts = $this->_atts('google', $atts);
         $args = isset($this->shortcodes['google']['args']) ? $this->shortcodes['google']['args'] : array();
@@ -528,8 +580,13 @@ class gdbbMod_Shortcodes {
     }
 
     public function shortcode_youtube($atts, $content = null) {
-        if (is_null($content)) return '';
-        if (!$this->_scope()) return $content;
+        if (is_null($content)) {
+            return '';
+        }
+
+        if (!$this->_scope()) {
+            return $content;
+        }
 
         $atts = $this->_atts('youtube', $atts);
 
@@ -562,8 +619,13 @@ class gdbbMod_Shortcodes {
     }
 
     public function shortcode_vimeo($atts, $content = null) {
-        if (is_null($content)) return '';
-        if (!$this->_scope()) return $content;
+        if (is_null($content)) {
+            return '';
+        }
+
+        if (!$this->_scope()) {
+            return $content;
+        }
 
         $atts = $this->_atts('vimeo', $atts);
 
@@ -596,11 +658,26 @@ class gdbbMod_Shortcodes {
     }
 
     public function shortcode_note($atts, $content = null) {
-        if (is_null($content)) return '';
-        if (!$this->_scope()) return $content;
+        if (is_null($content)) {
+            return '';
+        }
+
+        if (!$this->_scope()) {
+            return $content;
+        }
 
         return '<!-- '.$this->_content($content).' -->';
     }
 }
 
-?>
+function gdbbx_render_the_bbcode($name, $atts, $content = null) {
+    global $gdbbpress_tools;
+
+    $_mod = $gdbbpress_tools->mod['s'];
+
+    if (method_exists($_mod, 'shortcode_'.$name)) {
+        return $_mod->{'shortcode_'.$name}($atts, $content);
+    }
+
+    return false;
+}

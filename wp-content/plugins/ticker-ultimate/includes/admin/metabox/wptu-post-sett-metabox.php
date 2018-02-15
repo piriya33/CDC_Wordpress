@@ -27,7 +27,7 @@ $read_more_link = get_post_meta( $post->ID, $prefix.'more_link', true );
 			</th>
 			<td>
 				<input type="url" value="<?php echo wptu_esc_attr($read_more_link); ?>" class="large-text wptu-more-link" id="wptu-more-link" name="<?php echo $prefix; ?>more_link" /><br/>
-				<span class="description"><?php _e('add custom link for the ticker post', 'ticker-ultimate'); ?></span>
+				<span class="description"><?php _e('add custom link for the ticker post. eg : http://www.wponlinesupport.com', 'ticker-ultimate'); ?></span>
 			</td>
 		</tr>
 

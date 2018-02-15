@@ -32,6 +32,7 @@ var gdbbPressTools = {
                 qout = qout.replace(/&nbsp;/g, " ");
                 qout = qout.replace(/<p>|<br>/g, "");
                 qout = qout.replace(/<\/\s*p>/g, "\n");
+                qout = qout.trim();
 
                 if (gdbbPressToolsInit.quote_method === "bbcode") {
                     qout = "[quote quote=" + id + "]" + qout + "[/quote]";

@@ -150,5 +150,3 @@ class gdbbT_Admin {
 
 global $gdbbpress_t_admin;
 $gdbbpress_t_admin = new gdbbT_Admin();
-
-?>

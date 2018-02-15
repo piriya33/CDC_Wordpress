@@ -12,7 +12,14 @@ class gdbbPressTools {
 
     public $is_search = false;
 
-    public $mod = array('a' => null, 'i' => null, 's' => null, 'q' => null, 't' => null, 'v' => null);
+    public $mod = array(
+        'a' => null, 
+        'i' => null, 
+        's' => null, 
+        'q' => null, 
+        't' => null, 
+        'v' => null
+    );
 
     function __construct() {
         $this->_init();
@@ -151,7 +158,7 @@ class gdbbPressTools {
         if ($active) {
             require_once(GDBBPRESSTOOLS_PATH.'code/mods/views.php');
 
-            $this->mod['s'] = new gdbbMod_Views(
+            $this->mod['v'] = new gdbbMod_Views(
                     $views);
         }
     }
@@ -193,5 +200,3 @@ class gdbbPressTools {
 
 global $gdbbpress_tools;
 $gdbbpress_tools = new gdbbPressTools();
-
-?>

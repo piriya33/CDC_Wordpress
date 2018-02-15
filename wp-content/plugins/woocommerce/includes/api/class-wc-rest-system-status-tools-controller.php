@@ -174,15 +174,6 @@ class WC_REST_System_Status_Tools_Controller extends WC_REST_Controller {
 					__( 'This option will delete ALL of your tax rates, use with caution. This action cannot be reversed.', 'woocommerce' )
 				),
 			),
-			'delete_webhook_logs' => array(
-				'name'    => __( 'Delete WebHook logs', 'woocommerce' ),
-				'button'  => __( 'Delete logs', 'woocommerce' ),
-				'desc'    => sprintf(
-					'<strong class="red">%1$s</strong> %2$s',
-					__( 'Note:', 'woocommerce' ),
-					__( 'This tool removes WebHook logs. This will not delete the WebHooks themselves.', 'woocommerce' )
-				),
-			),
 			'reset_tracking' => array(
 				'name'    => __( 'Reset usage tracking', 'woocommerce' ),
 				'button'  => __( 'Reset', 'woocommerce' ),
@@ -406,15 +397,15 @@ class WC_REST_System_Status_Tools_Controller extends WC_REST_Controller {
 				 * that don't have address indexes yet.
 				 */
 				$sql = "INSERT INTO {$wpdb->postmeta}( post_id, meta_key, meta_value )
-					SELECT post_id, '%1\$s', GROUP_CONCAT( meta_value SEPARATOR ' ' )
+					SELECT post_id, '%s', GROUP_CONCAT( meta_value SEPARATOR ' ' )
 					FROM {$wpdb->postmeta}
-					WHERE meta_key IN ( '%2\$s', '%3\$s' )
+					WHERE meta_key IN ( '%s', '%s' )
 					AND post_id IN ( SELECT DISTINCT post_id FROM {$wpdb->postmeta}
-						WHERE post_id NOT IN ( SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key='%1\$s' )
-						AND post_id IN ( SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key='%3\$s' ) )
+						WHERE post_id NOT IN ( SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key='%s' )
+						AND post_id IN ( SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key='%s' ) )
 					GROUP BY post_id";
-				$rows = $wpdb->query( $wpdb->prepare( $sql, '_billing_address_index', '_billing_first_name', '_billing_last_name' ) );
-				$rows += $wpdb->query( $wpdb->prepare( $sql, '_shipping_address_index', '_shipping_first_name', '_shipping_last_name' ) );
+				$rows = $wpdb->query( $wpdb->prepare( $sql, '_billing_address_index', '_billing_first_name', '_billing_last_name', '_billing_address_index', '_billing_last_name' ) );
+				$rows += $wpdb->query( $wpdb->prepare( $sql, '_shipping_address_index', '_shipping_first_name', '_shipping_last_name', '_shipping_address_index', '_shipping_last_name') );
 
 				$message = sprintf( __( '%d indexes added', 'woocommerce' ), $rows );
 			break;
@@ -446,12 +437,6 @@ class WC_REST_System_Status_Tools_Controller extends WC_REST_Controller {
 				$wpdb->query( "TRUNCATE TABLE {$wpdb->prefix}woocommerce_tax_rate_locations;" );
 				WC_Cache_Helper::incr_cache_prefix( 'taxes' );
 				$message = __( 'Tax rates successfully deleted', 'woocommerce' );
-			break;
-			case 'delete_webhook_logs' :
-
-				$result = absint( $wpdb->query( "DELETE FROM {$wpdb->comments} WHERE comment_type='webhook_delivery';" ) );
-				$wpdb->query( "DELETE commentmeta FROM {$wpdb->commentmeta} commentmeta LEFT JOIN {$wpdb->comments} comments ON comments.comment_ID = commentmeta.comment_id WHERE comments.comment_ID IS NULL;" );
-				$message = sprintf( __( '%d logs deleted', 'woocommerce' ), $result );
 			break;
 			case 'reset_tracking' :
 				delete_option( 'woocommerce_allow_tracking' );

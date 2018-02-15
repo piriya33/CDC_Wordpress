@@ -5,14 +5,14 @@ Plugin URL: https://www.wponlinesupport.com/
 Text Domain: ticker-ultimate
 Domain Path: /languages/
 Description: Ultimate Ticker Plugin
-Version: 1.0.0
+Version: 1.0.1
 Author: WP Online Support
 Author URI: http://www.wponlinesupport.com/
 Contributors: WP Online Support
 */
 
 if( !defined( 'WPTU_VERSION' ) ) {
-    define( 'WPTU_VERSION', '1.0.0' ); // Version of plugin
+    define( 'WPTU_VERSION', '1.0.1' ); // Version of plugin
 }
 if( !defined( 'WPTU_POST_TYPE' ) ) {
     define( 'WPTU_POST_TYPE', 'wptu_ticker' ); // Plugin post type

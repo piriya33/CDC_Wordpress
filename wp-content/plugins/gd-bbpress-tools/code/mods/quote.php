@@ -103,5 +103,3 @@ class gdbbMod_Quote {
         return $content.'<div class="d4p-bbt-quote-block">'.$this->_quote().'</div>';
     }
 }
-
-?>

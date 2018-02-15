@@ -24,10 +24,10 @@ function wptu_get_post_link( $post_id = '' ) {
 		$prefix = WPTU_META_PREFIX;
 		
 		$post_link = get_post_meta( $post_id, $prefix.'more_link', true );
-
-		if( empty($post_link) ) {
+		
+		if( empty($post_link) && (get_post_type($post_id) != WPTU_POST_TYPE) ) {
 			$post_link = get_the_permalink( $post_id );	
-		}
+		}		
 	}
 	return $post_link;
 }

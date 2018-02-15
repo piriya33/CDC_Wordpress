@@ -1,7 +1,7 @@
 === GD bbPress Tools ===
 Contributors: GDragoN
 Donate link: https://plugins.dev4press.com/gd-bbpress-toolbox/
-Version: 1.9.1
+Version: 1.9.2
 Tags: bbpress, tools, gdragon, dev4press, forums, forum, topic, reply, signature, quote, search, toolbar, signature, views, admin, bbcode, bbcodes, shortcode, shortcodes
 Requires at least: 4.2
 Requires PHP: 5.3
@@ -28,10 +28,10 @@ The plugin supports BBCodes based on the phpBB implementation. Right now, the pl
 Included translations: English, Serbian, German.
 
 = bbPress Plugin Versions =
-GD bbPress Tools 1.9.1 supports bbPress 2.5 or newer. Older bbPress are no longer supported!
+GD bbPress Tools 1.9.2 supports bbPress 2.5 or newer. Older bbPress are no longer supported!
 
 = BuddyPress Support =
-GD bbPress Tools 1.9.1 is tested with BuddyPress 2.6 and newer and it works fine if you enable BuddyPress support in bbPress plugin for Group Forums. Make sure you enable JavaScript and CSS Settings Always Include option in the Attachments plugin settings.
+GD bbPress Tools 1.9.2 is tested with BuddyPress 2.6 and newer and it works fine if you enable BuddyPress support in bbPress plugin for Group Forums. Make sure you enable JavaScript and CSS Settings Always Include option in the Attachments plugin settings.
 
 = Upgrade to GD bbPress Toolbox Pro =
 Pro version contains many more useful features 10 more BBCodes (including Hide and Spoiler), BBCodes editor toolbar, report topics and replies, SEO features, many more views, notification email control, BBCodes toolbar, great new responsive admin UI, enhanced attachments features and additional widgets. For more information: [GD bbPress Toolbox Pro](https://plugins.dev4press.com/gd-bbpress-toolbox/)
@@ -80,10 +80,17 @@ Yes. But, make sure to enable 'Always Include' option for JavaScript and CSS.
 * German: David Decker - http://deckerweb.de/
 
 == Upgrade Notice ==
-= 1.9.1 =
+= 1.9.2 =
 Various minor improvements and updates.
 
 == Changelog ==
+= 1.9.2 - 2017.10.26 =
+* Added function to access BBCodes handler functions
+* Updated trim quote content before adding to editor
+* Updated several BBCodes handler functions
+* Fixed topic related issue with the quote BBCode
+* Fixed minor issue with the loading of Views module
+
 = 1.9.1 - 2017.09.20 =
 * Updated WordPress minimal requirement to 4.2
 * Updated several broken URL's

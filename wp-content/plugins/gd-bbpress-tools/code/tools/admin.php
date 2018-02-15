@@ -110,5 +110,3 @@ class gdbbMod_Admin {
 
 global $gdbbpress_tools_admin;
 $gdbbpress_tools_admin = new gdbbMod_Admin();
-
-?>

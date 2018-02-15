@@ -171,5 +171,3 @@ function d4p_bbp_update_shorthand_bbcodes($content) {
 
     return $content;
 }
-
-?>

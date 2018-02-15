@@ -2,7 +2,7 @@
 Contributors: wponlinesupport, anoopranawat 
 Tags: wponlinesupport, ticker, news ticker, blog ticker, post ticker, ticker slider, ticker vertical slider, ticker horizontal slider
 Requires at least: 3.1
-Tested up to: 4.8
+Tested up to: 4.9.2
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -14,9 +14,9 @@ A very simple plugin to add and display News Tickers in horizontal slider, verti
 
 Ticker Ultimate Plugin enables you to create and display posts in fade, vertical and horizontal slider effect.
 
-View [DEMO](https://www.wponlinesupport.com/wp-plugin/ticker-ultimate/) for more details.
+View [DEMO](https://www.wponlinesupport.com/wp-plugin/ticker-ultimate/) | [PRO DEMO and Features](https://www.wponlinesupport.com/wp-plugin/ticker-ultimate/) for additional information.
 
-View [PRO DEMO](https://www.wponlinesupport.com/wp-plugin/ticker-ultimate/) for more details.
+Checkout our new plugin - [PowerPack - Need of Every Website](http://powerpack.wponlinesupport.com/?utm_source=wp)
 
 **This plugin contain one shortcode**
 
@@ -74,8 +74,23 @@ Ticker Ultimate Shortcode:
 2. Output
 
 
-
 == Changelog ==
+
+= 1.0.1 (25-1-2018) =
+* [*] Fixed the issue with the ticker if link is not added (if user user use custom post type)
+
+= 1.0 =
+* Initial release.
+
+== Upgrade Notice ==
+
+= 1.0 =
+* Initial release.
+
+== Upgrade Notice ==
+
+= 1.0.1 (25-1-2018) =
+* [*] Fixed the issue with the ticker if link is not added (if user user use custom post type)
 
 = 1.0 =
 * Initial release.

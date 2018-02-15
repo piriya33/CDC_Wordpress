@@ -8,5 +8,3 @@ function d4p_bbt_o($name) {
     global $gdbbpress_tools;
     return $gdbbpress_tools->o[$name];
 }
-
-?>

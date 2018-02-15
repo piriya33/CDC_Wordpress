@@ -27,5 +27,3 @@ function d4p_bbt_is_role($setting_name) {
 
     return $allowed;
 }
-
-?>

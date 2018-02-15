@@ -44,5 +44,3 @@ class gdbbMod_Front {
 
 global $gdbbpress_tools_front;
 $gdbbpress_tools_front = new gdbbMod_Front();
-
-?>

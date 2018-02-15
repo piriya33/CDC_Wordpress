@@ -98,13 +98,18 @@ function wptu_ticker( $atts, $content = null ) {
 	</style>
 	
 	<div class="wptu-ticker wptu-ticker-main wptu-clearfix <?php echo $border_class; ?>" id="wptu-ticker-<?php echo $unique; ?>">		
-		
 		<div class="wptu-ticker-title"><div class="wptu-ticker-head"><?php echo $ticker_title; ?></div><span></span></div><!-- end .wptu-ticker-title -->
 		<div class="wptu-ticker-block">
 			<ul>
-			<?php while ( $query->have_posts() ) : $query->the_post(); $post_link = wptu_get_post_link( $post->ID ); ?>
+			<?php while ( $query->have_posts() ) : $query->the_post(); 
+				$post_link = wptu_get_post_link( $post->ID ); ?>
 				<li>
+				<?php if(!empty($post_link)) { ?>
 					<a href="<?php echo $post_link; ?>"><?php the_title(); ?></a>
+				<?php } else { ?>
+					<?php the_title(); ?>
+				<?php } ?>	
+					
 				</li>
 			<?php endwhile; ?>
 			</ul>

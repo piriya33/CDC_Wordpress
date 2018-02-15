@@ -63,9 +63,12 @@ final class WC_Cart_Fees {
 		}
 
 		$this->cart = $cart;
-		add_action( 'woocommerce_cart_emptied', array( $this, 'remove_all_fees' ) );
-		add_action( 'woocommerce_cart_reset', array( $this, 'remove_all_fees' ) );
 	}
+
+	/**
+	 * Register methods for this object on the appropriate WordPress hooks.
+	 */
+	public function init() {}
 
 	/**
 	 * Add a fee. Fee IDs must be unique.
@@ -77,7 +80,7 @@ final class WC_Cart_Fees {
 	public function add_fee( $args = array() ) {
 		$fee_props            = (object) wp_parse_args( $args, $this->default_fee_props );
 		$fee_props->name      = $fee_props->name ? $fee_props->name : __( 'Fee', 'woocommerce' );
-		$fee_props->tax_class = in_array( $fee_props->tax_class, WC_Tax::get_tax_classes(), true ) ? $fee_props->tax_class: '';
+		$fee_props->tax_class = in_array( $fee_props->tax_class, array_merge( WC_Tax::get_tax_classes(), WC_Tax::get_tax_class_slugs() ), true ) ? $fee_props->tax_class: '';
 		$fee_props->taxable   = wc_string_to_bool( $fee_props->taxable );
 		$fee_props->amount    = wc_format_decimal( $fee_props->amount );
 

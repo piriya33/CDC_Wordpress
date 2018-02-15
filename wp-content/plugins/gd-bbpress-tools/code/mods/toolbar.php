@@ -219,5 +219,3 @@ class gdbbMod_Toolbar {
         ));
     }
 }
-
-?>
