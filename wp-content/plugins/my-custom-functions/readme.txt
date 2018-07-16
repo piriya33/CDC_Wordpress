@@ -1,19 +1,19 @@
 === My Custom Functions ===
 Contributors: Arthur Gareginyan
 Tags: code, php, function, snippet, custom, execute, edit, editing, editor, functionality plugin, codemirror, syntax highlighting, syntaxhighlighting, syntax highlighter, syntaxhighlighter, syntax,
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8A88KC7TFF6CS
+Donate link: https://www.spacexchimp.com/donate.html
 Requires at least: 3.9
 Tested up to: 4.9
-Stable tag: 4.13
+Stable tag: 4.23
 License: GPL3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Easily and safely add your custom functions (PHP code) directly out of your WordPress Admin area, without the need to have an external editor.
+Easily and safely add your custom functions (PHP code) directly out of your WordPress Admin Area, without the need to have an external editor.
 
 
 == Description ==
 
-An easy to use, with intuitive interface, WordPress plugin that gives you the ability to easily and safely add your custom functions (PHP code) for execution in the WordPress environment directly out of your WordPress Admin area and without any need for an external editor.Its purpose is to provide a familiar experience to WordPress users. No need for any more editing of the functions.php file of your theme. Just add your PHP code in the field on the plugin settings page and this plugin will do the rest for you.
+An easy to use, with intuitive interface, WordPress plugin that gives you the ability to easily and safely add your custom functions (PHP code) for execution in the WordPress environment directly out of your WordPress Admin Area, without the need to have an external editor.Its purpose is to provide a familiar experience to WordPress users. No need for any more editing of the functions.php file of your theme. Just add your PHP code in the field on the plugin settings page and this plugin will do the rest for you.
 It's really useful in case of any theme update, because your custom PHP code would never be overwritten. Your custom PHP code will keep on working, no matter how many times you upgrade or switch your theme.On the plugin settings page you find the PHP editor powered by CodeMirror. It has syntax highlighting and line numbering options. Also this editor supports a tab indentation.
 
 This is a simple and perfect tool to use as your website's functionality plugin.
@@ -64,12 +64,12 @@ This plugin is ready for translation and has already been translated into severa
 
 If you want to help translate this plugin then please visit the [translation page](https://translate.wordpress.org/projects/wp-plugins/my-custom-functions).
 
-**System requirements**
+**Minimum system requirements:**
 
 * [PHP](https://php.net) version **5.2** or higher.
 * [MySQL](https://www.mysql.com) version **5.0** or higher.
 
-**Recommendations:**
+**Recommended system requirements:**
 
 * [PHP](https://php.net) version **7.0** or higher.
 * [MySQL](https://www.mysql.com) version **5.6** or higher.
@@ -78,18 +78,18 @@ If you want to help translate this plugin then please visit the [translation pag
 
 Developing plugins is long and tedious work. If you benefit or enjoy this plugin please take the time to:
 
-* [Donate](https://www.arthurgareginyan.com/donate.html) to support ongoing development. Your contribution would be greatly appreciated.
+* [Donate](https://www.spacexchimp.com/donate.html) to support ongoing development. Your contribution would be greatly appreciated.
 * [Rate and Review](https://wordpress.org/support/view/plugin-reviews/my-custom-functions?rate=5#postform) this plugin.
-* [Share with me](mailto:arthurgareginyan@gmail.com) or view the [GitHub Repo](https://github.com/ArthurGareginyan/my-custom-functions) if you have any ideas or suggestions to make this plugin better.
+* [Share with us](https://www.spacexchimp.com/contact.html) or view the [GitHub Repo](https://github.com/ArthurGareginyan/my-custom-functions) if you have any ideas or suggestions to make this plugin better.
 
 
 == Installation ==
 
 Install "My Custom Functions" just as you would any other WordPress Plugin.
 
-Automatically via WordPress Admin Panel:
+Automatically via WordPress Admin Area:
 
-1. Log into Admin Panel of your WordPress website.
+1. Log in to Admin Area of your WordPress website.
 2. Go to "`Plugins`" -> "`Add New`".
 3. Find this plugin and click install.
 4. Activate this plugin through the "`Plugins`" tab.
@@ -99,10 +99,10 @@ Manually via FTP access:
 1. Download a copy (ZIP file) of this plugin from WordPress.org.
 2. Unzip the ZIP file.
 3. Upload the unzipped catalog to your website's plugin directory (`/wp-content/plugins/`).
-4. Log into Admin Panel of your WordPress website.
+4. Log in to Admin Area of your WordPress website.
 5. Activate this plugin through the "`Plugins`" tab.
 
-After installation and activation, the "`PHP Inserter`" menu item will appear in the "`Settings`" section of Admin Panel. Click on it in order to view the plugin settings page.
+After installation and activation, the "`PHP Inserter`" menu item will appear in the "`Settings`" section of Admin Area. Click on it in order to view the plugin settings page.
 
 [More help installing plugins](http://codex.wordpress.org/Managing_Plugins#Installing_Plugins "WordPress Codex: Installing Plugins")
 
@@ -113,14 +113,15 @@ After installation and activation, the "`PHP Inserter`" menu item will appear in
 A. Sorry, this plugin is available for use only on self-hosted (WordPress.ORG) websites.
 
 = Q. Can I use this plugin on my language? =
-A. Yes. This plugin is ready for translation and has already been translated into several languages. But If your language is not available then you can make one. The POT file is included and placed in the "`languages`" folder. Just send the PO file to us at the arthurgareginyan@gmail.com and we will include this translation within the next plugin update. Many of plugin users would be delighted if you share your translation with the community. Thanks for your contribution!
+A. Yes. This plugin is ready for translation and has already been translated into several languages. But If your language is not available then you can make one. The POT file is included and placed in the "`languages`" folder. Just [send the PO file to us](https://www.spacexchimp.com/contact.html) and we will include this translation within the next plugin update. Many of plugin users would be delighted if you share your translation with the community. Thanks for your contribution!
 
 = Q. How does it work? =
 A. Simply go to the plugin settings page, place your PHP code in the field, switch the toggle to the "ON" position and click the "Save changes" button. Enjoy the result of applying your PHP code. It's that simple!
-You can find the plugin settings page at "`WP Admin Panel`" -> "`Settings`" -> "`PHP Inserter`".
+You can find the plugin settings page at "`WordPress Admin Area`" -> "`Settings`" -> "`PHP Inserter`".
 
 = Q. Can I use HTML/CSS/JS code integrated in PHP code? =
 A. Yes. But you need to do it properly, like this:
+
 `function NameOfYourFunction {
 
     echo "<script>
@@ -141,7 +142,7 @@ A. Here are a few of the most likely causes of the error message:
 4. You are trying to overwrite an existing function (of WordPress, theme, or plugin). Instead, use filters and hooks.
 
 = Q. Does this plugin requires any modification of the theme? =
-A. Absolutely not. This plugin is configurable entirely from the plugin settings page that you can find in the Admin Panel of your WordPress website.
+A. Absolutely not. This plugin is configurable entirely from the plugin settings page that you can find in the Admin Area of your WordPress website.
 
 = Q. Does this require any knowledge of HTML or CSS? =
 A. This plugin can be configured with no knowledge of HTML or CSS, using an easy-to-use plugin settings page. But you need to know the HTML or CSS in order to add/remove/modify the HTML or CSS code by using this plugin.
@@ -152,26 +153,31 @@ A. As with every plugin, it's possible that things don't work. The most common r
 It's impossible to tell what could be wrong exactly, but if you post a support request in the plugin's support forum on WordPress.org, we'd be happy to give it a look and try to help out. Please include as much information as possible, including a link to your website where the problem can be seen.
 
 = Q. What to do if this plugin crashed the website? =
-A. This plugin has a built-in functions for checking the custom code for syntax errors, duplicate functions names, and etc. But plugin is not perfect, so there are times when the entered custom code causes the error and white screen (WSOD). This is due to the fact that your custom code has a syntax error that this plugin could not detect. When this happens with you just do the following and all will be fine.
+A. This plugin has a built-in functions for checking the custom code for syntax errors, duplicate functions names, and etc. But plugin is not perfect, so there are times when the entered custom code causes the error and white screen (WSOD). This is due to the fact that your custom code has a syntax error that this plugin could not detect. When this happens with you, please perform the following steps.
 
-1. Via FTP, go to the plugin folder (in 'wp-content/plugins/my-custom-functions/').
-2. Rename the "START" file to "STOP". This will stop the execution of your custom code.
-3. Return to the plugin settings page and edit/fix your custom code that you entered before the crash.
-4. Rename the "STOP" file to "START" and you're done!
+1. Access your server via FTP or SFTP. If you aren’t sure how usually your web hosting provider will have instructions somewhere on their website.
+2. Browse to the directory `wp-content/plugins/my-custom-functions/`. Please contact your web hosting company to get help if you can't find this folder.
+3. Rename the file `START` to `STOP`. This will stop the execution of your custom code.
+4. Log in to Admin Area of your WordPress website.
+5. Go to the plugin settings page `Settings` -> `PHP Inserter`.
+6. Edit/fix your custom code that you entered before the crash.
+7. Return to the plugin folder and rename the file `STOP` to `START` and you're done!
 
-This plugin stored you entered code in the database of your website. For getting your code, you also can go to the `Database` -> Table "`wp_options`" -> Option "`anarcho_cfunctions_settings`" -> "`option_value`".
+This plugin stored you entered code in the database of your website. For getting your code, you also can go to the `Database` -> Table "`wp_options`" -> Option "`spacexchimp_p001_settings`" -> "`option_value`".
 
-= Q. The last WordPress update is preventing me from editing the website of the creator that is using this plugin. Why is this? =
+We are already working on a feature to automatically stop the execution of users custom PHP code for cases when this plugin could not detect the error, and this caused the inaccessibility of the website.
+
+= Q. The last WordPress update is preventing me from editing my website that is using this plugin. Why is this? =
 A. This plugin can not cause such problem. More likely, the problem are related to the settings of the website. It could just be a cache, so please try to clear your website's cache (may be you using a caching plugin, or some web service such as the CloudFlare) and then the cache of your web browser. Also please try to re-login to the website, this too can help.
 
 = Q. Where to report bug if found? =
-A. Please visit the [Dedicated Plugin Page on GitHub](https://github.com/ArthurGareginyan/my-custom-functions) and report.
+A. Bug reports are very welcome! Please visit [our contact page](https://www.spacexchimp.com/contact.html) and report. Thank you!
 
 = Q. Where to share any ideas or suggestions to make the plugin better? =
-A. Any suggestions are very welcome! Please send us an email to [arthurgareginyan@gmail.com](mailto:arthurgareginyan@gmail.com). Thank you!
+A. Any suggestions are very welcome! Please visit [our contact page](https://www.spacexchimp.com/contact.html) and share. Thank you!
 
 = Q. I love this plugin! Can I help somehow? =
-A. Yes, any financial contributions are welcome! Just visit [the website of the creator](https://www.arthurgareginyan.com/donate.html), click on the donate button, and thank you!
+A. Yes, any contributions are very welcome! Please visit [our donation page](https://www.spacexchimp.com/donate.html). Thank you!
 
 
 == Screenshots ==
@@ -186,7 +192,7 @@ A. Yes, any financial contributions are welcome! Just visit [the website of the 
 
 ****
 
-"My Custom Functions" is one of the personal software projects of [Arthur Gareginyan](https://www.arthurgareginyan.com).
+"My Custom Functions" is one of the own software projects of [Space X-Chimp](https://www.spacexchimp.com).
 
 **License**
 
@@ -195,19 +201,67 @@ Commercial licensing (e.g. for projects that can’t use an open-source license)
 
 **Credits**
 
-* The icon of plugin is a copyrighted image created by [Arthur Gareginyan](https://www.arthurgareginyan.com). (C) All rights reserved.
-* The banner of plugin is a copyrighted image created by [Arthur Gareginyan](https://www.arthurgareginyan.com). (C) All rights reserved.
+* The icon of plugin is a copyrighted image created by the [Space X-Chimp](https://www.spacexchimp.com) team. (C) All rights reserved.
+* The banner of plugin is a copyrighted image created by the [Space X-Chimp](https://www.spacexchimp.com) team. (C) All rights reserved.
 * [CodeMirror](https://codemirror.net/) is an open-source project shared under the [MIT license](https://codemirror.net/LICENSE).
 * [Bootstrap](http://getbootstrap.com) by Twitter, Inc. released under the [MIT license](https://github.com/twbs/bootstrap/blob/master/LICENSE).
 
 **Links**
 
-* [Developer Website](https://www.arthurgareginyan.com)
-* [Dedicated Plugin Page on GitHub](https://github.com/ArthurGareginyan/my-custom-functions)
+* [Developer website](https://www.spacexchimp.com)
+* [Dedicated plugin page on GitHub](https://github.com/ArthurGareginyan/my-custom-functions)
 * [Premium Version](https://www.spacexchimp.com/plugins/my-custom-functions-pro.html)
 
 
 == Changelog ==
+
+= 4.23 =
+* The code block that enqueue the CodeMirror library files is moved to a separate function '_load_scripts_codemirror' within the 'enqueue.php' file.
+* Enqueue of the CodeMirror addons is moved to the beginning of the queue, before enqueuing the CodeMirror mods.
+* All translation files are updated.
+
+= 4.22 =
+* Fixed: CodeMirror addon 'autorefresh.js' was added to one of the previous versions of the plugin, but it was not enabled.
+
+= 4.21 =
+* Fixed localization of the word "licence". (Thanks to Garrett Hyder @garrett-eclipse)
+* Settings for the CodeMirror editor are moved to a separate file 'codemirror-settings.js'.
+* Added the addon 'placeholder.js' to the CodeMirror editor. Added a placeholder for code field.
+* Texts on the plugin settings page are updated. Translations are updated.
+
+= 4.20 =
+* Updated the method of loading the addons of the CodeMirror library.
+* Added the addon 'autorefresh.js' to the CodeMirror editor. The code for manual refreshing the CodeMirror editor is deleted.
+* Texts on the plugin settings page are updated. Translations are updated.
+
+= 4.19 =
+* CodeMirror library updated to the latest version v5.38.0. The directory structure is changed (files are better organized). Added a test files for the CodeMirror modes.
+* Updated the method of loading the modes and addons of the CodeMirror library.
+
+= 4.18 =
+* Fixed a bug due to which the plugin data that stored in the database to not be deleted during the uninstallation of the plugin.
+* The contents of the file 'uninstall.php' is moved to the file 'core.php'. The file 'uninstall.php' is deleted.
+* The upgrade banner has moved from an external source to the plugin folder.
+* Some texts are corrected.
+
+= 4.17 =
+* Added new constant "_FILE".
+* Added a function that runs during the plugin activation. Now the date of the first activation of the plugin is recorded in the database.
+
+= 4.16 =
+* Added auto-versioning of the CSS and JavaScript files to avoid cache issues.
+* CSS code in the file 'admin.css' is optimized.
+
+= 4.15 =
+* Fixed the link "Settings", located in the plugin's meta row on the "Plugins" page. The suffix ".php" was deleted.
+* Fixed information stored in the header of the translation files.
+* Translation files updated.
+
+= 4.14 =
+* Some texts updated, and typos corrected.
+* All translation files updated.
+* The information about the author of the plugin (including name, links, copyright, etc.) was changed due to the fact that the plugin became the property of SpaceXChimp.
+* The human.txt file updated.
 
 = 4.13 =
 * Texts updated.
@@ -229,7 +283,7 @@ Commercial licensing (e.g. for projects that can’t use an open-source license)
 * In the "_register_submenu_page" function, "$capability" changed from the 'edit_theme_options' to 'manage_options'.
 
 = 4.9 =
-* Fixed the issue due tof which the 'Space X-Chimp' sub menu item in the brand menu item was displayed.
+* Fixed the issue due to which the 'Space X-Chimp' sub menu item in the brand menu item was displayed.
 * Added branded footer text on the plugin's settings page.
 
 = 4.8 =

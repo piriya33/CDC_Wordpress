@@ -3,7 +3,7 @@
   Plugin Name: CF7 Google Sheet Connector
   Plugin URI: https://wordpress.org/plugins/cf7-google-sheets-connector/
   Description: Send your Contact Form 7 data to your Google Sheets spreadsheet.
-  Version: 1.7
+  Version: 2.0
   Author: WesternDeal
   Author URI: https://profiles.wordpress.org/westerndeal/
   Text Domain: gsconnector
@@ -14,8 +14,8 @@ if ( ! defined('ABSPATH') ) {
 }
 
 // Declare some global constants
-define('GS_CONNECTOR_VERSION', '1.7');
-define('GS_CONNECTOR_DB_VERSION', '1.7');
+define('GS_CONNECTOR_VERSION', '2.0');
+define('GS_CONNECTOR_DB_VERSION', '2.0');
 define('GS_CONNECTOR_ROOT', dirname(__FILE__));
 define('GS_CONNECTOR_URL', plugins_url('/', __FILE__));
 define('GS_CONNECTOR_BASE_FILE', basename(dirname(__FILE__)) . '/google-sheet-connector.php');

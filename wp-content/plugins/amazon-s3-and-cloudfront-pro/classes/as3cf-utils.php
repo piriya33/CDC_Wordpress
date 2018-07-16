@@ -35,77 +35,6 @@ if ( ! class_exists( 'AS3CF_Utils' ) ) {
 		}
 
 		/**
-		 * Checks if another version of WP Offload S3 (Lite) is active and deactivates it.
-		 * To be hooked on `activated_plugin` so other plugin is deactivated when current plugin is activated.
-		 *
-		 * @param string $plugin
-		 *
-		 * @return bool
-		 */
-		public static function deactivate_other_instances( $plugin ) {
-			if ( ! in_array( basename( $plugin ), array( 'amazon-s3-and-cloudfront-pro.php', 'wordpress-s3.php' ) ) ) {
-				return false;
-			}
-
-			$plugin_to_deactivate             = 'wordpress-s3.php';
-			$deactivated_notice_id            = '1';
-			$activated_plugin_min_version     = '1.1';
-			$plugin_to_deactivate_min_version = '1.0';
-			if ( basename( $plugin ) === $plugin_to_deactivate ) {
-				$plugin_to_deactivate             = 'amazon-s3-and-cloudfront-pro.php';
-				$deactivated_notice_id            = '2';
-				$activated_plugin_min_version     = '1.0';
-				$plugin_to_deactivate_min_version = '1.1';
-			}
-
-			$version = self::get_plugin_version_from_basename( $plugin );
-
-			if ( version_compare( $version, $activated_plugin_min_version, '<' ) ) {
-				return false;
-			}
-
-			if ( is_multisite() ) {
-				$active_plugins = (array) get_site_option( 'active_sitewide_plugins', array() );
-				$active_plugins = array_keys( $active_plugins );
-			} else {
-				$active_plugins = (array) get_option( 'active_plugins', array() );
-			}
-
-			foreach ( $active_plugins as $basename ) {
-				if ( false !== strpos( $basename, $plugin_to_deactivate ) ) {
-					$version = self::get_plugin_version_from_basename( $basename );
-
-					if ( version_compare( $version, $plugin_to_deactivate_min_version, '<' ) ) {
-						return false;
-					}
-
-					set_transient( 'as3cf_deactivated_notice_id', $deactivated_notice_id, HOUR_IN_SECONDS );
-					deactivate_plugins( $basename );
-
-					return true;
-				}
-			}
-
-			return false;
-		}
-
-		/**
-		 * Get plugin data from basename
-		 *
-		 * @param string $basename
-		 *
-		 * @return string
-		 */
-		public static function get_plugin_version_from_basename( $basename ) {
-			require_once ABSPATH . 'wp-admin/includes/plugin.php';
-
-			$plugin_path = WP_PLUGIN_DIR . '/' . $basename;
-			$plugin_data = get_plugin_data( $plugin_path );
-
-			return $plugin_data['Version'];
-		}
-
-		/**
 		 * Trailing slash prefix string ensuring no leading slashes.
 		 *
 		 * @param $string
@@ -203,6 +132,10 @@ if ( ! class_exists( 'AS3CF_Utils' ) ) {
 		 * @return bool
 		 */
 		public static function is_url( $string ) {
+			if ( ! is_string( $string ) ) {
+				return false;
+			}
+
 			if ( preg_match( '@^(?:https?:)?//[a-zA-Z0-9\-]+@', $string ) ) {
 				return true;
 			}
@@ -431,6 +364,45 @@ if ( ! class_exists( 'AS3CF_Utils' ) ) {
 			}
 
 			call_user_func_array( 'deactivate_plugins', func_get_args() );
+		}
+
+		/**
+		 * Get the first defined constant from the given list of constant names.
+		 *
+		 * @param array $constants
+		 *
+		 * @return string|false string constant name if defined, otherwise false if none are defined
+		 */
+		public static function get_first_defined_constant( $constants ) {
+			foreach ( (array) $constants as $constant ) {
+				if ( defined( $constant ) ) {
+					return $constant;
+				}
+			}
+
+			return false;
+		}
+
+		/**
+		 * Ensure returned keys are for correct attachment.
+		 *
+		 * @param array $keys
+		 *
+		 * @return array
+		 */
+		public static function validate_attachment_keys( $attachment_id, $keys ) {
+			$paths     = self::get_attachment_file_paths( $attachment_id, false );
+			$filenames = array_map( 'wp_basename', $paths );
+
+			foreach ( $keys as $key => $value ) {
+				$filename = wp_basename( $value );
+
+				if ( ! in_array( $filename, $filenames ) ) {
+					unset( $keys[ $key ] );
+				}
+			}
+
+			return $keys;
 		}
 	}
 }

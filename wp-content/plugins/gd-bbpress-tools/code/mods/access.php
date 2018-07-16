@@ -8,7 +8,7 @@ class gdbbMod_Access {
     }
 
     /** Based on the code by John James Jacoby from 'bbPress - No Admin' plugin:
-     *  http://wordpress.org/extend/plugins/bbpress-no-admin/
+     *  https://wordpress.org/extend/plugins/bbpress-no-admin/
      */
     public function admin_disable_access() {
         remove_action('admin_menu', 'bbp_admin_separator');

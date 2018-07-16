@@ -15,7 +15,7 @@ class Download_And_Remover extends Downloader {
 	 * @return array|bool
 	 */
 	protected function get_sidebar_block_args() {
-		if ( ! $this->as3cf->is_plugin_setup() ) {
+		if ( ! $this->as3cf->is_plugin_setup( true ) ) {
 			// Don't show tool if not setup
 			return false;
 		}

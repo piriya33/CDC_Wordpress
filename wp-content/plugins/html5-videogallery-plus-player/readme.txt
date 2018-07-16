@@ -1,8 +1,8 @@
 === Video gallery and Player ===
-Contributors: wponlinesupport, anoopranawat 
+Contributors: wponlinesupport, anoopranawat, pratik-jain
 Tags: wponlinesupport, HTML5, video.js,  HTML5 video, youtube video gallery, vimeo video gallery, youtube video gallery with popup,  Youtube-video, youtube embed, youtube gallery, youtube player, magnific Popup, vimeo video gallery gallery, HTML5 video player, HTML5 video gallery, wordpress HTML5 video, wordpress HTML5 video player, wordpress HTML5 video gallery, responsive, wordpress responsive video gallery  
-Requires at least: 3.1
-Tested up to: 4.8
+Requires at least: 3.5
+Tested up to: 4.9.6
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -14,11 +14,9 @@ Easy to add and display your HTML5, YouTube, Vimeo vedio gallery with Magnific P
 This plugin add a responsive HTML5, YouTube, Vimeo vedio gallery with Magnific Popup to your  WordPress website. Display video gallery in grid view(1,2,3,4) etc
 You can also use category id to create multiple vedio galleries.
 
-View [DEMO](http://wponlinesupport.com/wp-plugin/video-gallery-player/)  for more details.
+View [DEMO](https://www.wponlinesupport.com/wp-plugin/video-gallery-player/) | [PRO DEMO and Features](https://www.wponlinesupport.com/wp-plugin/video-gallery-player/) for additional information.
 
-View [PRO DEMO and Features](http://wponlinesupport.com/wp-plugin/video-gallery-player/) for additional information.
-
-Download our all [FREE 34 WordPress Plugins](https://www.wponlinesupport.com/wp-online-support-all-free-34-plugins/?utm_source=wp&event=fd).
+Checkout our new plugin - [PowerPack - Need of Every Website](https://wordpress.org/plugins/powerpack-lite/)
 
 The plugin adds a Video gallery tab to your admin menu, which allows you to enter Video Title and Video source items just as you would regular posts.
 
@@ -70,7 +68,7 @@ directly to your template file.
 > * Added 2 shortcodes with various parameters.
 > * [video_gallery] – Grid Shortcode
 > * [video_gallery_slider] – Slider Shortcode
-> * 15 Predefined designs.
+> * 20 Predefined designs.
 > * Display videos in a grid view.
 > * Display video with title and description.
 > * Display video in slider view.
@@ -82,8 +80,11 @@ directly to your template file.
 > * 100% Multilanguage.
 > * Fully Responsive.
 >
-> View [PRO DEMO and Features](http://wponlinesupport.com/wp-plugin/video-gallery-player/) for additional information.
+> View [PRO DEMO and Features](https://www.wponlinesupport.com/wp-plugin/video-gallery-player/) for additional information.
 >
+
+= Privacy & Policy =
+* We have also opt-in e-mail selection , once you download the plugin , so that we can inform you and nurture you about products and its features.
 
 == Installation ==
 
@@ -110,6 +111,17 @@ OR
 
 == Changelog ==
 
+= 2.2.3 (07, June 2018) =
+* [*] Follow some WordPress Detailed Plugin Guidelines.
+
+= 2.2.2 (Date 06 April, 2018) =
+* [*] Fixed issue with HTML video player when closing the popup.
+* [*] Fixed issue with HTML video player when Multiple shortcode on a page
+
+= 2.2 (Date 22 March, 2018) =
+* Tested up to WP 4.9.4
+* Fixed some CSS issue
+
 = 2.1.3 (Date 30 Jan, 2017) =
 * Tested up to WP 4.7.2
 * [+] Added Zoom Animation on popup open
@@ -123,7 +135,6 @@ OR
 * [+] Added "How to work" menu tab.
 * [-] Removed Pro design tab.
 * Improved category shortcode display column code.
-
 
 = 2.0.1 (Date 18 July, 2016) =
 * Resolved multiple shortcode popup issue.
@@ -148,44 +159,3 @@ OR
 
 = 1.0 =
 * Initial release.
-
-
-== Upgrade Notice ==
-
-= 2.1.3 (Date 30 Jan, 2017) =
-* Tested up to WP 4.7.2
-* [+] Added Zoom Animation on popup open
-* Fixed some CSS issue
-
-= 2.1.2 (Date 05 Dec, 2016) =
-* Tested up to WP 4.6.1
-* Added string translation 
-
-= 2.1.1 (Date 27 Oct, 2016) =
-* [+] Added "How to work" menu tab.
-* [-] Removed Pro design tab.
-* Improved category shortcode display column code.
-
-= 2.0.1 (Date 18 July, 2016) =
-* Resolved multiple shortcode popup issue.
-* Optimized JS Performane.
-* Improved category shortcode display column code.
-* Added PRO design page.
-
-= 2.0 (Date 18 July, 2016) =
-* Fixed some css issues.
-* Fixed Play button popup open.
-
-= 1.1.1 (Date 7 July, 2016) =
-* Fixed Popup and responsive bug.
-
-= 1.1 (Date 7july 2016) =
-* Added Magnific Popup
-* Added grid for video gallery
-* Added latest video.js and css
-* Added better design
-* Added meta box for adding video links
-* Remove setting page
-
-= 1.0 =
-Initial release.

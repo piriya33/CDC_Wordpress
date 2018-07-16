@@ -30,5 +30,5 @@
 <div class="d4p-clear"></div>
 
 <div class="d4p-copyright">
-    Dev4Press &copy; 2008 - 2016 <a target="_blank" href="https://www.dev4press.com">www.dev4press.com</a> | Golden Dragon WebStudio <a target="_blank" href="http://www.gdragon.info">www.gdragon.info</a>
+    Dev4Press &copy; 2008 - 2018 <a target="_blank" href="https://www.dev4press.com">www.dev4press.com</a> | Golden Dragon WebStudio <a target="_blank" href="https://www.gdragon.info">www.gdragon.info</a>
 </div>

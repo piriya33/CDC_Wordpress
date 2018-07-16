@@ -84,7 +84,7 @@ class Enable_Media_Replace extends Integration {
 			return $file;
 		}
 
-		if ( ! $this->as3cf->is_plugin_setup() ) {
+		if ( ! $this->as3cf->is_plugin_setup( true ) ) {
 			return $file;
 		}
 

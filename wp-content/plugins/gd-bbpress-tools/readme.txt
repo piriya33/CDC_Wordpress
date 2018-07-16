@@ -1,14 +1,14 @@
 === GD bbPress Tools ===
 Contributors: GDragoN
 Donate link: https://plugins.dev4press.com/gd-bbpress-toolbox/
-Version: 1.9.2
+Version: 1.9.3
 Tags: bbpress, tools, gdragon, dev4press, forums, forum, topic, reply, signature, quote, search, toolbar, signature, views, admin, bbcode, bbcodes, shortcode, shortcodes
 Requires at least: 4.2
 Requires PHP: 5.3
 Tested up to: 4.9
 Stable tag: trunk
 License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 Adds different expansions and tools to the bbPress plugin powered forums: BBCode support, signatures, custom views, quote...
 
@@ -77,13 +77,17 @@ Yes. But, make sure to enable 'Always Include' option for JavaScript and CSS.
 == Translations ==
 * English
 * Serbian
-* German: David Decker - http://deckerweb.de/
+* German: David Decker - https://deckerweb.de/
 
 == Upgrade Notice ==
-= 1.9.2 =
-Various minor improvements and updates.
+= 1.9.3 =
+Updated function for universal rendering of BBCodes.
 
 == Changelog ==
+= 1.9.3 - 2018.02.16 =
+* Updated function for universal rendering of BBCodes
+* Updated various URL's included in plugin and readme file
+
 = 1.9.2 - 2017.10.26 =
 * Added function to access BBCodes handler functions
 * Updated trim quote content before adding to editor

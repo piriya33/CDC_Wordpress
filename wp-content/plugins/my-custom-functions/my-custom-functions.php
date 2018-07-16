@@ -2,10 +2,10 @@
 /**
  * Plugin Name: My Custom Functions
  * Plugin URI: https://github.com/ArthurGareginyan/my-custom-functions
- * Description: Easily and safely add your custom functions (PHP code) directly out of your WordPress Admin area, without the need to have an external editor.
- * Author: Arthur Gareginyan
- * Author URI: https://www.arthurgareginyan.com
- * Version: 4.13
+ * Description: Easily and safely add your custom functions (PHP code) directly out of your WordPress Admin Area, without the need to have an external editor.
+ * Author: Space X-Chimp
+ * Author URI: https://www.spacexchimp.com
+ * Version: 4.23
  * License: GPL3
  * Text Domain: my-custom-functions
  * Domain Path: /languages/
@@ -25,20 +25,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this plugin. If not, see <http://www.gnu.org/licenses/>.
  *
- *
- *               █████╗ ██████╗ ████████╗██╗  ██╗██╗   ██╗██████╗
- *              ██╔══██╗██╔══██╗╚══██╔══╝██║  ██║██║   ██║██╔══██╗
- *              ███████║██████╔╝   ██║   ███████║██║   ██║██████╔╝
- *              ██╔══██║██╔══██╗   ██║   ██╔══██║██║   ██║██╔══██╗
- *              ██║  ██║██║  ██║   ██║   ██║  ██║╚██████╔╝██║  ██║
- *              ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═╝
- *
- *   ██████╗  █████╗ ██████╗ ███████╗ ██████╗ ██╗███╗   ██╗██╗   ██╗ █████╗ ███╗   ██╗
- *  ██╔════╝ ██╔══██╗██╔══██╗██╔════╝██╔════╝ ██║████╗  ██║╚██╗ ██╔╝██╔══██╗████╗  ██║
- *  ██║  ███╗███████║██████╔╝█████╗  ██║  ███╗██║██╔██╗ ██║ ╚████╔╝ ███████║██╔██╗ ██║
- *  ██║   ██║██╔══██║██╔══██╗██╔══╝  ██║   ██║██║██║╚██╗██║  ╚██╔╝  ██╔══██║██║╚██╗██║
- *  ╚██████╔╝██║  ██║██║  ██║███████╗╚██████╔╝██║██║ ╚████║   ██║   ██║  ██║██║ ╚████║
- *   ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝╚═╝  ╚═══╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝
+ * ███████╗██████╗  █████╗  ██████╗███████╗    ██╗  ██╗      ██████╗██╗  ██╗██╗███╗   ███╗██████╗
+ * ██╔════╝██╔══██╗██╔══██╗██╔════╝██╔════╝    ╚██╗██╔╝     ██╔════╝██║  ██║██║████╗ ████║██╔══██╗
+ * ███████╗██████╔╝███████║██║     █████╗       ╚███╔╝█████╗██║     ███████║██║██╔████╔██║██████╔╝
+ * ╚════██║██╔═══╝ ██╔══██║██║     ██╔══╝       ██╔██╗╚════╝██║     ██╔══██║██║██║╚██╔╝██║██╔═══╝
+ * ███████║██║     ██║  ██║╚██████╗███████╗    ██╔╝ ██╗     ╚██████╗██║  ██║██║██║ ╚═╝ ██║██║
+ * ╚══════╝╚═╝     ╚═╝  ╚═╝ ╚═════╝╚══════╝    ╚═╝  ╚═╝      ╚═════╝╚═╝  ╚═╝╚═╝╚═╝     ╚═╝╚═╝
  *
  */
 
@@ -63,6 +55,7 @@ function spacexchimp_p001_define_constants( $constant_name, $value ) {
     if ( !defined( $constant_name ) )
         define( $constant_name, $value );
 }
+spacexchimp_p001_define_constants( 'FILE', __FILE__ );
 spacexchimp_p001_define_constants( 'DIR', dirname( plugin_basename( __FILE__ ) ) );
 spacexchimp_p001_define_constants( 'BASE', plugin_basename( __FILE__ ) );
 spacexchimp_p001_define_constants( 'URL', plugin_dir_url( __FILE__ ) );
@@ -84,4 +77,3 @@ require_once( SPACEXCHIMP_P001_PATH . 'inc/php/enqueue.php' );
 require_once( SPACEXCHIMP_P001_PATH . 'inc/php/functional.php' );
 require_once( SPACEXCHIMP_P001_PATH . 'inc/php/page.php' );
 require_once( SPACEXCHIMP_P001_PATH . 'inc/php/messages.php' );
-require_once( SPACEXCHIMP_P001_PATH . 'inc/php/uninstall.php' );

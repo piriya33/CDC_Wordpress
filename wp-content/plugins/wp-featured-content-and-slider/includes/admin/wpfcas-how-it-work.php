@@ -2,7 +2,7 @@
 /**
  * Pro Designs and Plugins Feed
  *
- * @package Album and Image Gallery Plus Lightbox
+ * @package WP Featured Content and Slider
  * @since 1.0.0
  */
 
@@ -15,7 +15,7 @@ add_action('admin_menu', 'wpfcasm_register_design_page');
 /**
  * Register plugin design page in admin menu
  * 
- * @package Album and Image Gallery Plus Lightbox
+ * @package WP Featured Content and Slider
  * @since 1.0.0
  */
 function wpfcasm_register_design_page() {
@@ -25,7 +25,7 @@ function wpfcasm_register_design_page() {
 /**
  * Function to display plugin design HTML
  * 
- * @package Album and Image Gallery Plus Lightbox
+ * @package WP Featured Content and Slider
  * @since 1.0.0
  */
 function wpfcasm_designs_page() {
@@ -70,7 +70,7 @@ function wpfcasm_designs_page() {
 /**
  * Gets the plugin design part feed
  *
- * @package Album and Image Gallery Plus Lightbox
+ * @package WP Featured Content and Slider
  * @since 1.0.0
  */
 function wpfcasm_get_plugin_design( $feed_type = '' ) {
@@ -109,7 +109,7 @@ function wpfcasm_get_plugin_design( $feed_type = '' ) {
 /**
  * Function to get plugin feed tabs
  *
- * @package Album and Image Gallery Plus Lightbox
+ * @package WP Featured Content and Slider
  * @since 1.0.0
  */
 function wpfcasm_help_tabs() {
@@ -124,7 +124,7 @@ function wpfcasm_help_tabs() {
 													'transient_time'	=> 172800
 												),
 						'offers-feed' 	=> array(
-													'name'				=> __('WPOS Offers', 'wp-featured-content-and-slider'),
+													'name'				=> __('Hire Us', 'wp-featured-content-and-slider'),
 													'url'				=> 'http://wponlinesupport.com/plugin-data-api/wpos-offers.php',
 													'transient_key'		=> 'wpos_offers_feed',
 													'transient_time'	=> 86400,
@@ -136,7 +136,7 @@ function wpfcasm_help_tabs() {
 /**
  * Function to get 'How It Works' HTML
  *
- * @package Album and Image Gallery Plus Lightbox
+ * @package WP Featured Content and Slider
  * @since 1.0.0
  */
 function wpfcasm_howitwork_page() { ?>
@@ -212,8 +212,8 @@ function wpfcasm_howitwork_page() { ?>
 												</th>
 												<td>
 													<p><?php _e('Check plugin document for shortcode parameters and demo for designs.', 'wp-featured-content-and-slider'); ?></p> <br/>
-													<a class="button button-primary" href="http://www.wponlinesupport.com/plugins-documentation/document-wp-featured-content-and-slider/?utm_source=hp&event=doc" target="_blank"><?php _e('Documentation', 'wp-featured-content-and-slider'); ?></a>									
-													<a class="button button-primary" href="http://demo.wponlinesupport.com/featured-content-and-slider-demo/?utm_source=hp&event=demo" target="_blank"><?php _e('Demo for Designs', 'wp-featured-content-and-slider'); ?></a>
+													<a class="button button-primary" href="http://www.wponlinesupport.com/plugins-documentation/document-wp-featured-content-and-slider/" target="_blank"><?php _e('Documentation', 'wp-featured-content-and-slider'); ?></a>									
+													<a class="button button-primary" href="http://demo.wponlinesupport.com/featured-content-and-slider-demo/" target="_blank"><?php _e('Demo for Designs', 'wp-featured-content-and-slider'); ?></a>
 												</td>
 											</tr>
 										</tbody>
@@ -246,8 +246,8 @@ function wpfcasm_howitwork_page() { ?>
 										<li>Fully responsive</li>
 										<li>100% Multi language</li>
 									</ul>
-									<a class="button button-primary wpos-button-full" href="https://www.wponlinesupport.com/wp-plugin/wp-featured-content-and-slider/?utm_source=hp&event=go_premium" target="_blank"><?php _e('Go Premium ', 'wp-featured-content-and-slider'); ?></a>	
-									<p><a class="button button-primary wpos-button-full" href="http://demo.wponlinesupport.com/prodemo/pro-wp-featured-content-and-slider/?utm_source=hp&event=pro_demo" target="_blank"><?php _e('View PRO Demo ', 'wp-featured-content-and-slider'); ?></a>			</p>								
+									<a class="button button-primary wpos-button-full" href="https://www.wponlinesupport.com/wp-plugin/wp-featured-content-and-slider/" target="_blank"><?php _e('Go Premium ', 'wp-featured-content-and-slider'); ?></a>	
+									<p><a class="button button-primary wpos-button-full" href="http://demo.wponlinesupport.com/prodemo/pro-wp-featured-content-and-slider/" target="_blank"><?php _e('View PRO Demo ', 'wp-featured-content-and-slider'); ?></a>			</p>								
 								</div><!-- .inside -->
 							</div><!-- #general -->
 						</div><!-- .meta-box-sortables ui-sortable -->
@@ -261,7 +261,7 @@ function wpfcasm_howitwork_page() { ?>
 										<span><?php _e( 'Help to improve this plugin!', 'wp-featured-content-and-slider' ); ?></span>
 									</h3>									
 									<div class="inside">										
-										<p>Enjoyed this plugin? You can help by rate this plugin <a href="https://wordpress.org/support/plugin/wp-featured-content-and-slider/reviews/?filter=5" target="_blank">5 stars!</a></p>
+										<p>Enjoyed this plugin? You can help by rate this plugin <a href="https://wordpress.org/support/plugin/wp-featured-content-and-slider/reviews/" target="_blank">5 stars!</a></p>
 									</div><!-- .inside -->
 							</div><!-- #general -->
 						</div><!-- .meta-box-sortables ui-sortable -->

@@ -6,7 +6,7 @@
  * Domain Path: /languages/
  * Description: Easy to add and display your HTML5, YouTube, Vimeo vedio gallery with Magnific Popup to your website. 
  * Author: WP Online Support
- * Version: 2.1.3
+ * Version: 2.2.3
  * Author URI: http://www.wponlinesupport.com/
  *
  * @package WordPress
@@ -15,7 +15,7 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 if( !defined( 'WP_HTML5VP_VERSION' ) ) {
-	define( 'WP_HTML5VP_VERSION', '2.1.3' ); // Version of plugin
+	define( 'WP_HTML5VP_VERSION', '2.2.3' ); // Version of plugin
 }
 if( !defined( 'WP_HTML5VP_DIR' ) ) {
     define( 'WP_HTML5VP_DIR', dirname( __FILE__ ) ); // Plugin dir
@@ -52,16 +52,23 @@ add_action( 'wp_enqueue_scripts','wp_html5video_style_css' );
 function wp_html5video_style_css() {		
 	
 	wp_enqueue_style( 'wp_html5video_css',  plugin_dir_url( __FILE__ ). 'assets/css/video-js.css', array(), WP_HTML5VP_VERSION );
-	wp_enqueue_style( 'wp_html5video_colcss',  plugin_dir_url( __FILE__ ). 'assets/css/video-style.css', array(), WP_HTML5VP_VERSION );	
-	wp_enqueue_style( 'wp_html5video_popup',  plugin_dir_url( __FILE__ ). 'assets/css/magnific-popup.css', array(), WP_HTML5VP_VERSION );	
+	wp_enqueue_style( 'wp_html5video_colcss',  plugin_dir_url( __FILE__ ). 'assets/css/video-style.css', array(), WP_HTML5VP_VERSION );		
+
+	// Registring and enqueing wpos-magnific-popup-style css
+	if( !wp_style_is( 'wpos-magnific-popup-style', 'registered' ) ) {
+			wp_enqueue_style( 'wpos-magnific-popup-style',  plugin_dir_url( __FILE__ ). 'assets/css/magnific-popup.css', array(), WP_HTML5VP_VERSION );
+			wp_enqueue_style( 'wpos-magnific-popup-style' );
+	}			
 	
 	wp_register_script( 'wp-html5video-js', WP_HTML5VP_URL.'assets/js/video.js', array('jquery'), WP_HTML5VP_VERSION, true );
 	wp_enqueue_script( 'wp-html5video-js' );
-	wp_register_script( 'wp-html5video-popup', WP_HTML5VP_URL.'assets/js/jquery.magnific-popup.min.js', array('jquery'), WP_HTML5VP_VERSION, true );
-	wp_enqueue_script( 'wp-html5video-popup' );
+	
+	if( !wp_script_is( 'wpos-magnific-popup-jquery', 'registered' ) ) {
+			wp_register_script( 'wpos-magnific-popup-jquery', WP_HTML5VP_URL.'assets/js/jquery.magnific-popup.min.js', array('jquery'), WP_HTML5VP_VERSION, true );
+		}	
 
     wp_register_script( 'wp-html5video-public-js', WP_HTML5VP_URL.'assets/js/wp-html5vp-public.js', array('jquery'), WP_HTML5VP_VERSION, true );
-    wp_enqueue_script( 'wp-html5video-public-js' );
+   
 }
  
 /**
@@ -69,9 +76,7 @@ function wp_html5video_style_css() {
  * 
  * @package HTML5 Video gallery and Player
  * @since 1.1
- */ 
- 
- 
+ */
 function html5video_setup_post_types() {
 
 	$html5video_labels =  apply_filters( 'sp_html5video_labels', array(
@@ -173,12 +178,20 @@ function wp_html5vp_admin_notice() {
     $dir = ABSPATH . 'wp-content/plugins/videogallery-plus-player-pro/video-gallery.php';
     
     // If FREE plugin is active and PRO plugin exist
-    if( is_plugin_active( 'html5-videogallery-plus-player/html5video.php' ) && file_exists($dir)) {
+    if( is_plugin_active( 'html5-videogallery-plus-player/html5video.php' ) && file_exists($dir) ) {
         
         global $pagenow;
+        $notice_link        = add_query_arg( array('message' => 'wp-html5vp-plugin-notice'), admin_url('plugins.php') );
+        $notice_transient   = get_transient( 'wp_html5vp_install_notice' );
         
-        if ( $pagenow == 'plugins.php' && current_user_can( 'install_plugins' ) ) {
-            echo '<div id="message" class="updated notice is-dismissible"><p><strong>Thank you for activating Video gallery and Player</strong>.<br /> It looks like you had PRO version <strong>(<em>Video gallery and Player PRO</em>)</strong> of this plugin activated. To avoid conflicts the extra version has been deactivated and we recommend you delete it. </p></div>';
+        if( $notice_transient == false && $pagenow == 'plugins.php' && file_exists( $dir ) && current_user_can( 'install_plugins' ) ) {
+              echo '<div class="updated notice" style="position:relative;">
+                    <p>
+                        <strong>'.sprintf( __('Thank you for activating %s', 'html5-videogallery-plus-player'), 'Video gallery and Player').'</strong>.<br/>
+                        '.sprintf( __('It looks like you had PRO version %s of this plugin activated. To avoid conflicts the extra version has been deactivated and we recommend you delete it.', 'html5-videogallery-plus-player'), '<strong>(<em>Video gallery and Player PRO</em>)</strong>' ).'
+                    </p>
+                    <a href="'.esc_url( $notice_link ).'" class="notice-dismiss" style="text-decoration:none;"></a>
+                </div>';
         }
     }
 }
@@ -220,7 +233,38 @@ require_once( WP_HTML5VP_DIR . '/includes/wp-html5vp-functions.php' );
 require_once( WP_HTML5VP_DIR . '/includes/class_shortcode.php' );
 require_once( WP_HTML5VP_DIR . '/includes/class_admin_metabox.php' );
 
+// Admin File
+require_once( WP_HTML5VP_DIR . '/includes/admin/class-html5vp-admin.php' );
+
 // Load admin files
 if ( is_admin() || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
     include_once( WP_HTML5VP_DIR . '/includes/admin/wp-html5vp-how-it-work.php' );	
 }
+
+/* Plugin Wpos Analytics Data Starts */
+function wpos_analytics_anl37_load() {
+
+    require_once dirname( __FILE__ ) . '/wpos-analytics/wpos-analytics.php';
+
+    $wpos_analytics =  wpos_anylc_init_module( array(
+                            'id'            => 37,
+                            'file'          => plugin_basename( __FILE__ ),
+                            'name'          => 'Video gallery and Player',
+                            'slug'          => 'video-gallery-and-player',
+                            'type'          => 'plugin',
+                            'menu'          => 'edit.php?post_type=sp_html5video',
+                            'text_domain'   => 'html5-videogallery-plus-player',
+                            'offers'        => array(
+                                                    'trial_premium' => array(
+                                                        'image' => 'http://analytics.wponlinesupport.com/?anylc_img=37',
+                                                        'link'  => 'https://www.wponlinesupport.com/plugins-plus-themes-powerpack-combo-offer/?ref=blogeditor'
+                                                    ),
+                                                ),
+                        ));
+
+    return $wpos_analytics;
+}
+
+// Init Analytics
+wpos_analytics_anl37_load();
+/* Plugin Wpos Analytics Data Ends */

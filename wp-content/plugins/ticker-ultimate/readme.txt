@@ -1,8 +1,8 @@
 === Ticker Ultimate ===
-Contributors: wponlinesupport, anoopranawat 
+Contributors: wponlinesupport, anoopranawat, pratik-jain
 Tags: wponlinesupport, ticker, news ticker, blog ticker, post ticker, ticker slider, ticker vertical slider, ticker horizontal slider
-Requires at least: 3.1
-Tested up to: 4.9.2
+Requires at least: 3.5
+Tested up to: 4.9.7
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -60,7 +60,8 @@ Ticker Ultimate Shortcode:
 = Template code is =
 <code><?php echo do_shortcode('[wp_ticker]'); ?></code>
 
-
+= Privacy & Policy =
+* We have also opt-in e-mail selection , once you download the plugin , so that we can inform you and nurture you about products and its features.
  
 == Installation ==
 
@@ -76,26 +77,11 @@ Ticker Ultimate Shortcode:
 
 == Changelog ==
 
-= 1.0.1 (25-1-2018) =
+= 1.1 (14, June 2018) =
+* [*] Follow some WordPress Detailed Plugin Guidelines.
+
+= 1.0.1 (25, Jan 2018) =
 * [*] Fixed the issue with the ticker if link is not added (if user user use custom post type)
-
-= 1.0 =
-* Initial release.
-
-== Upgrade Notice ==
-
-= 1.0 =
-* Initial release.
-
-== Upgrade Notice ==
-
-= 1.0.1 (25-1-2018) =
-* [*] Fixed the issue with the ticker if link is not added (if user user use custom post type)
-
-= 1.0 =
-* Initial release.
-
-== Upgrade Notice ==
 
 = 1.0 =
 * Initial release.

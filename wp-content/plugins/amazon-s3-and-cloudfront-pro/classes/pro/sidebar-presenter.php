@@ -50,7 +50,6 @@ class Sidebar_Presenter {
 	public function init( $as3cf ) {
 		$this->as3cf = $as3cf;
 
-		add_action( 'as3cf_after_settings', array( $this, 'render_sidebar' ) );
 		add_action( 'as3cfpro_load_assets', array( $this, 'load_assets' ) );
 
 		// JS data

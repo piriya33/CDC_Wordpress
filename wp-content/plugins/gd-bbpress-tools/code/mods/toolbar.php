@@ -206,7 +206,7 @@ class gdbbMod_Toolbar {
             'parent' => 'gdbb-toolbar-info-links-bbp',
             'id'     => 'gdbb-toolbar-bbp-home',
             'title'  => __("bbPress Homepage", "gd-bbpress-tools"),
-            'href'   => 'http://bbpress.org/',
+            'href'   => 'https://bbpress.org/',
             'meta'   => array('target' => '_blank')
         ));
         

@@ -358,10 +358,11 @@ abstract class Modal_Tool extends Tool {
 
 		$this->progress = $_POST['progress'];
 
-		$batch_limit = apply_filters( 'as3cfpro_' . $this->tool_key . '_batch_limit', 10 ); // number of attachments
-		$batch_time  = apply_filters( 'as3cfpro_' . $this->tool_key . '_batch_time', 10 ); // seconds
-		$batch_count = 0;
-		$finish_time = time() + $batch_time;
+		$batch_limit    = apply_filters( 'as3cfpro_' . $this->tool_key . '_batch_limit', 10 ); // number of attachments
+		$batch_time     = apply_filters( 'as3cfpro_' . $this->tool_key . '_batch_time', 10 ); // seconds
+		$batch_count    = 0;
+		$finish_time    = time() + $batch_time;
+		$limit_exceeded = false;
 
 		$this->errors         = array();
 		$this->process_errors = $this->get_errors();
@@ -393,6 +394,7 @@ abstract class Modal_Tool extends Tool {
 
 					$this->progress['bytes'] += $size;
 					$this->progress['files']++;
+					$batch_count++;
 
 					// Remove attachment from queue
 					unset( $items->data[ $blog_id ][ $attachment_id ] );
@@ -400,7 +402,7 @@ abstract class Modal_Tool extends Tool {
 					if ( time() >= $finish_time || $this->as3cf->memory_exceeded( $this->lock_key ) || $batch_count >= $batch_limit ) {
 						// Time or memory limit exceeded or attachment limit exceeded
 						$this->as3cf->restore_current_blog();
-
+						$limit_exceeded = true;
 						break 2;
 					}
 				}
@@ -418,7 +420,7 @@ abstract class Modal_Tool extends Tool {
 			}
 
 			$queue_count++;
-		} while ( $queue_count < $queues );
+		} while ( ( $queue_count < $queues ) && ( ! $limit_exceeded ) );
 
 		// Un-hide errors notice if new errors have occurred
 		if ( count( $this->errors ) ) {

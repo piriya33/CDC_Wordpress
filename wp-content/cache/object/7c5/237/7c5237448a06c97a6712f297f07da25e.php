@@ -1,0 +1,1 @@
+2'L[<?php exit; ?>a:1:{s:7:"content";s:131:"a:3:{s:6:"status";a:3:{s:4:"code";i:1;s:4:"text";s:5:"under";s:5:"ratio";d:0.01495;}s:5:"total";s:3:"299";s:5:"limit";s:5:"20000";}";}

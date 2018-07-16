@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) or die( "Restricted access!" );
             <div class="postbox about">
                 <h3 class="title"><?php _e( 'About', $text ); ?></h3>
                 <div class="inside">
-                    <p><?php _e( 'This plugin allows you to easily and safely add your custom functions (PHP code) directly out of your WordPress Admin area, without the need to have an external editor.', $text ); ?></p>
+                    <p><?php _e( 'This plugin allows you to easily and safely add your custom functions (PHP code) directly out of your WordPress Admin Area, without the need to have an external editor.', $text ); ?></p>
                 </div>
             </div>
 
@@ -29,7 +29,7 @@ defined( 'ABSPATH' ) or die( "Restricted access!" );
             <div class="postbox banner">
                 <div class="inside">
                     <a href="https://www.spacexchimp.com/plugins/my-custom-functions-pro.html" target="_blank">
-                        <img src="https://www.spacexchimp.com/assets/dynamic-content/images/plugin-upgrade.png" alt="Upgrade" style="margin-top:-16px;">
+                        <img src="<?php echo SPACEXCHIMP_P001_URL . 'inc/img/upgrade.png'; ?>" alt="Upgrade" style="margin-top:-16px;">
                     </a>
                 </div>
             </div>

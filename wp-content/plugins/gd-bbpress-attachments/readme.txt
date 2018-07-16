@@ -1,10 +1,10 @@
 === GD bbPress Attachments ===
 Contributors: GDragoN
 Donate link: https://plugins.dev4press.com/gd-bbpress-attachments/
-Version: 2.5
+Version: 2.6
 Tags: bbpress, attachments, gdragon, dev4press, upload, forum, topic, reply, media library, limit, meta
-Requires at least: 4.2
-Requires PHP: 5.3
+Requires at least: 4.4
+Requires PHP: 5.5
 Tested up to: 4.9
 Stable tag: trunk
 License: GPLv2 or later
@@ -20,30 +20,30 @@ On the admin side, topic and reply panels have a column with attachments count, 
 Supported languages: English, Serbian, Swedish, Polish, Dutch, German, Italian, Slovak, French, Spanish, Persian, Portuguese.
 
 = bbPress Plugin Versions =
-GD bbPress Attachments 2.5 supports bbPress 2.5 or newer. Older bbPress are no longer supported!
+GD bbPress Attachments 2.6 supports bbPress 2.5 or newer. Older bbPress are no longer supported!
 
 = BuddyPress Support =
-GD bbPress Attachments 2.5 is tested with BuddyPress 2.6 and newer and it works fine if you enable BuddyPress support in bbPress plugin for Group Forums. Make sure you enable JavaScript and CSS Settings Always Include option in the Attachments plugin settings.
+GD bbPress Attachments 2.6 is tested with BuddyPress 2.6 and newer and it works fine if you enable BuddyPress support in bbPress plugin for Group Forums. Make sure you enable JavaScript and CSS Settings Always Include option in the Attachments plugin settings.
+
+= More free Dev4Press plugins for bbPress =
+* [GD bbPress Tools](https://wordpress.org/plugins/gd-bbpress-tools/) - various expansion tools for forums
+* [GD Topic Polls](https://wordpress.org/plugins/gd-topic-polls/) - add polls to the bbPress topics
 
 = Upgrade to GD bbPress Toolbox Pro =
 Pro version contains many more useful features 10 more BBCodes (including Hide and Spoiler), BBCodes editor toolbar, report topics and replies, SEO features, many more views, notification email control, BBCodes toolbar, great new responsive admin UI, enhanced attachments features and additional widgets. For more information: [GD bbPress Toolbox Pro](https://plugins.dev4press.com/gd-bbpress-toolbox/)
 
-= Premium dev4Press.com plugins for bbPress =
+= Premium Dev4Press plugins for bbPress =
 * [GD bbPress Toolbox Pro](https://plugins.dev4press.com/gd-bbpress-toolbox/) - collection of features for bbPress
 * [GD Topic Polls Pro](https://plugins.dev4press.com/gd-topic-polls/) - add polls to the bbPress topics
 * [GD Topic Prefix Pro](https://plugins.dev4press.com/gd-topic-prefix/) - add customizable bbPress topic prefixes
 * [GD Content Tools Pro](https://plugins.dev4press.com/gd-content-tools/) - meta box for the topic and reply form
 
-= More free dev4Press.com plugins for bbPress =
-* [GD bbPress Tools](https://wordpress.org/plugins/gd-bbpress-tools/) - various expansion tools for forums
-* [GD Topic Polls](https://wordpress.org/plugins/gd-topic-polls/) - add polls to the bbPress topics
-
 == Installation ==
 = General Requirements =
-* PHP: 5.3 or newer
+* PHP: 5.5 or newer
 
 = WordPress Requirements =
-* WordPress: 4.2 or newer
+* WordPress: 4.4 or newer
 
 = bbPress Requirements =
 * bbPress Plugin: 2.5 or newer
@@ -65,10 +65,10 @@ Another common issue is that WordPress Media Library upload is not working. If t
 All attachments uploads are handled by the WordPress Media Library, and plugin uses native WordPress upload functions. When the file is uploaded it will be available through Media Library. Consult WordPress documentation about Media Library requirements.
 
 * Will this plugin work with standalone bbPress installation?
-No. This plugin requires the plugin versions of bbPress 2.3 or higher.
+No. This plugin requires the plugin versions of bbPress 2.5 or higher.
 
 * Does this plugin work with bbPress that is part of BuddyPress plugin?
-No. Plugin requires bbPress 2.3 or higher plugin.
+No. Plugin requires bbPress 2.5 or higher plugin.
 
 * Does this plugin work with bbPress plugin used as sitewide forums for BuddyPress plugin?
 Yes. But, make sure to enable 'Always Include' option for JavaScript and CSS.
@@ -89,10 +89,17 @@ Yes. But, make sure to enable 'Always Include' option for JavaScript and CSS.
 * Italian
 
 == Upgrade Notice ==
-= 2.5 =
-JS and CSS files are by default always loaded. Various minor improvements and updates.
+= 2.6 =
+Various fixes and updates.
 
 == Changelog ==
+= 2.6 (2018.04.27) =
+* Updated plugin requirements
+* Sanitize file name stored for the upload errors
+* Escape the file name displayed for upload errors
+* Fixed potential stored XSS vulnerability (thanks to [Luigi Gubello](https://www.gubello.me/blog/) for reporting)
+* Fixed few typos and missing translation strings
+
 = 2.5 =
 * Updated JS and CSS files are by default always loaded
 * Updated WordPress minimal requirement to 4.2

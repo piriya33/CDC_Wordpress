@@ -670,14 +670,16 @@ class gdbbMod_Shortcodes {
     }
 }
 
-function gdbbx_render_the_bbcode($name, $atts, $content = null) {
-    global $gdbbpress_tools;
+if (!function_exists('gdbbx_render_the_bbcode')) {
+    function gdbbx_render_the_bbcode($name, $atts, $content = null) {
+        global $gdbbpress_tools;
 
-    $_mod = $gdbbpress_tools->mod['s'];
+        $_mod = $gdbbpress_tools->mod['s'];
 
-    if (method_exists($_mod, 'shortcode_'.$name)) {
-        return $_mod->{'shortcode_'.$name}($atts, $content);
+        if (method_exists($_mod, 'shortcode_'.$name)) {
+            return $_mod->{'shortcode_'.$name}($atts, $content);
+        }
+
+        return false;
     }
-
-    return false;
 }

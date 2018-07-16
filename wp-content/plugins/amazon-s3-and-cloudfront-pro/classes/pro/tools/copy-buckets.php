@@ -24,7 +24,7 @@ class Copy_Buckets extends Background_Tool {
 	public function init() {
 		parent::init();
 
-		if ( ! $this->as3cf->is_pro_plugin_setup() ) {
+		if ( ! $this->as3cf->is_pro_plugin_setup( true ) ) {
 			return;
 		}
 
@@ -40,7 +40,7 @@ class Copy_Buckets extends Background_Tool {
 	 * @return array|bool
 	 */
 	protected function get_sidebar_block_args() {
-		if ( ! $this->as3cf->is_pro_plugin_setup() ) {
+		if ( ! $this->as3cf->is_pro_plugin_setup( true ) ) {
 			return false;
 		}
 

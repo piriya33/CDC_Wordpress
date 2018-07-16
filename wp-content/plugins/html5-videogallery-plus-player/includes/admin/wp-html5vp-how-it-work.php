@@ -2,7 +2,7 @@
 /**
  * Pro Designs and Plugins Feed
  *
- * @package Meta slider and carousel with lightbox
+ * @package Video gallery and Player
  * @since 1.0.0
  */
 
@@ -15,7 +15,7 @@ add_action('admin_menu', 'vgap_register_design_page');
 /**
  * Register plugin design page in admin menu
  * 
- * @package Album and Image Gallery Plus Lightbox
+ * @package Video gallery and Player
  * @since 1.0.0
  */
 function vgap_register_design_page() {
@@ -25,7 +25,7 @@ function vgap_register_design_page() {
 /**
  * Function to display plugin design HTML
  * 
- * @package Album and Image Gallery Plus Lightbox
+ * @package Video gallery and Player
  * @since 1.0.0
  */
 function vgap_designs_page() {
@@ -33,7 +33,7 @@ function vgap_designs_page() {
 	$wpos_feed_tabs = vgap_help_tabs();
 	$active_tab 	= isset($_GET['tab']) ? $_GET['tab'] : 'how-it-work';
 ?>
-		
+
 	<div class="wrap vgap-wrap">
 
 		<h2 class="nav-tab-wrapper">
@@ -70,7 +70,7 @@ function vgap_designs_page() {
 /**
  * Gets the plugin design part feed
  *
- * @package Album and Image Gallery Plus Lightbox
+ * @package Video gallery and Player
  * @since 1.0.0
  */
 function vgap_get_plugin_design( $feed_type = '' ) {
@@ -109,7 +109,7 @@ function vgap_get_plugin_design( $feed_type = '' ) {
 /**
  * Function to get plugin feed tabs
  *
- * @package Album and Image Gallery Plus Lightbox
+ * @package Video gallery and Player
  * @since 1.0.0
  */
 function vgap_help_tabs() {
@@ -124,7 +124,7 @@ function vgap_help_tabs() {
 													'transient_time'	=> 172800
 												),
 						'offers-feed' 	=> array(
-													'name'				=> __('WPOS Offers', 'html5-videogallery-plus-player'),
+													'name'				=> __('Hire Us', 'html5-videogallery-plus-player'),
 													'url'				=> 'http://wponlinesupport.com/plugin-data-api/wpos-offers.php',
 													'transient_key'		=> 'wpos_offers_feed',
 													'transient_time'	=> 86400,
@@ -136,7 +136,7 @@ function vgap_help_tabs() {
 /**
  * Function to get 'How It Works' HTML
  *
- * @package Album and Image Gallery Plus Lightbox
+ * @package Video gallery and Player
  * @since 1.0.0
  */
 function vgap_howitwork_page() { ?>
@@ -210,8 +210,8 @@ function vgap_howitwork_page() { ?>
 												</th>
 												<td>
 													<p><?php _e('Check plugin document for shortcode parameters and demo for designs.', 'html5-videogallery-plus-player'); ?></p> <br/>
-													<a class="button button-primary" href="https://www.wponlinesupport.com/plugins-documentation/documentvideo-gallery-player/?utm_source=hp&event=doc" target="_blank"><?php _e('Documentation', 'html5-videogallery-plus-player'); ?></a>									
-													<a class="button button-primary" href="http://demo.wponlinesupport.com/video-gallery-and-player-demo/?utm_source=hp&event=demo" target="_blank"><?php _e('Demo for Designs', 'html5-videogallery-plus-player'); ?></a>
+													<a class="button button-primary" href="https://www.wponlinesupport.com/plugins-documentation/documentvideo-gallery-player/" target="_blank"><?php _e('Documentation', 'html5-videogallery-plus-player'); ?></a>									
+													<a class="button button-primary" href="http://demo.wponlinesupport.com/video-gallery-and-player-demo/" target="_blank"><?php _e('Demo for Designs', 'html5-videogallery-plus-player'); ?></a>
 												</td>
 											</tr>
 										</tbody>
@@ -234,7 +234,7 @@ function vgap_howitwork_page() { ?>
 								<div class="inside">										
 									<ul class="wpos-list">
 									
-										<li>18+ Designs</li>
+										<li>20+ Designs</li>
 										<li>Grid View <br /> <img style="width:100%;" src="<?php echo WP_HTML5VP_URL; ?>assets/images/video-gallery-grid.jpg"></li>
 										<li>Slider/Carousel View <br /> <img style="width:100%;" src="<?php echo WP_HTML5VP_URL; ?>assets/images/video-gallery-slider.jpg"></li>
 										<li>Slider/Carousel with center mode <br /> <img style="width:100%;" src="<?php echo WP_HTML5VP_URL; ?>assets/images/video-gallery-slider-center-mode.jpg"></li>
@@ -244,8 +244,8 @@ function vgap_howitwork_page() { ?>
 										<li>Responsive</li>
 										<li>Popup gallery slider</li>
 									</ul>
-									<a class="button button-primary wpos-button-full" href="https://www.wponlinesupport.com/wp-plugin/video-gallery-player/?utm_source=hp&event=go_premium" target="_blank"><?php _e('Go Premium ', 'html5-videogallery-plus-player'); ?></a>	
-									<p><a class="button button-primary wpos-button-full" href="http://demo.wponlinesupport.com/prodemo/video-gallery-and-player-pro-demo/?utm_source=hp&event=pro_demo" target="_blank"><?php _e('View PRO Demo ', 'html5-videogallery-plus-player'); ?></a>			</p>								
+									<a class="button button-primary wpos-button-full" href="https://www.wponlinesupport.com/wp-plugin/video-gallery-player/" target="_blank"><?php _e('Go Premium ', 'html5-videogallery-plus-player'); ?></a>	
+									<p><a class="button button-primary wpos-button-full" href="http://demo.wponlinesupport.com/prodemo/video-gallery-and-player-pro-demo/" target="_blank"><?php _e('View PRO Demo ', 'html5-videogallery-plus-player'); ?></a>			</p>								
 								</div><!-- .inside -->
 							</div><!-- #general -->
 						</div><!-- .meta-box-sortables ui-sortable -->
@@ -259,7 +259,7 @@ function vgap_howitwork_page() { ?>
 										<span><?php _e( 'Help to improve this plugin!', 'html5-videogallery-plus-player' ); ?></span>
 									</h3>									
 									<div class="inside">										
-										<p>Enjoyed this plugin? You can help by rate this plugin <a href="https://wordpress.org/support/plugin/html5-videogallery-plus-player/reviews/?filter=5" target="_blank">5 stars!</a></p>
+										<p>Enjoyed this plugin? You can help by rate this plugin <a href="https://wordpress.org/support/plugin/html5-videogallery-plus-player/reviews/" target="_blank">5 stars!</a></p>
 									</div><!-- .inside -->
 							</div><!-- #general -->
 						</div><!-- .meta-box-sortables ui-sortable -->

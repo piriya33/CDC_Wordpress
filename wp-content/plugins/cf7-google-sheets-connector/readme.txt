@@ -4,8 +4,8 @@ Donate link: https://www.paypal.me/WesternDeal
 Author URL: https://profiles.wordpress.org/westerndeal/
 Tags: cf7, contact form 7, Contact Form 7 Integrations, contact forms, Google Sheets, Google Sheets Integrations, Google, Sheets
 Requires at least: 3.6
-Tested up to: 4.8.1
-Stable tag: 1.7
+Tested up to: 4.9.6
+Stable tag: 2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -68,6 +68,17 @@ Please double-check those items and hopefully getting them right will fix the is
 * Now you can paste this code back on the `Admin Panel > Contact form 7 > Google Sheets` screen. 
 
 == Changelog ==
+
+= 2.0 ( 11/06/2018 ) =
+* Fixed - Bypassing of CF7 built-in data validation.
+
+= 1.9 =
+* Fixed - Not fetching contact form data to google sheet.
+
+= 1.8 =
+* Fixed the hijacking( loading issue front-end form ) of page after submit actions.
+* Integrated New Special Mail Tags ( including flamingo serial number ) with Spread Sheet without (_) underscores(Refer screenshot).
+
 = 1.7 (26/08/2017) =
 * Integrated Special Mail Tags with Spread Sheet without (_)underscores(Refer screenshot).
 * Fixed Date Format as per wordpress standards.

@@ -26,7 +26,7 @@ $read_more_link = get_post_meta( $post->ID, 'wpfcas_slide_link', true );
 			<td>
 				<input type="text" value="<?php echo esc_attr($featured_icon); ?>" class="large-text wpfcas-icon" id="wpfcas-icon" name="wpfcas_slide_icon" /><br/>
 				<span class="description"><?php _e('For example : fa fa-bluetooth-b', 'wp-featured-content-and-slider'); ?></span><br/>
-				<span class="description"><?php _e('Get icon class details : <a href="https://fortawesome.github.io/Font-Awesome/icons/" target="_blank"> Font Awesome</a>', 'wp-featured-content-and-slider'); ?></span>
+				<span class="description"><?php _e('Get icon class details : <a href="https://fontawesome.com/v4.7.0/icons/" target="_blank"> Font Awesome</a>', 'wp-featured-content-and-slider'); ?></span>
 			</td>
 		</tr>
 

@@ -1,12 +1,6 @@
-#: code/attachments/front.php:192
-msgid "attachment"
-msgid_plural "attachments"
-msgstr[0] ""
-msgstr[1] ""
-
 #: code/attachments/admin.php:86
 #: code/attachments/admin.php:86
-#: code/attachments/front.php:205
+#: code/attachments/front.php:207
 #: code/admin.php:61
 #: forms/uploader.php:5
 msgid "Attachments"
@@ -21,22 +15,28 @@ msgstr ""
 msgid "Attachments List"
 msgstr ""
 
-#: code/attachments/front.php:210
+#: code/attachments/front.php:212
 msgid "You must be <a href='%s'>logged in</a> to view attached files."
 msgstr ""
 
-#: code/attachments/front.php:240
+#: code/attachments/front.php:242
 msgid "delete"
 msgstr ""
 
-#: code/attachments/front.php:244
+#: code/attachments/front.php:246
 msgid "detach"
 msgstr ""
 
-#: code/attachments/front.php:344
+#: code/attachments/front.php:346
 #: forms/attachments/meta_files.php:20
 msgid "Upload Errors"
 msgstr ""
+
+#: code/attachments/front.php:194
+msgid "attachment"
+msgid_plural "attachments"
+msgstr[0] ""
+msgstr[1] ""
 
 #: code/admin.php:50
 #: forms/tabs/toolbox.php:2
@@ -435,10 +435,6 @@ msgstr ""
 msgid "Author"
 msgstr ""
 
-#: forms/tabs/attachments.php:207
-msgid "In line"
-msgstr ""
-
 #: forms/tabs/attachments.php:172
 msgid "Forums Integration"
 msgstr ""
@@ -465,6 +461,10 @@ msgstr ""
 
 #: forms/tabs/attachments.php:201
 msgid "With caption"
+msgstr ""
+
+#: forms/tabs/attachments.php:207
+msgid "In line"
 msgstr ""
 
 #: forms/tabs/attachments.php:213

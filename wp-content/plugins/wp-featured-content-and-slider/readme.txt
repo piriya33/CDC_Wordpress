@@ -1,8 +1,8 @@
 === WP Featured Content and Slider ===
-Contributors: wponlinesupport, anoopranawat 
+Contributors: wponlinesupport, anoopranawat, pratik-jain
 Tags: content slider, slider, featured, features, services, custom post slider, custom post type display, featured content, featured services, featured content rotator, featured content slider, content gallery, content slideshow, featured content slideshow, featured posts, featured content slider, shortcode
 Requires at least: 3.1
-Tested up to: 4.8.1
+Tested up to: 4.9.7
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -10,24 +10,20 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 A quick, easy way to add and display what features your company, product or service offers, using our shortcode OR template code.
 
 == Description ==
-Many CMS site needs to display Featured Content/Featured services on website. "WP Featured Content and Slider" is a clean and easy-to-use features showcase
-management system for WordPress. Display Featured Content/Featured services, features your product, company or services offers, and display them via a shortcode OR template code.
+Many CMS site needs to display Featured Content/Featured services on website. "WP Featured Content and Slider" is a clean and easy-to-use features showcase management system for WordPress. 
+
+Display Featured Content/Featured services, features your product, company or services offers, and display them via a shortcode OR template code.
 
 View [DEMO](http://wponlinesupport.com/wp-plugin/wp-featured-content-and-slider/) | [PRO DEMO and Features](http://wponlinesupport.com/wp-plugin/wp-featured-content-and-slider/) for additional information.
 
-Checkout our new plugin - [PowerPack - Need of Every Website](http://powerpack.wponlinesupport.com/?utm_source=wp)
+Checkout our new plugin - [PowerPack - Need of Every Website](https://wordpress.org/plugins/powerpack-lite/)
 
 Now added Custom Post Type support where you can display custom post type content with this plugin.
-<code>[featured-content post_type="featured_post"]  and
-[featured-content-slider post_type="featured_post"]</code>
-Where : Select Post type for featured content. You can select post type: post, page, any custom post type 
 
-**We have given 3 designs with 2 shortcode.**
+**We have given 4 designs with 2 shortcode.**
 <code>[featured-content] and [featured-content-slider]</code>
 
-Where you can display Featured Content in list view, in grid view and Featured Content Slider with responsive.
-You can also select design theme from "Featured Content -> Featured Content Designs".
-
+Where you can display Featured Content in list view, in grid view and Featured Content Slider with responsive. You can also select design theme from "Featured Content -> Featured Content Designs".
 
 = Shortcode Examples =
 
@@ -123,6 +119,9 @@ You can also select design theme from "Featured Content -> Featured Content Desi
 * Title
 * Contents
 
+= Privacy & Policy =
+* We have also opt-in e-mail selection , once you download the plugin , so that we can inform you and nurture you about products and its features.
+
 == Installation ==
 
 1. Upload the 'WP Featured Content and Slider' folder to the '/wp-content/plugins/' directory.
@@ -148,12 +147,15 @@ You can also select design theme from "Featured Content -> Featured Content Desi
 
 == Changelog ==
 
+= 1.2.8 (09 June, 2018) =
+* [*] Follow some WordPress Detailed Plugin Guidelines.
+
 = 1.2.7 (25 Aug, 2017) =
-* [*] Fixed design-4 issue mac sfari browser
+* [*] Fixed design-4 issue mac sfari browser.
 
 = 1.2.6 (24 Aug, 2017) =
 * [*] Fixed design-4 issue in responsive and display content in vertical 
-* [*] Fixed css issues
+* [*] Fixed css issues.
 
 = 1.2.5 (16 Jan, 2017) =
 * [+] Added 'taxonomy' shortcode parameter for custom category.
@@ -162,8 +164,8 @@ You can also select design theme from "Featured Content -> Featured Content Desi
 * [*] Updated Font Awesome CSS to latest version 4.7.0
 
 = 1.2.4 (28/10/2016) =
-* [+] Added "How it work" tab
-* Fixed slick.js load issue
+* [+] Added "How it work" tab.
+* Fixed slick.js load issue.
 * Fixed some css issues.
 
 = 1.2.3 =
@@ -182,56 +184,11 @@ You can also select design theme from "Featured Content -> Featured Content Desi
 * Added new design ie design-4
 
 = 1.1 =
-* Added New shortcode parameters ie post_type, fa_icon_color, content_words_limit
-* Added new design-3
-* Added Font Awesome Icons
-* Fixed some bug
+* Added New shortcode parameters ie post_type, fa_icon_color, content_words_limit.
+* Added new design-3.
+* Added Font Awesome Icons.
+* Fixed some bug.
 
 = 1.0 =
 * Initial release.
 * Adds custom post type.
-
-
-== Upgrade Notice ==
-
-= 1.2.7 (25 Aug, 2017) =
-* [*] Fixed design-4 issue mac sfari browser
-
-= 1.2.6 (24 Aug, 2017) =
-* [*] Fixed design-4 issue in responsive and display content in vertical 
-* [*] Fixed css issues
-
-= 1.2.5 (16 Jan, 2017) =
-* [+] Added 'taxonomy' shortcode parameter for custom category.
-* [*] Grouped 'Fa Icon' and 'Read More Link' metabox options.
-* [*] Updated slider js to latest version.
-* [*] Updated Font Awesome CSS to latest version 4.7.0
-
-= 1.2.4 (28/10/2016) =
-* [+] Added "How it work" tab
-* Fixed slick.js load issue
-* Fixed some css issues. 
-
-= 1.2.3 =
-* Fixed some css issues. 
-
-= 1.2.2 =
-* Added css for outline issue.
-
-= 1.2.1 =
-* Fixed some css issues.
-* Resolved multiple slider jquery conflict issue.
-
-= 1.2 =
-* Fixed some bugs
-* Added New shortcode parameters ie show_content
-* Added new design ie design-4
-
-= 1.1 =
-* Added New shortcode parameters ie post_type, fa_icon_color, content_words_limit
-* Added new design-3
-* Added Font Awesome Icons
-* Fixed some bug
-
-= 1.0 =
-* Initial release

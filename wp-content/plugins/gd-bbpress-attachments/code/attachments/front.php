@@ -112,6 +112,8 @@ class gdbbAtt_Front {
                         'error' => $_FILES['d4p_attachment']['error'][$key]
                     );
 
+                    $file_name = sanitize_file_name($file_name);
+
                     if ($gdbbpress_attachments->is_right_size($file, $forum_id)) {
                         $upload = wp_handle_upload($file, $overrides);
 
@@ -346,7 +348,7 @@ class gdbbAtt_Front {
                 $content.= '<ol>';
 
                 foreach ($errors as $error) {
-                    $content.= '<li><strong>'.$error['file'].'</strong>: '.__($error['message'], "gd-bbpress-attachments").'</li>';
+                    $content.= '<li><strong>'.esc_html($error['file']).'</strong>: '.__($error['message'], "gd-bbpress-attachments").'</li>';
                 }
 
                 $content.= '</ol></div>';

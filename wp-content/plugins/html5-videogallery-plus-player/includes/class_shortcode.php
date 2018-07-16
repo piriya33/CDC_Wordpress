@@ -48,6 +48,9 @@ function sp_html5video_shortcode( $atts, $content = null ) {
 	// Popup Configuration
 	$popup_conf = compact('popup_fix');
 	
+	wp_enqueue_script( 'wpos-magnific-popup-jquery' );
+	 wp_enqueue_script( 'wp-html5video-public-js' );
+	
 	ob_start();
 
 	// Create the Query
@@ -109,7 +112,7 @@ function sp_html5video_shortcode( $atts, $content = null ) {
 						
 					<?php } else { ?>
 					
-						<a href="#video-modal-<?php echo $i; ?>" class="popup-modal">
+						<a href="#video-modal-<?php echo $unique.'-'.$i; ?>" class="popup-modal">
 						<?php if( $feat_image ) { ?>
 						<img src="<?php echo $feat_image; ?>" alt="<?php the_title(); ?>" />
 						<?php } ?>
@@ -117,8 +120,8 @@ function sp_html5video_shortcode( $atts, $content = null ) {
 						</a>			
 						
 					<?php } ?>
-					<div id="video-modal-<?php echo $i; ?>" class="mfp-hide white-popup-block wp-html5vp-popup-wrp">
-						<video id="video_<?php echo get_the_ID(); ?>" class="video-js vjs-default-skin" controls preload="none" width="100%" poster="<?php echo $feat_image; ?>" data-setup="{}">
+					<div id="video-modal-<?php echo $unique.'-'.$i; ?>" class="mfp-hide white-popup-block wp-html5vp-popup-wrp">
+						<video id="video_<?php echo get_the_ID(); ?>" class="wp-hvgp-video-frame video-js vjs-default-skin" controls preload="none" width="100%" poster="<?php echo $feat_image; ?>" data-setup="{}">
 							<source src="<?php echo $wpvideo_video_mp4; ?>" type='video/mp4' />
 							<source src="<?php echo $wpvideo_video_wbbm; ?>" type='video/webm' />
 							<source src="<?php echo $wpvideo_video_ogg; ?>" type='video/ogg' />

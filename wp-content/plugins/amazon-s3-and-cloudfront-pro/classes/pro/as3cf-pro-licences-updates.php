@@ -48,11 +48,12 @@ class AS3CF_Pro_Licences_Updates extends Delicious_Brains_API_Licences {
 		$plugin->basename                 = $this->as3cf->get_plugin_basename();
 		$plugin->dir_path                 = $this->as3cf->get_plugin_dir_path();
 		$plugin->prefix                   = 'as3cfpro';
-		$plugin->settings_url_path        = 'admin.php?page=amazon-s3-and-cloudfront';
-		$plugin->settings_url_hash        = '#support';
-		$plugin->hook_suffix              = 'aws_page_amazon-s3-and-cloudfront';
+		$plugin->settings_url_path        = $this->as3cf->get_plugin_pagenow() . '?page=amazon-s3-and-cloudfront';
+		$plugin->settings_url_hash        = '#settings';
+		$plugin->hook_suffix              = $as3cf->hook_suffix;
 		$plugin->email_address_name       = 'as3cf';
 		$plugin->notices_hook             = 'as3cf_pre_settings_render';
+		$plugin->load_hook                = 'as3cf_plugin_load';
 		$plugin->expired_licence_is_valid = true;
 		$plugin->purchase_url             = $this->as3cf->dbrains_url( '/wp-offload-s3/pricing/', array(
 			'utm_campaign' => 'WP+Offload+S3',
@@ -71,14 +72,14 @@ class AS3CF_Pro_Licences_Updates extends Delicious_Brains_API_Licences {
 		add_action( 'network_admin_notices', array( $this, 'dashboard_licence_issue_notice' ) );
 		add_action( 'as3cf_pre_settings_render', array( $this, 'licence_issue_notice' ), 11 );
 
-		add_action( 'as3cf_support_pre_debug', array( $this, 'render_licence_settings' ) );
+		add_action( 'as3cf_licence_field', array( $this, 'render_licence_settings' ) );
 		add_action( 'as3cf_support_pre_debug', array( $this, 'render_licence_info' ) );
 
 		add_filter( 'as3cfpro_js_nonces', array( $this, 'add_licence_nonces' ) );
 		add_filter( 'as3cfpro_js_strings', array( $this, 'add_licence_strings' ) );
-		add_filter( 'aws_addons', array( $this, 'inject_addon_page_links' ) );
+		add_filter( 'as3cf_addons', array( $this, 'inject_addon_page_links' ) );
 
-		add_action( 'load-' . $this->plugin->hook_suffix, array( $this, 'http_dismiss_licence_notice' ) );
+		add_action( 'as3cf_plugin_load', array( $this, 'http_dismiss_licence_notice' ) );
 		add_action( 'as3cfpro_http_refresh_licence', array( $this, 'do_http_refresh_licence' ) );
 		add_action( 'as3cfpro_http_remove_licence', array( $this, 'do_http_remove_licence' ) );
 		add_action( 'as3cfpro_activate_licence_response', array( $this, 'refresh_licence_notice' ) );
@@ -113,8 +114,12 @@ class AS3CF_Pro_Licences_Updates extends Delicious_Brains_API_Licences {
 	/**
 	 * Display the license form
 	 */
-	function render_licence_settings() {
-		$this->as3cf->render_view( 'licence-settings' );
+	public function render_licence_settings() {
+		$this->as3cf->render_view( 'licence-settings', array(
+			'is_defined'     => $this->is_licence_constant(),
+			'is_set'         => (bool) $this->get_licence_key(),
+			'masked_licence' => $this->get_masked_licence(),
+		) );
 	}
 
 	/**
@@ -137,6 +142,7 @@ class AS3CF_Pro_Licences_Updates extends Delicious_Brains_API_Licences {
 	function add_licence_nonces( $nonces ) {
 		$nonces['check_licence']      = wp_create_nonce( 'check-licence' );
 		$nonces['activate_licence']   = wp_create_nonce( 'activate-licence' );
+		$nonces['remove_licence']     = wp_create_nonce( 'remove-licence' );
 		$nonces['reactivate_licence'] = wp_create_nonce( 'reactivate-licence' );
 
 		return $nonces;
@@ -177,20 +183,13 @@ class AS3CF_Pro_Licences_Updates extends Delicious_Brains_API_Licences {
 	 * @return array $addons
 	 */
 	function inject_addon_page_links( $addons ) {
-		if ( ! isset( $addons[ $this->plugin->slug ]['addons'] ) ) {
-			// No addons defined for this plugin, abort
-			return $addons;
-		}
-
 		if ( ! $this->is_valid_licence( true ) ) {
-			// We don't have a valid license, abort
 			return $addons;
 		}
 
-		$plugin_addons = $addons[ $this->plugin->slug ]['addons'];
-
-		foreach ( $plugin_addons as $slug => $addon ) {
+		foreach ( $addons as $slug => &$addon ) {
 			$basename = $this->plugin->get_plugin_basename( $slug );
+
 			if ( ! isset( $this->addons[ $basename ] ) ) {
 				continue;
 			}
@@ -209,11 +208,8 @@ class AS3CF_Pro_Licences_Updates extends Delicious_Brains_API_Licences {
 				$extra_link['text'] = __( 'Download', 'amazon-s3-and-cloudfront' );
 			}
 
-			$addon['links'][]       = $extra_link;
-			$plugin_addons[ $slug ] = $addon;
+			$addon['links'][] = $extra_link;
 		}
-
-		$addons[ $this->plugin->slug ]['addons'] = $plugin_addons;
 
 		return $addons;
 	}
@@ -289,7 +285,7 @@ class AS3CF_Pro_Licences_Updates extends Delicious_Brains_API_Licences {
 			return;
 		}
 
-		if ( $dashboard && method_exists( 'WP_AWS_Compatibility_Check', 'is_installing_or_updating_plugins' ) && WP_AWS_Compatibility_Check::is_installing_or_updating_plugins() ) {
+		if ( $dashboard && method_exists( 'AS3CF_Compatibility_Check', 'is_installing_or_updating_plugins' ) && AS3CF_Compatibility_Check::is_installing_or_updating_plugins() ) {
 			// Don't show the notice for plugin installs & updates, just too much noise
 			return;
 		}
