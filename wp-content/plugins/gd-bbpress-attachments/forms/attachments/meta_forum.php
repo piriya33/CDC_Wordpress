@@ -13,16 +13,18 @@
 <p>
     <strong class="label" style="width: 160px;"><?php _e("Maximum file size", "gd-bbpress-attachments"); ?>:</strong>
     <label for="gdbbatt_max_file_size" class="screen-reader-text"><?php _e("Maximum file size", "gd-bbpress-attachments"); ?>:</label>
-    <input type="text" class="small-text" value="<?php echo $meta["max_file_size"]; ?>" name="gdbbatt[max_file_size]" id="gdbbatt_max_file_size" />
+    <br/><input step="1" min="1" type="number" class="widefat small-text" value="<?php echo $meta["max_file_size"]; ?>" name="gdbbatt[max_file_size]" id="gdbbatt_max_file_size" />
     <span class="description">KB</span>
 </p>
 <p>
     <strong class="label" style="width: 160px;"><?php _e("Maximum files to upload", "gd-bbpress-attachments"); ?>:</strong>
     <label for="gdbbatt_max_to_upload" class="screen-reader-text"><?php _e("Maximum files to upload", "gd-bbpress-attachments"); ?>:</label>
-    <input type="text" class="small-text" value="<?php echo $meta["max_to_upload"]; ?>" name="gdbbatt[max_to_upload]" id="gdbbatt_max_to_upload" />
+    <br/><input step="1" min="1" type="number" class="widefat small-text" value="<?php echo $meta["max_to_upload"]; ?>" name="gdbbatt[max_to_upload]" id="gdbbatt_max_to_upload" />
+    <span class="description"><?php _e("at once", "gd-bbpress-attachments"); ?></span>
 </p>
 <p>
-    <strong class="label" style="width: 160px;"><?php _e("Hide list of attachements from visitors", "gd-bbpress-attachments"); ?>:</strong>
+    <strong class="label" style="width: 160px;"><?php _e("Hide list of attachements", "gd-bbpress-attachments"); ?>:</strong>
     <label for="gdbbatt_hide_from_visitors" class="screen-reader-text"><?php _e("Hide From Visitors", "gd-bbpress-attachments"); ?>:</label>
-    <input style="vertical-align: top; margin-top: 3px;" type="checkbox" <?php if ($meta["hide_from_visitors"] == 1) echo " checked"; ?> name="gdbbatt[hide_from_visitors]" id="gdbbatt_hide_from_visitors" />
+    <br/><input style="vertical-align: top; margin-top: 3px;" type="checkbox" <?php if ($meta["hide_from_visitors"] == 1) echo " checked"; ?> name="gdbbatt[hide_from_visitors]" id="gdbbatt_hide_from_visitors" />
+    <?php _e("From visitors", "gd-bbpress-attachments"); ?>
 </p>

@@ -1,14 +1,14 @@
 <?php
 
 /*
-Name:    d4pLib_Class_Base
-Version: v2.0.3
+Name:    d4pLib - Classes - Class
+Version: v2.5.2
 Author:  Milan Petrovic
-Email:   milan@gdragon.info
+Email:   support@dev4press.com
 Website: https://www.dev4press.com/
 
 == Copyright ==
-Copyright 2008 - 2017 Milan Petrovic (email: milan@gdragon.info)
+Copyright 2008 - 2018 Milan Petrovic (email: support@dev4press.com)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -25,8 +25,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-if (!class_exists('d4pClass')) {
-    class d4pClass {
+if (!class_exists('d4p_class')) {
+    class d4p_class {
         function __construct($args = array()) {
             if (is_array($args) && !empty($args)) {
                 $this->from_array($args);

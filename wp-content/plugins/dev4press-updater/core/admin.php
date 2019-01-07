@@ -52,21 +52,34 @@ class d4pupd_admin_core {
         add_action('admin_init', array($this, 'admin_init'));
         add_action('admin_enqueue_scripts', array($this, 'enqueue_scripts'));
 
-        $this->init_ready();
-    }
-
-    public function init_ready() {
         if (d4pupd_settings()->is_install()) {
+            add_action('network_admin_notices', array($this, 'install_notice'));
             add_action('admin_notices', array($this, 'install_notice'));
+        }
+
+        if (d4pupd_settings()->is_update()) {
+            add_action('network_admin_notices', array($this, 'update_notice'));
+            add_action('admin_notices', array($this, 'update_notice'));
         }
     }
 
     public function install_notice() {
-        if (current_user_can('d4pupd_standard')) {
-            $url = network_admin_url('admin.php?page=dev4press-updater-front');
+        if (current_user_can('install_plugins') && $this->page === false) {
+            $url = network_admin_url('admin.php?page=dev4press-updater-about');
 
             echo '<div class="updated"><p>';
             echo __("Dev4Press Updater is activated and it needs to finish installation.", "dev4press-updater");
+            echo ' <a href="'.$url.'">'.__("Click Here", "dev4press-updater").'</a>.';
+            echo '</p></div>';
+        }
+    }
+
+    public function update_notice() {
+        if (current_user_can('install_plugins') && $this->page === false) {
+            $url = network_admin_url('admin.php?page=dev4press-updater-about');
+
+            echo '<div class="updated"><p>';
+            echo __("Dev4Press Updater is updated, and you need to review the update process.", "dev4press-updater");
             echo ' <a href="'.$url.'">'.__("Click Here", "dev4press-updater").'</a>.';
             echo '</p></div>';
         }
@@ -81,7 +94,7 @@ class d4pupd_admin_core {
 
     public function admin_init() {
         if (isset($_GET['panel']) && $_GET['panel'] != '') {
-            $this->panel = trim($_GET['panel']);
+            $this->panel = d4p_sanitize_slug($_GET['panel']);
         }
 
         if (isset($_POST['option_page']) && $_POST['option_page'] == 'dev4press-updater-settings') {
@@ -113,8 +126,9 @@ class d4pupd_admin_core {
 
             if ($new_api_key != $old_api_key) {
                 delete_site_transient('dev4press_updater_response');
+                delete_site_transient('dev4press_updater_throttle');
             }
-            
+
             wp_redirect('admin.php?page=dev4press-updater-settings&panel='.$this->panel.'&message=saved');
             exit;
         }
@@ -183,6 +197,10 @@ class d4pupd_admin_core {
 
             wp_enqueue_style('d4pupd-plugin', $this->file('css', 'plugin'), array('d4plib-admin'), d4pupd_settings()->file_version());
             wp_enqueue_script('d4pupd-plugin', $this->file('js', 'plugin'), array('d4plib-admin'), d4pupd_settings()->file_version(), true);
+
+            if ($this->page == 'about') {
+                wp_enqueue_style('d4plib-grid', $this->file('css', 'grid', true), array(), D4P_VERSION.'.'.D4P_BUILD);
+            }
 
             $_data = array(
                 'wp_version' => D4PUPD_WPV,

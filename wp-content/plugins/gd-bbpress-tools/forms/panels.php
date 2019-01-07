@@ -3,23 +3,20 @@
 $current = isset($_GET['tab']) ? sanitize_key($_GET['tab']) : 'tools';
 
 $tabs = array(
-    'tools' => __("Settings", "gd-bbpress-tools"), 
-    'bbcode' => __("BBCodes", "gd-bbpress-tools"), 
-    'views' => __("Views", "gd-bbpress-tools"), 
-    'update' => __("Tools", "gd-bbpress-tools"), 
-    'faq' => __("FAQ", "gd-bbpress-tools"), 
-    'toolbox' => __("Toolbox", "gd-bbpress-tools"), 
-    'd4p' => __("Dev4Press", "gd-bbpress-tools"), 
-    'about' => __("About", "gd-bbpress-tools")
+    'tools' => '<span class="dashicons dashicons-admin-settings" title="'.__("Settings", "gd-bbpress-tools").'"></span><span class="tab-title"> '.__("Settings", "gd-bbpress-tools").'</span>', 
+    'tweaks' => '<span class="dashicons dashicons-lightbulb" title="'.__("Tweaks", "gd-bbpress-tools").'"></span><span class="tab-title"> '.__("Tweaks", "gd-bbpress-tools").'</span>', 
+    'bbcode' => '<span class="dashicons dashicons-editor-code" title="'.__("BBCodes", "gd-bbpress-tools").'"></span><span class="tab-title"> '.__("BBCodes", "gd-bbpress-tools").'</span>', 
+    'views' => '<span class="dashicons dashicons-visibility" title="'.__("Views", "gd-bbpress-tools").'"></span><span class="tab-title"> '.__("Views", "gd-bbpress-tools").'</span>', 
+    'update' => '<span class="dashicons dashicons-admin-tools" title="'.__("Tools", "gd-bbpress-tools").'"></span><span class="tab-title"> '.__("Tools", "gd-bbpress-tools").'</span>', 
+    'd4p' => '<span class="dashicons dashicons-flag" title="'.__("Dev4Press", "gd-bbpress-tools").'"></span><span class="tab-title"> '.__("Dev4Press", "gd-bbpress-tools").'</span>', 
+    'about' => '<span class="dashicons dashicons-info" title="'.__("About", "gd-bbpress-tools").'"></span><span class="tab-title"> '.__("About", "gd-bbpress-tools").'</span>'
 );
 
 if (!isset($tabs[$current])) {
     $current = 'tools';
 }
 
-if ($current != 'toolbox') {
-    $this->upgrade_notice();
-}
+$this->upgrade_notice();
 
 $to_load = $current;
 if ($current == 'update') {
@@ -34,7 +31,7 @@ if ($current == 'update') {
 <div class="wrap">
     <h2>GD bbPress Tools</h2>
     <div id="icon-tools" class="icon32"><br></div>
-    <h2 class="nav-tab-wrapper">
+    <h2 class="nav-tab-wrapper d4p-tabber-ctrl">
     <?php
 
     foreach($tabs as $tab => $name){

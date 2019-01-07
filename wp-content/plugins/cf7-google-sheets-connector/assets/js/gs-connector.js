@@ -1,6 +1,5 @@
 jQuery(document).ready(function () {
-     
-     /**
+   /**
     * verify the api code
     * @since 1.0
     */
@@ -23,6 +22,23 @@ jQuery(document).ready(function () {
           }
       });
       
-    });   
-         
+    });  
+    
+    /**
+     * Clear debug
+     */
+      jQuery(document).on('click', '.debug-clear', function () { 
+         jQuery( ".clear-loading-sign" ).addClass( "loading" );
+         var data = {
+            action: 'gs_clear_log',
+            security: jQuery('#gs-ajax-nonce').val()
+         };
+         jQuery.post(ajaxurl, data, function (response ) {
+            if( response.success ) { 
+               jQuery( ".clear-loading-sign" ).removeClass( "loading" );
+               jQuery( "#gs-validation-message" ).empty();
+               jQuery("<span class='gs-valid-message'>Logs are cleared.</span>").appendTo('#gs-validation-message'); 
+            }
+         });
+      });
 });

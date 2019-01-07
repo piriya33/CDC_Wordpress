@@ -2,13 +2,13 @@
 
 /*
 Name:    d4pLib_Admin_Settings
-Version: v2.0.3
+Version: v2.5.2
 Author:  Milan Petrovic
-Email:   milan@gdragon.info
+Email:   support@dev4press.com
 Website: https://www.dev4press.com/
 
 == Copyright ==
-Copyright 2008 - 2017 Milan Petrovic (email: milan@gdragon.info)
+Copyright 2008 - 2018 Milan Petrovic (email: support@dev4press.com)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -64,6 +64,7 @@ if (!class_exists('d4pSettingType')) {
 
         const EXPANDABLE_PAIRS = 'expandable_pairs';
         const EXPANDABLE_TEXT = 'expandable_text';
+        const EXPANDABLE_RAW = 'expandable_raw';
 
         public static $_values = array(
             'info' => self::INFO,
@@ -160,38 +161,44 @@ if (!class_exists('d4pSettingsRender')) {
 
         public function render() {
             foreach ($this->groups as $group => $obj) {
-                $args = isset($obj['args']) ? $obj['args'] : array();
+                if (isset($obj['type']) && $obj['type'] == 'separator') {
+                    echo '<div class="d4p-group-separator">';
+                        echo '<h3><span>'.$obj['label'].'</span></h3>';
+                    echo '</div>';
+                } else {
+                    $args = isset($obj['args']) ? $obj['args'] : array();
 
-                $classes = array('d4p-group', 'd4p-group-'.$group);
+                    $classes = array('d4p-group', 'd4p-group-'.$group);
 
-                if (isset($args['hidden']) && $args['hidden']) {
-                    $classes[] = 'd4p-hidden-group';
-                }
-
-                if (isset($args['class']) && $args['class'] != '') {
-                    $classes[] = $args['class'];
-                }
-
-                echo '<div class="'.join(' ', $classes).'" id="d4p-group-'.$group.'">';
-                    $kb = isset($obj['kb']) ? str_replace('%url%', $obj['kb']['url'], $this->kb) : '';
-
-                    if ($kb != '') {
-                        $kb = '<a class="d4p-kb-group" href="'.$kb.'" target="_blank">'.$obj['kb']['label'].'</a>';
+                    if (isset($args['hidden']) && $args['hidden']) {
+                        $classes[] = 'd4p-hidden-group';
                     }
 
-                    echo '<h3>'.$obj['name'].$kb.'</h3>';
-                    echo '<div class="d4p-group-inner">';
-                        echo '<table class="form-table d4p-settings-table">';
-                            echo '<tbody>';
+                    if (isset($args['class']) && $args['class'] != '') {
+                        $classes[] = $args['class'];
+                    }
 
-                                foreach ($obj['settings'] as $setting) {
-                                    $this->render_option($setting, $group);
-                                }
+                    echo '<div class="'.join(' ', $classes).'" id="d4p-group-'.$group.'">';
+                        $kb = isset($obj['kb']) ? str_replace('%url%', $obj['kb']['url'], $this->kb) : '';
 
-                            echo '</tbody>';
-                        echo '</table>';
+                        if ($kb != '') {
+                            $kb = '<a class="d4p-kb-group" href="'.$kb.'" target="_blank">'.$obj['kb']['label'].'</a>';
+                        }
+
+                        echo '<h3>'.$obj['name'].$kb.'</h3>';
+                        echo '<div class="d4p-group-inner">';
+                            echo '<table class="form-table d4p-settings-table">';
+                                echo '<tbody>';
+
+                                    foreach ($obj['settings'] as $setting) {
+                                        $this->render_option($setting, $group);
+                                    }
+
+                                echo '</tbody>';
+                            echo '</table>';
+                        echo '</div>';
                     echo '</div>';
-                echo '</div>';
+                }
             }
         }
 
@@ -315,8 +322,8 @@ if (!class_exists('d4pSettingsRender')) {
 
                 echo "<div class='d4plib-images-image'>";
                 echo "<input type='hidden' value='".$id."' name='".$name_base."[]' />";
-                echo "<a class='button d4plib-button-action d4plib-images-remove' aria-label='".__("Remove")."'><i aria-hidden='true' class='fa fa-ban'></i></a>";
-                echo "<a class='button d4plib-button-action d4plib-images-preview' aria-label='".__("Preview")."'><i aria-hidden='true' class='fa fa-search'></i></a>";
+                echo "<a class='button d4plib-button-action d4plib-images-remove' aria-label='".__("Remove", "d4plib")."'><i aria-hidden='true' class='fa fa-ban'></i></a>";
+                echo "<a class='button d4plib-button-action d4plib-images-preview' aria-label='".__("Preview", "d4plib")."'><i aria-hidden='true' class='fa fa-search'></i></a>";
                 echo "<span class='d4plib-image-name'>".$title."</span>";
                 echo "<img src='".$url."' />";
                 echo "</div>";
@@ -355,8 +362,8 @@ if (!class_exists('d4pSettingsRender')) {
 
         private function draw_bool($element, $value, $name_base, $id_base = '') {
             $selected = $value == 1 || $value === true ? ' checked="checked"' : '';
-            $readonly = isset($element->args['readonly']) && $element->args['readonly'] ? ' readonly' : '';
-            $label = isset($element->args['label']) && $element->args['label'] != '' ? $element->args['label'] : 'Enabled';
+            $readonly = isset($element->args['readonly']) && $element->args['readonly'] ? ' readonly="readonly" disabled="disabled"' : '';
+            $label = isset($element->args['label']) && $element->args['label'] != '' ? $element->args['label'] : __("Enabled", "d4plib");
 
             echo sprintf('<label for="%s"><input%s type="checkbox" name="%s" id="%s"%s class="widefat" /><span class="d4p-accessibility-show-for-sr">%s: </span>%s</label>',
                     $id_base, $readonly, $name_base, $id_base, $selected, $element->title, $label);
@@ -632,6 +639,10 @@ if (!class_exists('d4pSettingsRender')) {
             echo '</li>';
         }
 
+        private function draw_expandable_raw($element, $value, $name_base, $id_base = '') {
+            $this->draw_expandable_text($element, $value, $name_base, $id_base);
+        }
+
         private function draw_expandable_text($element, $value, $name_base, $id_base = '') {
             echo '<ol>';
 
@@ -696,6 +707,19 @@ if (!class_exists('d4pSettingsProcess')) {
                 case 'hr':
                 case 'custom':
                     $value = null;
+                    break;
+                case 'expandable_raw':
+                    $value = array();
+
+                    foreach ($post[$key] as $id => $data) {
+                        if ($id > 0) {
+                            $_val = trim(stripslashes($data['value']));
+
+                            if ($_val != '') {
+                                $value[] = $_val;
+                            }
+                        }
+                    }
                     break;
                 case 'expandable_text':
                     $value = array();
@@ -804,58 +828,6 @@ if (!class_exists('d4pSettingsProcess')) {
             }
 
             return $value;
-        }
-    }
-}
-
-if (!class_exists('d4pCheckboxRadioWalker')) {
-    class d4pCheckboxRadioWalker extends Walker {
-        public $tree_type = 'settings';
-
-        public $db_fields = array('parent' => 'parent', 'id' => 'id');
-
-        public function start_lvl(&$output, $depth = 0, $args = array()) {
-            $indent = str_repeat("\t", $depth);
-            $output.= "\n$indent<ul class='children'>\n";
-        }
-
-        public function end_lvl(&$output, $depth = 0, $args = array()) {
-            $indent = str_repeat("\t", $depth);
-            $output.= "$indent</ul>\n";
-        }
-
-        public function start_el(&$output, $page, $depth = 0, $args = array(), $current_page = 0 ) {
-            if ($depth) {
-                $indent = str_repeat("\t", $depth);
-            } else {
-                $indent = '';
-            }
-
-            $css_class = array(
-                'option-item', 
-                'option-item-parent-'.$page->parent, 
-                'option-item'.$page->id);
-
-            $css_classes = implode(' ', $css_class);
-
-            $args['input'] = empty($args['input']) ? 'checkbox' : $args['input'];
-
-            $selected = in_array($page->id, $args['selected']) ? ' checked="checked"' : '';
-
-            $output.= $indent.sprintf(
-                '<li class="%s"><label><input type="%s" value="%s" name="%s%s"%s class="widefat" />%s</label>',
-                $css_classes,
-                $args['input'],
-                $page->id,
-                $args['name'],
-                $args['input'] == 'checkbox' ? '[]' : '',
-                $selected,
-                $page->title
-            );
-        }
-
-        public function end_el(&$output, $page, $depth = 0, $args = array()) {
-            $output.= "</li>\n";
         }
     }
 }

@@ -18,7 +18,8 @@ class gdbbPressTools {
         's' => null, 
         'q' => null, 
         't' => null, 
-        'v' => null
+        'v' => null,
+        'w' => null
     );
 
     function __construct() {
@@ -100,6 +101,10 @@ class gdbbPressTools {
                 $this->mod['a'] = new gdbbMod_Access();
             }
         } else {
+            require_once(GDBBPRESSTOOLS_PATH.'code/mods/tweaks.php');
+
+            $this->mod['w'] = new gdbbMod_Tweaks();
+
             if ($this->o['quote_active'] == 1 && d4p_bbp_is_role('quote') && !$this->is_search) {
                 require_once(GDBBPRESSTOOLS_PATH.'code/mods/quote.php');
 
@@ -138,8 +143,8 @@ class gdbbPressTools {
         }
 
         if ($this->o['allowed_tags_div'] == 1) {
-            add_filter('bbp_kses_allowed_tags', array(&$this, 'allowed_tags'));
-            add_filter('bbp_get_allowed_tags', array(&$this, 'display_allowed_tags'));
+            add_filter('bbp_kses_allowed_tags', array($this, 'allowed_tags'));
+            add_filter('bbp_get_allowed_tags', array($this, 'display_allowed_tags'));
         }
 
         $views = array();

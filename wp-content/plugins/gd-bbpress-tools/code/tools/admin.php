@@ -6,7 +6,7 @@ class gdbbMod_Admin {
     public $admin_plugin = false;
 
     function __construct() {
-        add_action('admin_init', array(&$this, 'admin_init'));
+        add_action('admin_init', array($this, 'admin_init'));
     }
 
     public function admin_init() {
@@ -28,13 +28,26 @@ class gdbbMod_Admin {
             }
         }
 
+        if (isset($_POST['gdbb-tweaks-submit'])) {
+            global $gdbbpress_tools;
+            check_admin_referer('gd-bbpress-tools');
+
+            $gdbbpress_tools->o['tweak_disable_breadcrumbs'] = isset($_POST['tweak_disable_breadcrumbs']) ? 1 : 0;
+            $gdbbpress_tools->o['tweak_tags_in_reply_for_authors_only'] = isset($_POST['tweak_tags_in_reply_for_authors_only']) ? 1 : 0;
+            $gdbbpress_tools->o['tweak_show_lead_topic'] = isset($_POST['tweak_show_lead_topic']) ? 1 : 0;
+
+            update_option('gd-bbpress-tools', $gdbbpress_tools->o);
+            wp_redirect(add_query_arg('settings-updated', 'true'));
+            exit();
+        }
+
         if (isset($_POST['gdbb-views-submit'])) {
             global $gdbbpress_tools;
             check_admin_referer('gd-bbpress-tools');
 
             $gdbbpress_tools->o['view_mostreplies_active'] = isset($_POST['view_mostreplies_active']) ? 1 : 0;
             $gdbbpress_tools->o['view_latesttopics_active'] = isset($_POST['view_latesttopics_active']) ? 1 : 0;
-            $gdbbpress_tools->o['view_searchresults_active'] = isset($_POST['view_searchresults_active']) ? 1 : 0;
+            $gdbbpress_tools->o['view_topicsfreshness_active'] = isset($_POST['view_topicsfreshness_active']) ? 1 : 0;
 
             update_option('gd-bbpress-tools', $gdbbpress_tools->o);
             wp_redirect(add_query_arg('settings-updated', 'true'));

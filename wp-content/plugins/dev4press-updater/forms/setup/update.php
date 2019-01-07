@@ -28,6 +28,7 @@ $_classes = array('d4p-wrap', 'wpv-'.D4PUPD_WPV, 'd4p-page-update');
                 <?php
 
                     d4pupd_remove_cron('dev4press_update_check');
+                    d4pupd_remove_cron('dev4press_updater_v4_check');
 
                     d4pupd_settings()->set('install', false, 'info');
                     d4pupd_settings()->set('update', false, 'info', true);
@@ -35,7 +36,7 @@ $_classes = array('d4p-wrap', 'wpv-'.D4PUPD_WPV, 'd4p-page-update');
                     _e("Update completed.", "dev4press-updater");
 
                 ?>
-                <br/><br/><a class="button-primary" href="<?php echo d4p_current_url(); ?>"><?php _e("Click here to continue.", "dev4press-updater"); ?></a>
+                <br/><br/><a class="button-primary" href="<?php echo network_admin_url('admin.php?page=dev4press-updater-about'); ?>"><?php _e("Click here to continue.", "dev4press-updater"); ?></a>
 
                 <h3 style="margin: 20px 0;"><?php _e("Important Notice", "dev4press-updater"); ?></h3>
                 <?php _e("Before you can use the plugin, clear the website and browser cache to make sure that latest JS and CSS files are loaded.", "dev4press-updater"); ?>

@@ -2,12 +2,12 @@
 Contributors: wponlinesupport, anoopranawat, pratik-jain
 Tags: wponlinesupport, ticker, news ticker, blog ticker, post ticker, ticker slider, ticker vertical slider, ticker horizontal slider
 Requires at least: 3.5
-Tested up to: 4.9.7
+Tested up to: 5.0.2
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-A quick, easy way to add and display Tickers to your site.
+A quick, easy way to add and display Tickers to your site. Also work with Gutenberg shortcode block.
 
 == Description ==
 A very simple plugin to add and display News Tickers in horizontal slider, vertical slider that work with WordPress posts and Custom Post Type with the help of shortcode.
@@ -16,12 +16,13 @@ Ticker Ultimate Plugin enables you to create and display posts in fade, vertical
 
 View [DEMO](https://www.wponlinesupport.com/wp-plugin/ticker-ultimate/) | [PRO DEMO and Features](https://www.wponlinesupport.com/wp-plugin/ticker-ultimate/) for additional information.
 
-Checkout our new plugin - [PowerPack - Need of Every Website](http://powerpack.wponlinesupport.com/?utm_source=wp)
+Also work with Gutenberg shortcode block.
 
 **This plugin contain one shortcode**
 
 = Here is the shortcode example =
 - Ticker Ultimate Shortcode: 
+
 <code>[wp_ticker]</code>  
 
 Where you can display your recent post as headline.
@@ -35,9 +36,11 @@ Where you can display your recent post as headline.
 * Default Wordpress Posts Support
 * Strong shortcode parameters
 * 100% Multilanguage
+* Also work with Gutenberg shortcode block.
 
 = Complete shortcode with all parameters =
 Ticker Ultimate Shortcode:
+
 <code>[wp_ticker category="5" ticker_title="News Tickers" color="#000" background_color="#2096CD" effect="fade" fontstyle="normal" autoplay="false" timer="4000" title_color="#000" border="false" post_type="post" post_cat="category"]</code>
  
 = Use Following parameters with shortcode =
@@ -76,6 +79,12 @@ Ticker Ultimate Shortcode:
 
 
 == Changelog ==
+
+= 1.2.1 (31, Dec 2018) =
+* [*] Update Opt-in flow.
+
+= 1.2 (08, Dec 2018) =
+* [*] Tested with WordPress 5.0 and Gutenberg.
 
 = 1.1 (14, June 2018) =
 * [*] Follow some WordPress Detailed Plugin Guidelines.

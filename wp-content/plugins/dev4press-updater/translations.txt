@@ -1,7 +1,25 @@
 === Dev4Press Updater ===
 == List of included languages ==
 
-=== de_DE [Deutsch] ===
-Plugin Version: 3.4
-Translated by: Tobias Bischof
-URL: http://www.pocketnavigation.de
+=== de_DE [Deutsch - German] ===
+Plugin Version: 4.0
+
+=== es_ES [Español - Spanish] ===
+Plugin Version: 4.0
+
+=== fr_FR [Français - French] ===
+Plugin Version: 4.0
+
+=== it_IT [Italiano - Italian] ===
+Plugin Version: 4.0
+
+=== nl_NL [Nederlands - Dutch] ===
+Plugin Version: 4.0
+
+=== sr_RS [Српски - Serbian] ===
+Plugin Version: 4.0
+
+=== ja [日本語 - Japanese] ===
+Plugin Version: 3.9
+Translated by: Shinsaku IKEDA
+URL: https://def.cafe

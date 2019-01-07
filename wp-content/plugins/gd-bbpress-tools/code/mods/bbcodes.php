@@ -27,19 +27,19 @@ class gdbbMod_Shortcodes {
             $deactivate = in_array($shortcode, $this->list_deactivated);
 
             if (!$deactivate) {
-                add_shortcode($shortcode, array(&$this, 'shortcode_'.$shortcode));
-                add_shortcode(strtoupper($shortcode), array(&$this, 'shortcode_'.$shortcode));
+                add_shortcode($shortcode, array($this, 'shortcode_'.$shortcode));
+                add_shortcode(strtoupper($shortcode), array($this, 'shortcode_'.$shortcode));
             }
         }
 
         if ($this->notice) {
-            add_action('bbp_theme_before_reply_form_notices', array(&$this, 'show_notice'));
-            add_action('bbp_theme_before_topic_form_notices', array(&$this, 'show_notice'));
+            add_action('bbp_theme_before_reply_form_notices', array($this, 'show_notice'));
+            add_action('bbp_theme_before_topic_form_notices', array($this, 'show_notice'));
         }
 
         if ($this->restricted) {
-            add_filter('bbp_new_reply_pre_insert', array(&$this, 'restrict_content'));
-            add_filter('bbp_new_topic_pre_insert', array(&$this, 'restrict_content'));
+            add_filter('bbp_new_reply_pre_insert', array($this, 'restrict_content'));
+            add_filter('bbp_new_topic_pre_insert', array($this, 'restrict_content'));
         }
 
         add_filter('bbp_get_reply_content', 'do_shortcode');
@@ -305,7 +305,7 @@ class gdbbMod_Shortcodes {
 
     public function strip_advanced($content) {
         $pattern = $this->_regex(apply_filters('d4p_bbpresstools_bbcode_advanced_list', $this->advanced));
-        return preg_replace_callback("/$pattern/s", array(&$this, '_strip'), $content);
+        return preg_replace_callback("/$pattern/s", array($this, '_strip'), $content);
     }
 
     public function restrict_content($reply_data) {

@@ -259,6 +259,7 @@ class Wpos_Anylc_Admin {
 
 		// Redirect to about page
 		wp_safe_redirect( $redirect );
+		exit;
 	}
 
 	/**
@@ -326,7 +327,7 @@ class Wpos_Anylc_Admin {
 			}
 
 			if( $promotion_pdt_data ) {
-				echo '<div class="updated notice wpos-anylc-optin-notice is-dismissible">
+				echo '<div class="updated notice wpos-anylc-optin-notice is-dismissible" style="display:block !important;">
 						<p><strong>Your Download has been started. In case if it is intrupted then download it from here. '.join(' | ', $promotion_pdt_data).'</strong></p>
 					</div>';
 			}

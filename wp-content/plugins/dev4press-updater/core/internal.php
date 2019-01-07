@@ -41,8 +41,10 @@ class d4pupd_admin_settings {
             ),
             'control' => array(
                 'control_auto_check' => array('name' => __("Auto check for updates", "dev4press-updater"), 'settings' => array(
-                    new d4pSettingElement('settings', 'check_interval', __("Interval", "dev4press-updater"), '', d4pSettingType::SELECT, d4pupd_settings()->get('check_interval'), 'array', $this->get_auto_check_period()),
-                    new d4pSettingElement('settings', 'update_status', __("Check for", "dev4press-updater"), '', d4pSettingType::SELECT, d4pupd_settings()->get('update_status'), 'array', $this->get_auto_check_versions())
+                    new d4pSettingElement('settings', 'check_interval', __("Interval", "dev4press-updater"), '', d4pSettingType::SELECT, d4pupd_settings()->get('check_interval'), 'array', $this->get_auto_check_period())
+                )),
+                'control_version' => array('name' => __("Update status", "dev4press-updater"), 'settings' => array(
+                    new d4pSettingElement('settings', 'update_status', __("Check for", "dev4press-updater"), __("Alpha, Beta and Nightly updates can be unstable, they are for testing purposes only, and they should be used on staging, localhost or development websites only, not on live websites!", "dev4press-updater"), d4pSettingType::SELECT, d4pupd_settings()->get('update_status'), 'array', $this->get_auto_check_versions())
                 ))
             ),
             'debug' => array(

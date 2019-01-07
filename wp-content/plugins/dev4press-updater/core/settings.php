@@ -13,7 +13,7 @@ class d4pupd_core_settings {
             'dev4press_api_key' => '',
             'debug_level' => 'none',
             'check_interval' => 'twicedaily',
-            'update_status' => 'normal'
+            'update_status' => 'stable'
         )
     );
 
@@ -81,6 +81,7 @@ class d4pupd_core_settings {
         }
 
         delete_site_transient('dev4press_updater_response');
+        delete_site_transient('dev4press_updater_throttle');
     }
 
     private function _upgrade($old, $new) {

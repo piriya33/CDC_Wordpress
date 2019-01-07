@@ -2,13 +2,13 @@
 
 /*
 Name:    d4pLib_Sanitize
-Version: v2.0.3
+Version: v2.5.2
 Author:  Milan Petrovic
-Email:   milan@gdragon.info
+Email:   support@dev4press.com
 Website: https://www.dev4press.com/
 
 == Copyright ==
-Copyright 2008 - 2017 Milan Petrovic (email: milan@gdragon.info)
+Copyright 2008 - 2018 Milan Petrovic (email: support@dev4press.com)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -24,6 +24,24 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
+
+if (!function_exists('d4p_sanitize_file_path')) {
+    function d4p_sanitize_file_path($filename) {
+	$filename_raw = $filename;
+
+        $special_chars = apply_filters('d4p_sanitize_file_path_chars', array(
+            "?", "[", "]", "/", "\\", "=", "<", ">", ":", ";", ",", "'", "\"", "&", "$", "#", "*", "(", ")", "|", "~", "`", "!", "{", "}", "%", "+", chr(0)
+            ), $filename_raw);
+
+	$filename = preg_replace("#\x{00a0}#siu", ' ', $filename);
+	$filename = str_replace($special_chars, '', $filename);
+	$filename = str_replace(array('%20', '+'), '-', $filename);
+	$filename = preg_replace('/[\r\n\t -]+/', '-', $filename);
+	$filename = trim($filename, '.-_' );
+
+        return apply_filters('d4p_sanitize_file_path', $filename, $filename_raw);
+    }
+}
 
 if (!function_exists('d4p_sanitize_key_expanded')) {
     function d4p_sanitize_key_expanded($key) {
@@ -117,6 +135,7 @@ if (!function_exists('d4p_kses_expanded_list_of_tags')) {
                 'rel' => true,
                 'class' => true,
                 'style' => true,
+                'download' => true,
                 'target' => true
             ),
             'abbr' => array(),

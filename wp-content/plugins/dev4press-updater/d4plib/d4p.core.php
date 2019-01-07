@@ -2,13 +2,13 @@
 
 /*
 Name:    d4pLib_Core
-Version: v2.0.3
+Version: v2.5.2
 Author:  Milan Petrovic
-Email:   milan@gdragon.info
+Email:   support@dev4press.com
 Website: https://www.dev4press.com/
 
 == Copyright ==
-Copyright 2008 - 2017 Milan Petrovic (email: milan@gdragon.info)
+Copyright 2008 - 2018 Milan Petrovic (email: support@dev4press.com)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,8 +26,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
 if (!defined('D4P_VERSION')) { 
-    define('D4P_VERSION', '2.0.3');
-    define('D4P_BUILD', '2320');
+    define('D4P_VERSION', '2.5.2');
+    define('D4P_BUILD', '2450');
 }
 
 if (!defined('D4P_FONTAWESOME')) { 
@@ -77,6 +77,10 @@ if (!defined('D4P_SCRIPT_DEBUG')) {
     define('D4P_SCRIPT_DEBUG', defined('SCRIPT_DEBUG') && SCRIPT_DEBUG);
 }
 
+if (!defined('D4PLIB_CACERT_PATH')) {
+    define('D4PLIB_CACERT_PATH', dirname(__FILE__).'/resources/curl/cacert.pem');
+}
+
 if (!function_exists('d4p_include')) {
     function d4p_include($name, $directory = '', $base_path = '') {
         $path = $base_path == '' ? dirname(__FILE__).'/' : $base_path;
@@ -103,26 +107,14 @@ if (!function_exists('d4p_includes')) {
     }
 }
 
-if (!function_exists('d4p_render_icon')) {
-    function d4p_render_icon($name, $tag = 'i', $aria_hidden = true, $fw = false, $class = '', $attr = array()) {
-        $icon = '<'.$tag;
+if (!function_exists('d4p_prepare_object_cache')) {
+    function d4p_prepare_object_cache($base_path = '') {
+        d4p_includes(array(
+            array('name' => 'cache-object', 'directory' => 'core'),
+            array('name' => 'cache', 'directory' => 'core')
+        ), $base_path);
 
-        if ($aria_hidden) {
-            $icon.= ' aria-hidden="true"';
-        }
-
-        $extra = $fw ? 'fw' : '';
-        $classes = d4p_icon_class($name, $extra).' '.$class;
-
-        $icon.= ' class="'.trim($classes).'"';
-
-        foreach ($attr as $key => $value) {
-            $icon.= ' '.$key.'="'.esc_attr($value).'"';
-        }
-
-        $icon.= '></'.$tag.'>';
-
-        return $icon;
+        d4p_object_cache_init();
     }
 }
 
@@ -134,34 +126,7 @@ if (!function_exists('d4p_has_plugin')) {
     }
 }
 
-if (!function_exists('d4p_icon_class')) {
-    function d4p_icon_class($name, $extra = array()) {
-        $class = '';
-        $d4p = false; 
-        $dashicons = false;
-
-        if (substr($name, 0, 3) == 'd4p') {
-            $class.= 'd4pi '.$name;
-            $d4p = true;
-        } else if (substr($name, 0, 9) == 'dashicons') {
-            $class.= 'dashicons '.$name;
-            $dashicons = true;
-        } else {
-            $class.= 'fa fa-'.$name;
-        }
-
-        if (!empty($extra) && !$dashicons) {
-            $extra = (array)$extra;
-
-            foreach ($extra as $key) {
-                $class.= ' '.($d4p ? 'd4pi' : 'fa').'-'.$key;
-            }
-        }
-
-        return $class;
-    }
-}
-
 if (D4P_DEBUG) {
+    d4p_include('debug', 'classes');
     d4p_include('debug');
 }

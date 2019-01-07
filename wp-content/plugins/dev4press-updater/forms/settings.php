@@ -30,7 +30,7 @@ include(D4PUPD_PATH.'forms/shared/top.php');
                 <i aria-hidden="true" class="fa fa-cogs"></i>
                 <h3><?php _e("Settings", "dev4press-updater"); ?></h3>
                 <?php if ($_panel != 'index') { ?>
-                <h4><i aria-hidden="true" class="<?php echo d4p_icon_class($panels[$_panel]['icon']); ?>"></i> <?php echo $panels[$_panel]['title']; ?></h4>
+                <h4><i aria-hidden="true" class="<?php echo d4p_get_icon_class($panels[$_panel]['icon']); ?>"></i> <?php echo $panels[$_panel]['title']; ?></h4>
                 <?php } ?>
             </div>
             <div class="d4p-panel-info">
@@ -58,7 +58,7 @@ include(D4PUPD_PATH.'forms/shared/top.php');
                 ?>
 
                 <div class="d4p-options-panel">
-                    <i aria-hidden="true" class="<?php echo d4p_icon_class($obj['icon']); ?>"></i>
+                    <i aria-hidden="true" class="<?php echo d4p_get_icon_class($obj['icon']); ?>"></i>
                     <h5><?php echo $obj['title']; ?></h5>
                     <div>
                         <a class="button-primary" href="<?php echo $url; ?>"><?php _e("Settings Panel", "dev4press-updater"); ?></a>

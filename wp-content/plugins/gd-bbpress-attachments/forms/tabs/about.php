@@ -1,5 +1,5 @@
 <div class="d4p-information">
-    <div class="d4p-plugin">
+    <fieldset>
         <h3>GD bbPress Attachments <?php echo $options["version"]; ?></h3>
         <?php
 
@@ -16,30 +16,37 @@
         echo '<strong>'.$options["build"].'</strong>';
 
         ?>
-    </div>
-    <h3><?php _e("System Requirements", "gd-bbpress-attachments"); ?></h3>
-    <?php
+    </fieldset>
 
-        _e("PHP: ", "gd-bbpress-attachments");
-        echo '<strong>5.3 or newer</strong><br/>';
-        _e("WordPress: ", "gd-bbpress-attachments");
-        echo '<strong>4.2 or newer</strong><br/>';
-        _e("bbPress: ", "gd-bbpress-attachments");
-        echo '<strong>2.5 or newer</strong>';
+    <fieldset>
+        <h3><?php _e("System Requirements", "gd-bbpress-attachments"); ?></h3>
+        <?php
 
-    ?><br/><br/><br/><br/>
+            _e("PHP: ", "gd-bbpress-attachments");
+            echo '<strong>5.5 or newer</strong><br/>';
+            _e("WordPress: ", "gd-bbpress-attachments");
+            echo '<strong>4.4 or newer</strong><br/>';
+            _e("bbPress: ", "gd-bbpress-attachments");
+            echo '<strong>2.5 or newer</strong>';
+
+        ?>
+    </fieldset>
+
+    <fieldset>
+        <h3><?php _e("Important Plugin Links", "gd-bbpress-attachments"); ?></h3>
+        <a target="_blank" href="https://plugins.dev4press.com/gd-bbpress-attachments/">GD bbPress Attachments <?php _e("Home Page", "gd-bbpress-attachments"); ?></a><br/>
+        <a target="_blank" href="https://wordpress.org/plugins/gd-bbpress-attachments/">GD bbPress Attachments <?php _e("on", "gd-bbpress-attachments"); ?> WordPress.org</a>
+        <h3><?php _e("Plugin Support", "gd-bbpress-attachments"); ?></h3>
+        <a target="_blank" href="https://support.dev4press.com/forums/forum/gd-bbpress-attachments/"><?php _e("Plugin Support Forum on Dev4Press", "gd-bbpress-attachments"); ?></a><br/>
+        <h3><?php _e("Dev4Press Important Links", "gd-bbpress-attachments"); ?></h3>
+        <a target="_blank" href="https://twitter.com/milangd">Dev4Press <?php _e("on", "gd-bbpress-attachments"); ?> Twitter</a><br/>
+        <a target="_blank" href="https://www.facebook.com/dev4press">Dev4Press Facebook <?php _e("Page", "gd-bbpress-attachments"); ?></a><br/>
+    </fieldset>
 </div>
 <div class="d4p-information-second">
-    <h3><?php _e("Important Plugin Links", "gd-bbpress-attachments"); ?></h3>
-    <a target="_blank" href="https://plugins.dev4press.com/gd-bbpress-attachments/">GD bbPress Attachments <?php _e("Home Page", "gd-bbpress-attachments"); ?></a><br/>
-    <a target="_blank" href="https://wordpress.org/plugins/gd-bbpress-attachments/">GD bbPress Attachments <?php _e("on", "gd-bbpress-attachments"); ?> WordPress.org</a>
-    <h3><?php _e("Plugin Support", "gd-bbpress-attachments"); ?></h3>
-    <a target="_blank" href="https://support.dev4press.com/forums/forum/gd-bbpress-attachments/"><?php _e("Plugin Support Forum on Dev4Press", "gd-bbpress-attachments"); ?></a><br/>
-    <h3><?php _e("Dev4Press Important Links", "gd-bbpress-attachments"); ?></h3>
-    <a target="_blank" href="https://twitter.com/milangd">Dev4Press <?php _e("on", "gd-bbpress-attachments"); ?> Twitter</a><br/>
-    <a target="_blank" href="https://www.facebook.com/dev4press">Dev4Press Facebook <?php _e("Page", "gd-bbpress-attachments"); ?></a><br/>
+    <?php include(GDBBPRESSATTACHMENTS_PATH.'forms/more/toolbox.php'); ?>
 </div>
 <div class="d4p-clear"></div>
 <div class="d4p-copyright">
-    Dev4Press &copy; 2008 - 2017 <a target="_blank" href="https://www.dev4press.com">www.dev4press.com</a> | Golden Dragon WebStudio <a target="_blank" href="http://www.gdragon.info">www.gdragon.info</a>
+    Dev4Press &copy; 2008 - 2018 <a target="_blank" href="https://www.dev4press.com/">www.dev4press.com</a> | Golden Dragon WebStudio <a target="_blank" href="https://www.gdragon.info">www.gdragon.info</a>
 </div>

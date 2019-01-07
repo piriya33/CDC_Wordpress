@@ -224,9 +224,9 @@ function wpos_anylc_plugin_activation( $plugin, $network_activation ) {
 	if( isset( $wpos_analytics_module[ $plugin ] ) ) {
 
 		$opt_in_data 	= get_option( $wpos_analytics_module[ $plugin ]['anylc_optin'] );
-		$optin_status 	= isset( $opt_in_data['status'] ) ? $opt_in_data['status'] : null;
+		$optin_status 	= isset( $opt_in_data['status'] ) ? $opt_in_data['status'] : -1;
 
-		if( $optin_status == '' ) {
+		if( $optin_status == -1 ) {
 			$redirect_link = add_query_arg( array('page' => $wpos_analytics_module[ $plugin ]['slug']), admin_url('admin.php') );
 			update_option( 'wpos_anylc_redirect', $redirect_link );
 		}

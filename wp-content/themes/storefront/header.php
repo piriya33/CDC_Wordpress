@@ -11,7 +11,7 @@
 <html <?php language_attributes(); ?>>
 <head>
 <meta charset="<?php bloginfo( 'charset' ); ?>">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2.0">
 <link rel="profile" href="http://gmpg.org/xfn/11">
 <link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>">
 
@@ -43,7 +43,8 @@
 		 * @hooked storefront_header_cart                      - 60
 		 * @hooked storefront_primary_navigation_wrapper_close - 68
 		 */
-		do_action( 'storefront_header' ); ?>
+		do_action( 'storefront_header' );
+		?>
 
 	</header><!-- #masthead -->
 
@@ -54,7 +55,8 @@
 	 * @hooked storefront_header_widget_region - 10
 	 * @hooked woocommerce_breadcrumb - 10
 	 */
-	do_action( 'storefront_before_content' ); ?>
+	do_action( 'storefront_before_content' );
+	?>
 
 	<div id="content" class="site-content" tabindex="-1">
 		<div class="col-full">

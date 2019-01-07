@@ -30,7 +30,7 @@ foreach ($match as $img) {
         <div class="column-updated">
             <?php
 
-            echo '<span style="font-size: 85%">'.__("Released On", "dev4press-updater").'</span>:<br/><strong>'.$item->get_date('j F Y, g:i a').'</strong>';
+            echo '<span style="font-size: 85%">'.__("Published On", "dev4press-updater").'</span>:<br/><strong>'.$item->get_date('j F Y, g:i a').'</strong>';
 
             ?>
         </div>

@@ -1,14 +1,14 @@
 <?php
 
 /*
-Name:    d4pLib_Class_Plugin
-Version: v2.0.3
+Name:    d4pLib - Class - Plugin Core
+Version: v2.5.2
 Author:  Milan Petrovic
-Email:   milan@gdragon.info
+Email:   support@dev4press.com
 Website: https://www.dev4press.com/
 
 == Copyright ==
-Copyright 2008 - 2017 Milan Petrovic (email: milan@gdragon.info)
+Copyright 2008 - 2018 Milan Petrovic (email: support@dev4press.com)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -36,6 +36,8 @@ if (!class_exists('d4p_plugin_core')) {
         public $is_debug;
         public $wp_version;
         public $wp_version_real;
+
+        public $js_locale = array();
 
         public function __construct() {
             add_action('plugins_loaded', array($this, 'plugins_loaded'));
@@ -82,8 +84,27 @@ if (!class_exists('d4p_plugin_core')) {
 
         public function load_textdomain() {
             load_plugin_textdomain($this->plugin, false, $this->plugin.'/languages');
+            load_plugin_textdomain('d4plib', false, $this->plugin.'/d4plib/languages');
         }
 
+        public function locale() {
+            return apply_filters('plugin_locale', get_user_locale(), $this->plugin);
+        }
+
+        public function locale_js_code($script) {
+            $locale = $this->locale();
+
+            if (!empty($locale) && isset($this->js_locale[$script])) {
+                $code = strtolower(substr($locale, 0, 2));
+
+                if (in_array($code, $this->js_locale[$script])) {
+                    return $code;
+                }
+            }
+
+            return false;
+        }
+   
         public function init_capabilities() {
             $role = get_role('administrator');
 

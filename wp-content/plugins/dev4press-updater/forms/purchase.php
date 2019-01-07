@@ -20,10 +20,15 @@ include(D4PUPD_PATH.'forms/shared/top.php');
         <div>
             <?php
 
-            if (isset(d4pupd_updater()->update['purchase']['plugins_pack'])) {
-                $data = d4pupd_updater()->update['purchase']['plugins_pack'];
+            if (isset(d4pupd_updater()->update['purchase']['plugins']) && 
+                      is_array(d4pupd_updater()->update['purchase']['clubs']) && 
+                      !empty(d4pupd_updater()->update['purchase']['clubs'])) {
                 $ribbon = 'club';
-                include(D4PUPD_PATH.'forms/parts/plugin.purchase.php');
+                foreach (d4pupd_updater()->update['purchase']['clubs'] as $data) {
+                    if (!empty($data->price)) {
+                        include(D4PUPD_PATH.'forms/parts/plugin.purchase.php');
+                    }
+                }
             }
 
             if (isset(d4pupd_updater()->update['purchase']['plugins']) && 
@@ -31,7 +36,7 @@ include(D4PUPD_PATH.'forms/shared/top.php');
                       !empty(d4pupd_updater()->update['purchase']['plugins'])) {
                 $ribbon = 'plugin';
                 foreach (d4pupd_updater()->update['purchase']['plugins'] as $data) {
-                    if (isset($data->licenses)) {
+                    if (!empty($data->price)) {
                         include(D4PUPD_PATH.'forms/parts/plugin.purchase.php');
                     }
                 }
@@ -42,7 +47,7 @@ include(D4PUPD_PATH.'forms/shared/top.php');
                       !empty(d4pupd_updater()->update['purchase']['addons'])) {
                 $ribbon = 'addon';
                 foreach (d4pupd_updater()->update['purchase']['addons'] as $data) {
-                    if (isset($data->licenses)) {
+                    if (!empty($data->price)) {
                         include(D4PUPD_PATH.'forms/parts/plugin.purchase.php');
                     }
                 }

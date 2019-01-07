@@ -1,1 +1,0 @@
-E+L[<?php exit; ?>a:1:{s:7:"content";s:262:"a:5:{i:0;a:1:{s:4:"task";s:20:"trash_pending_orders";}i:1;a:1:{s:4:"task";s:19:"trash_failed_orders";}i:2;a:1:{s:4:"task";s:22:"trash_cancelled_orders";}i:3;a:1:{s:4:"task";s:26:"anonymize_completed_orders";}i:4;a:1:{s:4:"task";s:24:"delete_inactive_accounts";}}";}

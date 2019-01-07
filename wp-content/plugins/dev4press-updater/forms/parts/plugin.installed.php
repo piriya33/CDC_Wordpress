@@ -3,7 +3,7 @@
 <div class="plugin-card d4pupd-plugin-status-<?php echo $update_status; ?> d4pupd-single-plugin<?php if ($upgrade_url != '') { echo ' d4pupd-update-available'; } ?>">
     <div class="corner-ribbon ribbon-<?php echo $ribbon; ?>"><?php echo $ribbon; ?></div>
     <div class="plugin-card-top">
-        <a class="plugin-icon"><img alt="<?php echo $data->name; ?>" src="<?php echo d4pupd_updater()->cdn; ?>products/<?php echo $data->category; ?>/<?php echo $data->code; ?>_128.png" /></a>
+        <a class="plugin-icon"><img alt="<?php echo $data->name; ?>" src="<?php echo d4pupd_updater()->cdn; ?>icons/<?php echo $ribbon; ?>s/<?php echo $data->code; ?>.png" /></a>
         <div class="name column-name">
             <h4><?php echo $data->name; ?></h4>
         </div>
@@ -49,16 +49,26 @@
         <div class="column-full-width">
             <?php
 
-            $last_update = mysql2date('U', $update_content->release_date);
+            $release_date = mysql2date('U', $update_content->release_date);
 
             echo '<strong>'.__("New Version", "dev4press-updater").'</strong>: '.$update_content->version;
+
+            if ($update_content->status != 'stable') {
+                echo ' '.ucfirst($update_content->status);
+            }
+
             echo ' ('.$update_content->build.') &middot; ';
-            echo '<strong>'.__("Released", "dev4press-updater").'</strong>: ';
-            echo sprintf(__("%s ago", "dev4press-updater"), human_time_diff($last_update)).'<br/>';
-            echo '<strong>'.__("Notice", "dev4press-updater").'</strong>: ';
+            echo sprintf(__("<strong>Released</strong>: %s ago", "dev4press-updater"), human_time_diff($release_date));
+            echo '<br/><strong>'.__("Notice", "dev4press-updater").'</strong>: ';
             echo $update_content->info.' &middot; <a target="_blank" href="https://'.$ribbon.'s.dev4press.com/'.$data->code.'/changelog/">';
             echo __("You can see full changelog here", "dev4press-updater").'</a>';
 
+            if ($update_content->status != 'stable') {
+                echo '<div class="not-stable-version">';
+                echo sprintf(__("This is a %s version, for testing purposes only. Do not use it on live websites!", "dev4press-updater"), '<strong>'.$update_content->status.'</strong>');
+                echo '</div>';
+            }
+            
             ?>
         </div>
         <?php } ?>

@@ -18,34 +18,45 @@ class d4pupd_core_updater {
 
     public $transcode = array(
         'gd-rating-system-builder' => 'code-builder-addon',
+        'gd-rating-system-mycred' => 'mycred-integration-addon',
+        'gd-rating-system-mycred-simple' => 'mycred-simple-integration-addon',
+        'gd-rating-system-rich-snippet-recipe' => 'recipe-rich-snippet-addon',
+        'gd-rating-system-rich-snippet-book' => 'book-rich-snippet-addon',
         'gd-rating-system-multi' => 'multi-ratings-addon',
         'gd-rating-system-user-reviews' => 'user-reviews-addon',
-        'gd-rating-system-comments-form' => 'comments-form-addon',
+        'gd-rating-system-comment-form' => 'comments-form-addon',
         'gd-rating-system-data-export' => 'data-export-addon',
         'gd-rating-system-emojione' => 'emojione-pack-addon',
         'gd-rating-system-halloween' => 'halloween-pack-addon',
         'gd-rating-system-christmas' => 'christmas-pack-addon',
         'gd-press-tools-storage-dropbox' => 'dropbox-storage-addon',
         'gd-press-tools-storage-s3' => 'amazon-s3-storage-addon',
+        'gd-knowledge-base-integration-wc' => 'integration-addon-wc',
+        'gd-knowledge-base-integration-edd' => 'integration-addon-edd',
 
         'code-builder-addon' => 'gd-rating-system-builder',
+        'mycred-integration-addon' => 'gd-rating-system-mycred',
+        'mycred-simple-integration-addon' => 'gd-rating-system-mycred-simple',
+        'recipe-rich-snippet-addon' => 'gd-rating-system-rich-snippet-recipe',
+        'book-rich-snippet-addon' => 'gd-rating-system-rich-snippet-book',
         'multi-ratings-addon' => 'gd-rating-system-multi',
         'user-reviews-addon' => 'gd-rating-system-user-reviews',
-        'comments-form-addon' => 'gd-rating-system-comments-form',
+        'comments-form-addon' => 'gd-rating-system-comment-form',
         'data-export-addon' => 'gd-rating-system-data-export',
         'emojione-pack-addon' => 'gd-rating-system-emojione',
         'halloween-pack-addon' => 'gd-rating-system-halloween',
         'christmas-pack-addon' => 'gd-rating-system-christmas',
         'dropbox-storage-addon' => 'gd-press-tools-storage-dropbox',
-        'amazon-s3-storage-addon' => 'gd-press-tools-storage-s3'
+        'amazon-s3-storage-addon' => 'gd-press-tools-storage-s3',
+        'integration-addon-wc' => 'gd-knowledge-base-integration-wc',
+        'integration-addon-edd' => 'gd-knowledge-base-integration-edd'
     );
 
     public $plugins = array(
-        'gd-taxonomies-tools/gd-taxonomies-tools.php',
-
         'dev4press-updater/dev4press-updater.php',
 
         'gd-security-toolbox/gd-security-toolbox.php',
+        'gd-power-search-for-bbpress/gd-power-search-for-bbpress.php',
         'gd-rating-system/gd-rating-system.php',
         'gd-seo-toolbox/gd-seo-toolbox.php',
         'gd-bbpress-toolbox/gd-bbpress-toolbox.php',
@@ -55,7 +66,6 @@ class d4pupd_core_updater {
         'gd-clever-widgets/gd-clever-widgets.php',
         'gd-webfonts-toolbox/gd-webfonts-toolbox.php',
         'gd-press-tools/gd-press-tools.php',
-        'gd-products-center/gd-products-center.php',
         'gd-content-tools/gd-content-tools.php',
         'gd-topic-prefix/gd-topic-prefix.php',
         'gd-topic-polls/gd-topic-polls.php',
@@ -63,20 +73,29 @@ class d4pupd_core_updater {
         'gd-rating-system-emojione/gd-rating-system-emojione.php',
         'gd-rating-system-halloween/gd-rating-system-halloween.php',
         'gd-rating-system-christmas/gd-rating-system-christmas.php',
+        'gd-rating-system-valentine/gd-rating-system-valentine.php',
         'gd-rating-system-builder/gd-rating-system-builder.php',
+        'gd-rating-system-mycred/gd-rating-system-mycred.php',
+        'gd-rating-system-mycred-simple/gd-rating-system-mycred-simple.php',
+        'gd-rating-system-rich-snippet-recipe/gd-rating-system-rich-snippet-recipe.php',
+        'gd-rating-system-rich-snippet-book/gd-rating-system-rich-snippet-book.php',
         'gd-rating-system-multi/gd-rating-system-multi.php',
         'gd-rating-system-user-reviews/gd-rating-system-user-reviews.php',
-        'gd-rating-system-comments-form/gd-rating-system-comments-form.php',
+        'gd-rating-system-comment-form/gd-rating-system-comment-form.php',
         'gd-rating-system-data-export/gd-rating-system-data-export.php',
+        'gd-rating-system-data-analytics/gd-rating-system-data-analytics.php',
 
         'gd-press-tools-storage-dropbox/gd-press-tools-storage-dropbox.php',
-        'gd-press-tools-storage-s3/gd-press-tools-storage-s3.php'
+        'gd-press-tools-storage-s3/gd-press-tools-storage-s3.php',
+
+        'gd-knowledge-base-integration-wc/gd-knowledge-base-integration-wc.php',
+        'gd-knowledge-base-integration-edd/gd-knowledge-base-integration-edd.php'
     );
 
-    public $check = 'https://www.dev4press.com/service/updater/check3/';
+    public $check = 'https://www.dev4press.com/service/updater/query/';
 
     public $download = 'https://www.dev4press.com/download/%category%/%apikey%/%id%/%build%/';
-    public $cdn = 'https://d3pfz6v4o98uk0.cloudfront.net/gfx/';
+    public $cdn = 'https://d2bl2ba2iq9qpr.cloudfront.net/gfx/';
 
     public $feeds = array(
         'promotions' => 'https://www.dev4press.com/service/feeds/promotions/',
@@ -97,12 +116,12 @@ class d4pupd_core_updater {
 
         if ($this->apikey != '') {
             if (is_main_site()) {
-                if (!wp_next_scheduled('dev4press_update_check') && d4pupd_settings()->get('check_interval') != '__none__') {
-                    wp_schedule_event($this->cron_time_day(), $this->cron_check_interval(), 'dev4press_update_check');
+                if (!wp_next_scheduled('dev4press_updater_v4_check') && d4pupd_settings()->get('check_interval') != '__none__') {
+                    wp_schedule_event($this->cron_time_day(), $this->cron_check_interval(), 'dev4press_updater_v4_check');
                 }
             } else {
-                if (wp_next_scheduled('dev4press_update_check') !== false) {
-                    d4pupd_remove_cron('dev4press_update_check');
+                if (wp_next_scheduled('dev4press_updater_v4_check') !== false) {
+                    d4pupd_remove_cron('dev4press_updater_v4_check');
                 }
             }
 
@@ -116,6 +135,17 @@ class d4pupd_core_updater {
             add_filter('http_request_args', array($this, 'request_headers'), 1000, 2);
 
             add_filter('install_plugin_complete_actions', array($this, 'install_plugin_complete_actions'), 10, 3);
+
+            foreach ($this->plugins as $file) {
+                add_action('in_plugin_update_message-'.$file, array($this, 'update_message'), 10, 2);
+            }
+        }
+    }
+
+    public function update_message($plugin_data, $response) {
+        if (isset($response->dev4press) && $response->dev4press && $response->dev4press_status != 'stable') {
+            echo '</p></div><div class="notice inline notice-error notice-alt"><p>';
+            echo sprintf(__("The new update is a %s version, for testing purposes only. Do not use it on live websites!", "dev4press-updater"), '<strong>'.$response->dev4press_status.'</strong>');
         }
     }
 
@@ -147,6 +177,23 @@ class d4pupd_core_updater {
         return $res;
     }
 
+    public function get_plugin_update_data($file) {
+        $release = false;
+
+        if (isset($this->update['plugins'][$file])) {
+            $updates = $this->update['plugins'][$file];
+
+            foreach ($this->statuses as $status) {
+                if (isset($updates[$status])) {
+                    $release = $updates[$status];
+                    break;
+                }
+            }
+        }
+
+        return $release;
+    }
+
     public function add_updates_plugins($updates) {
         if (isset($this->update['core']['status']) && $this->update['core']['status'] == 'ok') {
             foreach ($this->update['plugins'] as $plugin => $data) {
@@ -162,14 +209,44 @@ class d4pupd_core_updater {
                 if ($release !== false) {
                     $update = new StdClass;
 
+                    $icon = $this->cdn.'icons/'.$release->category.'s/'.$release->group.'.png';
+                    $banner = $this->cdn.'banners/'.$release->category.'s/'.$release->group.'.jpg';
+
                     $update->id = $release->id;
                     $update->slug = $release->group;
-                    $update->new_version = $release->version;
-                    $update->url = 'https://plugins.dev4press.com/'.$release->group;
-                    $update->package = $this->download_product_url($release);
-                    $update->upgrade_notice = $release->info;
                     $update->plugin = $plugin;
+                    $update->new_version = $release->version;
+                    $update->url = 'https://'.$release->category.'s.dev4press.com/'.$release->group.'/';
+                    $update->package = $this->download_product_url($release);
+                    $update->icons = array(
+                        '1x' => $icon,
+                        '2x' => $icon,
+                        'default' => $icon
+                    );
+                    $update->banners = array(
+                        '1x' => $banner,
+                        '2x' => $banner,
+                        'low' => $banner,
+                        'high' => $banner,
+                        'default' => $banner
+                    );
+                    $update->upgrade_notice = $release->info;
+                    $update->dev4press = true;
+                    $update->dev4press_status = $release->status;
+                    $update->requires_php = '5.6';
 
+                    if (isset($release->php)) {
+                        $update->requires_php = $release->php;
+                    }
+
+                    if (isset($release->wordpress_tested)) {
+                        $update->tested = $release->wordpress_tested;
+                    }
+
+                    if ($release->status != 'stable') {
+                        $update->new_version.= ' '.strtoupper($release->status);
+                    }
+                    
                     if ($this->debug == 'full') {
                         dev4upd_debug_log('PLUGIN_UPDATE_PACKAGE', $update);
                     }
@@ -198,19 +275,44 @@ class d4pupd_core_updater {
                     if ($args->slug == $code) {
                         $result = new stdClass();
 
+                        $update = $this->get_plugin_update_data($code.'/'.$code.'.php');
+
+                        $banner = $this->cdn.'banners/'.$data->category.'s/'.$data->code.'.jpg';
+
                         $result->name = $data->name;
                         $result->slug = $code;
-                        $result->version = $data->latest->version;
+                        $result->version = $update->version;
                         $result->homepage = $data->url;
-                        $result->last_updated = $data->latest->release_date;
-                        $result->download_link = $this->download_product_url($data->latest);
-                        $result->requires = $data->latest->wordpress;
+                        $result->last_updated = $update->release_date;
+                        $result->download_link = $this->download_product_url($update);
+                        $result->requires = $update->wordpress;
+                        $result->requires_php = '5.6';
                         $result->author = 'Milan Petrovic, Dev4Press';
                         $result->author_homepage = 'https://www.dev4press.com/';
                         $result->sections = array(
                             'description' => $data->description,
-                            'changelog' => '<strong>'.__("Version", "dev4press-updater").': '.$data->latest->version.'</strong><p>'.$data->latest->info.'</p><strong>'.__("Full Changelog", "dev4press-updater").':</strong><p><a target="_blank" href="'.$data->url.'changelog/">'.__("Changelog page", "dev4press-updater").'</a></p>',
+                            'changelog' => '<strong>'.__("Version", "dev4press-updater").': '.$update->version.($update->status != 'stable' ? ' '.strtoupper($update->status) : '').'</strong><p>'.$update->info.'</p>',
                         );
+
+                        if ($update->status != 'stable') {
+                            $result->version.= ' '.strtoupper($update->status);
+                            $result->sections['changelog'].= '<strong>'.__("Important", "dev4press-updater").':</strong><p>'.sprintf(__("The new update is a %s version, for testing purposes only. Do not use it on live websites!", "dev4press-updater"), '<strong>'.$update->status.'</strong>').'</p>';
+                        }
+
+                        $result->sections['changelog'].= '<strong>'.__("Full Changelog", "dev4press-updater").':</strong><p><a target="_blank" href="'.$data->url.'changelog/">'.__("Changelog page", "dev4press-updater").'</a></p>';
+
+                        $result->banners = array(
+                            'low' => $banner,
+                            'high' => $banner
+                        );
+
+                        if (isset($update->php)) {
+                            $result->requires_php = $update->php;
+                        }
+
+                        if (isset($update->wordpress_tested)) {
+                            $result->tested = $update->wordpress_tested;
+                        }
 
                         if ($this->debug == 'full') {
                             dev4upd_debug_log('PLUGIN_INSTALL_PACKAGE', $result);
@@ -312,6 +414,7 @@ class d4pupd_core_updater {
                     $list['plugins'][] = array(
                         'name' => $data[$status]->name,
                         'version' => $data[$status]->version,
+                        'status' => $status,
                         'released' => $data[$status]->release_date
                     );
                 }
@@ -350,9 +453,9 @@ class d4pupd_core_updater {
 
         set_site_transient('dev4press_updater_response', $this->update, 604800);
 
-        $timestamp = d4p_next_scheduled('dev4press_update_check');
+        $timestamp = d4p_next_scheduled('dev4press_updater_v4_check');
         if ($timestamp === false || $timestamp > time() + 300) {
-            wp_schedule_single_event(time() + 300, 'dev4press_update_check');
+            wp_schedule_single_event(time() + 300, 'dev4press_updater_v4_check');
         }
     }
 

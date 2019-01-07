@@ -1,5 +1,5 @@
 <div class="d4p-information">
-    <div class="d4p-plugin">
+    <fieldset>
         <h3>GD bbPress Tools <?php echo $options["version"]; ?></h3>
         <?php
 
@@ -16,26 +16,35 @@
         echo '<strong>'.$options["build"].'</strong>';
 
         ?>
-    </div>
-    <h3><?php _e("System Requirements", "gd-bbpress-tools"); ?></h3>
-    <?php
+    </fieldset>
 
-        _e("WordPress: ", "gd-bbpress-tools");
-        echo '<strong>4.2 or newer</strong><br/>';
-        _e("bbPress: ", "gd-bbpress-tools");
-        echo '<strong>2.5 or newer</strong>';
+    <fieldset>
+        <h3><?php _e("System Requirements", "gd-bbpress-tools"); ?></h3>
+        <?php
 
-    ?><br/><br/><br/><br/>
+            _e("PHP: ", "gd-bbpress-tools");
+            echo '<strong>5.5 or newer</strong><br/>';
+            _e("WordPress: ", "gd-bbpress-tools");
+            echo '<strong>4.4 or newer</strong><br/>';
+            _e("bbPress: ", "gd-bbpress-tools");
+            echo '<strong>2.5 or newer</strong>';
+
+        ?>
+    </fieldset>
+
+    <fieldset>
+        <h3><?php _e("Important Plugin Links", "gd-bbpress-tools"); ?></h3>
+        <a target="_blank" href="https://plugins.dev4press.com/gd-bbpress-tools/">GD bbPress Tools <?php _e("Home Page", "gd-bbpress-tools"); ?></a><br/>
+        <a target="_blank" href="https://wordpress.org/extend/plugins/gd-bbpress-tools/">GD bbPress Tools <?php _e("on", "gd-bbpress-tools"); ?> WordPress.org</a>
+        <h3><?php _e("Plugin Support", "gd-bbpress-tools"); ?></h3>
+        <a target="_blank" href="https://support.dev4press.com/forums/forum/plugins-free/gd-bbpress-tools/"><?php _e("Plugin Support Forum on Dev4Press", "gd-bbpress-tools"); ?></a><br/>
+        <h3><?php _e("Dev4Press Important Links", "gd-bbpress-tools"); ?></h3>
+        <a target="_blank" href="https://twitter.com/milangd">Dev4Press <?php _e("on", "gd-bbpress-tools"); ?> Twitter</a><br/>
+        <a target="_blank" href="https://www.facebook.com/dev4press">Dev4Press Facebook <?php _e("Page", "gd-bbpress-tools"); ?></a>
+    </fieldset>
 </div>
 <div class="d4p-information-second">
-    <h3><?php _e("Important Plugin Links", "gd-bbpress-tools"); ?></h3>
-    <a target="_blank" href="https://plugins.dev4press.com/gd-bbpress-tools/">GD bbPress Tools <?php _e("Home Page", "gd-bbpress-tools"); ?></a><br/>
-    <a target="_blank" href="https://wordpress.org/extend/plugins/gd-bbpress-tools/">GD bbPress Tools <?php _e("on", "gd-bbpress-tools"); ?> WordPress.org</a>
-    <h3><?php _e("Plugin Support", "gd-bbpress-tools"); ?></h3>
-    <a target="_blank" href="https://support.dev4press.com/forums/forum/plugins-free/gd-bbpress-tools/"><?php _e("Plugin Support Forum on Dev4Press", "gd-bbpress-tools"); ?></a><br/>
-    <h3><?php _e("Dev4Press Important Links", "gd-bbpress-tools"); ?></h3>
-    <a target="_blank" href="https://twitter.com/milangd">Dev4Press <?php _e("on", "gd-bbpress-tools"); ?> Twitter</a><br/>
-    <a target="_blank" href="https://www.facebook.com/dev4press">Dev4Press Facebook <?php _e("Page", "gd-bbpress-tools"); ?></a>
+    <?php include(GDBBPRESSTOOLS_PATH.'forms/more/toolbox.php'); ?>
 </div>
 <div class="d4p-clear"></div>
 <div class="d4p-copyright">

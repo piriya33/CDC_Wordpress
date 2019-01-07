@@ -1,14 +1,14 @@
 <?php
 
 /*
-Name:    d4pLib_Four
-Version: v2.0.3
+Name:    d4pLib - Classes - Four Core
+Version: v2.5.2
 Author:  Milan Petrovic
-Email:   milan@gdragon.info
+Email:   support@dev4press.com
 Website: https://www.dev4press.com/
 
 == Copyright ==
-Copyright 2008 - 2017 Milan Petrovic (email: milan@gdragon.info)
+Copyright 2008 - 2018 Milan Petrovic (email: support@dev4press.com)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -36,6 +36,8 @@ if (!class_exists('d4p_core_four')) {
             'gd-topic-prefix/gd-topic-prefix.php' => '56',
             'gd-social-sharing/gd-social-sharing.php' => '52',
             'gd-bbpress-toolbox/gd-bbpress-toolbox.php' => '29',
+            'gd-quantum-theme-for-bbpress/gd-quantum-theme-for-bbpress.php' => '69',
+            'gd-power-search-for-bbpress/gd-power-search-for-bbpress.php' => '72',
             'gd-swift-navigator/gd-swift-navigator.php' => '38',
             'gd-crumbs-navigator/gd-crumbs-navigator.php' => '39',
             'gd-knowledge-base/gd-knowledge-base.php' => '46',
@@ -114,7 +116,7 @@ if (!class_exists('d4p_core_four')) {
 
             $data = get_site_transient($key);
 
-            if ($data === false) {
+            if ($data === false || is_null($data) || empty($data)) {
                 $url = $this->_request_url('recommend');
 
                 $data = $this->_request($url);
@@ -130,7 +132,7 @@ if (!class_exists('d4p_core_four')) {
         public function ad_render($panel = 'update') {
             $render = '';
 
-            if ($this->ad !== false && $this->ad->plugins !== false && is_array($this->ad->plugins) && !empty($this->ad->plugins)) {
+            if (!is_null($this->ad) && $this->ad !== false && isset($this->ad->plugins) && $this->ad->plugins !== false && is_array($this->ad->plugins) && !empty($this->ad->plugins)) {
                 $plugins = (array)$this->ad->plugins;
 
                 if ($plugins) {
@@ -142,7 +144,7 @@ if (!class_exists('d4p_core_four')) {
                             $render.= '<h6 style="background-color: '.$plugin->color_dark.';"><a target="_blank" href="'.$this->_url($plugin->url_home, $panel).'">'.$plugin->name.'</a></h6>';
                             $render.= '<div class="dev4press-plugin-inner">';
                                 $render.= '<div class="dev4press-plugin-thumb">';
-                                    $render.= '<a target="_blank" href="'.$this->_url($plugin->url_home, $panel).'"><img src="'.$plugin->url_icon.'" alt="'.$plugin->name.'" /></a>';
+                                    $render.= '<a target="_blank" href="'.$this->_url($plugin->url_home, $panel).'"><i class="d4p-icon d4p-plugin-icon-'.$plugin->code.'"></i></a>';
                                 $render.= '</div>';
                                 $render.= '<em>'.$plugin->description.'</em>';
                                 $render.= '<div class="dev4press-plugin-links">';

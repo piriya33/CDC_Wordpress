@@ -8,44 +8,7 @@ class gdbbMod_Views {
     function __construct($views) {
         $this->views = $views;
 
-        add_action('bbtoolbox_core', array(&$this, 'register_views'));
-
-        if (d4p_bbpress_version() > 20) {
-            add_filter('bbp_get_view_query_args', array(&$this, 'modify_search'), 10, 2);
-        } else {
-            add_action('bbp_has_topics_query', array(&$this, 'modify_query'));
-        }
-    }
-
-    public function modify_search($query, $view) {
-        if ($view == 'search') {
-            $search = isset($_GET['s']) ? trim($_GET['s']) : '';
-            $forum = isset($_GET['f']) ? intval($_GET['f']) : '';
-
-            if ($search != '') {
-                $query['s'] = $search;
-
-                if ($forum != '') {
-                    $query['post_parent'] = $forum;
-                }
-            } else {
-                $query['post_type'] = 'd4p_nothing_to_find_here';
-            }
-        }
-
-        return $query;
-    }
-
-    public function modify_query($bbp_t) {
-        if (bbp_is_single_view()) {
-            global $wp_query;
-
-            if (isset($wp_query->query['bbp_view']) && $wp_query->query['bbp_view'] == 'search') {
-                $bbp_t = $this->modify_search($bbp_t, 'search');
-            }
-        }
-
-        return $bbp_t;
+        add_action('bbtoolbox_core', array($this, 'register_views'));
     }
 
     public function register_views() {
@@ -73,11 +36,15 @@ class gdbbMod_Views {
                 false);
     }
 
-    private function _view_searchresults($args) {
+    private function _view_topicsfreshness($args) {
         bbp_register_view(
-                'search', 
-                __("Search Results", "gd-bbpress-tools"), 
-                array(), 
+                'topics-freshness', 
+                __("Topics Freshness", "gd-bbpress-tools"), 
+                array('orderby' => 'meta_value',
+                      'order' => 'DESC',
+                      'meta_key' => '_bbp_last_active_time',
+                      'post_status' => array(bbp_get_public_status_id(), bbp_get_closed_status_id()),
+                      'post_type' => bbp_get_topic_post_type()), 
                 false);
     }
 }

@@ -6,7 +6,6 @@ include(D4PUPD_PATH.'forms/shared/top.php');
 
 $plugins = d4pupd_updater()->update['install']['plugins'];
 
-
 foreach ($plugins as $id => $plugin) {
     $_key = isset(d4pupd_updater()->transcode[$plugin->group]) ? d4pupd_updater()->transcode[$plugin->group] : $plugin->group;
 

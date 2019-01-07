@@ -3,7 +3,7 @@
 <div class="plugin-card d4pupd-single-plugin">
     <div class="corner-ribbon ribbon-<?php echo $ribbon; ?>"><?php echo $ribbon; ?></div>
     <div class="plugin-card-top">
-        <a class="plugin-icon"><img alt="<?php echo $data->name; ?>" src="<?php echo d4pupd_updater()->cdn; ?>products/<?php echo $ribbon; ?>/<?php echo $data->code; ?>_128.png" /></a>
+        <a class="plugin-icon"><img alt="<?php echo $data->name; ?>" src="<?php echo d4pupd_updater()->cdn; ?>icons/<?php echo $ribbon; ?>s/<?php echo $data->code; ?>.png" /></a>
         <div class="name column-name">
             <h4><?php echo $data->name; ?></h4>
         </div>
@@ -37,8 +37,7 @@
 
             $last_update = mysql2date('U', $install->release_date);
 
-            echo '<strong>'.__("Last Updated", "dev4press-updater").'</strong>: ';
-            echo sprintf(__("%s ago", "dev4press-updater"), human_time_diff($last_update));
+            echo sprintf(__("<strong>Last Updated</strong>: %s ago", "dev4press-updater"), human_time_diff($last_update));
 
             ?>
         </div>

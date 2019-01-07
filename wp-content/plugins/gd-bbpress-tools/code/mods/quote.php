@@ -42,33 +42,33 @@ class gdbbMod_Quote {
     }
 
     public function add_content_filters() {
-        add_filter('bbp_get_reply_content', array(&$this, 'quote_reply_content'), 90);
-        add_filter('bbp_get_topic_content', array(&$this, 'quote_topic_content'), 90);
+        add_filter('bbp_get_reply_content', array($this, 'quote_reply_content'), 90);
+        add_filter('bbp_get_topic_content', array($this, 'quote_topic_content'), 90);
 
         if ($this->location == 'content' || $this->location == 'both') {
-            add_filter('bbp_get_reply_content', array(&$this, 'reply_content'));
-            add_filter('bbp_get_topic_content', array(&$this, 'reply_content'));
+            add_filter('bbp_get_reply_content', array($this, 'reply_content'));
+            add_filter('bbp_get_topic_content', array($this, 'reply_content'));
         }
 
         if ($this->location == 'header' || $this->location == 'both') {
-            add_filter('bbp_get_topic_admin_links', array(&$this, 'reply_links'), 10, 2);
-            add_filter('bbp_get_reply_admin_links', array(&$this, 'reply_links'), 10, 2);
-            add_action('bbp_theme_after_topic_admin_links', array(&$this, 'after_reply_links'));
-            add_action('bbp_theme_after_reply_admin_links', array(&$this, 'after_reply_links'));
+            add_filter('bbp_get_topic_admin_links', array($this, 'reply_links'), 10, 2);
+            add_filter('bbp_get_reply_admin_links', array($this, 'reply_links'), 10, 2);
+            add_action('bbp_theme_after_topic_admin_links', array($this, 'after_reply_links'));
+            add_action('bbp_theme_after_reply_admin_links', array($this, 'after_reply_links'));
         }
     }
 
     public function remove_content_filters() {
-        remove_filter('bbp_get_reply_content', array(&$this, 'quote_reply_content'), 9);
-        remove_filter('bbp_get_topic_content', array(&$this, 'quote_topic_content'), 9);
+        remove_filter('bbp_get_reply_content', array($this, 'quote_reply_content'), 9);
+        remove_filter('bbp_get_topic_content', array($this, 'quote_topic_content'), 9);
 
-        remove_filter('bbp_get_reply_content', array(&$this, 'reply_content'));
-        remove_filter('bbp_get_topic_content', array(&$this, 'reply_content'));
+        remove_filter('bbp_get_reply_content', array($this, 'reply_content'));
+        remove_filter('bbp_get_topic_content', array($this, 'reply_content'));
 
-        remove_filter('bbp_get_topic_admin_links', array(&$this, 'reply_links'), 10, 2);
-        remove_filter('bbp_get_reply_admin_links', array(&$this, 'reply_links'), 10, 2);
-        remove_action('bbp_theme_after_topic_admin_links', array(&$this, 'after_reply_links'));
-        remove_action('bbp_theme_after_reply_admin_links', array(&$this, 'after_reply_links'));
+        remove_filter('bbp_get_topic_admin_links', array($this, 'reply_links'), 10, 2);
+        remove_filter('bbp_get_reply_admin_links', array($this, 'reply_links'), 10, 2);
+        remove_action('bbp_theme_after_topic_admin_links', array($this, 'after_reply_links'));
+        remove_action('bbp_theme_after_reply_admin_links', array($this, 'after_reply_links'));
     }
 
     public function quote_reply_content($content) {

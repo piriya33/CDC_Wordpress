@@ -2,23 +2,22 @@
 Contributors: wponlinesupport, anoopranawat, pratik-jain
 Tags: wponlinesupport, HTML5, video.js,  HTML5 video, youtube video gallery, vimeo video gallery, youtube video gallery with popup,  Youtube-video, youtube embed, youtube gallery, youtube player, magnific Popup, vimeo video gallery gallery, HTML5 video player, HTML5 video gallery, wordpress HTML5 video, wordpress HTML5 video player, wordpress HTML5 video gallery, responsive, wordpress responsive video gallery  
 Requires at least: 3.5
-Tested up to: 4.9.6
+Tested up to: 5.0.2
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Easy to add and display your HTML5, YouTube, Vimeo vedio gallery with Magnific Popup to your website . 
+Easy to add and display your HTML5, YouTube, Vimeo vedio gallery with Magnific Popup to your website. Also work with Gutenberg shortcode block. 
 
 == Description ==
 
-This plugin add a responsive HTML5, YouTube, Vimeo vedio gallery with Magnific Popup to your  WordPress website. Display video gallery in grid view(1,2,3,4) etc
-You can also use category id to create multiple vedio galleries.
+This plugin add a responsive HTML5, YouTube, Vimeo vedio gallery with Magnific Popup to your  WordPress website. Display video gallery in grid view(1,2,3,4) etc. You can also use category id to create multiple vedio galleries.
 
 View [DEMO](https://www.wponlinesupport.com/wp-plugin/video-gallery-player/) | [PRO DEMO and Features](https://www.wponlinesupport.com/wp-plugin/video-gallery-player/) for additional information.
 
-Checkout our new plugin - [PowerPack - Need of Every Website](https://wordpress.org/plugins/powerpack-lite/)
-
 The plugin adds a Video gallery tab to your admin menu, which allows you to enter Video Title and Video source items just as you would regular posts.
+
+Also work with Gutenberg shortcode block.
 
 = Gallery Options: = 
 * Create a YouTube gallery page.
@@ -30,13 +29,18 @@ The plugin adds a Video gallery tab to your admin menu, which allows you to ente
  
 With this video gallery plugin, you can create galleries from your youtube, vimeo and HTML5 videos. The process of creating a video gallery only takes a few minutes and created gallery can be displayed on any page or post by means of WordPress shortcode.
  
-Now just create a new page and add this short code 
-<code>[sp_html5video] </code> to your page. 
+Now just create a new page and add this short code to your page:
+
+<code>[sp_html5video] </code> 
+
 You can also use PHP code 
+
 <code> <?php echo do_shortcode('[sp_html5video]'); ?></code> 
+
 directly to your template file.
 
 = Shortcode parameters: =
+
 <code>[sp_html5video]</code>
 
 * **limit:**
@@ -53,6 +57,7 @@ directly to your template file.
 
 = Features include: =
 * Create unlimited galleries with category shortcode.
+* Also work with Gutenberg shortcode block.
 * Fully Responsive
 * Create a Video gallery page.
 * Add a Video player to your page.
@@ -108,8 +113,16 @@ OR
 4. Category shortcode
 5. Grid view
 6. Popup view
+7. Also work with Gutenberg shortcode block.
 
 == Changelog ==
+
+= 2.3.1 (26, Dec 2018) =
+* [*] Update Opt-in flow.
+
+= 2.3 (07, Dec 2018) =
+* [*] Tested with WordPress 5.0 and Gutenberg.
+* [*] Fixed some CSS issues.
 
 = 2.2.3 (07, June 2018) =
 * [*] Follow some WordPress Detailed Plugin Guidelines.

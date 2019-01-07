@@ -8,19 +8,19 @@ class gdbbMod_Front {
     }
 
     public function load() {
-        add_action('bbp_head', array(&$this, 'bbp_head'));
-        add_action('wp_enqueue_scripts', array(&$this, 'wp_enqueue_scripts'));
+        add_action('bbp_head', array($this, 'bbp_head'));
+        add_action('wp_enqueue_scripts', array($this, 'wp_enqueue_scripts'));
     }
 
     public function wp_enqueue_scripts() {
         if (d4p_bbt_o('include_always') == 1 || d4p_is_bbpress()) {
             if (d4p_bbt_o('include_css') == 1) {
-                wp_enqueue_style('d4p-bbtools', GDBBPRESSTOOLS_URL.'css/gd-bbpress-tools.css', array(), GDBBPRESSTOOLS_VERSION);
+                wp_enqueue_style('d4p-bbtools', GDBBPRESSTOOLS_URL.'css/front.css', array(), GDBBPRESSTOOLS_VERSION);
             }
 
             if (d4p_bbt_o('include_js') == 1) {
                 wp_enqueue_script('jquery');
-                wp_enqueue_script('d4p-bbtools', GDBBPRESSTOOLS_URL.'js/gd-bbpress-tools.js', array('jquery'), GDBBPRESSTOOLS_VERSION, true);
+                wp_enqueue_script('d4p-bbtools', GDBBPRESSTOOLS_URL.'js/front.js', array('jquery'), GDBBPRESSTOOLS_VERSION, true);
             }
         }
     }

@@ -2,13 +2,13 @@
 
 /*
 Name:    d4pLib_Debug
-Version: v2.0.3
+Version: v2.5.2
 Author:  Milan Petrovic
-Email:   milan@gdragon.info
+Email:   support@dev4press.com
 Website: https://www.dev4press.com/
 
 == Copyright ==
-Copyright 2008 - 2017 Milan Petrovic (email: milan@gdragon.info)
+Copyright 2008 - 2018 Milan Petrovic (email: support@dev4press.com)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -25,23 +25,21 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-d4p_include('debug', 'classes');
-
 if (!function_exists('d4p_error_log')) {
     function d4p_error_log($log, $title = '') {
-        d4PDBG::error_log($log, $title);
+        d4p_debug::error_log($log, $title);
     }
 }
 
 if (!function_exists('d4p_print_r')) {
     function d4p_print_r($obj, $pre = true, $title = '', $before = '', $after = '') {
-        d4PDBG::print_r($obj, $pre, $title, $before, $after);
+        d4p_debug::print_r($obj, $pre, $title, $before, $after);
     }
 }
 
 if (!function_exists('d4p_print_hooks')) {
     function d4p_print_hooks($filter = false, $destination = 'print') {
-        d4PDBG::print_hooks($filter, $destination);
+        d4p_debug::print_hooks($filter, $destination);
     }
 }
 

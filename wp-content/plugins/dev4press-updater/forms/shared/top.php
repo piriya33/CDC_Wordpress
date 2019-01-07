@@ -6,8 +6,17 @@ $pages = d4pupd_admin()->menu_items;
 $_page = d4pupd_admin()->page;
 $_panel = d4pupd_admin()->panel;
 
-if (!empty($panels) && $_panel === false) {
-    $_panel = 'index';
+if (!empty($panels)) {
+    if ($_panel === false || empty($_panel)) {
+        $_panel = 'index';
+    }
+
+    $_available = array_keys($panels);
+
+    if (!in_array($_panel, $_available)) {
+        $_panel = 'index';
+        d4pupd_admin()->panel = false;
+    }
 }
 
 $_classes = array('d4p-wrap', 'wpv-'.D4PUPD_WPV, 'd4p-page-'.$_page);
@@ -20,7 +29,9 @@ if ($_panel !== false) {
 $_message = '';
 
 if (isset($_GET['message']) && $_GET['message'] != '') {
-    switch ($_GET['message']) {
+    $msg = d4p_sanitize_slug($_GET['message']);
+
+    switch ($msg) {
         case 'saved':
             $_message = __("Settings are saved.", "dev4press-updater");
             break;
@@ -33,15 +44,15 @@ if (isset($_GET['message']) && $_GET['message'] != '') {
         <div class="d4p-navigator">
             <ul>
                 <li class="d4p-nav-button">
-                    <a href="#"><i aria-hidden="true" class="<?php echo d4p_icon_class($pages[$_page]['icon']); ?>"></i> <?php echo $pages[$_page]['title']; ?></a>
+                    <a href="#"><i aria-hidden="true" class="<?php echo d4p_get_icon_class($pages[$_page]['icon']); ?>"></i> <?php echo $pages[$_page]['title']; ?></a>
                     <ul>
                         <?php
 
                         foreach ($pages as $page => $obj) {
                             if ($page != $_page) {
-                                echo '<li><a href="admin.php?page=dev4press-updater-'.$page.'"><i aria-hidden="true" class="'.d4p_icon_class($obj['icon'], 'fw').'"></i> '.$obj['title'].'</a></li>';
+                                echo '<li><a href="admin.php?page=dev4press-updater-'.$page.'"><i aria-hidden="true" class="'.d4p_get_icon_class($obj['icon'], 'fw').'"></i> '.$obj['title'].'</a></li>';
                             } else {
-                                echo '<li class="d4p-nav-current"><i aria-hidden="true" class="'.d4p_icon_class($obj['icon'], 'fw').'"></i> '.$obj['title'].'</li>';
+                                echo '<li class="d4p-nav-current"><i aria-hidden="true" class="'.d4p_get_icon_class($obj['icon'], 'fw').'"></i> '.$obj['title'].'</li>';
                             }
                         }
 
@@ -50,15 +61,15 @@ if (isset($_GET['message']) && $_GET['message'] != '') {
                 </li>
                 <?php if (!empty($panels)) { ?>
                 <li class="d4p-nav-button">
-                    <a href="#"><i aria-hidden="true" class="<?php echo d4p_icon_class($panels[$_panel]['icon']); ?>"></i> <?php echo $panels[$_panel]['title']; ?></a>
+                    <a href="#"><i aria-hidden="true" class="<?php echo d4p_get_icon_class($panels[$_panel]['icon']); ?>"></i> <?php echo $panels[$_panel]['title']; ?></a>
                     <ul>
                         <?php
 
                         foreach ($panels as $panel => $obj) {
                             if ($panel != $_panel) {
-                                echo '<li><a href="admin.php?page=dev4press-updater-'.$_page.'&panel='.$panel.'"><i aria-hidden="true" class="'.(d4p_icon_class($obj['icon'], 'fw')).'"></i> '.$obj['title'].'</a></li>';
+                                echo '<li><a href="admin.php?page=dev4press-updater-'.$_page.'&panel='.$panel.'"><i aria-hidden="true" class="'.(d4p_get_icon_class($obj['icon'], 'fw')).'"></i> '.$obj['title'].'</a></li>';
                             } else {
-                                echo '<li class="d4p-nav-current"><i aria-hidden="true" class="'.d4p_icon_class($obj['icon'], 'fw').'"></i> '.$obj['title'].'</li>';
+                                echo '<li class="d4p-nav-current"><i aria-hidden="true" class="'.d4p_get_icon_class($obj['icon'], 'fw').'"></i> '.$obj['title'].'</li>';
                             }
                         }
 

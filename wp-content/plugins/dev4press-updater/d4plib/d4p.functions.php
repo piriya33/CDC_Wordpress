@@ -2,13 +2,13 @@
 
 /*
 Name:    d4pLib_Functions
-Version: v2.0.3
+Version: v2.5.2
 Author:  Milan Petrovic
-Email:   milan@gdragon.info
+Email:   support@dev4press.com
 Website: https://www.dev4press.com/
 
 == Copyright ==
-Copyright 2008 - 2017 Milan Petrovic (email: milan@gdragon.info)
+Copyright 2008 - 2018 Milan Petrovic (email: support@dev4press.com)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -25,14 +25,15 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-if (!function_exists('d4p_is_oembed_link')) {
-    function d4p_is_oembed_link($url) {
-        require_once(ABSPATH.WPINC.'/class-oembed.php');
+if (!function_exists('is_odd')) {
+    function is_odd($number) {
+        return $number&1;
+    }
+}
 
-        $oembed = _wp_oembed_get_object();
-        $result = $oembed->get_html($url);
-
-        return $result === false ? false : true;
+if (!function_exists('is_divisible')) {
+    function is_divisible($number, $by_number) {
+        return $number%$by_number == 0;
     }
 }
 
@@ -197,18 +198,6 @@ if (!function_exists('d4p_extract_images_urls')) {
     }
 }
 
-if (!function_exists('is_odd')) {
-    function is_odd($number) {
-        return $number&1;
-    }
-}
-
-if (!function_exists('is_divisible')) {
-    function is_divisible($number, $by_number) {
-        return $number%$by_number == 0;
-    }
-}
-
 if (!function_exists('d4p_gzip_uncompressed_size')) {
     function d4p_gzip_uncompressed_size($file_path) {
         $fp = fopen($file_path, "rb");
@@ -305,5 +294,86 @@ if (!function_exists('d4p_mysql_date')) {
 if (!function_exists('d4p_mysql_datetime_format')) {
     function d4p_mysql_datetime_format() {
         return 'Y-m-d H:i:s';
+    }
+}
+
+if (!function_exists('d4p_url_campaign_tracking')) {
+    function d4p_url_campaign_tracking($url, $campaign = '', $medium = '', $content = '', $term = '', $source = null) {
+        if (!empty($campaign)) {
+            $url = add_query_arg('utm_campaign', $campaign, $url);
+        }
+
+        if (!empty($medium)) {
+            $url = add_query_arg('utm_medium', $medium, $url);
+        }
+
+        if (!empty($content)) {
+            $url = add_query_arg('utm_content', $content, $url);
+        }
+
+        if (!empty($term)) {
+            $url = add_query_arg('utm_term', $term, $url);
+        }
+
+        if (is_null($source)) {
+            $source = parse_url(get_bloginfo('url'), PHP_URL_HOST);
+        }
+
+        if (!empty($source)) {
+            $url = add_query_arg('utm_source', $source, $url);
+        }
+
+        return $url;
+    }
+}
+
+if (!function_exists('d4p_get_icon_class')) {
+    function d4p_get_icon_class($name, $extra = array()) {
+        $class = '';
+        $d4p = false; 
+        $dashicons = false;
+
+        if (substr($name, 0, 3) == 'd4p') {
+            $class.= 'd4p-icon '.$name;
+            $d4p = true;
+        } else if (substr($name, 0, 9) == 'dashicons') {
+            $class.= 'dashicons '.$name;
+            $dashicons = true;
+        } else {
+            $class.= 'fa fa-'.$name;
+        }
+
+        if (!empty($extra) && !$dashicons) {
+            $extra = (array)$extra;
+
+            foreach ($extra as $key) {
+                $class.= ' '.($d4p ? 'd4p-icon' : 'fa').'-'.$key;
+            }
+        }
+
+        return $class;
+    }
+}
+
+if (!function_exists('d4p_render_icon')) {
+    function d4p_render_icon($name, $tag = 'i', $aria_hidden = true, $fw = false, $class = '', $attr = array()) {
+        $icon = '<'.$tag;
+
+        if ($aria_hidden) {
+            $icon.= ' aria-hidden="true"';
+        }
+
+        $extra = $fw ? 'fw' : '';
+        $classes = d4p_get_icon_class($name, $extra).' '.$class;
+
+        $icon.= ' class="'.trim($classes).'"';
+
+        foreach ($attr as $key => $value) {
+            $icon.= ' '.$key.'="'.esc_attr($value).'"';
+        }
+
+        $icon.= '></'.$tag.'>';
+
+        return $icon;
     }
 }

@@ -1,10 +1,10 @@
 === GD bbPress Tools ===
 Contributors: GDragoN
-Donate link: https://plugins.dev4press.com/gd-bbpress-toolbox/
-Version: 1.9.3
-Tags: bbpress, tools, gdragon, dev4press, forums, forum, topic, reply, signature, quote, search, toolbar, signature, views, admin, bbcode, bbcodes, shortcode, shortcodes
-Requires at least: 4.2
-Requires PHP: 5.3
+Donate link: https://plugins.dev4press.com/gd-bbpress-tools/
+Version: 2.0.2
+Tags: dev4press, bbpress, signature, quote, bbcodes, toolbar, views, bbcode, forums, forum, topic, reply
+Requires at least: 4.4
+Requires PHP: 5.5
 Tested up to: 4.9
 Stable tag: trunk
 License: GPLv2 or later
@@ -15,26 +15,59 @@ Adds different expansions and tools to the bbPress plugin powered forums: BBCode
 == Description ==
 Adds various expansions and tools to the bbPress plugin implemented forums. Currently included features:
 
-* BBCode shortcodes support
 * Quote Reply or Topic
 * User signature with BBCode and HTML support
-* Additional custom views
-* Basic topics search results view
+* Signature field in BuddyPress profile edit
 * Toolbar menu integration
+* BBCode shortcodes with 30 BBCodes
 * Limit bbPress admin side access
-
-The plugin supports BBCodes based on the phpBB implementation. Right now, the plugin has 30 BBCodes.
-
-Included translations: English, Serbian, German.
+* Tweak: Disable bbPress breadcrumbs
+* Tweak: Topic tags field in reply form for author only
+* Tweak: Show lead topic
+* Topics View: Topics with most replies
+* Topics View: Latest Topics
+* Topics View: Topics by freshness
 
 = bbPress Plugin Versions =
-GD bbPress Tools 1.9.2 supports bbPress 2.5 or newer. Older bbPress are no longer supported!
+GD bbPress Tools 2.0 supports bbPress 2.5 or newer. Older bbPress are no longer supported!
 
 = BuddyPress Support =
-GD bbPress Tools 1.9.2 is tested with BuddyPress 2.6 and newer and it works fine if you enable BuddyPress support in bbPress plugin for Group Forums. Make sure you enable JavaScript and CSS Settings Always Include option in the Attachments plugin settings.
+GD bbPress Tools 2.0 is tested with BuddyPress 3.0 using bbPress for Groups forums. Make sure you enable JavaScript and CSS Settings Always Include option in the plugin settings.
+
+= More free dev4Press.com plugins for bbPress =
+* [GD bbPress Attachments](https://wordpress.org/plugins/gd-bbpress-attachments/) - attachments for topics and replies
+* [GD Topic Polls](https://wordpress.org/plugins/gd-topic-polls/) - add polls to the bbPress topics
 
 = Upgrade to GD bbPress Toolbox Pro =
-Pro version contains many more useful features 10 more BBCodes (including Hide and Spoiler), BBCodes editor toolbar, report topics and replies, SEO features, many more views, notification email control, BBCodes toolbar, great new responsive admin UI, enhanced attachments features and additional widgets. For more information: [GD bbPress Toolbox Pro](https://plugins.dev4press.com/gd-bbpress-toolbox/)
+Pro version contains many more great features:
+
+* Enhanced attachments features
+* Limit file types attachments uplod
+* BBCodes editor toolbar
+* Report topics and replies
+* Say thanks to forum members
+* Various SEO features
+* Various privacy features
+* Enable TinyMCE editor
+* Private topics and replies
+* Auto closing of inactive topics
+* Notification email control
+* Show user stats in topics and replies
+* Track new and unread topics
+* Great new responsive admin UI
+* Setup Wizard
+* Forum based settings overrides
+* Improved BuddyPress support
+* 40 BBCodes (including Hide and Spoiler)
+* 19 Topics Views
+* 8 additional widgets
+* Many great tweaks
+* And much, much more
+
+With more features on the roadmap exclusively for Pro version.
+
+* More information about [GD bbPress Toolbox Pro](https://plugins.dev4press.com/gd-bbpress-toolbox/)
+* Compare [Free vs. Pro Plugin](https://plugins.dev4press.com/gd-bbpress-toolbox/articles/toolbox-pro-vs-free-plugins/)
 
 = Premium dev4Press.com plugins for bbPress =
 * [GD bbPress Toolbox Pro](https://plugins.dev4press.com/gd-bbpress-toolbox/) - collection of features for bbPress
@@ -42,16 +75,12 @@ Pro version contains many more useful features 10 more BBCodes (including Hide a
 * [GD Topic Prefix Pro](https://plugins.dev4press.com/gd-topic-prefix/) - add customizable bbPress topic prefixes
 * [GD Content Tools Pro](https://plugins.dev4press.com/gd-content-tools/) - meta box for the topic and reply form
 
-= More free dev4Press.com plugins for bbPress =
-* [GD bbPress Attachments](https://wordpress.org/plugins/gd-bbpress-attachments/) - attachments for topics and replies
-* [GD Topic Polls](https://wordpress.org/plugins/gd-topic-polls/) - add polls to the bbPress topics
-
 == Installation ==
 = General Requirements =
-* PHP: 5.3 or newer
+* PHP: 5.5 or newer
 
 = WordPress Requirements =
-* WordPress: 4.2 or newer
+* WordPress: 4.4 or newer
 
 = bbPress Requirements =
 * bbPress Plugin: 2.5 or newer
@@ -62,17 +91,23 @@ Pro version contains many more useful features 10 more BBCodes (including Hide a
 * Activate the plugin through the 'Plugins' menu in WordPress
 
 == Frequently Asked Questions ==
-* Where can I configure the plugin?
+= Where can I configure the plugin? =
 Open the Forums menu, and you will see Tools item there. This will open a panel with global plugin settings.
 
-* Will this plugin work with standalone bbPress installation?
-No. This plugin requires the plugin versions of bbPress 2.3 or higher.
+= Will this plugin work with standalone bbPress installation? =
+No. This plugin requires the plugin versions of bbPress 2.5 or higher.
 
-* Does this plugin work with bbPress that is part of BuddyPress plugin?
-No. Plugin requires bbPress 2.3 or higher plugin.
+= Click on Quote button doesn't add quoted content? =
+This happens if the plugin's JavaScript is not loaded. Make sure that both CSS and JavaScript options are enabled. If that doesn't help, make sure to enable 'Always Include' option too.
 
-* Does this plugin work with bbPress plugin used as site wide forums for BuddyPress plugin?
-Yes. But, make sure to enable 'Always Include' option for JavaScript and CSS.
+= Some features not working with BuddyPress group forums? =
+This happens if the plugin's JavaScript is not loaded. Make sure that both CSS and JavaScript options are enabled and 'Always Include' option is also enabled.
+
+= Some BuddyPress features break when I use BuddyPress Nuovo templates? =
+The problem is caused by the Italic BBCode due to the conflict with the Underscore templates system BuddyPress uses. You can disable Italic BBCode, or you can limit BBCodes to the bbPress content only (highly recommended).
+
+= When the quote is used on the formatted content, formatting will be gone inside displayed quote? =
+This happens because quoting can only take rendered HTML as is, and when saved, bbPress will remove some of the HTML elements based on the user role. [GD bbPress Toolbox Pro](https://plugins.dev4press.com/gd-bbpress-toolbox/) plugin includes additional features that expand the allowed HTML elements for all roles, and that solves this quote problem.
 
 == Translations ==
 * English
@@ -80,10 +115,31 @@ Yes. But, make sure to enable 'Always Include' option for JavaScript and CSS.
 * German: David Decker - https://deckerweb.de/
 
 == Upgrade Notice ==
-= 1.9.3 =
-Updated function for universal rendering of BBCodes.
+= 2.0 =
+New plugin interface. Tweaks panel with 3 new tweaks. New topics view for Freshness. Updated WordPress and PHP requirements.
 
 == Changelog ==
+= 2.0.2 - 2018.08.22 =
+* Changed default BBCode option to load on bbPress pages only to enabled
+* Updated BBCodes information for potential issue with BuddyPress
+* Updated readme.txt file and the include FAQ list
+* Minor core code changes and improvements
+
+= 2.0.1 - 2018.07.27 =
+* Updated readme file with new FAQ entries
+* Updated plugin admin code to remove FAQ link
+
+= 2.0 - 2018.07.25 =
+* New interface for the plugin settings panel
+* New panel with settings for Tweaks
+* New tweak: show lead topic
+* New tweak: disable breadcrumbs
+* New tweak: topic tags in reply for topic author only
+* New topics view: Topics Freshness
+* Updated toolbar icon to use bbPress dashicon
+* Updated WordPress minimal requirement to 4.4
+* Updated PHP minimal requirement to 5.5
+
 = 1.9.3 - 2018.02.16 =
 * Updated function for universal rendering of BBCodes
 * Updated various URL's included in plugin and readme file
@@ -243,8 +299,9 @@ Updated function for universal rendering of BBCodes.
 * First official release
 
 == Screenshots ==
-1. Main plugins settings panel
-2. BBCode settings panel
-3. Views settings panel
-4. Toolbar bbPress forums menu
-5. Setting up signature
+1. Main settings panel
+2. Tweaks panel
+3. BBCodes panel
+4. Topics Views panel
+5. Toolbar bbPress forums menu
+6. Setting up signature

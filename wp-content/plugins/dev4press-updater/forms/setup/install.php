@@ -27,6 +27,7 @@ $_classes = array('d4p-wrap', 'wpv-'.D4PUPD_WPV, 'd4p-page-install');
                 <?php
 
                 d4pupd_remove_cron('dev4press_update_check');
+                d4pupd_remove_cron('dev4press_updater_v4_check');
 
                 $old = get_site_option('dev4press-updater');
 
@@ -55,7 +56,7 @@ $_classes = array('d4p-wrap', 'wpv-'.D4PUPD_WPV, 'd4p-page-install');
                     _e("Installation completed.", "dev4press-updater");
 
                 ?>
-                <br/><br/><a class="button-primary" href="<?php echo d4p_current_url(); ?>"><?php _e("Click here to continue.", "dev4press-updater"); ?></a>
+                <br/><br/><a class="button-primary" href="<?php echo network_admin_url('admin.php?page=dev4press-updater-about'); ?>"><?php _e("Click here to continue.", "dev4press-updater"); ?></a>
             </div>
             <?php echo d4pupd_plugin()->recommend('install'); ?>
         </div>

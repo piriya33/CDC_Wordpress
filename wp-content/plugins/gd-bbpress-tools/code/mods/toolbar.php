@@ -8,18 +8,23 @@ class gdbbMod_Toolbar {
     }
 
     public function init() {
-        add_action('admin_bar_menu', array(&$this, 'admin_bar_menu'), 100);
-        add_action('admin_head', array(&$this, 'admin_bar_icon'));
-        add_action('wp_head', array(&$this, 'admin_bar_icon'));
+        add_action('admin_bar_menu', array($this, 'admin_bar_menu'), 100);
+
+        add_action('admin_head', array($this, 'admin_bar_icon'));
+        add_action('wp_head', array($this, 'admin_bar_icon'));
     }
 
     public function admin_bar_icon() { ?>
         <style type="text/css">
-            #wpadminbar .ab-top-menu > li.menupop.icon-gdbb-toolbar > .ab-item {
-                background-image: url('<?php echo plugins_url('gd-bbpress-tools/gfx/menu.png'); ?>');
-                background-repeat: no-repeat;
-                background-position: 0.85em 50%;
-                padding-left: 32px;
+            #wpadminbar #wp-admin-bar-gdbb-toolbar .ab-icon:before {
+                content: "\f477";
+                top: 2px;
+            }
+
+            @media screen and ( max-width: 782px ) {
+                #wpadminbar li#wp-admin-bar-gdbb-toolbar {
+                    display: block;
+                }
             }
         </style>
     <?php }
@@ -27,9 +32,11 @@ class gdbbMod_Toolbar {
     public function admin_bar_menu() {
         global $wp_admin_bar;
 
+        $title = '<span class="ab-icon"></span><span class="ab-label">'.__("Forums", "gd-bbpress-tools").'</span>';
+
         $wp_admin_bar->add_menu(array(
             'id'     => 'gdbb-toolbar',
-            'title'  => __("Forums", "gd-bbpress-tools"),
+            'title'  => $title,
             'href'   => get_post_type_archive_link('forum'),
             'meta'   => array('class' => 'icon-gdbb-toolbar')
         ));

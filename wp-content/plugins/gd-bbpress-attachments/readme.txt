@@ -1,8 +1,8 @@
 === GD bbPress Attachments ===
 Contributors: GDragoN
 Donate link: https://plugins.dev4press.com/gd-bbpress-attachments/
-Version: 2.6
-Tags: bbpress, attachments, gdragon, dev4press, upload, forum, topic, reply, media library, limit, meta
+Version: 3.0.1
+Tags: dev4press, bbpress, attachments, upload, media library, forum, topic, reply, limit, meta
 Requires at least: 4.4
 Requires PHP: 5.5
 Tested up to: 4.9
@@ -13,30 +13,69 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Implements attachments upload to the topics and replies in bbPress plugin through media library and add additional forum based controls.
 
 == Description ==
-Attachments for forum topics and replies are handled through WordPress media library. You can control file sizes from the main plugin settings panel, or you can do it individually for each forum you have set. You can limit the number of files user can attach for each topic and reply. The plugin can embed a list of attached files into topics and replies, and images can be displayed as thumbnails. All upload errors are logged and topic/reply author and administrators can see those errors.
+GD bbPress Attachments is an easy to use plugin for WordPress and bbPress for implementing files upload for bbPress Forums topics and replies. You can control file sizes from the main plugin settings panel, or you can change some attachments settings for each forum individually. Currently included features:
 
-On the admin side, topic and reply panels have a column with attachments count, and on the individual edit pages you will see meta box with the list of attachments and upload errors.
-
-Supported languages: English, Serbian, Swedish, Polish, Dutch, German, Italian, Slovak, French, Spanish, Persian, Portuguese.
+* Attachments are handled through WordPress media library. 
+* Limit the number of files to upload at once.
+* Embed a list of attached files into topics and replies.
+* Attachment icon in the topics list for topics with attachments.
+* Attachments icons for file types in the attachments list.
+* Option to control if visitors can see list of attachments.
+* Display uploaded images as thumbnails.
+* Control thumbnail size.
+* Control thumbnail CLASS and REL attributes.
+* Upload errors can be logged .
+* Post uthor and administrators can see errors.
+* Administration: attachments count for topics and replies.
+* Administration: metabox for settings override for forums.
+* Administration: metabox with attachments list and errors for topics and replies.
 
 = bbPress Plugin Versions =
-GD bbPress Attachments 2.6 supports bbPress 2.5 or newer. Older bbPress are no longer supported!
+GD bbPress Attachments 3.0 supports bbPress 2.5 or newer. Older bbPress are no longer supported!
 
 = BuddyPress Support =
-GD bbPress Attachments 2.6 is tested with BuddyPress 2.6 and newer and it works fine if you enable BuddyPress support in bbPress plugin for Group Forums. Make sure you enable JavaScript and CSS Settings Always Include option in the Attachments plugin settings.
+GD bbPress Attachments 3.0 is tested with BuddyPress 3.0 using bbPress for Groups forums. Make sure you enable JavaScript and CSS Settings Always Include option in the plugin settings.
 
 = More free Dev4Press plugins for bbPress =
 * [GD bbPress Tools](https://wordpress.org/plugins/gd-bbpress-tools/) - various expansion tools for forums
 * [GD Topic Polls](https://wordpress.org/plugins/gd-topic-polls/) - add polls to the bbPress topics
 
 = Upgrade to GD bbPress Toolbox Pro =
-Pro version contains many more useful features 10 more BBCodes (including Hide and Spoiler), BBCodes editor toolbar, report topics and replies, SEO features, many more views, notification email control, BBCodes toolbar, great new responsive admin UI, enhanced attachments features and additional widgets. For more information: [GD bbPress Toolbox Pro](https://plugins.dev4press.com/gd-bbpress-toolbox/)
+Pro version contains many more great features:
 
-= Premium Dev4Press plugins for bbPress =
+* Enhanced attachments features
+* Limit file types attachments uplod
+* BBCodes editor toolbar
+* Report topics and replies
+* Say thanks to forum members
+* Various SEO features
+* Various privacy features
+* Enable TinyMCE editor
+* Private topics and replies
+* Auto closing of inactive topics
+* Notification email control
+* Show user stats in topics and replies
+* Track new and unread topics
+* Great new responsive admin UI
+* Setup Wizard
+* Forum based settings overrides
+* Improved BuddyPress support
+* 40 BBCodes (including Hide and Spoiler)
+* 19 Topics Views
+* 8 additional widgets
+* Many great tweaks
+* And much, much more
+
+With more features on the roadmap exclusively for Pro version.
+
+* More information about [GD bbPress Toolbox Pro](https://plugins.dev4press.com/gd-bbpress-toolbox/)
+* Compare [Free vs. Pro Plugin](https://plugins.dev4press.com/gd-bbpress-toolbox/articles/toolbox-pro-vs-free-plugins/)
+
+= Premium dev4Press.com plugins for bbPress =
 * [GD bbPress Toolbox Pro](https://plugins.dev4press.com/gd-bbpress-toolbox/) - collection of features for bbPress
+* [GD Power Search Pro](https://plugins.dev4press.com/gd-power-search-for-bbpress/) - advanced search for bbPress
 * [GD Topic Polls Pro](https://plugins.dev4press.com/gd-topic-polls/) - add polls to the bbPress topics
 * [GD Topic Prefix Pro](https://plugins.dev4press.com/gd-topic-prefix/) - add customizable bbPress topic prefixes
-* [GD Content Tools Pro](https://plugins.dev4press.com/gd-content-tools/) - meta box for the topic and reply form
 
 == Installation ==
 = General Requirements =
@@ -54,24 +93,21 @@ Pro version contains many more useful features 10 more BBCodes (including Hide a
 * Activate the plugin through the 'Plugins' menu in WordPress
 
 == Frequently Asked Questions ==
-* Where can I configure the plugin?
+= Where can I configure the plugin? =
 Open the Forums menu, and you will see Attachments item there. This will open a panel with global plugin settings.
 
-* What are the common problems that can prevent upload to work?
-In some cases, it can happen that jQuery is not included on the page, even so, the bbPress requires it to be loaded. That can happen if something else is unloading jQuery. If the jQuery is not present, the upload will not work.
-Another common issue is that WordPress Media Library upload is not working. If that is not set up, attachments upload can't work.
-
-* Why is Media Library required?
+= Why is Media Library required? =
 All attachments uploads are handled by the WordPress Media Library, and plugin uses native WordPress upload functions. When the file is uploaded it will be available through Media Library. Consult WordPress documentation about Media Library requirements.
 
-* Will this plugin work with standalone bbPress installation?
+= Will this plugin work with standalone bbPress installation? =
 No. This plugin requires the plugin versions of bbPress 2.5 or higher.
 
-* Does this plugin work with bbPress that is part of BuddyPress plugin?
-No. Plugin requires bbPress 2.5 or higher plugin.
-
-* Does this plugin work with bbPress plugin used as sitewide forums for BuddyPress plugin?
+= Does this plugin work with bbPress plugin used as sitewide forums for BuddyPress plugin? =
 Yes. But, make sure to enable 'Always Include' option for JavaScript and CSS.
+
+= What are the common problems that can prevent upload to work? =
+In some cases, it can happen that jQuery is not included on the page, even so, the bbPress requires it to be loaded. That can happen if something else is unloading jQuery. If the jQuery is not present, the upload will not work.
+Another common issue is that WordPress Media Library upload is not working. If that is not set up, attachments upload can't work.
 
 == Translations ==
 * English
@@ -89,10 +125,21 @@ Yes. But, make sure to enable 'Always Include' option for JavaScript and CSS.
 * Italian
 
 == Upgrade Notice ==
-= 2.6 =
-Various fixes and updates.
+= 3.0 =
+New plugin interface. New Images and Advanced settings panels. Various other updates and improvements.
 
 == Changelog ==
+= 3.0.1 (2018.10.05) =
+* Fixed problem with attachments save reply method passed arguments
+
+= 3.0 (2018.07.26) =
+* New interface for the plugin settings panel
+* New panel with advanced settings
+* New panel with images settings
+* New support for thumbnails for PDF and SVG file types
+* Updated settings form with proper field types
+* Updated toolbar icon to use bbPress dashicon
+
 = 2.6 (2018.04.27) =
 * Updated plugin requirements
 * Sanitize file name stored for the upload errors
@@ -100,13 +147,13 @@ Various fixes and updates.
 * Fixed potential stored XSS vulnerability (thanks to [Luigi Gubello](https://www.gubello.me/blog/) for reporting)
 * Fixed few typos and missing translation strings
 
-= 2.5 =
+= 2.5 (2017.09.20) =
 * Updated JS and CSS files are by default always loaded
 * Updated WordPress minimal requirement to 4.2
 * Updated several broken URL's
 * Updated and improved readme file
 
-= 2.4 =
+= 2.4 (2016.09.24) =
 * Added download attribute to attached files links
 * Updated sanitation of the plugin settings on save
 * Updated PHP minimal requirement to 5.3
@@ -114,21 +161,21 @@ Various fixes and updates.
 * Updated several broken URL's
 * Updated several missing translation strings
 
-= 2.3.2 =
+= 2.3.2 (2015.08.02) =
 * Added Swedish translation
 * Updated readme file
 
-= 2.3.1 =
+= 2.3.1 (2015.07.09) =
 * Added Russian translation
 * Updated readme file
 
-= 2.3 =
+= 2.3 (2015.07.04) =
 * Updated several Dev4Press links
 * Fixed XSS and LFI security issues with unsanitized input
 * Fixed order of displayed attachments to match upload order
 * Fixed inline image alignment when there is no image caption
 
-= 2.2 =
+= 2.2 (2015.03.06) =
 * Fixed problem with uploading video or audio files in some cases
 
 = 2.1 =
@@ -280,10 +327,12 @@ Various fixes and updates.
 
 == Screenshots ==
 1. Main plugins settings panel
-2. Reply with attachments and file type icons
-3. Image attachments with upload errors
-4. Attachments with delete and detach actions
+2. Images settings panel
+3. Advanced settings panel
+4. Reply with attachments and file type icons
 5. Attachments upload elements in the form
 6. Single forum meta box with settings
 7. Icons for the forums with attachments
 8. Thumbnails displayed in line
+9. Attachments with delete and detach actions
+10. Image attachments with upload errors

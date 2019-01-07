@@ -1,14 +1,14 @@
 <?php
 
 /*
-Name:    d4pLib_Class_Admin
-Version: v2.0.3
+Name:    d4pLib - Class - Settings Core
+Version: v2.5.2
 Author:  Milan Petrovic
-Email:   milan@gdragon.info
+Email:   support@dev4press.com
 Website: https://www.dev4press.com/
 
 == Copyright ==
-Copyright 2008 - 2017 Milan Petrovic (email: milan@gdragon.info)
+Copyright 2008 - 2018 Milan Petrovic (email: support@dev4press.com)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -191,7 +191,7 @@ if (!class_exists('d4p_settings_core')) {
         }
 
         public function prefix_get($prefix, $group = 'settings') {
-            $settings = array_keys($this->group($group));
+            $settings = array_merge(array_keys($this->settings[$group]), array_keys($this->current[$group]));
 
             $results = array();
 

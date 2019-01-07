@@ -39,7 +39,7 @@ if ( !defined( 'ABSPATH' ) ) {
 				<?php if( !empty( $analy_product['promotion'] ) ) { ?>
 				<div class="wpos-anylc-promotion-wrap">
 					<?php foreach( $analy_product['promotion'] as $promotion_key => $promotion_data ) { ?>
-					<div><label><input type="checkbox" value="<?php echo $promotion_key; ?>" name="promotion[]" checked="checked" /> <?php echo $promotion_data['desc']; ?></label></div>
+					<div><label><input type="checkbox" value="<?php echo $promotion_key; ?>" name="promotion[]" checked="checked" /> <?php echo $promotion_data['name']; ?></label></div>
 					<?php } ?>
 				</div>
 				<?php } ?>

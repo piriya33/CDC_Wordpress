@@ -1,13 +1,13 @@
 === WP Featured Content and Slider ===
 Contributors: wponlinesupport, anoopranawat, pratik-jain
 Tags: content slider, slider, featured, features, services, custom post slider, custom post type display, featured content, featured services, featured content rotator, featured content slider, content gallery, content slideshow, featured content slideshow, featured posts, featured content slider, shortcode
-Requires at least: 3.1
-Tested up to: 4.9.7
+Requires at least: 3.5
+Tested up to: 5.0.2
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-A quick, easy way to add and display what features your company, product or service offers, using our shortcode OR template code.
+A quick, easy way to add and display what features your company, product or service offers, using our shortcode OR template code. Also work with Gutenberg shortcode block.
 
 == Description ==
 Many CMS site needs to display Featured Content/Featured services on website. "WP Featured Content and Slider" is a clean and easy-to-use features showcase management system for WordPress. 
@@ -16,11 +16,12 @@ Display Featured Content/Featured services, features your product, company or se
 
 View [DEMO](http://wponlinesupport.com/wp-plugin/wp-featured-content-and-slider/) | [PRO DEMO and Features](http://wponlinesupport.com/wp-plugin/wp-featured-content-and-slider/) for additional information.
 
-Checkout our new plugin - [PowerPack - Need of Every Website](https://wordpress.org/plugins/powerpack-lite/)
-
 Now added Custom Post Type support where you can display custom post type content with this plugin.
 
+Also work with Gutenberg shortcode block.
+
 **We have given 4 designs with 2 shortcode.**
+
 <code>[featured-content] and [featured-content-slider]</code>
 
 Where you can display Featured Content in list view, in grid view and Featured Content Slider with responsive. You can also select design theme from "Featured Content -> Featured Content Designs".
@@ -135,8 +136,6 @@ Where you can display Featured Content in list view, in grid view and Featured C
 6. If you want to display using slider then use this template code
 <code><?php echo do_shortcode('[featured-content-slider]'); ?> </code>
 
-
-
 == Screenshots ==
 
 1. List and grid view.
@@ -144,8 +143,13 @@ Where you can display Featured Content in list view, in grid view and Featured C
 3. Designs
 4. Category Shortcode
 
-
 == Changelog ==
+
+= 1.3.1 (04, Jan 2019) =
+* [*] Update Opt-in flow.
+
+= 1.3 (08, Dec 2018) =
+* [*] Tested with WordPress 5.0 and Gutenberg.
 
 = 1.2.8 (09 June, 2018) =
 * [*] Follow some WordPress Detailed Plugin Guidelines.

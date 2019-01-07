@@ -35,13 +35,16 @@ class gdbbAtt_Admin {
             $gdbbpress_attachments->o['include_js'] = isset($_POST['include_js']) ? 1 : 0;
             $gdbbpress_attachments->o['include_css'] = isset($_POST['include_css']) ? 1 : 0;
             $gdbbpress_attachments->o['delete_attachments'] = d4p_sanitize_basic($_POST['delete_attachments']);
-            $gdbbpress_attachments->o['image_thumbnail_active'] = isset($_POST['image_thumbnail_active']) ? 1 : 0;
-            $gdbbpress_attachments->o['image_thumbnail_inline'] = isset($_POST['image_thumbnail_inline']) ? 1 : 0;
-            $gdbbpress_attachments->o['image_thumbnail_caption'] = isset($_POST['image_thumbnail_caption']) ? 1 : 0;
-            $gdbbpress_attachments->o['image_thumbnail_rel'] = d4p_sanitize_basic($_POST['image_thumbnail_rel']);
-            $gdbbpress_attachments->o['image_thumbnail_css'] = d4p_sanitize_basic($_POST['image_thumbnail_css']);
-            $gdbbpress_attachments->o['image_thumbnail_size_x'] = absint($_POST['image_thumbnail_size_x']);
-            $gdbbpress_attachments->o['image_thumbnail_size_y'] = absint($_POST['image_thumbnail_size_y']);
+
+            update_option('gd-bbpress-attachments', $gdbbpress_attachments->o);
+            wp_redirect(add_query_arg('settings-updated', 'true'));
+            exit();
+        }
+
+        if (isset($_POST['gdbb-att-advanced-submit'])) {
+            global $gdbbpress_attachments;
+            check_admin_referer('gd-bbpress-attachments');
+
             $gdbbpress_attachments->o['log_upload_errors'] = isset($_POST['log_upload_errors']) ? 1 : 0;
             $gdbbpress_attachments->o['errors_visible_to_admins'] = isset($_POST['errors_visible_to_admins']) ? 1 : 0;
             $gdbbpress_attachments->o['errors_visible_to_moderators'] = isset($_POST['errors_visible_to_moderators']) ? 1 : 0;
@@ -49,6 +52,23 @@ class gdbbAtt_Admin {
             $gdbbpress_attachments->o['delete_visible_to_admins'] = d4p_sanitize_basic($_POST['delete_visible_to_admins']);
             $gdbbpress_attachments->o['delete_visible_to_moderators'] = d4p_sanitize_basic($_POST['delete_visible_to_moderators']);
             $gdbbpress_attachments->o['delete_visible_to_author'] = d4p_sanitize_basic($_POST['delete_visible_to_author']);
+
+            update_option('gd-bbpress-attachments', $gdbbpress_attachments->o);
+            wp_redirect(add_query_arg('settings-updated', 'true'));
+            exit();
+        }
+
+        if (isset($_POST['gdbb-att-images-submit'])) {
+            global $gdbbpress_attachments;
+            check_admin_referer('gd-bbpress-attachments');
+
+            $gdbbpress_attachments->o['image_thumbnail_active'] = isset($_POST['image_thumbnail_active']) ? 1 : 0;
+            $gdbbpress_attachments->o['image_thumbnail_inline'] = isset($_POST['image_thumbnail_inline']) ? 1 : 0;
+            $gdbbpress_attachments->o['image_thumbnail_caption'] = isset($_POST['image_thumbnail_caption']) ? 1 : 0;
+            $gdbbpress_attachments->o['image_thumbnail_rel'] = d4p_sanitize_basic($_POST['image_thumbnail_rel']);
+            $gdbbpress_attachments->o['image_thumbnail_css'] = d4p_sanitize_basic($_POST['image_thumbnail_css']);
+            $gdbbpress_attachments->o['image_thumbnail_size_x'] = absint($_POST['image_thumbnail_size_x']);
+            $gdbbpress_attachments->o['image_thumbnail_size_y'] = absint($_POST['image_thumbnail_size_y']);
 
             update_option('gd-bbpress-attachments', $gdbbpress_attachments->o);
             wp_redirect(add_query_arg('settings-updated', 'true'));

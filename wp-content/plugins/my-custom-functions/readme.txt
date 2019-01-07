@@ -1,55 +1,65 @@
 === My Custom Functions ===
 Contributors: Arthur Gareginyan
-Tags: code, php, function, snippet, custom, execute, edit, editing, editor, functionality plugin, codemirror, syntax highlighting, syntaxhighlighting, syntax highlighter, syntaxhighlighter, syntax,
+Tags: inject code, inject function, inject snippet, inject php, insert code, insert function, insert snippet, insert php, execute code, execute function, execute snippet, execute php, inject custom code, inject custom function, inject custom snippet, inject custom php, insert custom code, insert custom function, insert custom snippet, insert custom php, execute custom code, execute custom function, execute custom snippet, execute custom php, code, function, snippet, php, functionality plugin
 Donate link: https://www.spacexchimp.com/donate.html
 Requires at least: 3.9
-Tested up to: 4.9
-Stable tag: 4.23
+Tested up to: 5.0
+Stable tag: 4.31
 License: GPL3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Easily and safely add your custom functions (PHP code) directly out of your WordPress Admin Area, without the need to have an external editor.
+Easily and safely add your custom PHP code to your WordPress website, directly out of the WordPress Admin Area, without the need to have an external editor.
 
 
 == Description ==
 
-An easy to use, with intuitive interface, WordPress plugin that gives you the ability to easily and safely add your custom functions (PHP code) for execution in the WordPress environment directly out of your WordPress Admin Area, without the need to have an external editor.Its purpose is to provide a familiar experience to WordPress users. No need for any more editing of the functions.php file of your theme. Just add your PHP code in the field on the plugin settings page and this plugin will do the rest for you.
-It's really useful in case of any theme update, because your custom PHP code would never be overwritten. Your custom PHP code will keep on working, no matter how many times you upgrade or switch your theme.On the plugin settings page you find the PHP editor powered by CodeMirror. It has syntax highlighting and line numbering options. Also this editor supports a tab indentation.
+An easy to use, with intuitive interface, WordPress plugin that gives you the ability to easily and safely add your custom PHP code to your WordPress website, directly out of the WordPress Admin Area, without the need to have an external editor.
 
-This is a simple and perfect tool to use as your website's functionality plugin.
+This is a simple and perfect tool to use as your website's functionality plugin. This is a must have tool for authors and website's owners. Its purpose is to provide a familiar experience to WordPress users. There is no need for any more editing of the functions.php file of your theme or any of your plugin files for to add custom PHP code. Just add your custom PHP code in the field on the plugin page and this plugin will do the rest for you. It will automatically add your PHP code to your website, without changing any of your theme files and without slowing down your website.
+
+The plugin works completely independently of the theme, so you can use it with any theme, and regardless of whether the theme does or does not have a functions.php file. The code you place on the plugin page will be entirely unaffected if you edit the contents of the theme’s functions.php file, or even completely change the theme. This is really useful in case of updating theme or plugins, because your custom PHP code would never be overwritten. Your custom PHP code will keep on working, no matter how many times you upgrade or switch your theme and plugins.
+
+On the plugin page you find the code editor powered by CodeMirror. This code editor has options such as syntax highlighting, line numbering, and more. And if you want more options, let us know and we will be happy to add them.
 
 **Features**
 
 * Lightweight and fast
 * Secure code with using clear coding standards
-* Intuitive interface with many settings
+* Intuitive interface
 * Cross browser compatible (work smooth in any modern browser)
 * Compatible with all WordPress themes
 * RTL compatible (right to left)
 * Translation ready
 
-**Key features include...**
+**Key features include**
 
+* Insert custom PHP code into the site
 * Checks the entered code for fatal errors
-* Ability to temporarily disable all custom functions
 * Easy disable option for WSOD
-* Syntax highlighting (by CodeMirror)
+* Ability to temporarily disable all custom PHP code
+* Code syntax highlighting
 * Line numbering
 * Active line highlighting
-* Editor allow for tab indentation
+* Editor allow for Tab indentation
 * And much, much more!
 
-**PRO features include...**
+**PRO features include**
 
-* Unlimited number of fields
-* Automatic backup of all functions to a file
-* Ability to temporarily disable the certain function
-* Ability to collapse/expand the certain fields with code
+* Ability to easily customize the code editor by selecting the desired settings
+* 56 themes for syntax highlighting
+* Toolbar with useful buttons, such as Undo, Redo, etc.
+* Ability to use shortcut keys (both Mac and PC) for Search, Replace, etc.
+* Unlimited number of fields for functions
+* Automatic backup of all functions to a downloadable text file
+* Separate activation and deactivation of functions
+* No ads on the settings page
 * Well documented
 
 [Get the PRO version now!](https://www.spacexchimp.com/plugins/my-custom-functions-pro.html)
 
-**Coming soon:*** Reload the settings page at same position after pushing the save button* Multisite network support
+**Supported languages**
+
+* PHP
 
 **Translation**
 
@@ -61,6 +71,7 @@ This plugin is ready for translation and has already been translated into severa
 * Chinese-Taiwan (translation by Gordon Yu)
 * Spanish (translation by Ramiro Garcés and Patricio Toledo)
 * French (translation by Theophil Bethel)
+* Dutch (translation by Peter Leenders)
 
 If you want to help translate this plugin then please visit the [translation page](https://translate.wordpress.org/projects/wp-plugins/my-custom-functions).
 
@@ -116,21 +127,21 @@ A. Sorry, this plugin is available for use only on self-hosted (WordPress.ORG) w
 A. Yes. This plugin is ready for translation and has already been translated into several languages. But If your language is not available then you can make one. The POT file is included and placed in the "`languages`" folder. Just [send the PO file to us](https://www.spacexchimp.com/contact.html) and we will include this translation within the next plugin update. Many of plugin users would be delighted if you share your translation with the community. Thanks for your contribution!
 
 = Q. How does it work? =
-A. Simply go to the plugin settings page, place your PHP code in the field, switch the toggle to the "ON" position and click the "Save changes" button. Enjoy the result of applying your PHP code. It's that simple!
+A. Simply go to the plugin settings page, place your custom PHP code in the code editor field, switch the toggle to the "ON" position and click the "Save changes" button. Enjoy the result of applying your custom PHP code. It's that simple!
 You can find the plugin settings page at "`WordPress Admin Area`" -> "`Settings`" -> "`PHP Inserter`".
 
 = Q. Can I use HTML/CSS/JS code integrated in PHP code? =
 A. Yes. But you need to do it properly, like this:
 
-`function NameOfYourFunction {
+`function my_custom_html_code() {
 
-    echo "<script>
-		// Your JS code
-	  </script>";
+    // Print the custom HTML code
+    echo '<script>YOUR CUSTOM HTML CODE HERE</script>';
 
-}`
+}
+add_action( 'wp_head', 'my_custom_html_code' );`
 
-= Q. How much of PHP code (characters) I can enter in the text field? =
+= Q. How much of PHP code (characters) I can enter in the code editor? =
 A. We don't limit the number of characters.
 
 = Q. On the plugin settings page, an error message appears. What could be wrong? =
@@ -147,6 +158,21 @@ A. Absolutely not. This plugin is configurable entirely from the plugin settings
 = Q. Does this require any knowledge of HTML or CSS? =
 A. This plugin can be configured with no knowledge of HTML or CSS, using an easy-to-use plugin settings page. But you need to know the HTML or CSS in order to add/remove/modify the HTML or CSS code by using this plugin.
 
+= Q. Can I add my custom PHP code to a specific page of my website? =
+A. For now, this plugin does not have an option to apply the custom PHP code only on specific pages. We plan to add this feature soon. But for now in order to apply your custom PHP code only on specific pages of your website, you need to wrap your custom PHP code in a PHP function that will determine the page you want. You need something like this:
+
+`function my_custom_php_code() {
+
+    // Stop the function if this is not the Home page of website
+    if ( !is_home() ) {
+        return;
+    }
+
+    // YOUR CUSTOM PHP CODE HERE
+
+}
+my_custom_php_code();`
+
 = Q. It's not working. What could be wrong? =
 A. As with every plugin, it's possible that things don't work. The most common reason for this is a web browser's cache. Every web browser stores a cache of the websites you visit (pages, images, and etc.) to reduce bandwidth usage and server load. This is called the browser's cache.​ Clearing your browser's cache may solve the problem.
 
@@ -160,7 +186,7 @@ A. This plugin has a built-in functions for checking the custom code for syntax 
 3. Rename the file `START` to `STOP`. This will stop the execution of your custom code.
 4. Log in to Admin Area of your WordPress website.
 5. Go to the plugin settings page `Settings` -> `PHP Inserter`.
-6. Edit/fix your custom code that you entered before the crash.
+6. Edit/fix your custom PHP code that you entered before the crash.
 7. Return to the plugin folder and rename the file `STOP` to `START` and you're done!
 
 This plugin stored you entered code in the database of your website. For getting your code, you also can go to the `Database` -> Table "`wp_options`" -> Option "`spacexchimp_p001_settings`" -> "`option_value`".
@@ -183,7 +209,7 @@ A. Yes, any contributions are very welcome! Please visit [our donation page](htt
 == Screenshots ==
 
 1. Plugin page.
-2. Plugin page with custom code added.
+2. Plugin page with custom PHP code added.
 3. Success message.
 4. «Fatal error» message.
 
@@ -205,15 +231,64 @@ Commercial licensing (e.g. for projects that can’t use an open-source license)
 * The banner of plugin is a copyrighted image created by the [Space X-Chimp](https://www.spacexchimp.com) team. (C) All rights reserved.
 * [CodeMirror](https://codemirror.net/) is an open-source project shared under the [MIT license](https://codemirror.net/LICENSE).
 * [Bootstrap](http://getbootstrap.com) by Twitter, Inc. released under the [MIT license](https://github.com/twbs/bootstrap/blob/master/LICENSE).
+* [Bootstrap-checkbox](https://github.com/vsn4ik/bootstrap-checkbox) is a project of [Vasily A.](https://github.com/vsn4ik), shared under the [MIT license](https://github.com/vsn4ik/bootstrap-checkbox/blob/master/LICENSE).
 
 **Links**
 
 * [Developer website](https://www.spacexchimp.com)
 * [Dedicated plugin page on GitHub](https://github.com/ArthurGareginyan/my-custom-functions)
+* [Dedicated plugin page on WordPress.org](https://wordpress.org/plugins/my-custom-functions/)
 * [Premium Version](https://www.spacexchimp.com/plugins/my-custom-functions-pro.html)
 
 
 == Changelog ==
+
+= 4.31 =
+* Improvement: Design of the plugin settings page is improved.
+
+= 4.30 =
+* Improvement: Design of the plugin settings page is improved.
+* Content of the "Usage Instructions" section updated.
+* Translation files are updated.
+
+= 4.29 =
+* Added new feature: If the changes in the code editor were made, but not saved, the message "NOT SAVED" is displayed.
+* Code commenting improved.
+* Translation files are updated.
+
+= 4.28 =
+* CSS code, which is located in the file "admin.css" and is related to the "FAQ" section, is improved.
+* The sidebar items are rearranged.
+* Some texts are updated.
+* Translation files are updated.
+
+= 4.27 =
+* The design of the message "Successful" is improved.
+* The design of the message "Error" is improved.
+* The "readme.txt" file is updated.
+* Some texts are updated.
+* Translation files are updated.
+
+= 4.26 =
+* The function '_prepare' is improved.
+* The function '_duplicates' is improved.
+* The function '_exec' is improved.
+* Code commenting improved.
+* Some texts are updated.
+* Translation files are updated.
+
+= 4.25 =
+* Some texts are updated.
+* Translation files are updated.
+* The translation into Russian has been corrected.
+
+= 4.24 =
+* Dutch translation added. (Thanks to Peter Leenders)
+* The function '_load_scripts_codemirror' is improved. Removed an unnecessary call of constants.
+* The function '_load_scripts_admin' is improved.
+* The banner of Space X-Chimp, located on the settings page of the plugin, is updated. The image 'banner.png' is deleted.
+* Some texts are updated.
+* All translation files are updated.
 
 = 4.23 =
 * The code block that enqueue the CodeMirror library files is moved to a separate function '_load_scripts_codemirror' within the 'enqueue.php' file.
@@ -324,7 +399,7 @@ Commercial licensing (e.g. for projects that can’t use an open-source license)
 * Code commenting improved.
 * Load of the additional remote CSS file removed from the admin.js file.
 * Changed the sorting of enqueueing of scripts.
-* The ''Family' page tab renamed to 'Store'.
+* The 'Family' page tab renamed to 'Store'.
 * Added ad banner of my store website.
 
 = 4.4.1 =

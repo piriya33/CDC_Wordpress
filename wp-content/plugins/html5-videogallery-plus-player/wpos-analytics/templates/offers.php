@@ -16,19 +16,20 @@ if ( !defined( 'ABSPATH' ) ) {
 
 <div class="wrap wpos-anylc-offers">
 
-	<?php foreach ($analy_product['offers'] as $offer_key => $offer_data) { 
+	<?php foreach ($analy_product['offers'] as $offer_key => $offer_data) {
 
 		// If status wise offer is there
 		if( wpos_anylc_is_multi_arr( $offer_data ) ) {
-			$offer_data = isset( $offer_data[ $opt_in ] ) ? $offer_data[ $opt_in ] : current( $offer_data );
+			$offer_data = isset( $offer_data[ $opt_in ] ) ? $offer_data[ $opt_in ] : false;
 		}
 
 		if( empty( $offer_data ) ) {
 			continue;
 		}
 
-		$link 	= isset( $offer_data['link'] )		? $offer_data['link'] : '#';
-		$image 	= !empty( $offer_data['image'] ) 	? add_query_arg( array('v' => time()), $offer_data['image'] ) : '';
+		$has_offer	= true;
+		$link 		= isset( $offer_data['link'] )		? $offer_data['link'] : '';
+		$image 		= !empty( $offer_data['image'] ) 	? add_query_arg( array('v' => time()), $offer_data['image'] ) : '';
 	?>
 
 		<div class="wpos-anylc-offer-wrap">
@@ -38,9 +39,13 @@ if ( !defined( 'ABSPATH' ) ) {
 
 			<?php if( $image ) { ?>
 			<div class="wpos-anylc-offer-body wpos-anylc-center">
+				<?php if( $link ) { ?>
 				<a href="<?php echo esc_url( $link ); ?>" target="_blank">
 					<img src="<?php echo esc_url( $image ); ?>" alt="" />
 				</a>
+				<?php } else { ?>
+				<img src="<?php echo esc_url( $image ); ?>" alt="" />
+				<?php } ?>
 			</div>
 			<?php } ?>
 
@@ -53,6 +58,16 @@ if ( !defined( 'ABSPATH' ) ) {
 			<?php } ?>
 		</div>
 
+	<?php } // End of foreach
+
+	// If no offer to display then redirect to main plugin screen
+	if( empty( $has_offer ) ) { 
+		$redirect_url = wpos_anylc_pdt_url( $analy_product ); // Redirect URL
+	?>
+		Please Wait... Redirecting to plugin screen. <a href="<?php echo $redirect_url; ?>">Click Here</a> in case you are not auto redirect.
+		<script type="text/javascript">
+			window.location = "<?php echo $redirect_url; ?>";
+		</script>
 	<?php } ?>
 
 </div><!-- end .wrap -->

@@ -53,7 +53,7 @@ abstract class Delicious_Brains_API_Licences extends Delicious_Brains_API_Base {
 	function actions() {
 		add_action( $this->plugin->load_hook, array( $this, 'remove_licence_when_constant_set' ) );
 		add_action( $this->plugin->load_hook, array( $this, 'http_disable_ssl' ) );
-		add_action( $this->plugin->load_hook, array( $this, 'http_remove_license' ) );
+		add_action( $this->plugin->load_hook, array( $this, 'http_remove_licence' ) );
 		add_action( $this->plugin->load_hook, array( $this, 'http_refresh_licence' ) );
 
 		add_action( 'wp_ajax_' . $this->plugin->prefix . '_activate_licence', array( $this, 'ajax_activate_licence' ) );
@@ -162,10 +162,11 @@ abstract class Delicious_Brains_API_Licences extends Delicious_Brains_API_Base {
 	 * Checks whether the saved licence has expired or not.
 	 *
 	 * @param bool $skip_transient_check
+	 * @param bool $skip_expired_check
 	 *
 	 * @return bool
 	 */
-	public function is_valid_licence( $skip_transient_check = false ) {
+	public function is_valid_licence( $skip_transient_check = false, $skip_expired_check = true ) {
 		$response = $this->is_licence_expired( $skip_transient_check );
 
 		if ( isset( $response['dbrains_api_down'] ) ) {
@@ -173,8 +174,8 @@ abstract class Delicious_Brains_API_Licences extends Delicious_Brains_API_Base {
 		}
 
 		if ( $this->plugin->expired_licence_is_valid && isset( $response['errors']['subscription_expired'] ) && 1 === count( $response['errors'] ) ) {
-			// Don't cripple the plugin's functionality if the user's licence is expired
-			return true;
+			// Maybe don't cripple the plugin's functionality if the user's licence is expired.
+			return $skip_expired_check;
 		}
 
 		return ( isset( $response['errors'] ) ) ? false : true;
@@ -336,7 +337,7 @@ abstract class Delicious_Brains_API_Licences extends Delicious_Brains_API_Base {
 			$message .= sprintf( '<p>%s</p>', $error );
 		}
 
-		return apply_filters( $this->plugin->prefix . '_licence_status_message' , $message, $errors );
+		return apply_filters( $this->plugin->prefix . '_licence_status_message', $message, $errors );
 	}
 
 	/**
@@ -359,7 +360,7 @@ abstract class Delicious_Brains_API_Licences extends Delicious_Brains_API_Base {
 
 			$masked_licence .= '<span class="bull">';
 			$masked_licence .= str_repeat( '&bull;', strlen( $licence_part ) ) . '</span>&ndash;';
-			-- $i;
+			--$i;
 		}
 
 		return $masked_licence;
@@ -403,9 +404,9 @@ abstract class Delicious_Brains_API_Licences extends Delicious_Brains_API_Base {
 	 *
 	 * @return void
 	 */
-	function http_remove_license() {
+	function http_remove_licence() {
 		if ( isset( $_GET[ $this->plugin->prefix . '-remove-licence' ] ) && wp_verify_nonce( $_GET['nonce'], $this->plugin->prefix . '-remove-licence' ) ) { // input var okay
-			$this->remove_license();
+			$this->remove_licence();
 
 			// redirecting here because we don't want to keep the query string in the web browsers address bar
 			wp_redirect( $this->admin_url( $this->plugin->settings_url_path . $this->plugin->settings_url_hash ) );
@@ -425,7 +426,7 @@ abstract class Delicious_Brains_API_Licences extends Delicious_Brains_API_Base {
 			) );
 		}
 
-		$this->remove_license();
+		$this->remove_licence();
 
 		wp_send_json_success( array(
 			'message' => __( 'Licence key removed successfully.', 'amazon-s3-and-cloudfront' ),
@@ -435,7 +436,7 @@ abstract class Delicious_Brains_API_Licences extends Delicious_Brains_API_Base {
 	/**
 	 * Remove the license key.
 	 */
-	protected function remove_license() {
+	protected function remove_licence() {
 		$this->set_licence_key( '' );
 
 		// delete these transients as they contain information only valid for authenticated licence holders
@@ -617,7 +618,7 @@ abstract class Delicious_Brains_API_Licences extends Delicious_Brains_API_Base {
 		if ( false === $result ) {
 			$return = array(
 				$this->plugin->prefix . '_error' => 1,
-				'body'                           => sprintf( __( 'Invalid nonce for: %s', 'amazon-s3-and-cloudfront' ), $action )
+				'body'                           => sprintf( __( 'Invalid nonce for: %s', 'amazon-s3-and-cloudfront' ), $action ),
 			);
 			$this->end_ajax( json_encode( $return ) );
 		}

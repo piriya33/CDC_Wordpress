@@ -1,3 +1,4 @@
+/* Basic */
 .d4p-wrap, 
 .d4p-wrap * {
     -webkit-box-sizing: border-box;
@@ -62,7 +63,7 @@
 }
 
 .d4p-navigator ul li.d4p-nav-button {
-    margin-right: 16px;
+    margin-right: 30px;
     float: left;
     position: relative;
 }
@@ -81,8 +82,9 @@
     font-size: 15px;
     padding: 7px 10px;
     margin: 0;
-    width: 200px;
+    width: 235px;
     white-space: nowrap;
+    overflow: hidden;
 }
 
 .d4p-navigator li {
@@ -107,7 +109,7 @@
     padding: 5px 0px;
     position: absolute;
     top: 33px;
-    width: 200px;
+    width: 235px;
     z-index: 100;
 }
 
@@ -157,7 +159,7 @@
 }
 
 .d4p-panel-title h3 {
-    font-size: 32px;
+    font-size: 28px;
     word-break: keep-all;
     font-weight: 600;
     letter-spacing: -2px;
@@ -199,12 +201,6 @@
     margin: 0 0 5px;
     text-align: center;
     text-decoration: none;
-}
-
-.d4p-panel-info {
-    text-align: center;
-    font-size: 16px;
-    line-height: 24px;
 }
 
 .d4p-panel-buttons {
@@ -285,6 +281,34 @@
 .d4p-content-right .d4p-update-info {
     float: left;
     max-width: 400px;
+}
+
+.d4p-group-separator {
+    margin: 0;
+    float: left;
+    text-align: left;
+    max-width: 800px;
+    width: 100%;
+    clear: both;
+    overflow: auto;
+}
+
+.d4p-group-separator h3 {
+    border-bottom: 2px solid #ccc;
+    text-transform: uppercase;
+    margin: 0 0 30px;
+    font-size: 22px;
+    line-height: 24px;
+}
+
+.d4p-group-separator h3 > span {
+    padding: 0 15px 2px;
+    position: relative;
+    top: 12px;
+    background: #ccc;
+    color: #111;
+    font-weight: bold;
+    margin: 0 0 0 30px;
 }
 
 .d4p-group {
@@ -417,11 +441,13 @@
     width: 25%;
 }
 
+.d4p-setting-expandable_raw ol,
 .d4p-setting-expandable_text ol {
     list-style: none;
     margin: 0 0 .5em;
 }
 
+.d4p-setting-expandable_raw .exp-text-element a,
 .d4p-setting-expandable_text .exp-text-element a {
     margin-left: 10px;
     text-align: center;
@@ -463,7 +489,7 @@
 }
 
 .d4p-panel-buttons input.button-primary {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
     height: 44px;
     width: 100%;
@@ -829,6 +855,13 @@
     height: 92px;
 }
 
+#dev4press-recommend .dev4press-plugin-thumb i {
+    font-size: 96px;
+    width: 96px;
+    height: 96px;
+    display: block;
+}
+
 #dev4press-recommend .dev4press-plugin-inner em {
     line-height: 18px;
     font-size: 12px;
@@ -955,6 +988,312 @@
     font-style: italic;
 }
 
+/* Dashboard */
+.d4p-plugin-dashboard > * {
+    padding-top: 0;
+}
+
+.d4p-plugin-dashboard .d4p-dashboard-badge {
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
+}
+
+.d4p-plugin-dashboard .d4p-dashboard-badge * {
+    color: #ffffff;
+}
+
+.d4p-plugin-dashboard .d4p-dashboard-badge h3 {
+    word-break: keep-all;
+    font-weight: 600;
+    letter-spacing: -2px;
+    margin: 5px 0 15px;
+    padding: 0;
+    text-transform: uppercase;
+    line-height: 1.1;
+    font-size: 32px;
+}
+
+.d4p-plugin-dashboard .d4p-dashboard-badge .d4p-plugin-logo i {
+    font-size: 140px;
+}
+
+.d4p-plugin-dashboard .d4p-dashboard-badge h5 {
+    margin: 0;
+    padding: 10px 0 0;
+    border-top: 1px solid #ddd;
+    font-size: 1.3em;
+    text-align: right;
+}
+
+.d4p-plugin-dashboard .d4p-buttons-group {
+    margin: 15px 0 0;
+    padding: 15px 0 0;
+    border-top: 1px solid #DDDDDD;
+}
+
+.d4p-plugin-dashboard .d4p-buttons-group .button-primary,
+.d4p-plugin-dashboard .d4p-buttons-group .button-secondary {
+    width: 100%;
+    font-size: 16px;
+    font-weight: bold;
+    height: 32px;
+    line-height: 28px;
+    margin: 0 0 5px;
+}
+
+.d4p-plugin-dashboard .d4p-buttons-group .button-primary:last-child,
+.d4p-plugin-dashboard .d4p-buttons-group .button-secondary:last-child {
+    margin: 0;
+}
+
+.d4p-group-dashboard-card {
+    clear: none;
+    text-align: left;
+    width: calc(50% - 15px);
+    max-width: 600px;
+    margin-right: 15px;
+}
+
+.d4p-group-dashboard-card .d4p-group-stats {
+    border-bottom: 1px solid #eee;
+    padding: 8px 12px;
+    background: #fafafa;
+}
+
+.d4p-group-dashboard-card .d4p-group-inner {
+    padding: 8px 12px;
+}
+
+.d4p-group-dashboard-card .d4p-group-footer {
+    border-top: 1px solid #eee;
+    padding: 8px 12px;
+}
+
+.d4p-group-dashboard-card .d4p-group-inner h4 {
+    margin: 0 0 .5em;
+}
+
+.d4p-group-dashboard-card .d4p-group-stats ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.d4p-group-dashboard-card .d4p-group-stats ul li {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    line-height: 2em;
+    font-size: 1em;
+    width: 50%;
+    float: left;
+}
+
+.d4p-group-dashboard-card .d4p-group-stats ul li a i {
+    color: #666;
+}
+
+.d4p-group-dashboard-card .d4p-group-stats ul li a strong {
+    font-weight: 700;
+}
+
+.d4p-group-dashboard-card .d4p-group-stats ul li a {
+    text-decoration: none;
+}
+
+.d4p-group-dashboard-card .d4p-group-inner a {
+    display: block;
+}
+
+/* About */
+.d4p-wrap.d4p-page-about {
+    position: relative;
+    margin: 25px 40px 0 20px;
+    max-width: 1050px;
+    font-size: 15px;
+}
+
+.d4p-page-about h1 {
+    margin: 0.2em 200px 0 0;
+    padding: 0;
+    color: #32373c;
+    line-height: 1.2em;
+    font-size: 2.4em;
+    font-weight: 400;
+}
+
+.d4p-page-about .d4p-about-text {
+    margin: 1em 200px 1em 0;
+    min-height: 60px;
+    color: #555d66;
+    font-weight: 400;
+    line-height: 1.6em;
+    font-size: 19px;
+}
+
+.d4p-page-about .d4p-about-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: #fff;
+    font-size: 14px;
+    text-align: center;
+    font-weight: 600;
+    margin: 5px 0 0;
+    padding: 20px 10px;
+    display: inline-block;
+    width: 140px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.d4p-page-about .d4p-about-badge i {
+    font-size: 90px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.d4p-page-about .nav-tab {
+    padding-right: 15px;
+    padding-left: 15px;
+    font-size: 18px;
+}
+
+.d4p-page-about .d4p-about-inner {
+    margin: 20px 0 0;
+}
+
+.d4p-about-inner .d4p-group {
+    background: none;
+    box-shadow: none;
+    max-width: none;
+    border: 0;
+}
+
+.d4p-about-dev4press-plugins {
+    margin: 0 0 10px;
+}
+
+.d4p-about-dev4press-plugins .d4p-dev4press-plugin {
+    width: calc(50% - 15px);
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+.d4p-about-dev4press-plugins .d4p-dev4press-plugin:nth-child(odd) {
+    margin-right: 15px;
+    clear: both;
+}
+
+.d4p-about-dev4press-plugins ._badge {
+    float: left;
+    width: 80px;
+    height: 100px;
+    text-align: center;
+    line-height: 100px;
+    color: #fff;
+    border-radius: 4px;
+}
+
+.d4p-about-dev4press-plugins ._badge a {
+    color: #fff;
+    text-decoration: none;
+    border: 0;
+    box-shadow: none;
+    outline: none;
+}
+
+.d4p-about-dev4press-plugins ._badge i {
+    font-size: 60px;
+    line-height: inherit;
+}
+
+.d4p-about-dev4press-plugins ._info {
+    margin-left: 100px;
+}
+
+.d4p-about-dev4press-plugins ._info h5 {
+    font-size: 18px;
+    margin: 0 0 5px;
+}
+
+.d4p-about-dev4press-plugins ._info h5 a {
+    text-decoration: none;
+    border: 0;
+    box-shadow: none;
+    outline: none;
+}
+
+.d4p-about-dev4press-plugins ._info p {
+    margin: 5px 0 0;
+}
+
+.d4p-page-about .d4p-about-minor {
+    margin: 0 0 40px;
+    border-bottom: 1px solid #ddd;
+}
+
+.d4p-page-about .d4p-about-minor h3 {
+    font-size: 18px;
+}
+
+.d4p-page-about .d4p-about-minor p {
+    font-size: 14px;
+}
+
+.d4p-whatsnew-section {
+    margin: 0 0 40px;
+    padding: 0 0 40px;
+    border-bottom: 1px solid #ddd;
+}
+
+.d4p-whatsnew-section img {
+    width: 100%;
+    height: auto;
+    box-shadow: 0px 0px 2px rgba(0, 0, 0, .64);
+}
+
+.d4p-whatsnew-section h3 {
+    margin: 1em 0 2em;
+    font-size: 30px;
+    font-weight: 300;
+}
+
+.d4p-whatsnew-section p {
+    font-size: 18px;
+    line-height: 28px;
+}
+
+.d4p-whatsnew-section .d4p-layout-grid {
+    margin-bottom: 2em;
+}
+
+.d4p-whatsnew-section .d4p-layout-grid:last-child {
+    margin-bottom: 0;
+}
+
+.d4p-whatsnew-heading .d4p-layout-grid {
+    max-width: 800px; 
+    width: 90%; 
+    margin: 56px auto 0;
+}
+
+.d4p-whatsnew-heading .d4p-layout-grid h2 {
+    font-size: 56px;
+    font-weight: 100;
+    margin: 0 0 20px;
+    line-height: 1;
+}
+
+.d4p-whatsnew-heading .d4p-layout-grid p {
+    font-size: 16px;
+}
+
+.d4p-whatsnew-heading .d4p-layout-grid p.lead-description {
+    font-size: 28px;
+    font-weight: 300;
+}
+
 @media screen and (max-width: 1280px) {
     .d4p-content-right .d4p-update-info {
         float: none;
@@ -1013,7 +1352,14 @@
         width: 25px;
     }
 
-    .d4p-content-right .d4p-update-info {
+    .d4p-about-dev4press-plugins .d4p-dev4press-plugin {
+        width: 100%;
+        display: block;
+    }
+
+    .d4p-about-dev4press-plugins .d4p-dev4press-plugin:nth-child(odd) {
+        margin-right: 0;
+        clear: none;
     }
 }
 
@@ -1076,13 +1422,13 @@
     .d4p-navigator {
         width: 100%;
     }
-    
+
     .d4p-navigator ul li.d4p-nav-button {
 	margin-right: 2%;
     }
 
     .d4p-navigator li.d4p-nav-button {
-        width: 48%;
+        width: 49%;
     }
 
     .d4p-navigator li.d4p-nav-button > a,
@@ -1096,6 +1442,32 @@
     .d4p-setting-absint input,
     .d4p-setting-numeric input,
     .d4p-setting-number input {
+        width: 100%;
+    }
+
+    .d4p-whatsnew-heading .d4p-layout-grid {
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .d4p-wrap.d4p-page-about {
+        margin-right: 20px;
+        margin-left: 10px;
+    }
+
+    .d4p-page-about h1,
+    .d4p-page-about .d4p-about-text {
+        margin-right: 0;
+    }
+
+    .d4p-page-about .d4p-about-text {
+        margin-bottom: 0.25em;
+    }
+
+    .d4p-page-about .d4p-about-badge {
+        position: relative;
+        margin-bottom: 1.5em;
         width: 100%;
     }
 }

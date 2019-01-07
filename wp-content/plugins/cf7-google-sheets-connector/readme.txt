@@ -1,11 +1,11 @@
 === CF7 Google Sheets Connector ===
 Contributors: westerndeal
 Donate link: https://www.paypal.me/WesternDeal
-Author URL: https://profiles.wordpress.org/westerndeal/
+Author URL: https://www.gsheetconnector.com/
 Tags: cf7, contact form 7, Contact Form 7 Integrations, contact forms, Google Sheets, Google Sheets Integrations, Google, Sheets
 Requires at least: 3.6
-Tested up to: 4.9.6
-Stable tag: 2.0
+Tested up to: 5.0.2
+Stable tag: 2.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,9 +13,21 @@ Send your Contact Form 7 data directly to your Google Sheets spreadsheet.
 
 == Description ==
 
+[Homepage](https://www.gsheetconnector.com/) | [Documentation](https://www.gsheetconnector.com/documentation) | [Support](https://www.gsheetconnector.com/support) | [Demo](https://cf7demo.gsheetconnector.com/) | [Premium Version](https://www.gsheetconnector.com/cf7-google-sheet-connector-pro?wp-repo)
+
 This plugin is a bridge between your [WordPress](https://wordpress.org/) [Contact Form 7](https://wordpress.org/plugins/contact-form-7/) forms and [Google Sheets](https://www.google.com/sheets/about/).
 
 When a visitor submits his/her data on your website via a Contact Form 7 form, upon form submission, such data are also sent to Google Sheets.
+
+Get rid of making mistakes while adding the sheet settings or adding the headers ( Mail Tags ) to the sheet column. We have Launched the <a href="https://www.gsheetconnector.com/cf7-google-sheet-connector-pro?wp-repo" target="_blank">Googlesheet Connector PRO version</a> with more automated features.
+
+= Still haven't purchased ? <a href="https://www.gsheetconnector.com/cf7-google-sheet-connector-pro?wp-repo" target="_blank">Get it Now</a> =
+
+= Check Live Demo =
+Demo URL:&nbsp;<a href="https://cf7demo.gsheetconnector.com/" target="_blank">https://cf7demo.gsheetconnector.com/</a>
+
+Google Sheet URL to Check submitted Data<br><a href="https://docs.google.com/spreadsheets/d/1ooBdX0cgtk155ww9MmdMTw8kDavIy5J1m76VwSrcTSs/" target="_blank">https://docs.google.com/spreadsheets/d/1ooBdX0cgtk155ww9MmdMTw8kDavIy5J1m76VwSrcTSs/</a>
+				
 
 = How to Use this Plugin =
 
@@ -69,6 +81,37 @@ Please double-check those items and hopefully getting them right will fix the is
 
 == Changelog ==
 
+= 2.7 =
+* Done UI changes.
+* Fixed - Not to delete authentication data when upgrade to Pro Version.
+* Changed few classes and functions name to not get conflict when upgrade to pro Version
+
+= 2.6 =
+* Done UI changes at Google Sheet Tab under Contact Form settings.
+
+= 2.5 =
+* Removed Limitation
+
+= 2.4 =
+* Fixed - Connections of Contact Forms with Google Sheet.
+* Added limitation to connect first 5 Contact Forms to Google Sheet.
+
+= 2.3.1 =
+* Fixed images not being displayed.
+
+= 2.3 =
+* Fixed integration issues.
+* Fixed the functionality issues of limitations as per the last update.
+
+= 2.2 =
+* Done few UI changes and solved few bugs.
+* Added a limitation for contact form to be connected with the Google Sheet.
+
+= 2.1 =
+* Added Google Sheet Connector dashboard widget for quick access to the contact form connected with Google Sheet.
+* Added option to clear logs.
+* Fixed - Multisite plugin activation issue.
+
 = 2.0 ( 11/06/2018 ) =
 * Fixed - Bypassing of CF7 built-in data validation.
 
@@ -109,4 +152,3 @@ Please double-check those items and hopefully getting them right will fix the is
 = 1.0 =
 * First public release
 * Integrated Contact form 7 with Google sheets.
-

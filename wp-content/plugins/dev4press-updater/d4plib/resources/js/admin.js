@@ -77,7 +77,9 @@ var d4plib_admin;
             });
         },
         settings: function() {
-            d4plib_media_image.init();
+            if (typeof d4plib_media_image !== 'undefined' && d4plib_media_image !== null) {
+                d4plib_media_image.init();
+            }
 
             $(".d4p-setting-number input, .d4p-field-number").numeric();
             $(".d4p-setting-integer input, .d4p-field-integer").numeric({decimalPlaces: 0, negative: false});
@@ -114,16 +116,10 @@ var d4plib_admin;
             $(document).on("click", ".d4p-setting-expandable_pairs .button-secondary", function(e){
                 e.preventDefault();
 
-                $(this).parent().fadeOut(function(){
-                    $(this).remove();
-                });
-            });
+                var li = $(this).parent();
 
-            $(document).on("click", ".d4p-setting-expandable_text .button-secondary", function(e){
-                e.preventDefault();
-
-                $(this).parent().fadeOut(function(){
-                    $(this).remove();
+                li.fadeOut(200, function(){
+                    li.remove();
                 });
             });
 
@@ -149,26 +145,20 @@ var d4plib_admin;
                 next.val(next_id);
             });
 
+            $(document).on("click", ".d4p-setting-expandable_text .button-secondary", function(e){
+                d4plib_admin.handlers.expendable_text_remove(this, e);
+            });
+
+            $(document).on("click", ".d4p-setting-expandable_raw .button-secondary", function(e){
+                d4plib_admin.handlers.expendable_text_remove(this, e);
+            });
+
             $(".d4p-setting-expandable_text a.button-primary").click(function(e) {
-                e.preventDefault();
+                d4plib_admin.handlers.expendable_text_add(this, e, ".d4p-setting-expandable_text");
+            });
 
-                var list = $(this).closest(".d4p-setting-expandable_text"),
-                    next = $(".d4p-next-id", list),
-                    next_id = next.val(),
-                    el = $(".exp-text-element-0", list).clone();
-
-                $("input", el).each(function(){
-                    var id = $(this).attr("id").replace("_0_", "_" + next_id + "_"),
-                        name = $(this).attr("name").replace("[0]", "[" + next_id + "]");
-
-                    $(this).attr("id", id).attr("name", name);
-                });
-
-                el.attr("class", "exp-text-element exp-text-element-" + next_id).fadeIn();
-                $("ol", list).append(el);
-
-                next_id++;
-                next.val(next_id);
+            $(".d4p-setting-expandable_raw a.button-primary").click(function(e) {
+                d4plib_admin.handlers.expendable_text_add(this, e, ".d4p-setting-expandable_raw");
             });
         },
         scroller: function() {
@@ -189,6 +179,38 @@ var d4plib_admin;
                         });
                     }
                 });
+            }
+        },
+        handlers: {
+            expendable_text_remove: function(ths, e) {
+                e.preventDefault();
+
+                var li = $(ths).parent();
+
+                li.fadeOut(200, function(){
+                    li.remove();
+                });
+            },
+            expendable_text_add: function(ths, e, cls) {
+                e.preventDefault();
+
+                var list = $(ths).closest(cls),
+                    next = $(".d4p-next-id", list), 
+                    next_id = next.val(),
+                    el = $(".exp-text-element-0", list).clone();
+
+                $("input", el).each(function(){
+                    var id = $(this).attr("id").replace("_0_", "_" + next_id + "_"),
+                        name = $(this).attr("name").replace("[0]", "[" + next_id + "]");
+
+                    $(this).attr("id", id).attr("name", name);
+                });
+
+                el.attr("class", "exp-text-element exp-text-element-" + next_id).fadeIn();
+                $("ol", list).append(el);
+
+                next_id++;
+                next.val(next_id);
             }
         }
     };

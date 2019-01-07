@@ -161,8 +161,9 @@ if (!class_exists('WP_Maintenance_Mode_Admin')) {
 
                 // delete all subscribers
                 $wpdb->query("DELETE FROM {$wpdb->prefix}wpmm_subscribers");
-
-                wp_send_json_success(sprintf(__('You have %d subscriber(s)', $this->plugin_slug), 0));
+		
+				$message = sprintf(_nx('You have %d subscriber', 'You have %s subscribers', 0, 'ajax response',$this->plugin_slug), 0);		
+                wp_send_json_success($message);
             } catch (Exception $ex) {
                 wp_send_json_error($ex->getMessage());
             }
@@ -360,6 +361,7 @@ if (!class_exists('WP_Maintenance_Mode_Admin')) {
                         $_POST['options']['modules']['social_dribbble'] = sanitize_text_field($_POST['options']['modules']['social_dribbble']);
                         $_POST['options']['modules']['social_twitter'] = sanitize_text_field($_POST['options']['modules']['social_twitter']);
                         $_POST['options']['modules']['social_facebook'] = sanitize_text_field($_POST['options']['modules']['social_facebook']);
+                        $_POST['options']['modules']['social_instagram'] = sanitize_text_field($_POST['options']['modules']['social_instagram']);
                         $_POST['options']['modules']['social_pinterest'] = sanitize_text_field($_POST['options']['modules']['social_pinterest']);
                         $_POST['options']['modules']['social_google+'] = sanitize_text_field($_POST['options']['modules']['social_google+']);
                         $_POST['options']['modules']['social_linkedin'] = sanitize_text_field($_POST['options']['modules']['social_linkedin']);
@@ -371,6 +373,7 @@ if (!class_exists('WP_Maintenance_Mode_Admin')) {
 
                         // GOOGLE ANALYTICS
                         $_POST['options']['modules']['ga_status'] = (int) $_POST['options']['modules']['ga_status'];
+						$_POST['options']['modules']['ga_anonymize_ip'] = (int) $_POST['options']['modules']['ga_anonymize_ip'];
                         $_POST['options']['modules']['ga_code'] = wpmm_sanitize_ga_code($_POST['options']['modules']['ga_code']);
 
                         $_POST['options']['modules']['custom_css'] = $custom_css;
@@ -425,8 +428,9 @@ if (!class_exists('WP_Maintenance_Mode_Admin')) {
                         $_POST['options']['gdpr']['status'] = (int)$_POST['options']['gdpr']['status'];
                         $_POST['options']['gdpr']['policy_page_label'] = sanitize_text_field($_POST['options']['gdpr']['policy_page_label']);
                         $_POST['options']['gdpr']['policy_page_link'] = sanitize_text_field($_POST['options']['gdpr']['policy_page_link']);
-                        $_POST['options']['gdpr']['contact_form_tail'] = sanitize_text_field($_POST['options']['gdpr']['contact_form_tail']);
-                        $_POST['options']['gdpr']['subscribe_form_tail'] = sanitize_text_field($_POST['options']['gdpr']['subscribe_form_tail']);
+						$_POST['options']['gdpr']['policy_page_target'] = (int) $_POST['options']['gdpr']['policy_page_target'];
+                        $_POST['options']['gdpr']['contact_form_tail'] = wp_kses($_POST['options']['gdpr']['contact_form_tail'], wpmm_gdpr_textarea_allowed_html());
+                        $_POST['options']['gdpr']['subscribe_form_tail'] = wp_kses($_POST['options']['gdpr']['subscribe_form_tail'], wpmm_gdpr_textarea_allowed_html());
                 }
 
                 $this->plugin_settings[$tab] = $_POST['options'][$tab];
@@ -541,7 +545,7 @@ if (!class_exists('WP_Maintenance_Mode_Admin')) {
 
             if ($this->plugin_screen_hook_suffix != $screen->id) {
                 // notice if plugin is activated
-                if ($this->plugin_settings['general']['status'] == 1 && $this->plugin_settings['general']['notice'] == 1) {
+                if (array_key_exists('general', $this->plugin_settings) && $this->plugin_settings['general']['status'] == 1 && $this->plugin_settings['general']['notice'] == 1) {
                     $notices['is_activated'] = array(
                         'class' => 'error',
                         'msg' => sprintf(__('The Maintenance Mode is <strong>active</strong>. Please don\'t forget to <a href="%s">deactivate</a> as soon as you are done.', $this->plugin_slug), admin_url('options-general.php?page=' . $this->plugin_slug))

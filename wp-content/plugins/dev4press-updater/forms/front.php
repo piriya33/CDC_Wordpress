@@ -4,6 +4,12 @@ if (!defined('ABSPATH')) exit;
 
 include(D4PUPD_PATH.'forms/shared/top.php');
 
+$scopes = array(
+    'normal' => array('beta'),
+    'alpha' => array('alpha', 'beta'),
+    'nightly' => array('nightly', 'alpha', 'beta')
+);
+
 ?>
 
 <div class="d4p-content-left">
@@ -47,17 +53,17 @@ include(D4PUPD_PATH.'forms/shared/top.php');
     <div class="d4p-group d4p-group-update-status">
         <h3><?php _e("API Key missing!", "dev4press-updater"); ?></h3>
         <div class="d4p-group-inner" style="text-align: left;">
-            <?php _e("You need to enter Dev4Press API Key before you can check for the updates.", "dev4press-updater"); ?><br/>
-            <a href="admin.php?page=dev4press-updater-settings&panel=api"><?php _e("Enter API Key", "dev4press-updater"); ?></a>
+            <p style="margin-bottom: 10px;"><?php _e("You need to enter Dev4Press API Key before you can check for the updates.", "dev4press-updater"); ?></p>
+            <a class="button-primary" href="admin.php?page=dev4press-updater-settings&panel=api"><?php _e("Enter API Key", "dev4press-updater"); ?></a>
         </div>
     </div>
     <?php } else { ?>
     <?php
 
-        $update_last = __("Never", "dev4press-updater");
+        $update_last = _x("Never", "When the last check was performed", "dev4press-updater");
 
         if (isset(d4pupd_updater()->update['core']['time'])) {
-            $update_last = sprintf(__("%s ago", "dev4press-updater"), human_time_diff(d4pupd_updater()->update['core']['time']));
+            $update_last = sprintf(_x("%s ago", "When the last check was performed", "dev4press-updater"), human_time_diff(d4pupd_updater()->update['core']['time']));
         }
 
         $updates = d4pupd_updater()->has_updates();
@@ -67,6 +73,12 @@ include(D4PUPD_PATH.'forms/shared/top.php');
     <div class="d4p-group d4p-group-update-status">
         <h3><?php _e("Update Status", "dev4press-updater"); ?></h3>
         <div class="d4p-group-inner">
+            <?php if (d4pupd_settings()->get('update_status') != 'stable') {?>
+            <div class="d4p-block-notice-nonstable">
+                <?php echo sprintf(__("The updater is currently set to allow %s updates. These updates can be unstable, they are for testing purposes only, and they should be used on staging, localhost or development websites only, not on live websites!", "dev4press-updater"), '<strong>'.join('</strong>, <strong>', $scopes[d4pupd_settings()->get('update_status')]).'</strong>'); ?> 
+                <?php echo sprintf(__("To change the updates received, visit the <a href='%s'>Settings</a> page.", "dev4press-updater"), network_admin_url('admin.php?page=dev4press-updater-settings&panel=control')); ?>
+            </div>
+            <?php } ?>
             <div class="d4p-block-update-status">
                 <strong><?php _e("Last check performed", "dev4press-updater"); ?>: </strong><?php echo $update_last; ?>
             </div>
@@ -78,11 +90,20 @@ include(D4PUPD_PATH.'forms/shared/top.php');
                 } else {
                     if (!empty($updates['plugins'])) {
                         $num = count($updates['plugins']);
-                        echo '<strong>'.$num.' '._n("plugin", "plugins", $num, "dev4press-updater").'</strong> '.__("available for update", "dev4press-updater").':';
+
+                        echo sprintf(_n("<strong>%s plugin</strong> availbale for update", "<strong>%s plugins</strong> availbale for update", $num, "dev4press-updater"), $num).':';
+
                         echo '<ul>';
                         foreach ($updates['plugins'] as $plugin) {
-                            echo '<li>'.$plugin['name'].' <strong>'.$plugin['version'].'</strong> ('.$plugin['released'].')</li>';
+                            echo '<li>'.$plugin['name'].' <strong>'.$plugin['version'].'</strong>';
+
+                            if ($plugin['status'] != 'stable') {
+                                echo ' <strong style="color: #900">'.ucfirst($plugin['status']).'</strong>';
+                            }
+
+                            echo ' ('.$plugin['released'].')</li>';
                         }
+
                         echo '</ul>';
                     }
                 }
@@ -130,8 +151,8 @@ include(D4PUPD_PATH.'forms/shared/top.php');
                         <td>
                             <strong><?php _e("Plugin Version", "dev4press-updater"); ?>: </strong><?php echo d4pupd_settings()->info_version; ?> &middot; 
                             <strong><?php _e("Build", "dev4press-updater"); ?>: </strong><?php echo d4pupd_settings()->info_build; ?><br/>
-                            <strong><?php _e("Update Server Version", "dev4press-updater"); ?>: </strong><?php echo isset(d4pupd_updater()->update['core']['api_version']) ? d4pupd_updater()->update['core']['api_version'] : 'INVALID'; ?><br/>
-                            <strong><?php _e("Last Update Check", "dev4press-updater"); ?>: </strong><?php echo date('r', d4pupd_updater()->update['core']['time'] + 3600 * d4p_gmt_offset()); ?><br/>
+                            <strong><?php _e("Update Server Version", "dev4press-updater"); ?>: </strong><?php echo isset(d4pupd_updater()->update['core']['api_version']) ? d4pupd_updater()->update['core']['api_version'] : __("Invalid", "dev4press-updater"); ?><br/>
+                            <strong><?php _e("Last Update Check", "dev4press-updater"); ?>: </strong><?php echo isset(d4pupd_updater()->update['core']['time']) ? date('r', d4pupd_updater()->update['core']['time'] + 3600 * d4p_gmt_offset()) : __("No Information", "dev4press-updater"); ?><br/>
                         </td>
                     </tr>
                     <tr valign="top">

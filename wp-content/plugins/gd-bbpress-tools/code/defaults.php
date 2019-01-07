@@ -4,15 +4,14 @@ if (!defined('ABSPATH')) exit;
 
 class gdbbPressTools_Defaults {
     var $default_options = array(
-        'version' => '1.9.3',
-        'date' => '2018.02.16.',
-        'build' => 2155,
+        'version' => '2.0.2',
+        'date' => '2018.08.22.',
+        'build' => 2202,
         'status' => 'stable',
         'update_wp44' => 0,
         'product_id' => 'gd-bbpress-tools',
         'edition' => 'free',
         'revision' => 0,
-        'upgrade_to_pro_190' => 1,
         'include_always' => 0,
         'include_js' => 1,
         'include_css' => 1,
@@ -20,6 +19,9 @@ class gdbbPressTools_Defaults {
         'toolbar_super_admin' => 1,
         'toolbar_roles' => null,
         'allowed_tags_div' => 1,
+        'tweak_tags_in_reply_for_authors_only' => 0,
+        'tweak_show_lead_topic' => 0,
+        'tweak_disable_breadcrumbs' => 0,
         'admin_disable_active' => 0,
         'admin_disable_super_admin' => 1,
         'admin_disable_roles' => null,
@@ -30,7 +32,7 @@ class gdbbPressTools_Defaults {
         'quote_roles' => null,
         'bbcodes_active' => 1,
         'bbcodes_notice' => 1,
-        'bbcodes_bbpress_only' => 0,
+        'bbcodes_bbpress_only' => 1,
         'bbcodes_special_super_admin' => 1,
         'bbcodes_special_roles' => null,
         'bbcodes_special_action' => 'info',
@@ -45,7 +47,7 @@ class gdbbPressTools_Defaults {
         'signature_buddypress_profile_group' => 1,
         'view_mostreplies_active' => 1,
         'view_latesttopics_active' => 1,
-        'view_searchresults_active' => 1
+        'view_topicsfreshness_active' => 1
     );
 
     var $capabilities = array(
