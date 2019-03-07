@@ -71,6 +71,9 @@ class Gs_Connector_Utility {
          case 'update-nag':
             $admin_notice = '<div id="message" class="update-nag">';
             break;
+         case 'review' :
+            $admin_notice = '<div id="message" class="updated notice gs-adds is-dismissible">';
+            break;
          default:
             $message = __( 'There\'s something wrong with your code...', 'gsconnector' );
             $admin_notice = "<div id=\"message\" class=\"error\">\n";

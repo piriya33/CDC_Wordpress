@@ -3,8 +3,8 @@ Contributors: Arthur Gareginyan
 Tags: inject code, inject function, inject snippet, inject php, insert code, insert function, insert snippet, insert php, execute code, execute function, execute snippet, execute php, inject custom code, inject custom function, inject custom snippet, inject custom php, insert custom code, insert custom function, insert custom snippet, insert custom php, execute custom code, execute custom function, execute custom snippet, execute custom php, code, function, snippet, php, functionality plugin
 Donate link: https://www.spacexchimp.com/donate.html
 Requires at least: 3.9
-Tested up to: 5.0
-Stable tag: 4.31
+Tested up to: 5.1
+Stable tag: 4.35
 License: GPL3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -63,17 +63,17 @@ On the plugin page you find the code editor powered by CodeMirror. This code edi
 
 **Translation**
 
-This plugin is ready for translation and has already been translated into several languages.
+This plugin is ready for translation and has already been translated into several languages. But If your language is not available then you can make one. It is also possible that not all existing translations are up-to-date or correct, so you are welcome to make corrections. Many of plugin users would be delighted if you share your translation with the community. Thanks for your contribution!
 
 * English (default)
 * Russian (translation by [Milena Kiseleva](https://www.instagram.com/milava_kiseleva/))
 * German (translation by Michael)
 * Chinese-Taiwan (translation by Gordon Yu)
 * Spanish (translation by Ramiro Garcés and Patricio Toledo)
-* French (translation by Theophil Bethel)
 * Dutch (translation by Peter Leenders)
+* French (translation by Jean-Michel, Theophil Bethel and Hervé Bouzin)
 
-If you want to help translate this plugin then please visit the [translation page](https://translate.wordpress.org/projects/wp-plugins/my-custom-functions).
+If you want to help translate this plugin, please visit the [translation page](https://translate.wordpress.org/projects/wp-plugins/my-custom-functions).
 
 **Minimum system requirements:**
 
@@ -120,11 +120,13 @@ After installation and activation, the "`PHP Inserter`" menu item will appear in
 
 == Frequently Asked Questions ==
 
-= Q. Will this plugin work on my WordPress.COM website? =
-A. Sorry, this plugin is available for use only on self-hosted (WordPress.ORG) websites.
+= Q. Will this plugin work on my wordpress.COM website? =
+A. Sorry, this plugin is available for use only on self-hosted (wordpress.ORG) websites.
 
 = Q. Can I use this plugin on my language? =
-A. Yes. This plugin is ready for translation and has already been translated into several languages. But If your language is not available then you can make one. The POT file is included and placed in the "`languages`" folder. Just [send the PO file to us](https://www.spacexchimp.com/contact.html) and we will include this translation within the next plugin update. Many of plugin users would be delighted if you share your translation with the community. Thanks for your contribution!
+A. Yes. This plugin is ready for translation and has already been translated into several languages. But If your language is not available then you can make one. It is also possible that not all existing translations are up-to-date or correct, so you are welcome to make corrections. Many of plugin users would be delighted if you share your translation with the community. Thanks for your contribution!
+
+If you want to help translate this plugin, please use the POT file that is included and placed in the `languages` folder to create a translation PO file. Just [send the PO file to us](https://www.spacexchimp.com/contact.html) and we will include this translation within the next plugin update.
 
 = Q. How does it work? =
 A. Simply go to the plugin settings page, place your custom PHP code in the code editor field, switch the toggle to the "ON" position and click the "Save changes" button. Enjoy the result of applying your custom PHP code. It's that simple!
@@ -143,14 +145,6 @@ add_action( 'wp_head', 'my_custom_html_code' );`
 
 = Q. How much of PHP code (characters) I can enter in the code editor? =
 A. We don't limit the number of characters.
-
-= Q. On the plugin settings page, an error message appears. What could be wrong? =
-A. Here are a few of the most likely causes of the error message:
-
-1. You make a syntax error in the code that you have entered. Check the syntax of your code and try again.
-2. You entered two functions with the same name. Use a unique names for your functions.
-3. You have entered function with a name that is already occupied by another function. Use a unique name for your function.
-4. You are trying to overwrite an existing function (of WordPress, theme, or plugin). Instead, use filters and hooks.
 
 = Q. Does this plugin requires any modification of the theme? =
 A. Absolutely not. This plugin is configurable entirely from the plugin settings page that you can find in the Admin Area of your WordPress website.
@@ -173,10 +167,25 @@ A. For now, this plugin does not have an option to apply the custom PHP code onl
 }
 my_custom_php_code();`
 
-= Q. It's not working. What could be wrong? =
-A. As with every plugin, it's possible that things don't work. The most common reason for this is a web browser's cache. Every web browser stores a cache of the websites you visit (pages, images, and etc.) to reduce bandwidth usage and server load. This is called the browser's cache.​ Clearing your browser's cache may solve the problem.
+= Q. On the plugin settings page, an error message appears. What could be wrong? =
+A. Here are a few of the most likely causes of the error message:
 
-It's impossible to tell what could be wrong exactly, but if you post a support request in the plugin's support forum on WordPress.org, we'd be happy to give it a look and try to help out. Please include as much information as possible, including a link to your website where the problem can be seen.
+1. You make a syntax error in the code that you have entered. Check the syntax of your code and try again.
+2. You entered two functions with the same name. Use a unique names for your functions.
+3. You have entered function with a name that is already occupied by another function. Use a unique name for your function.
+4. You are trying to overwrite an existing function (of WordPress, theme, or plugin). Instead, use filters and hooks.
+
+= Q. My custom PHP code is not working. What could be wrong? =
+A. It happens that your custom PHP code that you insert on the plugin page does not work, even if an error message does not appear. Here are a few of the most likely causes of the issue:
+
+1. You have a typo during the insertion of your custom PHP code.
+2. Your custom PHP code has a syntax error.
+3. Your custom PHP code is incorrect and may not work.
+
+= Q. It's not working. What could be wrong? =
+A. As with every plugin, it's possible that things don't work. It's impossible to tell what could be wrong exactly. The most common reason for this is a web browser’s cache. Every web browser stores a cache of the websites you visit (pages, images, and etc.) to reduce bandwidth usage and server load. This is called the browser’s cache. Clearing your browser’s cache may solve the problem.
+
+If you post a support request in the plugin's support forum on WordPress.org, we'd be happy to give it a look and try to help out. Please include as much information as possible, including a link to your website where the problem can be seen.
 
 = Q. What to do if this plugin crashed the website? =
 A. This plugin has a built-in functions for checking the custom code for syntax errors, duplicate functions names, and etc. But plugin is not perfect, so there are times when the entered custom code causes the error and white screen (WSOD). This is due to the fact that your custom code has a syntax error that this plugin could not detect. When this happens with you, please perform the following steps.
@@ -242,6 +251,32 @@ Commercial licensing (e.g. for projects that can’t use an open-source license)
 
 
 == Changelog ==
+
+= 4.35 - 2019-03-01 =
+* Framework updated: The file "page.php" is divided into the following parts: "page.php", "usage.php", "faq.php", "support.php".
+* Framework updated: The files "settings.php", "usage.php", "faq.php", "support.php" are moved to the subfolder "tabs".
+
+= 4.34 - 2019-02-24 =
+* Added French translation. (Thanks to Hervé Bouzin)
+
+= 4.33 =
+* The readme "Tested up to:" value changed to 5.1 after full testing process and ensuring compatibility.
+* Content of the "F.A.Q." section updated.
+* Some texts are corrected or replaced with new ones.
+* All translation files are updated.
+* Code formatting improved.
+* Code commenting improved.
+* The function '_duplicates' is renamed to "_preparation_duplicates".
+* Added CSS class ".custom-list" for displaying a custom list, which is used on the plugin settings page.
+* The "humans.txt" file updated.
+
+= 4.32 =
+* Content of the "Usage" section updated.
+* Content of the "FAQ" section updated.
+* Code formatting in the "admin.js" file improved.
+* Code commenting improved.
+* The copyright date updated.
+* Translation files are updated.
 
 = 4.31 =
 * Improvement: Design of the plugin settings page is improved.
@@ -336,7 +371,7 @@ Commercial licensing (e.g. for projects that can’t use an open-source license)
 * Some texts updated, and typos corrected.
 * All translation files updated.
 * The information about the author of the plugin (including name, links, copyright, etc.) was changed due to the fact that the plugin became the property of SpaceXChimp.
-* The human.txt file updated.
+* The "humans.txt" file updated.
 
 = 4.13 =
 * Texts updated.

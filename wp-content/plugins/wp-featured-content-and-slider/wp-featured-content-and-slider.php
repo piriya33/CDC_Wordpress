@@ -6,17 +6,19 @@
  * Domain Path: /languages/
  * Description: Easy to add and display what features your company, product or service offers, using our shortcode OR template code. Also work with Gutenberg shortcode block.
  * Author: WP OnlineSupport
- * Version: 1.3.1
- * Author URI: http://www.wponlinesupport.com/
+ * Version: 1.3.2
+ * Author URI: https://www.wponlinesupport.com/
  *
  * @package WordPress
  * @author WP OnlineSupport
  */
  
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 if( !defined( 'WPFCAS_VERSION' ) ) {
-	define( 'WPFCAS_VERSION', '1.3.1' ); // Version of plugin
+	define( 'WPFCAS_VERSION', '1.3.2' ); // Version of plugin
 }
 if( !defined( 'WPFCAS_DIR' ) ) {
 	define( 'WPFCAS_DIR', dirname( __FILE__ ) ); // Plugin dir
@@ -165,21 +167,26 @@ function wpos_analytics_anl35_load() {
 	require_once dirname( __FILE__ ) . '/wpos-analytics/wpos-analytics.php';
 
 	$wpos_analytics =  wpos_anylc_init_module( array(
-							'id'            => 35,
-							'file'          => plugin_basename( __FILE__ ),
-							'name'          => 'WP Featured Content and Slider',
-							'slug'          => 'wp-featured-content-and-slider',
-							'type'          => 'plugin',
-							'menu'          => 'edit.php?post_type=featured_post',
-							'text_domain'   => 'wp-featured-content-and-slider',
+							'id'			=> 35,
+							'file'			=> plugin_basename( __FILE__ ),
+							'name'			=> 'WP Featured Content and Slider',
+							'slug'			=> 'wp-featured-content-and-slider',
+							'type'			=> 'plugin',
+							'menu'			=> 'edit.php?post_type=featured_post',
+							'text_domain'	=> 'wp-featured-content-and-slider',
+							'promotion'		=> array(
+													'bundle' => array(
+															'name'	=> 'Download FREE 50+ Plugins, 10+ Themes and Dashboard Plugin',
+															'desc'	=> 'Download FREE 50+ Plugins, 10+ Themes and Dashboard Plugin',
+															'file'	=> 'https://www.wponlinesupport.com/latest/wpos-free-50-plugins-plus-12-themes.zip'
+														)
+													),
 							'offers'		=> array(
 													'trial_premium' => array(
-														1 => array(
-																'image'	=> 'http://analytics.wponlinesupport.com/?anylc_img=35',
-																'link'	=> 'https://www.wponlinesupport.com/pricing/?utm_source=OptIn&utm_medium=Banner&utm_campaign=OptInBanner#fndtn-lifetime-combo',
-																'desc'	=> 'Or start using the plugin from admin menu',
-															),
-													),
+														'image'	=> 'http://analytics.wponlinesupport.com/?anylc_img=35',
+														'link'	=> 'http://analytics.wponlinesupport.com/?anylc_redirect=35',
+														'desc'	=> 'Or start using the plugin from admin menu',
+													)
 												),
 						));
 

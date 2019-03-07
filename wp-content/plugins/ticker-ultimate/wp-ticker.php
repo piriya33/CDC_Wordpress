@@ -5,14 +5,14 @@ Plugin URL: https://www.wponlinesupport.com/plugins/
 Text Domain: ticker-ultimate
 Domain Path: /languages/
 Description: Ultimate Ticker Plugin. Also work with Gutenberg shortcode block.
-Version: 1.2.1
+Version: 1.2.2
 Author: WP OnlineSupport
 Author URI: https://www.wponlinesupport.com/
 Contributors: WP OnlineSupport
 */
 
 if( !defined( 'WPTU_VERSION' ) ) {
-	define( 'WPTU_VERSION', '1.2.1' ); // Version of plugin
+	define( 'WPTU_VERSION', '1.2.2' ); // Version of plugin
 }
 if( !defined( 'WPTU_POST_TYPE' ) ) {
 	define( 'WPTU_POST_TYPE', 'wptu_ticker' ); // Plugin post type
@@ -137,21 +137,26 @@ function wpos_analytics_anl5_load() {
 	require_once dirname( __FILE__ ) . '/wpos-analytics/wpos-analytics.php';
 
 	$wpos_analytics =  wpos_anylc_init_module( array(
-							'id'            => 5,
-							'file'          => plugin_basename( __FILE__ ),
-							'name'          => 'Ticker Ultimate',
-							'slug'          => 'ticker-ultimate',
-							'type'          => 'plugin',
-							'menu'          => 'edit.php?post_type=wptu_ticker',
-							'text_domain'   => 'ticker-ultimate',
+							'id'			=> 5,
+							'file'			=> plugin_basename( __FILE__ ),
+							'name'			=> 'Ticker Ultimate',
+							'slug'			=> 'ticker-ultimate',
+							'type'			=> 'plugin',
+							'menu'			=> 'edit.php?post_type=wptu_ticker',
+							'text_domain'	=> 'ticker-ultimate',
+							'promotion'		=> array(
+													'bundle' => array(
+															'name'	=> 'Download FREE 50+ Plugins, 10+ Themes and Dashboard Plugin',
+															'desc'	=> 'Download FREE 50+ Plugins, 10+ Themes and Dashboard Plugin',
+															'file'	=> 'https://www.wponlinesupport.com/latest/wpos-free-50-plugins-plus-12-themes.zip'
+														)
+													),
 							'offers'		=> array(
 													'trial_premium' => array(
-														1 => array(
-															'image'	=> 'http://analytics.wponlinesupport.com/?anylc_img=5',
-															'link'	=> 'https://www.wponlinesupport.com/pricing/?utm_source=OptIn&utm_medium=Banner&utm_campaign=OptInBanner#fndtn-lifetime-combo',
-															'desc'	=> 'Or start using the plugin from admin menu',
-														),
-													),
+														'image'	=> 'http://analytics.wponlinesupport.com/?anylc_img=5',
+														'link'	=> 'http://analytics.wponlinesupport.com/?anylc_redirect=5',
+														'desc'	=> 'Or start using the plugin from admin menu',
+													)
 												),
 						));
 

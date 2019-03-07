@@ -32,9 +32,15 @@ if ( !defined( 'ABSPATH' ) ) {
 				<div class="wpos-anylc-optin-icon"><img src="<?php echo $analy_product['brand_icon']; ?>" alt="Icon" /></div>
 			</div>
 			<div class="wpos-anylc-optin-cnt">
-				Hey <?php echo ucfirst($user_name); ?>,<br/>
-				Please help us improve <b><?php echo $product_name; ?></b>! <br/>
-				If you opt in, some data about your usage of <b><?php echo $product_name; ?></b> will be sent to <a target="_blank" href="https://www.wponlinesupport.com">wponlinesupport.com</a>. If you skip this, that's okay! <b><?php echo $product_name; ?></b> will still work just fine.
+				<p>Hey <?php echo ucfirst($user_name); ?>,</p>
+				<p>Don't ever miss an opportunity to <b>opt in</b> for Email Notifications / Announcements about exciting New Features and Update Releases.</p>
+				<p>Contribute in helping us making <b><?php echo $product_name; ?></b> compatible with most themes and plugins by allowing to share non-sensitive data to <a target="_blank" href="https://www.wponlinesupport.com">wponlinesupport.com</a> about your website.</p>
+				<p>If you skip this, that's okay! <b><?php echo $product_name; ?></b> will still work just fine.</p>
+
+				<div class="wpos-anylc-subs-wrap">
+					<input type="hidden" name="subscribe" value="" />
+					<label><input type="checkbox" value="1" name="subscribe" checked="checked" /> Subscribe for Updates and Promotions</label>
+				</div>
 
 				<?php if( !empty( $analy_product['promotion'] ) ) { ?>
 				<div class="wpos-anylc-promotion-wrap">
@@ -44,11 +50,11 @@ if ( !defined( 'ABSPATH' ) ) {
 				</div>
 				<?php } ?>
 			</div>
-			<div class="wpos-anylc-optin-action">
-				<button type="submit" name="wpos_anylc_optin" class="button button-primary button-large wpos-anylc-allow-btn" value="wpos_anylc_optin">Allow and Continue</button>
+			<div class="wpos-anylc-optin-action wpos-anylc-clearfix">
+				<button type="submit" name="wpos_anylc_optin" class="button button-primary button-large right wpos-anylc-allow-btn" value="wpos_anylc_optin">Allow and Continue</button>
 
 				<?php if( is_null( $opt_in ) ) { ?>
-				<a href="<?php echo esc_url( $skip_url ); ?>" class="button button-secondary button-large right wpos-anylc-skip-btn">Skip</a>
+				<a href="<?php echo esc_url( $skip_url ); ?>" class="button button-secondary button-large wpos-anylc-skip-btn">Skip</a>
 				<?php }
 
 				if( !empty( $optin_form_data ) ) {

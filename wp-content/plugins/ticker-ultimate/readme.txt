@@ -1,8 +1,8 @@
 === Ticker Ultimate ===
 Contributors: wponlinesupport, anoopranawat, pratik-jain
 Tags: wponlinesupport, ticker, news ticker, blog ticker, post ticker, ticker slider, ticker vertical slider, ticker horizontal slider
-Requires at least: 3.5
-Tested up to: 5.0.2
+Requires at least: 4.0
+Tested up to: 5.1
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -79,6 +79,9 @@ Ticker Ultimate Shortcode:
 
 
 == Changelog ==
+
+= 1.2.2 (14, Feb 2019) =
+* [*] Minor change in Opt-in flow.
 
 = 1.2.1 (31, Dec 2018) =
 * [*] Update Opt-in flow.

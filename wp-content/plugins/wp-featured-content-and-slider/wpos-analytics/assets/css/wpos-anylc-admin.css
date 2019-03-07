@@ -1,3 +1,5 @@
+.wpos-anylc-clearfix:before, .wpos-anylc-clearfix:after{content: ""; display: table;}
+.wpos-anylc-clearfix::after{clear: both;}
 .wpos-anylc-optin-wrap *{box-sizing:border-box; outline:0;}
 .wpos-anylc-hide{display:none;}
 .wpos-anylc-optin-wrap .button{border-radius:0;}
@@ -9,7 +11,8 @@
 .wpos-anylc-optin-plus .dashicons-plus{color:#999; height:auto; width:auto; font-size:26px;}
 .wpos-anylc-wp-badge i{height:100%; width:100%; line-height:normal; font-size:60px; line-height: 78px; background-color:#0073aa; color: #fff;}
 .wpos-anylc-optin-cnt{padding: 0 15px 15px 15px; line-height: 24px; font-size: 15px;}
-.wpos-anylc-promotion-wrap{margin:10px 0; font-size:14px; font-weight:600;}
+.wpos-anylc-optin-cnt p{line-height: 24px; font-size: 15px;}
+.wpos-anylc-subs-wrap, .wpos-anylc-promotion-wrap{margin:10px 0; font-size:14px; font-weight:600;}
 .wpos-anylc-optin-action{background-color:#C0C7CA; padding: 15px 15px;}
 .wpos-anylc-optin-action .button{height: auto !important; padding: 2px 12px !important; font-size: 15px; font-weight: 600;}
 .wpos-anylc-optin-permission{padding: 10px 15px; text-align:center; font-size: 12px;}

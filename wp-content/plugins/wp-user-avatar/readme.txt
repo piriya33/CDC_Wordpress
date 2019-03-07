@@ -3,7 +3,7 @@
 Contributors: flippercode
 Tags: author image, author photo, author avatar, avatar, bbPress, profile avatar, profile image, user avatar, user image, user photo, widget
 Requires at least: 3.6
-Tested up to: 5.0.0
+Tested up to: 5.1.0
 Stable tag: 2.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -404,6 +404,16 @@ This would output:
 4. After you've chosen a WP User Avatar image, you will see the option to remove it.
 
 == Changelog ==
+
+
+= 2.1.9 =
+* New: New filter 'wpua_default_alt_tag' added to modify default image alt tag And warning error resolved on stagging environment.
+
+= 2.1.8 =
+* Fix: Language Files are updated and warning error resolved on stagging environment.
+
+= 2.1.7 =
+* Fix: Default ALT tag added.
 
 = 2.1.6 =
 * Fix: Removed ads from the setting page.

@@ -4,8 +4,8 @@ Donate link: https://www.paypal.me/WesternDeal
 Author URL: https://www.gsheetconnector.com/
 Tags: cf7, contact form 7, Contact Form 7 Integrations, contact forms, Google Sheets, Google Sheets Integrations, Google, Sheets
 Requires at least: 3.6
-Tested up to: 5.0.2
-Stable tag: 2.7
+Tested up to: 5.0.3
+Stable tag: 2.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -80,6 +80,9 @@ Please double-check those items and hopefully getting them right will fix the is
 * Now you can paste this code back on the `Admin Panel > Contact form 7 > Google Sheets` screen. 
 
 == Changelog ==
+
+= 2.8 =
+* Fixed - Displaying of Google Sheet Connector notice to be dismissible.
 
 = 2.7 =
 * Done UI changes.

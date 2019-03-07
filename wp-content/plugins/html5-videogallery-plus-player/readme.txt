@@ -1,8 +1,8 @@
-=== Video gallery and Player ===
+﻿=== Video gallery and Player ===
 Contributors: wponlinesupport, anoopranawat, pratik-jain
 Tags: wponlinesupport, HTML5, video.js,  HTML5 video, youtube video gallery, vimeo video gallery, youtube video gallery with popup,  Youtube-video, youtube embed, youtube gallery, youtube player, magnific Popup, vimeo video gallery gallery, HTML5 video player, HTML5 video gallery, wordpress HTML5 video, wordpress HTML5 video player, wordpress HTML5 video gallery, responsive, wordpress responsive video gallery  
-Requires at least: 3.5
-Tested up to: 5.0.2
+Requires at least: 4.0
+Tested up to: 5.1
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -116,6 +116,9 @@ OR
 7. Also work with Gutenberg shortcode block.
 
 == Changelog ==
+
+= 2.3.2 (13, Feb 2019) =
+* [*] Minor change in Opt-in flow.
 
 = 2.3.1 (26, Dec 2018) =
 * [*] Update Opt-in flow.

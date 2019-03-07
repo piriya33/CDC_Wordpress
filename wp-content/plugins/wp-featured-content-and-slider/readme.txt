@@ -1,8 +1,8 @@
 === WP Featured Content and Slider ===
 Contributors: wponlinesupport, anoopranawat, pratik-jain
 Tags: content slider, slider, featured, features, services, custom post slider, custom post type display, featured content, featured services, featured content rotator, featured content slider, content gallery, content slideshow, featured content slideshow, featured posts, featured content slider, shortcode
-Requires at least: 3.5
-Tested up to: 5.0.2
+Requires at least: 4.0
+Tested up to: 5.1
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -144,6 +144,9 @@ Where you can display Featured Content in list view, in grid view and Featured C
 4. Category Shortcode
 
 == Changelog ==
+
+= 1.3.2 (14, Feb 2019) =
+* [*] Minor change in Opt-in flow.
 
 = 1.3.1 (04, Jan 2019) =
 * [*] Update Opt-in flow.

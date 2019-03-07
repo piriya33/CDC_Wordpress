@@ -3,10 +3,10 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: CF7 Google Sheet Connector 2.7\n"
+"Project-Id-Version: CF7 Google Sheet Connector 2.8\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/cf7-google-sheets-"
 "connector\n"
-"POT-Creation-Date: 2018-12-29 17:36+0530\n"
+"POT-Creation-Date: 2019-02-01 18:10+0530\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -18,88 +18,81 @@ msgstr ""
 "X-Poedit-KeywordsList: __;_e;esc_html\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: google-sheet-connector.php:168
+#: google-sheet-connector.php:169
 msgid ""
 "Google Sheet Connector Add-on requires Contact Form 7 plugin to be installed "
 "and activated."
 msgstr ""
 
-#: google-sheet-connector.php:179 google-sheet-connector.php:203
+#: google-sheet-connector.php:180 google-sheet-connector.php:204
 #: includes/class-gs-service.php:81
 msgid "Google Sheets"
 msgstr ""
 
-#: google-sheet-connector.php:200
+#: google-sheet-connector.php:201
 msgid "Contact Form 7 - Google Sheet Integration"
 msgstr ""
 
-#: google-sheet-connector.php:206
+#: google-sheet-connector.php:207
 msgid ""
 "Click \"Get code\" to retrieve your code from Google Drive to allow us to "
 "access your spreadsheets. And paste the code in the below textbox. "
 msgstr ""
 
-#: google-sheet-connector.php:208
+#: google-sheet-connector.php:209
 msgid "Google Access Code"
 msgstr ""
 
-#: google-sheet-connector.php:211
+#: google-sheet-connector.php:212
 msgid "Currently Active"
 msgstr ""
 
-#: google-sheet-connector.php:219
+#: google-sheet-connector.php:220
 msgid "Save"
 msgstr ""
 
-#: google-sheet-connector.php:225
+#: google-sheet-connector.php:226
 msgid "Debug Log"
 msgstr ""
 
-#: google-sheet-connector.php:239
+#: google-sheet-connector.php:240
 msgid ""
 "Did Contact Form 7 - Google Sheet Connector help you out ? Please leave a 5-"
 "star review. Thank you!"
 msgstr ""
 
-#: google-sheet-connector.php:243
+#: google-sheet-connector.php:244
 msgid "Need a helping hand ?"
 msgstr ""
 
-#: google-sheet-connector.php:244
+#: google-sheet-connector.php:245
 msgid "Please ask for help on "
 msgstr ""
 
-#: google-sheet-connector.php:244
+#: google-sheet-connector.php:245
 msgid "Support Forum"
 msgstr ""
 
-#: google-sheet-connector.php:244
+#: google-sheet-connector.php:245
 msgid " and "
 msgstr ""
 
-#: google-sheet-connector.php:244
+#: google-sheet-connector.php:245
 msgid "Email. "
 msgstr ""
 
-#: google-sheet-connector.php:244
+#: google-sheet-connector.php:245
 msgid ""
 "Do provide us detailed information about the issue along with wordpress "
 "version. "
 msgstr ""
 
-#: google-sheet-connector.php:310
+#: google-sheet-connector.php:326
 msgid "Settings"
 msgstr ""
 
-#: google-sheet-connector.php:315
+#: google-sheet-connector.php:331
 msgid "Google Sheet Connector"
-msgstr ""
-
-#: google-sheet-connector.php:325
-msgid ""
-"Upgrade to <a href=\"https://www.gsheetconnector.com/cf7-google-sheet-"
-"connector-pro\" target\"_blank\" >CF7 GSheetConnector PRO</a> with automated "
-"sheets to setup within few clicks. Grab the deal with discounted price."
 msgstr ""
 
 #: includes/class-gs-service.php:194
@@ -157,7 +150,7 @@ msgstr ""
 msgid "No custom mail tags available."
 msgstr ""
 
-#: includes/class-gs-utility.php:75
+#: includes/class-gs-utility.php:78
 msgid "There's something wrong with your code..."
 msgstr ""
 

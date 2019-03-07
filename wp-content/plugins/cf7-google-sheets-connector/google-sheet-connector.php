@@ -3,7 +3,7 @@
   Plugin Name: CF7 Google Sheet Connector
   Plugin URI: https://wordpress.org/plugins/cf7-google-sheets-connector/
   Description: Send your Contact Form 7 data to your Google Sheets spreadsheet.
-  Version: 2.7
+  Version: 2.8
   Author: WesternDeal
   Author URI: https://www.gsheetconnector.com/
   Text Domain: gsconnector
@@ -14,8 +14,8 @@ if ( !defined( 'ABSPATH' ) ) {
 }
 
 // Declare some global constants
-define( 'GS_CONNECTOR_VERSION', '2.7' );
-define( 'GS_CONNECTOR_DB_VERSION', '2.7' );
+define( 'GS_CONNECTOR_VERSION', '2.8' );
+define( 'GS_CONNECTOR_DB_VERSION', '2.8' );
 define( 'GS_CONNECTOR_ROOT', dirname( __FILE__ ) );
 define( 'GS_CONNECTOR_URL', plugins_url( '/', __FILE__ ) );
 define( 'GS_CONNECTOR_BASE_FILE', basename( dirname( __FILE__ ) ) . '/google-sheet-connector.php' );
@@ -66,12 +66,13 @@ class Gs_Connector_Free_Init {
 
       // load the js and css files
       add_action( 'init', array( $this, 'load_css_and_js_files' ) );
+      
+      // load the classes
+		add_action( 'init', array( $this, 'load_all_classes' ) );
 
       // Add custom link for our plugin
       add_filter( 'plugin_action_links_' . GS_CONNECTOR_BASE_NAME, array( $this, 'gs_connector_plugin_action_links' ) );
       add_action( 'wp_dashboard_setup', array( $this, 'add_gs_connector_summary_widget' ) );
-      
-      add_action( 'admin_notices', array( $this, 'cf7gs_buy_pro_notice' ) );
    }
 
    /**
@@ -277,6 +278,21 @@ class Gs_Connector_Free_Init {
          wp_enqueue_script( 'jquery-json', GS_CONNECTOR_URL . 'assets/js/jquery.json.js', '', '2.3', true );
          
 		}
+      
+      if ( is_admin() ) {
+         wp_enqueue_script( 'gs-connector-adds-js', GS_CONNECTOR_URL . 'assets/js/gs-connector-adds.js', GS_CONNECTOR_VERSION, true );
+         
+		}
+   }
+   
+   /**
+    * Function to load all required classes
+    * @since 2.8
+    */
+   public function load_all_classes() {
+      if ( ! class_exists( 'GS_Connector_Adds' ) ) {
+			include( GS_CONNECTOR_PATH . 'includes/class-gs-adds.php' );
+		}
    }
 
    /**
@@ -317,14 +333,6 @@ class Gs_Connector_Free_Init {
 
    public function gs_connector_summary_dashboard() {
       include_once( GS_CONNECTOR_ROOT . '/includes/pages/cf7gs-dashboard-widget.php' );
-   }
-   
-   public function cf7gs_buy_pro_notice() {
-      $notice = Gs_Connector_Utility::instance()->admin_notice( array(
-         'type' => 'update',
-         'message' => __( 'Upgrade to <a href="https://www.gsheetconnector.com/cf7-google-sheet-connector-pro" target"_blank" >CF7 GSheetConnector PRO</a> with automated sheets to setup within few clicks. Grab the deal with discounted price.', 'gsconnector' )
-      ) );
-      echo $notice;
    }
 
    /**

@@ -1,0 +1,1 @@
+[\<?php exit; ?>a:1:{s:7:"content";a:2:{s:25:"spamshield_ip_ban_disable";b:1;s:28:"spamshield_ubl_cache_disable";b:1;}}

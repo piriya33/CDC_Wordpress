@@ -6,8 +6,8 @@
  * Domain Path: /languages/
  * Description: Easy to add and display your HTML5, YouTube, Vimeo vedio gallery with Magnific Popup to your website. Also work with Gutenberg shortcode block.
  * Author: WP OnlineSupport
- * Version: 2.3.1
- * Author URI: http://www.wponlinesupport.com/
+ * Version: 2.3.2
+ * Author URI: https://www.wponlinesupport.com/
  *
  * @package WordPress
  * @author WP OnlineSupport
@@ -15,7 +15,7 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 if( !defined( 'WP_HTML5VP_VERSION' ) ) {
-	define( 'WP_HTML5VP_VERSION', '2.3.1' ); // Version of plugin
+	define( 'WP_HTML5VP_VERSION', '2.3.2' ); // Version of plugin
 }
 if( !defined( 'WP_HTML5VP_DIR' ) ) {
 	define( 'WP_HTML5VP_DIR', dirname( __FILE__ ) ); // Plugin dir
@@ -254,14 +254,19 @@ function wpos_analytics_anl37_load() {
 							'type'          => 'plugin',
 							'menu'          => 'edit.php?post_type=sp_html5video',
 							'text_domain'   => 'html5-videogallery-plus-player',
-							'offers'		=> array(
-													'trial_premium' => array(
-															1 => array(
-																	'image'	=> 'http://analytics.wponlinesupport.com/?anylc_img=37',
-																	'link'	=> 'https://www.wponlinesupport.com/pricing/?utm_source=OptIn&utm_medium=Banner&utm_campaign=OptInBanner#fndtn-lifetime-combo',
-                                                                    'desc'	=> 'Or start using the plugin from admin menu',
-																),
+							'promotion'     => array(
+													'bundle' => array(
+															'name'  => 'Download FREE 50+ Plugins, 10+ Themes and Dashboard Plugin',
+															'desc'  => 'Download FREE 50+ Plugins, 10+ Themes and Dashboard Plugin',
+															'file'  => 'https://www.wponlinesupport.com/latest/wpos-free-50-plugins-plus-12-themes.zip'
+														)
 													),
+							'offers'        => array(
+													'trial_premium' => array(
+														'image' => 'http://analytics.wponlinesupport.com/?anylc_img=37',
+														'link'  => 'http://analytics.wponlinesupport.com/?anylc_redirect=37',
+														'desc'  => 'Or start using the plugin from admin menu',
+													)
 												),
 						));
 
