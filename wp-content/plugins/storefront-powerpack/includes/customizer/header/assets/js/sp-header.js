@@ -151,6 +151,14 @@
 			} catch ( error ) {}
 		},
 
+		didInitialize: function() {
+			if ( _.isNull( this.grid ) ) {
+				return false;
+			}
+
+			return true;
+		},
+
 		initGridstack: function() {
 			var self = this;
 
@@ -335,43 +343,45 @@
 	};
 
 	api.bind( 'ready', function() {
-		// Init setting
-		api.SPHeader.Setting.init();
-
 		// Init configurator view
 		api.SPHeader.HeaderCustomizer = new api.SPHeader.HeaderCustomizerView();
 
-		// Add existing widgets
-		_.each( api.SPHeader.Setting.getValue(), function( val, key ) {
-			var existingWidget = new api.SPHeader.WidgetModel({
-				id: _.escape( key ),
-				x: parseInt( val.x, 10 ),
-				y: parseInt( val.y, 10 ),
-				w: parseInt( val.w, 10 ),
-				h: parseInt( val.h, 10 )
+		if ( api.SPHeader.HeaderCustomizer.didInitialize() ) {
+			// Init setting
+			api.SPHeader.Setting.init();
+
+			// Add existing widgets
+			_.each( api.SPHeader.Setting.getValue(), function( val, key ) {
+				var existingWidget = new api.SPHeader.WidgetModel({
+					id: _.escape( key ),
+					x: parseInt( val.x, 10 ),
+					y: parseInt( val.y, 10 ),
+					w: parseInt( val.w, 10 ),
+					h: parseInt( val.h, 10 )
+				});
+
+				api.SPHeader.HeaderCustomizer.addWidget( key, existingWidget );
 			});
 
-			api.SPHeader.HeaderCustomizer.addWidget( key, existingWidget );
-		});
+			// Open & Close side panel
+			$( '.sp-header-open' ).on( 'click', function( event ) {
+				event.preventDefault();
 
-		// Open & Close side panel
-		$( '.sp-header-open' ).on( 'click', function( event ) {
-			event.preventDefault();
+				if ( $( this ).hasClass( 'sp-header-active' ) ) {
+					api.SPHeader.HeaderCustomizer.close();
+					$( this ).removeClass( 'sp-header-active' );
+				} else {
+					api.SPHeader.HeaderCustomizer.open();
+					$( this ).addClass( 'sp-header-active' );
+				}
+			});
 
-			if ( $( this ).hasClass( 'sp-header-active' ) ) {
+			// Track clicks on the back button
+			$( '.customize-section-back' ).on( 'click', function() {
 				api.SPHeader.HeaderCustomizer.close();
-				$( this ).removeClass( 'sp-header-active' );
-			} else {
-				api.SPHeader.HeaderCustomizer.open();
-				$( this ).addClass( 'sp-header-active' );
-			}
-		});
-
-		// Track clicks on the back button
-		$( '.customize-section-back' ).on( 'click', function() {
-			api.SPHeader.HeaderCustomizer.close();
-			$( '.sp-header-open' ).removeClass( 'sp-header-active' );
-		});
+				$( '.sp-header-open' ).removeClass( 'sp-header-active' );
+			});
+		}
 	});
 
 } )( window.wp, jQuery );

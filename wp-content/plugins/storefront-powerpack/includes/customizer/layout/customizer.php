@@ -76,6 +76,29 @@ if ( ! class_exists( 'SP_Customizer_Layout' ) ) :
 			) ) );
 
 			/**
+			 * Storefront Text
+			 */
+			if ( class_exists( 'Arbitrary_Storefront_Control' ) ) {
+				$wp_customize->add_control( new Arbitrary_Storefront_Control( $wp_customize, 'sp_max_width_info', array(
+					'section'     => self::POWERPACK_LAYOUT_SECTION,
+					'type'        => 'text',
+					'description' => '<div style="padding: 10px; background-color: #fff; border: 1px solid #ccc;"><span class="dashicons dashicons-info" style="color: #007cb2; float: right; margin-left: 1em;"></span>' . sprintf( __( 'The "Max Width" option makes website content span the full width of the browser window rather than having a fixed width. With this option enabled, after publishing your changes and reloading the Customizer, you might want to adjust the size of the %sWooCommerce images%s.', 'storefront-powerpack' ), '<a style="text-decoration: underline; font-weight: 700;" href="https://docs.woocommerce.com/document/image-sizes-theme-developers/#section-2">', '</a>' ) . '</div>',
+					'priority'    => 20,
+				) ) );
+			}
+
+			/**
+			 * Storefront Divider
+			 */
+			if ( class_exists( 'Arbitrary_Storefront_Control' ) ) {
+				$wp_customize->add_control( new Arbitrary_Storefront_Control( $wp_customize, 'sp_max_width_divider', array(
+					'section'  => self::POWERPACK_LAYOUT_SECTION,
+					'type'     => 'divider',
+					'priority' => 30,
+				) ) );
+			}
+
+			/**
 			 * Content frame
 			 */
 			$wp_customize->add_setting( 'sp_content_frame', array(
@@ -88,10 +111,10 @@ if ( ! class_exists( 'SP_Customizer_Layout' ) ) :
 				'section'     => self::POWERPACK_LAYOUT_SECTION,
 				'settings'    => 'sp_content_frame',
 				'type'        => 'select',
-				'priority'    => 20,
+				'priority'    => 40,
 				'choices'     => array(
-					'default'  => 'Default',
-					'frame'    => 'Frame',
+					'default'  => __( 'Default', 'storefront-powerpack' ),
+					'frame'    => __( 'Frame', 'storefront-powerpack' ),
 				),
 			) ) );
 
@@ -107,7 +130,7 @@ if ( ! class_exists( 'SP_Customizer_Layout' ) ) :
 				'section'         => self::POWERPACK_LAYOUT_SECTION,
 				'settings'        => 'sp_content_frame_background',
 				'active_callback' => array( $this, 'is_content_frame_active' ),
-				'priority'        => 30,
+				'priority'        => 50,
 			) ) );
 		}
 

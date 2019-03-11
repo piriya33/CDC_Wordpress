@@ -18,7 +18,7 @@
  *
  * @package     WC-Customer-Order-CSV-Export/Generator
  * @author      SkyVerge
- * @copyright   Copyright (c) 2012-2017, SkyVerge, Inc.
+ * @copyright   Copyright (c) 2012-2018, SkyVerge, Inc.
  * @license     http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
@@ -206,13 +206,28 @@ class WC_Customer_Order_CSV_Export_Cron {
 
 		if ( ! empty( $order_ids ) ) {
 
+			$args = array(
+				'type'       => 'orders',
+				'method'     => $export_method,
+				'invocation' => 'auto',
+			);
+
+			if ( $this->is_duplicate_export( $order_ids, $args ) ) {
+				return;
+			}
+
+			/**
+			 * Filters the order IDs that are auto-exported.
+			 *
+			 * @since 4.5.0
+			 *
+			 * @param int[] $order_ids the order ids being auto-exported
+			 */
+			$order_ids = apply_filters( 'wc_customer_order_csv_auto_export_ids', $order_ids );
+
 			try {
 
-				wc_customer_order_csv_export()->get_export_handler_instance()->start_export( $order_ids, array(
-					'type'       => 'orders',
-					'method'     => $export_method,
-					'invocation' => 'auto',
-				) );
+				wc_customer_order_csv_export()->get_export_handler_instance()->start_export( $order_ids, $args );
 
 			} catch ( SV_WC_Plugin_Exception $e ) {
 
@@ -255,13 +270,30 @@ class WC_Customer_Order_CSV_Export_Cron {
 
 		if ( ! empty( $customers ) ) {
 
+			$args = array(
+				'type'       => 'customers',
+				'method'     => $export_method,
+				'invocation' => 'auto',
+			);
+
+			if ( $this->is_duplicate_export( $customers, $args ) ) {
+				return;
+			}
+
+			/**
+			 * Filters the customers that are going to be auto-exported.
+			 *
+			 * @since 4.5.0
+			 *
+			 * @param array $customers the customers being auto-exported, each array element could be one of:
+			 *     @type int registered customer id
+			 *     @type array guest customer array with email and order ID
+			 */
+			$customers = apply_filters( 'wc_customer_order_csv_auto_export_customers', $customers );
+
 			try {
 
-				wc_customer_order_csv_export()->get_export_handler_instance()->start_export( $customers, array(
-					'type'       => 'customers',
-					'method'     => $export_method,
-					'invocation' => 'auto',
-				) );
+				wc_customer_order_csv_export()->get_export_handler_instance()->start_export( $customers, $args );
 
 			} catch ( SV_WC_Plugin_Exception $e ) {
 
@@ -278,6 +310,63 @@ class WC_Customer_Order_CSV_Export_Cron {
 
 			}
 		}
+	}
+
+
+	/**
+	 * Determines if a potential new export job is a duplicate of one already in
+	 * the queue.
+	 *
+	 * This serves as a way to combat against cron events being fired multiple
+	 * times, as can happen in the wonderful world of WordPress. Here we:
+	 *
+	 *     1. Generate a fingerprint for the new job based on the args and current time.
+	 *     2. Delay processing for a small amount of random time
+	 *     3. Check if there are any existing jobs with a matching fingerprint
+	 *     4. Whichever concurrent request finished first will block the other from processing
+	 */
+	protected function is_duplicate_export( $object_ids, $export_args ) {
+
+		$timestamp    = time();
+		$fingerprint  = $this->generate_auto_export_fingerprint( $object_ids, $export_args, $timestamp );
+		$is_duplicate = false;
+
+		// add a random artificial delay
+		usleep( rand( 250000, 500000 ) );
+
+		if ( $existing_exports = wc_customer_order_csv_export()->get_export_handler_instance()->get_exports( array( 'status' => array( 'queued', 'processing' ), ) ) ) {
+
+			foreach ( $existing_exports as $export ) {
+
+				$export_args = array(
+					'type'       => $export->type,
+					'method'     => $export->method,
+					'invocation' => $export->invocation,
+				);
+
+				if ( hash_equals( $fingerprint, $this->generate_auto_export_fingerprint( $export->object_ids, $export_args, $timestamp ) ) ) {
+					$is_duplicate = true;
+				}
+			}
+		}
+
+		return $is_duplicate;
+	}
+
+
+	/**
+	 * Generates a fingerprint hash for new export jobs to help detect duplicates.
+	 *
+	 * @since 4.4.0
+	 *
+	 * @param array $object_ids export job object IDs
+	 * @param array $export_args export job args
+	 * @param int $timestamp when this fingerprint was generated
+	 * @return string
+	 */
+	protected function generate_auto_export_fingerprint( $object_ids, $export_args, $timestamp ) {
+
+		return md5( json_encode( $object_ids ) . json_encode( $export_args ) . $timestamp );
 	}
 
 
@@ -328,14 +417,20 @@ class WC_Customer_Order_CSV_Export_Cron {
 			}
 		}
 
+		$args = array(
+			'type'       => 'orders',
+			'method'     => get_option( 'wc_customer_order_csv_export_orders_auto_export_method' ),
+			'invocation' => 'auto',
+		);
+
+		if ( $this->is_duplicate_export( array( $order_id ), $args ) ) {
+			return;
+		}
+
 		try {
 
 			// whoa, we got here! kick it off!
-			$export_handler->start_export( $order_id, array(
-				'type'       => 'orders',
-				'method'     => get_option( 'wc_customer_order_csv_export_orders_auto_export_method' ),
-				'invocation' => 'auto',
-			) );
+			$export_handler->start_export( $order_id, $args );
 
 		} catch ( SV_WC_Plugin_Exception $e ) {
 

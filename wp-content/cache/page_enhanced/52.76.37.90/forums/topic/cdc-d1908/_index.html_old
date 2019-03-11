@@ -15,7 +15,7 @@
 <link rel="alternate" type="application/rss+xml" title="Chaloke Dot Com &raquo; Comments Feed" href="http://52.76.37.90/comments/feed/" />
 <link rel="alternate" type="application/rss+xml" title="Chaloke Dot Com &raquo; CDC-D1908 งานบุญนอกพระพุทธศาสนา Comments Feed" href="http://52.76.37.90/forums/topic/cdc-d1908/feed/" />
 		<script type="text/javascript">
-			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/11\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/11\/svg\/","svgExt":".svg","source":{"concatemoji":"http:\/\/52.76.37.90\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.0.2"}};
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/11.2.0\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/11.2.0\/svg\/","svgExt":".svg","source":{"concatemoji":"http:\/\/52.76.37.90\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.1"}};
 			!function(a,b,c){function d(a,b){var c=String.fromCharCode;l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,a),0,0);var d=k.toDataURL();l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,b),0,0);var e=k.toDataURL();return d===e}function e(a){var b;if(!l||!l.fillText)return!1;switch(l.textBaseline="top",l.font="600 32px Arial",a){case"flag":return!(b=d([55356,56826,55356,56819],[55356,56826,8203,55356,56819]))&&(b=d([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]),!b);case"emoji":return b=d([55358,56760,9792,65039],[55358,56760,8203,9792,65039]),!b}return!1}function f(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var g,h,i,j,k=b.createElement("canvas"),l=k.getContext&&k.getContext("2d");for(j=Array("flag","emoji"),c.supports={everything:!0,everythingExceptFlag:!0},i=0;i<j.length;i++)c.supports[j[i]]=e(j[i]),c.supports.everything=c.supports.everything&&c.supports[j[i]],"flag"!==j[i]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[j[i]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(h=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",h,!1),a.addEventListener("load",h,!1)):(a.attachEvent("onload",h),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),g=c.source||{},g.concatemoji?f(g.concatemoji):g.wpemoji&&g.twemoji&&(f(g.twemoji),f(g.wpemoji)))}(window,document,window._wpemojiSettings);
 		</script>
 		<style type="text/css">
@@ -32,29 +32,29 @@ img.emoji {
 	padding: 0 !important;
 }
 </style>
-<link rel='stylesheet' id='fontawesome-css'  href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css?ver=4.7.0' type='text/css' media='all' />
+	<link rel='stylesheet' id='fontawesome-css'  href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css?ver=4.7.0' type='text/css' media='all' />
 <link rel='stylesheet' id='gdbbx-front-core-css'  href='http://52.76.37.90/wp-content/plugins/gd-bbpress-toolbox/css/front-core.min.css?ver=4.7.2.625' type='text/css' media='all' />
 <link rel='stylesheet' id='gdbbx-front-widgets-css'  href='http://52.76.37.90/wp-content/plugins/gd-bbpress-toolbox/css/front-widgets.min.css?ver=4.7.2.625' type='text/css' media='all' />
-<link rel='stylesheet' id='wp-block-library-css'  href='http://52.76.37.90/wp-includes/css/dist/block-library/style.min.css?ver=5.0.2' type='text/css' media='all' />
-<link rel='stylesheet' id='wp-block-library-theme-css'  href='http://52.76.37.90/wp-includes/css/dist/block-library/theme.min.css?ver=5.0.2' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-block-library-css'  href='http://52.76.37.90/wp-includes/css/dist/block-library/style.min.css?ver=5.1' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-block-library-theme-css'  href='http://52.76.37.90/wp-includes/css/dist/block-library/theme.min.css?ver=5.1' type='text/css' media='all' />
 <link rel='stylesheet' id='bbp-default-css'  href='http://52.76.37.90/wp-content/plugins/bbpress/templates/default/css/bbpress.css?ver=2.5.14-6684' type='text/css' media='screen' />
 <link rel='stylesheet' id='cptch_stylesheet-css'  href='http://52.76.37.90/wp-content/plugins/captcha/css/front_end_style.css?ver=4.4.5' type='text/css' media='all' />
-<link rel='stylesheet' id='dashicons-css'  href='http://52.76.37.90/wp-includes/css/dashicons.min.css?ver=5.0.2' type='text/css' media='all' />
-<link rel='stylesheet' id='cptch_desktop_style-css'  href='http://52.76.37.90/wp-content/plugins/captcha/css/desktop_style.css?ver=4.4.5' type='text/css' media='all' />
+<link rel='stylesheet' id='dashicons-css'  href='http://52.76.37.90/wp-includes/css/dashicons.min.css?ver=5.1' type='text/css' media='all' />
+<link rel='stylesheet' id='cptch_mobile_style-css'  href='http://52.76.37.90/wp-content/plugins/captcha/css/mobile_style.css?ver=4.4.5' type='text/css' media='all' />
 <link rel='stylesheet' id='contact-form-7-css'  href='http://52.76.37.90/wp-content/plugins/contact-form-7/includes/css/styles.css?ver=5.1.1' type='text/css' media='all' />
 <link rel='stylesheet' id='cf7cf-style-css'  href='http://52.76.37.90/wp-content/plugins/cf7-conditional-fields/style.css?ver=1.4.1' type='text/css' media='all' />
-<link rel='stylesheet' id='wp_html5video_css-css'  href='http://52.76.37.90/wp-content/plugins/html5-videogallery-plus-player/assets/css/video-js.css?ver=2.3.1' type='text/css' media='all' />
-<link rel='stylesheet' id='wp_html5video_colcss-css'  href='http://52.76.37.90/wp-content/plugins/html5-videogallery-plus-player/assets/css/video-style.css?ver=2.3.1' type='text/css' media='all' />
-<link rel='stylesheet' id='wpos-magnific-popup-style-css'  href='http://52.76.37.90/wp-content/plugins/html5-videogallery-plus-player/assets/css/magnific-popup.css?ver=2.3.1' type='text/css' media='all' />
-<link rel='stylesheet' id='wptu-front-style-css'  href='http://52.76.37.90/wp-content/plugins/ticker-ultimate/assets/css/wptu-front.css?ver=1.2.1' type='text/css' media='all' />
+<link rel='stylesheet' id='wp_html5video_css-css'  href='http://52.76.37.90/wp-content/plugins/html5-videogallery-plus-player/assets/css/video-js.css?ver=2.3.2' type='text/css' media='all' />
+<link rel='stylesheet' id='wp_html5video_colcss-css'  href='http://52.76.37.90/wp-content/plugins/html5-videogallery-plus-player/assets/css/video-style.css?ver=2.3.2' type='text/css' media='all' />
+<link rel='stylesheet' id='wpos-magnific-popup-style-css'  href='http://52.76.37.90/wp-content/plugins/html5-videogallery-plus-player/assets/css/magnific-popup.css?ver=2.3.2' type='text/css' media='all' />
+<link rel='stylesheet' id='wptu-front-style-css'  href='http://52.76.37.90/wp-content/plugins/ticker-ultimate/assets/css/wptu-front.css?ver=1.2.2' type='text/css' media='all' />
 <style id='woocommerce-inline-inline-css' type='text/css'>
 .woocommerce form .form-row .required { visibility: visible; }
 </style>
-<link rel='stylesheet' id='wpfcas-font-awesome-css'  href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css?ver=1.3.1' type='text/css' media='all' />
-<link rel='stylesheet' id='wpfcas_style-css'  href='http://52.76.37.90/wp-content/plugins/wp-featured-content-and-slider/assets/css/featured-content-style.css?ver=1.3.1' type='text/css' media='all' />
-<link rel='stylesheet' id='wpfcas_slick_style-css'  href='http://52.76.37.90/wp-content/plugins/wp-featured-content-and-slider/assets/css/slick.css?ver=1.3.1' type='text/css' media='all' />
+<link rel='stylesheet' id='wpfcas-font-awesome-css'  href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css?ver=1.3.2' type='text/css' media='all' />
+<link rel='stylesheet' id='wpfcas_style-css'  href='http://52.76.37.90/wp-content/plugins/wp-featured-content-and-slider/assets/css/featured-content-style.css?ver=1.3.2' type='text/css' media='all' />
+<link rel='stylesheet' id='wpfcas_slick_style-css'  href='http://52.76.37.90/wp-content/plugins/wp-featured-content-and-slider/assets/css/slick.css?ver=1.3.2' type='text/css' media='all' />
 <link rel='stylesheet' id='wc-memberships-frontend-css'  href='http://52.76.37.90/wp-content/plugins/woocommerce-memberships/assets/css/frontend/wc-memberships-frontend.min.css?ver=1.8.5' type='text/css' media='all' />
-<link rel='stylesheet' id='storefront-style-css'  href='http://52.76.37.90/wp-content/themes/storefront/style.css?ver=2.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='storefront-style-css'  href='http://52.76.37.90/wp-content/themes/storefront/style.css?ver=2.4.3' type='text/css' media='all' />
 <style id='storefront-style-inline-css' type='text/css'>
 
 			.plus,
@@ -271,36 +271,39 @@ img.emoji {
 				}
 			
 </style>
-<link rel='stylesheet' id='storefront-gutenberg-blocks-css'  href='http://52.76.37.90/wp-content/themes/storefront/assets/css/base/gutenberg-blocks.css?ver=2.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='storefront-gutenberg-blocks-css'  href='http://52.76.37.90/wp-content/themes/storefront/assets/css/base/gutenberg-blocks.css?ver=2.4.3' type='text/css' media='all' />
 <style id='storefront-gutenberg-blocks-inline-css' type='text/css'>
 
-				.wp-block-button .wp-block-button__link {
-					border-color: #338dc9;
-				}
-
-				.wp-block-button:not(.has-text-color) .wp-block-button__link {
+				.wp-block-button__link:not(.has-text-color) {
 					color: #333333;
 				}
 
-				.wp-block-button:not(.has-text-color) .wp-block-button__link:hover,
-				.wp-block-button:not(.has-text-color) .wp-block-button__link:focus,
-				.wp-block-button:not(.has-text-color) .wp-block-button__link:active {
+				.wp-block-button__link:not(.has-text-color):hover,
+				.wp-block-button__link:not(.has-text-color):focus,
+				.wp-block-button__link:not(.has-text-color):active {
 					color: #333333;
 				}
 
-				.wp-block-button:not(.has-background) .wp-block-button__link {
+				.wp-block-button__link:not(.has-background) {
 					background-color: #338dc9;
 				}
 
-				.wp-block-button:not(.has-background) .wp-block-button__link:hover,
-				.wp-block-button:not(.has-background) .wp-block-button__link:focus,
-				.wp-block-button:not(.has-background) .wp-block-button__link:active {
+				.wp-block-button__link:not(.has-background):hover,
+				.wp-block-button__link:not(.has-background):focus,
+				.wp-block-button__link:not(.has-background):active {
 					border-color: #1a74b0;
 					background-color: #1a74b0;
 				}
 
 				.wp-block-quote footer,
-				.wp-block-quote cite {
+				.wp-block-quote cite,
+				.wp-block-quote__citation {
+					color: #383838;
+				}
+
+				.wp-block-pullquote cite,
+				.wp-block-pullquote footer,
+				.wp-block-pullquote__citation {
 					color: #383838;
 				}
 
@@ -312,15 +315,16 @@ img.emoji {
 					color: #333333;
 				}
 
-				.wp-block-file .wp-block-file__button {
+				.wp-block-file a.wp-block-file__button {
 					color: #333333;
 					background-color: #338dc9;
 					border-color: #338dc9;
 				}
 
-				.wp-block-file .wp-block-file__button:hover, .wp-block-file .wp-block-file__button:focus, .wp-block-file .wp-block-file__button:active {
+				.wp-block-file a.wp-block-file__button:hover,
+				.wp-block-file a.wp-block-file__button:focus,
+				.wp-block-file a.wp-block-file__button:active {
 					color: #333333;
-					background-color: #1a74b0;
 					background-color: #1a74b0;
 				}
 
@@ -334,14 +338,14 @@ img.emoji {
 				}
 			
 </style>
-<link rel='stylesheet' id='storefront-icons-css'  href='http://52.76.37.90/wp-content/themes/storefront/assets/css/base/icons.css?ver=2.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='storefront-icons-css'  href='http://52.76.37.90/wp-content/themes/storefront/assets/css/base/icons.css?ver=2.4.3' type='text/css' media='all' />
 <link rel='stylesheet' id='storefront-fonts-css'  href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,300italic,400italic,600,700,900&#038;subset=latin%2Clatin-ext' type='text/css' media='all' />
-<link rel='stylesheet' id='sbc-styles-css'  href='http://52.76.37.90/wp-content/plugins/storefront-blog-customiser/assets/css/style.css?ver=5.0.2' type='text/css' media='all' />
-<link rel='stylesheet' id='sd-styles-css'  href='http://52.76.37.90/wp-content/plugins/storefront-designer/assets/css/style.css?ver=5.0.2' type='text/css' media='all' />
-<link rel='stylesheet' id='sd-styles-2-css'  href='http://52.76.37.90/wp-content/plugins/storefront-designer/assets/css/style-2.css?ver=5.0.2' type='text/css' media='all' />
+<link rel='stylesheet' id='sbc-styles-css'  href='http://52.76.37.90/wp-content/plugins/storefront-blog-customiser/assets/css/style.css?ver=5.1' type='text/css' media='all' />
+<link rel='stylesheet' id='sd-styles-css'  href='http://52.76.37.90/wp-content/plugins/storefront-designer/assets/css/style.css?ver=5.1' type='text/css' media='all' />
+<link rel='stylesheet' id='sd-styles-2-css'  href='http://52.76.37.90/wp-content/plugins/storefront-designer/assets/css/style-2.css?ver=5.1' type='text/css' media='all' />
 <link rel='stylesheet' id='bfa-font-awesome-css'  href='//cdn.jsdelivr.net/fontawesome/4.7.0/css/font-awesome.min.css?ver=4.7.0' type='text/css' media='all' />
 <link rel='stylesheet' id='jquery-ui-smoothness-css'  href='http://52.76.37.90/wp-content/plugins/contact-form-7/includes/js/jquery-ui/themes/smoothness/jquery-ui.min.css?ver=1.11.4' type='text/css' media='screen' />
-<link rel='stylesheet' id='storefront-woocommerce-style-css'  href='http://52.76.37.90/wp-content/themes/storefront/assets/css/woocommerce/woocommerce.css?ver=2.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='storefront-woocommerce-style-css'  href='http://52.76.37.90/wp-content/themes/storefront/assets/css/woocommerce/woocommerce.css?ver=2.4.3' type='text/css' media='all' />
 <style id='storefront-woocommerce-style-inline-css' type='text/css'>
 
 			a.cart-contents,
@@ -579,38 +583,38 @@ img.emoji {
 				}
 			
 </style>
-<link rel='stylesheet' id='storefront-woocommerce-memberships-style-css'  href='http://52.76.37.90/wp-content/themes/storefront/assets/css/woocommerce/extensions/memberships.css?ver=2.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='storefront-woocommerce-memberships-style-css'  href='http://52.76.37.90/wp-content/themes/storefront/assets/css/woocommerce/extensions/memberships.css?ver=2.4.3' type='text/css' media='all' />
 <link rel='stylesheet' id='sp-header-frontend-css'  href='http://52.76.37.90/wp-content/plugins/storefront-powerpack/includes/customizer/header/assets/css/sp-header-frontend.css?ver=1.4.1' type='text/css' media='all' />
 <link rel='stylesheet' id='sp-layout-css'  href='http://52.76.37.90/wp-content/plugins/storefront-powerpack/includes/customizer/layout/assets/css/layout.css?ver=1.4.1' type='text/css' media='all' />
 <link rel='stylesheet' id='sp-styles-css'  href='http://52.76.37.90/wp-content/plugins/storefront-powerpack/includes/customizer/shop/../../../assets/css/style.css?ver=1.4.1' type='text/css' media='all' />
-<link rel='stylesheet' id='custom-css-css'  href='http://52.76.37.90/wp-content/plugins/theme-customisations-master/custom/style.css?ver=5.0.2' type='text/css' media='all' />
+<link rel='stylesheet' id='custom-css-css'  href='http://52.76.37.90/wp-content/plugins/theme-customisations-master/custom/style.css?ver=5.1' type='text/css' media='all' />
 <br />
-<b>Notice</b>:  woocommerce_params is <strong>deprecated</strong> since version 3.5.3! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4147</b><br />
+<b>Notice</b>:  woocommerce_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
 <br />
-<b>Notice</b>:  wc_checkout_params is <strong>deprecated</strong> since version 3.5.3! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4147</b><br />
+<b>Notice</b>:  wc_checkout_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
 <br />
-<b>Notice</b>:  woocommerce_params is <strong>deprecated</strong> since version 3.5.3! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4147</b><br />
+<b>Notice</b>:  woocommerce_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
 <br />
-<b>Notice</b>:  wc_checkout_params is <strong>deprecated</strong> since version 3.5.3! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4147</b><br />
+<b>Notice</b>:  wc_checkout_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
 <br />
-<b>Notice</b>:  woocommerce_params is <strong>deprecated</strong> since version 3.5.3! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4147</b><br />
+<b>Notice</b>:  woocommerce_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
 <br />
-<b>Notice</b>:  wc_checkout_params is <strong>deprecated</strong> since version 3.5.3! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4147</b><br />
+<b>Notice</b>:  wc_checkout_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
 <br />
-<b>Notice</b>:  woocommerce_params is <strong>deprecated</strong> since version 3.5.3! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4147</b><br />
+<b>Notice</b>:  woocommerce_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
 <br />
-<b>Notice</b>:  wc_checkout_params is <strong>deprecated</strong> since version 3.5.3! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4147</b><br />
+<b>Notice</b>:  wc_checkout_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
 <script type='text/javascript' src='http://52.76.37.90/wp-includes/js/jquery/jquery.js?ver=1.12.4'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1'></script>
-<script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/theme-customisations-master/custom/custom.js?ver=5.0.2'></script>
+<script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/theme-customisations-master/custom/custom.js?ver=5.1'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/storefront-designer/assets/js/jquery-sticky.min.js?ver=1.0.0'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/storefront-designer/assets/js/sticky-navigation.min.js?ver=1.0.0'></script>
 <link rel='https://api.w.org/' href='http://52.76.37.90/wp-json/' />
 <link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://52.76.37.90/xmlrpc.php?rsd" />
 <link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://52.76.37.90/wp-includes/wlwmanifest.xml" /> 
 <link rel='next' title='Oh no! Topic is wonky' href='http://52.76.37.90/forums/topic/oh-no-topic-is-wonky/' />
-<meta name="generator" content="WordPress 5.0.2" />
-<meta name="generator" content="WooCommerce 3.5.3" />
+<meta name="generator" content="WordPress 5.1" />
+<meta name="generator" content="WooCommerce 3.5.6" />
 <link rel="canonical" href="http://52.76.37.90/forums/topic/cdc-d1908/" />
 <link rel='shortlink' href='http://52.76.37.90/?p=26763' />
 <link rel="alternate" type="application/json+oembed" href="http://52.76.37.90/wp-json/oembed/1.0/embed?url=http%3A%2F%2F52.76.37.90%2Fforums%2Ftopic%2Fcdc-d1908%2F" />
@@ -619,7 +623,7 @@ img.emoji {
 
 <script type="text/javascript">
     /* <![CDATA[ */
-    var gdbxRender_Data = { url: "http://52.76.37.90/wp-admin/admin-ajax.php", run_quote: true, run_report: false, run_thanks: false, run_attachments: true, run_canned_replies: false, run_bbcodes: true, run_fitvids: true, wp_editor: true, wp_version: 50, last_cookie: 1551968535, bbpress_version: 25, text_are_you_sure: "Are you sure? Operation is not reversible.", now: 1551964935, thanks_thanks: "Thanks", thanks_unthanks: "Remove Thanks", thanks_saved: "Thanks Saved", thanks_removal: true, validate_attachments: true, insert_into_content: true, max_files: 5, max_size: 5120000, limiter: true, allowed_extensions: "jpg jpeg jpe gif png bmp tiff tif ico asf asx wmv wmx wm avi divx flv mov qt mpeg mpg mpe mp4 m4v ogv webm mkv 3gp 3gpp 3g2 3gp2 txt asc c cc h srt csv tsv ics rtx css vtt dfxp mp3 m4a m4b aac ra ram wav ogg oga flac mid midi wma wax mka rtf pdf class tar zip gz gzip rar 7z psd xcf doc pot pps ppt wri xla xls xlt xlw mdb mpp docx docm dotx dotm xlsx xlsm xlsb xltx xltm xlam pptx pptm ppsx ppsm potx potm ppam sldx sldm onetoc onetoc2 onetmp onepkg oxps xps odt odp ods odg odc odb odf wp wpd key numbers pages afl", text_select_file: "Select File", text_file_name: "Name", text_file_size: "Size", text_file_type: "Extension", text_file_validation: "Error!", text_file_validation_size: "The file is too big.", text_file_validation_type: "File type not allowed.", text_file_remove: "Remove this file", text_file_shortcode: "Insert into content", text_file_caption: "Set file caption", text_file_caption_placeholder: "Caption..." };
+    var gdbxRender_Data = { url: "http://52.76.37.90/wp-admin/admin-ajax.php", run_quote: true, run_report: false, run_thanks: false, run_attachments: true, run_canned_replies: false, run_bbcodes: true, run_fitvids: true, wp_editor: true, wp_version: 51, last_cookie: 1552005877, bbpress_version: 25, text_are_you_sure: "Are you sure? Operation is not reversible.", now: 1552002277, thanks_thanks: "Thanks", thanks_unthanks: "Remove Thanks", thanks_saved: "Thanks Saved", thanks_removal: true, validate_attachments: true, insert_into_content: true, max_files: 5, max_size: 5120000, limiter: true, allowed_extensions: "jpg jpeg jpe gif png bmp tiff tif ico asf asx wmv wmx wm avi divx flv mov qt mpeg mpg mpe mp4 m4v ogv webm mkv 3gp 3gpp 3g2 3gp2 txt asc c cc h srt csv tsv ics rtx css vtt dfxp mp3 m4a m4b aac ra ram wav ogg oga flac mid midi wma wax mka rtf pdf class tar zip gz gzip rar 7z psd xcf doc pot pps ppt wri xla xls xlt xlw mdb mpp docx docm dotx dotm xlsx xlsm xlsb xltx xltm xlam pptx pptm ppsx ppsm potx potm ppam sldx sldm onetoc onetoc2 onetmp onepkg oxps xps odt odp ods odg odc odb odf wp wpd key numbers pages afl", text_select_file: "Select File", text_file_name: "Name", text_file_size: "Size", text_file_type: "Extension", text_file_validation: "Error!", text_file_validation_size: "The file is too big.", text_file_validation_type: "File type not allowed.", text_file_remove: "Remove this file", text_file_shortcode: "Insert into content", text_file_caption: "Set file caption", text_file_caption_placeholder: "Caption..." };
     /* ]]> */
 </script>
 
@@ -740,7 +744,7 @@ img.emoji {
 	
 	
 		
-		<div class="bbp-template-notice info"><p class="bbp-topic-description">This topic contains 0 replies, has 1 voice, and was last updated by <a href="http://52.76.37.90/forums/users/michigawa/" title="View michigawa&#039;s profile" class="bbp-author-avatar" rel="nofollow"><img src="http://1.gravatar.com/avatar/d955d217e4ca86ae1245c64c6848db73?s=14&#038;d=mm&#038;r=g" width="14" height="14" alt="" class="avatar avatar-14 wp-user-avatar wp-user-avatar-14 photo avatar-default" /></a>&nbsp;<a href="http://52.76.37.90/forums/users/michigawa/" title="View michigawa&#039;s profile" class="bbp-author-name" rel="nofollow">michigawa</a> <a href="http://52.76.37.90/forums/topic/cdc-d1908/" title="CDC-D1908 งานบุญนอกพระพุทธศาสนา">4 weeks ago</a>.</p></div>
+		<div class="bbp-template-notice info"><p class="bbp-topic-description">This topic contains 0 replies, has 1 voice, and was last updated by <a href="http://52.76.37.90/forums/users/michigawa/" title="View michigawa&#039;s profile" class="bbp-author-avatar" rel="nofollow"><img src="http://1.gravatar.com/avatar/d955d217e4ca86ae1245c64c6848db73?s=14&#038;d=mm&#038;r=g" width="14" height="14" alt="Avatar" class="avatar avatar-14 wp-user-avatar wp-user-avatar-14 photo avatar-default" /></a>&nbsp;<a href="http://52.76.37.90/forums/users/michigawa/" title="View michigawa&#039;s profile" class="bbp-author-name" rel="nofollow">michigawa</a> <a href="http://52.76.37.90/forums/topic/cdc-d1908/" title="CDC-D1908 งานบุญนอกพระพุทธศาสนา">4 weeks, 1 day ago</a>.</p></div>
 		
 		
 			
@@ -803,7 +807,7 @@ img.emoji {
 	<div class="bbp-reply-author">
 
 		
-		<a href="http://52.76.37.90/forums/users/michigawa/" title="View michigawa&#039;s profile" class="bbp-author-avatar" rel="nofollow"><img src="http://1.gravatar.com/avatar/d955d217e4ca86ae1245c64c6848db73?s=80&#038;d=mm&#038;r=g" width="80" height="80" alt="" class="avatar avatar-80 wp-user-avatar wp-user-avatar-80 photo avatar-default" /></a><br /><a href="http://52.76.37.90/forums/users/michigawa/" title="View michigawa&#039;s profile" class="bbp-author-name" rel="nofollow">michigawa</a><br /><div class="bbp-author-role">Keymaster</div>
+		<a href="http://52.76.37.90/forums/users/michigawa/" title="View michigawa&#039;s profile" class="bbp-author-avatar" rel="nofollow"><img src="http://1.gravatar.com/avatar/d955d217e4ca86ae1245c64c6848db73?s=80&#038;d=mm&#038;r=g" width="80" height="80" alt="Avatar" class="avatar avatar-80 wp-user-avatar wp-user-avatar-80 photo avatar-default" /></a><br /><a href="http://52.76.37.90/forums/users/michigawa/" title="View michigawa&#039;s profile" class="bbp-author-name" rel="nofollow">michigawa</a><br /><div class="bbp-author-role">Keymaster</div>
 		
 		
 	</div><!-- .bbp-reply-author -->
@@ -899,7 +903,7 @@ img.emoji {
 
 					
 					
-						<div>1 week ago</div>
+						<div>1 week, 1 day ago</div>
 
 					
 				</li>
@@ -910,7 +914,7 @@ img.emoji {
 
 					
 					
-						<div>1 week, 1 day ago</div>
+						<div>1 week, 2 days ago</div>
 
 					
 				</li>
@@ -932,7 +936,7 @@ img.emoji {
 
 					
 					
-						<div>4 weeks ago</div>
+						<div>4 weeks, 1 day ago</div>
 
 					
 				</li>
@@ -943,7 +947,7 @@ img.emoji {
 
 					
 					
-						<div>1 month, 1 week ago</div>
+						<div>1 month, 2 weeks ago</div>
 
 					
 				</li>
@@ -960,7 +964,7 @@ img.emoji {
 
 					
 					
-						<div>6 hours, 36 minutes ago</div>
+						<div>16 hours, 59 minutes ago</div>
 
 					
 				</li>
@@ -971,7 +975,7 @@ img.emoji {
 
 					
 					
-						<div>4 days, 12 hours ago</div>
+						<div>4 days, 22 hours ago</div>
 
 					
 				</li>
@@ -982,7 +986,7 @@ img.emoji {
 
 					
 					
-						<div>17 minutes ago</div>
+						<div>10 hours, 40 minutes ago</div>
 
 					
 				</li>
@@ -993,7 +997,7 @@ img.emoji {
 
 					
 					
-						<div>1 week ago</div>
+						<div>1 week, 1 day ago</div>
 
 					
 				</li>
@@ -1004,7 +1008,7 @@ img.emoji {
 
 					
 					
-						<div>1 week, 1 day ago</div>
+						<div>1 week, 2 days ago</div>
 
 					
 				</li>
@@ -1037,7 +1041,7 @@ img.emoji {
 
 					
 					
-						<div>4 weeks ago</div>
+						<div>4 weeks, 1 day ago</div>
 
 					
 				</li>
@@ -1049,27 +1053,27 @@ img.emoji {
 <ul>
 <li>
 <a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/cdc-downloader-%e0%b8%94%e0%b8%b2%e0%b8%a7%e0%b8%99%e0%b9%8c%e0%b9%82%e0%b8%ab%e0%b8%a5%e0%b8%94%e0%b9%84%e0%b8%a1%e0%b9%88%e0%b9%84%e0%b8%94%e0%b9%89%e0%b8%84%e0%b8%a3%e0%b8%b1%e0%b8%9a/#post-27896" title="Reply To: CDC Downloader ดาวน์โหลดไม่ได้ครับ">Reply To: CDC Downloader ดาวน์โหลดไม่ได้ครับ</a>
-<em class="bbp-last-active">17 minutes ago</em>
+<em class="bbp-last-active">10 hours, 40 minutes ago</em>
 </li>
 <li>
 <a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/cdc-downloader/#post-27887" title="Reply To: CDC Downloader">Reply To: CDC Downloader</a>
-<em class="bbp-last-active">5 hours, 13 minutes ago</em>
+<em class="bbp-last-active">15 hours, 35 minutes ago</em>
 </li>
 <li>
 <a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/%e0%b8%aa%e0%b8%ad%e0%b8%9a%e0%b8%96%e0%b8%b2%e0%b8%a1%e0%b9%80%e0%b8%a3%e0%b8%b7%e0%b9%88%e0%b8%ad%e0%b8%87%e0%b8%82%e0%b9%89%e0%b8%ad%e0%b8%a1%e0%b8%b9%e0%b8%a5dw%e0%b8%ab%e0%b8%99%e0%b9%88%e0%b8%ad/#post-27882" title="Reply To: สอบถามเรื่องข้อมูลDWหน่อยครับ">Reply To: สอบถามเรื่องข้อมูลDWหน่อยครับ</a>
-<em class="bbp-last-active">6 hours, 36 minutes ago</em>
+<em class="bbp-last-active">16 hours, 59 minutes ago</em>
 </li>
 <li>
 <a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/%e0%b9%81%e0%b8%88%e0%b9%89%e0%b8%87%e0%b8%8a%e0%b8%b3%e0%b8%a3%e0%b8%b0%e0%b8%84%e0%b9%88%e0%b8%b2%e0%b8%aa%e0%b8%a1%e0%b8%b1%e0%b8%84%e0%b8%a3%e0%b8%aa%e0%b8%a1%e0%b8%b2%e0%b8%8a%e0%b8%b4%e0%b8%81/#post-27881" title="Reply To: แจ้งชำระค่าสมัครสมาชิก">Reply To: แจ้งชำระค่าสมัครสมาชิก</a>
-<em class="bbp-last-active">6 hours, 39 minutes ago</em>
+<em class="bbp-last-active">17 hours, 1 minute ago</em>
 </li>
 <li>
 <a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/error-code-14/#post-27623" title="Reply To: Error code 14">Reply To: Error code 14</a>
-<em class="bbp-last-active">2 days, 3 hours ago</em>
+<em class="bbp-last-active">2 days, 14 hours ago</em>
 </li>
 </ul>
 </div></div><div id="archives-2" class="widget widget_archive"><span class="gamma widget-title">Archives</span>		<ul>
-			<li><a href='http://52.76.37.90/2019/03/'>March 2019</a></li>
+				<li><a href='http://52.76.37.90/2019/03/'>March 2019</a></li>
 	<li><a href='http://52.76.37.90/2019/02/'>February 2019</a></li>
 	<li><a href='http://52.76.37.90/2019/01/'>January 2019</a></li>
 	<li><a href='http://52.76.37.90/2018/12/'>December 2018</a></li>
@@ -1082,7 +1086,7 @@ img.emoji {
 	<li><a href='http://52.76.37.90/2017/11/'>November 2017</a></li>
 	<li><a href='http://52.76.37.90/2017/07/'>July 2017</a></li>
 		</ul>
-		</div></div><!-- #secondary -->
+			</div></div><!-- #secondary -->
 
 		</div><!-- .col-full -->
 	</div><!-- #content -->
@@ -1191,7 +1195,7 @@ img.emoji {
 
 					
 					
-						<div>6 hours, 36 minutes ago</div>
+						<div>16 hours, 59 minutes ago</div>
 
 					
 				</li>
@@ -1202,7 +1206,7 @@ img.emoji {
 
 					
 					
-						<div>4 days, 12 hours ago</div>
+						<div>4 days, 22 hours ago</div>
 
 					
 				</li>
@@ -1213,7 +1217,7 @@ img.emoji {
 
 					
 					
-						<div>17 minutes ago</div>
+						<div>10 hours, 40 minutes ago</div>
 
 					
 				</li>
@@ -1224,7 +1228,7 @@ img.emoji {
 
 					
 					
-						<div>1 week ago</div>
+						<div>1 week, 1 day ago</div>
 
 					
 				</li>
@@ -1235,7 +1239,7 @@ img.emoji {
 
 					
 					
-						<div>1 week, 1 day ago</div>
+						<div>1 week, 2 days ago</div>
 
 					
 				</li>
@@ -1254,7 +1258,7 @@ img.emoji {
 
 					
 					
-						<div>17 minutes ago</div>
+						<div>10 hours, 40 minutes ago</div>
 
 					
 				</li>
@@ -1265,7 +1269,7 @@ img.emoji {
 
 					
 					
-						<div>5 hours, 13 minutes ago</div>
+						<div>15 hours, 35 minutes ago</div>
 
 					
 				</li>
@@ -1276,7 +1280,7 @@ img.emoji {
 
 					
 					
-						<div>6 hours, 36 minutes ago</div>
+						<div>16 hours, 59 minutes ago</div>
 
 					
 				</li>
@@ -1287,7 +1291,7 @@ img.emoji {
 
 					
 					
-						<div>6 hours, 39 minutes ago</div>
+						<div>17 hours, 1 minute ago</div>
 
 					
 				</li>
@@ -1298,7 +1302,7 @@ img.emoji {
 
 					
 					
-						<div>2 days, 3 hours ago</div>
+						<div>2 days, 14 hours ago</div>
 
 					
 				</li>
@@ -1342,8 +1346,8 @@ img.emoji {
 <script type='text/javascript'>
 /* <![CDATA[ */
 r3f5x9JS=escape(document['referrer']);
-hf4N='0f669b8e549773e2289b2d8176d751eb';
-hf4V='fccc2e511eb0dc85928917e951bbdc9d';
+hf4N='d113cd76a6702f8042daf053e317918c';
+hf4V='4ebc074a0451c9776c4e4829934cf045';
 jQuery(document).ready(function($){var e="#commentform, .comment-respond form, .comment-form, #lostpasswordform, #registerform, #loginform, #login_form, #wpss_contact_form, .wpcf7-form";$(e).submit(function(){$("<input>").attr("type","hidden").attr("name","r3f5x9JS").attr("value",r3f5x9JS).appendTo(e);return true;});var h="form[method='post']";$(h).submit(function(){$("<input>").attr("type","hidden").attr("name",hf4N).attr("value",hf4V).appendTo(h);return true;});});
 /* ]]> */
 </script> 
@@ -1353,13 +1357,13 @@ jQuery(document).ready(function($){var e="#commentform, .comment-respond form, .
 		document.body.className = c;
 	</script>
 	<br />
-<b>Notice</b>:  woocommerce_params is <strong>deprecated</strong> since version 3.5.3! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4147</b><br />
+<b>Notice</b>:  woocommerce_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
 <br />
-<b>Notice</b>:  wc_checkout_params is <strong>deprecated</strong> since version 3.5.3! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4147</b><br />
+<b>Notice</b>:  wc_checkout_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
 <br />
-<b>Notice</b>:  woocommerce_params is <strong>deprecated</strong> since version 3.5.3! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4147</b><br />
+<b>Notice</b>:  woocommerce_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
 <br />
-<b>Notice</b>:  wc_checkout_params is <strong>deprecated</strong> since version 3.5.3! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4147</b><br />
+<b>Notice</b>:  wc_checkout_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
 <script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/gd-bbpress-toolbox/d4pjs/fitvids/jquery.fitvids.js?ver=4.7.2.625'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/gd-bbpress-toolbox/js/front-core.min.js?ver=4.7.2.625'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/bbpress/templates/default/js/editor.js?ver=2.5.14-6684'></script>
@@ -1376,7 +1380,7 @@ var wpcf7 = {"apiSettings":{"root":"http:\/\/52.76.37.90\/wp-json\/contact-form-
 /* ]]> */
 </script>
 <script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/contact-form-7/includes/js/scripts.js?ver=5.1.1'></script>
-<script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/html5-videogallery-plus-player/assets/js/video.js?ver=2.3.1'></script>
+<script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/html5-videogallery-plus-player/assets/js/video.js?ver=2.3.2'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/woocommerce/assets/js/jquery-blockui/jquery.blockUI.min.js?ver=2.70'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/woocommerce/assets/js/js-cookie/js.cookie.min.js?ver=2.1.4'></script>
 <script type='text/javascript'>
@@ -1384,19 +1388,19 @@ var wpcf7 = {"apiSettings":{"root":"http:\/\/52.76.37.90\/wp-json\/contact-form-
 var woocommerce_params = {"ajax_url":"\/wp-admin\/admin-ajax.php","wc_ajax_url":"\/?wc-ajax=%%endpoint%%"};
 /* ]]> */
 </script>
-<script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/woocommerce/assets/js/frontend/woocommerce.min.js?ver=3.5.3'></script>
+<script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/woocommerce/assets/js/frontend/woocommerce.min.js?ver=3.5.6'></script>
 <script type='text/javascript'>
 /* <![CDATA[ */
 var wc_cart_fragments_params = {"ajax_url":"\/wp-admin\/admin-ajax.php","wc_ajax_url":"\/?wc-ajax=%%endpoint%%","cart_hash_key":"wc_cart_hash_16d44636f6eccd0f7080a358058ce065","fragment_name":"wc_fragments_16d44636f6eccd0f7080a358058ce065"};
 /* ]]> */
 </script>
-<script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/woocommerce/assets/js/frontend/cart-fragments.min.js?ver=3.5.3'></script>
+<script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/woocommerce/assets/js/frontend/cart-fragments.min.js?ver=3.5.6'></script>
 <script type='text/javascript'>
 /* <![CDATA[ */
 var storefrontScreenReaderText = {"expand":"Expand child menu","collapse":"Collapse child menu"};
 /* ]]> */
 </script>
-<script type='text/javascript' src='http://52.76.37.90/wp-content/themes/storefront/assets/js/navigation.min.js?ver=2.4.2'></script>
+<script type='text/javascript' src='http://52.76.37.90/wp-content/themes/storefront/assets/js/navigation.min.js?ver=2.4.3'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-content/themes/storefront/assets/js/skip-link-focus-fix.min.js?ver=20130115'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-content/themes/storefront/assets/js/vendor/pep.min.js?ver=0.4.3'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-includes/js/jquery/ui/core.min.js?ver=1.11.4'></script>
@@ -1407,16 +1411,16 @@ jQuery(document).ready(function(jQuery){jQuery.datepicker.setDefaults({"closeTex
 <script type='text/javascript' src='http://52.76.37.90/wp-includes/js/jquery/ui/widget.min.js?ver=1.11.4'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-includes/js/jquery/ui/button.min.js?ver=1.11.4'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-includes/js/jquery/ui/spinner.min.js?ver=1.11.4'></script>
-<script type='text/javascript' src='http://52.76.37.90/wp-content/themes/storefront/assets/js/woocommerce/header-cart.min.js?ver=2.4.2'></script>
+<script type='text/javascript' src='http://52.76.37.90/wp-content/themes/storefront/assets/js/woocommerce/header-cart.min.js?ver=2.4.3'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/wp-spamshield/js/jscripts-ftr2-min.js'></script>
-<script type='text/javascript' src='http://52.76.37.90/wp-includes/js/wp-embed.min.js?ver=5.0.2'></script>
+<script type='text/javascript' src='http://52.76.37.90/wp-includes/js/wp-embed.min.js?ver=5.1'></script>
 
 </body>
 </html>
 
 <!--
-Object Caching 162/270 objects using disk
+Object Caching 164/261 objects using disk
 Page Caching using disk: enhanced 
 
-Served from: 52.76.37.90 @ 2019-03-07 20:22:15 by W3 Total Cache
+Served from: 52.76.37.90 @ 2019-03-08 06:44:37 by W3 Total Cache
 -->

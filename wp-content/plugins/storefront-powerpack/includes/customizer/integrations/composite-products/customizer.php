@@ -142,26 +142,6 @@ if ( ! class_exists( 'SP_Customizer_Composite_Product_Details' ) ) :
 			) ) );
 
 			/**
-	         * Pagination vs Load More.
-	         */
-			$wp_customize->add_setting( 'sp_cp_component_options_pagination', array(
-				'sanitize_callback' => 'storefront_sanitize_choices',
-			) );
-
-			$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'sp_cp_component_options_pagination', array(
-				'label'       => __( 'Options pagination', 'storefront-powerpack' ),
-				'description' => sprintf( __( 'Turn off pagination and replace it with a %1$sLoad More%2$s button. Applicable when the %1$sThumbnails%2$s style is active.', 'storefront-powerpack' ), '<strong>', '</strong>' ),
-				'section'     => self::POWERPACK_COMPOSITE_PRODUCTS_SECTION,
-				'settings'    => 'sp_cp_component_options_pagination',
-				'type'        => 'select',
-				'priority'    => 25,
-				'choices'     => array(
-					'on'  => __( 'On', 'storefront-powerpack' ),
-					'off' => __( 'Off', 'storefront-powerpack' )
-				)
-			) ) );
-
-			/**
 	         * Max columns in Summary/Review section.
 	         */
 			$wp_customize->add_setting( 'sp_cp_summary_max_columns', array(

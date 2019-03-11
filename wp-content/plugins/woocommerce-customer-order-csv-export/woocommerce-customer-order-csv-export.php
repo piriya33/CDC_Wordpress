@@ -5,11 +5,11 @@
  * Description: Easily download customers & orders in CSV format and automatically export FTP or HTTP POST on a recurring schedule
  * Author: SkyVerge
  * Author URI: http://www.woocommerce.com
- * Version: 4.3.7
+ * Version: 4.6.2
  * Text Domain: woocommerce-customer-order-csv-export
  * Domain Path: /i18n/languages/
  *
- * Copyright: (c) 2012-2017, SkyVerge (info@skyverge.com)
+ * Copyright: (c) 2012-2018, SkyVerge (info@skyverge.com)
  *
  * License: GNU General Public License v3.0
  * License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -17,10 +17,12 @@
  * @package   WC-Customer-Order-CSV-Export
  * @author    SkyVerge
  * @category  Export
- * @copyright Copyright (c) 2012-2017, SkyVerge, Inc.
+ * @copyright Copyright (c) 2012-2018, SkyVerge, Inc.
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  *
  * Woo: 18652:914de15813a903c767b55445608bf290
+ * WC requires at least: 2.6.14
+ * WC tested up to: 3.5.4
  */
 
 defined( 'ABSPATH' ) or exit;
@@ -43,8 +45,8 @@ if ( ! class_exists( 'SV_WC_Framework_Bootstrap' ) ) {
 	require_once( plugin_dir_path( __FILE__ ) . 'lib/skyverge/woocommerce/class-sv-wc-framework-bootstrap.php' );
 }
 
-SV_WC_Framework_Bootstrap::instance()->register_plugin( '4.6.6', __( 'WooCommerce Customer/Order CSV Export', 'woocommerce-customer-order-csv-export' ), __FILE__, 'init_woocommerce_customer_order_csv_export', array(
-	'minimum_wc_version'   => '2.5.5',
+SV_WC_Framework_Bootstrap::instance()->register_plugin( '4.9.0', __( 'WooCommerce Customer/Order CSV Export', 'woocommerce-customer-order-csv-export' ), __FILE__, 'init_woocommerce_customer_order_csv_export', array(
+	'minimum_wc_version'   => '2.6.14',
 	'minimum_wp_version'   => '4.4',
 	'backwards_compatible' => '4.4',
 ) );
@@ -123,7 +125,7 @@ class WC_Customer_Order_CSV_Export extends SV_WC_Plugin {
 
 
 	/** plugin version number */
-	const VERSION = '4.3.7';
+	const VERSION = '4.6.2';
 
 	/** @var WC_Customer_Order_CSV_Export single instance of this plugin */
 	protected static $instance;
@@ -149,8 +151,11 @@ class WC_Customer_Order_CSV_Export extends SV_WC_Plugin {
 	/** @var \WC_Customer_Order_CSV_Export_AJAX instance */
 	protected $ajax;
 
-	/** @var \WC_Customer_Order_CSV_Export_Background_Export instance */
+	/** @var \SV_WP_Background_Job_Handler instance */
 	protected $background_export;
+
+	/** @var \SV_WP_Job_Batch_Handler instance */
+	protected $batch_export;
 
 	/** @var \WC_Customer_Order_CSV_Export_Download_Handler instance */
 	protected $download_handler;
@@ -185,6 +190,11 @@ class WC_Customer_Order_CSV_Export extends SV_WC_Plugin {
 			array(
 				'text_domain'        => 'woocommerce-customer-order-csv-export',
 				'display_php_notice' => true,
+				'dependencies'       => array(
+					'extensions'     => array(
+						'mbstring'
+					)
+				)
 			)
 		);
 
@@ -316,9 +326,25 @@ class WC_Customer_Order_CSV_Export extends SV_WC_Plugin {
 		// otherwise background jobs simply won't work
 		require_once( $this->get_framework_path() . '/utilities/class-sv-wp-async-request.php' );
 		require_once( $this->get_framework_path() . '/utilities/class-sv-wp-background-job-handler.php' );
+		require_once( $this->get_framework_path() . '/utilities/class-sv-wp-job-batch-handler.php' );
+
+		// export class
+		require_once( $this->get_plugin_path() . '/includes/class-wc-customer-order-csv-export-export.php' );
+
+		// handles data storage
+		require_once( $this->get_plugin_path() . '/includes/data-stores/abstract-class-wc-customer-order-csv-export-data-store.php' );
+		require_once( $this->get_plugin_path() . '/includes/data-stores/class-wc-customer-order-csv-export-data-store-factory.php' );
+
+		// export functions
+		require_once( $this->get_plugin_path() . '/includes/functions/wc-customer-order-csv-export-export-functions.php' );
 
 		// handles exporting files in background
 		$this->background_export = $this->load_class( '/includes/class-wc-customer-order-csv-export-background-export.php', 'WC_Customer_Order_CSV_Export_Background_Export' );
+
+		require_once( $this->get_plugin_path() . '/includes/class-wc-customer-order-csv-export-batch-export-handler.php' );
+
+		// handles exporting files in batches
+		$this->batch_export = new WC_Customer_Order_CSV_Export_Batch_Export_Handler( $this->background_export, $this );
 
 		// general interface for interacting with exports
 		$this->export_handler = $this->load_class( '/includes/class-wc-customer-order-csv-export-handler.php', 'WC_Customer_Order_CSV_Export_Handler' );
@@ -436,10 +462,21 @@ class WC_Customer_Order_CSV_Export extends SV_WC_Plugin {
 	 * Return background export class instance
 	 *
 	 * @since 4.0.0
-	 * @return \WC_Customer_Order_CSV_Export_Background_Export
+	 * @return \SV_WP_Background_Job_Handler
 	 */
 	public function get_background_export_instance() {
 		return $this->background_export;
+	}
+
+
+	/**
+	 * Return batch export class instance
+	 *
+	 * @since 4.0.0
+	 * @return \SV_WP_Job_Batch_Handler
+	 */
+	public function get_batch_export_instance() {
+		return $this->batch_export;
 	}
 
 
@@ -465,21 +502,6 @@ class WC_Customer_Order_CSV_Export extends SV_WC_Plugin {
 	}
 
 
-	/**
-	 * Returns the admin notice handler instance
-	 *
-	 * TODO: remove this when the method gets fixed in framework {IT 2016-09-02}
-	 *
-	 * @since 4.0.5
-	 */
-	public function get_admin_notice_handler() {
-
-		require_once( $this->get_framework_path() . '/class-sv-wc-admin-notice-handler.php' );
-
-		return parent::get_admin_notice_handler();
-	}
-
-
 	/** Admin Methods ******************************************************/
 
 
@@ -490,6 +512,7 @@ class WC_Customer_Order_CSV_Export extends SV_WC_Plugin {
 	 * @see SV_WC_Plugin::add_admin_notices()
 	 */
 	public function add_admin_notices() {
+		global $wpdb;
 
 		// show any dependency notices
 		parent::add_admin_notices();
@@ -501,6 +524,73 @@ class WC_Customer_Order_CSV_Export extends SV_WC_Plugin {
 			'export-format-notice',
 			array( 'always_show_on_settings' => false, 'notice_class' => 'updated' )
 		);
+
+		$loopback_enabled = $this->get_background_export_instance()->test_connection();
+
+		// add notice for failing loopback connections
+		if ( ! $loopback_enabled && $this->is_plugin_settings() ) {
+
+			$message = sprintf(
+				/* translators: Placeholders: %1$s - <strong>; %2$s - </strong>; %3$s, %5$s - <a> tags; %4$s - </a> tag */
+				__( '%1$sAutomated Exports%2$s are currently unavailable because your site does not support background processing. To use automated exports, please ask your hosting company to ensure your server has %3$sloopback connections%4$s enabled, or switch to a %5$srecommended hosting provider%4$s.', 'woocommerce-customer-order-csv-export' ),
+				'<strong>',
+				'</strong>',
+				'<a href="https://docs.woocommerce.com/document/ordercustomer-csv-export/#faq-loopback" target="_blank">',
+				'</a>',
+				'<a href="https://www.skyverge.com/upgrading-php-versions/#recommended-hosts" target="_blank">'
+			);
+
+			// check $_POST to see if we've updated settings, but batch processing isn't included (meaning it's off)
+			if ( ! $this->is_batch_processing_enabled() || ( isset( $_POST['wc_customer_order_csv_export_orders_format'] ) && ! isset( $_POST['wc_customer_order_csv_export_enable_batch_processing'] ) ) ) {
+				$message .= ' ' . sprintf(
+					/* translators: Placeholders: %1$s - <strong>; %2$s - </strong> */
+					__( 'In the meantime, you can process manual exports by enabling the %1$sBatch Processing%2$s setting.', 'woocommerce-customer-order-csv-export' ),
+					'<strong>', '</strong>'
+				);
+			}
+
+			$this->get_admin_notice_handler()->add_admin_notice(
+				$message,
+				'export-loopback-notice',
+				array( 'notice_class' => 'error' )
+			);
+		}
+
+		// add notice when batch processing blocks automatic exporting
+		if ( $loopback_enabled && $this->is_batch_processing_enabled() && $this->is_plugin_settings() ) {
+
+			$message = sprintf(
+				/* translators: Placeholders: %1$s - <strong>; %2$s - </strong>; %3$s, %5$s - <a> tags; %4$s - </a> tag */
+				__( '%1$sAutomated Exports%2$s are currently unavailable because batch processing is enabled. To use automated exports, please disable batch processing and ensure your server has %3$sloopback connections%4$s enabled.', 'woocommerce-customer-order-csv-export' ),
+				'<strong>',
+				'</strong>',
+				'<a href="https://docs.woocommerce.com/document/ordercustomer-csv-export/#faq-loopback" target="_blank">',
+				'</a>'
+			);
+
+			$this->get_admin_notice_handler()->add_admin_notice(
+				$message,
+				'export-no-automatic-notice',
+				array( 'notice_class' => 'error' )
+			);
+		}
+
+		// add notice for mysqli requirement
+		if ( ( $this->is_export_page() || $this->is_export_list_page() ) && ! $wpdb->dbh instanceof mysqli ) {
+
+			$message = sprintf(
+				/* translators: Placeholders: %1$s - <a> tag; %2$s - </a> tag */
+				__( 'Heads up! Your exports may consume more memory and take longer than usual unless mysqli is installed and enabled on your site. %1$sLearn More%2$s', 'woocommerce-customer-order-csv-export' ),
+				'<a href="https://docs.woocommerce.com/document/ordercustomer-csv-export/#mysqli-streaming" target="_blank">',
+				'</a>'
+			);
+
+			$this->get_admin_notice_handler()->add_admin_notice(
+				$message,
+				'mysqli-not-found-notice',
+				array( 'dismissible' => false, 'notice_class' => 'error' )
+			);
+		}
 	}
 
 
@@ -644,7 +734,7 @@ class WC_Customer_Order_CSV_Export extends SV_WC_Plugin {
 	 * @return string
 	 */
 	public function get_support_url() {
-		return 'https://woocommerce.com/my-account/tickets/';
+		return 'https://woocommerce.com/my-account/marketplace-ticket-form/';
 	}
 
 
@@ -659,6 +749,45 @@ class WC_Customer_Order_CSV_Export extends SV_WC_Plugin {
 	public function get_settings_url( $_ = null ) {
 
 		return admin_url( 'admin.php?page=wc_customer_order_csv_export&tab=settings' );
+	}
+
+
+	/**
+	 * Determines if the current page is the plugin settings page.*
+	 *
+	 * @since 4.4.0
+	 *
+	 * @return bool
+	 */
+	public function is_plugin_settings() {
+
+		return is_admin() && 'wc_customer_order_csv_export' === SV_WC_Helper::get_request( 'page' ) && 'settings' === SV_WC_Helper::get_request( 'tab' );
+	}
+
+
+	/**
+	 * Determines if the current page is the export list page.
+	 *
+	 * @since 4.5.0
+	 *
+	 * @return bool
+	 */
+	public function is_export_page() {
+
+		return is_admin() && 'wc_customer_order_csv_export' === SV_WC_Helper::get_request( 'page' ) && 'export_list' === SV_WC_Helper::get_request( 'tab' );
+	}
+
+
+	/**
+	 * Determines if the current page is the new export page.
+	 *
+	 * @since 4.5.0
+	 *
+	 * @return bool
+	 */
+	public function is_export_list_page() {
+
+		return is_admin() && 'wc_customer_order_csv_export' === SV_WC_Helper::get_request( 'page' ) && 'export' === SV_WC_Helper::get_request( 'tab' );
 	}
 
 
@@ -780,254 +909,67 @@ class WC_Customer_Order_CSV_Export extends SV_WC_Plugin {
 	}
 
 
+	/**
+	 * Determines if batch processing is enabled.
+	 *
+	 * @since 4.4.0
+	 *
+	 * @return bool
+	 */
+	public function is_batch_processing_enabled() {
+
+		// account for changes while saving settings
+		if ( isset( $_POST['wc_customer_order_csv_export_enable_batch_processing'] ) ) {
+			return (bool) $_POST['wc_customer_order_csv_export_enable_batch_processing'];
+		}
+
+		return 'yes' === get_option( 'wc_customer_order_csv_export_enable_batch_processing', 'no' );
+	}
+
+
+	/**
+	 * Determines if the option to export coupons is enabled.
+	 *
+	 * @since 4.6.0
+	 *
+	 * @return bool
+	 */
+	public function is_coupon_export_enabled() {
+		// coupon export is compatible with WooCommerce 3.0 and above
+		return SV_WC_Plugin_Compatibility::is_wc_version_gte_3_0();
+	}
+
+
 	/** Lifecycle Methods ******************************************************/
 
 
 	/**
-	 * Install default settings
+	 * Installs default settings.
+	 *
+	 * @see \SV_WC_Plugin::install()
 	 *
 	 * @since 3.0.0
-	 * @see SV_WC_Plugin::install()
 	 */
 	protected function install() {
 
-		// install default settings
-		require_once( $this->get_plugin_path() . '/includes/admin/class-wc-customer-order-csv-export-admin-settings.php' );
+		require_once( $this->get_plugin_path() . '/includes/class-wc-customer-order-csv-export-lifecycle.php' );
 
-		foreach ( WC_Customer_Order_CSV_Export_Admin_Settings::get_settings() as $section => $settings ) {
-
-			foreach ( $settings as $setting ) {
-
-				if ( isset( $setting['default'] ) ) {
-
-					update_option( $setting['id'], $setting['default'] );
-				}
-			}
-		}
-
-		// install default custom format builder settings
-		require_once( $this->get_plugin_path() . '/includes/admin/class-wc-customer-order-csv-export-admin-custom-format-builder.php' );
-
-		foreach ( WC_Customer_Order_CSV_Export_Admin_Custom_Format_Builder::get_settings() as $section => $settings ) {
-
-			foreach ( $settings as $setting ) {
-
-				if ( isset( $setting['default'] ) ) {
-
-					update_option( $setting['id'], $setting['default'] );
-				}
-			}
-		}
-
-		self::create_files();
+		WC_Customer_Order_CSV_Export_Lifecycle::install();
 	}
 
 
 	/**
-	 * Create files/directories
+	 * Upgrades to $installed_version.
 	 *
-	 * Based on WC_Install::create_files()
-	 *
-	 * @since 3.12-0-1
-	 */
-	private static function create_files() {
-
-		// Install files and folders for exported files and prevent hotlinking
-		$upload_dir      = wp_upload_dir();
-		$download_method = get_option( 'woocommerce_file_download_method', 'force' );
-
-		$files = array(
-			array(
-				'base'    => $upload_dir['basedir'] . '/csv_exports',
-				'file'    => 'index.html',
-				'content' => ''
-			),
-		);
-
-		if ( 'redirect' !== $download_method ) {
-			$files[] = array(
-				'base'    => $upload_dir['basedir'] . '/csv_exports',
-				'file'    => '.htaccess',
-				'content' => 'deny from all'
-			);
-		}
-
-		foreach ( $files as $file ) {
-
-			if ( wp_mkdir_p( $file['base'] ) && ! file_exists( trailingslashit( $file['base'] ) . $file['file'] ) ) {
-
-				if ( $file_handle = @fopen( trailingslashit( $file['base'] ) . $file['file'], 'w' ) ) {
-
-					fwrite( $file_handle, $file['content'] );
-					fclose( $file_handle );
-				}
-			}
-		}
-	}
-
-
-	/**
-	 * Upgrade to $installed_version
+	 * @see \SV_WC_Plugin::upgrade()
 	 *
 	 * @since 3.0.4
-	 * @see SV_WC_Plugin::upgrade()
 	 */
 	protected function upgrade( $installed_version ) {
 
-		// upgrade to 3.0.4
-		if ( version_compare( $installed_version, '3.0.4', '<' ) ) {
+		require_once( $this->get_plugin_path() . '/includes/class-wc-customer-order-csv-export-lifecycle.php' );
 
-			// wc_customer_order_csv_export_passive_mode > wc_customer_order_csv_export_ftp_passive_mode
-			update_option( 'wc_customer_order_csv_export_ftp_passive_mode', get_option( 'wc_customer_order_csv_export_passive_mode' ) );
-			delete_option( 'wc_customer_order_csv_export_passive_mode' );
-		}
-
-		// upgrate to 3.4.0
-		if ( version_compare( $installed_version, '3.4.0', '<' ) ) {
-
-			// update order statuses for 2.2+
-			$order_status_options = array( 'wc_customer_order_csv_export_statuses', 'wc_customer_order_csv_export_auto_export_statuses' );
-
-			foreach ( $order_status_options as $option ) {
-
-				$order_statuses     = (array) get_option( $option );
-				$new_order_statuses = array();
-
-				foreach ( $order_statuses as $status ) {
-					$new_order_statuses[] = 'wc-' . $status;
-				}
-
-				update_option( $option, $new_order_statuses );
-			}
-		}
-
-		// upgrade to 3.12.0
-		if ( version_compare( $installed_version, '3.12.0', '<' ) ) {
-
-			if ( 'import' === get_option( 'wc_customer_order_csv_export_order_format' ) ) {
-				update_option( 'wc_customer_order_csv_export_order_format', 'legacy_import' );
-			}
-		}
-
-		// upgrade to 4.0.0
-		if ( version_compare( $installed_version, '4.0.0', '<' ) ) {
-
-			// install defaults for customer auto-export settings, this must be done before
-			// updating renamed options, otherwise defaults will override the previously set options
-			require_once( $this->get_plugin_path() . '/includes/admin/class-wc-customer-order-csv-export-admin-settings.php' );
-
-			foreach ( WC_Customer_Order_CSV_Export_Admin_Settings::get_settings( 'customers' ) as $setting ) {
-
-				if ( isset( $setting['default'] ) ) {
-
-					update_option( $setting['id'], $setting['default'] );
-				}
-			}
-
-			// set up csv exports folder
-			self::create_files();
-
-			// install defaults for new settings
-			update_option( 'wc_customer_order_csv_export_orders_add_note', 'yes' );
-			update_option( 'wc_customer_order_csv_export_orders_auto_export_trigger', 'schedule' );
-
-			// rename settings
-			$renamed_options = array(
-				'wc_customer_order_csv_export_order_format'           => 'wc_customer_order_csv_export_orders_format',
-				'wc_customer_order_csv_export_order_filename'         => 'wc_customer_order_csv_export_orders_filename',
-				'wc_customer_order_csv_export_customer_format'        => 'wc_customer_order_csv_export_customers_format',
-				'wc_customer_order_csv_export_customer_filename'      => 'wc_customer_order_csv_export_customers_filename',
-				'wc_customer_order_csv_export_auto_export_method'     => 'wc_customer_order_csv_export_orders_auto_export_method',
-				'wc_customer_order_csv_export_auto_export_start_time' => 'wc_customer_order_csv_export_orders_auto_export_start_time',
-				'wc_customer_order_csv_export_auto_export_interval'   => 'wc_customer_order_csv_export_orders_auto_export_interval',
-				'wc_customer_order_csv_export_auto_export_statuses'   => 'wc_customer_order_csv_export_orders_auto_export_statuses',
-				'wc_customer_order_csv_export_ftp_server'             => 'wc_customer_order_csv_export_orders_ftp_server',
-				'wc_customer_order_csv_export_ftp_username'           => 'wc_customer_order_csv_export_orders_ftp_username',
-				'wc_customer_order_csv_export_ftp_password'           => 'wc_customer_order_csv_export_orders_ftp_password',
-				'wc_customer_order_csv_export_ftp_port'               => 'wc_customer_order_csv_export_orders_ftp_port',
-				'wc_customer_order_csv_export_ftp_path'               => 'wc_customer_order_csv_export_orders_ftp_path',
-				'wc_customer_order_csv_export_ftp_security'           => 'wc_customer_order_csv_export_orders_ftp_security',
-				'wc_customer_order_csv_export_ftp_passive_mode'       => 'wc_customer_order_csv_export_orders_ftp_passive_mode',
-				'wc_customer_order_csv_export_http_post_url'          => 'wc_customer_order_csv_export_orders_http_post_url',
-				'wc_customer_order_csv_export_email_recipients'       => 'wc_customer_order_csv_export_orders_email_recipients',
-				'wc_customer_order_csv_export_email_subject'          => 'wc_customer_order_csv_export_orders_email_subject',
-			);
-
-			foreach ( $renamed_options as $old => $new ) {
-
-				update_option( $new, get_option( $old ) );
-				delete_option( $old );
-			}
-
-			// install default custom field mapping settings
-			require_once( $this->get_plugin_path() . '/includes/admin/class-wc-customer-order-csv-export-admin-custom-format-builder.php' );
-
-			foreach ( WC_Customer_Order_CSV_Export_Admin_Custom_Format_Builder::get_settings() as $section => $settings ) {
-
-				foreach ( $settings as $setting ) {
-
-					if ( isset( $setting['default'] ) ) {
-
-						update_option( $setting['id'], $setting['default'] );
-					}
-				}
-			}
-
-			// maintain backwards compatibility with previous `default` and
-			// `default_one_row_per_item` formats for tjose who use it by creating a custom
-			// format based on the previous version
-			$orders_format = get_option( 'wc_customer_order_csv_export_orders_format' );
-
-			if ( in_array( $orders_format, array( 'default', 'default_one_row_per_item' ), true ) ) {
-
-				$custom_format = $this->get_formats_instance()->get_format( 'orders', $orders_format );
-
-				// keep order_number backwards-compatible
-				$custom_format['columns']['order_number_formatted'] = 'order_number';
-				unset( $custom_format['columns']['order_number'] );
-
-				// remove refunds key
-				unset( $custom_format['columns']['refunds'] );
-
-				if ( 'default_one_row_per_item' === $orders_format ) {
-
-					// rename 'total_tax' back to 'tax'
-					$custom_format['columns']['total_tax'] = 'tax';
-
-					// remove item-specific keys that weren't present in the old default format
-					unset( $custom_format['columns']['item_id'] );
-					unset( $custom_format['columns']['item_product_id'] );
-					unset( $custom_format['columns']['subtotal'] );
-					unset( $custom_format['columns']['subtotal_tax'] );
-
-					update_option( 'wc_customer_order_csv_export_orders_custom_format_row_type', 'item' );
-
-				} else {
-
-					update_option( 'wc_customer_order_csv_export_orders_custom_format_row_type', 'order' );
-				}
-
-				$mapping = array();
-
-				foreach ( $custom_format['columns'] as $column => $name ) {
-					$mapping[] = array( 'source' => $column, 'name' => $name );
-				}
-
-				update_option( 'wc_customer_order_csv_export_orders_custom_format_delimiter', ',' );
-				update_option( 'wc_customer_order_csv_export_orders_custom_format_mapping', $mapping );
-
-				// set the current orders export format as `custom`
-				update_option( 'wc_customer_order_csv_export_orders_format', 'custom' );
-			}
-
-			// handle renamed cron schedule
-			if ( $start_timestamp = wp_next_scheduled( 'wc_customer_order_csv_export_auto_export_interval' ) ) {
-
-				wp_clear_scheduled_hook( 'wc_customer_order_csv_export_auto_export_interval' );
-
-				wp_schedule_event( $start_timestamp, 'wc_customer_order_csv_export_orders_auto_export_interval', 'wc_customer_order_csv_export_auto_export_orders' );
-			}
-		}
+		WC_Customer_Order_CSV_Export_Lifecycle::upgrade( $installed_version );
 	}
 
 

@@ -18,7 +18,7 @@
  *
  * @package     WC-Customer-Order-CSV-Export/Export-Methods/FTP-Implicit-SSL
  * @author      SkyVerge
- * @copyright   Copyright (c) 2012-2017, SkyVerge, Inc.
+ * @copyright   Copyright (c) 2012-2018, SkyVerge, Inc.
  * @license     http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
@@ -48,9 +48,9 @@ class WC_Customer_Order_CSV_Export_Method_FTP_Implicit_SSL extends WC_Customer_O
 	 * @throws SV_WC_Plugin_Exception
 	 * @param array $args
 	 */
-	 public function __construct( $args ) {
+	public function __construct( $args ) {
 
-	 	parent::__construct( $args );
+		parent::__construct( $args );
 
 		// set host/initial path
 		$this->url = "ftps://{$this->server}/{$this->path}";
@@ -106,37 +106,44 @@ class WC_Customer_Order_CSV_Export_Method_FTP_Implicit_SSL extends WC_Customer_O
 
 
 	/**
-	 * Upload the file by writing into temporary memory and upload the stream to
-	 * remote file
+	 * Uploads the file to the remote target.
 	 *
 	 * @since 3.0.0
-	 * @param string $file_path path to file file to upload
-	 * @throws SV_WC_Plugin_Exception Open remote file failure or write data failure
+	 *
+	 * @param \WC_Customer_Order_CSV_Export_Export|string $export the export object or a path to an export file
 	 * @return bool whether the upload was successful or not
+	 * @throws \SV_WC_Plugin_Exception Open remote file failure or write data failure
 	 */
-	public function perform_action( $file_path ) {
+	public function perform_action( $export ) {
 
-		if ( empty( $file_path ) ) {
-			throw new SV_WC_Plugin_Exception( __( 'Missing file path', 'woocommerce-customer-order-csv-export' ) );
+		if ( ! $export ) {
+			throw new SV_WC_Plugin_Exception( __( 'Unable to find export for transfer', 'woocommerce-customer-order-csv-export' ) );
 		}
 
-		$filename = basename( $file_path );
+		if ( is_string( $export ) && is_readable( $export ) ) {
+
+			$file_path = $export;
+			$stream    = fopen( $file_path, 'r' );
+			$filename  = basename( $file_path );
+
+		} else {
+
+			$filename = $export->get_filename();
+			$stream   = $export->get_file_stream();
+		}
 
 		// set file name
 		if ( ! curl_setopt( $this->curl_handle, CURLOPT_URL, $this->url . $filename ) ) {
 
-			/* translators: Placeholders: %s - name of file to be updloaded */
+			/* translators: Placeholders: %s - name of file to be uploaded */
 			throw new SV_WC_Plugin_Exception( sprintf( __( 'Could not set cURL file name: %s', 'woocommerce-customer-order-csv-export' ), $filename ) );
 		}
-
-		// open memory stream for writing
-		$stream = fopen( $file_path, 'r' );
 
 		// check for valid stream handle
 		if ( ! $stream ) {
 
 			/* translators: Placeholders: %s - file path */
-			throw new SV_WC_Plugin_Exception( sprintf( __( 'Could not open %s for reading.', 'woocommerce-customer-order-csv-export' ), $file_path ) );
+			throw new SV_WC_Plugin_Exception( sprintf( __( 'Could not open %s for reading.', 'woocommerce-customer-order-csv-export' ), $filename ) );
 		}
 
 		// set the file to be uploaded

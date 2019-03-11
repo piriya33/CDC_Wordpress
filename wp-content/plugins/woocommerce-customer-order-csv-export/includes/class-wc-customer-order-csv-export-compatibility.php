@@ -18,7 +18,7 @@
  *
  * @package     WC-Customer-Order-CSV-Export/Generator
  * @author      SkyVerge
- * @copyright   Copyright (c) 2012-2017, SkyVerge, Inc.
+ * @copyright   Copyright (c) 2012-2018, SkyVerge, Inc.
  * @license     http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
@@ -43,6 +43,9 @@ class WC_Customer_Order_CSV_Export_Compatibility {
 	/** @var string customer export format */
 	private $customers_format;
 
+	/** @var string coupon export format */
+	private $coupons_format;
+
 	/**
 	 * Constructor
 	 *
@@ -54,6 +57,7 @@ class WC_Customer_Order_CSV_Export_Compatibility {
 
 		$this->orders_format    = get_option( 'wc_customer_order_csv_export_orders_format' );
 		$this->customers_format = get_option( 'wc_customer_order_csv_export_customers_format' );
+		$this->coupons_format   = get_option( 'wc_customer_order_csv_export_coupons_format' );
 
 		if ( 'default' !== $this->orders_format ) {
 
@@ -64,6 +68,12 @@ class WC_Customer_Order_CSV_Export_Compatibility {
 		if ( 'default' !== $this->customers_format ) {
 
 			add_filter( 'wc_customer_order_csv_export_customer_row', array( $this, 'modify_customer_row' ), 0, 2 );
+		}
+
+
+		if ( 'default' !== $this->coupons_format ) {
+
+			add_filter( 'wc_customer_order_csv_export_coupon_row', array( $this, 'modify_coupon_row' ), 0, 2 );
 		}
 	}
 
@@ -85,14 +95,17 @@ class WC_Customer_Order_CSV_Export_Compatibility {
 
 			$order_item_headers = $shipping_headers = array();
 
+			$max_line_items     = $this->get_max_line_items( $generator->ids );
+			$max_shipping_items = $this->get_max_shipping_line_items( $generator->ids );
+
 			// line items
-			for ( $i = 1; $i <= $this->get_max_line_items( $generator->ids ); $i++ ) {
+			for ( $i = 1; $i <= $max_line_items; $i++ ) {
 
 				$order_item_headers[ "order_item_{$i}" ] = "order_item_{$i}";
 			}
 
 			// shipping line items
-			for ( $i = 1; $i <= $this->get_max_shipping_line_items( $generator->ids ); $i++ ) {
+			for ( $i = 1; $i <= $max_shipping_items; $i++ ) {
 
 				$shipping_headers[ "shipping_method_{$i}" ] = "shipping_method_{$i}";
 				$shipping_headers[ "shipping_cost_{$i}" ]   = "shipping_cost_{$i}";
@@ -419,20 +432,7 @@ class WC_Customer_Order_CSV_Export_Compatibility {
 	 */
 	private function get_max_line_items( $order_ids ) {
 
-		$max_line_items = 0;
-
-		foreach ( $order_ids as $order_id ) {
-
-			$order = wc_get_order( $order_id );
-
-			$line_items_count = count( $order->get_items() );
-
-			if ( $line_items_count >= $max_line_items ) {
-				$max_line_items = $line_items_count;
-			}
-		}
-
-		return $max_line_items;
+		return $this->get_max_order_items( $order_ids, 'line_item' );
 	}
 
 
@@ -446,20 +446,39 @@ class WC_Customer_Order_CSV_Export_Compatibility {
 	 */
 	private function get_max_shipping_line_items( $order_ids ) {
 
-		$max_line_items = 0;
+		return $this->get_max_order_items( $order_ids, 'shipping' );
+	}
+
+
+	/**
+	 * Gets the maximum number of order items for a set of order IDs.
+	 *
+	 * @since 4.4.0
+	 *
+	 * @param array $order_ids order IDs
+	 * @param string $type line item type
+	 * @return int
+	 */
+	private function get_max_order_items( array $order_ids, $type = 'line_item' ) {
+		global $wpdb;
+
+		$max_items = 0;
 
 		foreach ( $order_ids as $order_id ) {
 
-			$order = wc_get_order( $order_id );
+			$rows = $wpdb->get_results( $wpdb->prepare( "SELECT order_item_id FROM {$wpdb->prefix}woocommerce_order_items WHERE order_id = %d AND order_item_type = %s", $order_id, $type ) );
 
-			$line_items_count = count( $order->get_items( 'shipping' ) );
+			if ( is_array( $rows ) ) {
 
-			if ( $line_items_count >= $max_line_items ) {
-				$max_line_items = $line_items_count;
+				$items_count = count( $rows );
+
+				if ( $items_count >= $max_items ) {
+					$max_items = $items_count;
+				}
 			}
 		}
 
-		return $max_line_items;
+		return $max_items;
 	}
 
 
@@ -559,5 +578,35 @@ class WC_Customer_Order_CSV_Export_Compatibility {
 		return $customer_data;
 	}
 
+
+	/**
+	 * Modifies the coupon export row to match the chosen format.
+	 *
+	 * @since 4.6.0
+   *
+	 * @param array $coupon_data an array of coupon data for the given coupon
+	 * @param WC_Coupon $coupon the WC_Coupon object
+	 * @return array modified coupon data
+	 */
+	public function modify_coupon_row( $coupon_data, $coupon ) {
+
+		if ( 'custom' === $this->coupons_format ) {
+
+			$meta = $this->get_custom_format_meta_keys( 'coupons' );
+
+			// Fetch meta columns
+			if ( ! empty( $meta ) ) {
+
+				foreach ( $meta as $meta_key ) {
+					$coupon_data[ 'meta:' . $meta_key ] = maybe_serialize( get_post_meta( $coupon->get_id(), $meta_key, TRUE ) );
+				}
+			}
+
+			// fetch static columns
+			$coupon_data = array_merge( $coupon_data, $this->get_custom_format_static_columns( 'coupons' ) );
+		}
+
+		return $coupon_data;
+	}
 
 }

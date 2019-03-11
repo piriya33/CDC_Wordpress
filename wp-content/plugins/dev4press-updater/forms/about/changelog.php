@@ -3,6 +3,11 @@
 <div class="d4p-group d4p-group-changelog">
     <h3><?php _e("Version", "dev4press-updater"); ?> 4</h3>
     <div class="d4p-group-inner">
+        <h4>Version: 4.0.1 / january 12 2019</h4>
+        <ul>
+            <li><strong>fix</strong> issue with one of the core plugin filters missing data</li>
+        </ul>
+
         <h4>Version: 4.0 / december 30 2018</h4>
         <ul>
             <li><strong>new</strong> plugin dashboard: show notice about unstable updates</li>

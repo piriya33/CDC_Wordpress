@@ -211,6 +211,12 @@ class SP_Designer_CSS_Setting extends WP_Customize_Setting {
 			$sanitized['backgroundAttachment'] = sanitize_text_field( $value['backgroundAttachment'] );
 		}
 
+		// Display
+		$sanitized['updateDisplay'] = 'inline';
+		if ( array_key_exists( 'updateDisplay', $value ) && in_array( $value['updateDisplay'], array( 'inline', 'none' ) ) ) {
+			$sanitized['updateDisplay'] = sanitize_text_field( $value['updateDisplay'] );
+		}
+
 		/** This filter is documented in wp-includes/class-wp-customize-setting.php */
 		return apply_filters( "customize_sanitize_{$this->id}", $sanitized, $this );
 	}

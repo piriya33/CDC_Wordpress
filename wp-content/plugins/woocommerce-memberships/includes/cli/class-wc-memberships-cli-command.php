@@ -16,28 +16,32 @@
  * versions in the future. If you wish to customize WooCommerce Memberships for your
  * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
- * @package   WC-Memberships/Classes
  * @author    SkyVerge
- * @copyright Copyright (c) 2014-2017, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2019, SkyVerge, Inc.
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
+use SkyVerge\WooCommerce\PluginFramework\v5_3_1 as Framework;
+
 /**
- * WooCommerce Memberships CLI Command
+ * WooCommerce Memberships CLI Command.
  *
- * Base class that must be extended by any WooCommerce Memberships sub commands
- * It extends \WC_CLI_Command which in turn is a \WP_CLI_Command child
+ * Base class that must be extended by any WooCommerce Memberships sub commands for WP CLI.
+ * It extends \WC_CLI_Command which in turn is a \WP_CLI_Command child.
+ *
+ * TODO since WooCommerce 3.0 WP CLI support in WooCommerce moved to a new model that integrates with the REST API. When supporting the REST API, Memberships will also move WC CLI support accordingly - currently it re-implements the objects before WC 3.0 {FN 2017-07-14}
  *
  * @since 1.7.0
  */
-class WC_Memberships_CLI_Command extends WC_CLI_Command {
+class WC_Memberships_CLI_Command extends \WC_CLI_Command {
 
 
 	/**
-	 * Get a Member from a user id, login name or email address
+	 * Get a Member from a user id, login name or email address.
 	 *
 	 * @since 1.7.0
-	 * @param int|string $customer A user id, email or login name
+	 *
+	 * @param int|string $customer a user id, email or login name
 	 * @return null|false|\WP_User
 	 */
 	protected function get_member( $customer ) {
@@ -59,11 +63,12 @@ class WC_Memberships_CLI_Command extends WC_CLI_Command {
 
 
 	/**
-	 * Loosely parse a date for Memberships date use
+	 * Loosely parse a date for Memberships date use.
 	 *
 	 * @since 1.7.0
-	 * @param string $date A date in mysql string format
-	 * @return false|string A datetime string or false if not a valid date
+	 *
+	 * @param string $date a date in mysql string format
+	 * @return false|string a datetime string or false if not a valid date
 	 */
 	protected function parse_membership_date( $date ) {
 		return wc_memberships_parse_date( $date, 'mysql' );
@@ -71,10 +76,11 @@ class WC_Memberships_CLI_Command extends WC_CLI_Command {
 
 
 	/**
-	 * Check if a Membership status is valid
+	 * Check if a Membership status is valid.
 	 *
 	 * @since 1.7.0
-	 * @param string $status Status to check
+	 *
+	 * @param string $status status to check
 	 * @return bool
 	 */
 	protected function is_valid_membership_status( $status ) {
@@ -87,10 +93,11 @@ class WC_Memberships_CLI_Command extends WC_CLI_Command {
 
 
 	/**
-	 * Get User Membership status keys
+	 * Get User Membership status keys.
 	 *
 	 * @since 1.7.0
-	 * @param bool $trim Trim prefix from the status keys
+	 *
+	 * @param bool $trim trim prefix from the status keys
 	 * @return array
 	 */
 	protected function get_membership_status_keys( $trim = true ) {
@@ -110,33 +117,36 @@ class WC_Memberships_CLI_Command extends WC_CLI_Command {
 
 
 	/**
-	 * Removes the WooCommerce User Membership status prefix
+	 * Removes the WooCommerce User Membership status prefix.
 	 *
 	 * @since 1.7.0
+	 *
 	 * @param string $status
 	 * @return string
 	 */
 	protected function trim_membership_status_prefix( $status ) {
-		return SV_WC_Helper::str_starts_with( $status, 'wcm-' ) ? substr( $status, 4 ) : $status;
+		return Framework\SV_WC_Helper::str_starts_with( $status, 'wcm-' ) ? substr( $status, 4 ) : $status;
 	}
 
 
 	/**
-	 * Add the WooCommerce User Membership status prefix
+	 * Add the WooCommerce User Membership status prefix.
 	 *
 	 * @since 1.7.0
+	 *
 	 * @param $status
 	 * @return string
 	 */
 	protected function add_membership_status_prefix( $status ) {
-		return SV_WC_Helper::str_starts_with( $status, 'wcm-' ) ? $status : 'wcm-' . $status;
+		return Framework\SV_WC_Helper::str_starts_with( $status, 'wcm-' ) ? $status : 'wcm-' . $status;
 	}
 
 
 	/**
-	 * Get Meta Query arguments for date filtering
+	 * Get Meta Query arguments for date filtering.
 	 *
 	 * @since 1.7.0
+	 *
 	 * @param string $meta_key
 	 * @param string|array $dates
 	 * @return array
@@ -156,7 +166,7 @@ class WC_Memberships_CLI_Command extends WC_CLI_Command {
 
 				if ( false === $this->parse_membership_date( $date ) ) {
 
-					WP_CLI::warning( sprintf( 'Date "%s" is not valid.', $date ) );
+					\WP_CLI::warning( sprintf( 'Date "%s" is not valid.', $date ) );
 					$errors++;
 				}
 			}

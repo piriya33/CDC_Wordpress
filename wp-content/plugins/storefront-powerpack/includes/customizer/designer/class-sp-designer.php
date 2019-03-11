@@ -34,6 +34,7 @@ if ( ! class_exists( 'SP_Designer' ) ) :
 			add_action( 'customize_preview_init', array( $this, 'customize_preview_init' ) );
 			add_action( 'wp_head', array( $this, 'frontend' ), 9999 );
 			add_action( 'wp_enqueue_scripts', array( $this, 'frontend_google_fonts' ) );
+			add_filter( 'body_class', array( $this, 'body_class' ) );
 		}
 
 		/**
@@ -129,11 +130,11 @@ if ( ! class_exists( 'SP_Designer' ) ) :
 		 */
 		public function scripts() {
 			$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
-			wp_enqueue_script( 'sp-designer-js', plugins_url( '/assets/js/sp-designer' . $suffix . '.js', __FILE__ ), array( 'jquery', 'wp-backbone', 'customize-controls' ), storefront_powerpack()->version, true );
-			wp_enqueue_style( 'sp-designer-css', plugins_url( '/assets/css/sp-designer.css', __FILE__ ), array(), storefront_powerpack()->version, 'all' );
+			wp_enqueue_script( 'sp-designer-js', SP_PLUGIN_URL . 'includes/customizer/designer/assets/js/sp-designer' . $suffix . '.js', array( 'jquery', 'wp-backbone', 'customize-controls' ), storefront_powerpack()->version, true );
+			wp_enqueue_style( 'sp-designer-css', SP_PLUGIN_URL . 'includes/customizer/designer/assets/css/sp-designer.css', array(), storefront_powerpack()->version, 'all' );
 
-			wp_enqueue_script( 'selectize-js', plugins_url( '/assets/js/vendor/selectize.min.js', __FILE__ ), array( 'jquery', 'wp-backbone', 'customize-controls' ), storefront_powerpack()->version, true );
-			wp_enqueue_style( 'selectize-css', plugins_url( '/assets/js/vendor/selectize.min.css', __FILE__ ), array(), storefront_powerpack()->version, 'all' );
+			wp_enqueue_script( 'selectize-js', SP_PLUGIN_URL . 'includes/customizer/designer/assets/js/vendor/selectize.min.js', array( 'jquery', 'wp-backbone', 'customize-controls' ), storefront_powerpack()->version, true );
+			wp_enqueue_style( 'selectize-css', SP_PLUGIN_URL . 'includes/customizer/designer/assets/js/vendor/selectize.min.css', array(), storefront_powerpack()->version, 'all' );
 		}
 
 		/**
@@ -154,8 +155,8 @@ if ( ! class_exists( 'SP_Designer' ) ) :
 		 */
 		public function customize_preview_enqueue() {
 			$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
-			wp_enqueue_script( 'sp-designer-preview-js', plugins_url( '/assets/js/sp-designer-preview' . $suffix . '.js', __FILE__ ), array( 'jquery','customize-preview' ), storefront_powerpack()->version, true );
-			wp_enqueue_script( 'webfont-js', plugins_url( '/assets/js/vendor/webfont.js', __FILE__ ), array( 'customize-preview' ), '1.6.16', true );
+			wp_enqueue_script( 'sp-designer-preview-js', SP_PLUGIN_URL . 'includes/customizer/designer/assets/js/sp-designer-preview' . $suffix . '.js', array( 'jquery','customize-preview' ), storefront_powerpack()->version, true );
+			wp_enqueue_script( 'webfont-js', SP_PLUGIN_URL . 'includes/customizer/designer/assets/js/vendor/webfont.js', array( 'customize-preview' ), '1.6.16', true );
 
 			$web_fonts = array();
 
@@ -163,15 +164,20 @@ if ( ! class_exists( 'SP_Designer' ) ) :
 				$web_fonts[] = $font['family'];
 			}
 
+			$prefix_body_class = apply_filters( 'sp_designer_body_class', '.sp-designer' );
+			$prefix_global     = apply_filters( 'sp_designer_prefix_selector', '#page' );
+
 			$settings = array(
-				'webSafeFonts' => $web_fonts,
-				'selectorsMap' => $this->selectors_map(),
+				'webSafeFonts'       => $web_fonts,
+				'selectorsMap'       => $this->selectors_map(),
+				'prefixBodyClass'    => $prefix_body_class,
+				'prefixOtherClasses' => $prefix_global,
 			);
 
 			$data = sprintf( 'var _wpCustomizeSPDesignerPreviewSettings = %s;', wp_json_encode( $settings ) );
 			wp_scripts()->add_data( 'sp-designer-preview-js', 'data', $data );
 
-			wp_enqueue_style( 'sp-designer-preview-css', plugins_url( '/assets/css/sp-designer-preview.css', __FILE__ ), array(), storefront_powerpack()->version, 'all' );
+			wp_enqueue_style( 'sp-designer-preview-css', SP_PLUGIN_URL . 'includes/customizer/designer/assets/css/sp-designer-preview.css', array(), storefront_powerpack()->version, 'all' );
 		}
 
 		/**
@@ -193,8 +199,8 @@ if ( ! class_exists( 'SP_Designer' ) ) :
 				}
 
 				$font_variants[] = array(
-					'family'       => $font['family'],
-					'variants'     => $variants,
+					'family'   => $font['family'],
+					'variants' => $variants,
 				);
 			}
 
@@ -423,6 +429,25 @@ if ( ! class_exists( 'SP_Designer' ) ) :
 		}
 
 		/**
+		 * Custom body class added when the Designer is in use.
+		 *
+		 * @access  public
+		 * @since   1.4.4
+		 * @return  array Body classes
+		 */
+		public function body_class( $classes ) {
+			$selectors = get_theme_mod( 'sp_designer_css_data' );
+
+			if ( ! $selectors || ! is_array( $selectors ) ) {
+				return $classes;
+			}
+
+			$classes[] = 'sp-designer';
+
+			return $classes;
+		}
+
+		/**
 		 * Outputs the custom styles to the frontend.
 		 *
 		 * @access  public
@@ -436,6 +461,10 @@ if ( ! class_exists( 'SP_Designer' ) ) :
 				return;
 			}
 
+			// Add prefix to all selectors
+			$sp_body_class = apply_filters( 'sp_designer_body_class', '.sp-designer' );
+			$sp_prefix     = apply_filters( 'sp_designer_prefix_selector', '#page' );
+
 			$output = '';
 
 			foreach ( $selectors as $id => $css_properties ) {
@@ -443,8 +472,19 @@ if ( ! class_exists( 'SP_Designer' ) ) :
 					continue;
 				}
 
+				if ( 'body' === $css_properties['selector'] ) {
+					$selector = 'body' . $sp_body_class;
+				} else {
+					$selector = $sp_prefix . ' ' . $css_properties['selector'];
+				}
+
 				// Selector - start
-				$output .= $css_properties['selector'] . '{';
+				$output .= $selector . '{';
+
+				// Display
+				if ( isset( $css_properties['updateDisplay'] ) && 'none' == $css_properties['updateDisplay'] ) {
+					$output .= 'display: none;';
+				}
 
 				// Font size
 				if ( isset( $css_properties['fontSize'] ) && '' !== $css_properties['fontSize'] ) {
@@ -457,9 +497,7 @@ if ( ! class_exists( 'SP_Designer' ) ) :
 
 				// Font family
 				if ( isset( $css_properties['fontFamily'] ) && '' !== $css_properties['fontFamily'] ) {
-					if ( 'Default' === $css_properties['fontFamily'] ) {
-						$output .= 'font-family:inherit;';
-					} else {
+					if ( 'Default' !== $css_properties['fontFamily'] ) {
 						$output .= 'font-family:' . esc_attr( $css_properties['fontFamily'] ) . ';';
 					}
 				}
@@ -754,9 +792,19 @@ if ( ! class_exists( 'SP_Designer' ) ) :
 				'name'     => __( 'Header', 'storefront-powerpack' ),
 			);
 
-			$map['site-branding'] = array(
-				'selector' => '.site-branding',
+			$map['site-title'] = array(
+				'selector' => '.site-branding .site-title a',
 				'name'     => __( 'Site title / logo', 'storefront-powerpack' ),
+			);
+
+			$map['site-description'] = array(
+				'selector' => '.site-branding .site-description',
+				'name'     => __( 'Site Description', 'storefront-powerpack' ),
+			);
+
+			$map['site-logo'] = array(
+				'selector' => '.site-header .site-branding img',
+				'name'     => __( 'Site Logo', 'storefront-powerpack' ),
 			);
 
 			$map['site-search'] = array(
@@ -867,7 +915,7 @@ if ( ! class_exists( 'SP_Designer' ) ) :
 
 			// Buttons
 			$map['button'] = array(
-				'selector' => '.added_to_cart, .button, button, input[type=button], input[type=reset], input[type=submit]',
+				'selector' => '.added_to_cart, .button, button:not(.menu-toggle), input[type=button], input[type=reset], input[type=submit]',
 				'name'     => __( 'Button', 'storefront-powerpack' ),
 			);
 
@@ -888,12 +936,12 @@ if ( ! class_exists( 'SP_Designer' ) ) :
 			);
 
 			$map['loop-product-image'] = array(
-				'selector' => 'ul.products li.product .wp-post-image',
+				'selector' => 'ul.products li.product .wp-post-image, ul.products li.product .attachment-woocommerce_thumbnail',
 				'name'     => __( 'Loop Product Image', 'storefront-powerpack' ),
 			);
 
 			$map['loop-product-title'] = array(
-				'selector' => 'ul.products li.product h3',
+				'selector' => 'ul.products li.product h2, ul.products li.product h3',
 				'name'     => __( 'Loop Product Title', 'storefront-powerpack' ),
 			);
 

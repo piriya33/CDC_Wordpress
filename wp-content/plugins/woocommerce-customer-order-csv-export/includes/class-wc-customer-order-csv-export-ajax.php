@@ -18,7 +18,7 @@
  *
  * @package     WC-Customer-Order-CSV-Export/AJAX
  * @author      SkyVerge
- * @copyright   Copyright (c) 2012-2017, SkyVerge, Inc.
+ * @copyright   Copyright (c) 2012-2018, SkyVerge, Inc.
  * @license     http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
@@ -93,6 +93,10 @@ class WC_Customer_Order_CSV_Export_AJAX {
 				case 'customers':
 					$message = esc_html__( 'No customers found to export', 'woocommerce-customer-order-csv-export' );
 				break;
+
+				case 'coupons':
+					$message = esc_html__( 'No coupons found to export.', 'woocommerce-customer-order-csv-export' );
+				break;
 			}
 
 			wp_send_json_error( array(
@@ -125,13 +129,13 @@ class WC_Customer_Order_CSV_Export_AJAX {
 			$status_url = wp_nonce_url( admin_url( 'admin-ajax.php' ), 'get-export-status', 'security' );
 			$status_url = add_query_arg( array(
 				'action'    => 'wc_customer_order_csv_export_get_export_status',
-				'export_id' => $export->id,
+				'export_id' => $export->get_id(),
 			), $status_url );
 
 			wp_send_json( array(
-				'export_id'  => $export->id,
-				'method'     => $export->method,
-				'status'     => $export->status,
+				'export_id'  => $export->get_id(),
+				'method'     => $export->get_transfer_method(),
+				'status'     => $export->get_status(),
 				'status_url' => $status_url,
 			) );
 
@@ -178,58 +182,50 @@ class WC_Customer_Order_CSV_Export_AJAX {
 			return;
 		}
 
-		$export = wc_customer_order_csv_export()->get_export_handler_instance()->get_export( $_GET['export_id'] );
+		$export = wc_customer_order_csv_export_get_export( $_GET['export_id'] );
 
-		if ( ! $export ) {
+		try {
 
-			wp_send_json_error( array(
-				'title'   => esc_html__( 'Export Not Found', 'woocommerce-customer-order-csv-export' ),
-				/* translators: Placeholders: %s - export ID */
-				'message' => sprintf( esc_html__( 'No export found with id %s. It may have been cancelled during export.', 'woocommerce-customer-order-csv-export' ), $_GET['export_id'] ),
-			) );
+			if ( ! $export ) {
+				throw new SV_WC_Plugin_Exception( wc_customer_order_csv_export()->get_background_export_instance()->get_export_status_message( 'not-found', $_GET['export_id'] ) );
+			}
+
+			if ( 'failed' === $export->get_status() ) {
+				throw new SV_WC_Plugin_Exception( wc_customer_order_csv_export()->get_background_export_instance()->get_export_status_message( 'failed' ) );
+			}
+
+			$response = array(
+				'export_id'       => $export->get_id(),
+				'method'          => $export->get_transfer_method(),
+				'status'          => $export->get_status(),
+				'transfer_status' => $export->get_transfer_status(),
+			);
+
+			if ( 'completed' === $export->get_status() ) {
+
+				$download_url = wp_nonce_url( admin_url(), 'download-export' );
+
+				// return the download url for the exported file
+				$response['download_url'] =	add_query_arg( array(
+					'download_exported_csv_file' => 1,
+					'export_id'                  => $response['export_id'],
+				), $download_url );
+
+				if ( 'failed' === $export->get_transfer_status() ) {
+					throw new SV_WC_Plugin_Exception( wc_customer_order_csv_export()->get_background_export_instance()->get_export_status_message( 'transfer-failed' ) );
+				}
+			}
+
+			wp_send_json_success( $response );
+
+		} catch ( SV_WC_Plugin_Exception $e ) {
+
+			$data = $export ? array( 'id' => $export->get_id() ) : array();
+
+			$data['message'] = $e->getMessage();
+
+			wp_send_json_error( $data );
 		}
-
-		// prepare message for logs
-		$logs_message = sprintf( __( 'Additional details may be found in the CSV Export %1$slogs%2$s.', 'woocommerce-customer-order-csv-export' ), '<a href="' . admin_url( 'admin.php?page=wc-status&tab=logs' ) . '">', '</a>' );
-
-		if ( 'failed' === $export->status ) {
-
-			wp_send_json_error( array(
-				'title'   => esc_html__( 'Export Failed', 'woocommerce-customer-order-csv-export' ),
-				'message' => esc_html__( 'Unfortunately, your export failed.', 'woocommerce-customer-order-csv-export' ) . ' ' . $logs_message,
-			) );
-		}
-
-		$response = array(
-			'export_id'       => $export->id,
-			'method'          => $export->method,
-			'status'          => $export->status,
-			'transfer_status' => $export->transfer_status,
-		);
-
-		if ( 'completed' === $export->status ) {
-
-			$download_url = wp_nonce_url( admin_url(), 'download-export' );
-
-			// return the download url for the exported file
-			$response['download_url'] =	add_query_arg( array(
-				'download_exported_csv_file' => 1,
-				'export_id'                  => $export->id,
-			), $download_url );
-		}
-
-		if ( 'failed' === $export->transfer_status ) {
-
-			$label = wc_customer_order_csv_export()->get_methods_instance()->get_export_method_label( $export->method );
-
-			wp_send_json_error( array(
-				'title'   => esc_html__( 'Export Transfer Failed', 'woocommerce-customer-order-csv-export' ),
-				/* translators: Placeholders: %1$s - via [method], example: "...but the transfer via Email failed.", %2$s - opening <a> tag, %3$s - closing </a> tag */
-				'message' => sprintf( esc_html__( 'Export completed successfully, but the transfer %1$s failed. Exported file is available under %2$sExport List%3$s.', 'woocommerce-customer-order-csv-export' ), $label, '<a href="' . admin_url( 'admin.php?page=wc_customer_order_csv_export&tab=export_list' ) . '">', '</a>' ) . ' ' . $logs_message,
-			) );
-		}
-
-		wp_send_json( $response );
 	}
 
 

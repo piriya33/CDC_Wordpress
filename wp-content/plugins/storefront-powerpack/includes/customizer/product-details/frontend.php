@@ -28,6 +28,7 @@ if ( ! class_exists( 'SP_Frontend_Product_Details' ) ) :
 			add_filter( 'body_class', array( $this, 'body_class' ) );
 			add_filter( 'storefront_product_thumbnail_columns', array( $this, 'product_thumbnails' ) );
 			add_action( 'wp', array( $this, 'single_product_layout_sidebar' ), 999 );
+			add_filter( 'woocommerce_gallery_image_size', array( $this, 'stacked_image_size' ) );
 		}
 
 		/**
@@ -257,6 +258,55 @@ if ( ! class_exists( 'SP_Frontend_Product_Details' ) ) :
 			}
 
 			return $cols;
+		}
+
+		/**
+		 * Set custom single image width when gallery layout is set to 'stacked'
+		 *
+		 * @param string $size the image size.
+		 * @return string $size the edited image size.
+		 */
+		public function stacked_image_size( $size ) {
+			global $post;
+
+			if ( $size !== 'woocommerce_single' ) {
+				return $size;
+			}
+
+			$is_stacked = false;
+
+			// Global
+			$product_gallery_layout = get_theme_mod( 'sp_product_gallery_layout', 'default' );
+
+			if ( 'stacked' === $product_gallery_layout ) {
+				$is_stacked = true;
+			}
+
+			// Product
+			$product = $post->ID;
+
+			if ( $product && 'product' === get_post_type( $product ) ) {
+				$product_gallery_layout = get_post_meta( $product, '_sp_sf_gallery_layout', true );
+
+				if ( $product_gallery_layout ) {
+					switch ( $product_gallery_layout ) {
+						case 'stacked':
+							$is_stacked = true;
+							break;
+
+						case 'default':
+						case 'hide':
+							$is_stacked = false;
+							break;
+					}
+				}
+			}
+
+			if ( true === $is_stacked ) {
+				$size = 'full';
+			}
+
+			return $size;
 		}
 	}
 

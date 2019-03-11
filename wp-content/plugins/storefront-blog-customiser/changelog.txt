@@ -1,7 +1,23 @@
 *** Storefront Blog Customiser Changelog ***
 
+2019.02.05 - version 1.3.0
+* Tweak - Compatibility with Storefront 2.4+.
+* Fix - Incorrect text domains. New POT file generated.
+
+2018.06.25 - version 1.2.5
+* Fix - PHP warning if WooCommerce is not installed.
+
+2018.05.22 - version 1.2.4
+* Fix - Further improvements to the archives logic to make sure changes are only applied to non WooCommerce pages.
+
+2018.03.08 - version 1.2.3
+* Fix - Apply custom display layout to all archive pages.
+
+2017.09.21 - version 1.2.2
+* Fix - Also apply custom display layout to search results.
+
 2016.05.12 - version 1.2.1
- * Fix - Customizer error.
+* Fix - Customizer error.
 
 2016.05.09 - version 1.2.0
 * New - Post meta can now be hidden.

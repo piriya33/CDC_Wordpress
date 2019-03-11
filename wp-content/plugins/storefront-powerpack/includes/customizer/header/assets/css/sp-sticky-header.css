@@ -4,7 +4,10 @@
     left: 0;
     right: 0;
     top: 0;
-    z-index: 9999; }
+    z-index: 9999;
+    animation-duration: 1s;
+    animation-fill-mode: both;
+    animation-name: fadeIn; }
   .sp-header-sticky.admin-bar .site-header {
     top: 32px; }
   .sp-fixed-width.sp-header-sticky .site-header {
@@ -17,3 +20,9 @@
   .sp-fixed-width.sp-header-sticky .site-header {
     width: 100%;
     min-width: 0; } }
+
+@keyframes fadeIn {
+  from {
+    opacity: 0; }
+  to {
+    opacity: 1; } }

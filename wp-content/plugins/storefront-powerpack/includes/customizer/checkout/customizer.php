@@ -37,7 +37,6 @@ if ( ! class_exists( 'SP_Customizer_Checkout' ) ) :
 				'sp_distraction_free_checkout' => false,
 				'sp_two_step_checkout'         => false,
 				'sp_visit_checkout_prompt'     => '',
-				'sp_sticky_order_review'       => true
 			);
 		}
 
@@ -108,23 +107,6 @@ if ( ! class_exists( 'SP_Customizer_Checkout' ) ) :
 				'settings' => 'sp_two_step_checkout',
 				'type'     => 'checkbox',
 				'priority' => 30,
-			) ) );
-
-			/**
-			 * Two Step Checkout
-			 */
-			$wp_customize->add_setting( 'sp_sticky_order_review', array(
-				'sanitize_callback' => 'storefront_sanitize_checkbox',
-			) );
-
-			$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'sp_sticky_order_review', array(
-				'label'           => __( 'Sticky Order Review', 'storefront-powerpack' ),
-				'description' => __( 'The order review section sticks to the top of the browser window as the user scrolls down the page which ensures that the Place Order button is always visible.', 'storefront-powerpack' ),
-				'section'         => self::POWERPACK_CHECKOUT_SECTION,
-				'settings'        => 'sp_sticky_order_review',
-				'type'            => 'checkbox',
-				'active_callback' => array( $this, 'is_not_default_layout' ),
-				'priority'        => 40,
 			) ) );
 
 			/**

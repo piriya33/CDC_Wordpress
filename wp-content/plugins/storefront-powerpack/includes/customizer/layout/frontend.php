@@ -26,6 +26,10 @@ if ( ! class_exists( 'SP_Frontend_Layout' ) ) :
 			add_filter( 'body_class', array( $this, 'body_class' ) );
 			add_action( 'wp_enqueue_scripts', array( $this, 'script' ), 99 );
 			add_action( 'wp_enqueue_scripts', array( $this, 'add_customizer_css' ), 999 );
+			add_action( 'init', array( $this, 'reregister_theme_support' ) );
+
+			add_filter( 'woocommerce_get_image_size_single', array( $this, 'change_image_size' ), 10 );
+			add_filter( 'woocommerce_get_image_size_thumbnail', array( $this, 'change_image_size' ), 10 );
 		}
 
 		/**
@@ -54,7 +58,7 @@ if ( ! class_exists( 'SP_Frontend_Layout' ) ) :
 		 */
 		public function script() {
 			if ( 'max-width' === get_theme_mod( 'sp_max_width' ) || 'frame' === get_theme_mod( 'sp_content_frame' ) ) {
-				wp_enqueue_style( 'sp-layout', plugins_url( 'assets/css/layout.css', __FILE__ ), '', storefront_powerpack()->version );
+				wp_enqueue_style( 'sp-layout', SP_PLUGIN_URL . 'includes/customizer/layout/assets/css/layout.css', '', storefront_powerpack()->version );
 			}
 		}
 
@@ -74,6 +78,81 @@ if ( ! class_exists( 'SP_Frontend_Layout' ) ) :
 			';
 
 			wp_add_inline_style( 'storefront-style', $wc_style );
+		}
+
+		/**
+		 * Reregister theme features to remove declared image sizes
+		 *
+		 * @return void
+		 * @since 1.4.12
+		 */
+		public function reregister_theme_support() {
+			if ( 'max-width' !== get_theme_mod( 'sp_max_width' ) ) {
+				return;
+			}
+
+			$theme_support = get_theme_support( 'woocommerce' );
+			$theme_support = is_array( $theme_support ) ? $theme_support[0] : false;
+
+			if ( $theme_support ) {
+				$sizes = array(
+					'single_image_width',
+					'thumbnail_image_width',
+					'woocommerce_gallery_thumbnail'
+				);
+
+				foreach ( $sizes as $size ) {
+					if ( isset( $theme_support[ $size ] ) ) {
+						unset( $theme_support[ $size ] );
+					}
+				}
+
+				add_theme_support( 'woocommerce', $theme_support );
+			}
+		}
+
+		/**
+		 * Change image size when the layout is set to "Max Width"
+		 *
+		 * The `reregister_theme_support()` method above overrides the default theme features,
+		 * but all that does is bring back the WooCommerce settings in the Customizer.
+		 *
+		 * Here we're overriding the custom sizes declared by the theme, and replacing them
+		 * with the custom sizes from the Customizer settings.
+		 *
+		 * Theme features are registered before plugins are able to filter them properly
+		 * so this method is required to actually override the image sizes.
+		 *
+		 * @param array $size Array of image dimensions.
+		 * @return array $size Filtered array of image dimensions.
+		 * @since 1.4.5
+		 */
+		public function change_image_size( $size ) {
+			if ( 'max-width' !== get_theme_mod( 'sp_max_width' ) ) {
+				return $size;
+			}
+
+			$image_size = str_replace( 'woocommerce_get_image_size_', '', current_filter() );
+
+			if ( 'single' === $image_size ) {
+				$size['width'] = absint( get_option( 'woocommerce_single_image_width', 600 ) );
+			} elseif ( 'thumbnail' === $image_size ) {
+				$size['width'] = absint( get_option( 'woocommerce_thumbnail_image_width', 300 ) );
+				$cropping      = get_option( 'woocommerce_thumbnail_cropping', '1:1' );
+
+				if ( 'custom' === $cropping ) {
+					$width          = max( 1, get_option( 'woocommerce_thumbnail_cropping_custom_width', '4' ) );
+					$height         = max( 1, get_option( 'woocommerce_thumbnail_cropping_custom_height', '3' ) );
+					$size['height'] = absint( round( ( $size['width'] / $width ) * $height ) );
+				} else {
+					$cropping_split = explode( ':', $cropping );
+					$width          = max( 1, current( $cropping_split ) );
+					$height         = max( 1, end( $cropping_split ) );
+					$size['height'] = absint( round( ( $size['width'] / $width ) * $height ) );
+				}
+			}
+
+			return $size;
 		}
 	}
 

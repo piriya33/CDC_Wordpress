@@ -18,7 +18,7 @@
  *
  * @package     WC-Customer-Order-CSV-Export/Generator
  * @author      SkyVerge
- * @copyright   Copyright (c) 2012-2017, SkyVerge, Inc.
+ * @copyright   Copyright (c) 2012-2018, SkyVerge, Inc.
  * @license     http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
@@ -302,7 +302,7 @@ class WC_Customer_Order_CSV_Export_Generator {
 			$product_sku = 'unknown_product';
 
 			// Check if the product exists.
-			if ( is_object( $product ) ) {
+			if ( $product instanceof WC_Product ) {
 				$product_id  = $product->get_id();
 				$product_sku = $product->get_sku();
 			}
@@ -604,7 +604,8 @@ class WC_Customer_Order_CSV_Export_Generator {
 			$refunds[] = $is_json ? $refund_data : $this->pipe_delimit_item( $refund_data );
 		}
 
-		$download_permissions_granted = SV_WC_Order_Compatibility::get_meta( $order, '_download_permissions_granted' );
+		// grant download permissions if the order both permits and contains a downloadable item
+		$download_permissions_granted = ( $order->is_download_permitted() && $order->has_downloadable_item() );
 
 		if ( SV_WC_Plugin_Compatibility::is_wc_version_gte_3_0() ) {
 			$order_date = is_callable( array( $order->get_date_created(), 'date' ) ) ? $order->get_date_created()->date( 'Y-m-d H:i:s' ) : null;
@@ -663,6 +664,12 @@ class WC_Customer_Order_CSV_Export_Generator {
 			'order_notes'            => implode( '|', $this->get_order_notes( $order ) ),
 			'download_permissions'   => $download_permissions_granted ? 1 : 0,
 		);
+
+		// support custom order numbers beyond Sequential Order Numbers Free / Pro - but since we can't
+		// distinguish between the underlying number and the formatted number, only set the formatted number
+		if ( ! $order_data['order_number_formatted'] ) {
+			$order_data['order_number_formatted'] = $order->get_order_number();
+		}
 
 		if ( 'item' === $this->format_definition['row_type'] ) {
 
@@ -1025,6 +1032,249 @@ class WC_Customer_Order_CSV_Export_Generator {
 
 
 	/**
+	 * Get the CSV for coupons.
+	 *
+	 * @since 4.6.0
+	 *
+	 * @param array $ids coupon IDs to export
+	 * @param bool $include_headers optional. Whether to include CSV column headers in the output or not. Defaults to false
+	 * @return string CSV data
+	 */
+	public function get_coupons_csv( $ids, $include_headers = false ) {
+
+		$stream  = fopen( 'php://output', 'w' );
+		$headers = $this->get_coupons_csv_headers();
+
+		ob_start();
+
+		if ( $include_headers ) {
+
+			$header = $this->get_header();
+
+			if ( null !== $header ) {
+				fputs( $stream, $header );
+			}
+		}
+
+		$coupon_data = array();
+
+		// iterate through coupons
+		foreach ( $ids as $coupon_id ) {
+
+			// get data for each coupon
+			$data = $this->get_coupons_csv_row_data( $coupon_id );
+
+			// skip if coupon data wasn't found
+			if ( empty( $data ) ) {
+				continue;
+			}
+
+			$coupon_data[] = $data;
+
+			// data can be an array of arrays when each line item is it's own row
+			$first_element = reset( $data );
+
+			if ( is_array( $first_element ) ) {
+
+				// iterate through each line item row and write it
+				foreach ( $data as $row ) {
+
+					fputs( $stream, $this->get_row_csv( $row, $headers ) );
+				}
+
+			} else {
+
+				// otherwise simply write the single order row
+				fputs( $stream, $this->get_row_csv( $data, $headers ) );
+			}
+		}
+
+		fclose( $stream );
+
+		$csv = ob_get_clean();
+
+		/**
+		 * Filter the generated coupons CSV.
+		 *
+		 * @since 4.6.0
+		 *
+		 * @param string $csv_data The CSV data
+		 * @param array $coupon_data An array of the coupon data to write to to the CSV
+		 * @param array $coupon_ids The coupon ids
+		 */
+		return apply_filters( 'wc_customer_order_csv_export_get_coupons_csv', $csv, $coupon_data, $ids );
+	}
+
+
+	/**
+	 * Get the column headers for the coupons CSV.
+	 *
+	 * Note that the headers are keyed in column_key => column_name format so that plugins can control the output
+	 * format using only the column headers and row data is not required to be in the exact same order, as the row data
+	 * is matched on the column key.
+	 *
+	 * @since 4.6.0
+	 *
+	 * @return array column headers in column_key => column_name format
+	 */
+	public function get_coupons_csv_headers() {
+
+		$column_headers = $this->format_definition['columns'];
+
+		/**
+		 * CSV Coupon Export Column Headers.
+		 *
+		 * Filter the column headers for the coupon export
+		 *
+		 * @since 4.6.0
+		 *
+		 * @param array $column_headers {
+		 *     column headers in key => name format
+		 *     to modify the column headers, ensure the keys match these and set your own values
+		 * }
+		 * @param \WC_Customer_Order_CSV_Export_Generator $this, generator instance
+		 */
+		return apply_filters( 'wc_customer_order_csv_export_coupon_headers', $column_headers, $this );
+	}
+
+
+	/**
+	 * Get the coupon data for a single CSV row.
+	 *
+	 * Note items are keyed according to the column header keys above so these can be modified using
+	 * the provider filter without needing to worry about the array order.
+	 *
+	 * @since 4.6.0
+	 *
+	 * @param int|string $id coupon id
+	 * @return array|false coupon data in the format key => content, or false on failure
+	 */
+	private function get_coupons_csv_row_data( $id ) {
+
+		// load the coupon
+		$coupon = new WC_Coupon( $id );
+
+		// skip this row if the coupon can't be loaded
+		if ( ! $coupon ) {
+			return false;
+		}
+
+		// get all category names to match against coupon category IDs
+		$categories     = get_categories( array( 'taxonomy' => 'product_cat' ) );
+		$category_names = array();
+
+		foreach ( $categories as $category ) {
+			$category_names[ $category->term_id ] = $category->category_nicename;
+		}
+
+		// get this coupon's included and excluded products
+		$product_ids          = $coupon->get_product_ids();
+		$excluded_product_ids = $coupon->get_excluded_product_ids();
+
+		// get this coupon's included and excluded product categories
+		$product_category_ids          = $coupon->get_product_categories();
+		$excluded_product_category_ids = $coupon->get_excluded_product_categories();
+
+		// create array of product SKUs allowed by this coupon
+		$products = array();
+
+		foreach ( $product_ids as $product_id ) {
+
+			$product = wc_get_product( $product_id );
+
+			if ( $product instanceof WC_Product ) {
+				$products[] = $product->get_sku();
+			}
+		}
+
+		// create array of product SKUs excluded by this coupon
+		$excluded_products = array();
+
+		foreach ( $excluded_product_ids as $excluded_product_id ) {
+
+			$product = wc_get_product( $excluded_product_id );
+
+			if ( $product instanceof WC_Product ) {
+				$excluded_products[] = $product->get_sku();
+			}
+		}
+
+		// create array of product category names allowed by this coupon
+		$product_categories = array();
+
+		foreach ( $product_category_ids as $product_category_id ) {
+			$product_categories[] = $category_names[ $product_category_id ];
+		}
+
+		// create array of product category names excluded by this coupon
+		$excluded_product_categories = array();
+
+		foreach ( $excluded_product_category_ids as $excluded_product_category_id ) {
+			$excluded_product_categories[] = $category_names[ $excluded_product_category_id ];
+		}
+
+		$expiry_date           = $coupon->get_date_expires();
+		$formatted_expiry_date = ( !empty( $expiry_date ) ) ? $this->format_date( $expiry_date->date( 'Y-m-d' ) ) : '';
+
+		// create array of email addresses of customers who have used this coupon
+		$used_by_customer_emails = array();
+
+		$used_by = $coupon->get_used_by();
+
+		foreach ( $used_by as $user_id ) {
+			// this value may be a user ID or an email address
+			if ( is_email( $user_id ) ) {
+				$used_by_customer_emails[] = $user_id;
+			} elseif ( $user = get_user_by( 'id', $user_id ) ) {
+				$user = get_user_by( 'id', $user_id );
+				$used_by_customer_emails[] = $user->user_email;
+			}
+		}
+
+		$coupon_data = array(
+			'code'                       => $coupon->get_code(),
+			'type'                       => $coupon->get_discount_type(),
+			'description'                => $coupon->get_description(),
+			'amount'                     => wc_format_decimal( $coupon->get_amount() ),
+			'expiry_date'                => $formatted_expiry_date,
+			'enable_free_shipping'       => $coupon->get_free_shipping() ? 'yes' : 'no',
+			'minimum_amount'             => wc_format_decimal( $coupon->get_minimum_amount() ),
+			'maximum_amount'             => wc_format_decimal( $coupon->get_maximum_amount() ),
+			'individual_use'             => $coupon->get_individual_use() ? 'yes' : 'no',
+			'exclude_sale_items'         => $coupon->get_exclude_sale_items() ? 'yes' : 'no',
+			'products'                   => implode( ', ', $products ),
+			'exclude_products'           => implode( ', ', $excluded_products ),
+			'product_categories'         => implode( ', ', $product_categories ),
+			'exclude_product_categories' => implode( ', ', $excluded_product_categories ),
+			'customer_emails'            => implode( ', ', $coupon->get_email_restrictions() ),
+			'usage_limit'                => $coupon->get_usage_limit(),
+			'limit_usage_to_x_items'     => $coupon->get_limit_usage_to_x_items(),
+			'usage_limit_per_user'       => $coupon->get_usage_limit_per_user(),
+			'usage_count'                => $coupon->get_usage_count(),
+			'product_ids'                => implode( ', ', $product_ids ),
+			'exclude_product_ids'        => implode( ', ', $excluded_product_category_ids ),
+			'used_by'                    => implode( ', ', $used_by_customer_emails ),
+		);
+
+		/**
+		 * CSV Coupon Export Row.
+		 *
+		 * Filter the individual row data for the coupon export
+		 *
+		 * @since 4.6.0
+		 *
+		 * @param array $coupon_data {
+		 *     order data in key => value format
+		 *     to modify the row data, ensure the key matches any of the header keys and set your own value
+		 * }
+		 * @param \WC_Coupon $coupon the coupon for this row
+		 * @param \WC_Customer_Order_CSV_Export_Generator $this, generator instance
+		 */
+		return apply_filters( 'wc_customer_order_csv_export_coupon_row', $coupon_data, $coupon, $this );
+	}
+
+
+	/**
 	 * Returns the localized state for the order.
 	 *
 	 * TODO: Remove once WC 3.0+ is required {MR 2017-02-23}
@@ -1161,9 +1411,9 @@ class WC_Customer_Order_CSV_Export_Generator {
 	private function escape_cell_formulas( $value ) {
 
 		$untrusted = SV_WC_Helper::str_starts_with( $value, '=' ) ||
-		             SV_WC_Helper::str_starts_with( $value, '+' ) ||
-		             SV_WC_Helper::str_starts_with( $value, '-' ) ||
-		             SV_WC_Helper::str_starts_with( $value, '@' );
+					 SV_WC_Helper::str_starts_with( $value, '+' ) ||
+					 SV_WC_Helper::str_starts_with( $value, '-' ) ||
+					 SV_WC_Helper::str_starts_with( $value, '@' );
 
 		if ( $untrusted ) {
 			$value = "'" . $value;
@@ -1261,6 +1511,10 @@ class WC_Customer_Order_CSV_Export_Generator {
 				$headers = $this->get_customers_csv_headers();
 			break;
 
+			case 'coupons':
+				$headers = $this->get_coupons_csv_headers();
+				break;
+
 			default:
 
 				/**
@@ -1313,6 +1567,9 @@ class WC_Customer_Order_CSV_Export_Generator {
 
 			case 'customers':
 				return $this->get_customers_csv( $ids );
+
+			case 'coupons':
+				return $this->get_coupons_csv( $ids );
 
 			default:
 				/**

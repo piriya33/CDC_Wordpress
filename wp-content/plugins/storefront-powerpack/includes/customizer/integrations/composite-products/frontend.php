@@ -29,9 +29,6 @@ if ( ! class_exists( 'SP_Frontend_Composite_Product_Details' ) ) :
 			// Filter max component options per page.
 			add_filter( 'woocommerce_component_options_per_page', 				array( $this, 'cp_component_options_per_page' ), 5 );
 
-			// Enable pagination vs load more UI.
-			add_filter( 'woocommerce_component_options_paginate_results',       array( $this, 'cp_component_options_pagination' ), 5 );
-
 			// Filter max component columns in review/summary.
 			add_filter( 'woocommerce_composite_component_summary_max_columns', 	array( $this, 'cp_summary_max_columns' ), 5 );
 
@@ -61,16 +58,6 @@ if ( ! class_exists( 'SP_Frontend_Composite_Product_Details' ) ) :
 		public function cp_component_options_per_page( $num ) {
 			$sp_num = get_theme_mod( 'sp_cp_component_options_per_page' );
 			return $sp_num ? $sp_num : $num;
-		}
-
-		/**
-		 * Number of component options per page when the Thumbnails setting is active.
-		 *
-		 * @param  integer $num_per_page products per page.
-		 * @return integer
-		 */
-		public function cp_component_options_pagination( $paginate ) {
-			return 'off' === get_theme_mod( 'sp_cp_component_options_pagination' ) ? false : true;
 		}
 
 		/**

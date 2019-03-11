@@ -1,6 +1,6 @@
 @import 'susy';
-@import '../../themes/storefront/assets/sass/utils/variables';
-@import '../../themes/storefront/assets/sass/vendors/modular-scale';
+@import '../../themes/storefront/assets/css/sass/utils/variables';
+@import '../../themes/storefront/assets/css/sass/vendors/modular-scale';
 
 .woocommerce-checkout.sp-distraction-free-checkout {
 	.site-header {
@@ -15,24 +15,36 @@
 			margin: 0 auto;
 			text-align: center;
 			width: 100%;
+
+			.custom-logo-link {
+				float: none;
+			}
+
+			img {
+				display: inline;
+			}
 		}
 	}
+}
 
-	.site-content {
-		padding-top: ms(5);
-	}
-
-	&.page-template-default {
-		.content-area {
-			@include span(8 of 12);
-			float: none;
-			margin: 0 auto;
+@include susy-media($desktop) {
+	.woocommerce-checkout.sp-distraction-free-checkout {
+		&.page-template-default {
+			.content-area {
+				@include span(8 of 12);
+				float: none;
+				margin: 0 auto;
+			}
 		}
-	}
 
-	&.sd-header-sticky {
+		&.sd-header-sticky {
+			.site-content {
+				padding-top: 2.618em;
+			}
+		}
+
 		.site-content {
-			padding-top: 2.618em;
+			padding-top: ms(5);
 		}
 	}
 }

@@ -18,7 +18,7 @@
  *
  * @package     WC-Customer-Order-CSV-Export/Export-Methods/Email
  * @author      SkyVerge
- * @copyright   Copyright (c) 2012-2017, SkyVerge, Inc.
+ * @copyright   Copyright (c) 2012-2018, SkyVerge, Inc.
  * @license     http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
@@ -73,17 +73,27 @@ class WC_Customer_Order_CSV_Export_Method_Email implements WC_Customer_Order_CSV
 
 
 	/**
-	 * Emails the admin with the exported file as an attachment
+	 * Emails the admin with the exported file as an attachment.
 	 *
 	 * @since 3.1.0
-	 * @param string $filename the attachment file path
-	 * @throws SV_WC_Plugin_Exception wp_mail errors
-	 * @return bool whether the mail was sent successfully or not
-	 */
-	public function perform_action( $file_path ) {
 
-		if ( empty( $file_path ) ) {
-			throw new SV_WC_Plugin_Exception( __( 'Missing file path', 'woocommerce-customer-order-csv-export' ) );
+	 * @param \WC_Customer_Order_CSV_Export_Export|string $export the export object or a path to an export file
+	 * @return bool whether the mail was sent successfully or not
+	 * @throws SV_WC_Plugin_Exception wp_mail errors
+	 */
+	public function perform_action( $export ) {
+
+		if ( ! $export ) {
+			throw new SV_WC_Plugin_Exception( __( 'Unable to find export for transfer', 'woocommerce-customer-order-csv-export' ) );
+		}
+
+		if ( is_string( $export ) && is_readable( $export ) ) {
+
+			$file_path = $export;
+
+		} else {
+
+			$file_path = $export->get_temporary_file_path();
 		}
 
 		// init email args

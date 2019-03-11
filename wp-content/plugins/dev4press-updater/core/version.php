@@ -5,10 +5,10 @@ if (!defined('ABSPATH')) exit;
 class d4pupd_core_info {
     public $code = 'dev4press-updater';
 
-    public $version = '4.0';
-    public $build = 2400;
+    public $version = '4.0.1';
+    public $build = 2401;
     public $status = 'stable';
-    public $updated = '2018.12.30';
+    public $updated = '2019.01.12';
     public $url = 'https://plugins.dev4press.com/dev4press-updater/';
     public $author_name = 'Milan Petrovic';
     public $author_url = 'https://www.dev4press.com/';
@@ -22,7 +22,7 @@ class d4pupd_core_info {
     public $update = false;
     public $previous = 0;
 
-    public $key = 1546171200;
+    public $key = 1547306585;
 
     function __construct() { }
 

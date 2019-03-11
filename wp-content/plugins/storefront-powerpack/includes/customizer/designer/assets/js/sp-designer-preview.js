@@ -96,6 +96,7 @@
 			var setting = this, css = setting.get(), newStyle, textDecoration;
 
 			newStyle = {
+				'display':            ( ( 'none' === css.updateDisplay ) ? 'none' : '' ),
 				'font-size':          css.fontSize + css.fontSizeUnit,
 				'letter-spacing':     css.letterSpacing + css.letterSpacingUnit,
 				'line-height':        css.lineHeight + 'px',
@@ -119,7 +120,7 @@
 
 			// Font Family
 			if ( 'Default' === css.fontFamily || '' === css.fontFamily ) {
-				newStyle['font-family'] = 'inherit';
+				newStyle['font-family'] = '';
 			} else {
 				// Only use WebFont is the font is a Google Font.
 				if ( ! _.contains( api.SPDesignerPreviewData.webSafeFonts, css.fontFamily ) ) {
@@ -176,8 +177,39 @@
 				newStyle['background-image']      = '';
 			}
 
-			// Set CSS
-			$( css.selector ).css( newStyle );
+			var outputStyle = '';
+
+			_.each( newStyle, function( val, key ) {
+				if ( '' !== val ) {
+					outputStyle += key + ':' + val + ';';
+				}
+			});
+
+			var selectorPrefix = api.SPDesignerPreviewData.prefixOtherClasses;
+
+			if ( 'body' === css.selector ) {
+				selectorPrefix = api.SPDesignerPreviewData.prefixBodyClass;
+				outputStyle = 'body' + selectorPrefix + '{' + outputStyle + '}';
+			} else {
+				outputStyle = selectorPrefix + ' ' + css.selector + '{' + outputStyle + '}';
+			}
+
+			var sanitizedStyleID;
+
+			// Replace spaces with dashes
+			sanitizedStyleID = css.selector.replace(/\s+/g, '-').toLowerCase();
+
+			// Lowercase
+			sanitizedStyleID = sanitizedStyleID.toLowerCase();
+
+			// Strip invalid characters
+			sanitizedStyleID = sanitizedStyleID.replace( /[^0-9A-Za-z-]/g, '' );
+
+			// Remove any other style tags for this selector
+			$( '#' + 'sp-designer-' + sanitizedStyleID ).remove();
+
+			// Append style tag to <head>
+			$(' <style/>' ).attr( 'id', 'sp-designer-' + sanitizedStyleID ).text( outputStyle ).appendTo( document.head );
 		},
 
 		/**
@@ -189,6 +221,7 @@
 			data = {
 				'selector': selector,
 				'cssProperties': {
+					'updateDisplay':         $selector.css( 'display' ),
 					'fontWeight':            $selector.css( 'font-weight' ),
 					'fontSize':              $selector.css( 'font-size' ),
 					'letterSpacing':         $selector.css( 'letter-spacing' ),

@@ -26,8 +26,6 @@ if ( ! class_exists( 'SP_Frontend_Shop' ) ) :
 		public function __construct() {
 			add_action( 'wp', array( $this, 'shop_layout' ), 999 );
 			add_filter( 'body_class', array( $this, 'body_class' ) );
-			add_filter( 'storefront_loop_columns', array( $this, 'shop_columns' ), 999 );
-			add_filter( 'storefront_products_per_page', array( $this, 'shop_products_per_page' ), 999 );
 			add_action( 'wp_enqueue_scripts', array( $this, 'script' ), 99 );
 			add_action( 'wp_enqueue_scripts', array( $this, 'inline_css' ), 999 );
 			add_action( 'woocommerce_before_shop_loop', 'sp_scroll_wrapper', 4 );
@@ -38,6 +36,11 @@ if ( ! class_exists( 'SP_Frontend_Shop' ) ) :
 			if ( $storefront_version && version_compare( $storefront_version, '2.2.0', '<' ) ) {
 				add_action( 'woocommerce_before_shop_loop', 'sp_product_loop_wrap', 40 );
 				add_action( 'woocommerce_after_shop_loop', 'sp_product_loop_wrap_close', 5 );
+			}
+
+			if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '3.3', '<' ) ) {
+				add_filter( 'storefront_loop_columns', array( $this, 'shop_columns' ), 999 );
+				add_filter( 'storefront_products_per_page', array( $this, 'shop_products_per_page' ), 999 );
 			}
 		}
 
@@ -56,7 +59,7 @@ if ( ! class_exists( 'SP_Frontend_Shop' ) ) :
 			$archive_price               = get_theme_mod( 'sp_product_archive_price',         true );
 			$archive_add_to_cart         = get_theme_mod( 'sp_product_archive_add_to_cart',   true );
 			$archive_product_description = get_theme_mod( 'sp_product_archive_description',   false );
-			$archive_titles              = get_theme_mod( 'sp_product_archive_title',         true );			
+			$archive_titles              = get_theme_mod( 'sp_product_archive_title',         true );
 			$infinite_scroll             = get_theme_mod( 'sp_infinite_scroll',               false );
 
 
@@ -170,10 +173,17 @@ if ( ! class_exists( 'SP_Frontend_Shop' ) ) :
 		 * @return  void
 		 */
 		public function script() {
+			global $storefront_version;
+
 			$infinite_scroll = get_theme_mod( 'sp_infinite_scroll', false );
 
-			wp_enqueue_style( 'sp-styles', plugins_url( '../../../assets/css/style.css', __FILE__ ), '', storefront_powerpack()->version );
+			wp_enqueue_style( 'sp-styles', SP_PLUGIN_URL . 'assets/css/style.css', '', storefront_powerpack()->version );
 			wp_style_add_data( 'sp-styles', 'rtl', 'replace' );
+
+			// Compatibility with Storefront versions under 2.3.
+			if ( version_compare( $storefront_version, '2.3.0', '<' ) ) {
+				wp_enqueue_style( 'sp-fontawesome-4' );
+			}
 
 			/**
 			 * Load the infinite scroll script on appropriate pages if the setting is enabled.
@@ -181,8 +191,8 @@ if ( ! class_exists( 'SP_Frontend_Shop' ) ) :
 			 */
 			if ( true === $infinite_scroll && ! ( class_exists( 'Jetpack' ) && Jetpack::is_module_active( 'infinite-scroll' ) ) ) {
 				if ( is_shop() || is_product_taxonomy() || is_product_category() || is_product_tag() ) {
-					wp_enqueue_script( 'jscroll', plugins_url( '../../../assets/js/jquery.jscroll.min.js', __FILE__ ), array( 'jquery' ) );
-					wp_enqueue_script( 'jscroll-init', plugins_url( '../../../assets/js/jscroll-init.min.js', __FILE__ ), array( 'jscroll' ) );
+					wp_enqueue_script( 'jscroll', SP_PLUGIN_URL . 'assets/js/jquery.jscroll.min.js', array( 'jquery' ) );
+					wp_enqueue_script( 'jscroll-init', SP_PLUGIN_URL . 'assets/js/jscroll-init.min.js', array( 'jscroll' ) );
 				}
 			}
 		}
@@ -199,11 +209,11 @@ if ( ! class_exists( 'SP_Frontend_Shop' ) ) :
 			$storefront_shop_style = '
 				.star-rating span:before,
 				.star-rating:before {
-					color: ' . $star_color . ';
+					color: ' . $star_color . ' !important;
 				}
 
 				.star-rating:before {
-					opacity: 0.25;
+					opacity: 0.25 !important;
 				}
 			';
 

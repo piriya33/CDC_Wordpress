@@ -3,11 +3,12 @@
  * Plugin Name: Storefront Powerpack
  * Plugin URI: https://woocommerce.com/products/storefront-powerpack/
  * Description: Up your game with Storefront Powerpack and get access to host of neat gadgets that enable effortless customisation of your Storefront.
- * Version: 1.4.1
+ * Version: 1.4.15
  * Author: WooCommerce
  * Author URI: https://woocommerce.com/
  * Requires at least: 4.4
- * Tested up to: 4.7.2
+ * Tested up to: 5.0
+ * Woo: 1865835:e38ad13a5aaec7860df698cbad82c175
  *
  * Text Domain: storefront-powerpack
  * Domain Path: /languages/
@@ -86,7 +87,7 @@ final class Storefront_Powerpack {
 	 */
 	public function __construct() {
 		$this->token   = 'storefront-powerpack';
-		$this->version = '1.4.1';
+		$this->version = '1.4.15';
 		$this->define_constants();
 		$this->init_hooks();
 	} // End __construct()
@@ -112,46 +113,66 @@ final class Storefront_Powerpack {
 			include_once( 'includes/class-sp-customizer.php' );
 
 			// Header
-			include_once( 'includes/customizer/header/customizer.php' );
-			include_once( 'includes/customizer/header/frontend.php' );
+			if ( apply_filters( 'storefront_powerpack_header_enabled', true ) ) {
+				include_once( 'includes/customizer/header/customizer.php' );
+				include_once( 'includes/customizer/header/frontend.php' );
+			}
 
 			// Footer
-			include_once( 'includes/customizer/footer/customizer.php' );
-			include_once( 'includes/customizer/footer/frontend.php' );
+			if ( apply_filters( 'storefront_powerpack_footer_enabled', true ) ) {
+				include_once( 'includes/customizer/footer/customizer.php' );
+				include_once( 'includes/customizer/footer/frontend.php' );
+			}
 
 			// Designer
-			include_once( 'includes/customizer/designer/class-sp-designer.php' );
+			if ( apply_filters( 'storefront_powerpack_designer_enabled', true ) ) {
+				include_once( 'includes/customizer/designer/class-sp-designer.php' );
+			}
 
 			// Layout
-			include_once( 'includes/customizer/layout/customizer.php' );
-			include_once( 'includes/customizer/layout/frontend.php' );
+			if ( apply_filters( 'storefront_powerpack_layout_enabled', true ) ) {
+				include_once( 'includes/customizer/layout/customizer.php' );
+				include_once( 'includes/customizer/layout/frontend.php' );
+			}
 
 			// Integrations
-			include_once( 'includes/class-sp-integrations.php' );
+			if ( apply_filters( 'storefront_powerpack_integrations_enabled', true ) ) {
+				include_once( 'includes/class-sp-integrations.php' );
+			}
 
 			if ( class_exists( 'WooCommerce' ) ) {
 				// Checkout
-				include_once( 'includes/customizer/checkout/customizer.php' );
-				include_once( 'includes/customizer/checkout/frontend.php' );
-				include_once( 'includes/customizer/checkout/template.php' );
+				if ( apply_filters( 'storefront_powerpack_checkout_enabled', true ) ) {
+					include_once( 'includes/customizer/checkout/customizer.php' );
+					include_once( 'includes/customizer/checkout/frontend.php' );
+					include_once( 'includes/customizer/checkout/template.php' );
+				}
 
 				// Homepage
-				include_once( 'includes/customizer/homepage/customizer.php' );
-				include_once( 'includes/customizer/homepage/frontend.php' );
-				include_once( 'includes/customizer/homepage/template.php' );
+				if ( apply_filters( 'storefront_powerpack_homepage_enabled', true ) ) {
+					include_once( 'includes/customizer/homepage/customizer.php' );
+					include_once( 'includes/customizer/homepage/frontend.php' );
+					include_once( 'includes/customizer/homepage/template.php' );
+				}
 
 				// Messages
-				include_once( 'includes/customizer/messages/customizer.php' );
-				include_once( 'includes/customizer/messages/frontend.php' );
+				if ( apply_filters( 'storefront_powerpack_messages_enabled', true ) ) {
+					include_once( 'includes/customizer/messages/customizer.php' );
+					include_once( 'includes/customizer/messages/frontend.php' );
+				}
 
 				// Product Details
-				include_once( 'includes/customizer/product-details/customizer.php' );
-				include_once( 'includes/customizer/product-details/frontend.php' );
+				if ( apply_filters( 'storefront_powerpack_product_details_enabled', true ) ) {
+					include_once( 'includes/customizer/product-details/customizer.php' );
+					include_once( 'includes/customizer/product-details/frontend.php' );
+				}
 
 				// Shop
-				include_once( 'includes/customizer/shop/customizer.php' );
-				include_once( 'includes/customizer/shop/frontend.php' );
-				include_once( 'includes/customizer/shop/template.php' );
+				if ( apply_filters( 'storefront_powerpack_shop_enabled', true ) ) {
+					include_once( 'includes/customizer/shop/customizer.php' );
+					include_once( 'includes/customizer/shop/frontend.php' );
+					include_once( 'includes/customizer/shop/template.php' );
+				}
 			}
 		}
 	}
@@ -161,6 +182,7 @@ final class Storefront_Powerpack {
 	 */
 	public function define_constants() {
 		define( 'SP_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
+		define( 'SP_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 	}
 
 	/**

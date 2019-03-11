@@ -18,7 +18,7 @@
  *
  * @package     WC-Customer-Order-CSV-Export/Classes
  * @author      SkyVerge
- * @copyright   Copyright (c) 2012-2017, SkyVerge, Inc.
+ * @copyright   Copyright (c) 2012-2018, SkyVerge, Inc.
  * @license     http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
@@ -159,6 +159,33 @@ class WC_Customer_Order_CSV_Export_Formats {
 				'total_spent',
 				'order_count',
 			);
+
+		} elseif ( 'coupons' === $export_type ) {
+
+			$options = array(
+				'code',
+				'type',
+				'description',
+				'amount',
+				'expiry_date',
+				'enable_free_shipping',
+				'minimum_amount',
+				'maximum_amount',
+				'individual_use',
+				'exclude_sale_items',
+				'products',
+				'exclude_products',
+				'product_categories',
+				'exclude_product_categories',
+				'customer_emails',
+				'usage_limit',
+				'limit_usage_to_x_items',
+				'usage_limit_per_user',
+				'usage_count',
+				'product_ids',
+				'exclude_product_ids',
+				'used_by',
+			);
 		}
 
 		/**
@@ -249,6 +276,7 @@ class WC_Customer_Order_CSV_Export_Formats {
 		$this->formats = array(
 			'orders'    => array(),
 			'customers' => array(),
+			'coupons'   => array(),
 		);
 
 		// 'default' format
@@ -550,15 +578,16 @@ class WC_Customer_Order_CSV_Export_Formats {
 
 
 		// 'custom' order format
+		$row_type     = get_option( 'wc_customer_order_csv_export_orders_custom_format_row_type', 'order' );
+		$items_format = 'order' === $row_type ? get_option( 'wc_customer_order_csv_export_orders_custom_format_items_format', 'pipe_delimited' ) : 'pipe_delimited';
 
 		$this->formats['orders']['custom'] = array(
 			'delimiter'    => get_option( 'wc_customer_order_csv_export_orders_custom_format_delimiter', ',' ),
 			'enclosure'    => '"',
-			'row_type'     => get_option( 'wc_customer_order_csv_export_orders_custom_format_row_type', 'order' ),
-			'items_format' => get_option( 'wc_customer_order_csv_export_orders_custom_format_items_format', 'pipe_delimited' ),
+			'row_type'     => $row_type,
+			'items_format' => $items_format,
 			'columns'      => $this->get_custom_column_mapping( 'orders' ),
 		);
-
 
 
 		// Define customers export formats
@@ -650,6 +679,44 @@ class WC_Customer_Order_CSV_Export_Formats {
 			'enclosure' => '"',
 			'columns'   => $this->get_custom_column_mapping( 'customers' ),
 		);
+
+
+		// Define coupons export formats
+
+		$this->formats['coupons']['default'] = array(
+			'delimiter' => ',',
+			'enclosure' => '"',
+			'columns'   => array(
+				'code'                       => 'code',
+				'type'                       => 'type',
+				'description'                => 'description',
+				'amount'                     => 'amount',
+				'expiry_date'                => 'expiry_date',
+				'enable_free_shipping'       => 'enable_free_shipping',
+				'minimum_amount'             => 'minimum_amount',
+				'maximum_amount'             => 'maximum_amount',
+				'individual_use'             => 'individual_use',
+				'exclude_sale_items'         => 'exclude_sale_items',
+				'products'                   => 'products',
+				'exclude_products'           => 'exclude_products',
+				'product_categories'         => 'product_categories',
+				'exclude_product_categories' => 'exclude_product_categories',
+				'customer_emails'            => 'customer_emails',
+				'usage_limit'                => 'usage_limit',
+				'limit_usage_to_x_items'     => 'limit_usage_to_x_items',
+				'usage_limit_per_user'       => 'usage_limit_per_user',
+				'usage_count'                => 'usage_count',
+				'product_ids'                => 'product_ids',
+				'exclude_product_ids'        => 'exclude_product_ids',
+				'used_by'                    => 'used_by',
+			),
+		);
+
+		$this->formats['coupons']['custom'] = array(
+			'delimiter' => get_option( 'wc_customer_order_csv_export_coupons_custom_format_delimiter', ',' ),
+			'enclosure' => '"',
+			'columns'   => $this->get_custom_column_mapping( 'coupons' ),
+		);
 	}
 
 
@@ -730,6 +797,8 @@ class WC_Customer_Order_CSV_Export_Formats {
 				$meta_keys = $this->get_user_meta_keys();
 			} elseif ( 'orders' === $export_type ) {
 				$meta_keys = $this->get_post_meta_keys( 'shop_order' );
+			} elseif ( 'coupons' === $export_type ) {
+				$meta_keys = $this->get_post_meta_keys( 'shop_coupon' );
 			}
 
 			// exclude meta with dedicated columns from all meta
@@ -815,6 +884,10 @@ class WC_Customer_Order_CSV_Export_Formats {
 
 			$dedicated_order_columns = array( '_customer_user', '_order_shipping', '_order_shipping_tax', '_download_permissions_granted' );
 			$has_dedicated_column    = in_array( $meta_key, $dedicated_order_columns, true );
+		} elseif ( 'coupons' === $export_type ) {
+
+			$dedicated_coupon_columns = array( 'coupon_amount', 'date_expires', 'discount_type', 'free_shipping' );
+			$has_dedicated_column    = in_array( $meta_key, $dedicated_coupon_columns, true );
 		}
 
 		if ( ! $has_dedicated_column ) {

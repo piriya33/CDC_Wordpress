@@ -18,7 +18,7 @@
  *
  * @package     WC-Customer-Order-CSV-Export/Admin
  * @author      SkyVerge
- * @copyright   Copyright (c) 2012-2017, SkyVerge, Inc.
+ * @copyright   Copyright (c) 2012-2018, SkyVerge, Inc.
  * @license     http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
@@ -46,6 +46,7 @@ class WC_Customer_Order_CSV_Export_Admin_Custom_Format_Builder {
 
 		add_filter( 'woocommerce_admin_settings_sanitize_option_wc_customer_order_csv_export_orders_custom_format_delimiter',    array( $this, 'restore_tab_value' ), 10, 3 );
 		add_filter( 'woocommerce_admin_settings_sanitize_option_wc_customer_order_csv_export_customers_custom_format_delimiter', array( $this, 'restore_tab_value' ), 10, 3 );
+		add_filter( 'woocommerce_admin_settings_sanitize_option_wc_customer_order_csv_export_coupons_custom_format_delimiter', array( $this, 'restore_tab_value' ), 10, 3 );
 	}
 
 
@@ -61,6 +62,10 @@ class WC_Customer_Order_CSV_Export_Admin_Custom_Format_Builder {
 			'orders'    => __( 'Orders', 'woocommerce-customer-order-csv-export' ),
 			'customers' => __( 'Customers', 'woocommerce-customer-order-csv-export' )
 		);
+
+		if ( wc_customer_order_csv_export()->is_coupon_export_enabled() ) {
+			$sections['coupons'] = __( 'Coupons', 'woocommerce-customer-order-csv-export' );
+		}
 
 		/**
 		 * Allow actors to change the sections for field mapper
@@ -204,6 +209,59 @@ class WC_Customer_Order_CSV_Export_Admin_Custom_Format_Builder {
 			),
 
 		);
+
+		// only display coupons export custom format if enabled
+		if ( wc_customer_order_csv_export()->is_coupon_export_enabled() ) {
+
+			$settings['coupons'] = array(
+
+				array(
+					'name' => __( 'Format Options', 'woocommerce-customer-order-csv-export' ),
+					'type' => 'title',
+				),
+
+				array(
+					'id'       => 'wc_customer_order_csv_export_coupons_custom_format_delimiter',
+					'name'     => __( 'CSV delimiter', 'woocommerce-customer-order-csv-export' ),
+					'type'     => 'select',
+					'options'  => array(
+						","  => __( 'Comma', 'woocommerce-customer-order-csv-export' ),
+						";"  => __( 'Semicolon', 'woocommerce-customer-order-csv-export' ),
+						"\t" => __( 'Tab', 'woocommerce-customer-order-csv-export' ),
+					),
+					'default' => ',',
+					'class'   => 'wc-enhanced-select js-delimiter',
+				),
+
+				array(
+					'id'      => 'wc_customer_order_csv_export_coupons_custom_format_include_all_meta',
+					'name'    => __( 'Include all meta', 'woocommerce-customer-order-csv-export' ),
+					'desc'    => __( 'Enable to include all meta in the export', 'woocommerce-customer-order-csv-export' ),
+					'default' => 'no',
+					'type'    => 'checkbox',
+					'class'   => 'js-include-all-meta',
+				),
+
+				array( 'type' => 'sectionend' ),
+
+				array(
+					'name' => __( 'Column Mapping', 'woocommerce-customer-order-csv-export' ),
+					'type' => 'title',
+				),
+
+				array(
+					'id'          => 'wc_customer_order_csv_export_coupons_custom_format_mapping',
+					'type'        => 'wc_customer_order_csv_export_field_mapping',
+					'export_type' => 'coupons',
+					'default'     => self::get_default_field_mapping( 'coupons' ),
+				),
+
+
+				array( 'type' => 'sectionend' ),
+
+			);
+
+		}
 
 		// return all or section-specific settings
 		$found_settings = $section_id ? $settings[ $section_id ] : $settings;

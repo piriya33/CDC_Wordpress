@@ -18,7 +18,7 @@
  *
  * @package     WC-Customer-Order-CSV-Export/Export-Methods/SFTP
  * @author      SkyVerge
- * @copyright   Copyright (c) 2012-2017, SkyVerge, Inc.
+ * @copyright   Copyright (c) 2012-2018, SkyVerge, Inc.
  * @license     http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
@@ -47,9 +47,9 @@ class WC_Customer_Order_CSV_Export_Method_SFTP extends WC_Customer_Order_CSV_Exp
 	 * @throws SV_WC_Plugin_Exception - ssh2 extension not installed, failed SSH / SFTP connection, failed authentication
 	 * @param array $args
 	 */
-	 public function __construct( $args ) {
+	public function __construct( $args ) {
 
-	 	parent::__construct( $args );
+		parent::__construct( $args );
 
 		// Handle errors from ssh2_* functions that throw warnings for things like
 		// failed connections, etc
@@ -90,51 +90,59 @@ class WC_Customer_Order_CSV_Export_Method_SFTP extends WC_Customer_Order_CSV_Exp
 
 
 	/**
-	 * Open remote file and write exported data into it
+	 * Opens the remote file and writes exported data into it.
 	 *
 	 * @since 3.0.0
-	 * @param string $file_path path to file to upload
-	 * @throws SV_WC_Plugin_Exception Open remote file failure or write data failure
+	 *
+	 * @param \WC_Customer_Order_CSV_Export_Export|string $export the export object or a path to an export file
 	 * @return bool whether the upload was successful or not
+	 * @throws \SV_WC_Plugin_Exception Open remote file failure or write data failure
 	 */
-	public function perform_action( $file_path ) {
+	public function perform_action( $export ) {
 
-		if ( empty( $file_path ) ) {
-			throw new SV_WC_Plugin_Exception( __( 'Missing file path', 'woocommerce-customer-order-csv-export' ) );
+		if ( ! $export ) {
+			throw new SV_WC_Plugin_Exception( __( 'Unable to find export for transfer', 'woocommerce-customer-order-csv-export' ) );
 		}
 
-		$filename    = basename( $file_path );
+		if ( is_string( $export ) && is_readable( $export ) ) {
+
+			$file_path = $export;
+			$source    = fopen( $file_path, 'r' );
+			$filename  = basename( $file_path );
+
+		} else {
+
+			$filename = $export->get_filename();
+			$source   = $export->get_file_stream();
+		}
+
 		// keep this! see https://bugs.php.net/bug.php?id=73597
 		$sftp_link   = intval( $this->sftp_link );
 		$remote_path = "ssh2.sftp://{$sftp_link}/{$this->path}";
 		$remote_file = "{$remote_path}{$filename}";
 
 		// open a file on the remote system for writing
-		$stream = fopen( $remote_file, 'w+' );
+		$remote_stream = fopen( $remote_file, 'w+' );
+
+		// set chunk size to 1Mb to optimize for transfer speed
+		$chunk_size = 1024 * 1024;
+		stream_set_chunk_size( $remote_stream, $chunk_size );
 
 		// check for fopen failure
-		if ( ! $stream ) {
+		if ( ! $remote_stream ) {
 
 			/* translators: Placeholders: %s - file path */
 			throw new SV_WC_Plugin_Exception( sprintf( __( 'Could not open remote file: %s.', 'woocommerce-customer-order-csv-export' ), $remote_file ) );
 		}
 
-		$data = file_get_contents( $file_path );
+		while ( $buffer = fread( $source, $chunk_size ) ) {
 
-		if ( false === $data ) {
-			/* translators: Placeholders: %s - file name */
-			throw new SV_WC_Plugin_Exception( sprintf( __( 'Could not open file %s for reading.', 'woocommerce-customer-order-csv-export' ), $filename ) );
-		}
-
-		// write exported data to opened remote file
-		if ( false === fwrite( $stream, $data ) ) {
-
-			/* translators: Placeholders: %s - file name */
-			throw new SV_WC_Plugin_Exception( sprintf( __( 'Could not write data to remote file: %s.', 'woocommerce-customer-order-csv-export' ), $filename ) );
+			fwrite( $remote_stream, $buffer );
 		}
 
 		// close file
-		fclose( $stream );
+		fclose( $remote_stream );
+		fclose( $source );
 
 		return true;
 	}

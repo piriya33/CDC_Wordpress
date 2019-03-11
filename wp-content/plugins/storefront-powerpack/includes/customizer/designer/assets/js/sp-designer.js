@@ -373,7 +373,7 @@
 				settingValue = control.setting(), elements;
 
 			elements = [
-				'fontStyle', 'textUnderline', 'textLineThrough', 'fontFamily', 'fontVariant', 'fontSize', 'fontSizeUnit', 'fontWeight', 'lineHeight',
+				'updateDisplay', 'fontStyle', 'textUnderline', 'textLineThrough', 'fontFamily', 'fontVariant', 'fontSize', 'fontSizeUnit', 'fontWeight', 'lineHeight',
 				'letterSpacing', 'letterSpacingUnit', 'letterSpacingUnit', 'color', 'marginTop', 'marginTopUnit', 'marginBottom', 'marginBottomUnit',
 				'marginLeft', 'marginLeftUnit', 'marginRight', 'marginRightUnit', 'paddingTop', 'paddingTopUnit', 'paddingBottom', 'paddingBottomUnit',
 				'paddingLeft', 'paddingLeftUnit', 'paddingRight', 'paddingRightUnit', 'borderRadius', 'borderRadiusUnit', 'borderColor', 'borderStyle',
@@ -726,6 +726,8 @@
 		 */
 		_handleDefaults: function( cssProperties ) {
 			var defaults = {
+				'updateDisplay':         ( ( cssProperties.display ) ? 'none' : 'inline' ),
+
 				'fontSize':              ( ( cssProperties.fontSize && 0 <= parseInt( cssProperties.fontSize, 10 ) ) ? parseInt( cssProperties.fontSize, 10 ) : 0 ),
 				'fontSizeUnit':          ( ( cssProperties.fontSizeUnit ) ? cssProperties.fontSizeUnit : 'px' ),
 				'letterSpacing':         ( ( cssProperties.letterSpacing ) ? parseInt( cssProperties.letterSpacing, 10 ) : 0 ),

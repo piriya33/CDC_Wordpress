@@ -74,7 +74,15 @@ class SP_Designer_CSS_Control extends WP_Customize_Control {
 							{{ data.label }}
 						</div>
 					</li>
+					<li>
+						<label class="sp-designer-sub-title"><?php _e( 'Show/Hide', 'storefront-powerpack' ); ?></label>
 
+							<select data-sp-designer-property="updateDisplay">
+								<?php foreach ( array( 'inline' => __( 'Show', 'storefront-powerpack' ), 'none' => __( 'Hide', 'storefront-powerpack' ) ) as $k => $v ) : ?>
+									<option value="<?php echo esc_attr( $k ); ?>" <# if ( '<?php echo esc_attr( $k ); ?>' == data.css.updateDisplay ) { #> selected<# } #>><?php echo esc_attr( $v ); ?></option>
+								<?php endforeach; ?>
+							</select>
+					</li>
 					<li>
 						<label class="customize-control-title"><?php _e( 'Text', 'storefront-powerpack' ); ?></label>
 

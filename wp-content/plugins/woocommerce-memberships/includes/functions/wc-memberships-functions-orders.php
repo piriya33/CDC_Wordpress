@@ -16,22 +16,39 @@
  * versions in the future. If you wish to customize WooCommerce Memberships for your
  * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
- * @package   WC-Memberships/Classes
  * @author    SkyVerge
- * @copyright Copyright (c) 2014-2017, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2019, SkyVerge, Inc.
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
 defined( 'ABSPATH' ) or exit;
 
+use SkyVerge\WooCommerce\PluginFramework\v5_3_1 as Framework;
+
 
 /**
- * Get memberships granted access from order
+ * Gets an order's date (compatibility function for template files).
+ *
+ * @since 1.12.0
+ *
+ * @param \WC_Order $order
+ * @param string $date the date to retrieve
+ * @param string $context WooCommerce context: 'view' or 'edit' (default)
+ * @return null|\WC_DateTime
+ */
+function wc_memberships_get_order_date( $order, $date, $context = 'edit' ) {
+
+	return Framework\SV_WC_Order_Compatibility::get_date_prop( $order, $date, $context );
+}
+
+
+/**
+ * Returns memberships granted access meta from order.
  *
  * @since 1.7.0
- * @param int|\WC_Order|\WC_Order_Refund $order Order object
- * @return false|array False if order didn't grant access to a membership
- *                     or associative array of membership ids and granting access details
+ *
+ * @param int|\WC_Order|\WC_Order_Refund $order order object
+ * @return false|array false if order didn't grant access to a membership or associative array of membership ids and granting access details
  */
 function wc_memberships_get_order_access_granted_memberships( $order ) {
 
@@ -39,19 +56,19 @@ function wc_memberships_get_order_access_granted_memberships( $order ) {
 		$order = wc_get_order( (int) $order );
 	}
 
-	$meta = $order instanceof WC_Order || $order instanceof WC_Order_Refund ? SV_WC_Order_Compatibility::get_meta( $order, '_wc_memberships_access_granted', true ) : false;
+	$meta = $order instanceof \WC_Order || $order instanceof \WC_Order_Refund ? Framework\SV_WC_Order_Compatibility::get_meta( $order, '_wc_memberships_access_granted', true ) : false;
 
 	return ! is_array( $meta ) ? array() : $meta;
 }
 
 
 /**
- * Check whether an order has granted access to a plan or a user membership
+ * Checks whether an order has granted access to a plan or a user membership.
  *
  * @since 1.7.0
- * @param int|\WC_Order $order The order id or object
- * @param array $args An associative array either with an user membership or a membership plan id or object:
- *                    for example: array( 'user_membership' => 123 ) or array( 'membership_plan' => $plan_object )
+ *
+ * @param int|\WC_Order $order the order id or object
+ * @param array $args an associative array either with an user membership or a membership plan id or object: or example: array( 'user_membership' => 123 ) or array( 'membership_plan' => $plan_object )
  * @return bool
  */
 function wc_memberships_has_order_granted_access( $order, $args ) {
@@ -69,8 +86,8 @@ function wc_memberships_has_order_granted_access( $order, $args ) {
 				$user_membership = wc_memberships_get_user_membership( (int) $user_membership );
 			}
 
-			if ( $user_membership instanceof WC_Memberships_User_Membership ) {
-				$has_granted = isset( $access_granted_memberships[ $user_membership->get_id() ] );
+			if ( $user_membership instanceof \WC_Memberships_User_Membership ) {
+				$has_granted = array_key_exists( $user_membership->get_id(), $access_granted_memberships );
 			}
 
 		} elseif ( isset( $args['membership_plan'] ) ) {
@@ -80,7 +97,7 @@ function wc_memberships_has_order_granted_access( $order, $args ) {
 
 			if ( is_numeric( $membership_plan ) ) {
 				$membership_plan_id = (int) $membership_plan;
-			} elseif ( $membership_plan instanceof WC_Memberships_Membership_Plan ) {
+			} elseif ( $membership_plan instanceof \WC_Memberships_Membership_Plan ) {
 				$membership_plan_id = $membership_plan->get_id();
 			}
 
@@ -91,7 +108,6 @@ function wc_memberships_has_order_granted_access( $order, $args ) {
 					$user_membership = wc_memberships_get_user_membership( $user_membership_id );
 
 					if ( $user_membership && $membership_plan_id === $user_membership->get_plan_id() ) {
-
 						$has_granted = true;
 						break;
 					}
@@ -105,13 +121,13 @@ function wc_memberships_has_order_granted_access( $order, $args ) {
 
 
 /**
- * Set memberships an order granted access to meta
+ * Sets memberships an order granted access to meta.
  *
  * @since 1.7.0
  *
- * @param int|\WC_Order $order
- * @param int|\WC_Memberships_User_Membership $user_membership
- * @param array $args Meta value details to save (optional)
+ * @param int|\WC_Order $order the order to set the flag for
+ * @param int|\WC_Memberships_User_Membership $user_membership user membership being granted access from order
+ * @param array $args optional: additional details to record in the same array meta
  */
 function wc_memberships_set_order_access_granted_membership( $order, $user_membership, $args = array() ) {
 
@@ -119,37 +135,34 @@ function wc_memberships_set_order_access_granted_membership( $order, $user_membe
 		$order = wc_get_order( (int) $order );
 	}
 
-	if ( ! $order instanceof WC_Order ) {
-		return;
+	if ( $order instanceof \WC_Order ) {
+
+		if ( is_numeric( $user_membership ) ) {
+			$user_membership = wc_memberships_get_user_membership( (int) $user_membership );
+		}
+
+		if ( $user_membership instanceof \WC_Memberships_User_Membership ) {
+
+			$user_membership_id = $user_membership->get_id();
+			$meta               = wc_memberships_get_order_access_granted_memberships( $order );
+			$details            = wp_parse_args( $args, array(
+				'already_granted'       => 'yes',
+				'granting_order_status' => $order->get_status(),
+			) );
+
+			$meta[ $user_membership_id ] = $details;
+
+			Framework\SV_WC_Order_Compatibility::update_meta_data( $order, '_wc_memberships_access_granted', $meta );
+		}
 	}
-
-	if ( is_numeric( $user_membership ) ) {
-		$user_membership = wc_memberships_get_user_membership( (int) $user_membership );
-	}
-
-	if ( $user_membership instanceof WC_Memberships_User_Membership ) {
-		$user_membership_id = $user_membership->get_id();
-	} else {
-		return;
-	}
-
-	$meta    = wc_memberships_get_order_access_granted_memberships( $order );
-	$details = wp_parse_args( $args, array(
-		'already_granted'       => 'yes',
-		'granting_order_status' => $order->get_status(),
-	) );
-
-	$meta[ $user_membership_id ] = $details;
-
-	SV_WC_Order_Compatibility::update_meta_data( $order, '_wc_memberships_access_granted', $meta );
 }
 
 
 /**
- * Check if purchasing products that grant access to a membership
- * in the same order allow to extend the length of the membership
+ * Checks if purchasing products that grant access to a membership in the same order allow to extend the length of the membership.
  *
  * @since 1.6.0
+ *
  * @return bool
  */
 function wc_memberships_cumulative_granting_access_orders_allowed() {
@@ -158,12 +171,13 @@ function wc_memberships_cumulative_granting_access_orders_allowed() {
 
 
 /**
- * Get order products that grant access to a membership plan
+ * Returns order products that grant access to a membership plan.
  *
  * @since 1.7.0
+ *
  * @param \WC_Memberships_Membership_Plan $plan Membership plan to check for access
- * @param int|\WC_Order|string $order WC_Order instance or id, can be empty string if $order_items are provided
- * @param array $order_items Array of order items, if empty will try to get those from $order
+ * @param int|\WC_Order|string $order WC_Order instance or ID, can be empty string if $order_items are provided
+ * @param array $order_items array of order items, if empty will try to get those from $order
  * @return array
  */
 function wc_memberships_get_order_access_granting_product_ids( $plan, $order, $order_items = array() ) {
@@ -174,7 +188,7 @@ function wc_memberships_get_order_access_granting_product_ids( $plan, $order, $o
 
 		$order = is_numeric( $order ) ? wc_get_order( (int) $order ) : $order;
 
-		if ( $order instanceof WC_Order ) {
+		if ( $order instanceof \WC_Order ) {
 			$order_items = $order->get_items();
 		}
 	}
@@ -253,57 +267,57 @@ function wc_memberships_get_order_access_granting_product_ids( $plan, $order, $o
  */
 function wc_memberships_get_order_thank_you_links( $order_id ) {
 
+	$message = '';
+
 	if ( $order_id instanceof WC_Order ) {
-		$order_id = SV_WC_Order_Compatibility::get_prop( $order_id, 'id' );
-	} elseif ( ! is_numeric( $order_id ) ) {
-		return '';
+		$order_id = Framework\SV_WC_Order_Compatibility::get_prop( $order_id, 'id' );
 	}
 
-	$message     = '';
-	$memberships = wc_memberships_get_order_access_granted_memberships( $order_id );
+	if ( is_numeric( $order_id ) ) {
 
-	if ( ! empty( $memberships ) ) {
+		$memberships = wc_memberships_get_order_access_granted_memberships( $order_id );
 
-		$memberships_with_members_area = array();
+		if ( ! empty( $memberships ) ) {
 
-		foreach( $memberships as $membership_id => $data ) {
+			$memberships_with_members_area = array();
 
-			if ( 'yes' === $data['already_granted'] ) {
+			foreach( $memberships as $membership_id => $data ) {
 
-				$user_membership       = wc_memberships_get_user_membership( (int) $membership_id );
-				$membership_plan       = $user_membership->get_plan();
-				$members_area_sections = $membership_plan ? $membership_plan->get_members_area_sections() : array();
+				if ( 'yes' === $data['already_granted'] ) {
 
-				if ( ! empty( $members_area_sections ) ) {
-					$memberships_with_members_area[ $user_membership->get_plan_id() ] = $user_membership->get_plan()->get_name();
+					$user_membership       = wc_memberships_get_user_membership( (int) $membership_id );
+					$membership_plan       = $user_membership ? $user_membership->get_plan() : null;
+					$members_area_sections = $membership_plan ? $membership_plan->get_members_area_sections() : array();
+
+					if ( ! empty( $members_area_sections ) ) {
+						$memberships_with_members_area[ $user_membership->get_plan_id() ] = $user_membership->get_plan()->get_name();
+					}
 				}
 			}
-		}
 
-		if ( ! empty( $memberships_with_members_area ) ) {
+			if ( ! empty( $memberships_with_members_area ) ) {
 
-			// start building!
-			$message = '<p>' . __( 'Thanks for purchasing a membership!', 'woocommerce-memberships' );
+				$message = '<p>' . __( 'Thanks for purchasing a membership!', 'woocommerce-memberships' );
 
-			if ( 1 === count( $memberships_with_members_area ) ) {
+				if ( 1 === count( $memberships_with_members_area ) ) {
 
-				/* translators: Placeholders: %1$s - <a> tag, %2$s - </a> tag */
-				$message .= ' ' . sprintf( __( 'You can view more details about your membership from %1$syour account%2$s.', 'woocommerce-memberships' ), '<a href="' . esc_url( wc_memberships_get_members_area_url( key( $memberships_with_members_area ) ) ) . '">', '</a>' );
+					/* translators: Placeholders: %1$s - <a> tag, %2$s - </a> tag */
+					$message .= ' ' . sprintf( __( 'You can view more details about your membership from %1$syour account%2$s.', 'woocommerce-memberships' ), '<a href="' . esc_url( wc_memberships_get_members_area_url( key( $memberships_with_members_area ) ) ) . '">', '</a>' );
 
-			} else {
+				} else {
 
-				$message .= ' ' . __( 'You can view details for each membership in your account:', 'woocommerce-memberships' );
-				$message .= '<ul>';
+					$message .= ' ' . __( 'You can view details for each membership in your account:', 'woocommerce-memberships' );
+					$message .= '<ul>';
 
-				foreach( $memberships_with_members_area as $plan_id => $plan_name ) {
-					$message .= '<li><a href="' . esc_url( wc_memberships_get_members_area_url( $plan_id ) ) . '">' . esc_html( $plan_name ) . '</a></li>';
+					foreach( $memberships_with_members_area as $plan_id => $plan_name ) {
+						$message .= '<li><a href="' . esc_url( wc_memberships_get_members_area_url( $plan_id ) ) . '">' . esc_html( $plan_name ) . '</a></li>';
+					}
+
+					$message .= '</ul>';
 				}
 
-				$message .= '</ul>';
+				$message .= '</p>';
 			}
-
-			// ship it!
-			$message .= '</p>';
 		}
 	}
 
@@ -317,3 +331,4 @@ function wc_memberships_get_order_thank_you_links( $order_id ) {
 	 */
 	return apply_filters( 'woocommerce_memberships_thank_you_message', $message, $order_id );
 }
+

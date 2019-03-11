@@ -1,6 +1,6 @@
 @import 'bourbon';
 @import 'susy';
-@import '../../themes/storefront/assets/sass/utils/variables';
+@import '../../themes/storefront/assets/css/sass/utils/variables';
 
 .sp-two-step-checkout {
 	#order_review_heading {
@@ -144,8 +144,10 @@
 		margin-left: 0;
 
 		> li {
-			display: none;
-			-webkit-backface-visibility: hidden;
+			&:not(:first-child) {
+				display: none;
+				-webkit-backface-visibility: hidden;
+			}
 		}
 	}
 
@@ -167,9 +169,9 @@
 			float: left;
 
 			a:before {
-				content: "\f177";
-				font-family: "FontAwesome";
-				font-weight: 400;
+				font-family: 'Font Awesome 5 Free';
+				font-weight: 900;
+				content: "\f30a";
 				margin-right: .53em;
 			}
 		}
@@ -178,9 +180,9 @@
 			float: right;
 
 			a:after {
-				content: "\f178";
-				font-family: "FontAwesome";
-				font-weight: 400;
+				font-family: 'Font Awesome 5 Free';
+				font-weight: 900;
+				content: "\f30b";
 				margin-left: .53em;
 			}
 		}

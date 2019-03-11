@@ -1,13 +1,14 @@
 <?php
 /**
  * Plugin Name: Storefront Blog Customiser
- * Plugin URI: http://woothemes.com/products/storefront-blog-customiser/
+ * Plugin URI: https://woocommerce.com/products/storefront-blog-customiser/
  * Description: Adds blog customisation settings to the Storefront theme
- * Version: 1.2.1
- * Author: WooThemes
- * Author URI: http://woothemes.com/
+ * Version: 1.3.0
+ * Author: WooCommerce
+ * Author URI: https://woocommerce.com/
  * Requires at least: 4.1.0
- * Tested up to: 4.5.0
+ * Tested up to: 5.0
+ * Woo: 603523:b6db5f01709cb92bf7e03bdb9f967eb1
  *
  * Text Domain: storefront-blog-customiser
  * Domain Path: /languages/
@@ -101,7 +102,7 @@ final class Storefront_Blog_Customiser {
 		$this->token 			= 'storefront-blog-customiser';
 		$this->plugin_url 		= plugin_dir_url( __FILE__ );
 		$this->plugin_path 		= plugin_dir_path( __FILE__ );
-		$this->version 			= '1.2.1';
+		$this->version 			= '1.3.0';
 
 		register_activation_hook( __FILE__, array( $this, 'install' ) );
 
@@ -277,7 +278,7 @@ final class Storefront_Blog_Customiser {
 	     * Blog archives section
 	     */
 	    $wp_customize->add_section( 'storefront_blog_archive' , array(
-		    'title'      	=> __( 'Archives', 'storefront' ),
+		    'title'      	=> __( 'Archives', 'storefront-blog-customiser' ),
 		    'priority'   	=> 10,
 		    'description' 	=> __( 'Customise the look & feel of the blog archives', 'storefront-blog-customiser' ),
 		    'panel'			=> 'sbc_panel',
@@ -287,7 +288,7 @@ final class Storefront_Blog_Customiser {
 	     * Single blog post section
 	     */
 	    $wp_customize->add_section( 'storefront_blog_single' , array(
-		    'title'      	=> __( 'Single posts', 'storefront' ),
+		    'title'      	=> __( 'Single posts', 'storefront-blog-customiser' ),
 		    'priority'   	=> 20,
 		    'description' 	=> __( 'Customise the look & feel of the blog post pages', 'storefront-blog-customiser' ),
 		    'panel'			=> 'sbc_panel',
@@ -297,7 +298,7 @@ final class Storefront_Blog_Customiser {
 	     * Homepage blog section
 	     */
 	    $wp_customize->add_section( 'storefront_blog_homepage' , array(
-		    'title'      	=> __( 'Homepage', 'storefront' ),
+		    'title'      	=> __( 'Homepage', 'storefront-blog-customiser' ),
 		    'priority'   	=> 30,
 		    'description' 	=> __( 'Configure the display of blog posts on the homepage template', 'storefront-blog-customiser' ),
 		    'panel'			=> 'sbc_panel',
@@ -307,7 +308,7 @@ final class Storefront_Blog_Customiser {
 		 * Post layout
 		 */
 		$wp_customize->add_setting( 'sbc_post_layout_archive', array(
-			'default'    		=> 'meta-left',
+			'default'    		=> 'default',
 			'sanitize_callback' => 'storefront_sanitize_choices',
 		) );
 
@@ -318,7 +319,8 @@ final class Storefront_Blog_Customiser {
 			'type'     => 'select',
 			'priority' => 10,
 			'choices'  => array(
-				'default'            => __( 'Left of content', 'storefront-blog-customiser' ),
+				'default'            => __( 'Default', 'storefront-blog-customiser' ),
+				'meta-left'          => __( 'Left of content', 'storefront-blog-customiser' ),
 				'meta-right'         => __( 'Right of content', 'storefront-blog-customiser' ),
 				'meta-inline-top'    => __( 'Above content', 'storefront-blog-customiser' ),
 				'meta-inline-bottom' => __( 'Beneath content', 'storefront-blog-customiser' ),
@@ -364,7 +366,7 @@ final class Storefront_Blog_Customiser {
 		 * Single post layout
 		 */
 		$wp_customize->add_setting( 'sbc_post_layout_single', array(
-			'default'    		=> 'meta-left',
+			'default'    		=> 'default',
 			'sanitize_callback' => 'storefront_sanitize_choices',
 		) );
 
@@ -375,7 +377,8 @@ final class Storefront_Blog_Customiser {
 			'type'     => 'select',
 			'priority' => 10,
 			'choices'  => array(
-				'default'            => __( 'Left of content', 'storefront-blog-customiser' ),
+				'default'            => __( 'Default', 'storefront-blog-customiser' ),
+				'meta-left'          => __( 'Left of content', 'storefront-blog-customiser' ),
 				'meta-right'         => __( 'Right of content', 'storefront-blog-customiser' ),
 				'meta-inline-top'    => __( 'Above content', 'storefront-blog-customiser' ),
 				'meta-inline-bottom' => __( 'Beneath content', 'storefront-blog-customiser' ),
@@ -440,7 +443,7 @@ final class Storefront_Blog_Customiser {
 		 * Homepage post layout
 		 */
 		$wp_customize->add_setting( 'sbc_post_layout_homepage', array(
-			'default'    		=> 'meta-left',
+			'default'    		=> 'default',
 			'sanitize_callback' => 'storefront_sanitize_choices',
 		) );
 
@@ -451,7 +454,8 @@ final class Storefront_Blog_Customiser {
 			'type'     => 'select',
 			'priority' => 25,
 			'choices'  => array(
-				'default'            => __( 'Left of content', 'storefront-blog-customiser' ),
+				'default'            => __( 'Default', 'storefront-blog-customiser' ),
+				'meta-left'          => __( 'Left of content', 'storefront-blog-customiser' ),
 				'meta-right'         => __( 'Right of content', 'storefront-blog-customiser' ),
 				'meta-inline-top'    => __( 'Above content', 'storefront-blog-customiser' ),
 				'meta-inline-bottom' => __( 'Beneath content', 'storefront-blog-customiser' ),
@@ -496,15 +500,15 @@ final class Storefront_Blog_Customiser {
 				'type'     => 'select',
 				'priority' => 40,
 				'choices'  => array(
-								'1'	 => '1',
-								'2'	 => '2',
-								'3'	 => '3',
-								'4'	 => '4',
-								'5'	 => '5',
+								'1'  => '1',
+								'2'  => '2',
+								'3'  => '3',
+								'4'  => '4',
+								'5'  => '5',
 								'6'  => '6',
 								'7'  => '7',
 								'8'  => '8',
-								'9'	 => '9',
+								'9'  => '9',
 								'10' => '10',
 								'11' => '11',
 								'12' => '12',
@@ -530,34 +534,39 @@ final class Storefront_Blog_Customiser {
 		$blog_single_full_width  = get_theme_mod( 'sbc_blog_single_layout', false );
 		$magazine                = get_theme_mod( 'sbc_magazine_layout', false );
 
-		if ( version_compare( $storefront_version, '2.0.0', '>=' ) ) {
+		if ( version_compare( $storefront_version, '2.4.3', '>=' ) ) {
+			$version = '-2-4';
+		} else if ( version_compare( $storefront_version, '2.0.0', '>=' ) ) {
 			$version = '-2';
 		} else {
 			$version = '';
 		}
 
-		if ( is_archive() || is_category() || is_tag() || ( is_home() && ! is_page_template( 'template-homepage.php' ) ) ) {
+		// Archives.
+		if ( $this->is_blog_archive() ) {
 			$classes[] = 'sbc-' . $post_layout_archive . $version;
 		}
 
-		if ( is_single() ) {
+		if ( $this->is_blog_archive() && true === (bool) $blog_archive_full_width ) {
+			$classes[] = 'storefront-full-width-content';
+		}
+
+		if ( $this->is_blog_archive() && true === (bool) $magazine ) {
+			$classes[] = 'sbc-magazine';
+		}
+
+		// Single.
+		if ( is_singular( 'post' ) ) {
 			$classes[] = 'sbc-' . $post_layout_single . $version;
 		}
 
+		if ( is_singular( 'post' ) && true === (bool) $blog_single_full_width ) {
+			$classes[] = 'storefront-full-width-content';
+		}
+
+		// Homepage.
 		if ( is_page_template( 'template-homepage.php' ) ) {
 			$classes[] = 'sbc-' . $post_layout_homepage . $version;
-		}
-
-		if ( ( is_category() || is_tag() || is_home() ) && true == $blog_archive_full_width ) {
-			$classes[] = 'storefront-full-width-content';
-		}
-
-		if ( is_singular( 'post' ) && true == $blog_single_full_width ) {
-			$classes[] = 'storefront-full-width-content';
-		}
-
-		if ( ( is_category() || is_tag() || is_home() ) && true == $magazine ) {
-			$classes[] = 'sbc-magazine';
 		}
 
 		return $classes;
@@ -568,6 +577,8 @@ final class Storefront_Blog_Customiser {
 	 * Tweaks layout based on settings
 	 */
 	public function sbc_layout() {
+		global $storefront_version;
+
 		$post_layout_archive     = get_theme_mod( 'sbc_post_layout_archive', 'default' );
 		$post_layout_single      = get_theme_mod( 'sbc_post_layout_single', 'default' );
 		$post_layout_homepage    = get_theme_mod( 'sbc_post_layout_homepage', 'default' );
@@ -575,41 +586,115 @@ final class Storefront_Blog_Customiser {
 		$blog_single_full_width  = get_theme_mod( 'sbc_blog_single_layout', false );
 
 		// Archives.
-		if ( 'meta-inline-bottom' == $post_layout_archive && ( is_archive() || is_category() || is_tag() || ( is_home() && ! is_page_template( 'template-homepage.php' ) ) ) ) {
-			remove_action( 'storefront_loop_post', 'storefront_post_meta', 20 );
-			add_action( 'storefront_loop_post',    'storefront_post_meta', 35 );
-		}
-
-		if ( 'meta-hidden' == $post_layout_archive && ( is_archive() || is_category() || is_tag() || ( is_home() && ! is_page_template( 'template-homepage.php' ) ) ) ) {
-			remove_action( 'storefront_loop_post', 'storefront_post_meta', 20 );
-		}
-
-		// Single posts
-		if ( 'meta-inline-bottom' == $post_layout_single && is_single() ) {
-			remove_action( 'storefront_single_post', 'storefront_post_meta', 20 );
-			add_action( 'storefront_single_post',    'storefront_post_meta', 35 );
-		}
-
-		if ( 'meta-hidden' == $post_layout_single && is_single() ) {
-			remove_action( 'storefront_single_post', 'storefront_post_meta', 20 );
-		}
-
-		// Homepage
-		if ( 'meta-inline-bottom' == $post_layout_homepage && is_page_template( 'template-homepage.php' ) ) {
-			remove_action( 'storefront_loop_post', 'storefront_post_meta', 20 );
-			add_action( 'storefront_loop_post',	   'storefront_post_meta', 35 );
-		}
-
-		if ( 'meta-hidden' == $post_layout_homepage && is_page_template( 'template-homepage.php' ) ) {
-			remove_action( 'storefront_loop_post', 'storefront_post_meta', 20 );
-		}
-
-		if ( ( is_category() || is_tag() || is_home() ) && true == $blog_archive_full_width ) {
+		if ( $this->is_blog_archive() && true === $blog_archive_full_width ) {
 			remove_action( 'storefront_sidebar', 'storefront_get_sidebar', 10 );
 		}
 
-		if ( is_singular( 'post' ) && true == $blog_single_full_width ) {
+		// Single posts.
+		if ( is_singular( 'post' ) && true === $blog_single_full_width ) {
 			remove_action( 'storefront_sidebar', 'storefront_get_sidebar', 10 );
+		}
+
+		if ( version_compare( $storefront_version, '2.4.3', '>=' ) ) {
+			// Single posts.
+			if ( is_singular( 'post' ) ) {
+				if ( 'default' !== $post_layout_single ) {
+					remove_action( 'storefront_post_header_before', 'storefront_post_meta', 10 );
+					remove_action( 'storefront_single_post_bottom', 'storefront_post_taxonomy', 5 );
+					add_action( 'sbc_entry_meta', 'storefront_post_meta', 10 );
+					add_action( 'sbc_entry_meta', 'storefront_post_taxonomy', 20 );
+				}
+
+				switch ( $post_layout_single ) {
+					case 'meta-left':
+					case 'meta-right':
+						add_action( 'storefront_single_post', array( $this, 'sbc_meta' ), 20 );
+						break;
+					case 'meta-inline-top':
+						add_action( 'storefront_post_header_after', array( $this, 'sbc_meta' ), 10 );
+						break;
+					case 'meta-inline-bottom':
+						add_action( 'storefront_single_post_bottom', array( $this, 'sbc_meta' ), 5 );
+						break;
+				}
+			}
+
+			// Archives.
+			if ( $this->is_blog_archive() ) {
+				if ( 'default' !== $post_layout_archive ) {
+					remove_action( 'storefront_post_header_before', 'storefront_post_meta', 10 );
+					remove_action( 'storefront_loop_post', 'storefront_post_taxonomy', 40 );
+					add_action( 'sbc_entry_meta', 'storefront_post_meta', 10 );
+					add_action( 'sbc_entry_meta', 'storefront_post_taxonomy', 20 );
+				}
+
+				switch ( $post_layout_archive ) {
+					case 'meta-left':
+					case 'meta-right':
+						add_action( 'storefront_loop_post', array( $this, 'sbc_meta' ), 20 );
+						break;
+					case 'meta-inline-top':
+						add_action( 'storefront_post_header_after', array( $this, 'sbc_meta' ), 10 );
+						break;
+					case 'meta-inline-bottom':
+						add_action( 'storefront_loop_post', array( $this, 'sbc_meta' ), 40 );
+						break;
+				}
+			}
+
+			// Homepage.
+			if ( is_page_template( 'template-homepage.php' ) ) {
+				if ( 'default' !== $post_layout_homepage ) {
+					remove_action( 'storefront_post_header_before', 'storefront_post_meta', 10 );
+					remove_action( 'storefront_loop_post', 'storefront_post_taxonomy', 40 );
+					add_action( 'sbc_entry_meta', 'storefront_post_meta', 10 );
+					add_action( 'sbc_entry_meta', 'storefront_post_taxonomy', 20 );
+				}
+
+				switch ( $post_layout_homepage ) {
+					case 'meta-left':
+					case 'meta-right':
+						add_action( 'storefront_loop_post', array( $this, 'sbc_meta' ), 20 );
+						break;
+					case 'meta-inline-top':
+						add_action( 'storefront_post_header_after', array( $this, 'sbc_meta' ), 10 );
+						break;
+					case 'meta-inline-bottom':
+						add_action( 'storefront_loop_post', array( $this, 'sbc_meta' ), 40 );
+						break;
+				}
+			}
+		} else {
+
+			// Single posts.
+			if ( 'meta-inline-bottom' === $post_layout_single && is_singular( 'post' ) ) {
+				remove_action( 'storefront_single_post', 'storefront_post_meta', 20 );
+				add_action( 'storefront_single_post',    'storefront_post_meta', 35 );
+			}
+
+			if ( 'meta-hidden' === $post_layout_single && is_singular( 'post' ) ) {
+				remove_action( 'storefront_single_post', 'storefront_post_meta', 20 );
+			}
+
+			// Archives.
+			if ( 'meta-inline-bottom' === $post_layout_archive && $this->is_blog_archive() ) {
+				remove_action( 'storefront_loop_post', 'storefront_post_meta', 20 );
+				add_action( 'storefront_loop_post',    'storefront_post_meta', 35 );
+			}
+
+			if ( 'meta-hidden' === $post_layout_archive && $this->is_blog_archive() ) {
+				remove_action( 'storefront_loop_post', 'storefront_post_meta', 20 );
+			}
+
+			// Homepage.
+			if ( 'meta-inline-bottom' === $post_layout_homepage && is_page_template( 'template-homepage.php' ) ) {
+				remove_action( 'storefront_loop_post', 'storefront_post_meta', 20 );
+				add_action( 'storefront_loop_post',	   'storefront_post_meta', 35 );
+			}
+
+			if ( 'meta-hidden' === $post_layout_homepage && is_page_template( 'template-homepage.php' ) ) {
+				remove_action( 'storefront_loop_post', 'storefront_post_meta', 20 );
+			}
 		}
 	}
 
@@ -619,10 +704,10 @@ final class Storefront_Blog_Customiser {
 	 * @param  array $classes The classes.
 	 * @return array $classes The classes.
 	 */
-	function sbc_post_class( $classes ) {
+	public function sbc_post_class( $classes ) {
 		$magazine = get_theme_mod( 'sbc_magazine_layout', false );
 
-		if ( true == $magazine && ! is_single() ) {
+		if ( true === $magazine && $this->is_blog_archive() ) {
 			global $wp_query;
 
 			// Set "odd" or "even" class if is not single.
@@ -638,12 +723,12 @@ final class Storefront_Blog_Customiser {
 	 * @return void
 	 */
 	public static function storefront_homepage_blog() {
-		$display_homepage_blog 	= get_theme_mod( 'sbc_homepage_blog_toggle', false );
-		$title 					= get_theme_mod( 'sbc_homepage_blog_title', __( 'Recent Blog Posts', 'storefront-blog-customiser' ) );
-		$homepage_blog_columns 	= get_theme_mod( 'sbc_homepage_blog_columns', '2' );
-		$homepage_blog_limit 	= get_theme_mod( 'sbc_homepage_blog_limit', 2 );
+		$display_homepage_blog = get_theme_mod( 'sbc_homepage_blog_toggle', false );
+		$title                 = get_theme_mod( 'sbc_homepage_blog_title', __( 'Recent Blog Posts', 'storefront-blog-customiser' ) );
+		$homepage_blog_columns = get_theme_mod( 'sbc_homepage_blog_columns', '2' );
+		$homepage_blog_limit   = get_theme_mod( 'sbc_homepage_blog_limit', 2 );
 
-		if ( true == $display_homepage_blog ) {
+		if ( true === $display_homepage_blog ) {
 			$args 	= array(
 					'post_type'           => 'post',
 					'posts_per_page'      => absint( $homepage_blog_limit ),
@@ -668,5 +753,27 @@ final class Storefront_Blog_Customiser {
 
 			echo '</div>';
 		}
+	}
+
+	/**
+	 * Entry meta wrapping `div` containing the `sbc_entry_meta` action.
+	 *
+	 * @return void
+	 */
+	public static function sbc_meta() {
+		?>
+		<div class="sbc-entry-meta">
+			<?php do_action( 'sbc_entry_meta' ); ?>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Returns true when viewing a non WooCommerce archive.
+	 *
+	 * @return bool
+	 */
+	private function is_blog_archive() {
+		return ! ( function_exists( 'is_woocommerce' ) && is_woocommerce() ) && ( is_archive() || is_search() || is_category() || is_tag() || ( is_home() && ! is_page_template( 'template-homepage.php' ) ) );
 	}
 } // End Class

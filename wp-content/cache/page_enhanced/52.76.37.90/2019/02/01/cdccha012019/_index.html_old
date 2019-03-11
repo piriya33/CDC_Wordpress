@@ -15,7 +15,7 @@
 <link rel="alternate" type="application/rss+xml" title="Chaloke Dot Com &raquo; Comments Feed" href="http://52.76.37.90/comments/feed/" />
 <link rel="alternate" type="application/rss+xml" title="Chaloke Dot Com &raquo; CDC Trading Pattern by Chaloke 1/2019(1วัน) Comments Feed" href="http://52.76.37.90/2019/02/01/cdccha012019/feed/" />
 		<script type="text/javascript">
-			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/11\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/11\/svg\/","svgExt":".svg","source":{"concatemoji":"http:\/\/52.76.37.90\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.0.2"}};
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/11.2.0\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/11.2.0\/svg\/","svgExt":".svg","source":{"concatemoji":"http:\/\/52.76.37.90\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.1"}};
 			!function(a,b,c){function d(a,b){var c=String.fromCharCode;l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,a),0,0);var d=k.toDataURL();l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,b),0,0);var e=k.toDataURL();return d===e}function e(a){var b;if(!l||!l.fillText)return!1;switch(l.textBaseline="top",l.font="600 32px Arial",a){case"flag":return!(b=d([55356,56826,55356,56819],[55356,56826,8203,55356,56819]))&&(b=d([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]),!b);case"emoji":return b=d([55358,56760,9792,65039],[55358,56760,8203,9792,65039]),!b}return!1}function f(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var g,h,i,j,k=b.createElement("canvas"),l=k.getContext&&k.getContext("2d");for(j=Array("flag","emoji"),c.supports={everything:!0,everythingExceptFlag:!0},i=0;i<j.length;i++)c.supports[j[i]]=e(j[i]),c.supports.everything=c.supports.everything&&c.supports[j[i]],"flag"!==j[i]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[j[i]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(h=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",h,!1),a.addEventListener("load",h,!1)):(a.attachEvent("onload",h),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),g=c.source||{},g.concatemoji?f(g.concatemoji):g.wpemoji&&g.twemoji&&(f(g.twemoji),f(g.wpemoji)))}(window,document,window._wpemojiSettings);
 		</script>
 		<style type="text/css">
@@ -32,27 +32,27 @@ img.emoji {
 	padding: 0 !important;
 }
 </style>
-<link rel='stylesheet' id='gdbbx-front-widgets-css'  href='http://52.76.37.90/wp-content/plugins/gd-bbpress-toolbox/css/front-widgets.min.css?ver=4.7.2.625' type='text/css' media='all' />
-<link rel='stylesheet' id='wp-block-library-css'  href='http://52.76.37.90/wp-includes/css/dist/block-library/style.min.css?ver=5.0.2' type='text/css' media='all' />
-<link rel='stylesheet' id='wp-block-library-theme-css'  href='http://52.76.37.90/wp-includes/css/dist/block-library/theme.min.css?ver=5.0.2' type='text/css' media='all' />
+	<link rel='stylesheet' id='gdbbx-front-widgets-css'  href='http://52.76.37.90/wp-content/plugins/gd-bbpress-toolbox/css/front-widgets.min.css?ver=4.7.2.625' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-block-library-css'  href='http://52.76.37.90/wp-includes/css/dist/block-library/style.min.css?ver=5.1' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-block-library-theme-css'  href='http://52.76.37.90/wp-includes/css/dist/block-library/theme.min.css?ver=5.1' type='text/css' media='all' />
 <link rel='stylesheet' id='bbp-default-css'  href='http://52.76.37.90/wp-content/plugins/bbpress/templates/default/css/bbpress.css?ver=2.5.14-6684' type='text/css' media='screen' />
 <link rel='stylesheet' id='cptch_stylesheet-css'  href='http://52.76.37.90/wp-content/plugins/captcha/css/front_end_style.css?ver=4.4.5' type='text/css' media='all' />
-<link rel='stylesheet' id='dashicons-css'  href='http://52.76.37.90/wp-includes/css/dashicons.min.css?ver=5.0.2' type='text/css' media='all' />
-<link rel='stylesheet' id='cptch_desktop_style-css'  href='http://52.76.37.90/wp-content/plugins/captcha/css/desktop_style.css?ver=4.4.5' type='text/css' media='all' />
+<link rel='stylesheet' id='dashicons-css'  href='http://52.76.37.90/wp-includes/css/dashicons.min.css?ver=5.1' type='text/css' media='all' />
+<link rel='stylesheet' id='cptch_mobile_style-css'  href='http://52.76.37.90/wp-content/plugins/captcha/css/mobile_style.css?ver=4.4.5' type='text/css' media='all' />
 <link rel='stylesheet' id='contact-form-7-css'  href='http://52.76.37.90/wp-content/plugins/contact-form-7/includes/css/styles.css?ver=5.1.1' type='text/css' media='all' />
 <link rel='stylesheet' id='cf7cf-style-css'  href='http://52.76.37.90/wp-content/plugins/cf7-conditional-fields/style.css?ver=1.4.1' type='text/css' media='all' />
-<link rel='stylesheet' id='wp_html5video_css-css'  href='http://52.76.37.90/wp-content/plugins/html5-videogallery-plus-player/assets/css/video-js.css?ver=2.3.1' type='text/css' media='all' />
-<link rel='stylesheet' id='wp_html5video_colcss-css'  href='http://52.76.37.90/wp-content/plugins/html5-videogallery-plus-player/assets/css/video-style.css?ver=2.3.1' type='text/css' media='all' />
-<link rel='stylesheet' id='wpos-magnific-popup-style-css'  href='http://52.76.37.90/wp-content/plugins/html5-videogallery-plus-player/assets/css/magnific-popup.css?ver=2.3.1' type='text/css' media='all' />
-<link rel='stylesheet' id='wptu-front-style-css'  href='http://52.76.37.90/wp-content/plugins/ticker-ultimate/assets/css/wptu-front.css?ver=1.2.1' type='text/css' media='all' />
+<link rel='stylesheet' id='wp_html5video_css-css'  href='http://52.76.37.90/wp-content/plugins/html5-videogallery-plus-player/assets/css/video-js.css?ver=2.3.2' type='text/css' media='all' />
+<link rel='stylesheet' id='wp_html5video_colcss-css'  href='http://52.76.37.90/wp-content/plugins/html5-videogallery-plus-player/assets/css/video-style.css?ver=2.3.2' type='text/css' media='all' />
+<link rel='stylesheet' id='wpos-magnific-popup-style-css'  href='http://52.76.37.90/wp-content/plugins/html5-videogallery-plus-player/assets/css/magnific-popup.css?ver=2.3.2' type='text/css' media='all' />
+<link rel='stylesheet' id='wptu-front-style-css'  href='http://52.76.37.90/wp-content/plugins/ticker-ultimate/assets/css/wptu-front.css?ver=1.2.2' type='text/css' media='all' />
 <style id='woocommerce-inline-inline-css' type='text/css'>
 .woocommerce form .form-row .required { visibility: visible; }
 </style>
-<link rel='stylesheet' id='wpfcas-font-awesome-css'  href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css?ver=1.3.1' type='text/css' media='all' />
-<link rel='stylesheet' id='wpfcas_style-css'  href='http://52.76.37.90/wp-content/plugins/wp-featured-content-and-slider/assets/css/featured-content-style.css?ver=1.3.1' type='text/css' media='all' />
-<link rel='stylesheet' id='wpfcas_slick_style-css'  href='http://52.76.37.90/wp-content/plugins/wp-featured-content-and-slider/assets/css/slick.css?ver=1.3.1' type='text/css' media='all' />
+<link rel='stylesheet' id='wpfcas-font-awesome-css'  href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css?ver=1.3.2' type='text/css' media='all' />
+<link rel='stylesheet' id='wpfcas_style-css'  href='http://52.76.37.90/wp-content/plugins/wp-featured-content-and-slider/assets/css/featured-content-style.css?ver=1.3.2' type='text/css' media='all' />
+<link rel='stylesheet' id='wpfcas_slick_style-css'  href='http://52.76.37.90/wp-content/plugins/wp-featured-content-and-slider/assets/css/slick.css?ver=1.3.2' type='text/css' media='all' />
 <link rel='stylesheet' id='wc-memberships-frontend-css'  href='http://52.76.37.90/wp-content/plugins/woocommerce-memberships/assets/css/frontend/wc-memberships-frontend.min.css?ver=1.8.5' type='text/css' media='all' />
-<link rel='stylesheet' id='storefront-style-css'  href='http://52.76.37.90/wp-content/themes/storefront/style.css?ver=2.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='storefront-style-css'  href='http://52.76.37.90/wp-content/themes/storefront/style.css?ver=2.4.3' type='text/css' media='all' />
 <style id='storefront-style-inline-css' type='text/css'>
 
 			.plus,
@@ -269,36 +269,39 @@ img.emoji {
 				}
 			
 </style>
-<link rel='stylesheet' id='storefront-gutenberg-blocks-css'  href='http://52.76.37.90/wp-content/themes/storefront/assets/css/base/gutenberg-blocks.css?ver=2.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='storefront-gutenberg-blocks-css'  href='http://52.76.37.90/wp-content/themes/storefront/assets/css/base/gutenberg-blocks.css?ver=2.4.3' type='text/css' media='all' />
 <style id='storefront-gutenberg-blocks-inline-css' type='text/css'>
 
-				.wp-block-button .wp-block-button__link {
-					border-color: #338dc9;
-				}
-
-				.wp-block-button:not(.has-text-color) .wp-block-button__link {
+				.wp-block-button__link:not(.has-text-color) {
 					color: #333333;
 				}
 
-				.wp-block-button:not(.has-text-color) .wp-block-button__link:hover,
-				.wp-block-button:not(.has-text-color) .wp-block-button__link:focus,
-				.wp-block-button:not(.has-text-color) .wp-block-button__link:active {
+				.wp-block-button__link:not(.has-text-color):hover,
+				.wp-block-button__link:not(.has-text-color):focus,
+				.wp-block-button__link:not(.has-text-color):active {
 					color: #333333;
 				}
 
-				.wp-block-button:not(.has-background) .wp-block-button__link {
+				.wp-block-button__link:not(.has-background) {
 					background-color: #338dc9;
 				}
 
-				.wp-block-button:not(.has-background) .wp-block-button__link:hover,
-				.wp-block-button:not(.has-background) .wp-block-button__link:focus,
-				.wp-block-button:not(.has-background) .wp-block-button__link:active {
+				.wp-block-button__link:not(.has-background):hover,
+				.wp-block-button__link:not(.has-background):focus,
+				.wp-block-button__link:not(.has-background):active {
 					border-color: #1a74b0;
 					background-color: #1a74b0;
 				}
 
 				.wp-block-quote footer,
-				.wp-block-quote cite {
+				.wp-block-quote cite,
+				.wp-block-quote__citation {
+					color: #383838;
+				}
+
+				.wp-block-pullquote cite,
+				.wp-block-pullquote footer,
+				.wp-block-pullquote__citation {
 					color: #383838;
 				}
 
@@ -310,15 +313,16 @@ img.emoji {
 					color: #333333;
 				}
 
-				.wp-block-file .wp-block-file__button {
+				.wp-block-file a.wp-block-file__button {
 					color: #333333;
 					background-color: #338dc9;
 					border-color: #338dc9;
 				}
 
-				.wp-block-file .wp-block-file__button:hover, .wp-block-file .wp-block-file__button:focus, .wp-block-file .wp-block-file__button:active {
+				.wp-block-file a.wp-block-file__button:hover,
+				.wp-block-file a.wp-block-file__button:focus,
+				.wp-block-file a.wp-block-file__button:active {
 					color: #333333;
-					background-color: #1a74b0;
 					background-color: #1a74b0;
 				}
 
@@ -332,14 +336,14 @@ img.emoji {
 				}
 			
 </style>
-<link rel='stylesheet' id='storefront-icons-css'  href='http://52.76.37.90/wp-content/themes/storefront/assets/css/base/icons.css?ver=2.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='storefront-icons-css'  href='http://52.76.37.90/wp-content/themes/storefront/assets/css/base/icons.css?ver=2.4.3' type='text/css' media='all' />
 <link rel='stylesheet' id='storefront-fonts-css'  href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,300italic,400italic,600,700,900&#038;subset=latin%2Clatin-ext' type='text/css' media='all' />
-<link rel='stylesheet' id='sbc-styles-css'  href='http://52.76.37.90/wp-content/plugins/storefront-blog-customiser/assets/css/style.css?ver=5.0.2' type='text/css' media='all' />
-<link rel='stylesheet' id='sd-styles-css'  href='http://52.76.37.90/wp-content/plugins/storefront-designer/assets/css/style.css?ver=5.0.2' type='text/css' media='all' />
-<link rel='stylesheet' id='sd-styles-2-css'  href='http://52.76.37.90/wp-content/plugins/storefront-designer/assets/css/style-2.css?ver=5.0.2' type='text/css' media='all' />
+<link rel='stylesheet' id='sbc-styles-css'  href='http://52.76.37.90/wp-content/plugins/storefront-blog-customiser/assets/css/style.css?ver=5.1' type='text/css' media='all' />
+<link rel='stylesheet' id='sd-styles-css'  href='http://52.76.37.90/wp-content/plugins/storefront-designer/assets/css/style.css?ver=5.1' type='text/css' media='all' />
+<link rel='stylesheet' id='sd-styles-2-css'  href='http://52.76.37.90/wp-content/plugins/storefront-designer/assets/css/style-2.css?ver=5.1' type='text/css' media='all' />
 <link rel='stylesheet' id='bfa-font-awesome-css'  href='//cdn.jsdelivr.net/fontawesome/4.7.0/css/font-awesome.min.css?ver=4.7.0' type='text/css' media='all' />
 <link rel='stylesheet' id='jquery-ui-smoothness-css'  href='http://52.76.37.90/wp-content/plugins/contact-form-7/includes/js/jquery-ui/themes/smoothness/jquery-ui.min.css?ver=1.11.4' type='text/css' media='screen' />
-<link rel='stylesheet' id='storefront-woocommerce-style-css'  href='http://52.76.37.90/wp-content/themes/storefront/assets/css/woocommerce/woocommerce.css?ver=2.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='storefront-woocommerce-style-css'  href='http://52.76.37.90/wp-content/themes/storefront/assets/css/woocommerce/woocommerce.css?ver=2.4.3' type='text/css' media='all' />
 <style id='storefront-woocommerce-style-inline-css' type='text/css'>
 
 			a.cart-contents,
@@ -577,30 +581,30 @@ img.emoji {
 				}
 			
 </style>
-<link rel='stylesheet' id='storefront-woocommerce-memberships-style-css'  href='http://52.76.37.90/wp-content/themes/storefront/assets/css/woocommerce/extensions/memberships.css?ver=2.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='storefront-woocommerce-memberships-style-css'  href='http://52.76.37.90/wp-content/themes/storefront/assets/css/woocommerce/extensions/memberships.css?ver=2.4.3' type='text/css' media='all' />
 <link rel='stylesheet' id='sp-header-frontend-css'  href='http://52.76.37.90/wp-content/plugins/storefront-powerpack/includes/customizer/header/assets/css/sp-header-frontend.css?ver=1.4.1' type='text/css' media='all' />
 <link rel='stylesheet' id='sp-layout-css'  href='http://52.76.37.90/wp-content/plugins/storefront-powerpack/includes/customizer/layout/assets/css/layout.css?ver=1.4.1' type='text/css' media='all' />
 <link rel='stylesheet' id='sp-styles-css'  href='http://52.76.37.90/wp-content/plugins/storefront-powerpack/includes/customizer/shop/../../../assets/css/style.css?ver=1.4.1' type='text/css' media='all' />
-<link rel='stylesheet' id='custom-css-css'  href='http://52.76.37.90/wp-content/plugins/theme-customisations-master/custom/style.css?ver=5.0.2' type='text/css' media='all' />
+<link rel='stylesheet' id='custom-css-css'  href='http://52.76.37.90/wp-content/plugins/theme-customisations-master/custom/style.css?ver=5.1' type='text/css' media='all' />
 <br />
-<b>Notice</b>:  woocommerce_params is <strong>deprecated</strong> since version 3.5.3! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4147</b><br />
+<b>Notice</b>:  woocommerce_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
 <br />
-<b>Notice</b>:  wc_checkout_params is <strong>deprecated</strong> since version 3.5.3! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4147</b><br />
+<b>Notice</b>:  wc_checkout_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
 <br />
-<b>Notice</b>:  woocommerce_params is <strong>deprecated</strong> since version 3.5.3! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4147</b><br />
+<b>Notice</b>:  woocommerce_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
 <br />
-<b>Notice</b>:  wc_checkout_params is <strong>deprecated</strong> since version 3.5.3! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4147</b><br />
+<b>Notice</b>:  wc_checkout_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
 <br />
-<b>Notice</b>:  woocommerce_params is <strong>deprecated</strong> since version 3.5.3! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4147</b><br />
+<b>Notice</b>:  woocommerce_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
 <br />
-<b>Notice</b>:  wc_checkout_params is <strong>deprecated</strong> since version 3.5.3! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4147</b><br />
+<b>Notice</b>:  wc_checkout_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
 <br />
-<b>Notice</b>:  woocommerce_params is <strong>deprecated</strong> since version 3.5.3! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4147</b><br />
+<b>Notice</b>:  woocommerce_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
 <br />
-<b>Notice</b>:  wc_checkout_params is <strong>deprecated</strong> since version 3.5.3! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4147</b><br />
+<b>Notice</b>:  wc_checkout_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
 <script type='text/javascript' src='http://52.76.37.90/wp-includes/js/jquery/jquery.js?ver=1.12.4'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1'></script>
-<script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/theme-customisations-master/custom/custom.js?ver=5.0.2'></script>
+<script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/theme-customisations-master/custom/custom.js?ver=5.1'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/storefront-designer/assets/js/jquery-sticky.min.js?ver=1.0.0'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/storefront-designer/assets/js/sticky-navigation.min.js?ver=1.0.0'></script>
 <link rel='https://api.w.org/' href='http://52.76.37.90/wp-json/' />
@@ -608,8 +612,8 @@ img.emoji {
 <link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://52.76.37.90/wp-includes/wlwmanifest.xml" /> 
 <link rel='prev' title='CDC Candlestick pattern และ สัญญาณแมงเม่า 1/2019(1วัน)' href='http://52.76.37.90/2019/01/31/cdccan12019/' />
 <link rel='next' title='USERNAME/PASSWORD CHANGE for CDCDL   / CDCDL มีการเปลี่ยน username/password' href='http://52.76.37.90/2019/03/04/username-password-change-for-cdcdl-cdcdl-%e0%b8%a1%e0%b8%b5%e0%b8%81%e0%b8%b2%e0%b8%a3%e0%b9%80%e0%b8%9b%e0%b8%a5%e0%b8%b5%e0%b9%88%e0%b8%a2%e0%b8%99-username-password/' />
-<meta name="generator" content="WordPress 5.0.2" />
-<meta name="generator" content="WooCommerce 3.5.3" />
+<meta name="generator" content="WordPress 5.1" />
+<meta name="generator" content="WooCommerce 3.5.6" />
 <link rel="canonical" href="http://52.76.37.90/2019/02/01/cdccha012019/" />
 <link rel='shortlink' href='http://52.76.37.90/?p=26688' />
 <link rel="alternate" type="application/json+oembed" href="http://52.76.37.90/wp-json/oembed/1.0/embed?url=http%3A%2F%2F52.76.37.90%2F2019%2F02%2F01%2Fcdccha012019%2F" />
@@ -618,7 +622,7 @@ img.emoji {
 
 <script type="text/javascript">
     /* <![CDATA[ */
-    var gdbxRender_Data = { url: "http://52.76.37.90/wp-admin/admin-ajax.php", run_quote: true, run_report: false, run_thanks: false, run_attachments: true, run_canned_replies: false, run_bbcodes: true, run_fitvids: true, wp_editor: true, wp_version: 50, last_cookie: 1551968618, bbpress_version: 25, text_are_you_sure: "Are you sure? Operation is not reversible.", now: 1551965018, thanks_thanks: "Thanks", thanks_unthanks: "Remove Thanks", thanks_saved: "Thanks Saved", thanks_removal: true, validate_attachments: true, insert_into_content: true, max_files: 5, max_size: 5120000, limiter: true, allowed_extensions: "jpg jpeg jpe gif png bmp tiff tif ico asf asx wmv wmx wm avi divx flv mov qt mpeg mpg mpe mp4 m4v ogv webm mkv 3gp 3gpp 3g2 3gp2 txt asc c cc h srt csv tsv ics rtx css vtt dfxp mp3 m4a m4b aac ra ram wav ogg oga flac mid midi wma wax mka rtf pdf class tar zip gz gzip rar 7z psd xcf doc pot pps ppt wri xla xls xlt xlw mdb mpp docx docm dotx dotm xlsx xlsm xlsb xltx xltm xlam pptx pptm ppsx ppsm potx potm ppam sldx sldm onetoc onetoc2 onetmp onepkg oxps xps odt odp ods odg odc odb odf wp wpd key numbers pages afl", text_select_file: "Select File", text_file_name: "Name", text_file_size: "Size", text_file_type: "Extension", text_file_validation: "Error!", text_file_validation_size: "The file is too big.", text_file_validation_type: "File type not allowed.", text_file_remove: "Remove this file", text_file_shortcode: "Insert into content", text_file_caption: "Set file caption", text_file_caption_placeholder: "Caption..." };
+    var gdbxRender_Data = { url: "http://52.76.37.90/wp-admin/admin-ajax.php", run_quote: true, run_report: false, run_thanks: false, run_attachments: true, run_canned_replies: false, run_bbcodes: true, run_fitvids: true, wp_editor: true, wp_version: 51, last_cookie: 1552006612, bbpress_version: 25, text_are_you_sure: "Are you sure? Operation is not reversible.", now: 1552003012, thanks_thanks: "Thanks", thanks_unthanks: "Remove Thanks", thanks_saved: "Thanks Saved", thanks_removal: true, validate_attachments: true, insert_into_content: true, max_files: 5, max_size: 5120000, limiter: true, allowed_extensions: "jpg jpeg jpe gif png bmp tiff tif ico asf asx wmv wmx wm avi divx flv mov qt mpeg mpg mpe mp4 m4v ogv webm mkv 3gp 3gpp 3g2 3gp2 txt asc c cc h srt csv tsv ics rtx css vtt dfxp mp3 m4a m4b aac ra ram wav ogg oga flac mid midi wma wax mka rtf pdf class tar zip gz gzip rar 7z psd xcf doc pot pps ppt wri xla xls xlt xlw mdb mpp docx docm dotx dotm xlsx xlsm xlsb xltx xltm xlam pptx pptm ppsx ppsm potx potm ppam sldx sldm onetoc onetoc2 onetmp onepkg oxps xps odt odp ods odg odc odb odf wp wpd key numbers pages afl", text_select_file: "Select File", text_file_name: "Name", text_file_size: "Size", text_file_type: "Extension", text_file_validation: "Error!", text_file_validation_size: "The file is too big.", text_file_validation_type: "File type not allowed.", text_file_remove: "Remove this file", text_file_shortcode: "Insert into content", text_file_caption: "Set file caption", text_file_caption_placeholder: "Caption..." };
     /* ]]> */
 </script>
 
@@ -731,7 +735,8 @@ img.emoji {
 <article id="post-26688" class="post-26688 post type-post status-publish format-standard has-post-thumbnail hentry category-uncategorized">
 
 			<header class="entry-header">
-		<span class="posted-on">Posted on <a href="http://52.76.37.90/2019/02/01/cdccha012019/" rel="bookmark"><time class="entry-date published" datetime="2019-02-01T22:04:55+00:00">01/02/2019</time> <time class="updated" datetime="2019-02-04T22:19:22+00:00">04/02/2019</time></a></span> <span class="post-author">by <a href="http://52.76.37.90/author/cdc-admin/" rel="author">cdc-admin</a></span> <span class="post-comments">&mdash; <a href="http://52.76.37.90/2019/02/01/cdccha012019/#respond">Leave a comment</a></span><h1 class="entry-title">CDC Trading Pattern by Chaloke 1/2019(1วัน)</h1>		</header><!-- .entry-header -->
+		
+			<span class="posted-on">Posted on <a href="http://52.76.37.90/2019/02/01/cdccha012019/" rel="bookmark"><time class="entry-date published" datetime="2019-02-01T22:04:55+07:00">01/02/2019</time><time class="updated" datetime="2019-02-04T22:19:22+07:00">04/02/2019</time></a></span> <span class="post-author">by <a href="http://52.76.37.90/author/cdc-admin/" rel="author">cdc-admin</a></span> <span class="post-comments">&mdash; <a href="http://52.76.37.90/2019/02/01/cdccha012019/#respond">Leave a comment</a></span><h1 class="entry-title">CDC Trading Pattern by Chaloke 1/2019(1วัน)</h1>		</header><!-- .entry-header -->
 				<div class="entry-content">
 		<img width="1127" height="542" src="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/02/01215748/chaloke001.jpg" class="attachment- size- wp-post-image" alt="" srcset="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/02/01215748/chaloke001.jpg 1127w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/02/01215748/chaloke001-500x240.jpg 500w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/02/01215748/chaloke001-768x369.jpg 768w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/02/01215748/chaloke001-1024x492.jpg 1024w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/02/01215748/chaloke001-416x200.jpg 416w" sizes="(max-width: 1127px) 100vw, 1127px" /><p>
 <!--StartFragment--></p>
@@ -881,7 +886,7 @@ img.emoji {
 
 
 
-<p>e-mail: <a href="&#x6d;a&#x69;&#x6c;t&#x6f;&#x3a;i&#x6e;&#x66;o&#x40;&#x63;h&#x61;&#x6c;o&#x6b;&#101;.&#x63;&#111;m">i&#x6e;f&#111;&#x40;c&#104;&#x61;l&#x6f;&#x6b;e&#x2e;c&#111;&#x6d;</a></p>
+<p>e-mail: <a href="&#x6d;&#97;i&#x6c;&#x74;o:&#x69;&#x6e;fo&#x40;&#99;h&#x61;&#x6c;&#111;k&#x65;&#x2e;co&#x6d;">&#105;n&#x66;o&#x40;c&#x68;a&#x6c;o&#x6b;e&#x2e;c&#x6f;m</a></p>
 
 
 
@@ -901,8 +906,7 @@ img.emoji {
 		
 		<aside class="entry-taxonomy">
 						<div class="cat-links">
-				<span class="screen-reader-text">Posted in</span>
-				<a href="http://52.76.37.90/category/uncategorized/" rel="category tag">Uncategorized</a>			</div>
+				Category: <a href="http://52.76.37.90/category/uncategorized/" rel="category tag">Uncategorized</a>			</div>
 			
 					</aside>
 
@@ -915,12 +919,12 @@ img.emoji {
 <p class="comment-form-email"><label for="email">Email <span class="required">*</span></label> <input id="email" name="email" type="email" value="" size="30" maxlength="100" aria-describedby="email-notes" required='required' /></p>
 <p class="comment-form-url"><label for="url">Website</label> <input id="url" name="url" type="url" value="" size="30" maxlength="200" /></p>
 <p class="cptch_block"><span class="cptch_wrap cptch_math_actions">
-				<label class="cptch_label" for="cptch_input_66"><span class="cptch_span">2</span>
-					<span class="cptch_span">&nbsp;&#43;&nbsp;</span>
-					<span class="cptch_span"><input id="cptch_input_66" class="cptch_input cptch_wp_comments" type="text" autocomplete="off" name="cptch_number" value="" maxlength="2" size="2" aria-required="true" required="required" style="margin-bottom:0;display:inline;font-size: 12px;width: 40px;" /></span>
+				<label class="cptch_label" for="cptch_input_49"><span class="cptch_span">&#101;&#105;&#103;h&#116;</span>
+					<span class="cptch_span">&nbsp;&minus;&nbsp;</span>
+					<span class="cptch_span">4</span>
 					<span class="cptch_span">&nbsp;=&nbsp;</span>
-					<span class="cptch_span"><img class="cptch_img " src="data:image/png;base64,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" alt="image"/></span>
-					<input type="hidden" name="cptch_result" value="M+k=" /><input type="hidden" name="cptch_time" value="1551965018" />
+					<span class="cptch_span"><input id="cptch_input_49" class="cptch_input cptch_wp_comments" type="text" autocomplete="off" name="cptch_number" value="" maxlength="2" size="2" aria-required="true" required="required" style="margin-bottom:0;display:inline;font-size: 12px;width: 40px;" /></span>
+					<input type="hidden" name="cptch_result" value="VT4=" /><input type="hidden" name="cptch_time" value="1552003012" />
 					<input type="hidden" name="cptch_form" value="wp_comments" />
 				</label><span class="cptch_reload_button_wrap hide-if-no-js">
 					<noscript>
@@ -937,14 +941,14 @@ img.emoji {
 <script type='text/javascript'>
 /* <![CDATA[ */
 r3f5x9JS=escape(document['referrer']);
-hf1N='0f669b8e549773e2289b2d8176d751eb';
-hf1V='fccc2e511eb0dc85928917e951bbdc9d';
+hf1N='d113cd76a6702f8042daf053e317918c';
+hf1V='4ebc074a0451c9776c4e4829934cf045';
 document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><input type='hidden' name='"+hf1N+"' value='"+hf1V+"' />");
 /* ]]> */
 </script>
 <noscript><input type="hidden" name="JS04X7" value="NS1" /></noscript>
 <noscript><p><strong>Currently you have JavaScript disabled. In order to post comments, please make sure JavaScript and Cookies are enabled, and reload the page.</strong> <a href="http://enable-javascript.com/" rel="nofollow external" >Click here for instructions on how to enable JavaScript in your browser.</a></p></noscript>
-<p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="167"/></p>			</form>
+<p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="69"/></p>			</form>
 			</div><!-- #respond -->
 	
 </section><!-- #comments -->
@@ -971,7 +975,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>1 week ago</div>
+						<div>1 week, 1 day ago</div>
 
 					
 				</li>
@@ -982,7 +986,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>1 week, 1 day ago</div>
+						<div>1 week, 2 days ago</div>
 
 					
 				</li>
@@ -1004,7 +1008,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>4 weeks ago</div>
+						<div>4 weeks, 1 day ago</div>
 
 					
 				</li>
@@ -1015,7 +1019,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>1 month, 1 week ago</div>
+						<div>1 month, 2 weeks ago</div>
 
 					
 				</li>
@@ -1032,7 +1036,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>6 hours, 38 minutes ago</div>
+						<div>17 hours, 11 minutes ago</div>
 
 					
 				</li>
@@ -1043,7 +1047,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>4 days, 12 hours ago</div>
+						<div>4 days, 23 hours ago</div>
 
 					
 				</li>
@@ -1054,7 +1058,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>19 minutes ago</div>
+						<div>10 hours, 52 minutes ago</div>
 
 					
 				</li>
@@ -1065,7 +1069,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>1 week ago</div>
+						<div>1 week, 1 day ago</div>
 
 					
 				</li>
@@ -1076,7 +1080,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>1 week, 1 day ago</div>
+						<div>1 week, 2 days ago</div>
 
 					
 				</li>
@@ -1109,7 +1113,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>4 weeks ago</div>
+						<div>4 weeks, 1 day ago</div>
 
 					
 				</li>
@@ -1121,27 +1125,27 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 <ul>
 <li>
 <a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/cdc-downloader-%e0%b8%94%e0%b8%b2%e0%b8%a7%e0%b8%99%e0%b9%8c%e0%b9%82%e0%b8%ab%e0%b8%a5%e0%b8%94%e0%b9%84%e0%b8%a1%e0%b9%88%e0%b9%84%e0%b8%94%e0%b9%89%e0%b8%84%e0%b8%a3%e0%b8%b1%e0%b8%9a/#post-27896" title="Reply To: CDC Downloader ดาวน์โหลดไม่ได้ครับ">Reply To: CDC Downloader ดาวน์โหลดไม่ได้ครับ</a>
-<em class="bbp-last-active">19 minutes ago</em>
+<em class="bbp-last-active">10 hours, 52 minutes ago</em>
 </li>
 <li>
 <a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/cdc-downloader/#post-27887" title="Reply To: CDC Downloader">Reply To: CDC Downloader</a>
-<em class="bbp-last-active">5 hours, 14 minutes ago</em>
+<em class="bbp-last-active">15 hours, 47 minutes ago</em>
 </li>
 <li>
 <a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/%e0%b8%aa%e0%b8%ad%e0%b8%9a%e0%b8%96%e0%b8%b2%e0%b8%a1%e0%b9%80%e0%b8%a3%e0%b8%b7%e0%b9%88%e0%b8%ad%e0%b8%87%e0%b8%82%e0%b9%89%e0%b8%ad%e0%b8%a1%e0%b8%b9%e0%b8%a5dw%e0%b8%ab%e0%b8%99%e0%b9%88%e0%b8%ad/#post-27882" title="Reply To: สอบถามเรื่องข้อมูลDWหน่อยครับ">Reply To: สอบถามเรื่องข้อมูลDWหน่อยครับ</a>
-<em class="bbp-last-active">6 hours, 38 minutes ago</em>
+<em class="bbp-last-active">17 hours, 11 minutes ago</em>
 </li>
 <li>
 <a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/%e0%b9%81%e0%b8%88%e0%b9%89%e0%b8%87%e0%b8%8a%e0%b8%b3%e0%b8%a3%e0%b8%b0%e0%b8%84%e0%b9%88%e0%b8%b2%e0%b8%aa%e0%b8%a1%e0%b8%b1%e0%b8%84%e0%b8%a3%e0%b8%aa%e0%b8%a1%e0%b8%b2%e0%b8%8a%e0%b8%b4%e0%b8%81/#post-27881" title="Reply To: แจ้งชำระค่าสมัครสมาชิก">Reply To: แจ้งชำระค่าสมัครสมาชิก</a>
-<em class="bbp-last-active">6 hours, 40 minutes ago</em>
+<em class="bbp-last-active">17 hours, 13 minutes ago</em>
 </li>
 <li>
 <a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/error-code-14/#post-27623" title="Reply To: Error code 14">Reply To: Error code 14</a>
-<em class="bbp-last-active">2 days, 3 hours ago</em>
+<em class="bbp-last-active">2 days, 14 hours ago</em>
 </li>
 </ul>
 </div></div><div id="archives-2" class="widget widget_archive"><span class="gamma widget-title">Archives</span>		<ul>
-			<li><a href='http://52.76.37.90/2019/03/'>March 2019</a></li>
+				<li><a href='http://52.76.37.90/2019/03/'>March 2019</a></li>
 	<li><a href='http://52.76.37.90/2019/02/'>February 2019</a></li>
 	<li><a href='http://52.76.37.90/2019/01/'>January 2019</a></li>
 	<li><a href='http://52.76.37.90/2018/12/'>December 2018</a></li>
@@ -1154,7 +1158,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 	<li><a href='http://52.76.37.90/2017/11/'>November 2017</a></li>
 	<li><a href='http://52.76.37.90/2017/07/'>July 2017</a></li>
 		</ul>
-		</div></div><!-- #secondary -->
+			</div></div><!-- #secondary -->
 
 		</div><!-- .col-full -->
 	</div><!-- #content -->
@@ -1263,7 +1267,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>6 hours, 38 minutes ago</div>
+						<div>17 hours, 11 minutes ago</div>
 
 					
 				</li>
@@ -1274,7 +1278,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>4 days, 12 hours ago</div>
+						<div>4 days, 23 hours ago</div>
 
 					
 				</li>
@@ -1285,7 +1289,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>19 minutes ago</div>
+						<div>10 hours, 52 minutes ago</div>
 
 					
 				</li>
@@ -1296,7 +1300,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>1 week ago</div>
+						<div>1 week, 1 day ago</div>
 
 					
 				</li>
@@ -1307,7 +1311,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>1 week, 1 day ago</div>
+						<div>1 week, 2 days ago</div>
 
 					
 				</li>
@@ -1326,7 +1330,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>19 minutes ago</div>
+						<div>10 hours, 52 minutes ago</div>
 
 					
 				</li>
@@ -1337,7 +1341,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>5 hours, 14 minutes ago</div>
+						<div>15 hours, 47 minutes ago</div>
 
 					
 				</li>
@@ -1348,7 +1352,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>6 hours, 38 minutes ago</div>
+						<div>17 hours, 11 minutes ago</div>
 
 					
 				</li>
@@ -1359,7 +1363,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>6 hours, 40 minutes ago</div>
+						<div>17 hours, 13 minutes ago</div>
 
 					
 				</li>
@@ -1370,7 +1374,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>2 days, 3 hours ago</div>
+						<div>2 days, 14 hours ago</div>
 
 					
 				</li>
@@ -1414,8 +1418,8 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 <script type='text/javascript'>
 /* <![CDATA[ */
 r3f5x9JS=escape(document['referrer']);
-hf4N='0f669b8e549773e2289b2d8176d751eb';
-hf4V='fccc2e511eb0dc85928917e951bbdc9d';
+hf4N='d113cd76a6702f8042daf053e317918c';
+hf4V='4ebc074a0451c9776c4e4829934cf045';
 cm4S="form[action='http://52.76.37.90/wp-comments-post.php']";
 jQuery(document).ready(function($){var e="#commentform, .comment-respond form, .comment-form, "+cm4S+", #lostpasswordform, #registerform, #loginform, #login_form, #wpss_contact_form, .wpcf7-form";$(e).submit(function(){$("<input>").attr("type","hidden").attr("name","r3f5x9JS").attr("value",r3f5x9JS).appendTo(e);return true;});var h="form[method='post']";$(h).submit(function(){$("<input>").attr("type","hidden").attr("name",hf4N).attr("value",hf4V).appendTo(h);return true;});});
 /* ]]> */
@@ -1426,13 +1430,13 @@ jQuery(document).ready(function($){var e="#commentform, .comment-respond form, .
 		document.body.className = c;
 	</script>
 	<br />
-<b>Notice</b>:  woocommerce_params is <strong>deprecated</strong> since version 3.5.3! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4147</b><br />
+<b>Notice</b>:  woocommerce_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
 <br />
-<b>Notice</b>:  wc_checkout_params is <strong>deprecated</strong> since version 3.5.3! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4147</b><br />
+<b>Notice</b>:  wc_checkout_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
 <br />
-<b>Notice</b>:  woocommerce_params is <strong>deprecated</strong> since version 3.5.3! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4147</b><br />
+<b>Notice</b>:  woocommerce_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
 <br />
-<b>Notice</b>:  wc_checkout_params is <strong>deprecated</strong> since version 3.5.3! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4147</b><br />
+<b>Notice</b>:  wc_checkout_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
 <script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/bbpress/templates/default/js/editor.js?ver=2.5.14-6684'></script>
 <script type='text/javascript'>
 /* <![CDATA[ */
@@ -1440,7 +1444,7 @@ var wpcf7 = {"apiSettings":{"root":"http:\/\/52.76.37.90\/wp-json\/contact-form-
 /* ]]> */
 </script>
 <script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/contact-form-7/includes/js/scripts.js?ver=5.1.1'></script>
-<script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/html5-videogallery-plus-player/assets/js/video.js?ver=2.3.1'></script>
+<script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/html5-videogallery-plus-player/assets/js/video.js?ver=2.3.2'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/woocommerce/assets/js/jquery-blockui/jquery.blockUI.min.js?ver=2.70'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/woocommerce/assets/js/js-cookie/js.cookie.min.js?ver=2.1.4'></script>
 <script type='text/javascript'>
@@ -1448,21 +1452,21 @@ var wpcf7 = {"apiSettings":{"root":"http:\/\/52.76.37.90\/wp-json\/contact-form-
 var woocommerce_params = {"ajax_url":"\/wp-admin\/admin-ajax.php","wc_ajax_url":"\/?wc-ajax=%%endpoint%%"};
 /* ]]> */
 </script>
-<script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/woocommerce/assets/js/frontend/woocommerce.min.js?ver=3.5.3'></script>
+<script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/woocommerce/assets/js/frontend/woocommerce.min.js?ver=3.5.6'></script>
 <script type='text/javascript'>
 /* <![CDATA[ */
 var wc_cart_fragments_params = {"ajax_url":"\/wp-admin\/admin-ajax.php","wc_ajax_url":"\/?wc-ajax=%%endpoint%%","cart_hash_key":"wc_cart_hash_16d44636f6eccd0f7080a358058ce065","fragment_name":"wc_fragments_16d44636f6eccd0f7080a358058ce065"};
 /* ]]> */
 </script>
-<script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/woocommerce/assets/js/frontend/cart-fragments.min.js?ver=3.5.3'></script>
+<script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/woocommerce/assets/js/frontend/cart-fragments.min.js?ver=3.5.6'></script>
 <script type='text/javascript'>
 /* <![CDATA[ */
 var storefrontScreenReaderText = {"expand":"Expand child menu","collapse":"Collapse child menu"};
 /* ]]> */
 </script>
-<script type='text/javascript' src='http://52.76.37.90/wp-content/themes/storefront/assets/js/navigation.min.js?ver=2.4.2'></script>
+<script type='text/javascript' src='http://52.76.37.90/wp-content/themes/storefront/assets/js/navigation.min.js?ver=2.4.3'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-content/themes/storefront/assets/js/skip-link-focus-fix.min.js?ver=20130115'></script>
-<script type='text/javascript' src='http://52.76.37.90/wp-includes/js/comment-reply.min.js?ver=5.0.2'></script>
+<script type='text/javascript' src='http://52.76.37.90/wp-includes/js/comment-reply.min.js?ver=5.1'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-content/themes/storefront/assets/js/vendor/pep.min.js?ver=0.4.3'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-includes/js/jquery/ui/core.min.js?ver=1.11.4'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-includes/js/jquery/ui/datepicker.min.js?ver=1.11.4'></script>
@@ -1472,23 +1476,23 @@ jQuery(document).ready(function(jQuery){jQuery.datepicker.setDefaults({"closeTex
 <script type='text/javascript' src='http://52.76.37.90/wp-includes/js/jquery/ui/widget.min.js?ver=1.11.4'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-includes/js/jquery/ui/button.min.js?ver=1.11.4'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-includes/js/jquery/ui/spinner.min.js?ver=1.11.4'></script>
-<script type='text/javascript' src='http://52.76.37.90/wp-content/themes/storefront/assets/js/woocommerce/header-cart.min.js?ver=2.4.2'></script>
+<script type='text/javascript' src='http://52.76.37.90/wp-content/themes/storefront/assets/js/woocommerce/header-cart.min.js?ver=2.4.3'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/wp-spamshield/js/jscripts-ftr2-min.js'></script>
-<script type='text/javascript' src='http://52.76.37.90/wp-includes/js/wp-embed.min.js?ver=5.0.2'></script>
-<script async="async" type='text/javascript' src='http://52.76.37.90/wp-content/plugins/akismet/_inc/form.js?ver=4.1'></script>
+<script type='text/javascript' src='http://52.76.37.90/wp-includes/js/wp-embed.min.js?ver=5.1'></script>
+<script async="async" type='text/javascript' src='http://52.76.37.90/wp-content/plugins/akismet/_inc/form.js?ver=4.1.1'></script>
 <script type='text/javascript'>
 /* <![CDATA[ */
 var cptch_vars = {"nonce":"98e61034b0","ajaxurl":"http:\/\/52.76.37.90\/wp-admin\/admin-ajax.php","enlarge":""};
 /* ]]> */
 </script>
-<script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/captcha/js/front_end_script.js?ver=5.0.2'></script>
+<script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/captcha/js/front_end_script.js?ver=5.1'></script>
 
 </body>
 </html>
 
 <!--
-Object Caching 167/280 objects using disk
+Object Caching 3/552 objects using disk
 Page Caching using disk: enhanced 
 
-Served from: 52.76.37.90 @ 2019-03-07 20:23:38 by W3 Total Cache
+Served from: 52.76.37.90 @ 2019-03-08 06:56:52 by W3 Total Cache
 -->

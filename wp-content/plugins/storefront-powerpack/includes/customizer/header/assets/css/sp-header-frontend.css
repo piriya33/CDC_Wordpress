@@ -1,14 +1,13 @@
 @media screen and (min-width: 768px) {
-  .sp-header-active.woocommerce-active .site-header .site-header-cart,
-  .sp-header-active.woocommerce-active .site-header .secondary-navigation,
-  .sp-header-active.woocommerce-active .site-header .main-navigation,
-  .sp-header-active.woocommerce-active .site-header .site-search,
-  .sp-header-active.woocommerce-active .site-branding,
+  .sp-header-active .site-header .site-header-cart,
+  .sp-header-active .site-header .secondary-navigation,
+  .sp-header-active .site-header .main-navigation,
+  .sp-header-active .site-header .site-search,
   .sp-header-active .site-header .site-branding {
-    width: auto;
-    float: none;
-    margin-right: 0;
-    margin-bottom: 0; }
+    width: auto !important;
+    float: none !important;
+    margin-right: 0 !important;
+    margin-bottom: 0 !important; }
   .sp-header-active .sp-header-span-1 {
     width: 4.347826087%;
     float: left;

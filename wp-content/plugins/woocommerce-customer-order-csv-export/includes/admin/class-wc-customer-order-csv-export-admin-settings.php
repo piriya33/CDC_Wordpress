@@ -18,7 +18,7 @@
  *
  * @package     WC-Customer-Order-CSV-Export/Admin
  * @author      SkyVerge
- * @copyright   Copyright (c) 2012-2017, SkyVerge, Inc.
+ * @copyright   Copyright (c) 2012-2018, SkyVerge, Inc.
  * @license     http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
@@ -62,6 +62,10 @@ class WC_Customer_Order_CSV_Export_Admin_Settings {
 			'orders'    => __( 'Orders', 'woocommerce-customer-order-csv-export' ),
 			'customers' => __( 'Customers', 'woocommerce-customer-order-csv-export' )
 		);
+
+		if ( wc_customer_order_csv_export()->is_coupon_export_enabled() ) {
+			$sections['coupons'] = __( 'Coupons', 'woocommerce-customer-order-csv-export' );
+		}
 
 		/**
 		 * Allow actors to change the sections for settings
@@ -123,7 +127,7 @@ class WC_Customer_Order_CSV_Export_Admin_Settings {
 			}
 		}
 
-		$export_method_options = wc_customer_order_csv_export()->get_methods_instance()->get_export_method_labels();
+		$export_method_options = wc_customer_order_csv_export()->is_batch_processing_enabled() ? array() : wc_customer_order_csv_export()->get_methods_instance()->get_export_method_labels();
 		$export_method_options = array( 'disabled' => __( 'Disabled', 'woocommerce-customer-order-csv-export' ) ) + $export_method_options;
 
 		$ftp_security_options = array(
@@ -190,6 +194,15 @@ class WC_Customer_Order_CSV_Export_Admin_Settings {
 						'desc'    => __( 'Enable to add a note to exported orders.', 'woocommerce-customer-order-csv-export' ),
 						'default' => 'yes',
 						'type'    => 'checkbox',
+					),
+
+					array(
+						'id'       => 'wc_customer_order_csv_export_enable_batch_processing',
+						'name'     => __( 'Batch Processing', 'woocommerce-customer-order-csv-export' ),
+						'desc'     => __( 'Use batch processing for manual exports.', 'woocommerce-customer-order-csv-export' ),
+						'desc_tip' => __( 'Only enable this setting when notified that your site does not support background processing.', 'woocommerce-customer-order-csv-export' ),
+						'default'  => 'no',
+						'type'     => 'checkbox',
 					),
 
 				array( 'type' => 'sectionend' ),
@@ -469,6 +482,15 @@ class WC_Customer_Order_CSV_Export_Admin_Settings {
 						'type'     => 'text',
 					),
 
+					array(
+						'id'       => 'wc_customer_order_csv_export_enable_batch_processing',
+						'name'     => __( 'Batch Processing', 'woocommerce-customer-order-csv-export' ),
+						'desc'     => __( 'Use batch processing for manual exports.', 'woocommerce-customer-order-csv-export' ),
+						'desc_tip' => __( 'Only enable this setting when notified that your site does not support background processing.', 'woocommerce-customer-order-csv-export' ),
+						'default'  => 'no',
+						'type'     => 'checkbox',
+					),
+
 				array( 'type' => 'sectionend' ),
 
 				array(
@@ -659,7 +681,14 @@ class WC_Customer_Order_CSV_Export_Admin_Settings {
 
 				array( 'type' => 'sectionend' ),
 			),
+
 		);
+
+		// only display coupons export settings if enabled
+		if ( wc_customer_order_csv_export()->is_coupon_export_enabled() ) {
+
+			$settings = self::get_coupon_export_settings( $settings );
+		}
 
 		// return all or section-specific settings
 		$found_settings = $section_id ? $settings[ $section_id ] : $settings;
@@ -675,6 +704,60 @@ class WC_Customer_Order_CSV_Export_Admin_Settings {
 		 * @param string $section_id current section ID
 		 */
 		return apply_filters( 'wc_customer_order_csv_export_settings', $found_settings, $section_id );
+	}
+
+
+	/**
+	 * Retrieves coupon export settings.
+	 *
+	 * @since 4.6.0
+	 *
+	 * @param array $settings existing settings array
+	 * @return array updated settings
+	 */
+	public static function get_coupon_export_settings( $settings ) {
+
+		$settings['coupons'] = array(
+
+			array(
+				'name' => __( 'Export Format', 'woocommerce-customer-order-csv-export' ),
+				'type' => 'title'
+			),
+
+			array(
+				'id'       => 'wc_customer_order_csv_export_coupons_format',
+				'name'     => __( 'Coupon Export Format', 'woocommerce-customer-order-csv-export' ),
+				'desc_tip' => __( 'CSV Import matches the Customer/Order CSV Import plugin format', 'woocommerce-customer-order-csv-export' ),
+				'type'     => 'select',
+				'options'  => array(
+					'default' => __( 'CSV Import', 'woocommerce-customer-order-csv-export' ),
+					'custom'  => __( 'Custom', 'woocommerce-customer-order-csv-export' ),
+				),
+				'default'  => 'default',
+			),
+
+			array(
+				'id'       => 'wc_customer_order_csv_export_coupons_filename',
+				'name'     => __( 'Coupon Export Filename', 'woocommerce-customer-order-csv-export' ),
+				'desc_tip' => __( 'The filename for exported coupons. Merge variables: %%timestamp%%', 'woocommerce-customer-order-csv-export' ),
+				'default'  => 'coupons-export-%%timestamp%%.csv',
+				'css'      => 'min-width: 300px;',
+				'type'     => 'text',
+			),
+
+			array(
+				'id'       => 'wc_customer_order_csv_export_enable_batch_processing',
+				'name'     => __( 'Batch Processing', 'woocommerce-customer-order-csv-export' ),
+				'desc'     => __( 'Use batch processing for manual exports.', 'woocommerce-customer-order-csv-export' ),
+				'desc_tip' => __( 'Only enable this setting when notified that your site does not support background processing.', 'woocommerce-customer-order-csv-export' ),
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+
+			array( 'type' => 'sectionend' ),
+		);
+
+		return $settings;
 	}
 
 
@@ -805,11 +888,7 @@ class WC_Customer_Order_CSV_Export_Admin_Settings {
 	 */
 	public function mutate_select2_product_ids( $value ) {
 
-		if ( is_array( $value ) ) {
-			$value = implode( ',', array_map( 'absint', $value ) );
-		}
-
-		return $value;
+		return implode( ',', array_map( 'absint', (array) $value ) );
 	}
 
 

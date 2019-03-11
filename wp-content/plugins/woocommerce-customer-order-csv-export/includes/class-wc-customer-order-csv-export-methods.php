@@ -18,7 +18,7 @@
  *
  * @package     WC-Customer-Order-CSV-Export/Classes
  * @author      SkyVerge
- * @copyright   Copyright (c) 2012-2017, SkyVerge, Inc.
+ * @copyright   Copyright (c) 2012-2018, SkyVerge, Inc.
  * @license     http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
@@ -95,12 +95,14 @@ class WC_Customer_Order_CSV_Export_Methods {
 	 * WC_Customer_Order_CSV_Export_Handler class
 	 *
 	 * @since 3.0.0
+	 *
 	 * @param string $method the export method, `download`, `ftp`, `http_post`, or `email`
 	 * @param string $export_type the export type, `orders` or `customers`
-	 * @param array $args Optional. An array of arguments to pass to the export method
+	 * @param string $completed_at optional - a string representation of the completion date
 	 * @return \WC_Customer_Order_CSV_Export_Method the export method
+	 * @throws \SV_WC_Plugin_Exception
 	 */
-	public function get_export_method( $method, $export_type, $args = array() ) {
+	public function get_export_method( $method, $export_type, $completed_at = '' ) {
 
 		$path          = wc_customer_order_csv_export()->get_plugin_path() . '/includes/export-methods';
 		$option_prefix = 'wc_customer_order_csv_export_' . $export_type . '_';
@@ -189,7 +191,7 @@ class WC_Customer_Order_CSV_Export_Methods {
 					break;
 				}
 
-				$timestamp = ! empty( $args['completed_at'] ) ? strtotime( $args['completed_at'] ) : current_time( 'timestamp' );
+				$timestamp = '' !== $completed_at ? strtotime( $completed_at ) : current_time( 'timestamp' );
 				$message   = sprintf( $message, date_i18n( wc_date_format(), $timestamp ) );
 
 				$args = array(

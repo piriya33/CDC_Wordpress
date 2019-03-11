@@ -18,7 +18,7 @@
  *
  * @package     WC-Customer-Order-CSV-Export/Export-Methods/HTTP-POST
  * @author      SkyVerge
- * @copyright   Copyright (c) 2012-2017, SkyVerge, Inc.
+ * @copyright   Copyright (c) 2012-2018, SkyVerge, Inc.
  * @license     http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
@@ -63,14 +63,25 @@ class WC_Customer_Order_CSV_Export_Method_HTTP_POST implements WC_Customer_Order
 	 * Performs an HTTP POST to the specified URL with the exported data
 	 *
 	 * @since 3.0.0
-	 * @param string $file_path pathj to file to be posted
-	 * @throws SV_WC_Plugin_Exception WP HTTP error handling
+	 *
+	 * @param \WC_Customer_Order_CSV_Export_Export|string $export the export object or a path to an export file
 	 * @return bool whether the HTTP POST was successful or not
+	 * @throws \SV_WC_Plugin_Exception WP HTTP error handling
 	 */
-	public function perform_action( $file_path ) {
+	public function perform_action( $export ) {
 
-		if ( empty( $file_path ) ) {
-			throw new SV_WC_Plugin_Exception( __( 'Missing file path', 'woocommerce-customer-order-csv-export' ) );
+		if ( ! $export ) {
+			throw new SV_WC_Plugin_Exception( __( 'Unable to find export for transfer', 'woocommerce-customer-order-csv-export' ) );
+		}
+
+		// export is a filename
+		if ( is_string( $export ) && is_readable( $export ) ) {
+
+			$contents = file_get_contents( $export );
+
+		} else {
+
+			$contents = $export->get_output();
 		}
 
 		/**
@@ -89,7 +100,7 @@ class WC_Customer_Order_CSV_Export_Method_HTTP_POST implements WC_Customer_Order
 				'accept'       => $this->content_type,
 				'content-type' => $this->content_type,
 			),
-			'body'        => file_get_contents( $file_path ),
+			'body'        => $contents,
 			'cookies'     => array(),
 			'user-agent'  => "WordPress " . $GLOBALS['wp_version'],
 		) );

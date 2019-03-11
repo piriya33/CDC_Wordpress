@@ -277,6 +277,10 @@ class d4pupd_core_updater {
 
                         $update = $this->get_plugin_update_data($code.'/'.$code.'.php');
 
+                        if ($update === false) {
+                            $update = $data->latest;
+                        }
+
                         $banner = $this->cdn.'banners/'.$data->category.'s/'.$data->code.'.jpg';
 
                         $result->name = $data->name;

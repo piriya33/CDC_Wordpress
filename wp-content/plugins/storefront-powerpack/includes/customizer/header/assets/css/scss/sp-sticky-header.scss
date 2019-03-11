@@ -6,6 +6,9 @@
 			right: 0;
 			top: 0;
 			z-index: 9999;
+			animation-duration: 1s;
+			animation-fill-mode: both;
+			animation-name: fadeIn;
 		}
 
 		&.admin-bar {
@@ -35,5 +38,15 @@
 				min-width: 0;
 			}
 		}
+	}
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+
+	to {
+		opacity: 1;
 	}
 }

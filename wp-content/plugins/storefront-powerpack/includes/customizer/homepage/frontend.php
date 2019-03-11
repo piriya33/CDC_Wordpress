@@ -59,7 +59,10 @@ if ( ! class_exists( 'SP_Frontend_Homepage' ) ) :
 			$columns = get_theme_mod( 'sp_homepage_on_sale_products_columns' );
 			$limit 	 = get_theme_mod( 'sp_homepage_on_sale_products_limit' );
 
-			$args['title']   = $title;
+			if ( ! empty( $title ) ) {
+				$args['title'] = $title;
+			}
+
 			$args['columns'] = $columns;
 			$args['limit']   = $limit;
 
@@ -77,7 +80,10 @@ if ( ! class_exists( 'SP_Frontend_Homepage' ) ) :
 			$columns = get_theme_mod( 'sp_homepage_top_rated_products_columns' );
 			$limit 	 = get_theme_mod( 'sp_homepage_top_rated_products_limit' );
 
-			$args['title']   = $title;
+			if ( ! empty( $title ) ) {
+				$args['title'] = $title;
+			}
+
 			$args['columns'] = $columns;
 			$args['limit']   = $limit;
 
@@ -95,7 +101,10 @@ if ( ! class_exists( 'SP_Frontend_Homepage' ) ) :
 			$columns = get_theme_mod( 'sp_homepage_featured_products_columns' );
 			$limit 	 = get_theme_mod( 'sp_homepage_featured_products_limit' );
 
-			$args['title']   = $title;
+			if ( ! empty( $title ) ) {
+				$args['title'] = $title;
+			}
+
 			$args['columns'] = $columns;
 			$args['limit']   = $limit;
 
@@ -113,7 +122,10 @@ if ( ! class_exists( 'SP_Frontend_Homepage' ) ) :
 			$columns = get_theme_mod( 'sp_homepage_recent_products_columns' );
 			$limit   = get_theme_mod( 'sp_homepage_recent_products_limit' );
 
-			$args['title']   = $title;
+			if ( ! empty( $title ) ) {
+				$args['title'] = $title;
+			}
+
 			$args['columns'] = $columns;
 			$args['limit']   = $limit;
 
@@ -131,7 +143,10 @@ if ( ! class_exists( 'SP_Frontend_Homepage' ) ) :
 			$columns = get_theme_mod( 'sp_homepage_best_sellers_products_columns' );
 			$limit   = get_theme_mod( 'sp_homepage_best_sellers_products_limit' );
 
-			$args['title']   = $title;
+			if ( ! empty( $title ) ) {
+				$args['title'] = $title;
+			}
+
 			$args['columns'] = $columns;
 			$args['limit']   = $limit;
 
@@ -149,7 +164,10 @@ if ( ! class_exists( 'SP_Frontend_Homepage' ) ) :
 			$columns = get_theme_mod( 'sp_homepage_category_columns' );
 			$limit   = get_theme_mod( 'sp_homepage_category_limit' );
 
-			$args['title']   = $title;
+			if ( ! empty( $title ) ) {
+				$args['title'] = $title;
+			}
+
 			$args['columns'] = $columns;
 			$args['limit']   = $limit;
 

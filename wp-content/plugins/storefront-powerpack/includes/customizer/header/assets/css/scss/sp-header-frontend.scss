@@ -30,13 +30,15 @@ $susy: (
 @media screen and (min-width: 768px) {
 	.sp-header-active {
 		// Reset
-		&.woocommerce-active .site-header .site-header-cart,
-		&.woocommerce-active .site-header .secondary-navigation,
-		&.woocommerce-active .site-header .main-navigation,
-		&.woocommerce-active .site-header .site-search,
-		&.woocommerce-active .site-branding,
+		.site-header .site-header-cart,
+		.site-header .secondary-navigation,
+		.site-header .main-navigation,
+		.site-header .site-search,
 		.site-header .site-branding {
-			@include reset;
+			width: auto !important;
+			float: none !important;
+			margin-right: 0 !important;
+			margin-bottom: 0 !important;
 		}
 
 		// Grid classes

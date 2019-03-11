@@ -24,7 +24,7 @@ if ( ! class_exists( 'SP_Frontend_Checkout' ) ) :
 		 * @since 1.0.0
 		 */
 		public function __construct() {
-			add_action( 'wp',                 array( $this, 'distraction_free_checkout' ) );
+			add_action( 'wp',                 array( $this, 'distraction_free_checkout' ), 60 );
 			add_action( 'wp',                 array( $this, 'two_step_checkout' ) );
 			add_action( 'wp_enqueue_scripts', array( $this, 'script' ), 99 );
 			add_filter( 'body_class',         array( $this, 'body_class' ) );
@@ -38,19 +38,26 @@ if ( ! class_exists( 'SP_Frontend_Checkout' ) ) :
 		 * @return  void
 		 */
 		public function distraction_free_checkout() {
+			global $storefront_version;
+
 			$distraction_free = get_theme_mod( 'sp_distraction_free_checkout', false );
 
 			if ( is_checkout() && true === $distraction_free ) {
-				// Remove the distractions.
-				remove_action( 'storefront_header',         'storefront_secondary_navigation', 30 );
-				remove_action( 'storefront_header',         'storefront_primary_navigation',   50 );
 				remove_action( 'storefront_footer',         'storefront_footer_widgets',       10 );
 				remove_action( 'storefront_footer',         'storefront_credit',               20 );
 				remove_action( 'storefront_sidebar',        'storefront_get_sidebar',          10 );
-				remove_action( 'storefront_content_top',    'woocommerce_breadcrumb',          10 );
-				remove_action( 'storefront_header',         'storefront_product_search',       40 );
-				remove_action( 'storefront_header',         'storefront_header_cart',          60 );
 				remove_action( 'storefront_before_content', 'storefront_header_widget_region', 10 );
+
+				if ( version_compare( $storefront_version, '2.3.0', '>=' ) ) {
+					remove_action( 'storefront_before_content', 'woocommerce_breadcrumb', 10 );
+				} else {
+					remove_action( 'storefront_content_top', 'woocommerce_breadcrumb', 10 );
+				}
+
+				/* Remove everything from the Header and the re-add only the branding section.
+				   This ensures compatiblity with the Header Customizer. */
+				remove_all_actions( 'storefront_header' );
+				add_action( 'storefront_header', 'storefront_site_branding', 10 );
 			}
 		}
 
@@ -83,16 +90,17 @@ if ( ! class_exists( 'SP_Frontend_Checkout' ) ) :
 		 * @return  void
 		 */
 		public function script() {
+			global $storefront_version;
+
 			$distraction_free    = get_theme_mod( 'sp_distraction_free_checkout', false );
 			$checkout_layout     = get_theme_mod( 'sp_checkout_layout' );
 			$two_step_checkout   = get_theme_mod( 'sp_two_step_checkout', false );
-			$sticky_order_review = get_theme_mod( 'sp_sticky_order_review', false );
 
 			/**
 			 * Load the distraction free checkout styles if the setting is enabled and the checkout is the current page.
 			 */
 			if ( true === $distraction_free && is_checkout() ) {
-				wp_enqueue_style( 'sp-distraction-free-checkout', plugins_url( 'assets/css/distraction-free.css', __FILE__ ), '', '1.0.0' );
+				wp_enqueue_style( 'sp-distraction-free-checkout', SP_PLUGIN_URL . 'includes/customizer/checkout/assets/css/distraction-free.css', '', storefront_powerpack()->version );
 				wp_style_add_data( 'sp-distraction-free-checkout', 'rtl', 'replace' );
 			}
 
@@ -100,7 +108,7 @@ if ( ! class_exists( 'SP_Frontend_Checkout' ) ) :
 			 * Load the general checkout styles if the checkout is the current page.
 			 */
 			if ( 'default' !== $checkout_layout && is_checkout() ) {
-				wp_enqueue_style( 'sp-checkout-layout', plugins_url( 'assets/css/layout.css', __FILE__ ), '', '1.0.0' );
+				wp_enqueue_style( 'sp-checkout-layout', SP_PLUGIN_URL . 'includes/customizer/checkout/assets/css/layout.css', '', storefront_powerpack()->version );
 				wp_style_add_data( 'sp-checkout-layout', 'rtl', 'replace' );
 
 				// Disable the sticky payment javascript.
@@ -111,19 +119,17 @@ if ( ! class_exists( 'SP_Frontend_Checkout' ) ) :
 			 * Load the two-step checkout styles and flexslider if the setting is enabled and the checkout is the current page.
 			 */
 			if ( true === $two_step_checkout && is_checkout() ) {
-				wp_enqueue_style( 'sp-two-step-checkout', plugins_url( 'assets/css/two-step.css', __FILE__ ), '', '1.0.0' );
+				wp_enqueue_style( 'sp-two-step-checkout', SP_PLUGIN_URL . 'includes/customizer/checkout/assets/css/two-step.css', '', storefront_powerpack()->version );
 				wp_style_add_data( 'sp-two-step-checkout', 'rtl', 'replace' );
-				wp_enqueue_script( 'flexslider', plugins_url( 'assets/js/jquery.flexslider.min.js', __FILE__ ), array( 'jquery' ), '2.5.0' );
+				wp_enqueue_script( 'flexslider', SP_PLUGIN_URL . 'includes/customizer/checkout/assets/js/jquery.flexslider.min.js', array( 'jquery' ), '2.5.0' );
 
 				// Disable the sticky payment javascript.
 				wp_dequeue_script( 'storefront-sticky-payment' );
-			}
 
-			/**
-			 * Remove sticky order review from the checkout page.
-			 */
-			if ( false === $sticky_order_review && is_checkout() ) {
-				wp_dequeue_script( 'storefront-sticky-payment' );
+				// Compatibility with Storefront versions under 2.3.
+				if ( version_compare( $storefront_version, '2.3.0', '<' ) ) {
+					wp_enqueue_style( 'sp-fontawesome-4' );
+				}
 			}
 		}
 

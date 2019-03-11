@@ -30,32 +30,32 @@
     <div class="d4p-group-inner">
         <h4>de_DE [Deutsch - German]</h4>
         <ul>
-            <li><?php _e("Version", "dev4press-updater"); ?>: <span>4.0</span></li>
+            <li><?php _e("Version", "dev4press-updater"); ?>: <span>4.0.1</span></li>
         </ul>
 
         <h4>es_ES [Español - Spanish]</h4>
         <ul>
-            <li><?php _e("Version", "dev4press-updater"); ?>: <span>4.0</span></li>
+            <li><?php _e("Version", "dev4press-updater"); ?>: <span>4.0.1</span></li>
         </ul>
 
         <h4>fr_FR [Français - French]</h4>
         <ul>
-            <li><?php _e("Version", "dev4press-updater"); ?>: <span>4.0</span></li>
+            <li><?php _e("Version", "dev4press-updater"); ?>: <span>4.0.1</span></li>
         </ul>
 
         <h4>it_IT [Italiano - Italian]</h4>
         <ul>
-            <li><?php _e("Version", "dev4press-updater"); ?>: <span>4.0</span></li>
+            <li><?php _e("Version", "dev4press-updater"); ?>: <span>4.0.1</span></li>
         </ul>
 
         <h4>nl_NL [Nederlands - Dutch]</h4>
         <ul>
-            <li><?php _e("Version", "dev4press-updater"); ?>: <span>4.0</span></li>
+            <li><?php _e("Version", "dev4press-updater"); ?>: <span>4.0.1</span></li>
         </ul>
 
         <h4>sr_RS [Српски - Serbian]</h4>
         <ul>
-            <li><?php _e("Version", "dev4press-updater"); ?>: <span>4.0</span></li>
+            <li><?php _e("Version", "dev4press-updater"); ?>: <span>4.0.1</span></li>
         </ul>
 
         <h4>ja (日本語 - Japanese)</h4>

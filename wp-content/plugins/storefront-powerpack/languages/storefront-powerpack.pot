@@ -1,18 +1,18 @@
-# Copyright (C) 2017 
-# This file is distributed under the same license as the  package.
+# <!=Copyright (C) 2019
+# This file is distributed under the same license as the  package.=!>
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: "
 "https://github.com/woothemes/storefront-powerpack/issues\n"
-"POT-Creation-Date: 2017-06-23 14:40:26+00:00\n"
+"POT-Creation-Date: 2019-03-04 16:13:05+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2017-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2019-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
-"X-Generator: grunt-wp-i18n 0.5.4\n"
+"X-Generator: grunt-wp-i18n1.0.2\n"
 
 #: includes/class-sp-admin.php:93
 msgid "Storefront Layout Options"
@@ -41,7 +41,8 @@ msgid "Override layout&hellip;"
 msgstr ""
 
 #: includes/class-sp-admin.php:107 includes/class-sp-admin.php:123
-#: includes/customizer/designer/class-sp-designer.php:389
+#: includes/customizer/designer/class-sp-designer.php:395
+#: includes/customizer/layout/customizer.php:116
 msgid "Default"
 msgstr ""
 
@@ -60,13 +61,14 @@ msgid ""
 msgstr ""
 
 #: includes/class-sp-admin.php:124
-#: includes/customizer/integrations/composite-products/customizer.php:205
+#: includes/customizer/integrations/composite-products/customizer.php:185
 msgid "Stacked"
 msgstr ""
 
 #: includes/class-sp-admin.php:125 includes/class-sp-admin.php:141
 #: includes/class-sp-admin.php:157 includes/class-sp-admin.php:173
 #: includes/class-sp-admin.php:189
+#: includes/customizer/designer/includes/class-sp-designer-css-control.php:81
 msgid "Hide"
 msgstr ""
 
@@ -87,6 +89,7 @@ msgstr ""
 
 #: includes/class-sp-admin.php:140 includes/class-sp-admin.php:156
 #: includes/class-sp-admin.php:172 includes/class-sp-admin.php:188
+#: includes/customizer/designer/includes/class-sp-designer-css-control.php:81
 msgid "Show"
 msgstr ""
 
@@ -136,46 +139,35 @@ msgstr ""
 msgid "Powerpack ⚡"
 msgstr ""
 
-#: includes/customizer/checkout/customizer.php:55
+#: includes/customizer/checkout/customizer.php:54
 msgid "Checkout"
 msgstr ""
 
-#: includes/customizer/checkout/customizer.php:68
+#: includes/customizer/checkout/customizer.php:67
 msgid "Checkout layout"
 msgstr ""
 
-#: includes/customizer/checkout/customizer.php:88
+#: includes/customizer/checkout/customizer.php:87
 msgid "Distraction Free Checkout"
 msgstr ""
 
-#: includes/customizer/checkout/customizer.php:89
+#: includes/customizer/checkout/customizer.php:88
 msgid ""
 "Removes all clutter from the checkout, allowing the customer to focus "
 "entirely on that procedure."
 msgstr ""
 
-#: includes/customizer/checkout/customizer.php:105
+#: includes/customizer/checkout/customizer.php:104
 msgid "Two Step Checkout"
 msgstr ""
 
-#: includes/customizer/checkout/customizer.php:106
+#: includes/customizer/checkout/customizer.php:105
 msgid ""
 "Separates the customer details collection form, and the order summary / "
 "payment details form in to two separate pages."
 msgstr ""
 
 #: includes/customizer/checkout/customizer.php:121
-msgid "Sticky Order Review"
-msgstr ""
-
-#: includes/customizer/checkout/customizer.php:122
-msgid ""
-"The order review section sticks to the top of the browser window as the "
-"user scrolls down the page which ensures that the Place Order button is "
-"always visible."
-msgstr ""
-
-#: includes/customizer/checkout/customizer.php:139
 msgid ""
 "These settings do not affect the page you're currently previewing. Visit "
 "the checkout page to see their effects."
@@ -201,181 +193,189 @@ msgstr ""
 msgid "Proceed to payment"
 msgstr ""
 
-#: includes/customizer/designer/class-sp-designer.php:58
+#: includes/customizer/designer/class-sp-designer.php:59
 msgid "Designer"
 msgstr ""
 
-#: includes/customizer/designer/class-sp-designer.php:209
+#: includes/customizer/designer/class-sp-designer.php:215
 msgid "Set as background"
 msgstr ""
 
-#: includes/customizer/designer/class-sp-designer.php:210
+#: includes/customizer/designer/class-sp-designer.php:216
 msgid "Choose background"
 msgstr ""
 
-#: includes/customizer/designer/class-sp-designer.php:388
+#: includes/customizer/designer/class-sp-designer.php:394
 msgid "Theme"
 msgstr ""
 
-#: includes/customizer/designer/class-sp-designer.php:403
+#: includes/customizer/designer/class-sp-designer.php:409
 msgid "Web Safe Fonts"
 msgstr ""
 
-#: includes/customizer/designer/class-sp-designer.php:418
+#: includes/customizer/designer/class-sp-designer.php:424
 msgid "Google Web Fonts"
 msgstr ""
 
-#: includes/customizer/designer/class-sp-designer.php:740
+#: includes/customizer/designer/class-sp-designer.php:778
 msgid "Body"
 msgstr ""
 
-#: includes/customizer/designer/class-sp-designer.php:754
+#: includes/customizer/designer/class-sp-designer.php:792
 #: includes/customizer/header/customizer.php:99
 msgid "Header"
 msgstr ""
 
-#: includes/customizer/designer/class-sp-designer.php:759
+#: includes/customizer/designer/class-sp-designer.php:797
 msgid "Site title / logo"
 msgstr ""
 
-#: includes/customizer/designer/class-sp-designer.php:764
+#: includes/customizer/designer/class-sp-designer.php:802
+msgid "Site Description"
+msgstr ""
+
+#: includes/customizer/designer/class-sp-designer.php:807
+msgid "Site Logo"
+msgstr ""
+
+#: includes/customizer/designer/class-sp-designer.php:812
 msgid "Header search"
 msgstr ""
 
-#: includes/customizer/designer/class-sp-designer.php:769
+#: includes/customizer/designer/class-sp-designer.php:817
 msgid "Navigation wrapper"
 msgstr ""
 
-#: includes/customizer/designer/class-sp-designer.php:774
+#: includes/customizer/designer/class-sp-designer.php:822
 msgid "Main navigation"
 msgstr ""
 
-#: includes/customizer/designer/class-sp-designer.php:779
+#: includes/customizer/designer/class-sp-designer.php:827
 msgid "Main navigation link"
 msgstr ""
 
-#: includes/customizer/designer/class-sp-designer.php:784
+#: includes/customizer/designer/class-sp-designer.php:832
 msgid "Secondary navigation"
 msgstr ""
 
-#: includes/customizer/designer/class-sp-designer.php:789
+#: includes/customizer/designer/class-sp-designer.php:837
 msgid "Header cart"
 msgstr ""
 
-#: includes/customizer/designer/class-sp-designer.php:795
+#: includes/customizer/designer/class-sp-designer.php:843
 msgid "Breadcrumb"
 msgstr ""
 
-#: includes/customizer/designer/class-sp-designer.php:800
+#: includes/customizer/designer/class-sp-designer.php:848
 msgid "Breadcrumb link"
 msgstr ""
 
-#: includes/customizer/designer/class-sp-designer.php:806
+#: includes/customizer/designer/class-sp-designer.php:854
 msgid "Main content"
 msgstr ""
 
-#: includes/customizer/designer/class-sp-designer.php:811
+#: includes/customizer/designer/class-sp-designer.php:859
 msgid "Content / sidebar wrapper"
 msgstr ""
 
-#: includes/customizer/designer/class-sp-designer.php:817
+#: includes/customizer/designer/class-sp-designer.php:865
 msgid "Sidebar"
 msgstr ""
 
-#: includes/customizer/designer/class-sp-designer.php:822
+#: includes/customizer/designer/class-sp-designer.php:870
 msgid "Sidebar Widgets"
 msgstr ""
 
-#: includes/customizer/designer/class-sp-designer.php:827
+#: includes/customizer/designer/class-sp-designer.php:875
 msgid "Widget title"
 msgstr ""
 
-#: includes/customizer/designer/class-sp-designer.php:833
+#: includes/customizer/designer/class-sp-designer.php:881
 #: includes/customizer/footer/customizer.php:50
 msgid "Footer"
 msgstr ""
 
-#: includes/customizer/designer/class-sp-designer.php:838
+#: includes/customizer/designer/class-sp-designer.php:886
 msgid "Footer Widgets"
 msgstr ""
 
-#: includes/customizer/designer/class-sp-designer.php:844
+#: includes/customizer/designer/class-sp-designer.php:892
 msgid "Post / Page Container"
 msgstr ""
 
-#: includes/customizer/designer/class-sp-designer.php:849
+#: includes/customizer/designer/class-sp-designer.php:897
 msgid "Page Content"
 msgstr ""
 
-#: includes/customizer/designer/class-sp-designer.php:854
+#: includes/customizer/designer/class-sp-designer.php:902
 msgid "Post Content"
 msgstr ""
 
-#: includes/customizer/designer/class-sp-designer.php:859
+#: includes/customizer/designer/class-sp-designer.php:907
 msgid "Post Meta"
 msgstr ""
 
-#: includes/customizer/designer/class-sp-designer.php:865
+#: includes/customizer/designer/class-sp-designer.php:913
 msgid "Comment / Review content"
 msgstr ""
 
-#: includes/customizer/designer/class-sp-designer.php:871
+#: includes/customizer/designer/class-sp-designer.php:919
 msgid "Button"
 msgstr ""
 
-#: includes/customizer/designer/class-sp-designer.php:876
+#: includes/customizer/designer/class-sp-designer.php:924
 msgid "Alternate Button"
 msgstr ""
 
-#: includes/customizer/designer/class-sp-designer.php:882
+#: includes/customizer/designer/class-sp-designer.php:930
 msgid "Loop Container"
 msgstr ""
 
-#: includes/customizer/designer/class-sp-designer.php:887
+#: includes/customizer/designer/class-sp-designer.php:935
 msgid "Loop Product"
 msgstr ""
 
-#: includes/customizer/designer/class-sp-designer.php:892
+#: includes/customizer/designer/class-sp-designer.php:940
 msgid "Loop Product Image"
 msgstr ""
 
-#: includes/customizer/designer/class-sp-designer.php:897
+#: includes/customizer/designer/class-sp-designer.php:945
 msgid "Loop Product Title"
 msgstr ""
 
-#: includes/customizer/designer/class-sp-designer.php:902
+#: includes/customizer/designer/class-sp-designer.php:950
 msgid "Loop Sale Marker"
 msgstr ""
 
-#: includes/customizer/designer/class-sp-designer.php:907
+#: includes/customizer/designer/class-sp-designer.php:955
 msgid "Loop Price"
 msgstr ""
 
-#: includes/customizer/designer/class-sp-designer.php:913
+#: includes/customizer/designer/class-sp-designer.php:961
 msgid "Single Product Container"
 msgstr ""
 
-#: includes/customizer/designer/class-sp-designer.php:918
+#: includes/customizer/designer/class-sp-designer.php:966
 msgid "Single Image Container"
 msgstr ""
 
-#: includes/customizer/designer/class-sp-designer.php:923
+#: includes/customizer/designer/class-sp-designer.php:971
 msgid "Single Featured Image"
 msgstr ""
 
-#: includes/customizer/designer/class-sp-designer.php:928
+#: includes/customizer/designer/class-sp-designer.php:976
 msgid "Single Thumbnails Container"
 msgstr ""
 
-#: includes/customizer/designer/class-sp-designer.php:933
+#: includes/customizer/designer/class-sp-designer.php:981
 msgid "Single Thumbnails"
 msgstr ""
 
-#: includes/customizer/designer/class-sp-designer.php:938
+#: includes/customizer/designer/class-sp-designer.php:986
 msgid "Single Product Summary"
 msgstr ""
 
-#: includes/customizer/designer/class-sp-designer.php:943
+#: includes/customizer/designer/class-sp-designer.php:991
 msgid "WooCommerce Tabs"
 msgstr ""
 
@@ -387,182 +387,186 @@ msgstr ""
 msgid "Editing:"
 msgstr ""
 
-#: includes/customizer/designer/includes/class-sp-designer-css-control.php:79
+#: includes/customizer/designer/includes/class-sp-designer-css-control.php:78
+msgid "Show/Hide"
+msgstr ""
+
+#: includes/customizer/designer/includes/class-sp-designer-css-control.php:87
 msgid "Text"
 msgstr ""
 
-#: includes/customizer/designer/includes/class-sp-designer-css-control.php:82
+#: includes/customizer/designer/includes/class-sp-designer-css-control.php:90
 msgid "Font Style"
 msgstr ""
 
-#: includes/customizer/designer/includes/class-sp-designer-css-control.php:106
+#: includes/customizer/designer/includes/class-sp-designer-css-control.php:114
 msgid "Font Family"
 msgstr ""
 
-#: includes/customizer/designer/includes/class-sp-designer-css-control.php:120
+#: includes/customizer/designer/includes/class-sp-designer-css-control.php:128
 msgid "Font Variant"
 msgstr ""
 
-#: includes/customizer/designer/includes/class-sp-designer-css-control.php:127
+#: includes/customizer/designer/includes/class-sp-designer-css-control.php:135
 msgid "Font Size"
 msgstr ""
 
-#: includes/customizer/designer/includes/class-sp-designer-css-control.php:138
+#: includes/customizer/designer/includes/class-sp-designer-css-control.php:146
 msgid "Line Height"
 msgstr ""
 
-#: includes/customizer/designer/includes/class-sp-designer-css-control.php:143
+#: includes/customizer/designer/includes/class-sp-designer-css-control.php:151
 msgid "Letter Spacing"
 msgstr ""
 
-#: includes/customizer/designer/includes/class-sp-designer-css-control.php:154
+#: includes/customizer/designer/includes/class-sp-designer-css-control.php:162
 msgid "Text Color"
 msgstr ""
 
-#: includes/customizer/designer/includes/class-sp-designer-css-control.php:163
+#: includes/customizer/designer/includes/class-sp-designer-css-control.php:171
 msgid "Margin"
 msgstr ""
 
-#: includes/customizer/designer/includes/class-sp-designer-css-control.php:166
-#: includes/customizer/designer/includes/class-sp-designer-css-control.php:216
+#: includes/customizer/designer/includes/class-sp-designer-css-control.php:174
+#: includes/customizer/designer/includes/class-sp-designer-css-control.php:224
 msgid "Top"
 msgstr ""
 
-#: includes/customizer/designer/includes/class-sp-designer-css-control.php:177
-#: includes/customizer/designer/includes/class-sp-designer-css-control.php:227
+#: includes/customizer/designer/includes/class-sp-designer-css-control.php:185
+#: includes/customizer/designer/includes/class-sp-designer-css-control.php:235
 msgid "Bottom"
 msgstr ""
 
-#: includes/customizer/designer/includes/class-sp-designer-css-control.php:188
-#: includes/customizer/designer/includes/class-sp-designer-css-control.php:238
-#: includes/customizer/designer/includes/class-sp-designer-css-control.php:346
+#: includes/customizer/designer/includes/class-sp-designer-css-control.php:196
+#: includes/customizer/designer/includes/class-sp-designer-css-control.php:246
+#: includes/customizer/designer/includes/class-sp-designer-css-control.php:354
 msgid "Left"
 msgstr ""
 
-#: includes/customizer/designer/includes/class-sp-designer-css-control.php:199
-#: includes/customizer/designer/includes/class-sp-designer-css-control.php:249
-#: includes/customizer/designer/includes/class-sp-designer-css-control.php:348
+#: includes/customizer/designer/includes/class-sp-designer-css-control.php:207
+#: includes/customizer/designer/includes/class-sp-designer-css-control.php:257
+#: includes/customizer/designer/includes/class-sp-designer-css-control.php:356
 msgid "Right"
 msgstr ""
 
-#: includes/customizer/designer/includes/class-sp-designer-css-control.php:213
+#: includes/customizer/designer/includes/class-sp-designer-css-control.php:221
 msgid "Padding"
 msgstr ""
 
-#: includes/customizer/designer/includes/class-sp-designer-css-control.php:263
+#: includes/customizer/designer/includes/class-sp-designer-css-control.php:271
 msgid "Border"
 msgstr ""
 
-#: includes/customizer/designer/includes/class-sp-designer-css-control.php:266
+#: includes/customizer/designer/includes/class-sp-designer-css-control.php:274
 msgid "Border Style"
 msgstr ""
 
-#: includes/customizer/designer/includes/class-sp-designer-css-control.php:269
-#: includes/customizer/integrations/composite-products/customizer.php:208
+#: includes/customizer/designer/includes/class-sp-designer-css-control.php:277
+#: includes/customizer/integrations/composite-products/customizer.php:188
 msgid "None"
 msgstr ""
 
-#: includes/customizer/designer/includes/class-sp-designer-css-control.php:270
+#: includes/customizer/designer/includes/class-sp-designer-css-control.php:278
 msgid "Dotted"
 msgstr ""
 
-#: includes/customizer/designer/includes/class-sp-designer-css-control.php:271
+#: includes/customizer/designer/includes/class-sp-designer-css-control.php:279
 msgid "Dashed"
 msgstr ""
 
-#: includes/customizer/designer/includes/class-sp-designer-css-control.php:272
+#: includes/customizer/designer/includes/class-sp-designer-css-control.php:280
 msgid "Double"
 msgstr ""
 
-#: includes/customizer/designer/includes/class-sp-designer-css-control.php:273
+#: includes/customizer/designer/includes/class-sp-designer-css-control.php:281
 msgid "Solid"
 msgstr ""
 
-#: includes/customizer/designer/includes/class-sp-designer-css-control.php:278
+#: includes/customizer/designer/includes/class-sp-designer-css-control.php:286
 msgid "Border Width"
 msgstr ""
 
-#: includes/customizer/designer/includes/class-sp-designer-css-control.php:289
+#: includes/customizer/designer/includes/class-sp-designer-css-control.php:297
 msgid "Border Radius"
 msgstr ""
 
-#: includes/customizer/designer/includes/class-sp-designer-css-control.php:300
+#: includes/customizer/designer/includes/class-sp-designer-css-control.php:308
 msgid "Border Color"
 msgstr ""
 
-#: includes/customizer/designer/includes/class-sp-designer-css-control.php:309
+#: includes/customizer/designer/includes/class-sp-designer-css-control.php:317
 msgid "Background"
 msgstr ""
 
-#: includes/customizer/designer/includes/class-sp-designer-css-control.php:312
+#: includes/customizer/designer/includes/class-sp-designer-css-control.php:320
 msgid "Background Color"
 msgstr ""
 
-#: includes/customizer/designer/includes/class-sp-designer-css-control.php:318
+#: includes/customizer/designer/includes/class-sp-designer-css-control.php:326
 msgid "Background Image"
 msgstr ""
 
-#: includes/customizer/designer/includes/class-sp-designer-css-control.php:321
+#: includes/customizer/designer/includes/class-sp-designer-css-control.php:329
 msgid "No background image set"
 msgstr ""
 
-#: includes/customizer/designer/includes/class-sp-designer-css-control.php:325
+#: includes/customizer/designer/includes/class-sp-designer-css-control.php:333
 msgid "Add Image"
 msgstr ""
 
-#: includes/customizer/designer/includes/class-sp-designer-css-control.php:326
+#: includes/customizer/designer/includes/class-sp-designer-css-control.php:334
 msgid "Change Image"
 msgstr ""
 
-#: includes/customizer/designer/includes/class-sp-designer-css-control.php:327
+#: includes/customizer/designer/includes/class-sp-designer-css-control.php:335
 msgid "Remove Image"
 msgstr ""
 
-#: includes/customizer/designer/includes/class-sp-designer-css-control.php:332
+#: includes/customizer/designer/includes/class-sp-designer-css-control.php:340
 msgid "Background Repeat"
 msgstr ""
 
-#: includes/customizer/designer/includes/class-sp-designer-css-control.php:335
+#: includes/customizer/designer/includes/class-sp-designer-css-control.php:343
 msgid "No repeat"
 msgstr ""
 
-#: includes/customizer/designer/includes/class-sp-designer-css-control.php:336
+#: includes/customizer/designer/includes/class-sp-designer-css-control.php:344
 msgid "Tile"
 msgstr ""
 
-#: includes/customizer/designer/includes/class-sp-designer-css-control.php:337
+#: includes/customizer/designer/includes/class-sp-designer-css-control.php:345
 msgid "Tile Horizontally"
 msgstr ""
 
-#: includes/customizer/designer/includes/class-sp-designer-css-control.php:338
+#: includes/customizer/designer/includes/class-sp-designer-css-control.php:346
 msgid "Tile Vertically"
 msgstr ""
 
-#: includes/customizer/designer/includes/class-sp-designer-css-control.php:343
+#: includes/customizer/designer/includes/class-sp-designer-css-control.php:351
 msgid "Background Position"
 msgstr ""
 
-#: includes/customizer/designer/includes/class-sp-designer-css-control.php:347
+#: includes/customizer/designer/includes/class-sp-designer-css-control.php:355
 msgid "Center"
 msgstr ""
 
-#: includes/customizer/designer/includes/class-sp-designer-css-control.php:353
+#: includes/customizer/designer/includes/class-sp-designer-css-control.php:361
 msgid "Background Attachment"
 msgstr ""
 
-#: includes/customizer/designer/includes/class-sp-designer-css-control.php:356
+#: includes/customizer/designer/includes/class-sp-designer-css-control.php:364
 msgid "Scroll"
 msgstr ""
 
-#: includes/customizer/designer/includes/class-sp-designer-css-control.php:357
+#: includes/customizer/designer/includes/class-sp-designer-css-control.php:365
 msgid "Fixed"
 msgstr ""
 
-#: includes/customizer/designer/includes/class-sp-designer-css-control.php:364
+#: includes/customizer/designer/includes/class-sp-designer-css-control.php:372
 msgid "Reset %s styles"
 msgstr ""
 
-#: includes/customizer/designer/includes/class-sp-designer-css-control.php:386
+#: includes/customizer/designer/includes/class-sp-designer-css-control.php:394
 msgid "Back"
 msgstr ""
 
@@ -711,7 +715,7 @@ msgstr ""
 #: includes/customizer/homepage/customizer.php:565
 #: includes/customizer/homepage/customizer.php:691
 #: includes/customizer/homepage/customizer.php:818
-#: includes/customizer/shop/customizer.php:118
+#: includes/customizer/shop/customizer.php:119
 msgid "Description"
 msgstr ""
 
@@ -721,7 +725,7 @@ msgstr ""
 #: includes/customizer/homepage/customizer.php:581
 #: includes/customizer/homepage/customizer.php:707
 #: includes/customizer/homepage/customizer.php:834
-#: includes/customizer/shop/customizer.php:137
+#: includes/customizer/shop/customizer.php:139
 msgid "Columns"
 msgstr ""
 
@@ -839,44 +843,26 @@ msgid "Options per page"
 msgstr ""
 
 #: includes/customizer/integrations/composite-products/customizer.php:152
-msgid "Options pagination"
-msgstr ""
-
-#: includes/customizer/integrations/composite-products/customizer.php:153
-msgid ""
-"Turn off pagination and replace it with a %1$sLoad More%2$s button. "
-"Applicable when the %1$sThumbnails%2$s style is active."
-msgstr ""
-
-#: includes/customizer/integrations/composite-products/customizer.php:159
-msgid "On"
-msgstr ""
-
-#: includes/customizer/integrations/composite-products/customizer.php:160
-msgid "Off"
-msgstr ""
-
-#: includes/customizer/integrations/composite-products/customizer.php:172
 msgid "Max columns in Summary"
 msgstr ""
 
-#: includes/customizer/integrations/composite-products/customizer.php:173
+#: includes/customizer/integrations/composite-products/customizer.php:153
 msgid "Applicable when using the %1$sStepped%2$s or %1$sComponentized%2$s layout."
 msgstr ""
 
-#: includes/customizer/integrations/composite-products/customizer.php:198
+#: includes/customizer/integrations/composite-products/customizer.php:178
 msgid "Toggle-box view"
 msgstr ""
 
-#: includes/customizer/integrations/composite-products/customizer.php:199
+#: includes/customizer/integrations/composite-products/customizer.php:179
 msgid "Apply the toggle-box Component view to the following layout(s):"
 msgstr ""
 
-#: includes/customizer/integrations/composite-products/customizer.php:206
+#: includes/customizer/integrations/composite-products/customizer.php:186
 msgid "Progressive"
 msgstr ""
 
-#: includes/customizer/integrations/composite-products/customizer.php:207
+#: includes/customizer/integrations/composite-products/customizer.php:187
 msgid "Both"
 msgstr ""
 
@@ -894,15 +880,27 @@ msgstr ""
 msgid "Define the width of your site content."
 msgstr ""
 
-#: includes/customizer/layout/customizer.php:86
+#: includes/customizer/layout/customizer.php:85
+msgid ""
+"The \"Max Width\" option makes website content span the full width of the "
+"browser window rather than having a fixed width. With this option enabled, "
+"after publishing your changes and reloading the Customizer, you might want "
+"to adjust the size of the %sWooCommerce images%s."
+msgstr ""
+
+#: includes/customizer/layout/customizer.php:109
 msgid "Content frame"
 msgstr ""
 
-#: includes/customizer/layout/customizer.php:87
+#: includes/customizer/layout/customizer.php:110
 msgid "Wraps the site content in a frame, offsetting it from the background."
 msgstr ""
 
-#: includes/customizer/layout/customizer.php:106
+#: includes/customizer/layout/customizer.php:117
+msgid "Frame"
+msgstr ""
+
+#: includes/customizer/layout/customizer.php:129
 msgid "Content background color"
 msgstr ""
 
@@ -978,68 +976,68 @@ msgid ""
 "shop page to see their effects."
 msgstr ""
 
-#: includes/customizer/shop/customizer.php:160
+#: includes/customizer/shop/customizer.php:163
 msgid "Products per page"
 msgstr ""
 
-#: includes/customizer/shop/customizer.php:212
+#: includes/customizer/shop/customizer.php:216
 msgid "Content alignment"
 msgstr ""
 
-#: includes/customizer/shop/customizer.php:243
+#: includes/customizer/shop/customizer.php:247
 msgid "Display product results count"
 msgstr ""
 
-#: includes/customizer/shop/customizer.php:258
+#: includes/customizer/shop/customizer.php:263
 msgid "Display product sorting"
 msgstr ""
 
-#: includes/customizer/shop/customizer.php:273
+#: includes/customizer/shop/customizer.php:279
 msgid "Display product image"
 msgstr ""
 
-#: includes/customizer/shop/customizer.php:288
+#: includes/customizer/shop/customizer.php:294
 msgid "Display product title"
 msgstr ""
 
-#: includes/customizer/shop/customizer.php:303
+#: includes/customizer/shop/customizer.php:309
 msgid "Display sale flash"
 msgstr ""
 
-#: includes/customizer/shop/customizer.php:318
+#: includes/customizer/shop/customizer.php:324
 msgid "Display rating"
 msgstr ""
 
-#: includes/customizer/shop/customizer.php:333
+#: includes/customizer/shop/customizer.php:339
 msgid "Display price"
 msgstr ""
 
-#: includes/customizer/shop/customizer.php:348
+#: includes/customizer/shop/customizer.php:354
 msgid "Display add to cart button"
 msgstr ""
 
-#: includes/customizer/shop/customizer.php:363
+#: includes/customizer/shop/customizer.php:369
 msgid "Display description"
 msgstr ""
 
-#: includes/customizer/shop/customizer.php:378
+#: includes/customizer/shop/customizer.php:384
 msgid "Enable infinite scroll"
 msgstr ""
 
-#: includes/customizer/shop/customizer.php:405
+#: includes/customizer/shop/customizer.php:411
 msgid "Star color"
 msgstr ""
 
-#: includes/customizer/shop/customizer.php:406
+#: includes/customizer/shop/customizer.php:412
 msgid "The color of the star ratings throughout the store"
 msgstr ""
 
-#: storefront-powerpack.php:202
+#: storefront-powerpack.php:224
 msgid ""
 "%sThanks for installing Storefront Powerpack. To get started, visit the "
 "%sCustomizer%s.%s %sOpen the Customizer%s"
 msgstr ""
 
-#: storefront-powerpack.php:300 storefront-powerpack.php:309
+#: storefront-powerpack.php:322 storefront-powerpack.php:331
 msgid "Cheatin&#8217; huh?"
 msgstr ""

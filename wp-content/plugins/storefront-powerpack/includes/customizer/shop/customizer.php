@@ -96,12 +96,13 @@ if ( ! class_exists( 'SP_Customizer_Shop' ) ) :
 			) );
 
 			$wp_customize->add_control( new SP_Buttonset_Control( $wp_customize, 'sp_shop_layout', array(
-				'label'    => __( 'Page layout', 'storefront-powerpack' ),
-				'section'  => self::POWERPACK_SHOP_SECTION,
-				'settings' => 'sp_shop_layout',
-				'type'     => 'select',
-				'priority' => 20,
-				'choices'  => array(
+				'label'           => __( 'Page layout', 'storefront-powerpack' ),
+				'section'         => self::POWERPACK_SHOP_SECTION,
+				'settings'        => 'sp_shop_layout',
+				'type'            => 'select',
+				'active_callback' => array( $this, 'is_not_homepage_template' ),
+				'priority'        => 20,
+				'choices'         => array(
 					'default'    => 'Default',
 					'full-width' => 'Full Width',
 				),
@@ -115,12 +116,13 @@ if ( ! class_exists( 'SP_Customizer_Shop' ) ) :
 			) );
 
 			$wp_customize->add_control( new SP_Buttonset_Control( $wp_customize, 'sp_archive_description', array(
-				'label'    => __( 'Description', 'storefront-powerpack' ),
-				'section'  => self::POWERPACK_SHOP_SECTION,
-				'settings' => 'sp_archive_description',
-				'type'     => 'select',
-				'priority' => 30,
-				'choices'  => array(
+				'label'           => __( 'Description', 'storefront-powerpack' ),
+				'section'         => self::POWERPACK_SHOP_SECTION,
+				'settings'        => 'sp_archive_description',
+				'type'            => 'select',
+				'priority'        => 30,
+				'active_callback' => array( $this, 'is_not_homepage_template' ),
+				'choices'         => array(
 					'default' => 'Above products',
 					'beneath' => 'Beneath products',
 				),
@@ -147,6 +149,7 @@ if ( ! class_exists( 'SP_Customizer_Shop' ) ) :
 					'5' => '5',
 					'6' => '6',
 				),
+				'active_callback' => array( $this, 'check_compatibility' ),
 			) ) );
 
 			/**
@@ -188,6 +191,7 @@ if ( ! class_exists( 'SP_Customizer_Shop' ) ) :
 					'23' => '23',
 					'24' => '24',
 				),
+				'active_callback' => array( $this, 'check_compatibility' ),
 			) ) );
 
 			/**
@@ -240,11 +244,12 @@ if ( ! class_exists( 'SP_Customizer_Shop' ) ) :
 			) );
 
 			$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'sp_product_archive_results_count', array(
-				'label'    => __( 'Display product results count', 'storefront-powerpack' ),
-				'section'  => self::POWERPACK_SHOP_SECTION,
-				'settings' => 'sp_product_archive_results_count',
-				'type'     => 'checkbox',
-				'priority' => 90,
+				'label'           => __( 'Display product results count', 'storefront-powerpack' ),
+				'section'         => self::POWERPACK_SHOP_SECTION,
+				'settings'        => 'sp_product_archive_results_count',
+				'type'            => 'checkbox',
+				'active_callback' => array( $this, 'is_not_homepage_template' ),
+				'priority'        => 90,
 			) ) );
 
 			/**
@@ -255,11 +260,12 @@ if ( ! class_exists( 'SP_Customizer_Shop' ) ) :
 			) );
 
 			$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'sp_product_archive_sorting', array(
-				'label'    => __( 'Display product sorting', 'storefront-powerpack' ),
-				'section'  => self::POWERPACK_SHOP_SECTION,
-				'settings' => 'sp_product_archive_sorting',
-				'type'     => 'checkbox',
-				'priority' => 100,
+				'label'           => __( 'Display product sorting', 'storefront-powerpack' ),
+				'section'         => self::POWERPACK_SHOP_SECTION,
+				'settings'        => 'sp_product_archive_sorting',
+				'type'            => 'checkbox',
+				'active_callback' => array( $this, 'is_not_homepage_template' ),
+				'priority'        => 100,
 			) ) );
 
 			/**
@@ -417,11 +423,25 @@ if ( ! class_exists( 'SP_Customizer_Shop' ) ) :
 		 * @since  1.0.0
 		 */
 		public function is_not_shop_page() {
-			if ( is_shop() || is_product_taxonomy() || is_product_category() || is_product_tag() ) {
+			if ( is_shop() || is_product_taxonomy() || is_product_category() || is_product_tag() || is_page_template( 'template-homepage.php' ) ) {
 				return false;
-			} else {
-				return true;
 			}
+
+			return true;
+		}
+
+		/**
+		 * Checks if the page currently being previewed is not a shop page
+		 *
+		 * @return bool
+		 * @since  1.4.9
+		 */
+		public function is_not_homepage_template() {
+			if ( is_page_template( 'template-homepage.php' ) ) {
+				return false;
+			}
+
+			return true;
 		}
 
 		/**
@@ -437,6 +457,16 @@ if ( ! class_exists( 'SP_Customizer_Shop' ) ) :
 			}
 
 			return false;
+		}
+
+		/**
+		 * Checks if activated WooCommerce version is below 3.3.
+		 *
+		 * @return bool
+		 * @since  1.4.5
+		 */
+		public function check_compatibility() {
+			return defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '3.3', '<' );
 		}
 	}
 
