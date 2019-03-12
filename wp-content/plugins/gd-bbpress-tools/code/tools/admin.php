@@ -88,12 +88,14 @@ class gdbbMod_Admin {
 
         if (isset($_POST['gdbb-tools-submit'])) {
             global $gdbbpress_tools;
+
             check_admin_referer('gd-bbpress-tools');
 
             $gdbbpress_tools->o['include_always'] = isset($_POST['include_always']) ? 1 : 0;
             $gdbbpress_tools->o['include_js'] = isset($_POST['include_js']) ? 1 : 0;
             $gdbbpress_tools->o['include_css'] = isset($_POST['include_css']) ? 1 : 0;
             $gdbbpress_tools->o['allowed_tags_div'] = isset($_POST['allowed_tags_div']) ? 1 : 0;
+            $gdbbpress_tools->o['kses_allowed_override'] = d4p_sanitize_basic($_POST['kses_allowed_override']);
             $gdbbpress_tools->o['quote_active'] = isset($_POST['quote_active']) ? 1 : 0;
             $gdbbpress_tools->o['quote_location'] = d4p_sanitize_basic($_POST['quote_location']);
             $gdbbpress_tools->o['quote_method'] = d4p_sanitize_basic($_POST['quote_method']);

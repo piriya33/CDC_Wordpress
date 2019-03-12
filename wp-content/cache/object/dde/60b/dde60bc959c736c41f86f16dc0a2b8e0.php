@@ -1,4 +1,4 @@
-uʅ\<?php exit; ?>a:1:{s:7:"content";O:8:"stdClass":23:{s:2:"ID";s:5:"26931";s:11:"post_author";s:3:"739";s:9:"post_date";s:19:"2019-02-26 21:15:01";s:13:"post_date_gmt";s:19:"2019-02-26 14:15:01";s:12:"post_content";s:4490:"<img src="http://www.chaloke.com/wp-content/uploads/2019/02/IMG_20160410_201056.jpg" />
+�Շ\<?php exit; ?>a:1:{s:7:"content";O:8:"stdClass":23:{s:2:"ID";s:5:"26931";s:11:"post_author";s:3:"739";s:9:"post_date";s:19:"2019-02-26 21:15:01";s:13:"post_date_gmt";s:19:"2019-02-26 14:15:01";s:12:"post_content";s:4490:"<img src="http://www.chaloke.com/wp-content/uploads/2019/02/IMG_20160410_201056.jpg" />
 
 <img src="http://www.chaloke.com/wp-content/uploads/2019/02/IMG_20160410_200954.jpg" />
 

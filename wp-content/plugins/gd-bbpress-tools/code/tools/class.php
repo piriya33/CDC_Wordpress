@@ -142,9 +142,10 @@ class gdbbPressTools {
             $this->mod['t'] = new gdbbMod_Toolbar();
         }
 
-        if ($this->o['allowed_tags_div'] == 1) {
+        if ($this->o['kses_allowed_override'] != 'bbpress') {
+            add_filter('bbp_kses_allowed_tags', array($this, 'kses_allowed_tags'), 10000);
+        } else if ($this->o['allowed_tags_div'] == 1) {
             add_filter('bbp_kses_allowed_tags', array($this, 'allowed_tags'));
-            add_filter('bbp_get_allowed_tags', array($this, 'display_allowed_tags'));
         }
 
         $views = array();
@@ -182,10 +183,14 @@ class gdbbPressTools {
         return $list;
     }
 
-    public function display_allowed_tags($tags) {
-        $remove = str_replace(htmlentities('<div class="">'), '', $tags);
+    public function kses_allowed_tags($list) {
+        if ($this->o['kses_allowed_override'] == 'post') {
+            $list = wp_kses_allowed_html('post');
+        } else if ($this->o['kses_allowed_override'] == 'expanded') {
+            $list = $this->_kses_expanded_list_of_tags();
+        }
 
-        return trim($remove);
+        return $list;
     }
 
     public function load_plugin() {
@@ -200,6 +205,159 @@ class gdbbPressTools {
         } else {
             require_once(GDBBPRESSTOOLS_PATH.'code/tools/front.php');
         }
+    }
+
+    private function _kses_expanded_list_of_tags() {
+        return array(
+            'a' => array(
+                'class' => true,
+                'href' => true,
+                'title' => true,
+                'rel' => true,
+                'class' => true,
+                'style' => true,
+                'download' => true,
+                'target' => true
+            ),
+            'abbr' => array(),
+            'blockquote' => array(
+                'class' => true,
+                'style' => true,
+                'cite' => true
+            ),
+            'div' => array(
+                'class' => true,
+                'style' => true
+            ),
+            'span' => array(
+                'class' => true,
+                'style' => true
+            ),
+            'code' => array(
+                'class' => true,
+                'style' => true
+            ),
+            'pre' => array(
+                'class' => true,
+                'style' => true
+            ),
+            'em' => array(
+                'class' => true,
+                'style' => true
+            ),
+            'i' => array(
+                'class' => true,
+                'style' => true
+            ),
+            'b' => array(
+                'class' => true,
+                'style' => true
+            ),
+            'strong' => array(
+                'class' => true,
+                'style' => true
+            ),
+            'del' => array(
+                'datetime' => true,
+                'class' => true,
+                'style' => true
+            ),
+            'h1' => array(
+                'align' => true,
+                'class' => true,
+                'style' => true
+            ),
+            'h2' => array(
+                'align' => true,
+                'class' => true,
+                'style' => true
+            ),
+            'h3' => array(
+                'align' => true,
+                'class' => true,
+                'style' => true
+            ),
+            'h4' => array(
+                'align' => true,
+                'class' => true,
+                'style' => true
+            ),
+            'h5' => array(
+                'align' => true,
+                'class' => true,
+                'style' => true
+            ),
+            'h6' => array(
+                'align' => true,
+                'class' => true,
+                'style' => true
+            ),
+            'ul' => array(
+                'class' => true,
+                'style' => true
+            ),
+            'ol' => array(
+                'class' => true,
+                'style' => true,
+                'start' => true
+            ),
+            'li' => array(
+                'class' => true,
+                'style' => true
+            ),
+            'img' => array(
+                'class' => true,
+                'style' => true,
+                'src' => true,
+                'border' => true,
+                'alt' => true,
+                'height' => true,
+                'width' => true
+            ),
+            'table' => array(
+                'align' => true,
+                'bgcolor' => true,
+                'border' => true,
+                'class' => true,
+                'style' => true
+            ),
+            'tbody' => array(
+                'align' => true,
+                'valign' => true,
+                'class' => true,
+                'style' => true
+            ),
+            'td' => array(
+                'align' => true,
+                'valign' => true,
+                'class' => true,
+                'style' => true
+            ),
+            'tfoot' => array(
+                'align' => true,
+                'valign' => true,
+                'class' => true,
+                'style' => true
+            ),
+            'th' => array(
+                'align' => true,
+                'valign' => true,
+                'class' => true,
+                'style' => true
+            ),
+            'thead' => array(
+                'align' => true,
+                'valign' => true,
+                'class' => true,
+                'style' => true
+            ),
+            'tr' => array(
+                'align' => true,
+                'valign' => true,
+                'class' => true,
+                'style' => true
+            )
+        );
     }
 }
 

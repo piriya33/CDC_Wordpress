@@ -1,1 +1,0 @@
-‚…\<?php exit; ?>a:1:{s:7:"content";s:171:"O:8:"stdClass":7:{s:9:"moderated";s:2:"13";s:8:"approved";s:4:"8781";s:14:"total_comments";i:8794;s:3:"all";i:8794;s:4:"spam";i:0;s:5:"trash";i:0;s:12:"post-trashed";i:0;}";}

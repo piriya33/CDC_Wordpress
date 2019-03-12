@@ -1,4 +1,4 @@
-uʅ\<?php exit; ?>a:1:{s:7:"content";O:8:"stdClass":23:{s:2:"ID";s:5:"27925";s:11:"post_author";s:3:"739";s:9:"post_date";s:19:"2019-03-08 09:43:42";s:13:"post_date_gmt";s:19:"2019-03-08 02:43:42";s:12:"post_content";s:1223:"<img src="http://www.chaloke.com/wp-content/uploads/2019/03/283738.jpg" />
+Շ\<?php exit; ?>a:1:{s:7:"content";O:8:"stdClass":23:{s:2:"ID";s:5:"27925";s:11:"post_author";s:3:"739";s:9:"post_date";s:19:"2019-03-08 09:43:42";s:13:"post_date_gmt";s:19:"2019-03-08 02:43:42";s:12:"post_content";s:1223:"<img src="http://www.chaloke.com/wp-content/uploads/2019/03/283738.jpg" />
 
 วัดอุทุมพร ตำบลทุ่งมน อำเภอปราสาท จังหวัดสุรินทร์ ยังไม่มีโต๊ะหมู่บูชาในพระอุโบสถ ขอเชิญชวนพวกเราร่วมอนุโมทนาบุญครั้งนี้ด้วยกันนะครับ
 

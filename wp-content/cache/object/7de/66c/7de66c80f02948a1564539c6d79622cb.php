@@ -1,4 +1,4 @@
-uʅ\<?php exit; ?>a:1:{s:7:"content";a:16:{s:19:"_bbp_akismet_result";a:1:{i:0;s:5:"false";}s:20:"_bbp_akismet_history";a:1:{i:0;s:148:"a:4:{s:4:"time";d:1551497564.953474;s:7:"message";s:37:"Akismet cleared this post as not spam";s:5:"event";s:9:"check-ham";s:4:"user";s:6:"teetat";}";}s:25:"_bbp_akismet_as_submitted";a:1:{i:0;s:6009:"a:76:{s:14:"comment_author";s:6:"teetat";s:20:"comment_author_email";s:21:"titat.thiti@yahoo.com";s:18:"comment_author_url";s:0:"";s:15:"comment_content";s:1071:"สวัสดีครับ
+Շ\<?php exit; ?>a:1:{s:7:"content";a:16:{s:19:"_bbp_akismet_result";a:1:{i:0;s:5:"false";}s:20:"_bbp_akismet_history";a:1:{i:0;s:148:"a:4:{s:4:"time";d:1551497564.953474;s:7:"message";s:37:"Akismet cleared this post as not spam";s:5:"event";s:9:"check-ham";s:4:"user";s:6:"teetat";}";}s:25:"_bbp_akismet_as_submitted";a:1:{i:0;s:6009:"a:76:{s:14:"comment_author";s:6:"teetat";s:20:"comment_author_email";s:21:"titat.thiti@yahoo.com";s:18:"comment_author_url";s:0:"";s:15:"comment_content";s:1071:"สวัสดีครับ
 
 รบกวนด้วยครับ
 

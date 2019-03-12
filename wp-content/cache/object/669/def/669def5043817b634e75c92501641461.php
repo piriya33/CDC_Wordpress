@@ -1,4 +1,4 @@
-uʅ\<?php exit; ?>a:1:{s:7:"content";O:8:"stdClass":23:{s:2:"ID";s:5:"16676";s:11:"post_author";s:5:"26747";s:9:"post_date";s:19:"2017-07-23 10:26:36";s:13:"post_date_gmt";s:19:"2017-07-23 03:26:36";s:12:"post_content";s:276:"สวัสดีครับ ถ้าผมต้องการ download file สูตร cdc ของ metastock แบบตัวอย่าง
+Շ\<?php exit; ?>a:1:{s:7:"content";O:8:"stdClass":23:{s:2:"ID";s:5:"16676";s:11:"post_author";s:5:"26747";s:9:"post_date";s:19:"2017-07-23 10:26:36";s:13:"post_date_gmt";s:19:"2017-07-23 03:26:36";s:12:"post_content";s:276:"สวัสดีครับ ถ้าผมต้องการ download file สูตร cdc ของ metastock แบบตัวอย่าง
 
 ที่ผมส่งมานี้ต้องdownload ที่ไหนครับ
 

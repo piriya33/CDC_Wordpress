@@ -1,4 +1,4 @@
-uʅ\<?php exit; ?>a:1:{s:7:"content";O:8:"stdClass":24:{s:2:"ID";i:19298;s:11:"post_author";s:4:"1985";s:9:"post_date";s:19:"2017-11-27 14:45:13";s:13:"post_date_gmt";s:19:"2017-11-27 07:45:13";s:12:"post_content";s:2182:"Dec 30, 2015
+Շ\<?php exit; ?>a:1:{s:7:"content";O:8:"stdClass":24:{s:2:"ID";i:19298;s:11:"post_author";s:4:"1985";s:9:"post_date";s:19:"2017-11-27 14:45:13";s:13:"post_date_gmt";s:19:"2017-11-27 07:45:13";s:12:"post_content";s:2182:"Dec 30, 2015
 
 ChalokeDotCom analysis of  คุณลุงโฉลก กับปีแห่งดอย
 

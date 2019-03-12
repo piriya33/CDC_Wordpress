@@ -41,6 +41,25 @@
         </fieldset>
 
         <fieldset>
+            <h3><?php _e("Allowed HTML tags and attributes", "gd-bbpress-tools"); ?></h3>
+            <p><?php _e("By default, only keymasters can post unrestricted HTML, other users are limited to a very small subset of tags. With this option, you can change the scope of tags and tag attributes bbPress will allow for topics and replies.", "gd-bbpress-tools"); ?></p>
+            <table class="form-table">
+                <tbody>
+                    <tr valign="top">
+                        <th scope="row"><label><?php _e("Allowed HTML", "gd-bbpress-tools"); ?></label></th>
+                        <td>
+                            <select name="kses_allowed_override" class="regular-text">
+                                <option value="bbpress"<?php if ($options["kses_allowed_override"] == "bbpress") echo ' selected="selected"'; ?>><?php _e("bbPress Default Set", "gd-bbpress-tools"); ?></option>
+                                <option value="expanded"<?php if ($options["kses_allowed_override"] == "expanded") echo ' selected="selected"'; ?>><?php _e("Expanded Set (Recommended)", "gd-bbpress-tools"); ?></option>
+                                <option value="post"<?php if ($options["kses_allowed_override"] == "post") echo ' selected="selected"'; ?>><?php _e("Full WordPress Posts Set", "gd-bbpress-tools"); ?></option>
+                            </select>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </fieldset>
+
+        <fieldset>
             <h3><?php _e("Quote Topics and Replies", "gd-bbpress-tools"); ?></h3>
             <p><?php _e("Add button to quote content for a topic and reply with the author and link. Can use BBCode quote type.", "gd-bbpress-tools"); ?></p>
             <table class="form-table">
