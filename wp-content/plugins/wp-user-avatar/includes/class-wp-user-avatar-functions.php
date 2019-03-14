@@ -137,21 +137,29 @@ class WP_User_Avatar_Functions {
         }
         else{
 
-          if (array_key_exists($hash, $wpua_hash_gravatar)){
+          if(is_array($wpua_hash_gravatar) && !empty($wpua_hash_gravatar)){
 
-              unset($wpua_hash_gravatar[$hash]);
-              $wpua_hash_gravatar[$hash][date('m-d-Y')] = (bool)$has_gravatar;
-              update_option('wpua_hash_gravatar',serialize($wpua_hash_gravatar));
-            
+              if (array_key_exists($hash, $wpua_hash_gravatar)){
+
+                  unset($wpua_hash_gravatar[$hash]);
+                  $wpua_hash_gravatar[$hash][date('m-d-Y')] = (bool)$has_gravatar;
+                  update_option('wpua_hash_gravatar',serialize($wpua_hash_gravatar));
+              }
+              else
+              {
+                $wpua_hash_gravatar[$hash][date('m-d-Y')] = (bool)$has_gravatar;
+                update_option('wpua_hash_gravatar',serialize($wpua_hash_gravatar));
+
+              }
 
           }
-          else
-          {
+
+          /*else{
             $wpua_hash_gravatar[$hash][date('m-d-Y')] = (bool)$has_gravatar;
             update_option('wpua_hash_gravatar',serialize($wpua_hash_gravatar));
 
-          }
-          
+          }*/
+        
         }
       //end
       }

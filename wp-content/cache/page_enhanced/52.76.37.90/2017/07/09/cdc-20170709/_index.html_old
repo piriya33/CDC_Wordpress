@@ -588,22 +588,6 @@ img.emoji {
 <link rel='stylesheet' id='sp-styles-css'  href='http://52.76.37.90/wp-content/plugins/storefront-powerpack/assets/css/style.css?ver=1.4.15' type='text/css' media='all' />
 <link rel='stylesheet' id='wc-bundle-style-css'  href='http://52.76.37.90/wp-content/plugins/woocommerce-product-bundles/assets/css/frontend/woocommerce.css?ver=5.9.2' type='text/css' media='all' />
 <link rel='stylesheet' id='custom-css-css'  href='http://52.76.37.90/wp-content/plugins/theme-customisations-master/custom/style.css?ver=5.1' type='text/css' media='all' />
-<br />
-<b>Notice</b>:  woocommerce_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
-<br />
-<b>Notice</b>:  wc_checkout_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
-<br />
-<b>Notice</b>:  woocommerce_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
-<br />
-<b>Notice</b>:  wc_checkout_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
-<br />
-<b>Notice</b>:  woocommerce_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
-<br />
-<b>Notice</b>:  wc_checkout_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
-<br />
-<b>Notice</b>:  woocommerce_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
-<br />
-<b>Notice</b>:  wc_checkout_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
 <script type='text/javascript' src='http://52.76.37.90/wp-includes/js/jquery/jquery.js?ver=1.12.4'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/theme-customisations-master/custom/custom.js?ver=5.1'></script>
@@ -624,7 +608,7 @@ img.emoji {
 
 <script type="text/javascript">
     /* <![CDATA[ */
-    var gdbxRender_Data = { url: "http://52.76.37.90/wp-admin/admin-ajax.php", run_quote: true, run_report: false, run_thanks: false, run_attachments: true, run_canned_replies: false, run_bbcodes: true, run_fitvids: true, wp_editor: true, wp_version: 51, last_cookie: 1552388260, bbpress_version: 25, text_are_you_sure: "Are you sure? Operation is not reversible.", now: 1552384660, thanks_thanks: "Thanks", thanks_unthanks: "Remove Thanks", thanks_saved: "Thanks Saved", thanks_removal: true, validate_attachments: true, insert_into_content: true, max_files: 5, max_size: 5120000, limiter: true, allowed_extensions: "jpg jpeg jpe gif png bmp tiff tif ico asf asx wmv wmx wm avi divx flv mov qt mpeg mpg mpe mp4 m4v ogv webm mkv 3gp 3gpp 3g2 3gp2 txt asc c cc h srt csv tsv ics rtx css vtt dfxp mp3 m4a m4b aac ra ram wav ogg oga flac mid midi wma wax mka rtf pdf class tar zip gz gzip rar 7z psd xcf doc pot pps ppt wri xla xls xlt xlw mdb mpp docx docm dotx dotm xlsx xlsm xlsb xltx xltm xlam pptx pptm ppsx ppsm potx potm ppam sldx sldm onetoc onetoc2 onetmp onepkg oxps xps odt odp ods odg odc odb odf wp wpd key numbers pages afl", text_select_file: "Select File", text_file_name: "Name", text_file_size: "Size", text_file_type: "Extension", text_file_validation: "Error!", text_file_validation_size: "The file is too big.", text_file_validation_type: "File type not allowed.", text_file_remove: "Remove this file", text_file_shortcode: "Insert into content", text_file_caption: "Set file caption", text_file_caption_placeholder: "Caption..." };
+    var gdbxRender_Data = { url: "http://52.76.37.90/wp-admin/admin-ajax.php", run_quote: true, run_report: false, run_thanks: false, run_attachments: true, run_canned_replies: false, run_bbcodes: true, run_fitvids: true, wp_editor: true, wp_version: 51, last_cookie: 1552507628, bbpress_version: 25, text_are_you_sure: "Are you sure? Operation is not reversible.", now: 1552504028, thanks_thanks: "Thanks", thanks_unthanks: "Remove Thanks", thanks_saved: "Thanks Saved", thanks_removal: true, validate_attachments: true, insert_into_content: true, max_files: 5, max_size: 5120000, limiter: true, allowed_extensions: "jpg jpeg jpe gif png bmp tiff tif ico asf asx wmv wmx wm avi divx flv mov qt mpeg mpg mpe mp4 m4v ogv webm mkv 3gp 3gpp 3g2 3gp2 txt asc c cc h srt csv tsv ics rtx css vtt dfxp mp3 m4a m4b aac ra ram wav ogg oga flac mid midi wma wax mka rtf pdf class tar zip gz gzip rar 7z psd xcf doc pot pps ppt wri xla xls xlt xlw mdb mpp docx docm dotx dotm xlsx xlsm xlsb xltx xltm xlam pptx pptm ppsx ppsm potx potm ppam sldx sldm onetoc onetoc2 onetmp onepkg oxps xps odt odp ods odg odc odb odf wp wpd key numbers pages afl", text_select_file: "Select File", text_file_name: "Name", text_file_size: "Size", text_file_type: "Extension", text_file_validation: "Error!", text_file_validation_size: "The file is too big.", text_file_validation_type: "File type not allowed.", text_file_remove: "Remove this file", text_file_shortcode: "Insert into content", text_file_caption: "Set file caption", text_file_caption_placeholder: "Caption..." };
     /* ]]> */
 </script>
 
@@ -664,9 +648,9 @@ img.emoji {
 		<button class="menu-toggle" aria-controls="site-navigation" aria-expanded="false"><span>Menu</span></button>
 			<div class="primary-navigation"><ul id="menu-navigation" class="menu"><li id="menu-item-103" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-103"><a href="/">Home</a></li>
 <li id="menu-item-77" class="menu-item menu-item-type-post_type menu-item-object-forum menu-item-77"><a href="http://52.76.37.90/forums/forum/cdc/">Forums</a></li>
-<li id="menu-item-19104" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19104"><a href="http://52.76.37.90/%e0%b8%9a%e0%b8%97%e0%b8%84%e0%b8%a7%e0%b8%b2%e0%b8%a1/">บทความ</a></li>
 <li id="menu-item-19308" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-19308"><a href="http://52.76.37.90/%e0%b8%a5%e0%b8%b2%e0%b8%99%e0%b8%84%e0%b8%a7%e0%b8%b2%e0%b8%a1%e0%b8%a3%e0%b8%b9%e0%b9%89/">คลังความรู้</a>
 <ul class="sub-menu">
+	<li id="menu-item-19104" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19104"><a href="http://52.76.37.90/%e0%b8%9a%e0%b8%97%e0%b8%84%e0%b8%a7%e0%b8%b2%e0%b8%a1/">บทความ</a></li>
 	<li id="menu-item-19315" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19315"><a href="http://52.76.37.90/%e0%b8%a5%e0%b8%b8%e0%b8%87%e0%b9%82%e0%b8%89%e0%b8%a5%e0%b8%81%e0%b8%a7%e0%b8%b4%e0%b9%80%e0%b8%84%e0%b8%a3%e0%b8%b2%e0%b8%b0%e0%b8%ab%e0%b9%8c/">ลุงโฉลกวิเคราะห์</a></li>
 	<li id="menu-item-19251" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19251"><a href="http://52.76.37.90/live/">Live</a></li>
 	<li id="menu-item-19252" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19252"><a href="http://52.76.37.90/crypto/">Crypto</a></li>
@@ -679,19 +663,23 @@ img.emoji {
 	<li id="menu-item-19057" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19057"><a href="http://52.76.37.90/cdc-%e0%b9%80%e0%b8%a5%e0%b8%b4%e0%b8%81%e0%b9%80%e0%b8%a1%e0%b9%88%e0%b8%b2/">CDC เลิกเม่า#1-17</a></li>
 </ul>
 </li>
-<li id="menu-item-94" class="menu-item menu-item-type-post_type menu-item-object-forum menu-item-94"><a href="http://52.76.37.90/forums/forum/cdc/charity/">ลานบุญ</a></li>
-<li id="menu-item-19323" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19323"><a href="http://52.76.37.90/%e0%b8%a5%e0%b8%b2%e0%b8%99%e0%b8%81%e0%b8%b4%e0%b8%88%e0%b8%81%e0%b8%a3%e0%b8%a3%e0%b8%a1/">ลานกิจกรรม</a></li>
+<li id="menu-item-94" class="menu-item menu-item-type-post_type menu-item-object-forum menu-item-94"><a href="http://52.76.37.90/forums/forum/cdc/charity/">ทำบุญ</a></li>
+<li id="menu-item-28235" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-has-children menu-item-28235"><a href="http://52.76.37.90/product-category/courses/">คอร์สอบรม</a>
+<ul class="sub-menu">
+	<li id="menu-item-28237" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-28237"><a href="http://52.76.37.90/payment-confirmation/">แจ้งชำระเงิน</a></li>
+</ul>
+</li>
 <li id="menu-item-19318" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-19318"><a href="http://52.76.37.90/%e0%b8%a5%e0%b8%b2%e0%b8%99%e0%b8%aa%e0%b8%a1%e0%b8%b2%e0%b8%8a%e0%b8%b4%e0%b8%81/">สมาชิก</a>
 <ul class="sub-menu">
-	<li id="menu-item-19" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19"><a href="http://52.76.37.90/shop/">สมัครสมาชิกสนับสนุน (Become our patreon!)</a></li>
+	<li id="menu-item-28236" class="menu-item menu-item-type-post_type menu-item-object-product menu-item-28236"><a href="http://52.76.37.90/product/supporting-membership-2/">สมัคร Supporting Membership (ชำระผ่านการโอนเงิน)</a></li>
 	<li id="menu-item-16343" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-16343"><a href="http://52.76.37.90/payment-confirmation/">แจ้งชำระเงิน</a></li>
 </ul>
 </li>
 </ul></div><div class="handheld-navigation"><ul id="menu-navigation-1" class="menu"><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-103"><a href="/">Home</a></li>
 <li class="menu-item menu-item-type-post_type menu-item-object-forum menu-item-77"><a href="http://52.76.37.90/forums/forum/cdc/">Forums</a></li>
-<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19104"><a href="http://52.76.37.90/%e0%b8%9a%e0%b8%97%e0%b8%84%e0%b8%a7%e0%b8%b2%e0%b8%a1/">บทความ</a></li>
 <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-19308"><a href="http://52.76.37.90/%e0%b8%a5%e0%b8%b2%e0%b8%99%e0%b8%84%e0%b8%a7%e0%b8%b2%e0%b8%a1%e0%b8%a3%e0%b8%b9%e0%b9%89/">คลังความรู้</a>
 <ul class="sub-menu">
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19104"><a href="http://52.76.37.90/%e0%b8%9a%e0%b8%97%e0%b8%84%e0%b8%a7%e0%b8%b2%e0%b8%a1/">บทความ</a></li>
 	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19315"><a href="http://52.76.37.90/%e0%b8%a5%e0%b8%b8%e0%b8%87%e0%b9%82%e0%b8%89%e0%b8%a5%e0%b8%81%e0%b8%a7%e0%b8%b4%e0%b9%80%e0%b8%84%e0%b8%a3%e0%b8%b2%e0%b8%b0%e0%b8%ab%e0%b9%8c/">ลุงโฉลกวิเคราะห์</a></li>
 	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19251"><a href="http://52.76.37.90/live/">Live</a></li>
 	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19252"><a href="http://52.76.37.90/crypto/">Crypto</a></li>
@@ -704,11 +692,15 @@ img.emoji {
 	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19057"><a href="http://52.76.37.90/cdc-%e0%b9%80%e0%b8%a5%e0%b8%b4%e0%b8%81%e0%b9%80%e0%b8%a1%e0%b9%88%e0%b8%b2/">CDC เลิกเม่า#1-17</a></li>
 </ul>
 </li>
-<li class="menu-item menu-item-type-post_type menu-item-object-forum menu-item-94"><a href="http://52.76.37.90/forums/forum/cdc/charity/">ลานบุญ</a></li>
-<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19323"><a href="http://52.76.37.90/%e0%b8%a5%e0%b8%b2%e0%b8%99%e0%b8%81%e0%b8%b4%e0%b8%88%e0%b8%81%e0%b8%a3%e0%b8%a3%e0%b8%a1/">ลานกิจกรรม</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-forum menu-item-94"><a href="http://52.76.37.90/forums/forum/cdc/charity/">ทำบุญ</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-has-children menu-item-28235"><a href="http://52.76.37.90/product-category/courses/">คอร์สอบรม</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-28237"><a href="http://52.76.37.90/payment-confirmation/">แจ้งชำระเงิน</a></li>
+</ul>
+</li>
 <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-19318"><a href="http://52.76.37.90/%e0%b8%a5%e0%b8%b2%e0%b8%99%e0%b8%aa%e0%b8%a1%e0%b8%b2%e0%b8%8a%e0%b8%b4%e0%b8%81/">สมาชิก</a>
 <ul class="sub-menu">
-	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19"><a href="http://52.76.37.90/shop/">สมัครสมาชิกสนับสนุน (Become our patreon!)</a></li>
+	<li class="menu-item menu-item-type-post_type menu-item-object-product menu-item-28236"><a href="http://52.76.37.90/product/supporting-membership-2/">สมัคร Supporting Membership (ชำระผ่านการโอนเงิน)</a></li>
 	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-16343"><a href="http://52.76.37.90/payment-confirmation/">แจ้งชำระเงิน</a></li>
 </ul>
 </li>
@@ -760,12 +752,12 @@ img.emoji {
 <p class="comment-form-email"><label for="email">Email <span class="required">*</span></label> <input id="email" name="email" type="email" value="" size="30" maxlength="100" aria-describedby="email-notes" required='required' /></p>
 <p class="comment-form-url"><label for="url">Website</label> <input id="url" name="url" type="url" value="" size="30" maxlength="200" /></p>
 <p class="cptch_block"><span class="cptch_wrap cptch_math_actions">
-				<label class="cptch_label" for="cptch_input_56"><span class="cptch_span">5</span>
-					<span class="cptch_span">&nbsp;&#43;&nbsp;</span>
-					<span class="cptch_span">tw&#111;</span>
+				<label class="cptch_label" for="cptch_input_7"><span class="cptch_span"><input id="cptch_input_7" class="cptch_input cptch_wp_comments" type="text" autocomplete="off" name="cptch_number" value="" maxlength="2" size="2" aria-required="true" required="required" style="margin-bottom:0;display:inline;font-size: 12px;width: 40px;" /></span>
+					<span class="cptch_span">&nbsp;&minus;&nbsp;</span>
+					<span class="cptch_span"><img class="cptch_img " src="data:image/png;base64,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" alt="image"/></span>
 					<span class="cptch_span">&nbsp;=&nbsp;</span>
-					<span class="cptch_span"><input id="cptch_input_56" class="cptch_input cptch_wp_comments" type="text" autocomplete="off" name="cptch_number" value="" maxlength="2" size="2" aria-required="true" required="required" style="margin-bottom:0;display:inline;font-size: 12px;width: 40px;" /></span>
-					<input type="hidden" name="cptch_result" value="+XY=" /><input type="hidden" name="cptch_time" value="1552384660" />
+					<span class="cptch_span">&#102;&#105;v&#101;</span>
+					<input type="hidden" name="cptch_result" value="k/A=" /><input type="hidden" name="cptch_time" value="1552504029" />
 					<input type="hidden" name="cptch_form" value="wp_comments" />
 				</label><span class="cptch_reload_button_wrap hide-if-no-js">
 					<noscript>
@@ -778,7 +770,7 @@ img.emoji {
 					<span class="cptch_reload_button dashicons dashicons-update"></span>
 				</span></span></p><p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="Post Comment" /> <input type='hidden' name='comment_post_ID' value='16225' id='comment_post_ID' />
 <input type='hidden' name='comment_parent' id='comment_parent' value='0' />
-</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="58592de026" /></p>
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="76d87f0f21" /></p>
 <script type='text/javascript'>
 /* <![CDATA[ */
 r3f5x9JS=escape(document['referrer']);
@@ -789,7 +781,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 </script>
 <noscript><input type="hidden" name="JS04X7" value="NS1" /></noscript>
 <noscript><p><strong>Currently you have JavaScript disabled. In order to post comments, please make sure JavaScript and Cookies are enabled, and reload the page.</strong> <a href="http://enable-javascript.com/" rel="nofollow external" >Click here for instructions on how to enable JavaScript in your browser.</a></p></noscript>
-<p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="92"/></p>			</form>
+<p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="117"/></p>			</form>
 			</div><!-- #respond -->
 	
 </section><!-- #comments -->
@@ -816,7 +808,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>4 days, 7 hours ago</div>
+						<div>5 days, 16 hours ago</div>
 
 					
 				</li>
@@ -827,7 +819,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>1 week, 5 days ago</div>
+						<div>1 week, 6 days ago</div>
 
 					
 				</li>
@@ -838,7 +830,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>1 week, 6 days ago</div>
+						<div>2 weeks, 1 day ago</div>
 
 					
 				</li>
@@ -849,7 +841,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>2 weeks, 4 days ago</div>
+						<div>2 weeks, 6 days ago</div>
 
 					
 				</li>
@@ -877,7 +869,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>4 days, 7 hours ago</div>
+						<div>5 days, 16 hours ago</div>
 
 					
 				</li>
@@ -888,7 +880,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>5 days, 3 hours ago</div>
+						<div>6 days, 12 hours ago</div>
 
 					
 				</li>
@@ -899,7 +891,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>1 week, 2 days ago</div>
+						<div>1 week, 3 days ago</div>
 
 					
 				</li>
@@ -910,7 +902,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>3 days, 21 hours ago</div>
+						<div>5 days, 6 hours ago</div>
 
 					
 				</li>
@@ -921,7 +913,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>1 week, 5 days ago</div>
+						<div>1 week, 6 days ago</div>
 
 					
 				</li>
@@ -932,7 +924,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>1 week, 6 days ago</div>
+						<div>2 weeks, 1 day ago</div>
 
 					
 				</li>
@@ -943,7 +935,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>2 weeks, 4 days ago</div>
+						<div>2 weeks, 6 days ago</div>
 
 					
 				</li>
@@ -954,7 +946,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>3 weeks ago</div>
+						<div>3 weeks, 1 day ago</div>
 
 					
 				</li>
@@ -965,24 +957,24 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 		</div><div id="d4p_bbw_newposts-4" class="widget cls_d4p_bbw_newposts"><span class="gamma widget-title">New Posts</span><div class="d4p-bbw-widget bbx-newposts">
 <ul>
 <li>
-<a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/%e0%b9%81%e0%b8%88%e0%b9%89%e0%b8%87%e0%b8%8a%e0%b8%b3%e0%b8%a3%e0%b8%b0%e0%b8%84%e0%b9%88%e0%b8%b2%e0%b8%aa%e0%b8%a1%e0%b8%b1%e0%b8%84%e0%b8%a3%e0%b8%aa%e0%b8%a1%e0%b8%b2%e0%b8%8a%e0%b8%b4%e0%b8%81/#post-28171" title="Reply To: แจ้งชำระค่าสมัครสมาชิก">Reply To: แจ้งชำระค่าสมัครสมาชิก</a>
-<em class="bbp-last-active">18 hours, 4 minutes ago</em>
+<a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/%e0%b9%81%e0%b8%88%e0%b9%89%e0%b8%87%e0%b8%8a%e0%b8%b3%e0%b8%a3%e0%b8%b0%e0%b8%84%e0%b9%88%e0%b8%b2%e0%b8%aa%e0%b8%a1%e0%b8%b1%e0%b8%84%e0%b8%a3%e0%b8%aa%e0%b8%a1%e0%b8%b2%e0%b8%8a%e0%b8%b4%e0%b8%81/#post-28197" title="Reply To: แจ้งชำระค่าสมัครสมาชิก">Reply To: แจ้งชำระค่าสมัครสมาชิก</a>
+<em class="bbp-last-active">1 day, 5 hours ago</em>
 </li>
 <li>
 <a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/cdc-downloader-%e0%b8%94%e0%b8%b2%e0%b8%a7%e0%b8%99%e0%b9%8c%e0%b9%82%e0%b8%ab%e0%b8%a5%e0%b8%94%e0%b9%84%e0%b8%a1%e0%b9%88%e0%b9%84%e0%b8%94%e0%b9%89%e0%b8%84%e0%b8%a3%e0%b8%b1%e0%b8%9a/#post-27962" title="Reply To: CDC Downloader ดาวน์โหลดไม่ได้ครับ">Reply To: CDC Downloader ดาวน์โหลดไม่ได้ครับ</a>
-<em class="bbp-last-active">3 days, 21 hours ago</em>
+<em class="bbp-last-active">5 days, 6 hours ago</em>
 </li>
 <li>
 <a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/cdc-d1912/" title="CDC-D1912 งานบุญโต๊ะหมู่บูชา">CDC-D1912 งานบุญโต๊ะหมู่บูชา</a>
-<em class="bbp-last-active">4 days, 7 hours ago</em>
+<em class="bbp-last-active">5 days, 16 hours ago</em>
 </li>
 <li>
 <a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/cdc-downloader/#post-27887" title="Reply To: CDC Downloader">Reply To: CDC Downloader</a>
-<em class="bbp-last-active">5 days, 1 hour ago</em>
+<em class="bbp-last-active">6 days, 10 hours ago</em>
 </li>
 <li>
 <a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/%e0%b8%aa%e0%b8%ad%e0%b8%9a%e0%b8%96%e0%b8%b2%e0%b8%a1%e0%b9%80%e0%b8%a3%e0%b8%b7%e0%b9%88%e0%b8%ad%e0%b8%87%e0%b8%82%e0%b9%89%e0%b8%ad%e0%b8%a1%e0%b8%b9%e0%b8%a5dw%e0%b8%ab%e0%b8%99%e0%b9%88%e0%b8%ad/#post-27882" title="Reply To: สอบถามเรื่องข้อมูลDWหน่อยครับ">Reply To: สอบถามเรื่องข้อมูลDWหน่อยครับ</a>
-<em class="bbp-last-active">5 days, 3 hours ago</em>
+<em class="bbp-last-active">6 days, 12 hours ago</em>
 </li>
 </ul>
 </div></div><div id="archives-2" class="widget widget_archive"><span class="gamma widget-title">Archives</span>		<ul>
@@ -1045,7 +1037,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>7 months, 1 week ago</div>
+						<div>7 months, 2 weeks ago</div>
 
 					
 				</li>
@@ -1078,7 +1070,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>10 months ago</div>
+						<div>10 months, 1 week ago</div>
 
 					
 				</li>
@@ -1089,7 +1081,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>6 months, 4 weeks ago</div>
+						<div>7 months ago</div>
 
 					
 				</li>
@@ -1108,7 +1100,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>4 days, 7 hours ago</div>
+						<div>5 days, 16 hours ago</div>
 
 					
 				</li>
@@ -1119,7 +1111,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>5 days, 3 hours ago</div>
+						<div>6 days, 12 hours ago</div>
 
 					
 				</li>
@@ -1130,7 +1122,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>1 week, 2 days ago</div>
+						<div>1 week, 3 days ago</div>
 
 					
 				</li>
@@ -1141,7 +1133,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>3 days, 21 hours ago</div>
+						<div>5 days, 6 hours ago</div>
 
 					
 				</li>
@@ -1152,7 +1144,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>1 week, 5 days ago</div>
+						<div>1 week, 6 days ago</div>
 
 					
 				</li>
@@ -1171,7 +1163,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>18 hours, 4 minutes ago</div>
+						<div>1 day, 5 hours ago</div>
 
 					
 				</li>
@@ -1182,7 +1174,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>3 days, 21 hours ago</div>
+						<div>5 days, 6 hours ago</div>
 
 					
 				</li>
@@ -1193,7 +1185,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>4 days, 7 hours ago</div>
+						<div>5 days, 16 hours ago</div>
 
 					
 				</li>
@@ -1204,7 +1196,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>5 days, 1 hour ago</div>
+						<div>6 days, 10 hours ago</div>
 
 					
 				</li>
@@ -1215,7 +1207,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>5 days, 3 hours ago</div>
+						<div>6 days, 12 hours ago</div>
 
 					
 				</li>
@@ -1270,15 +1262,7 @@ jQuery(document).ready(function($){var e="#commentform, .comment-respond form, .
 		c = c.replace(/woocommerce-no-js/, 'woocommerce-js');
 		document.body.className = c;
 	</script>
-	<br />
-<b>Notice</b>:  woocommerce_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
-<br />
-<b>Notice</b>:  wc_checkout_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
-<br />
-<b>Notice</b>:  woocommerce_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
-<br />
-<b>Notice</b>:  wc_checkout_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
-<script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/bbpress/templates/default/js/editor.js?ver=2.5.14-6684'></script>
+	<script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/bbpress/templates/default/js/editor.js?ver=2.5.14-6684'></script>
 <script type='text/javascript'>
 /* <![CDATA[ */
 var wpcf7 = {"apiSettings":{"root":"http:\/\/52.76.37.90\/wp-json\/contact-form-7\/v1","namespace":"contact-form-7\/v1"},"cached":"1","jqueryUi":"1"};
@@ -1323,7 +1307,7 @@ jQuery(document).ready(function(jQuery){jQuery.datepicker.setDefaults({"closeTex
 <script async="async" type='text/javascript' src='http://52.76.37.90/wp-content/plugins/akismet/_inc/form.js?ver=4.1.1'></script>
 <script type='text/javascript'>
 /* <![CDATA[ */
-var cptch_vars = {"nonce":"8da8c546c3","ajaxurl":"http:\/\/52.76.37.90\/wp-admin\/admin-ajax.php","enlarge":""};
+var cptch_vars = {"nonce":"6ebd447aa0","ajaxurl":"http:\/\/52.76.37.90\/wp-admin\/admin-ajax.php","enlarge":""};
 /* ]]> */
 </script>
 <script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/captcha/js/front_end_script.js?ver=5.1'></script>
@@ -1332,8 +1316,8 @@ var cptch_vars = {"nonce":"8da8c546c3","ajaxurl":"http:\/\/52.76.37.90\/wp-admin
 </html>
 
 <!--
-Object Caching 24/562 objects using disk
+Object Caching 8/582 objects using disk
 Page Caching using disk: enhanced 
 
-Served from: 52.76.37.90 @ 2019-03-12 16:57:41 by W3 Total Cache
+Served from: 52.76.37.90 @ 2019-03-14 02:07:09 by W3 Total Cache
 -->

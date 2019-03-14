@@ -1,1 +1,0 @@
-§Ð‡\<?php exit; ?>a:1:{s:7:"content";s:79:"This is a demo store for testing purposes &mdash; no orders shall be fulfilled.";}

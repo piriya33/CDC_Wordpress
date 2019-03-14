@@ -37,7 +37,7 @@ img.emoji {
 <link rel='stylesheet' id='bbp-default-css'  href='http://52.76.37.90/wp-content/plugins/bbpress/templates/default/css/bbpress.css?ver=2.5.14-6684' type='text/css' media='screen' />
 <link rel='stylesheet' id='cptch_stylesheet-css'  href='http://52.76.37.90/wp-content/plugins/captcha/css/front_end_style.css?ver=4.4.5' type='text/css' media='all' />
 <link rel='stylesheet' id='dashicons-css'  href='http://52.76.37.90/wp-includes/css/dashicons.min.css?ver=5.1' type='text/css' media='all' />
-<link rel='stylesheet' id='cptch_mobile_style-css'  href='http://52.76.37.90/wp-content/plugins/captcha/css/mobile_style.css?ver=4.4.5' type='text/css' media='all' />
+<link rel='stylesheet' id='cptch_desktop_style-css'  href='http://52.76.37.90/wp-content/plugins/captcha/css/desktop_style.css?ver=4.4.5' type='text/css' media='all' />
 <link rel='stylesheet' id='contact-form-7-css'  href='http://52.76.37.90/wp-content/plugins/contact-form-7/includes/css/styles.css?ver=5.1.1' type='text/css' media='all' />
 <link rel='stylesheet' id='cf7cf-style-css'  href='http://52.76.37.90/wp-content/plugins/cf7-conditional-fields/style.css?ver=1.4.1' type='text/css' media='all' />
 <link rel='stylesheet' id='wp_html5video_css-css'  href='http://52.76.37.90/wp-content/plugins/html5-videogallery-plus-player/assets/css/video-js.css?ver=2.3.2' type='text/css' media='all' />
@@ -50,7 +50,7 @@ img.emoji {
 <link rel='stylesheet' id='wpfcas-font-awesome-css'  href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css?ver=1.3.2' type='text/css' media='all' />
 <link rel='stylesheet' id='wpfcas_style-css'  href='http://52.76.37.90/wp-content/plugins/wp-featured-content-and-slider/assets/css/featured-content-style.css?ver=1.3.2' type='text/css' media='all' />
 <link rel='stylesheet' id='wpfcas_slick_style-css'  href='http://52.76.37.90/wp-content/plugins/wp-featured-content-and-slider/assets/css/slick.css?ver=1.3.2' type='text/css' media='all' />
-<link rel='stylesheet' id='wc-memberships-frontend-css'  href='http://52.76.37.90/wp-content/plugins/woocommerce-memberships/assets/css/frontend/wc-memberships-frontend.min.css?ver=1.8.5' type='text/css' media='all' />
+<link rel='stylesheet' id='wc-memberships-frontend-css'  href='http://52.76.37.90/wp-content/plugins/woocommerce-memberships/assets/css/frontend/wc-memberships-frontend.min.css?ver=1.12.4' type='text/css' media='all' />
 <link rel='stylesheet' id='storefront-style-css'  href='http://52.76.37.90/wp-content/themes/storefront/style.css?ver=2.4.3' type='text/css' media='all' />
 <style id='storefront-style-inline-css' type='text/css'>
 
@@ -572,35 +572,21 @@ img.emoji {
 
 				.star-rating span:before,
 				.star-rating:before {
-					color: #FFA200;
+					color: #FFA200 !important;
 				}
 
 				.star-rating:before {
-					opacity: 0.25;
+					opacity: 0.25 !important;
 				}
 			
 </style>
+<link rel='stylesheet' id='storefront-woocommerce-bundles-style-css'  href='http://52.76.37.90/wp-content/themes/storefront/assets/css/woocommerce/extensions/bundles.css?ver=2.4.3' type='text/css' media='all' />
 <link rel='stylesheet' id='storefront-woocommerce-memberships-style-css'  href='http://52.76.37.90/wp-content/themes/storefront/assets/css/woocommerce/extensions/memberships.css?ver=2.4.3' type='text/css' media='all' />
-<link rel='stylesheet' id='sp-header-frontend-css'  href='http://52.76.37.90/wp-content/plugins/storefront-powerpack/includes/customizer/header/assets/css/sp-header-frontend.css?ver=1.4.1' type='text/css' media='all' />
-<link rel='stylesheet' id='sp-layout-css'  href='http://52.76.37.90/wp-content/plugins/storefront-powerpack/includes/customizer/layout/assets/css/layout.css?ver=1.4.1' type='text/css' media='all' />
-<link rel='stylesheet' id='sp-styles-css'  href='http://52.76.37.90/wp-content/plugins/storefront-powerpack/includes/customizer/shop/../../../assets/css/style.css?ver=1.4.1' type='text/css' media='all' />
+<link rel='stylesheet' id='sp-header-frontend-css'  href='http://52.76.37.90/wp-content/plugins/storefront-powerpack/includes/customizer/header/assets/css/sp-header-frontend.css?ver=1.4.15' type='text/css' media='all' />
+<link rel='stylesheet' id='sp-layout-css'  href='http://52.76.37.90/wp-content/plugins/storefront-powerpack/includes/customizer/layout/assets/css/layout.css?ver=1.4.15' type='text/css' media='all' />
+<link rel='stylesheet' id='sp-styles-css'  href='http://52.76.37.90/wp-content/plugins/storefront-powerpack/assets/css/style.css?ver=1.4.15' type='text/css' media='all' />
+<link rel='stylesheet' id='wc-bundle-style-css'  href='http://52.76.37.90/wp-content/plugins/woocommerce-product-bundles/assets/css/frontend/woocommerce.css?ver=5.9.2' type='text/css' media='all' />
 <link rel='stylesheet' id='custom-css-css'  href='http://52.76.37.90/wp-content/plugins/theme-customisations-master/custom/style.css?ver=5.1' type='text/css' media='all' />
-<br />
-<b>Notice</b>:  woocommerce_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
-<br />
-<b>Notice</b>:  wc_checkout_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
-<br />
-<b>Notice</b>:  woocommerce_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
-<br />
-<b>Notice</b>:  wc_checkout_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
-<br />
-<b>Notice</b>:  woocommerce_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
-<br />
-<b>Notice</b>:  wc_checkout_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
-<br />
-<b>Notice</b>:  woocommerce_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
-<br />
-<b>Notice</b>:  wc_checkout_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
 <script type='text/javascript' src='http://52.76.37.90/wp-includes/js/jquery/jquery.js?ver=1.12.4'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/theme-customisations-master/custom/custom.js?ver=5.1'></script>
@@ -615,7 +601,7 @@ img.emoji {
 
 <script type="text/javascript">
     /* <![CDATA[ */
-    var gdbxRender_Data = { url: "http://52.76.37.90/wp-admin/admin-ajax.php", run_quote: true, run_report: false, run_thanks: false, run_attachments: true, run_canned_replies: false, run_bbcodes: true, run_fitvids: true, wp_editor: true, wp_version: 51, last_cookie: 1552018379, bbpress_version: 25, text_are_you_sure: "Are you sure? Operation is not reversible.", now: 1552014779, thanks_thanks: "Thanks", thanks_unthanks: "Remove Thanks", thanks_saved: "Thanks Saved", thanks_removal: true, validate_attachments: true, insert_into_content: true, max_files: 5, max_size: 5120000, limiter: true, allowed_extensions: "jpg jpeg jpe gif png bmp tiff tif ico asf asx wmv wmx wm avi divx flv mov qt mpeg mpg mpe mp4 m4v ogv webm mkv 3gp 3gpp 3g2 3gp2 txt asc c cc h srt csv tsv ics rtx css vtt dfxp mp3 m4a m4b aac ra ram wav ogg oga flac mid midi wma wax mka rtf pdf class tar zip gz gzip rar 7z psd xcf doc pot pps ppt wri xla xls xlt xlw mdb mpp docx docm dotx dotm xlsx xlsm xlsb xltx xltm xlam pptx pptm ppsx ppsm potx potm ppam sldx sldm onetoc onetoc2 onetmp onepkg oxps xps odt odp ods odg odc odb odf wp wpd key numbers pages afl", text_select_file: "Select File", text_file_name: "Name", text_file_size: "Size", text_file_type: "Extension", text_file_validation: "Error!", text_file_validation_size: "The file is too big.", text_file_validation_type: "File type not allowed.", text_file_remove: "Remove this file", text_file_shortcode: "Insert into content", text_file_caption: "Set file caption", text_file_caption_placeholder: "Caption..." };
+    var gdbxRender_Data = { url: "http://52.76.37.90/wp-admin/admin-ajax.php", run_quote: true, run_report: false, run_thanks: false, run_attachments: true, run_canned_replies: false, run_bbcodes: true, run_fitvids: true, wp_editor: true, wp_version: 51, last_cookie: 1552495003, bbpress_version: 25, text_are_you_sure: "Are you sure? Operation is not reversible.", now: 1552491403, thanks_thanks: "Thanks", thanks_unthanks: "Remove Thanks", thanks_saved: "Thanks Saved", thanks_removal: true, validate_attachments: true, insert_into_content: true, max_files: 5, max_size: 5120000, limiter: true, allowed_extensions: "jpg jpeg jpe gif png bmp tiff tif ico asf asx wmv wmx wm avi divx flv mov qt mpeg mpg mpe mp4 m4v ogv webm mkv 3gp 3gpp 3g2 3gp2 txt asc c cc h srt csv tsv ics rtx css vtt dfxp mp3 m4a m4b aac ra ram wav ogg oga flac mid midi wma wax mka rtf pdf class tar zip gz gzip rar 7z psd xcf doc pot pps ppt wri xla xls xlt xlw mdb mpp docx docm dotx dotm xlsx xlsm xlsb xltx xltm xlam pptx pptm ppsx ppsm potx potm ppam sldx sldm onetoc onetoc2 onetmp onepkg oxps xps odt odp ods odg odc odb odf wp wpd key numbers pages afl", text_select_file: "Select File", text_file_name: "Name", text_file_size: "Size", text_file_type: "Extension", text_file_validation: "Error!", text_file_validation_size: "The file is too big.", text_file_validation_type: "File type not allowed.", text_file_remove: "Remove this file", text_file_shortcode: "Insert into content", text_file_caption: "Set file caption", text_file_caption_placeholder: "Caption..." };
     /* ]]> */
 </script>
 
@@ -638,7 +624,7 @@ img.emoji {
 <meta name="msapplication-TileImage" content="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2016/07/04093950/cropped-CDClogo2015_rev1_A-270x270.png" />
 </head>
 
-<body class="archive date wp-custom-logo wp-embed-responsive woocommerce-no-js group-blog storefront-secondary-navigation storefront-align-wide right-sidebar woocommerce-active sp-max-width sp-shop-alignment-center sbc-meta-hidden-2 sd-fixed-width sd-buttons-rounded sd-buttons-flat sd-buttons-shadows sd-scale-largest sd-button-size-smaller sd-header-compact sd-typography-helvetica">
+<body class="archive date wp-custom-logo wp-embed-responsive woocommerce-no-js group-blog storefront-secondary-navigation storefront-align-wide right-sidebar woocommerce-active sp-designer sp-max-width sp-shop-alignment-center sbc-meta-hidden-2-4 sd-fixed-width sd-buttons-rounded sd-buttons-flat sd-buttons-shadows sd-scale-largest sd-button-size-smaller sd-header-compact sd-typography-helvetica">
 
 
 <div id="page" class="hfeed site">
@@ -655,9 +641,9 @@ img.emoji {
 		<button class="menu-toggle" aria-controls="site-navigation" aria-expanded="false"><span>Menu</span></button>
 			<div class="primary-navigation"><ul id="menu-navigation" class="menu"><li id="menu-item-103" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-103"><a href="/">Home</a></li>
 <li id="menu-item-77" class="menu-item menu-item-type-post_type menu-item-object-forum menu-item-77"><a href="http://52.76.37.90/forums/forum/cdc/">Forums</a></li>
-<li id="menu-item-19104" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19104"><a href="http://52.76.37.90/%e0%b8%9a%e0%b8%97%e0%b8%84%e0%b8%a7%e0%b8%b2%e0%b8%a1/">บทความ</a></li>
 <li id="menu-item-19308" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-19308"><a href="http://52.76.37.90/%e0%b8%a5%e0%b8%b2%e0%b8%99%e0%b8%84%e0%b8%a7%e0%b8%b2%e0%b8%a1%e0%b8%a3%e0%b8%b9%e0%b9%89/">คลังความรู้</a>
 <ul class="sub-menu">
+	<li id="menu-item-19104" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19104"><a href="http://52.76.37.90/%e0%b8%9a%e0%b8%97%e0%b8%84%e0%b8%a7%e0%b8%b2%e0%b8%a1/">บทความ</a></li>
 	<li id="menu-item-19315" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19315"><a href="http://52.76.37.90/%e0%b8%a5%e0%b8%b8%e0%b8%87%e0%b9%82%e0%b8%89%e0%b8%a5%e0%b8%81%e0%b8%a7%e0%b8%b4%e0%b9%80%e0%b8%84%e0%b8%a3%e0%b8%b2%e0%b8%b0%e0%b8%ab%e0%b9%8c/">ลุงโฉลกวิเคราะห์</a></li>
 	<li id="menu-item-19251" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19251"><a href="http://52.76.37.90/live/">Live</a></li>
 	<li id="menu-item-19252" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19252"><a href="http://52.76.37.90/crypto/">Crypto</a></li>
@@ -670,19 +656,23 @@ img.emoji {
 	<li id="menu-item-19057" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19057"><a href="http://52.76.37.90/cdc-%e0%b9%80%e0%b8%a5%e0%b8%b4%e0%b8%81%e0%b9%80%e0%b8%a1%e0%b9%88%e0%b8%b2/">CDC เลิกเม่า#1-17</a></li>
 </ul>
 </li>
-<li id="menu-item-94" class="menu-item menu-item-type-post_type menu-item-object-forum menu-item-94"><a href="http://52.76.37.90/forums/forum/cdc/charity/">ลานบุญ</a></li>
-<li id="menu-item-19323" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19323"><a href="http://52.76.37.90/%e0%b8%a5%e0%b8%b2%e0%b8%99%e0%b8%81%e0%b8%b4%e0%b8%88%e0%b8%81%e0%b8%a3%e0%b8%a3%e0%b8%a1/">ลานกิจกรรม</a></li>
+<li id="menu-item-94" class="menu-item menu-item-type-post_type menu-item-object-forum menu-item-94"><a href="http://52.76.37.90/forums/forum/cdc/charity/">ทำบุญ</a></li>
+<li id="menu-item-28235" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-has-children menu-item-28235"><a href="http://52.76.37.90/product-category/courses/">คอร์สอบรม</a>
+<ul class="sub-menu">
+	<li id="menu-item-28237" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-28237"><a href="http://52.76.37.90/payment-confirmation/">แจ้งชำระเงิน</a></li>
+</ul>
+</li>
 <li id="menu-item-19318" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-19318"><a href="http://52.76.37.90/%e0%b8%a5%e0%b8%b2%e0%b8%99%e0%b8%aa%e0%b8%a1%e0%b8%b2%e0%b8%8a%e0%b8%b4%e0%b8%81/">สมาชิก</a>
 <ul class="sub-menu">
-	<li id="menu-item-19" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19"><a href="http://52.76.37.90/shop/">สมัครสมาชิกสนับสนุน (Become our patreon!)</a></li>
+	<li id="menu-item-28236" class="menu-item menu-item-type-post_type menu-item-object-product menu-item-28236"><a href="http://52.76.37.90/product/supporting-membership-2/">สมัคร Supporting Membership (ชำระผ่านการโอนเงิน)</a></li>
 	<li id="menu-item-16343" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-16343"><a href="http://52.76.37.90/payment-confirmation/">แจ้งชำระเงิน</a></li>
 </ul>
 </li>
 </ul></div><div class="handheld-navigation"><ul id="menu-navigation-1" class="menu"><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-103"><a href="/">Home</a></li>
 <li class="menu-item menu-item-type-post_type menu-item-object-forum menu-item-77"><a href="http://52.76.37.90/forums/forum/cdc/">Forums</a></li>
-<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19104"><a href="http://52.76.37.90/%e0%b8%9a%e0%b8%97%e0%b8%84%e0%b8%a7%e0%b8%b2%e0%b8%a1/">บทความ</a></li>
 <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-19308"><a href="http://52.76.37.90/%e0%b8%a5%e0%b8%b2%e0%b8%99%e0%b8%84%e0%b8%a7%e0%b8%b2%e0%b8%a1%e0%b8%a3%e0%b8%b9%e0%b9%89/">คลังความรู้</a>
 <ul class="sub-menu">
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19104"><a href="http://52.76.37.90/%e0%b8%9a%e0%b8%97%e0%b8%84%e0%b8%a7%e0%b8%b2%e0%b8%a1/">บทความ</a></li>
 	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19315"><a href="http://52.76.37.90/%e0%b8%a5%e0%b8%b8%e0%b8%87%e0%b9%82%e0%b8%89%e0%b8%a5%e0%b8%81%e0%b8%a7%e0%b8%b4%e0%b9%80%e0%b8%84%e0%b8%a3%e0%b8%b2%e0%b8%b0%e0%b8%ab%e0%b9%8c/">ลุงโฉลกวิเคราะห์</a></li>
 	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19251"><a href="http://52.76.37.90/live/">Live</a></li>
 	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19252"><a href="http://52.76.37.90/crypto/">Crypto</a></li>
@@ -695,11 +685,15 @@ img.emoji {
 	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19057"><a href="http://52.76.37.90/cdc-%e0%b9%80%e0%b8%a5%e0%b8%b4%e0%b8%81%e0%b9%80%e0%b8%a1%e0%b9%88%e0%b8%b2/">CDC เลิกเม่า#1-17</a></li>
 </ul>
 </li>
-<li class="menu-item menu-item-type-post_type menu-item-object-forum menu-item-94"><a href="http://52.76.37.90/forums/forum/cdc/charity/">ลานบุญ</a></li>
-<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19323"><a href="http://52.76.37.90/%e0%b8%a5%e0%b8%b2%e0%b8%99%e0%b8%81%e0%b8%b4%e0%b8%88%e0%b8%81%e0%b8%a3%e0%b8%a3%e0%b8%a1/">ลานกิจกรรม</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-forum menu-item-94"><a href="http://52.76.37.90/forums/forum/cdc/charity/">ทำบุญ</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-has-children menu-item-28235"><a href="http://52.76.37.90/product-category/courses/">คอร์สอบรม</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-28237"><a href="http://52.76.37.90/payment-confirmation/">แจ้งชำระเงิน</a></li>
+</ul>
+</li>
 <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-19318"><a href="http://52.76.37.90/%e0%b8%a5%e0%b8%b2%e0%b8%99%e0%b8%aa%e0%b8%a1%e0%b8%b2%e0%b8%8a%e0%b8%b4%e0%b8%81/">สมาชิก</a>
 <ul class="sub-menu">
-	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19"><a href="http://52.76.37.90/shop/">สมัครสมาชิกสนับสนุน (Become our patreon!)</a></li>
+	<li class="menu-item menu-item-type-post_type menu-item-object-product menu-item-28236"><a href="http://52.76.37.90/product/supporting-membership-2/">สมัคร Supporting Membership (ชำระผ่านการโอนเงิน)</a></li>
 	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-16343"><a href="http://52.76.37.90/payment-confirmation/">แจ้งชำระเงิน</a></li>
 </ul>
 </li>
@@ -732,10 +726,9 @@ img.emoji {
 <article id="post-21369" class="post-21369 post type-post status-publish format-standard has-post-thumbnail hentry category-uncategorized">
 
 			<header class="entry-header">
-		
-			<span class="posted-on">Posted on <a href="http://52.76.37.90/2018/02/19/ef-12018/" rel="bookmark"><time class="entry-date published" datetime="2018-02-19T11:17:10+07:00">19/02/2018</time><time class="updated" datetime="2019-01-07T19:32:10+07:00">07/01/2019</time></a></span> <span class="post-author">by <a href="http://52.76.37.90/author/cdc-admin/" rel="author">cdc-admin</a></span> <span class="post-comments">&mdash; <a href="http://52.76.37.90/2018/02/19/ef-12018/#respond">Leave a comment</a></span><h2 class="alpha entry-title"><a href="http://52.76.37.90/2018/02/19/ef-12018/" rel="bookmark">&#8212;&#8212;&#8212;&#8211;ปิดรับสมัครแล้ว&#8212;&#8212;&#8212;&#8212;CDC Mastering Elliott Wave &#038; Fibnacci 1/2018</a></h2>		</header><!-- .entry-header -->
+		<h2 class="alpha entry-title"><a href="http://52.76.37.90/2018/02/19/ef-12018/" rel="bookmark">&#8212;&#8212;&#8212;&#8211;ปิดรับสมัครแล้ว&#8212;&#8212;&#8212;&#8212;CDC Mastering Elliott Wave &#038; Fibnacci 1/2018</a></h2>		</header><!-- .entry-header -->
 				<div class="entry-content">
-		<img width="1600" height="837" src="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/02/19112427/CDC-Elliot-Wave002.jpg" class="attachment- size- wp-post-image" alt="" srcset="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/02/19112427/CDC-Elliot-Wave002.jpg 1600w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/02/19112427/CDC-Elliot-Wave002-500x262.jpg 500w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/02/19112427/CDC-Elliot-Wave002-768x402.jpg 768w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/02/19112427/CDC-Elliot-Wave002-1024x536.jpg 1024w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/02/19112427/CDC-Elliot-Wave002-416x218.jpg 416w" sizes="(max-width: 1600px) 100vw, 1600px" /><h1>&#8212;&#8212;&#8212;&#8211;ปิดรับสมัครแล้ว&#8212;&#8212;&#8212;&#8212;</h1>
+		<img width="1600" height="837" src="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/02/19112427/CDC-Elliot-Wave002.jpg" class="attachment- size- wp-post-image" alt="" srcset="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/02/19112427/CDC-Elliot-Wave002.jpg 1600w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/02/19112427/CDC-Elliot-Wave002-600x314.jpg 600w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/02/19112427/CDC-Elliot-Wave002-500x262.jpg 500w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/02/19112427/CDC-Elliot-Wave002-768x402.jpg 768w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/02/19112427/CDC-Elliot-Wave002-1024x536.jpg 1024w" sizes="(max-width: 1600px) 100vw, 1600px" /><h1>&#8212;&#8212;&#8212;&#8211;ปิดรับสมัครแล้ว&#8212;&#8212;&#8212;&#8212;</h1>
 <h2 class="hP" tabindex="-1">CDC Mastering Elliott Wave &amp; Fibnacci 1/2018</h2>
 <h2 class="hP" tabindex="-1">( ระยะเวลา 2 วัน โดยเรียนที่อาคาร CDC Foundation )</h2>
 <h2>วันเสาร์ที่ 24 มีนาคม 2561<br />
@@ -752,22 +745,14 @@ img.emoji {
 <p> <a href="http://52.76.37.90/2018/02/19/ef-12018/#more-21369" class="more-link">Continue reading <span class="screen-reader-text">&#8212;&#8212;&#8212;&#8211;ปิดรับสมัครแล้ว&#8212;&#8212;&#8212;&#8212;CDC Mastering Elliott Wave &#038; Fibnacci 1/2018</span></a></p>
 		</div><!-- .entry-content -->
 		
-		<aside class="entry-taxonomy">
-						<div class="cat-links">
-				Category: <a href="http://52.76.37.90/category/uncategorized/" rel="category tag">Uncategorized</a>			</div>
-			
-					</aside>
-
-		
 </article><!-- #post-## -->
 
 <article id="post-21339" class="post-21339 post type-post status-publish format-standard has-post-thumbnail hentry category-uncategorized">
 
 			<header class="entry-header">
-		
-			<span class="posted-on">Posted on <a href="http://52.76.37.90/2018/02/18/amipd12018/" rel="bookmark"><time class="entry-date published" datetime="2018-02-18T17:38:55+07:00">18/02/2018</time><time class="updated" datetime="2018-02-19T23:02:39+07:00">19/02/2018</time></a></span> <span class="post-author">by <a href="http://52.76.37.90/author/cdc-admin/" rel="author">cdc-admin</a></span> <span class="post-comments">&mdash; <a href="http://52.76.37.90/2018/02/18/amipd12018/#respond">Leave a comment</a></span><h2 class="alpha entry-title"><a href="http://52.76.37.90/2018/02/18/amipd12018/" rel="bookmark">เปิดรับสมัครแล้ว Amibroker Programming &#038; System Deveopment Workshop รุ่นที่ 1/2018</a></h2>		</header><!-- .entry-header -->
+		<h2 class="alpha entry-title"><a href="http://52.76.37.90/2018/02/18/amipd12018/" rel="bookmark">เปิดรับสมัครแล้ว Amibroker Programming &#038; System Deveopment Workshop รุ่นที่ 1/2018</a></h2>		</header><!-- .entry-header -->
 				<div class="entry-content">
-		<img width="2168" height="1134" src="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/02/18173609/amiadv_1802_03-01.jpg" class="attachment- size- wp-post-image" alt="" srcset="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/02/18173609/amiadv_1802_03-01.jpg 2168w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/02/18173609/amiadv_1802_03-01-500x262.jpg 500w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/02/18173609/amiadv_1802_03-01-768x402.jpg 768w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/02/18173609/amiadv_1802_03-01-1024x536.jpg 1024w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/02/18173609/amiadv_1802_03-01-416x218.jpg 416w" sizes="(max-width: 2168px) 100vw, 2168px" /><h2>Amibroker Programming &amp; System Development Workshop รุ่นที่ 1/2018</h2>
+		<img width="2168" height="1134" src="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/02/18173609/amiadv_1802_03-01.jpg" class="attachment- size- wp-post-image" alt="" srcset="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/02/18173609/amiadv_1802_03-01.jpg 2168w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/02/18173609/amiadv_1802_03-01-600x314.jpg 600w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/02/18173609/amiadv_1802_03-01-500x262.jpg 500w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/02/18173609/amiadv_1802_03-01-768x402.jpg 768w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/02/18173609/amiadv_1802_03-01-1024x536.jpg 1024w" sizes="(max-width: 2168px) 100vw, 2168px" /><h2>Amibroker Programming &amp; System Development Workshop รุ่นที่ 1/2018</h2>
 <h2>( ระยะเวลา 2 วัน โดยเรียนที่อาคาร CDC Foundation )<br />
 วันเสาร์ที่ 3 มีนาคม 2561<br />
 วันอาทิตย์ที่ 4 มีนาคม 2561<br />
@@ -775,81 +760,49 @@ img.emoji {
 <p> <a href="http://52.76.37.90/2018/02/18/amipd12018/#more-21339" class="more-link">Continue reading <span class="screen-reader-text">เปิดรับสมัครแล้ว Amibroker Programming &#038; System Deveopment Workshop รุ่นที่ 1/2018</span></a></p>
 		</div><!-- .entry-content -->
 		
-		<aside class="entry-taxonomy">
-						<div class="cat-links">
-				Category: <a href="http://52.76.37.90/category/uncategorized/" rel="category tag">Uncategorized</a>			</div>
-			
-					</aside>
-
-		
 </article><!-- #post-## -->
 
 <article id="post-21309" class="post-21309 post type-post status-publish format-standard hentry category-uncategorized">
 
 			<header class="entry-header">
-		
-			<span class="posted-on">Posted on <a href="http://52.76.37.90/2018/02/16/21309/" rel="bookmark"><time class="entry-date published updated" datetime="2018-02-16T21:46:48+07:00">16/02/2018</time></a></span> <span class="post-author">by <a href="http://52.76.37.90/author/oatphuasriphan/" rel="author">oatphuasriphan</a></span> <span class="post-comments">&mdash; <a href="http://52.76.37.90/2018/02/16/21309/#respond">Leave a comment</a></span>		</header><!-- .entry-header -->
+				</header><!-- .entry-header -->
 				<div class="entry-content">
 		<p><iframe width="980" height="551" src="https://www.youtube.com/embed/8HNCEizY_lY?start=1626&#038;feature=oembed" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></p>
 <p>คณะเศรษฐศาสตร์ มหาวิทยาลัยเชียงใหม่ จัดการบรรยายพิเศษเรื่อง &#8220;ทิศทางการลงทุนปี 2561 โดยวิทยากรคุณโฉลก สัมพันธารักษ์ เจ้าของเวปไซด์โฉลกดอทคอมและนักลงทุนอิสระ ในวันอังคารที่29 มกราคม 2561 เวลา 13.00 &#8211; 16.00 น. ณ ห้องสัมมนาชั้น 2 คณะเศรษฐศาสตร์ มหาวิทยาลัยเชียงใหม่</p>
 		</div><!-- .entry-content -->
-		
-		<aside class="entry-taxonomy">
-						<div class="cat-links">
-				Category: <a href="http://52.76.37.90/category/uncategorized/" rel="category tag">Uncategorized</a>			</div>
-			
-					</aside>
-
 		
 </article><!-- #post-## -->
 
 <article id="post-21289" class="post-21289 post type-post status-publish format-standard hentry category-42">
 
 			<header class="entry-header">
-		
-			<span class="posted-on">Posted on <a href="http://52.76.37.90/2018/02/15/happy-valentines-day-2018/" rel="bookmark"><time class="entry-date published" datetime="2018-02-15T22:07:03+07:00">15/02/2018</time><time class="updated" datetime="2018-02-15T22:09:09+07:00">15/02/2018</time></a></span> <span class="post-author">by <a href="http://52.76.37.90/author/oatphuasriphan/" rel="author">oatphuasriphan</a></span> <span class="post-comments">&mdash; <a href="http://52.76.37.90/2018/02/15/happy-valentines-day-2018/#respond">Leave a comment</a></span><h2 class="alpha entry-title"><a href="http://52.76.37.90/2018/02/15/happy-valentines-day-2018/" rel="bookmark">Happy Valentine&#8217;s Day 2018</a></h2>		</header><!-- .entry-header -->
+		<h2 class="alpha entry-title"><a href="http://52.76.37.90/2018/02/15/happy-valentines-day-2018/" rel="bookmark">Happy Valentine&#8217;s Day 2018</a></h2>		</header><!-- .entry-header -->
 				<div class="entry-content">
 		<p>&nbsp;</p>
 <p><iframe width="980" height="551" src="https://www.youtube.com/embed/UpfSh_v2SOM?feature=oembed" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></p>
 <p>คุญลุงโฉลกส่งมอบความรักที่ดีที่สุดให้กับนักลงทุนทุกคนคือ การรักตัวเอง</p>
 		</div><!-- .entry-content -->
 		
-		<aside class="entry-taxonomy">
-						<div class="cat-links">
-				Category: <a href="http://52.76.37.90/category/%e0%b8%9a%e0%b8%97%e0%b8%84%e0%b8%a7%e0%b8%b2%e0%b8%a1/" rel="category tag">บทความ</a>			</div>
-			
-					</aside>
-
-		
 </article><!-- #post-## -->
 
 <article id="post-21285" class="post-21285 post type-post status-publish format-standard hentry category-uncategorized">
 
 			<header class="entry-header">
-		
-			<span class="posted-on">Posted on <a href="http://52.76.37.90/2018/02/15/cdc-warning-20180206/" rel="bookmark"><time class="entry-date published" datetime="2018-02-15T21:55:57+07:00">15/02/2018</time><time class="updated" datetime="2018-02-15T22:04:18+07:00">15/02/2018</time></a></span> <span class="post-author">by <a href="http://52.76.37.90/author/oatphuasriphan/" rel="author">oatphuasriphan</a></span> <span class="post-comments">&mdash; <a href="http://52.76.37.90/2018/02/15/cdc-warning-20180206/#respond">Leave a comment</a></span><h2 class="alpha entry-title"><a href="http://52.76.37.90/2018/02/15/cdc-warning-20180206/" rel="bookmark">CDC Warning 20180206</a></h2>		</header><!-- .entry-header -->
+		<h2 class="alpha entry-title"><a href="http://52.76.37.90/2018/02/15/cdc-warning-20180206/" rel="bookmark">CDC Warning 20180206</a></h2>		</header><!-- .entry-header -->
 				<div class="entry-content">
 		<p>&nbsp;</p>
 <p><iframe width="980" height="551" src="https://www.youtube.com/embed/IVF2tA3cq68?feature=oembed" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></p>
 <p>คุณลุงโฉลกเตือนนักเรียนลงทุนในกลุ่มให้ระมัดระวัง อาจจะเกิดการสัญญาแม่งเม่าการกลับตัว Set Index,Dow Jones,Bitcoin</p>
 		</div><!-- .entry-content -->
 		
-		<aside class="entry-taxonomy">
-						<div class="cat-links">
-				Category: <a href="http://52.76.37.90/category/uncategorized/" rel="category tag">Uncategorized</a>			</div>
-			
-					</aside>
-
-		
 </article><!-- #post-## -->
 
 <article id="post-20981" class="post-20981 post type-post status-publish format-standard has-post-thumbnail hentry category-uncategorized">
 
 			<header class="entry-header">
-		
-			<span class="posted-on">Posted on <a href="http://52.76.37.90/2018/02/04/bb22018/" rel="bookmark"><time class="entry-date published" datetime="2018-02-04T20:39:12+07:00">04/02/2018</time><time class="updated" datetime="2018-02-04T20:41:31+07:00">04/02/2018</time></a></span> <span class="post-author">by <a href="http://52.76.37.90/author/cdc-admin/" rel="author">cdc-admin</a></span> <span class="post-comments">&mdash; <a href="http://52.76.37.90/2018/02/04/bb22018/#respond">Leave a comment</a></span><h2 class="alpha entry-title"><a href="http://52.76.37.90/2018/02/04/bb22018/" rel="bookmark">CDC Basic Bitcoin รุ่นที่ 2/2018</a></h2>		</header><!-- .entry-header -->
+		<h2 class="alpha entry-title"><a href="http://52.76.37.90/2018/02/04/bb22018/" rel="bookmark">CDC Basic Bitcoin รุ่นที่ 2/2018</a></h2>		</header><!-- .entry-header -->
 				<div class="entry-content">
-		<img width="1280" height="720" src="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2017/12/04202922/Basicbitcoin.0111.jpg" class="attachment- size- wp-post-image" alt="" srcset="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2017/12/04202922/Basicbitcoin.0111.jpg 1280w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2017/12/04202922/Basicbitcoin.0111-500x281.jpg 500w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2017/12/04202922/Basicbitcoin.0111-768x432.jpg 768w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2017/12/04202922/Basicbitcoin.0111-1024x576.jpg 1024w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2017/12/04202922/Basicbitcoin.0111-128x72.jpg 128w" sizes="(max-width: 1280px) 100vw, 1280px" /><h2></h2>
+		<img width="1280" height="720" src="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2017/12/04202922/Basicbitcoin.0111.jpg" class="attachment- size- wp-post-image" alt="" srcset="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2017/12/04202922/Basicbitcoin.0111.jpg 1280w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2017/12/04202922/Basicbitcoin.0111-600x338.jpg 600w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2017/12/04202922/Basicbitcoin.0111-500x281.jpg 500w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2017/12/04202922/Basicbitcoin.0111-768x432.jpg 768w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2017/12/04202922/Basicbitcoin.0111-1024x576.jpg 1024w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2017/12/04202922/Basicbitcoin.0111-128x72.jpg 128w" sizes="(max-width: 1280px) 100vw, 1280px" /><h2></h2>
 <h2>CDC Basic Bitcoin รุ่นที่ 2/2018</h2>
 <h2>( ระยะเวลา 2 วัน โดยเรียนที่อาคาร CDC Foundation )<br />
 วันแรก: วันเสาร์ที่ 10 กุมภาพันธ์ 2561<br />
@@ -857,13 +810,6 @@ img.emoji {
 ตั้งแต่เวลา 9:30 – 16:30 น.</h2>
 <p> <a href="http://52.76.37.90/2018/02/04/bb22018/#more-20981" class="more-link">Continue reading <span class="screen-reader-text">CDC Basic Bitcoin รุ่นที่ 2/2018</span></a></p>
 		</div><!-- .entry-content -->
-		
-		<aside class="entry-taxonomy">
-						<div class="cat-links">
-				Category: <a href="http://52.76.37.90/category/uncategorized/" rel="category tag">Uncategorized</a>			</div>
-			
-					</aside>
-
 		
 </article><!-- #post-## -->
 
@@ -887,7 +833,7 @@ img.emoji {
 
 					
 					
-						<div>29 minutes ago</div>
+						<div>5 days, 12 hours ago</div>
 
 					
 				</li>
@@ -898,7 +844,7 @@ img.emoji {
 
 					
 					
-						<div>1 week, 1 day ago</div>
+						<div>1 week, 6 days ago</div>
 
 					
 				</li>
@@ -909,7 +855,7 @@ img.emoji {
 
 					
 					
-						<div>1 week, 2 days ago</div>
+						<div>2 weeks, 1 day ago</div>
 
 					
 				</li>
@@ -920,7 +866,7 @@ img.emoji {
 
 					
 					
-						<div>2 weeks ago</div>
+						<div>2 weeks, 6 days ago</div>
 
 					
 				</li>
@@ -931,7 +877,7 @@ img.emoji {
 
 					
 					
-						<div>4 weeks, 1 day ago</div>
+						<div>1 month ago</div>
 
 					
 				</li>
@@ -948,7 +894,7 @@ img.emoji {
 
 					
 					
-						<div>29 minutes ago</div>
+						<div>5 days, 12 hours ago</div>
 
 					
 				</li>
@@ -959,7 +905,7 @@ img.emoji {
 
 					
 					
-						<div>20 hours, 27 minutes ago</div>
+						<div>6 days, 8 hours ago</div>
 
 					
 				</li>
@@ -970,7 +916,7 @@ img.emoji {
 
 					
 					
-						<div>5 days, 2 hours ago</div>
+						<div>1 week, 3 days ago</div>
 
 					
 				</li>
@@ -981,7 +927,7 @@ img.emoji {
 
 					
 					
-						<div>14 hours, 8 minutes ago</div>
+						<div>5 days, 3 hours ago</div>
 
 					
 				</li>
@@ -992,7 +938,7 @@ img.emoji {
 
 					
 					
-						<div>1 week, 1 day ago</div>
+						<div>1 week, 6 days ago</div>
 
 					
 				</li>
@@ -1003,7 +949,7 @@ img.emoji {
 
 					
 					
-						<div>1 week, 2 days ago</div>
+						<div>2 weeks, 1 day ago</div>
 
 					
 				</li>
@@ -1014,7 +960,7 @@ img.emoji {
 
 					
 					
-						<div>2 weeks ago</div>
+						<div>2 weeks, 6 days ago</div>
 
 					
 				</li>
@@ -1025,7 +971,7 @@ img.emoji {
 
 					
 					
-						<div>2 weeks, 2 days ago</div>
+						<div>3 weeks, 1 day ago</div>
 
 					
 				</li>
@@ -1036,24 +982,24 @@ img.emoji {
 		</div><div id="d4p_bbw_newposts-4" class="widget cls_d4p_bbw_newposts"><span class="gamma widget-title">New Posts</span><div class="d4p-bbw-widget bbx-newposts">
 <ul>
 <li>
+<a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/%e0%b9%81%e0%b8%88%e0%b9%89%e0%b8%87%e0%b8%8a%e0%b8%b3%e0%b8%a3%e0%b8%b0%e0%b8%84%e0%b9%88%e0%b8%b2%e0%b8%aa%e0%b8%a1%e0%b8%b1%e0%b8%84%e0%b8%a3%e0%b8%aa%e0%b8%a1%e0%b8%b2%e0%b8%8a%e0%b8%b4%e0%b8%81/#post-28197" title="Reply To: แจ้งชำระค่าสมัครสมาชิก">Reply To: แจ้งชำระค่าสมัครสมาชิก</a>
+<em class="bbp-last-active">1 day, 2 hours ago</em>
+</li>
+<li>
+<a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/cdc-downloader-%e0%b8%94%e0%b8%b2%e0%b8%a7%e0%b8%99%e0%b9%8c%e0%b9%82%e0%b8%ab%e0%b8%a5%e0%b8%94%e0%b9%84%e0%b8%a1%e0%b9%88%e0%b9%84%e0%b8%94%e0%b9%89%e0%b8%84%e0%b8%a3%e0%b8%b1%e0%b8%9a/#post-27962" title="Reply To: CDC Downloader ดาวน์โหลดไม่ได้ครับ">Reply To: CDC Downloader ดาวน์โหลดไม่ได้ครับ</a>
+<em class="bbp-last-active">5 days, 3 hours ago</em>
+</li>
+<li>
 <a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/cdc-d1912/" title="CDC-D1912 งานบุญโต๊ะหมู่บูชา">CDC-D1912 งานบุญโต๊ะหมู่บูชา</a>
-<em class="bbp-last-active">29 minutes ago</em>
-</li>
-<li>
-<a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/%e0%b9%81%e0%b8%88%e0%b9%89%e0%b8%87%e0%b8%8a%e0%b8%b3%e0%b8%a3%e0%b8%b0%e0%b8%84%e0%b9%88%e0%b8%b2%e0%b8%aa%e0%b8%a1%e0%b8%b1%e0%b8%84%e0%b8%a3%e0%b8%aa%e0%b8%a1%e0%b8%b2%e0%b8%8a%e0%b8%b4%e0%b8%81/#post-27921" title="Reply To: แจ้งชำระค่าสมัครสมาชิก">Reply To: แจ้งชำระค่าสมัครสมาชิก</a>
-<em class="bbp-last-active">1 hour, 33 minutes ago</em>
-</li>
-<li>
-<a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/cdc-downloader-%e0%b8%94%e0%b8%b2%e0%b8%a7%e0%b8%99%e0%b9%8c%e0%b9%82%e0%b8%ab%e0%b8%a5%e0%b8%94%e0%b9%84%e0%b8%a1%e0%b9%88%e0%b9%84%e0%b8%94%e0%b9%89%e0%b8%84%e0%b8%a3%e0%b8%b1%e0%b8%9a/#post-27896" title="Reply To: CDC Downloader ดาวน์โหลดไม่ได้ครับ">Reply To: CDC Downloader ดาวน์โหลดไม่ได้ครับ</a>
-<em class="bbp-last-active">14 hours, 8 minutes ago</em>
+<em class="bbp-last-active">5 days, 12 hours ago</em>
 </li>
 <li>
 <a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/cdc-downloader/#post-27887" title="Reply To: CDC Downloader">Reply To: CDC Downloader</a>
-<em class="bbp-last-active">19 hours, 3 minutes ago</em>
+<em class="bbp-last-active">6 days, 7 hours ago</em>
 </li>
 <li>
 <a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/%e0%b8%aa%e0%b8%ad%e0%b8%9a%e0%b8%96%e0%b8%b2%e0%b8%a1%e0%b9%80%e0%b8%a3%e0%b8%b7%e0%b9%88%e0%b8%ad%e0%b8%87%e0%b8%82%e0%b9%89%e0%b8%ad%e0%b8%a1%e0%b8%b9%e0%b8%a5dw%e0%b8%ab%e0%b8%99%e0%b9%88%e0%b8%ad/#post-27882" title="Reply To: สอบถามเรื่องข้อมูลDWหน่อยครับ">Reply To: สอบถามเรื่องข้อมูลDWหน่อยครับ</a>
-<em class="bbp-last-active">20 hours, 27 minutes ago</em>
+<em class="bbp-last-active">6 days, 8 hours ago</em>
 </li>
 </ul>
 </div></div><div id="archives-2" class="widget widget_archive"><span class="gamma widget-title">Archives</span>		<ul>
@@ -1116,7 +1062,7 @@ img.emoji {
 
 					
 					
-						<div>7 months, 1 week ago</div>
+						<div>7 months, 2 weeks ago</div>
 
 					
 				</li>
@@ -1149,7 +1095,7 @@ img.emoji {
 
 					
 					
-						<div>10 months ago</div>
+						<div>10 months, 1 week ago</div>
 
 					
 				</li>
@@ -1160,7 +1106,7 @@ img.emoji {
 
 					
 					
-						<div>6 months, 3 weeks ago</div>
+						<div>7 months ago</div>
 
 					
 				</li>
@@ -1179,7 +1125,7 @@ img.emoji {
 
 					
 					
-						<div>29 minutes ago</div>
+						<div>5 days, 12 hours ago</div>
 
 					
 				</li>
@@ -1190,7 +1136,7 @@ img.emoji {
 
 					
 					
-						<div>20 hours, 27 minutes ago</div>
+						<div>6 days, 8 hours ago</div>
 
 					
 				</li>
@@ -1201,7 +1147,7 @@ img.emoji {
 
 					
 					
-						<div>5 days, 2 hours ago</div>
+						<div>1 week, 3 days ago</div>
 
 					
 				</li>
@@ -1212,7 +1158,7 @@ img.emoji {
 
 					
 					
-						<div>14 hours, 8 minutes ago</div>
+						<div>5 days, 3 hours ago</div>
 
 					
 				</li>
@@ -1223,7 +1169,7 @@ img.emoji {
 
 					
 					
-						<div>1 week, 1 day ago</div>
+						<div>1 week, 6 days ago</div>
 
 					
 				</li>
@@ -1238,22 +1184,11 @@ img.emoji {
 
 			
 				<li>
-					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/cdc-d1912/">CDC-D1912 งานบุญโต๊ะหมู่บูชา</a>
-
-					
-					
-						<div>29 minutes ago</div>
-
-					
-				</li>
-
-			
-				<li>
 					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/%e0%b9%81%e0%b8%88%e0%b9%89%e0%b8%87%e0%b8%8a%e0%b8%b3%e0%b8%a3%e0%b8%b0%e0%b8%84%e0%b9%88%e0%b8%b2%e0%b8%aa%e0%b8%a1%e0%b8%b1%e0%b8%84%e0%b8%a3%e0%b8%aa%e0%b8%a1%e0%b8%b2%e0%b8%8a%e0%b8%b4%e0%b8%81/">แจ้งชำระค่าสมัครสมาชิก</a>
 
 					
 					
-						<div>1 hour, 33 minutes ago</div>
+						<div>1 day, 2 hours ago</div>
 
 					
 				</li>
@@ -1264,7 +1199,18 @@ img.emoji {
 
 					
 					
-						<div>14 hours, 8 minutes ago</div>
+						<div>5 days, 3 hours ago</div>
+
+					
+				</li>
+
+			
+				<li>
+					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/cdc-d1912/">CDC-D1912 งานบุญโต๊ะหมู่บูชา</a>
+
+					
+					
+						<div>5 days, 12 hours ago</div>
 
 					
 				</li>
@@ -1275,7 +1221,7 @@ img.emoji {
 
 					
 					
-						<div>19 hours, 3 minutes ago</div>
+						<div>6 days, 7 hours ago</div>
 
 					
 				</li>
@@ -1286,7 +1232,7 @@ img.emoji {
 
 					
 					
-						<div>20 hours, 27 minutes ago</div>
+						<div>6 days, 8 hours ago</div>
 
 					
 				</li>
@@ -1330,8 +1276,8 @@ img.emoji {
 <script type='text/javascript'>
 /* <![CDATA[ */
 r3f5x9JS=escape(document['referrer']);
-hf4N='d113cd76a6702f8042daf053e317918c';
-hf4V='4ebc074a0451c9776c4e4829934cf045';
+hf4N='1f78e9a4584232a892d55221d0786f85';
+hf4V='c82145947f1a21e7a7f67e8ee32e548d';
 jQuery(document).ready(function($){var e="#commentform, .comment-respond form, .comment-form, #lostpasswordform, #registerform, #loginform, #login_form, #wpss_contact_form, .wpcf7-form";$(e).submit(function(){$("<input>").attr("type","hidden").attr("name","r3f5x9JS").attr("value",r3f5x9JS).appendTo(e);return true;});var h="form[method='post']";$(h).submit(function(){$("<input>").attr("type","hidden").attr("name",hf4N).attr("value",hf4V).appendTo(h);return true;});});
 /* ]]> */
 </script> 
@@ -1340,15 +1286,7 @@ jQuery(document).ready(function($){var e="#commentform, .comment-respond form, .
 		c = c.replace(/woocommerce-no-js/, 'woocommerce-js');
 		document.body.className = c;
 	</script>
-	<br />
-<b>Notice</b>:  woocommerce_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
-<br />
-<b>Notice</b>:  wc_checkout_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
-<br />
-<b>Notice</b>:  woocommerce_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
-<br />
-<b>Notice</b>:  wc_checkout_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
-<script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/bbpress/templates/default/js/editor.js?ver=2.5.14-6684'></script>
+	<script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/bbpress/templates/default/js/editor.js?ver=2.5.14-6684'></script>
 <script type='text/javascript'>
 /* <![CDATA[ */
 var wpcf7 = {"apiSettings":{"root":"http:\/\/52.76.37.90\/wp-json\/contact-form-7\/v1","namespace":"contact-form-7\/v1"},"cached":"1","jqueryUi":"1"};
@@ -1394,8 +1332,8 @@ jQuery(document).ready(function(jQuery){jQuery.datepicker.setDefaults({"closeTex
 </html>
 
 <!--
-Object Caching 155/329 objects using disk
+Object Caching 22/636 objects using disk
 Page Caching using disk: enhanced 
 
-Served from: 52.76.37.90 @ 2019-03-08 10:12:59 by W3 Total Cache
+Served from: 52.76.37.90 @ 2019-03-13 22:36:43 by W3 Total Cache
 -->

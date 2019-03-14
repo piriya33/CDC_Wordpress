@@ -589,22 +589,6 @@ img.emoji {
 <link rel='stylesheet' id='sp-styles-css'  href='http://52.76.37.90/wp-content/plugins/storefront-powerpack/assets/css/style.css?ver=1.4.15' type='text/css' media='all' />
 <link rel='stylesheet' id='wc-bundle-style-css'  href='http://52.76.37.90/wp-content/plugins/woocommerce-product-bundles/assets/css/frontend/woocommerce.css?ver=5.9.2' type='text/css' media='all' />
 <link rel='stylesheet' id='custom-css-css'  href='http://52.76.37.90/wp-content/plugins/theme-customisations-master/custom/style.css?ver=5.1' type='text/css' media='all' />
-<br />
-<b>Notice</b>:  woocommerce_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
-<br />
-<b>Notice</b>:  wc_checkout_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
-<br />
-<b>Notice</b>:  woocommerce_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
-<br />
-<b>Notice</b>:  wc_checkout_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
-<br />
-<b>Notice</b>:  woocommerce_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
-<br />
-<b>Notice</b>:  wc_checkout_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
-<br />
-<b>Notice</b>:  woocommerce_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
-<br />
-<b>Notice</b>:  wc_checkout_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
 <script type='text/javascript' src='http://52.76.37.90/wp-includes/js/jquery/jquery.js?ver=1.12.4'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/theme-customisations-master/custom/custom.js?ver=5.1'></script>
@@ -624,7 +608,7 @@ img.emoji {
 
 <script type="text/javascript">
     /* <![CDATA[ */
-    var gdbxRender_Data = { url: "http://52.76.37.90/wp-admin/admin-ajax.php", run_quote: true, run_report: false, run_thanks: false, run_attachments: true, run_canned_replies: false, run_bbcodes: true, run_fitvids: true, wp_editor: true, wp_version: 51, last_cookie: 1552399954, bbpress_version: 25, text_are_you_sure: "Are you sure? Operation is not reversible.", now: 1552396354, thanks_thanks: "Thanks", thanks_unthanks: "Remove Thanks", thanks_saved: "Thanks Saved", thanks_removal: true, validate_attachments: true, insert_into_content: true, max_files: 5, max_size: 5120000, limiter: true, allowed_extensions: "jpg jpeg jpe gif png bmp tiff tif ico asf asx wmv wmx wm avi divx flv mov qt mpeg mpg mpe mp4 m4v ogv webm mkv 3gp 3gpp 3g2 3gp2 txt asc c cc h srt csv tsv ics rtx css vtt dfxp mp3 m4a m4b aac ra ram wav ogg oga flac mid midi wma wax mka rtf pdf class tar zip gz gzip rar 7z psd xcf doc pot pps ppt wri xla xls xlt xlw mdb mpp docx docm dotx dotm xlsx xlsm xlsb xltx xltm xlam pptx pptm ppsx ppsm potx potm ppam sldx sldm onetoc onetoc2 onetmp onepkg oxps xps odt odp ods odg odc odb odf wp wpd key numbers pages afl", text_select_file: "Select File", text_file_name: "Name", text_file_size: "Size", text_file_type: "Extension", text_file_validation: "Error!", text_file_validation_size: "The file is too big.", text_file_validation_type: "File type not allowed.", text_file_remove: "Remove this file", text_file_shortcode: "Insert into content", text_file_caption: "Set file caption", text_file_caption_placeholder: "Caption..." };
+    var gdbxRender_Data = { url: "http://52.76.37.90/wp-admin/admin-ajax.php", run_quote: true, run_report: false, run_thanks: false, run_attachments: true, run_canned_replies: false, run_bbcodes: true, run_fitvids: true, wp_editor: true, wp_version: 51, last_cookie: 1552457988, bbpress_version: 25, text_are_you_sure: "Are you sure? Operation is not reversible.", now: 1552454388, thanks_thanks: "Thanks", thanks_unthanks: "Remove Thanks", thanks_saved: "Thanks Saved", thanks_removal: true, validate_attachments: true, insert_into_content: true, max_files: 5, max_size: 5120000, limiter: true, allowed_extensions: "jpg jpeg jpe gif png bmp tiff tif ico asf asx wmv wmx wm avi divx flv mov qt mpeg mpg mpe mp4 m4v ogv webm mkv 3gp 3gpp 3g2 3gp2 txt asc c cc h srt csv tsv ics rtx css vtt dfxp mp3 m4a m4b aac ra ram wav ogg oga flac mid midi wma wax mka rtf pdf class tar zip gz gzip rar 7z psd xcf doc pot pps ppt wri xla xls xlt xlw mdb mpp docx docm dotx dotm xlsx xlsm xlsb xltx xltm xlam pptx pptm ppsx ppsm potx potm ppam sldx sldm onetoc onetoc2 onetmp onepkg oxps xps odt odp ods odg odc odb odf wp wpd key numbers pages afl", text_select_file: "Select File", text_file_name: "Name", text_file_size: "Size", text_file_type: "Extension", text_file_validation: "Error!", text_file_validation_size: "The file is too big.", text_file_validation_type: "File type not allowed.", text_file_remove: "Remove this file", text_file_shortcode: "Insert into content", text_file_caption: "Set file caption", text_file_caption_placeholder: "Caption..." };
     /* ]]> */
 </script>
 
@@ -680,7 +664,7 @@ img.emoji {
 </ul>
 </li>
 <li id="menu-item-94" class="menu-item menu-item-type-post_type menu-item-object-forum menu-item-94"><a href="http://52.76.37.90/forums/forum/cdc/charity/">ลานบุญ</a></li>
-<li id="menu-item-19323" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19323"><a href="http://52.76.37.90/%e0%b8%a5%e0%b8%b2%e0%b8%99%e0%b8%81%e0%b8%b4%e0%b8%88%e0%b8%81%e0%b8%a3%e0%b8%a3%e0%b8%a1/">ลานกิจกรรม</a></li>
+<li id="menu-item-19323" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19323"><a href="http://52.76.37.90/%e0%b8%a5%e0%b8%b2%e0%b8%99%e0%b8%81%e0%b8%b4%e0%b8%88%e0%b8%81%e0%b8%a3%e0%b8%a3%e0%b8%a1/">Courses</a></li>
 <li id="menu-item-19318" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-19318"><a href="http://52.76.37.90/%e0%b8%a5%e0%b8%b2%e0%b8%99%e0%b8%aa%e0%b8%a1%e0%b8%b2%e0%b8%8a%e0%b8%b4%e0%b8%81/">สมาชิก</a>
 <ul class="sub-menu">
 	<li id="menu-item-19" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19"><a href="http://52.76.37.90/shop/">สมัครสมาชิกสนับสนุน (Become our patreon!)</a></li>
@@ -705,7 +689,7 @@ img.emoji {
 </ul>
 </li>
 <li class="menu-item menu-item-type-post_type menu-item-object-forum menu-item-94"><a href="http://52.76.37.90/forums/forum/cdc/charity/">ลานบุญ</a></li>
-<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19323"><a href="http://52.76.37.90/%e0%b8%a5%e0%b8%b2%e0%b8%99%e0%b8%81%e0%b8%b4%e0%b8%88%e0%b8%81%e0%b8%a3%e0%b8%a3%e0%b8%a1/">ลานกิจกรรม</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19323"><a href="http://52.76.37.90/%e0%b8%a5%e0%b8%b2%e0%b8%99%e0%b8%81%e0%b8%b4%e0%b8%88%e0%b8%81%e0%b8%a3%e0%b8%a3%e0%b8%a1/">Courses</a></li>
 <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-19318"><a href="http://52.76.37.90/%e0%b8%a5%e0%b8%b2%e0%b8%99%e0%b8%aa%e0%b8%a1%e0%b8%b2%e0%b8%8a%e0%b8%b4%e0%b8%81/">สมาชิก</a>
 <ul class="sub-menu">
 	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19"><a href="http://52.76.37.90/shop/">สมัครสมาชิกสนับสนุน (Become our patreon!)</a></li>
@@ -745,7 +729,7 @@ img.emoji {
 	
 	
 		<div class="bbp-topic-tags"><p>Tagged:&nbsp;<a href="http://52.76.37.90/forums/topic-tag/actionzone/" rel="tag">ActionZone</a>, <a href="http://52.76.37.90/forums/topic-tag/trading-system/" rel="tag">trading system</a></p></div>
-		<div class="bbp-template-notice info"><p class="bbp-topic-description">This topic contains 38 replies, has 27 voices, and was last updated by <a href="http://52.76.37.90/forums/users/scopal99/" title="View Scopal99&#039;s profile" class="bbp-author-avatar" rel="nofollow"><img src="http://2.gravatar.com/avatar/2b1e5d97bb1143e56f35dbeefc3a597e?s=14&#038;d=mm&#038;r=g" width="14" height="14" alt="Avatar" class="avatar avatar-14 wp-user-avatar wp-user-avatar-14 photo avatar-default" /></a>&nbsp;<a href="http://52.76.37.90/forums/users/scopal99/" title="View Scopal99&#039;s profile" class="bbp-author-name" rel="nofollow">Scopal99</a> <a href="http://52.76.37.90/forums/topic/cdc-action-zone-basic-default/#post-25891" title="Reply To: CDC Action Zone Basic / Default">3 months ago</a>.</p></div>
+		<div class="bbp-template-notice info"><p class="bbp-topic-description">This topic contains 38 replies, has 27 voices, and was last updated by <a href="http://52.76.37.90/forums/users/scopal99/" title="View Scopal99&#039;s profile" class="bbp-author-avatar" rel="nofollow"><img src="http://2.gravatar.com/avatar/2b1e5d97bb1143e56f35dbeefc3a597e?s=14&#038;d=mm&#038;r=g" width="14" height="14" alt="Avatar" class="avatar avatar-14 wp-user-avatar wp-user-avatar-14 photo avatar-default" /></a>&nbsp;<a href="http://52.76.37.90/forums/users/scopal99/" title="View Scopal99&#039;s profile" class="bbp-author-name" rel="nofollow">Scopal99</a> <a href="http://52.76.37.90/forums/topic/cdc-action-zone-basic-default/#post-25891" title="Reply To: CDC Action Zone Basic / Default">3 months, 1 week ago</a>.</p></div>
 		
 		
 			
@@ -1554,7 +1538,7 @@ Search for CDC Action Zone under Indicators</p>
 <ul id="bbp-reply-revision-log-21177" class="bbp-reply-revision-log">
 
 	<li id="bbp-reply-revision-log-21177-item-21186" class="bbp-reply-revision-log-item">
-		This reply was modified 1 year ago by <a href="http://52.76.37.90/forums/users/dreamscat/" title="View dreamscat&#039;s profile"><img src="http://2.gravatar.com/avatar/b25fc34cbb62b3b65a02ae0b98509e49?s=14&#038;d=mm&#038;r=g" width="14" height="14" alt="Avatar" class="avatar avatar-14 wp-user-avatar wp-user-avatar-14 photo avatar-default" /></a>&nbsp;<a href="http://52.76.37.90/forums/users/dreamscat/" title="View dreamscat&#039;s profile">dreamscat</a>.
+		This reply was modified 1 year, 1 month ago by <a href="http://52.76.37.90/forums/users/dreamscat/" title="View dreamscat&#039;s profile"><img src="http://2.gravatar.com/avatar/b25fc34cbb62b3b65a02ae0b98509e49?s=14&#038;d=mm&#038;r=g" width="14" height="14" alt="Avatar" class="avatar avatar-14 wp-user-avatar wp-user-avatar-14 photo avatar-default" /></a>&nbsp;<a href="http://52.76.37.90/forums/users/dreamscat/" title="View dreamscat&#039;s profile">dreamscat</a>.
 	</li>
 
 </ul>
@@ -1717,7 +1701,7 @@ Search for CDC Action Zone under Indicators</p>
 <ul id="bbp-reply-revision-log-22608" class="bbp-reply-revision-log">
 
 	<li id="bbp-reply-revision-log-22608-item-22609" class="bbp-reply-revision-log-item">
-		This reply was modified 10 months, 3 weeks ago by <a href="http://52.76.37.90/forums/users/dreamscat/" title="View dreamscat&#039;s profile"><img src="http://2.gravatar.com/avatar/b25fc34cbb62b3b65a02ae0b98509e49?s=14&#038;d=mm&#038;r=g" width="14" height="14" alt="Avatar" class="avatar avatar-14 wp-user-avatar wp-user-avatar-14 photo avatar-default" /></a>&nbsp;<a href="http://52.76.37.90/forums/users/dreamscat/" title="View dreamscat&#039;s profile">dreamscat</a>.
+		This reply was modified 10 months, 4 weeks ago by <a href="http://52.76.37.90/forums/users/dreamscat/" title="View dreamscat&#039;s profile"><img src="http://2.gravatar.com/avatar/b25fc34cbb62b3b65a02ae0b98509e49?s=14&#038;d=mm&#038;r=g" width="14" height="14" alt="Avatar" class="avatar avatar-14 wp-user-avatar wp-user-avatar-14 photo avatar-default" /></a>&nbsp;<a href="http://52.76.37.90/forums/users/dreamscat/" title="View dreamscat&#039;s profile">dreamscat</a>.
 	</li>
 
 </ul>
@@ -2541,7 +2525,7 @@ SetOption(&#8220;MaxOpenPositions&#8221;,maxpos);</p>
 
 					
 					
-						<div>4 days, 10 hours ago</div>
+						<div>5 days, 2 hours ago</div>
 
 					
 				</li>
@@ -2552,7 +2536,7 @@ SetOption(&#8220;MaxOpenPositions&#8221;,maxpos);</p>
 
 					
 					
-						<div>1 week, 5 days ago</div>
+						<div>1 week, 6 days ago</div>
 
 					
 				</li>
@@ -2563,7 +2547,7 @@ SetOption(&#8220;MaxOpenPositions&#8221;,maxpos);</p>
 
 					
 					
-						<div>1 week, 6 days ago</div>
+						<div>2 weeks ago</div>
 
 					
 				</li>
@@ -2602,7 +2586,7 @@ SetOption(&#8220;MaxOpenPositions&#8221;,maxpos);</p>
 
 					
 					
-						<div>4 days, 10 hours ago</div>
+						<div>5 days, 2 hours ago</div>
 
 					
 				</li>
@@ -2613,7 +2597,7 @@ SetOption(&#8220;MaxOpenPositions&#8221;,maxpos);</p>
 
 					
 					
-						<div>5 days, 6 hours ago</div>
+						<div>5 days, 22 hours ago</div>
 
 					
 				</li>
@@ -2624,7 +2608,7 @@ SetOption(&#8220;MaxOpenPositions&#8221;,maxpos);</p>
 
 					
 					
-						<div>1 week, 2 days ago</div>
+						<div>1 week, 3 days ago</div>
 
 					
 				</li>
@@ -2635,7 +2619,7 @@ SetOption(&#8220;MaxOpenPositions&#8221;,maxpos);</p>
 
 					
 					
-						<div>4 days ago</div>
+						<div>4 days, 16 hours ago</div>
 
 					
 				</li>
@@ -2646,7 +2630,7 @@ SetOption(&#8220;MaxOpenPositions&#8221;,maxpos);</p>
 
 					
 					
-						<div>1 week, 5 days ago</div>
+						<div>1 week, 6 days ago</div>
 
 					
 				</li>
@@ -2657,7 +2641,7 @@ SetOption(&#8220;MaxOpenPositions&#8221;,maxpos);</p>
 
 					
 					
-						<div>1 week, 6 days ago</div>
+						<div>2 weeks ago</div>
 
 					
 				</li>
@@ -2679,7 +2663,7 @@ SetOption(&#8220;MaxOpenPositions&#8221;,maxpos);</p>
 
 					
 					
-						<div>3 weeks ago</div>
+						<div>3 weeks, 1 day ago</div>
 
 					
 				</li>
@@ -2690,24 +2674,24 @@ SetOption(&#8220;MaxOpenPositions&#8221;,maxpos);</p>
 		</div><div id="d4p_bbw_newposts-4" class="widget cls_d4p_bbw_newposts"><span class="gamma widget-title">New Posts</span><div class="d4p-bbw-widget bbx-newposts">
 <ul>
 <li>
-<a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/%e0%b9%81%e0%b8%88%e0%b9%89%e0%b8%87%e0%b8%8a%e0%b8%b3%e0%b8%a3%e0%b8%b0%e0%b8%84%e0%b9%88%e0%b8%b2%e0%b8%aa%e0%b8%a1%e0%b8%b1%e0%b8%84%e0%b8%a3%e0%b8%aa%e0%b8%a1%e0%b8%b2%e0%b8%8a%e0%b8%b4%e0%b8%81/#post-28179" title="Reply To: แจ้งชำระค่าสมัครสมาชิก">Reply To: แจ้งชำระค่าสมัครสมาชิก</a>
-<em class="bbp-last-active">3 hours, 1 minute ago</em>
+<a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/%e0%b9%81%e0%b8%88%e0%b9%89%e0%b8%87%e0%b8%8a%e0%b8%b3%e0%b8%a3%e0%b8%b0%e0%b8%84%e0%b9%88%e0%b8%b2%e0%b8%aa%e0%b8%a1%e0%b8%b1%e0%b8%84%e0%b8%a3%e0%b8%aa%e0%b8%a1%e0%b8%b2%e0%b8%8a%e0%b8%b4%e0%b8%81/#post-28197" title="Reply To: แจ้งชำระค่าสมัครสมาชิก">Reply To: แจ้งชำระค่าสมัครสมาชิก</a>
+<em class="bbp-last-active">15 hours, 54 minutes ago</em>
 </li>
 <li>
 <a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/cdc-downloader-%e0%b8%94%e0%b8%b2%e0%b8%a7%e0%b8%99%e0%b9%8c%e0%b9%82%e0%b8%ab%e0%b8%a5%e0%b8%94%e0%b9%84%e0%b8%a1%e0%b9%88%e0%b9%84%e0%b8%94%e0%b9%89%e0%b8%84%e0%b8%a3%e0%b8%b1%e0%b8%9a/#post-27962" title="Reply To: CDC Downloader ดาวน์โหลดไม่ได้ครับ">Reply To: CDC Downloader ดาวน์โหลดไม่ได้ครับ</a>
-<em class="bbp-last-active">4 days ago</em>
+<em class="bbp-last-active">4 days, 16 hours ago</em>
 </li>
 <li>
 <a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/cdc-d1912/" title="CDC-D1912 งานบุญโต๊ะหมู่บูชา">CDC-D1912 งานบุญโต๊ะหมู่บูชา</a>
-<em class="bbp-last-active">4 days, 10 hours ago</em>
+<em class="bbp-last-active">5 days, 2 hours ago</em>
 </li>
 <li>
 <a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/cdc-downloader/#post-27887" title="Reply To: CDC Downloader">Reply To: CDC Downloader</a>
-<em class="bbp-last-active">5 days, 5 hours ago</em>
+<em class="bbp-last-active">5 days, 21 hours ago</em>
 </li>
 <li>
 <a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/%e0%b8%aa%e0%b8%ad%e0%b8%9a%e0%b8%96%e0%b8%b2%e0%b8%a1%e0%b9%80%e0%b8%a3%e0%b8%b7%e0%b9%88%e0%b8%ad%e0%b8%87%e0%b8%82%e0%b9%89%e0%b8%ad%e0%b8%a1%e0%b8%b9%e0%b8%a5dw%e0%b8%ab%e0%b8%99%e0%b9%88%e0%b8%ad/#post-27882" title="Reply To: สอบถามเรื่องข้อมูลDWหน่อยครับ">Reply To: สอบถามเรื่องข้อมูลDWหน่อยครับ</a>
-<em class="bbp-last-active">5 days, 6 hours ago</em>
+<em class="bbp-last-active">5 days, 22 hours ago</em>
 </li>
 </ul>
 </div></div><div id="archives-2" class="widget widget_archive"><span class="gamma widget-title">Archives</span>		<ul>
@@ -2833,7 +2817,7 @@ SetOption(&#8220;MaxOpenPositions&#8221;,maxpos);</p>
 
 					
 					
-						<div>4 days, 10 hours ago</div>
+						<div>5 days, 2 hours ago</div>
 
 					
 				</li>
@@ -2844,7 +2828,7 @@ SetOption(&#8220;MaxOpenPositions&#8221;,maxpos);</p>
 
 					
 					
-						<div>5 days, 6 hours ago</div>
+						<div>5 days, 22 hours ago</div>
 
 					
 				</li>
@@ -2855,7 +2839,7 @@ SetOption(&#8220;MaxOpenPositions&#8221;,maxpos);</p>
 
 					
 					
-						<div>1 week, 2 days ago</div>
+						<div>1 week, 3 days ago</div>
 
 					
 				</li>
@@ -2866,7 +2850,7 @@ SetOption(&#8220;MaxOpenPositions&#8221;,maxpos);</p>
 
 					
 					
-						<div>4 days ago</div>
+						<div>4 days, 16 hours ago</div>
 
 					
 				</li>
@@ -2877,7 +2861,7 @@ SetOption(&#8220;MaxOpenPositions&#8221;,maxpos);</p>
 
 					
 					
-						<div>1 week, 5 days ago</div>
+						<div>1 week, 6 days ago</div>
 
 					
 				</li>
@@ -2896,7 +2880,7 @@ SetOption(&#8220;MaxOpenPositions&#8221;,maxpos);</p>
 
 					
 					
-						<div>3 hours, 1 minute ago</div>
+						<div>15 hours, 54 minutes ago</div>
 
 					
 				</li>
@@ -2907,7 +2891,7 @@ SetOption(&#8220;MaxOpenPositions&#8221;,maxpos);</p>
 
 					
 					
-						<div>4 days ago</div>
+						<div>4 days, 16 hours ago</div>
 
 					
 				</li>
@@ -2918,7 +2902,7 @@ SetOption(&#8220;MaxOpenPositions&#8221;,maxpos);</p>
 
 					
 					
-						<div>4 days, 10 hours ago</div>
+						<div>5 days, 2 hours ago</div>
 
 					
 				</li>
@@ -2929,7 +2913,7 @@ SetOption(&#8220;MaxOpenPositions&#8221;,maxpos);</p>
 
 					
 					
-						<div>5 days, 5 hours ago</div>
+						<div>5 days, 21 hours ago</div>
 
 					
 				</li>
@@ -2940,7 +2924,7 @@ SetOption(&#8220;MaxOpenPositions&#8221;,maxpos);</p>
 
 					
 					
-						<div>5 days, 6 hours ago</div>
+						<div>5 days, 22 hours ago</div>
 
 					
 				</li>
@@ -2994,20 +2978,12 @@ jQuery(document).ready(function($){var e="#commentform, .comment-respond form, .
 		c = c.replace(/woocommerce-no-js/, 'woocommerce-js');
 		document.body.className = c;
 	</script>
-	<br />
-<b>Notice</b>:  woocommerce_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
-<br />
-<b>Notice</b>:  wc_checkout_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
-<br />
-<b>Notice</b>:  woocommerce_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
-<br />
-<b>Notice</b>:  wc_checkout_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
-<script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/gd-bbpress-toolbox/d4pjs/fitvids/jquery.fitvids.js?ver=4.7.2.625'></script>
+	<script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/gd-bbpress-toolbox/d4pjs/fitvids/jquery.fitvids.js?ver=4.7.2.625'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/gd-bbpress-toolbox/js/front-core.min.js?ver=4.7.2.625'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/bbpress/templates/default/js/editor.js?ver=2.5.14-6684'></script>
 <script type='text/javascript'>
 /* <![CDATA[ */
-var bbpTopicJS = {"bbp_ajaxurl":"http:\/\/52.76.37.90\/forums\/topic\/cdc-action-zone-basic-default\/?bbp-ajax=true","generic_ajax_error":"Something went wrong. Refresh your browser and try again.","is_user_logged_in":"","fav_nonce":"9484ef54bf","subs_nonce":"0274407f8f"};
+var bbpTopicJS = {"bbp_ajaxurl":"http:\/\/52.76.37.90\/forums\/topic\/cdc-action-zone-basic-default\/?bbp-ajax=true","generic_ajax_error":"Something went wrong. Refresh your browser and try again.","is_user_logged_in":"","fav_nonce":"fc30ba6643","subs_nonce":"bf60018387"};
 /* ]]> */
 </script>
 <script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/bbpress/templates/default/js/topic.js?ver=2.5.14-6684'></script>
@@ -3057,8 +3033,8 @@ jQuery(document).ready(function(jQuery){jQuery.datepicker.setDefaults({"closeTex
 </html>
 
 <!--
-Object Caching 20/1076 objects using disk
+Object Caching 19/1073 objects using disk
 Page Caching using disk: enhanced 
 
-Served from: 52.76.37.90 @ 2019-03-12 20:12:34 by W3 Total Cache
+Served from: 52.76.37.90 @ 2019-03-13 12:19:49 by W3 Total Cache
 -->

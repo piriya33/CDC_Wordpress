@@ -1,1 +1,0 @@
-§Ð‡\<?php exit; ?>a:1:{s:7:"content";s:55:"http://52.76.37.90/wp-includes/images/media/default.png";}

@@ -40,7 +40,7 @@ img.emoji {
 <link rel='stylesheet' id='bbp-default-css'  href='http://52.76.37.90/wp-content/plugins/bbpress/templates/default/css/bbpress.css?ver=2.5.14-6684' type='text/css' media='screen' />
 <link rel='stylesheet' id='cptch_stylesheet-css'  href='http://52.76.37.90/wp-content/plugins/captcha/css/front_end_style.css?ver=4.4.5' type='text/css' media='all' />
 <link rel='stylesheet' id='dashicons-css'  href='http://52.76.37.90/wp-includes/css/dashicons.min.css?ver=5.1' type='text/css' media='all' />
-<link rel='stylesheet' id='cptch_mobile_style-css'  href='http://52.76.37.90/wp-content/plugins/captcha/css/mobile_style.css?ver=4.4.5' type='text/css' media='all' />
+<link rel='stylesheet' id='cptch_desktop_style-css'  href='http://52.76.37.90/wp-content/plugins/captcha/css/desktop_style.css?ver=4.4.5' type='text/css' media='all' />
 <link rel='stylesheet' id='contact-form-7-css'  href='http://52.76.37.90/wp-content/plugins/contact-form-7/includes/css/styles.css?ver=5.1.1' type='text/css' media='all' />
 <link rel='stylesheet' id='cf7cf-style-css'  href='http://52.76.37.90/wp-content/plugins/cf7-conditional-fields/style.css?ver=1.4.1' type='text/css' media='all' />
 <link rel='stylesheet' id='wp_html5video_css-css'  href='http://52.76.37.90/wp-content/plugins/html5-videogallery-plus-player/assets/css/video-js.css?ver=2.3.2' type='text/css' media='all' />
@@ -590,22 +590,6 @@ img.emoji {
 <link rel='stylesheet' id='sp-styles-css'  href='http://52.76.37.90/wp-content/plugins/storefront-powerpack/assets/css/style.css?ver=1.4.15' type='text/css' media='all' />
 <link rel='stylesheet' id='wc-bundle-style-css'  href='http://52.76.37.90/wp-content/plugins/woocommerce-product-bundles/assets/css/frontend/woocommerce.css?ver=5.9.2' type='text/css' media='all' />
 <link rel='stylesheet' id='custom-css-css'  href='http://52.76.37.90/wp-content/plugins/theme-customisations-master/custom/style.css?ver=5.1' type='text/css' media='all' />
-<br />
-<b>Notice</b>:  woocommerce_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
-<br />
-<b>Notice</b>:  wc_checkout_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
-<br />
-<b>Notice</b>:  woocommerce_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
-<br />
-<b>Notice</b>:  wc_checkout_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
-<br />
-<b>Notice</b>:  woocommerce_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
-<br />
-<b>Notice</b>:  wc_checkout_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
-<br />
-<b>Notice</b>:  woocommerce_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
-<br />
-<b>Notice</b>:  wc_checkout_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
 <script type='text/javascript' src='http://52.76.37.90/wp-includes/js/jquery/jquery.js?ver=1.12.4'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/theme-customisations-master/custom/custom.js?ver=5.1'></script>
@@ -624,7 +608,7 @@ img.emoji {
 
 <script type="text/javascript">
     /* <![CDATA[ */
-    var gdbxRender_Data = { url: "http://52.76.37.90/wp-admin/admin-ajax.php", run_quote: true, run_report: false, run_thanks: false, run_attachments: true, run_canned_replies: false, run_bbcodes: true, run_fitvids: true, wp_editor: true, wp_version: 51, last_cookie: 1552328394, bbpress_version: 25, text_are_you_sure: "Are you sure? Operation is not reversible.", now: 1552324794, thanks_thanks: "Thanks", thanks_unthanks: "Remove Thanks", thanks_saved: "Thanks Saved", thanks_removal: true, validate_attachments: true, insert_into_content: true, max_files: 5, max_size: 5120000, limiter: true, allowed_extensions: "jpg jpeg jpe gif png bmp tiff tif ico asf asx wmv wmx wm avi divx flv mov qt mpeg mpg mpe mp4 m4v ogv webm mkv 3gp 3gpp 3g2 3gp2 txt asc c cc h srt csv tsv ics rtx css vtt dfxp mp3 m4a m4b aac ra ram wav ogg oga flac mid midi wma wax mka rtf pdf class tar zip gz gzip rar 7z psd xcf doc pot pps ppt wri xla xls xlt xlw mdb mpp docx docm dotx dotm xlsx xlsm xlsb xltx xltm xlam pptx pptm ppsx ppsm potx potm ppam sldx sldm onetoc onetoc2 onetmp onepkg oxps xps odt odp ods odg odc odb odf wp wpd key numbers pages afl", text_select_file: "Select File", text_file_name: "Name", text_file_size: "Size", text_file_type: "Extension", text_file_validation: "Error!", text_file_validation_size: "The file is too big.", text_file_validation_type: "File type not allowed.", text_file_remove: "Remove this file", text_file_shortcode: "Insert into content", text_file_caption: "Set file caption", text_file_caption_placeholder: "Caption..." };
+    var gdbxRender_Data = { url: "http://52.76.37.90/wp-admin/admin-ajax.php", run_quote: true, run_report: false, run_thanks: false, run_attachments: true, run_canned_replies: false, run_bbcodes: true, run_fitvids: true, wp_editor: true, wp_version: 51, last_cookie: 1552450267, bbpress_version: 25, text_are_you_sure: "Are you sure? Operation is not reversible.", now: 1552446667, thanks_thanks: "Thanks", thanks_unthanks: "Remove Thanks", thanks_saved: "Thanks Saved", thanks_removal: true, validate_attachments: true, insert_into_content: true, max_files: 5, max_size: 5120000, limiter: true, allowed_extensions: "jpg jpeg jpe gif png bmp tiff tif ico asf asx wmv wmx wm avi divx flv mov qt mpeg mpg mpe mp4 m4v ogv webm mkv 3gp 3gpp 3g2 3gp2 txt asc c cc h srt csv tsv ics rtx css vtt dfxp mp3 m4a m4b aac ra ram wav ogg oga flac mid midi wma wax mka rtf pdf class tar zip gz gzip rar 7z psd xcf doc pot pps ppt wri xla xls xlt xlw mdb mpp docx docm dotx dotm xlsx xlsm xlsb xltx xltm xlam pptx pptm ppsx ppsm potx potm ppam sldx sldm onetoc onetoc2 onetmp onepkg oxps xps odt odp ods odg odc odb odf wp wpd key numbers pages afl", text_select_file: "Select File", text_file_name: "Name", text_file_size: "Size", text_file_type: "Extension", text_file_validation: "Error!", text_file_validation_size: "The file is too big.", text_file_validation_type: "File type not allowed.", text_file_remove: "Remove this file", text_file_shortcode: "Insert into content", text_file_caption: "Set file caption", text_file_caption_placeholder: "Caption..." };
     /* ]]> */
 </script>
 
@@ -917,7 +901,7 @@ SCB ลาดพร้าว 59<br />
 
 					
 					
-						<div>3 days, 14 hours ago</div>
+						<div>5 days ago</div>
 
 					
 				</li>
@@ -928,7 +912,7 @@ SCB ลาดพร้าว 59<br />
 
 					
 					
-						<div>1 week, 4 days ago</div>
+						<div>1 week, 6 days ago</div>
 
 					
 				</li>
@@ -939,7 +923,7 @@ SCB ลาดพร้าว 59<br />
 
 					
 					
-						<div>1 week, 6 days ago</div>
+						<div>2 weeks ago</div>
 
 					
 				</li>
@@ -950,7 +934,7 @@ SCB ลาดพร้าว 59<br />
 
 					
 					
-						<div>2 weeks, 4 days ago</div>
+						<div>2 weeks, 5 days ago</div>
 
 					
 				</li>
@@ -978,7 +962,7 @@ SCB ลาดพร้าว 59<br />
 
 					
 					
-						<div>3 days, 14 hours ago</div>
+						<div>5 days ago</div>
 
 					
 				</li>
@@ -989,7 +973,7 @@ SCB ลาดพร้าว 59<br />
 
 					
 					
-						<div>4 days, 10 hours ago</div>
+						<div>5 days, 20 hours ago</div>
 
 					
 				</li>
@@ -1000,7 +984,7 @@ SCB ลาดพร้าว 59<br />
 
 					
 					
-						<div>1 week, 1 day ago</div>
+						<div>1 week, 3 days ago</div>
 
 					
 				</li>
@@ -1011,7 +995,7 @@ SCB ลาดพร้าว 59<br />
 
 					
 					
-						<div>3 days, 4 hours ago</div>
+						<div>4 days, 14 hours ago</div>
 
 					
 				</li>
@@ -1022,7 +1006,7 @@ SCB ลาดพร้าว 59<br />
 
 					
 					
-						<div>1 week, 4 days ago</div>
+						<div>1 week, 6 days ago</div>
 
 					
 				</li>
@@ -1033,7 +1017,7 @@ SCB ลาดพร้าว 59<br />
 
 					
 					
-						<div>1 week, 6 days ago</div>
+						<div>2 weeks ago</div>
 
 					
 				</li>
@@ -1044,7 +1028,7 @@ SCB ลาดพร้าว 59<br />
 
 					
 					
-						<div>2 weeks, 4 days ago</div>
+						<div>2 weeks, 5 days ago</div>
 
 					
 				</li>
@@ -1055,7 +1039,7 @@ SCB ลาดพร้าว 59<br />
 
 					
 					
-						<div>2 weeks, 6 days ago</div>
+						<div>3 weeks ago</div>
 
 					
 				</li>
@@ -1066,24 +1050,24 @@ SCB ลาดพร้าว 59<br />
 		</div><div id="d4p_bbw_newposts-4" class="widget cls_d4p_bbw_newposts"><span class="gamma widget-title">New Posts</span><div class="d4p-bbw-widget bbx-newposts">
 <ul>
 <li>
-<a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/%e0%b9%81%e0%b8%88%e0%b9%89%e0%b8%87%e0%b8%8a%e0%b8%b3%e0%b8%a3%e0%b8%b0%e0%b8%84%e0%b9%88%e0%b8%b2%e0%b8%aa%e0%b8%a1%e0%b8%b1%e0%b8%84%e0%b8%a3%e0%b8%aa%e0%b8%a1%e0%b8%b2%e0%b8%8a%e0%b8%b4%e0%b8%81/#post-28171" title="Reply To: แจ้งชำระค่าสมัครสมาชิก">Reply To: แจ้งชำระค่าสมัครสมาชิก</a>
-<em class="bbp-last-active">1 hour, 26 minutes ago</em>
+<a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/%e0%b9%81%e0%b8%88%e0%b9%89%e0%b8%87%e0%b8%8a%e0%b8%b3%e0%b8%a3%e0%b8%b0%e0%b8%84%e0%b9%88%e0%b8%b2%e0%b8%aa%e0%b8%a1%e0%b8%b1%e0%b8%84%e0%b8%a3%e0%b8%aa%e0%b8%a1%e0%b8%b2%e0%b8%8a%e0%b8%b4%e0%b8%81/#post-28197" title="Reply To: แจ้งชำระค่าสมัครสมาชิก">Reply To: แจ้งชำระค่าสมัครสมาชิก</a>
+<em class="bbp-last-active">13 hours, 45 minutes ago</em>
 </li>
 <li>
 <a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/cdc-downloader-%e0%b8%94%e0%b8%b2%e0%b8%a7%e0%b8%99%e0%b9%8c%e0%b9%82%e0%b8%ab%e0%b8%a5%e0%b8%94%e0%b9%84%e0%b8%a1%e0%b9%88%e0%b9%84%e0%b8%94%e0%b9%89%e0%b8%84%e0%b8%a3%e0%b8%b1%e0%b8%9a/#post-27962" title="Reply To: CDC Downloader ดาวน์โหลดไม่ได้ครับ">Reply To: CDC Downloader ดาวน์โหลดไม่ได้ครับ</a>
-<em class="bbp-last-active">3 days, 4 hours ago</em>
+<em class="bbp-last-active">4 days, 14 hours ago</em>
 </li>
 <li>
 <a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/cdc-d1912/" title="CDC-D1912 งานบุญโต๊ะหมู่บูชา">CDC-D1912 งานบุญโต๊ะหมู่บูชา</a>
-<em class="bbp-last-active">3 days, 14 hours ago</em>
+<em class="bbp-last-active">5 days ago</em>
 </li>
 <li>
 <a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/cdc-downloader/#post-27887" title="Reply To: CDC Downloader">Reply To: CDC Downloader</a>
-<em class="bbp-last-active">4 days, 9 hours ago</em>
+<em class="bbp-last-active">5 days, 19 hours ago</em>
 </li>
 <li>
 <a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/%e0%b8%aa%e0%b8%ad%e0%b8%9a%e0%b8%96%e0%b8%b2%e0%b8%a1%e0%b9%80%e0%b8%a3%e0%b8%b7%e0%b9%88%e0%b8%ad%e0%b8%87%e0%b8%82%e0%b9%89%e0%b8%ad%e0%b8%a1%e0%b8%b9%e0%b8%a5dw%e0%b8%ab%e0%b8%99%e0%b9%88%e0%b8%ad/#post-27882" title="Reply To: สอบถามเรื่องข้อมูลDWหน่อยครับ">Reply To: สอบถามเรื่องข้อมูลDWหน่อยครับ</a>
-<em class="bbp-last-active">4 days, 10 hours ago</em>
+<em class="bbp-last-active">5 days, 20 hours ago</em>
 </li>
 </ul>
 </div></div><div id="archives-2" class="widget widget_archive"><span class="gamma widget-title">Archives</span>		<ul>
@@ -1209,7 +1193,7 @@ SCB ลาดพร้าว 59<br />
 
 					
 					
-						<div>3 days, 14 hours ago</div>
+						<div>5 days ago</div>
 
 					
 				</li>
@@ -1220,7 +1204,7 @@ SCB ลาดพร้าว 59<br />
 
 					
 					
-						<div>4 days, 10 hours ago</div>
+						<div>5 days, 20 hours ago</div>
 
 					
 				</li>
@@ -1231,7 +1215,7 @@ SCB ลาดพร้าว 59<br />
 
 					
 					
-						<div>1 week, 1 day ago</div>
+						<div>1 week, 3 days ago</div>
 
 					
 				</li>
@@ -1242,7 +1226,7 @@ SCB ลาดพร้าว 59<br />
 
 					
 					
-						<div>3 days, 4 hours ago</div>
+						<div>4 days, 14 hours ago</div>
 
 					
 				</li>
@@ -1253,7 +1237,7 @@ SCB ลาดพร้าว 59<br />
 
 					
 					
-						<div>1 week, 4 days ago</div>
+						<div>1 week, 6 days ago</div>
 
 					
 				</li>
@@ -1272,7 +1256,7 @@ SCB ลาดพร้าว 59<br />
 
 					
 					
-						<div>1 hour, 26 minutes ago</div>
+						<div>13 hours, 45 minutes ago</div>
 
 					
 				</li>
@@ -1283,7 +1267,7 @@ SCB ลาดพร้าว 59<br />
 
 					
 					
-						<div>3 days, 4 hours ago</div>
+						<div>4 days, 14 hours ago</div>
 
 					
 				</li>
@@ -1294,7 +1278,7 @@ SCB ลาดพร้าว 59<br />
 
 					
 					
-						<div>3 days, 14 hours ago</div>
+						<div>5 days ago</div>
 
 					
 				</li>
@@ -1305,7 +1289,7 @@ SCB ลาดพร้าว 59<br />
 
 					
 					
-						<div>4 days, 9 hours ago</div>
+						<div>5 days, 19 hours ago</div>
 
 					
 				</li>
@@ -1316,7 +1300,7 @@ SCB ลาดพร้าว 59<br />
 
 					
 					
-						<div>4 days, 10 hours ago</div>
+						<div>5 days, 20 hours ago</div>
 
 					
 				</li>
@@ -1360,8 +1344,8 @@ SCB ลาดพร้าว 59<br />
 <script type='text/javascript'>
 /* <![CDATA[ */
 r3f5x9JS=escape(document['referrer']);
-hf4N='d113cd76a6702f8042daf053e317918c';
-hf4V='4ebc074a0451c9776c4e4829934cf045';
+hf4N='1f78e9a4584232a892d55221d0786f85';
+hf4V='c82145947f1a21e7a7f67e8ee32e548d';
 jQuery(document).ready(function($){var e="#commentform, .comment-respond form, .comment-form, #lostpasswordform, #registerform, #loginform, #login_form, #wpss_contact_form, .wpcf7-form";$(e).submit(function(){$("<input>").attr("type","hidden").attr("name","r3f5x9JS").attr("value",r3f5x9JS).appendTo(e);return true;});var h="form[method='post']";$(h).submit(function(){$("<input>").attr("type","hidden").attr("name",hf4N).attr("value",hf4V).appendTo(h);return true;});});
 /* ]]> */
 </script> 
@@ -1370,20 +1354,12 @@ jQuery(document).ready(function($){var e="#commentform, .comment-respond form, .
 		c = c.replace(/woocommerce-no-js/, 'woocommerce-js');
 		document.body.className = c;
 	</script>
-	<br />
-<b>Notice</b>:  woocommerce_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
-<br />
-<b>Notice</b>:  wc_checkout_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
-<br />
-<b>Notice</b>:  woocommerce_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
-<br />
-<b>Notice</b>:  wc_checkout_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
-<script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/gd-bbpress-toolbox/d4pjs/fitvids/jquery.fitvids.js?ver=4.7.2.625'></script>
+	<script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/gd-bbpress-toolbox/d4pjs/fitvids/jquery.fitvids.js?ver=4.7.2.625'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/gd-bbpress-toolbox/js/front-core.min.js?ver=4.7.2.625'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/bbpress/templates/default/js/editor.js?ver=2.5.14-6684'></script>
 <script type='text/javascript'>
 /* <![CDATA[ */
-var bbpTopicJS = {"bbp_ajaxurl":"http:\/\/52.76.37.90\/forums\/topic\/cdc-d1730\/?bbp-ajax=true","generic_ajax_error":"Something went wrong. Refresh your browser and try again.","is_user_logged_in":"","fav_nonce":"3f17912ba3","subs_nonce":"e4a6f46f21"};
+var bbpTopicJS = {"bbp_ajaxurl":"http:\/\/52.76.37.90\/forums\/topic\/cdc-d1730\/?bbp-ajax=true","generic_ajax_error":"Something went wrong. Refresh your browser and try again.","is_user_logged_in":"","fav_nonce":"340ea86bd1","subs_nonce":"c5c4599cb4"};
 /* ]]> */
 </script>
 <script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/bbpress/templates/default/js/topic.js?ver=2.5.14-6684'></script>
@@ -1433,8 +1409,8 @@ jQuery(document).ready(function(jQuery){jQuery.datepicker.setDefaults({"closeTex
 </html>
 
 <!--
-Object Caching 162/303 objects using disk
+Object Caching 6/571 objects using disk
 Page Caching using disk: enhanced 
 
-Served from: 52.76.37.90 @ 2019-03-12 00:19:55 by W3 Total Cache
+Served from: 52.76.37.90 @ 2019-03-13 10:11:07 by W3 Total Cache
 -->

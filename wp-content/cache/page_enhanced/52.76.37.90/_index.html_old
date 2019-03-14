@@ -601,7 +601,7 @@ img.emoji {
 
 <script type="text/javascript">
     /* <![CDATA[ */
-    var gdbxRender_Data = { url: "http://52.76.37.90/wp-admin/admin-ajax.php", run_quote: true, run_report: false, run_thanks: false, run_attachments: true, run_canned_replies: false, run_bbcodes: true, run_fitvids: true, wp_editor: true, wp_version: 51, last_cookie: 1552406968, bbpress_version: 25, text_are_you_sure: "Are you sure? Operation is not reversible.", now: 1552403368, thanks_thanks: "Thanks", thanks_unthanks: "Remove Thanks", thanks_saved: "Thanks Saved", thanks_removal: true, validate_attachments: true, insert_into_content: true, max_files: 5, max_size: 5120000, limiter: true, allowed_extensions: "jpg jpeg jpe gif png bmp tiff tif ico asf asx wmv wmx wm avi divx flv mov qt mpeg mpg mpe mp4 m4v ogv webm mkv 3gp 3gpp 3g2 3gp2 txt asc c cc h srt csv tsv ics rtx css vtt dfxp mp3 m4a m4b aac ra ram wav ogg oga flac mid midi wma wax mka rtf pdf class tar zip gz gzip rar 7z psd xcf doc pot pps ppt wri xla xls xlt xlw mdb mpp docx docm dotx dotm xlsx xlsm xlsb xltx xltm xlam pptx pptm ppsx ppsm potx potm ppam sldx sldm onetoc onetoc2 onetmp onepkg oxps xps odt odp ods odg odc odb odf wp wpd key numbers pages afl", text_select_file: "Select File", text_file_name: "Name", text_file_size: "Size", text_file_type: "Extension", text_file_validation: "Error!", text_file_validation_size: "The file is too big.", text_file_validation_type: "File type not allowed.", text_file_remove: "Remove this file", text_file_shortcode: "Insert into content", text_file_caption: "Set file caption", text_file_caption_placeholder: "Caption..." };
+    var gdbxRender_Data = { url: "http://52.76.37.90/wp-admin/admin-ajax.php", run_quote: true, run_report: false, run_thanks: false, run_attachments: true, run_canned_replies: false, run_bbcodes: true, run_fitvids: true, wp_editor: true, wp_version: 51, last_cookie: 1552500478, bbpress_version: 25, text_are_you_sure: "Are you sure? Operation is not reversible.", now: 1552496878, thanks_thanks: "Thanks", thanks_unthanks: "Remove Thanks", thanks_saved: "Thanks Saved", thanks_removal: true, validate_attachments: true, insert_into_content: true, max_files: 5, max_size: 5120000, limiter: true, allowed_extensions: "jpg jpeg jpe gif png bmp tiff tif ico asf asx wmv wmx wm avi divx flv mov qt mpeg mpg mpe mp4 m4v ogv webm mkv 3gp 3gpp 3g2 3gp2 txt asc c cc h srt csv tsv ics rtx css vtt dfxp mp3 m4a m4b aac ra ram wav ogg oga flac mid midi wma wax mka rtf pdf class tar zip gz gzip rar 7z psd xcf doc pot pps ppt wri xla xls xlt xlw mdb mpp docx docm dotx dotm xlsx xlsm xlsb xltx xltm xlam pptx pptm ppsx ppsm potx potm ppam sldx sldm onetoc onetoc2 onetmp onepkg oxps xps odt odp ods odg odc odb odf wp wpd key numbers pages afl", text_select_file: "Select File", text_file_name: "Name", text_file_size: "Size", text_file_type: "Extension", text_file_validation: "Error!", text_file_validation_size: "The file is too big.", text_file_validation_type: "File type not allowed.", text_file_remove: "Remove this file", text_file_shortcode: "Insert into content", text_file_caption: "Set file caption", text_file_caption_placeholder: "Caption..." };
     /* ]]> */
 </script>
 
@@ -641,9 +641,9 @@ img.emoji {
 		<button class="menu-toggle" aria-controls="site-navigation" aria-expanded="false"><span>Menu</span></button>
 			<div class="primary-navigation"><ul id="menu-navigation" class="menu"><li id="menu-item-103" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-103"><a href="/" aria-current="page">Home</a></li>
 <li id="menu-item-77" class="menu-item menu-item-type-post_type menu-item-object-forum menu-item-77"><a href="http://52.76.37.90/forums/forum/cdc/">Forums</a></li>
-<li id="menu-item-19104" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19104"><a href="http://52.76.37.90/%e0%b8%9a%e0%b8%97%e0%b8%84%e0%b8%a7%e0%b8%b2%e0%b8%a1/">บทความ</a></li>
 <li id="menu-item-19308" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-19308"><a href="http://52.76.37.90/%e0%b8%a5%e0%b8%b2%e0%b8%99%e0%b8%84%e0%b8%a7%e0%b8%b2%e0%b8%a1%e0%b8%a3%e0%b8%b9%e0%b9%89/">คลังความรู้</a>
 <ul class="sub-menu">
+	<li id="menu-item-19104" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19104"><a href="http://52.76.37.90/%e0%b8%9a%e0%b8%97%e0%b8%84%e0%b8%a7%e0%b8%b2%e0%b8%a1/">บทความ</a></li>
 	<li id="menu-item-19315" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19315"><a href="http://52.76.37.90/%e0%b8%a5%e0%b8%b8%e0%b8%87%e0%b9%82%e0%b8%89%e0%b8%a5%e0%b8%81%e0%b8%a7%e0%b8%b4%e0%b9%80%e0%b8%84%e0%b8%a3%e0%b8%b2%e0%b8%b0%e0%b8%ab%e0%b9%8c/">ลุงโฉลกวิเคราะห์</a></li>
 	<li id="menu-item-19251" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19251"><a href="http://52.76.37.90/live/">Live</a></li>
 	<li id="menu-item-19252" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19252"><a href="http://52.76.37.90/crypto/">Crypto</a></li>
@@ -656,19 +656,23 @@ img.emoji {
 	<li id="menu-item-19057" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19057"><a href="http://52.76.37.90/cdc-%e0%b9%80%e0%b8%a5%e0%b8%b4%e0%b8%81%e0%b9%80%e0%b8%a1%e0%b9%88%e0%b8%b2/">CDC เลิกเม่า#1-17</a></li>
 </ul>
 </li>
-<li id="menu-item-94" class="menu-item menu-item-type-post_type menu-item-object-forum menu-item-94"><a href="http://52.76.37.90/forums/forum/cdc/charity/">ลานบุญ</a></li>
-<li id="menu-item-19323" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19323"><a href="http://52.76.37.90/%e0%b8%a5%e0%b8%b2%e0%b8%99%e0%b8%81%e0%b8%b4%e0%b8%88%e0%b8%81%e0%b8%a3%e0%b8%a3%e0%b8%a1/">ลานกิจกรรม</a></li>
+<li id="menu-item-94" class="menu-item menu-item-type-post_type menu-item-object-forum menu-item-94"><a href="http://52.76.37.90/forums/forum/cdc/charity/">ทำบุญ</a></li>
+<li id="menu-item-28235" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-has-children menu-item-28235"><a href="http://52.76.37.90/product-category/courses/">คอร์สอบรม</a>
+<ul class="sub-menu">
+	<li id="menu-item-28237" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-28237"><a href="http://52.76.37.90/payment-confirmation/">แจ้งชำระเงิน</a></li>
+</ul>
+</li>
 <li id="menu-item-19318" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-19318"><a href="http://52.76.37.90/%e0%b8%a5%e0%b8%b2%e0%b8%99%e0%b8%aa%e0%b8%a1%e0%b8%b2%e0%b8%8a%e0%b8%b4%e0%b8%81/">สมาชิก</a>
 <ul class="sub-menu">
-	<li id="menu-item-19" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19"><a href="http://52.76.37.90/shop/">สมัครสมาชิกสนับสนุน (Become our patreon!)</a></li>
+	<li id="menu-item-28236" class="menu-item menu-item-type-post_type menu-item-object-product menu-item-28236"><a href="http://52.76.37.90/product/supporting-membership-2/">สมัคร Supporting Membership (ชำระผ่านการโอนเงิน)</a></li>
 	<li id="menu-item-16343" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-16343"><a href="http://52.76.37.90/payment-confirmation/">แจ้งชำระเงิน</a></li>
 </ul>
 </li>
 </ul></div><div class="handheld-navigation"><ul id="menu-navigation-1" class="menu"><li class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-103"><a href="/" aria-current="page">Home</a></li>
 <li class="menu-item menu-item-type-post_type menu-item-object-forum menu-item-77"><a href="http://52.76.37.90/forums/forum/cdc/">Forums</a></li>
-<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19104"><a href="http://52.76.37.90/%e0%b8%9a%e0%b8%97%e0%b8%84%e0%b8%a7%e0%b8%b2%e0%b8%a1/">บทความ</a></li>
 <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-19308"><a href="http://52.76.37.90/%e0%b8%a5%e0%b8%b2%e0%b8%99%e0%b8%84%e0%b8%a7%e0%b8%b2%e0%b8%a1%e0%b8%a3%e0%b8%b9%e0%b9%89/">คลังความรู้</a>
 <ul class="sub-menu">
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19104"><a href="http://52.76.37.90/%e0%b8%9a%e0%b8%97%e0%b8%84%e0%b8%a7%e0%b8%b2%e0%b8%a1/">บทความ</a></li>
 	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19315"><a href="http://52.76.37.90/%e0%b8%a5%e0%b8%b8%e0%b8%87%e0%b9%82%e0%b8%89%e0%b8%a5%e0%b8%81%e0%b8%a7%e0%b8%b4%e0%b9%80%e0%b8%84%e0%b8%a3%e0%b8%b2%e0%b8%b0%e0%b8%ab%e0%b9%8c/">ลุงโฉลกวิเคราะห์</a></li>
 	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19251"><a href="http://52.76.37.90/live/">Live</a></li>
 	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19252"><a href="http://52.76.37.90/crypto/">Crypto</a></li>
@@ -681,11 +685,15 @@ img.emoji {
 	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19057"><a href="http://52.76.37.90/cdc-%e0%b9%80%e0%b8%a5%e0%b8%b4%e0%b8%81%e0%b9%80%e0%b8%a1%e0%b9%88%e0%b8%b2/">CDC เลิกเม่า#1-17</a></li>
 </ul>
 </li>
-<li class="menu-item menu-item-type-post_type menu-item-object-forum menu-item-94"><a href="http://52.76.37.90/forums/forum/cdc/charity/">ลานบุญ</a></li>
-<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19323"><a href="http://52.76.37.90/%e0%b8%a5%e0%b8%b2%e0%b8%99%e0%b8%81%e0%b8%b4%e0%b8%88%e0%b8%81%e0%b8%a3%e0%b8%a3%e0%b8%a1/">ลานกิจกรรม</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-forum menu-item-94"><a href="http://52.76.37.90/forums/forum/cdc/charity/">ทำบุญ</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-has-children menu-item-28235"><a href="http://52.76.37.90/product-category/courses/">คอร์สอบรม</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-28237"><a href="http://52.76.37.90/payment-confirmation/">แจ้งชำระเงิน</a></li>
+</ul>
+</li>
 <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-19318"><a href="http://52.76.37.90/%e0%b8%a5%e0%b8%b2%e0%b8%99%e0%b8%aa%e0%b8%a1%e0%b8%b2%e0%b8%8a%e0%b8%b4%e0%b8%81/">สมาชิก</a>
 <ul class="sub-menu">
-	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19"><a href="http://52.76.37.90/shop/">สมัครสมาชิกสนับสนุน (Become our patreon!)</a></li>
+	<li class="menu-item menu-item-type-post_type menu-item-object-product menu-item-28236"><a href="http://52.76.37.90/product/supporting-membership-2/">สมัคร Supporting Membership (ชำระผ่านการโอนเงิน)</a></li>
 	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-16343"><a href="http://52.76.37.90/payment-confirmation/">แจ้งชำระเงิน</a></li>
 </ul>
 </li>
@@ -866,7 +874,7 @@ Official News and Announcements</div>
 			<header class="entry-header">
 		<h2 class="alpha entry-title"><a href="http://52.76.37.90/2019/03/04/username-password-change-for-cdcdl-cdcdl-%e0%b8%a1%e0%b8%b5%e0%b8%81%e0%b8%b2%e0%b8%a3%e0%b9%80%e0%b8%9b%e0%b8%a5%e0%b8%b5%e0%b9%88%e0%b8%a2%e0%b8%99-username-password/" rel="bookmark">USERNAME/PASSWORD CHANGE for CDCDL   / CDCDL มีการเปลี่ยน username/password</a></h2>		</header><!-- .entry-header -->
 				<div class="entry-content">
-		<img width="960" height="960" src="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/03/04002315/chg.jpg" class="attachment- size- wp-post-image" alt="" srcset="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/03/04002315/chg.jpg 960w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/03/04002315/chg-150x150.jpg 150w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/03/04002315/chg-500x500.jpg 500w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/03/04002315/chg-768x768.jpg 768w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/03/04002315/chg-324x324.jpg 324w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/03/04002315/chg-416x416.jpg 416w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/03/04002315/chg-100x100.jpg 100w" sizes="(max-width: 960px) 100vw, 960px" />
+		<img width="960" height="960" src="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/03/04002315/chg.jpg" class="attachment- size- wp-post-image" alt="" srcset="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/03/04002315/chg.jpg 960w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/03/04002315/chg-300x300.jpg 300w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/03/04002315/chg-600x600.jpg 600w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/03/04002315/chg-150x150.jpg 150w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/03/04002315/chg-500x500.jpg 500w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/03/04002315/chg-768x768.jpg 768w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/03/04002315/chg-100x100.jpg 100w" sizes="(max-width: 960px) 100vw, 960px" />
 <p>
 
 CDCDL มีการเปลี่ยน username/password สำหรับการ download ข้อมูลแล้ว โดย username/password ใหม่สามารถเข้าดูได้ที่&nbsp;<br><a href="http://www.chaloke.com/forums/topic/cdc-downloader/?fbclid=IwAR39u2vxkZduyP9gt_M-XX2ofwnDUjnHzfZvMwi2J_oTIt0HFuaHJSwVTWo" rel="noreferrer noopener" target="_blank">http://www.chaloke.com/forums/topic/cdc-downloader/</a><br>(เฉพาะสมาชิกสนับสนุนเท่านั้น)
@@ -881,7 +889,7 @@ CDCDL มีการเปลี่ยน username/password สำหรับ�
 			<header class="entry-header">
 		<h2 class="alpha entry-title"><a href="http://52.76.37.90/2019/01/31/cdccan12019/" rel="bookmark">CDC Candlestick pattern และ สัญญาณแมงเม่า 1/2019(1วัน)</a></h2>		</header><!-- .entry-header -->
 				<div class="entry-content">
-		<img width="1245" height="665" src="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/01/31101000/candle_4.jpg" class="attachment- size- wp-post-image" alt="" srcset="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/01/31101000/candle_4.jpg 1245w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/01/31101000/candle_4-500x267.jpg 500w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/01/31101000/candle_4-768x410.jpg 768w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/01/31101000/candle_4-1024x547.jpg 1024w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/01/31101000/candle_4-416x222.jpg 416w" sizes="(max-width: 1245px) 100vw, 1245px" />
+		<img width="1245" height="665" src="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/01/31101000/candle_4.jpg" class="attachment- size- wp-post-image" alt="" srcset="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/01/31101000/candle_4.jpg 1245w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/01/31101000/candle_4-600x320.jpg 600w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/01/31101000/candle_4-500x267.jpg 500w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/01/31101000/candle_4-768x410.jpg 768w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/01/31101000/candle_4-1024x547.jpg 1024w" sizes="(max-width: 1245px) 100vw, 1245px" />
 <h2>เปิดรับสมัครแล้ว</h2>
 
 
@@ -915,7 +923,7 @@ CDCDL มีการเปลี่ยน username/password สำหรับ�
 			<header class="entry-header">
 		<h2 class="alpha entry-title"><a href="http://52.76.37.90/2018/11/25/cdctalk201901/" rel="bookmark">เปิดรับสมัคร CDC Webinar 2019 Live TALK JAN-JUNE</a></h2>		</header><!-- .entry-header -->
 				<div class="entry-content">
-		<img width="2000" height="2000" src="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/11/23223549/cdcTALK2019.png" class="attachment- size- wp-post-image" alt="" srcset="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/11/23223549/cdcTALK2019.png 2000w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/11/23223549/cdcTALK2019-150x150.png 150w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/11/23223549/cdcTALK2019-500x500.png 500w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/11/23223549/cdcTALK2019-768x768.png 768w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/11/23223549/cdcTALK2019-1024x1024.png 1024w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/11/23223549/cdcTALK2019-324x324.png 324w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/11/23223549/cdcTALK2019-416x416.png 416w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/11/23223549/cdcTALK2019-100x100.png 100w" sizes="(max-width: 2000px) 100vw, 2000px" /><h2>เปิดรับสมัคร CDC Webinar 2019 Live TALK JAN-JUNE</h2>
+		<img width="2000" height="2000" src="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/11/23223549/cdcTALK2019.png" class="attachment- size- wp-post-image" alt="" srcset="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/11/23223549/cdcTALK2019.png 2000w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/11/23223549/cdcTALK2019-300x300.png 300w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/11/23223549/cdcTALK2019-600x600.png 600w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/11/23223549/cdcTALK2019-150x150.png 150w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/11/23223549/cdcTALK2019-500x500.png 500w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/11/23223549/cdcTALK2019-768x768.png 768w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/11/23223549/cdcTALK2019-1024x1024.png 1024w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/11/23223549/cdcTALK2019-100x100.png 100w" sizes="(max-width: 2000px) 100vw, 2000px" /><h2>เปิดรับสมัคร CDC Webinar 2019 Live TALK JAN-JUNE</h2>
 <h3> CDC Webinar 2019 Live TALK JAN-JUNE</h3>
 <p>พบกันทุกคืนวันจันทร์ ตั้งแต่ 2ทุ่มเป็นต้นไป กับCDC Webinar 2019 Live TALK JAN-JUNE</p>
 <p>สัมนาออนไลน์ของชมรมโฉลก<br />
@@ -936,7 +944,7 @@ CDCDL มีการเปลี่ยน username/password สำหรับ�
 			<header class="entry-header">
 		<h2 class="alpha entry-title"><a href="http://52.76.37.90/2019/02/01/cdccha012019/" rel="bookmark">CDC Trading Pattern by Chaloke 1/2019(1วัน)</a></h2>		</header><!-- .entry-header -->
 				<div class="entry-content">
-		<img width="1127" height="542" src="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/02/01215748/chaloke001.jpg" class="attachment- size- wp-post-image" alt="" srcset="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/02/01215748/chaloke001.jpg 1127w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/02/01215748/chaloke001-500x240.jpg 500w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/02/01215748/chaloke001-768x369.jpg 768w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/02/01215748/chaloke001-1024x492.jpg 1024w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/02/01215748/chaloke001-416x200.jpg 416w" sizes="(max-width: 1127px) 100vw, 1127px" /><p>
+		<img width="1127" height="542" src="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/02/01215748/chaloke001.jpg" class="attachment- size- wp-post-image" alt="" srcset="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/02/01215748/chaloke001.jpg 1127w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/02/01215748/chaloke001-600x289.jpg 600w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/02/01215748/chaloke001-500x240.jpg 500w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/02/01215748/chaloke001-768x369.jpg 768w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/02/01215748/chaloke001-1024x492.jpg 1024w" sizes="(max-width: 1127px) 100vw, 1127px" /><p>
 <!--StartFragment--></p>
 
 
@@ -1084,7 +1092,7 @@ CDCDL มีการเปลี่ยน username/password สำหรับ�
 
 
 
-<p>e-mail: <a href="mail&#116;&#111;&#x3a;&#x69;&#x6e;&#x66;&#x6f;&#x40;chalo&#107;&#101;&#x2e;&#x63;&#x6f;&#x6d;">i&#x6e;&#x66;o&#x40;&#x63;h&#x61;&#x6c;o&#107;&#x65;.&#99;&#x6f;m</a></p>
+<p>e-mail: <a href="mailt&#111;&#58;&#x69;&#x6e;&#x66;&#x6f;&#x40;&#x63;&#x68;aloke&#46;&#99;&#111;&#x6d;">&#x69;n&#x66;&#x6f;&#64;&#x63;&#104;a&#x6c;&#111;k&#x65;.&#x63;&#x6f;m</a></p>
 
 
 
@@ -1149,7 +1157,7 @@ CDCDL มีการเปลี่ยน username/password สำหรับ�
 			<header class="entry-header">
 		<h2 class="alpha entry-title"><a href="http://52.76.37.90/2018/06/05/cdcwebinar2018b/" rel="bookmark">เปิดรับสมัคร CDC Talk Webinar 2018 รอบที 2 (ก.ค. &#8211; ธ.ค.)</a></h2>		</header><!-- .entry-header -->
 				<div class="entry-content">
-		<img width="1734" height="907" src="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/06/05162206/WBN2018_2_th.jpg" class="attachment- size- wp-post-image" alt="" srcset="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/06/05162206/WBN2018_2_th.jpg 1734w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/06/05162206/WBN2018_2_th-500x262.jpg 500w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/06/05162206/WBN2018_2_th-768x402.jpg 768w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/06/05162206/WBN2018_2_th-1024x536.jpg 1024w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/06/05162206/WBN2018_2_th-416x218.jpg 416w" sizes="(max-width: 1734px) 100vw, 1734px" /><h2>เปิดรับสมัคร CDC Talk Webinar 2018 รอบที 2 (ก.ค. &#8211; ธ.ค.)</h2>
+		<img width="1734" height="907" src="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/06/05162206/WBN2018_2_th.jpg" class="attachment- size- wp-post-image" alt="" srcset="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/06/05162206/WBN2018_2_th.jpg 1734w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/06/05162206/WBN2018_2_th-600x314.jpg 600w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/06/05162206/WBN2018_2_th-500x262.jpg 500w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/06/05162206/WBN2018_2_th-768x402.jpg 768w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/06/05162206/WBN2018_2_th-1024x536.jpg 1024w" sizes="(max-width: 1734px) 100vw, 1734px" /><h2>เปิดรับสมัคร CDC Talk Webinar 2018 รอบที 2 (ก.ค. &#8211; ธ.ค.)</h2>
 <h3>CDC Talk Webinar 2018 (JUL-DEC)</h3>
 <p>พบกันทุกคืนวันจันทร์ ตั้งแต่ 2ทุ่มเป็นต้นไป กับ CDC Talk Webinar 2018 สัมนาออนไลน์ของชมรมโฉลก<br />
 ที่ให้ความรู้ ความมั่นใจ ในการลงทุนกับเพื่อนๆสมาชิก มาตลอดหลายปี<br />
@@ -1169,7 +1177,7 @@ CDCDL มีการเปลี่ยน username/password สำหรับ�
 			<header class="entry-header">
 		<h2 class="alpha entry-title"><a href="http://52.76.37.90/2018/03/22/cdcbb32018/" rel="bookmark">CDC Basic Bitcoin รุ่นที่ 3/2018</a></h2>		</header><!-- .entry-header -->
 				<div class="entry-content">
-		<img width="1756" height="840" src="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2016/07/12130029/bitcoin.jpg" class="attachment- size- wp-post-image" alt="" srcset="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2016/07/12130029/bitcoin.jpg 1756w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2016/07/12130029/bitcoin-500x239.jpg 500w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2016/07/12130029/bitcoin-768x367.jpg 768w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2016/07/12130029/bitcoin-1024x490.jpg 1024w" sizes="(max-width: 1756px) 100vw, 1756px" /><h2></h2>
+		<img width="1756" height="840" src="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2016/07/12130029/bitcoin.jpg" class="attachment- size- wp-post-image" alt="" srcset="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2016/07/12130029/bitcoin.jpg 1756w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2016/07/12130029/bitcoin-600x287.jpg 600w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2016/07/12130029/bitcoin-500x239.jpg 500w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2016/07/12130029/bitcoin-768x367.jpg 768w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2016/07/12130029/bitcoin-1024x490.jpg 1024w" sizes="(max-width: 1756px) 100vw, 1756px" /><h2></h2>
 <h2>CDC Basic Bitcoin รุ่นที่ 3/2018</h2>
 <h2>( ระยะเวลา 2 วัน โดยเรียนที่อาคาร CDC Foundation )<br />
 วันแรก: วันเสาร์ที่ 31 มีนาคม 2561<br />
@@ -1185,7 +1193,7 @@ CDCDL มีการเปลี่ยน username/password สำหรับ�
 			<header class="entry-header">
 		<h2 class="alpha entry-title"><a href="http://52.76.37.90/2018/02/19/ef-12018/" rel="bookmark">&#8212;&#8212;&#8212;&#8211;ปิดรับสมัครแล้ว&#8212;&#8212;&#8212;&#8212;CDC Mastering Elliott Wave &#038; Fibnacci 1/2018</a></h2>		</header><!-- .entry-header -->
 				<div class="entry-content">
-		<img width="1600" height="837" src="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/02/19112427/CDC-Elliot-Wave002.jpg" class="attachment- size- wp-post-image" alt="" srcset="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/02/19112427/CDC-Elliot-Wave002.jpg 1600w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/02/19112427/CDC-Elliot-Wave002-500x262.jpg 500w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/02/19112427/CDC-Elliot-Wave002-768x402.jpg 768w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/02/19112427/CDC-Elliot-Wave002-1024x536.jpg 1024w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/02/19112427/CDC-Elliot-Wave002-416x218.jpg 416w" sizes="(max-width: 1600px) 100vw, 1600px" /><h1>&#8212;&#8212;&#8212;&#8211;ปิดรับสมัครแล้ว&#8212;&#8212;&#8212;&#8212;</h1>
+		<img width="1600" height="837" src="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/02/19112427/CDC-Elliot-Wave002.jpg" class="attachment- size- wp-post-image" alt="" srcset="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/02/19112427/CDC-Elliot-Wave002.jpg 1600w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/02/19112427/CDC-Elliot-Wave002-600x314.jpg 600w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/02/19112427/CDC-Elliot-Wave002-500x262.jpg 500w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/02/19112427/CDC-Elliot-Wave002-768x402.jpg 768w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/02/19112427/CDC-Elliot-Wave002-1024x536.jpg 1024w" sizes="(max-width: 1600px) 100vw, 1600px" /><h1>&#8212;&#8212;&#8212;&#8211;ปิดรับสมัครแล้ว&#8212;&#8212;&#8212;&#8212;</h1>
 <h2 class="hP" tabindex="-1">CDC Mastering Elliott Wave &amp; Fibnacci 1/2018</h2>
 <h2 class="hP" tabindex="-1">( ระยะเวลา 2 วัน โดยเรียนที่อาคาร CDC Foundation )</h2>
 <h2>วันเสาร์ที่ 24 มีนาคม 2561<br />
@@ -1230,7 +1238,7 @@ CDCDL มีการเปลี่ยน username/password สำหรับ�
 
 					
 					
-						<div>4 days, 12 hours ago</div>
+						<div>5 days, 14 hours ago</div>
 
 					
 				</li>
@@ -1241,7 +1249,7 @@ CDCDL มีการเปลี่ยน username/password สำหรับ�
 
 					
 					
-						<div>1 week, 5 days ago</div>
+						<div>1 week, 6 days ago</div>
 
 					
 				</li>
@@ -1252,7 +1260,7 @@ CDCDL มีการเปลี่ยน username/password สำหรับ�
 
 					
 					
-						<div>2 weeks ago</div>
+						<div>2 weeks, 1 day ago</div>
 
 					
 				</li>
@@ -1263,7 +1271,7 @@ CDCDL มีการเปลี่ยน username/password สำหรับ�
 
 					
 					
-						<div>2 weeks, 5 days ago</div>
+						<div>2 weeks, 6 days ago</div>
 
 					
 				</li>
@@ -1291,7 +1299,7 @@ CDCDL มีการเปลี่ยน username/password สำหรับ�
 
 					
 					
-						<div>4 days, 12 hours ago</div>
+						<div>5 days, 14 hours ago</div>
 
 					
 				</li>
@@ -1302,7 +1310,7 @@ CDCDL มีการเปลี่ยน username/password สำหรับ�
 
 					
 					
-						<div>5 days, 8 hours ago</div>
+						<div>6 days, 10 hours ago</div>
 
 					
 				</li>
@@ -1313,7 +1321,7 @@ CDCDL มีการเปลี่ยน username/password สำหรับ�
 
 					
 					
-						<div>1 week, 2 days ago</div>
+						<div>1 week, 3 days ago</div>
 
 					
 				</li>
@@ -1324,7 +1332,7 @@ CDCDL มีการเปลี่ยน username/password สำหรับ�
 
 					
 					
-						<div>4 days, 2 hours ago</div>
+						<div>5 days, 4 hours ago</div>
 
 					
 				</li>
@@ -1335,7 +1343,7 @@ CDCDL มีการเปลี่ยน username/password สำหรับ�
 
 					
 					
-						<div>1 week, 5 days ago</div>
+						<div>1 week, 6 days ago</div>
 
 					
 				</li>
@@ -1346,7 +1354,7 @@ CDCDL มีการเปลี่ยน username/password สำหรับ�
 
 					
 					
-						<div>2 weeks ago</div>
+						<div>2 weeks, 1 day ago</div>
 
 					
 				</li>
@@ -1357,7 +1365,7 @@ CDCDL มีการเปลี่ยน username/password สำหรับ�
 
 					
 					
-						<div>2 weeks, 5 days ago</div>
+						<div>2 weeks, 6 days ago</div>
 
 					
 				</li>
@@ -1368,7 +1376,7 @@ CDCDL มีการเปลี่ยน username/password สำหรับ�
 
 					
 					
-						<div>3 weeks ago</div>
+						<div>3 weeks, 1 day ago</div>
 
 					
 				</li>
@@ -1380,23 +1388,23 @@ CDCDL มีการเปลี่ยน username/password สำหรับ�
 <ul>
 <li>
 <a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/%e0%b9%81%e0%b8%88%e0%b9%89%e0%b8%87%e0%b8%8a%e0%b8%b3%e0%b8%a3%e0%b8%b0%e0%b8%84%e0%b9%88%e0%b8%b2%e0%b8%aa%e0%b8%a1%e0%b8%b1%e0%b8%84%e0%b8%a3%e0%b8%aa%e0%b8%a1%e0%b8%b2%e0%b8%8a%e0%b8%b4%e0%b8%81/#post-28197" title="Reply To: แจ้งชำระค่าสมัครสมาชิก">Reply To: แจ้งชำระค่าสมัครสมาชิก</a>
-<em class="bbp-last-active">1 hour, 44 minutes ago</em>
+<em class="bbp-last-active">1 day, 3 hours ago</em>
 </li>
 <li>
 <a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/cdc-downloader-%e0%b8%94%e0%b8%b2%e0%b8%a7%e0%b8%99%e0%b9%8c%e0%b9%82%e0%b8%ab%e0%b8%a5%e0%b8%94%e0%b9%84%e0%b8%a1%e0%b9%88%e0%b9%84%e0%b8%94%e0%b9%89%e0%b8%84%e0%b8%a3%e0%b8%b1%e0%b8%9a/#post-27962" title="Reply To: CDC Downloader ดาวน์โหลดไม่ได้ครับ">Reply To: CDC Downloader ดาวน์โหลดไม่ได้ครับ</a>
-<em class="bbp-last-active">4 days, 2 hours ago</em>
+<em class="bbp-last-active">5 days, 4 hours ago</em>
 </li>
 <li>
 <a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/cdc-d1912/" title="CDC-D1912 งานบุญโต๊ะหมู่บูชา">CDC-D1912 งานบุญโต๊ะหมู่บูชา</a>
-<em class="bbp-last-active">4 days, 12 hours ago</em>
+<em class="bbp-last-active">5 days, 14 hours ago</em>
 </li>
 <li>
 <a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/cdc-downloader/#post-27887" title="Reply To: CDC Downloader">Reply To: CDC Downloader</a>
-<em class="bbp-last-active">5 days, 7 hours ago</em>
+<em class="bbp-last-active">6 days, 8 hours ago</em>
 </li>
 <li>
 <a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/%e0%b8%aa%e0%b8%ad%e0%b8%9a%e0%b8%96%e0%b8%b2%e0%b8%a1%e0%b9%80%e0%b8%a3%e0%b8%b7%e0%b9%88%e0%b8%ad%e0%b8%87%e0%b8%82%e0%b9%89%e0%b8%ad%e0%b8%a1%e0%b8%b9%e0%b8%a5dw%e0%b8%ab%e0%b8%99%e0%b9%88%e0%b8%ad/#post-27882" title="Reply To: สอบถามเรื่องข้อมูลDWหน่อยครับ">Reply To: สอบถามเรื่องข้อมูลDWหน่อยครับ</a>
-<em class="bbp-last-active">5 days, 8 hours ago</em>
+<em class="bbp-last-active">6 days, 10 hours ago</em>
 </li>
 </ul>
 </div></div><div id="archives-2" class="widget widget_archive"><span class="gamma widget-title">Archives</span>		<ul>
@@ -1459,7 +1467,7 @@ CDCDL มีการเปลี่ยน username/password สำหรับ�
 
 					
 					
-						<div>7 months, 1 week ago</div>
+						<div>7 months, 2 weeks ago</div>
 
 					
 				</li>
@@ -1492,7 +1500,7 @@ CDCDL มีการเปลี่ยน username/password สำหรับ�
 
 					
 					
-						<div>10 months ago</div>
+						<div>10 months, 1 week ago</div>
 
 					
 				</li>
@@ -1503,7 +1511,7 @@ CDCDL มีการเปลี่ยน username/password สำหรับ�
 
 					
 					
-						<div>6 months, 4 weeks ago</div>
+						<div>7 months ago</div>
 
 					
 				</li>
@@ -1522,7 +1530,7 @@ CDCDL มีการเปลี่ยน username/password สำหรับ�
 
 					
 					
-						<div>4 days, 12 hours ago</div>
+						<div>5 days, 14 hours ago</div>
 
 					
 				</li>
@@ -1533,7 +1541,7 @@ CDCDL มีการเปลี่ยน username/password สำหรับ�
 
 					
 					
-						<div>5 days, 8 hours ago</div>
+						<div>6 days, 10 hours ago</div>
 
 					
 				</li>
@@ -1544,7 +1552,7 @@ CDCDL มีการเปลี่ยน username/password สำหรับ�
 
 					
 					
-						<div>1 week, 2 days ago</div>
+						<div>1 week, 3 days ago</div>
 
 					
 				</li>
@@ -1555,7 +1563,7 @@ CDCDL มีการเปลี่ยน username/password สำหรับ�
 
 					
 					
-						<div>4 days, 2 hours ago</div>
+						<div>5 days, 4 hours ago</div>
 
 					
 				</li>
@@ -1566,7 +1574,7 @@ CDCDL มีการเปลี่ยน username/password สำหรับ�
 
 					
 					
-						<div>1 week, 5 days ago</div>
+						<div>1 week, 6 days ago</div>
 
 					
 				</li>
@@ -1585,7 +1593,7 @@ CDCDL มีการเปลี่ยน username/password สำหรับ�
 
 					
 					
-						<div>1 hour, 44 minutes ago</div>
+						<div>1 day, 3 hours ago</div>
 
 					
 				</li>
@@ -1596,7 +1604,7 @@ CDCDL มีการเปลี่ยน username/password สำหรับ�
 
 					
 					
-						<div>4 days, 2 hours ago</div>
+						<div>5 days, 4 hours ago</div>
 
 					
 				</li>
@@ -1607,7 +1615,7 @@ CDCDL มีการเปลี่ยน username/password สำหรับ�
 
 					
 					
-						<div>4 days, 12 hours ago</div>
+						<div>5 days, 14 hours ago</div>
 
 					
 				</li>
@@ -1618,7 +1626,7 @@ CDCDL มีการเปลี่ยน username/password สำหรับ�
 
 					
 					
-						<div>5 days, 7 hours ago</div>
+						<div>6 days, 8 hours ago</div>
 
 					
 				</li>
@@ -1629,7 +1637,7 @@ CDCDL มีการเปลี่ยน username/password สำหรับ�
 
 					
 					
-						<div>5 days, 8 hours ago</div>
+						<div>6 days, 10 hours ago</div>
 
 					
 				</li>
@@ -1732,8 +1740,8 @@ jQuery(document).ready(function(jQuery){jQuery.datepicker.setDefaults({"closeTex
 </html>
 
 <!--
-Object Caching 30/736 objects using disk
+Object Caching 22/755 objects using disk
 Page Caching using disk: enhanced 
 
-Served from: 52.76.37.90 @ 2019-03-12 22:09:29 by W3 Total Cache
+Served from: 52.76.37.90 @ 2019-03-14 00:07:59 by W3 Total Cache
 -->

@@ -40,7 +40,7 @@ img.emoji {
 <link rel='stylesheet' id='bbp-default-css'  href='http://52.76.37.90/wp-content/plugins/bbpress/templates/default/css/bbpress.css?ver=2.5.14-6684' type='text/css' media='screen' />
 <link rel='stylesheet' id='cptch_stylesheet-css'  href='http://52.76.37.90/wp-content/plugins/captcha/css/front_end_style.css?ver=4.4.5' type='text/css' media='all' />
 <link rel='stylesheet' id='dashicons-css'  href='http://52.76.37.90/wp-includes/css/dashicons.min.css?ver=5.1' type='text/css' media='all' />
-<link rel='stylesheet' id='cptch_mobile_style-css'  href='http://52.76.37.90/wp-content/plugins/captcha/css/mobile_style.css?ver=4.4.5' type='text/css' media='all' />
+<link rel='stylesheet' id='cptch_desktop_style-css'  href='http://52.76.37.90/wp-content/plugins/captcha/css/desktop_style.css?ver=4.4.5' type='text/css' media='all' />
 <link rel='stylesheet' id='contact-form-7-css'  href='http://52.76.37.90/wp-content/plugins/contact-form-7/includes/css/styles.css?ver=5.1.1' type='text/css' media='all' />
 <link rel='stylesheet' id='cf7cf-style-css'  href='http://52.76.37.90/wp-content/plugins/cf7-conditional-fields/style.css?ver=1.4.1' type='text/css' media='all' />
 <link rel='stylesheet' id='wp_html5video_css-css'  href='http://52.76.37.90/wp-content/plugins/html5-videogallery-plus-player/assets/css/video-js.css?ver=2.3.2' type='text/css' media='all' />
@@ -53,7 +53,7 @@ img.emoji {
 <link rel='stylesheet' id='wpfcas-font-awesome-css'  href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css?ver=1.3.2' type='text/css' media='all' />
 <link rel='stylesheet' id='wpfcas_style-css'  href='http://52.76.37.90/wp-content/plugins/wp-featured-content-and-slider/assets/css/featured-content-style.css?ver=1.3.2' type='text/css' media='all' />
 <link rel='stylesheet' id='wpfcas_slick_style-css'  href='http://52.76.37.90/wp-content/plugins/wp-featured-content-and-slider/assets/css/slick.css?ver=1.3.2' type='text/css' media='all' />
-<link rel='stylesheet' id='wc-memberships-frontend-css'  href='http://52.76.37.90/wp-content/plugins/woocommerce-memberships/assets/css/frontend/wc-memberships-frontend.min.css?ver=1.8.5' type='text/css' media='all' />
+<link rel='stylesheet' id='wc-memberships-frontend-css'  href='http://52.76.37.90/wp-content/plugins/woocommerce-memberships/assets/css/frontend/wc-memberships-frontend.min.css?ver=1.12.4' type='text/css' media='all' />
 <link rel='stylesheet' id='storefront-style-css'  href='http://52.76.37.90/wp-content/themes/storefront/style.css?ver=2.4.3' type='text/css' media='all' />
 <style id='storefront-style-inline-css' type='text/css'>
 
@@ -575,35 +575,21 @@ img.emoji {
 
 				.star-rating span:before,
 				.star-rating:before {
-					color: #FFA200;
+					color: #FFA200 !important;
 				}
 
 				.star-rating:before {
-					opacity: 0.25;
+					opacity: 0.25 !important;
 				}
 			
 </style>
+<link rel='stylesheet' id='storefront-woocommerce-bundles-style-css'  href='http://52.76.37.90/wp-content/themes/storefront/assets/css/woocommerce/extensions/bundles.css?ver=2.4.3' type='text/css' media='all' />
 <link rel='stylesheet' id='storefront-woocommerce-memberships-style-css'  href='http://52.76.37.90/wp-content/themes/storefront/assets/css/woocommerce/extensions/memberships.css?ver=2.4.3' type='text/css' media='all' />
-<link rel='stylesheet' id='sp-header-frontend-css'  href='http://52.76.37.90/wp-content/plugins/storefront-powerpack/includes/customizer/header/assets/css/sp-header-frontend.css?ver=1.4.1' type='text/css' media='all' />
-<link rel='stylesheet' id='sp-layout-css'  href='http://52.76.37.90/wp-content/plugins/storefront-powerpack/includes/customizer/layout/assets/css/layout.css?ver=1.4.1' type='text/css' media='all' />
-<link rel='stylesheet' id='sp-styles-css'  href='http://52.76.37.90/wp-content/plugins/storefront-powerpack/includes/customizer/shop/../../../assets/css/style.css?ver=1.4.1' type='text/css' media='all' />
+<link rel='stylesheet' id='sp-header-frontend-css'  href='http://52.76.37.90/wp-content/plugins/storefront-powerpack/includes/customizer/header/assets/css/sp-header-frontend.css?ver=1.4.15' type='text/css' media='all' />
+<link rel='stylesheet' id='sp-layout-css'  href='http://52.76.37.90/wp-content/plugins/storefront-powerpack/includes/customizer/layout/assets/css/layout.css?ver=1.4.15' type='text/css' media='all' />
+<link rel='stylesheet' id='sp-styles-css'  href='http://52.76.37.90/wp-content/plugins/storefront-powerpack/assets/css/style.css?ver=1.4.15' type='text/css' media='all' />
+<link rel='stylesheet' id='wc-bundle-style-css'  href='http://52.76.37.90/wp-content/plugins/woocommerce-product-bundles/assets/css/frontend/woocommerce.css?ver=5.9.2' type='text/css' media='all' />
 <link rel='stylesheet' id='custom-css-css'  href='http://52.76.37.90/wp-content/plugins/theme-customisations-master/custom/style.css?ver=5.1' type='text/css' media='all' />
-<br />
-<b>Notice</b>:  woocommerce_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
-<br />
-<b>Notice</b>:  wc_checkout_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
-<br />
-<b>Notice</b>:  woocommerce_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
-<br />
-<b>Notice</b>:  wc_checkout_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
-<br />
-<b>Notice</b>:  woocommerce_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
-<br />
-<b>Notice</b>:  wc_checkout_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
-<br />
-<b>Notice</b>:  woocommerce_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
-<br />
-<b>Notice</b>:  wc_checkout_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
 <script type='text/javascript' src='http://52.76.37.90/wp-includes/js/jquery/jquery.js?ver=1.12.4'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/theme-customisations-master/custom/custom.js?ver=5.1'></script>
@@ -623,7 +609,7 @@ img.emoji {
 
 <script type="text/javascript">
     /* <![CDATA[ */
-    var gdbxRender_Data = { url: "http://52.76.37.90/wp-admin/admin-ajax.php", run_quote: true, run_report: false, run_thanks: false, run_attachments: true, run_canned_replies: false, run_bbcodes: true, run_fitvids: true, wp_editor: true, wp_version: 51, last_cookie: 1552099841, bbpress_version: 25, text_are_you_sure: "Are you sure? Operation is not reversible.", now: 1552096241, thanks_thanks: "Thanks", thanks_unthanks: "Remove Thanks", thanks_saved: "Thanks Saved", thanks_removal: true, validate_attachments: true, insert_into_content: true, max_files: 5, max_size: 5120000, limiter: true, allowed_extensions: "jpg jpeg jpe gif png bmp tiff tif ico asf asx wmv wmx wm avi divx flv mov qt mpeg mpg mpe mp4 m4v ogv webm mkv 3gp 3gpp 3g2 3gp2 txt asc c cc h srt csv tsv ics rtx css vtt dfxp mp3 m4a m4b aac ra ram wav ogg oga flac mid midi wma wax mka rtf pdf class tar zip gz gzip rar 7z psd xcf doc pot pps ppt wri xla xls xlt xlw mdb mpp docx docm dotx dotm xlsx xlsm xlsb xltx xltm xlam pptx pptm ppsx ppsm potx potm ppam sldx sldm onetoc onetoc2 onetmp onepkg oxps xps odt odp ods odg odc odb odf wp wpd key numbers pages afl", text_select_file: "Select File", text_file_name: "Name", text_file_size: "Size", text_file_type: "Extension", text_file_validation: "Error!", text_file_validation_size: "The file is too big.", text_file_validation_type: "File type not allowed.", text_file_remove: "Remove this file", text_file_shortcode: "Insert into content", text_file_caption: "Set file caption", text_file_caption_placeholder: "Caption..." };
+    var gdbxRender_Data = { url: "http://52.76.37.90/wp-admin/admin-ajax.php", run_quote: true, run_report: false, run_thanks: false, run_attachments: true, run_canned_replies: false, run_bbcodes: true, run_fitvids: true, wp_editor: true, wp_version: 51, last_cookie: 1552444256, bbpress_version: 25, text_are_you_sure: "Are you sure? Operation is not reversible.", now: 1552440656, thanks_thanks: "Thanks", thanks_unthanks: "Remove Thanks", thanks_saved: "Thanks Saved", thanks_removal: true, validate_attachments: true, insert_into_content: true, max_files: 5, max_size: 5120000, limiter: true, allowed_extensions: "jpg jpeg jpe gif png bmp tiff tif ico asf asx wmv wmx wm avi divx flv mov qt mpeg mpg mpe mp4 m4v ogv webm mkv 3gp 3gpp 3g2 3gp2 txt asc c cc h srt csv tsv ics rtx css vtt dfxp mp3 m4a m4b aac ra ram wav ogg oga flac mid midi wma wax mka rtf pdf class tar zip gz gzip rar 7z psd xcf doc pot pps ppt wri xla xls xlt xlw mdb mpp docx docm dotx dotm xlsx xlsm xlsb xltx xltm xlam pptx pptm ppsx ppsm potx potm ppam sldx sldm onetoc onetoc2 onetmp onepkg oxps xps odt odp ods odg odc odb odf wp wpd key numbers pages afl", text_select_file: "Select File", text_file_name: "Name", text_file_size: "Size", text_file_type: "Extension", text_file_validation: "Error!", text_file_validation_size: "The file is too big.", text_file_validation_type: "File type not allowed.", text_file_remove: "Remove this file", text_file_shortcode: "Insert into content", text_file_caption: "Set file caption", text_file_caption_placeholder: "Caption..." };
     /* ]]> */
 </script>
 
@@ -646,7 +632,7 @@ img.emoji {
 <meta name="msapplication-TileImage" content="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2016/07/04093950/cropped-CDClogo2015_rev1_A-270x270.png" />
 </head>
 
-<body class="forum bbpress forum-template-default single single-forum postid-79 wp-custom-logo wp-embed-responsive woocommerce-no-js group-blog storefront-secondary-navigation storefront-align-wide right-sidebar woocommerce-active sp-max-width sp-shop-alignment-center sbc-meta-inline-top-2 sd-fixed-width sd-buttons-rounded sd-buttons-flat sd-buttons-shadows sd-scale-largest sd-button-size-smaller sd-header-compact sd-typography-helvetica">
+<body class="forum bbpress forum-template-default single single-forum postid-79 wp-custom-logo wp-embed-responsive woocommerce-no-js group-blog storefront-secondary-navigation storefront-align-wide right-sidebar woocommerce-active sp-designer sp-max-width sp-shop-alignment-center sd-fixed-width sd-buttons-rounded sd-buttons-flat sd-buttons-shadows sd-scale-largest sd-button-size-smaller sd-header-compact sd-typography-helvetica">
 
 
 <div id="page" class="hfeed site">
@@ -744,7 +730,7 @@ img.emoji {
 	
 	
 	
-		<div class="bbp-template-notice info"><p class="bbp-forum-description">This forum contains 68 topics and 437 replies, and was last updated by <a href="http://52.76.37.90/forums/users/dreamscat/" title="View dreamscat&#039;s profile" class="bbp-author-avatar" rel="nofollow"><img src="http://2.gravatar.com/avatar/b25fc34cbb62b3b65a02ae0b98509e49?s=14&#038;d=mm&#038;r=g" width="14" height="14" alt="Avatar" class="avatar avatar-14 wp-user-avatar wp-user-avatar-14 photo avatar-default" /></a>&nbsp;<a href="http://52.76.37.90/forums/users/dreamscat/" title="View dreamscat&#039;s profile" class="bbp-author-name" rel="nofollow">dreamscat</a> <a href="http://52.76.37.90/forums/topic/%e0%b9%81%e0%b8%88%e0%b9%89%e0%b8%87%e0%b8%8a%e0%b8%b3%e0%b8%a3%e0%b8%b0%e0%b8%84%e0%b9%88%e0%b8%b2%e0%b8%aa%e0%b8%a1%e0%b8%b1%e0%b8%84%e0%b8%a3%e0%b8%aa%e0%b8%a1%e0%b8%b2%e0%b8%8a%e0%b8%b4%e0%b8%81/#post-27963" title="Reply To: แจ้งชำระค่าสมัครสมาชิก">13 hours, 19 minutes ago</a>.</p></div>
+		<div class="bbp-template-notice info"><p class="bbp-forum-description">This forum contains 68 topics and 445 replies, and was last updated by <a href="http://52.76.37.90/forums/users/dreamscat/" title="View dreamscat&#039;s profile" class="bbp-author-avatar" rel="nofollow"><img src="http://2.gravatar.com/avatar/b25fc34cbb62b3b65a02ae0b98509e49?s=14&#038;d=mm&#038;r=g" width="14" height="14" alt="Avatar" class="avatar avatar-14 wp-user-avatar wp-user-avatar-14 photo avatar-default" /></a>&nbsp;<a href="http://52.76.37.90/forums/users/dreamscat/" title="View dreamscat&#039;s profile" class="bbp-author-name" rel="nofollow">dreamscat</a> <a href="http://52.76.37.90/forums/topic/%e0%b9%81%e0%b8%88%e0%b9%89%e0%b8%87%e0%b8%8a%e0%b8%b3%e0%b8%a3%e0%b8%b0%e0%b8%84%e0%b9%88%e0%b8%b2%e0%b8%aa%e0%b8%a1%e0%b8%b1%e0%b8%84%e0%b8%a3%e0%b8%aa%e0%b8%a1%e0%b8%b2%e0%b8%8a%e0%b8%b4%e0%b8%81/#post-28197" title="Reply To: แจ้งชำระค่าสมัครสมาชิก">12 hours, 5 minutes ago</a>.</p></div>
 		
 		
 			
@@ -789,7 +775,7 @@ img.emoji {
 	<li class="bbp-topic-title">
 
 		
-		<i class="bbp-icon-mark fa fa-paperclip" title="70 attachments"></i> 
+		<i class="bbp-icon-mark fa fa-paperclip" title="73 attachments"></i> 
 		<a class="bbp-topic-permalink" href="http://52.76.37.90/forums/topic/%e0%b9%81%e0%b8%88%e0%b9%89%e0%b8%87%e0%b8%8a%e0%b8%b3%e0%b8%a3%e0%b8%b0%e0%b8%84%e0%b9%88%e0%b8%b2%e0%b8%aa%e0%b8%a1%e0%b8%b1%e0%b8%84%e0%b8%a3%e0%b8%aa%e0%b8%a1%e0%b8%b2%e0%b8%8a%e0%b8%b4%e0%b8%81/">แจ้งชำระค่าสมัครสมาชิก</a>
 
 		
@@ -808,14 +794,14 @@ img.emoji {
 		
 	</li>
 
-	<li class="bbp-topic-voice-count">119</li>
+	<li class="bbp-topic-voice-count">123</li>
 
-	<li class="bbp-topic-reply-count">233</li>
+	<li class="bbp-topic-reply-count">241</li>
 
 	<li class="bbp-topic-freshness">
 
 		
-		<a href="http://52.76.37.90/forums/topic/%e0%b9%81%e0%b8%88%e0%b9%89%e0%b8%87%e0%b8%8a%e0%b8%b3%e0%b8%a3%e0%b8%b0%e0%b8%84%e0%b9%88%e0%b8%b2%e0%b8%aa%e0%b8%a1%e0%b8%b1%e0%b8%84%e0%b8%a3%e0%b8%aa%e0%b8%a1%e0%b8%b2%e0%b8%8a%e0%b8%b4%e0%b8%81/#post-27963" title="Reply To: แจ้งชำระค่าสมัครสมาชิก">13 hours, 19 minutes ago</a>
+		<a href="http://52.76.37.90/forums/topic/%e0%b9%81%e0%b8%88%e0%b9%89%e0%b8%87%e0%b8%8a%e0%b8%b3%e0%b8%a3%e0%b8%b0%e0%b8%84%e0%b9%88%e0%b8%b2%e0%b8%aa%e0%b8%a1%e0%b8%b1%e0%b8%84%e0%b8%a3%e0%b8%aa%e0%b8%a1%e0%b8%b2%e0%b8%8a%e0%b8%b4%e0%b8%81/#post-28197" title="Reply To: แจ้งชำระค่าสมัครสมาชิก">12 hours, 5 minutes ago</a>
 		
 		<p class="bbp-topic-meta">
 
@@ -861,7 +847,7 @@ img.emoji {
 	<li class="bbp-topic-freshness">
 
 		
-		<a href="http://52.76.37.90/forums/topic/cdc-downloader-%e0%b8%94%e0%b8%b2%e0%b8%a7%e0%b8%99%e0%b9%8c%e0%b9%82%e0%b8%ab%e0%b8%a5%e0%b8%94%e0%b9%84%e0%b8%a1%e0%b9%88%e0%b9%84%e0%b8%94%e0%b9%89%e0%b8%84%e0%b8%a3%e0%b8%b1%e0%b8%9a/#post-27962" title="Reply To: CDC Downloader ดาวน์โหลดไม่ได้ครับ">13 hours, 21 minutes ago</a>
+		<a href="http://52.76.37.90/forums/topic/cdc-downloader-%e0%b8%94%e0%b8%b2%e0%b8%a7%e0%b8%99%e0%b9%8c%e0%b9%82%e0%b8%ab%e0%b8%a5%e0%b8%94%e0%b9%84%e0%b8%a1%e0%b9%88%e0%b9%84%e0%b8%94%e0%b9%89%e0%b8%84%e0%b8%a3%e0%b8%b1%e0%b8%9a/#post-27962" title="Reply To: CDC Downloader ดาวน์โหลดไม่ได้ครับ">4 days, 13 hours ago</a>
 		
 		<p class="bbp-topic-meta">
 
@@ -907,7 +893,7 @@ img.emoji {
 	<li class="bbp-topic-freshness">
 
 		
-		<a href="http://52.76.37.90/forums/topic/%e0%b8%84%e0%b8%a7%e0%b8%b2%e0%b8%a1%e0%b9%81%e0%b8%95%e0%b8%81%e0%b8%95%e0%b9%88%e0%b8%b2%e0%b8%87%e0%b9%82%e0%b8%9b%e0%b8%a3%e0%b9%81%e0%b8%81%e0%b8%a3%e0%b8%a1-metastock%e0%b8%81%e0%b8%b1%e0%b8%9aa/#post-26860" title="Reply To: ความแตกต่างโปรแกรม MetastockกับAmibroker">2 weeks, 3 days ago</a>
+		<a href="http://52.76.37.90/forums/topic/%e0%b8%84%e0%b8%a7%e0%b8%b2%e0%b8%a1%e0%b9%81%e0%b8%95%e0%b8%81%e0%b8%95%e0%b9%88%e0%b8%b2%e0%b8%87%e0%b9%82%e0%b8%9b%e0%b8%a3%e0%b9%81%e0%b8%81%e0%b8%a3%e0%b8%a1-metastock%e0%b8%81%e0%b8%b1%e0%b8%9aa/#post-26860" title="Reply To: ความแตกต่างโปรแกรม MetastockกับAmibroker">3 weeks ago</a>
 		
 		<p class="bbp-topic-meta">
 
@@ -953,7 +939,7 @@ img.emoji {
 	<li class="bbp-topic-freshness">
 
 		
-		<a href="http://52.76.37.90/forums/topic/%e0%b8%aa%e0%b8%ad%e0%b8%9a%e0%b8%96%e0%b8%b2%e0%b8%a1%e0%b8%a7%e0%b8%b1%e0%b8%99%e0%b8%ab%e0%b8%a1%e0%b8%94%e0%b8%ad%e0%b8%b2%e0%b8%a2%e0%b8%b8%e0%b8%aa%e0%b8%a1%e0%b8%b2%e0%b8%8a%e0%b8%b4%e0%b8%81/#post-26568" title="Reply To: สอบถามวันหมดอายุสมาชิก">1 month, 2 weeks ago</a>
+		<a href="http://52.76.37.90/forums/topic/%e0%b8%aa%e0%b8%ad%e0%b8%9a%e0%b8%96%e0%b8%b2%e0%b8%a1%e0%b8%a7%e0%b8%b1%e0%b8%99%e0%b8%ab%e0%b8%a1%e0%b8%94%e0%b8%ad%e0%b8%b2%e0%b8%a2%e0%b8%b8%e0%b8%aa%e0%b8%a1%e0%b8%b2%e0%b8%8a%e0%b8%b4%e0%b8%81/#post-26568" title="Reply To: สอบถามวันหมดอายุสมาชิก">1 month, 3 weeks ago</a>
 		
 		<p class="bbp-topic-meta">
 
@@ -1045,7 +1031,7 @@ img.emoji {
 	<li class="bbp-topic-freshness">
 
 		
-		<a href="http://52.76.37.90/forums/topic/%e0%b8%aa%e0%b8%ad%e0%b8%9a%e0%b8%96%e0%b8%b2%e0%b8%a1%e0%b9%80%e0%b8%a3%e0%b8%b7%e0%b9%88%e0%b8%ad%e0%b8%87%e0%b9%82%e0%b8%9b%e0%b8%a3%e0%b9%81%e0%b8%81%e0%b8%a3%e0%b8%a1%e0%b8%a3%e0%b8%b0%e0%b8%ab/#post-24990" title="Reply To: สอบถามเรื่องโปรแกรมระหว่างMetastockกับAmibroker">5 months ago</a>
+		<a href="http://52.76.37.90/forums/topic/%e0%b8%aa%e0%b8%ad%e0%b8%9a%e0%b8%96%e0%b8%b2%e0%b8%a1%e0%b9%80%e0%b8%a3%e0%b8%b7%e0%b9%88%e0%b8%ad%e0%b8%87%e0%b9%82%e0%b8%9b%e0%b8%a3%e0%b9%81%e0%b8%81%e0%b8%a3%e0%b8%a1%e0%b8%a3%e0%b8%b0%e0%b8%ab/#post-24990" title="Reply To: สอบถามเรื่องโปรแกรมระหว่างMetastockกับAmibroker">5 months, 1 week ago</a>
 		
 		<p class="bbp-topic-meta">
 
@@ -1091,7 +1077,7 @@ img.emoji {
 	<li class="bbp-topic-freshness">
 
 		
-		<a href="http://52.76.37.90/forums/topic/%e0%b8%82%e0%b9%89%e0%b8%ad%e0%b8%a1%e0%b8%b9%e0%b8%a5%e0%b8%ab%e0%b8%b8%e0%b9%89%e0%b8%99-tmb-%e0%b8%a7%e0%b8%b1%e0%b8%99%e0%b8%97%e0%b8%b5%e0%b9%88-19-9-18-%e0%b9%84%e0%b8%a1%e0%b9%88%e0%b8%a1/#post-24875" title="Reply To: ข้อมูลหุ้น TMB วันที่ 19/9/18 ไม่มี">5 months, 2 weeks ago</a>
+		<a href="http://52.76.37.90/forums/topic/%e0%b8%82%e0%b9%89%e0%b8%ad%e0%b8%a1%e0%b8%b9%e0%b8%a5%e0%b8%ab%e0%b8%b8%e0%b9%89%e0%b8%99-tmb-%e0%b8%a7%e0%b8%b1%e0%b8%99%e0%b8%97%e0%b8%b5%e0%b9%88-19-9-18-%e0%b9%84%e0%b8%a1%e0%b9%88%e0%b8%a1/#post-24875" title="Reply To: ข้อมูลหุ้น TMB วันที่ 19/9/18 ไม่มี">5 months, 3 weeks ago</a>
 		
 		<p class="bbp-topic-meta">
 
@@ -1367,7 +1353,7 @@ img.emoji {
 	<li class="bbp-topic-freshness">
 
 		
-		<a href="http://52.76.37.90/forums/topic/%e0%b8%82%e0%b8%ad%e0%b8%aa%e0%b8%b9%e0%b8%95%e0%b8%a3-td-sequential-%e0%b8%ab%e0%b8%99%e0%b9%88%e0%b8%ad%e0%b8%a2%e0%b8%84%e0%b8%a3%e0%b8%b1%e0%b8%9a/#post-23454" title="Reply To: ขอสูตร td sequential หน่อยครับ">8 months, 3 weeks ago</a>
+		<a href="http://52.76.37.90/forums/topic/%e0%b8%82%e0%b8%ad%e0%b8%aa%e0%b8%b9%e0%b8%95%e0%b8%a3-td-sequential-%e0%b8%ab%e0%b8%99%e0%b9%88%e0%b8%ad%e0%b8%a2%e0%b8%84%e0%b8%a3%e0%b8%b1%e0%b8%9a/#post-23454" title="Reply To: ขอสูตร td sequential หน่อยครับ">8 months, 4 weeks ago</a>
 		
 		<p class="bbp-topic-meta">
 
@@ -1413,7 +1399,7 @@ img.emoji {
 	<li class="bbp-topic-freshness">
 
 		
-		<a href="http://52.76.37.90/forums/topic/%e0%b8%81%e0%b8%a3%e0%b8%b2%e0%b8%9f-index-%e0%b8%82%e0%b8%ad%e0%b8%87%e0%b8%ad%e0%b8%a1%e0%b9%80%e0%b8%a3%e0%b8%b4%e0%b8%81%e0%b8%b2-%e0%b8%88%e0%b8%b5%e0%b8%99-%e0%b8%8d%e0%b8%b5%e0%b9%88%e0%b8%9b/#post-23332" title="Reply To: กราฟ Index ของอมเริกา จีน ญี่ปุ่น อินเดีย">9 months ago</a>
+		<a href="http://52.76.37.90/forums/topic/%e0%b8%81%e0%b8%a3%e0%b8%b2%e0%b8%9f-index-%e0%b8%82%e0%b8%ad%e0%b8%87%e0%b8%ad%e0%b8%a1%e0%b9%80%e0%b8%a3%e0%b8%b4%e0%b8%81%e0%b8%b2-%e0%b8%88%e0%b8%b5%e0%b8%99-%e0%b8%8d%e0%b8%b5%e0%b9%88%e0%b8%9b/#post-23332" title="Reply To: กราฟ Index ของอมเริกา จีน ญี่ปุ่น อินเดีย">9 months, 1 week ago</a>
 		
 		<p class="bbp-topic-meta">
 
@@ -1459,7 +1445,7 @@ img.emoji {
 	<li class="bbp-topic-freshness">
 
 		
-		<a href="http://52.76.37.90/forums/topic/%e0%b8%a3%e0%b8%b0%e0%b8%9a%e0%b8%9a-peaktrough/#post-23275" title="Reply To: ระบบ peak&amp;Trough">9 months ago</a>
+		<a href="http://52.76.37.90/forums/topic/%e0%b8%a3%e0%b8%b0%e0%b8%9a%e0%b8%9a-peaktrough/#post-23275" title="Reply To: ระบบ peak&amp;Trough">9 months, 1 week ago</a>
 		
 		<p class="bbp-topic-meta">
 
@@ -1551,7 +1537,7 @@ img.emoji {
 	<li class="bbp-topic-freshness">
 
 		
-		<a href="http://52.76.37.90/forums/topic/%e0%b9%81%e0%b8%88%e0%b9%89%e0%b8%87%e0%b8%ab%e0%b8%b8%e0%b9%89%e0%b8%99%e0%b9%80%e0%b8%9b%e0%b8%a5%e0%b8%b5%e0%b9%88%e0%b8%a2%e0%b8%99%e0%b8%8a%e0%b8%b7%e0%b9%88%e0%b8%ad-mtls-%e0%b9%80%e0%b8%9b/#post-23039" title="Reply To: แจ้งหุ้นเปลี่ยนชื่อ MTLS เป็น MTC">9 months, 4 weeks ago</a>
+		<a href="http://52.76.37.90/forums/topic/%e0%b9%81%e0%b8%88%e0%b9%89%e0%b8%87%e0%b8%ab%e0%b8%b8%e0%b9%89%e0%b8%99%e0%b9%80%e0%b8%9b%e0%b8%a5%e0%b8%b5%e0%b9%88%e0%b8%a2%e0%b8%99%e0%b8%8a%e0%b8%b7%e0%b9%88%e0%b8%ad-mtls-%e0%b9%80%e0%b8%9b/#post-23039" title="Reply To: แจ้งหุ้นเปลี่ยนชื่อ MTLS เป็น MTC">10 months ago</a>
 		
 		<p class="bbp-topic-meta">
 
@@ -1643,7 +1629,7 @@ img.emoji {
 	<li class="bbp-topic-freshness">
 
 		
-		<a href="http://52.76.37.90/forums/topic/%e0%b8%a3%e0%b8%b2%e0%b8%84%e0%b8%b2%e0%b8%9b%e0%b8%b4%e0%b8%94%e0%b9%84%e0%b8%a1%e0%b9%88%e0%b8%95%e0%b8%a3%e0%b8%87%e0%b8%81%e0%b8%b1%e0%b8%99%e0%b8%81%e0%b8%b1%e0%b8%9a%e0%b8%81%e0%b8%a3%e0%b8%b2/#post-22902" title="Reply To: ราคาปิดไม่ตรงกันกับกราฟ Metastock">10 months, 1 week ago</a>
+		<a href="http://52.76.37.90/forums/topic/%e0%b8%a3%e0%b8%b2%e0%b8%84%e0%b8%b2%e0%b8%9b%e0%b8%b4%e0%b8%94%e0%b9%84%e0%b8%a1%e0%b9%88%e0%b8%95%e0%b8%a3%e0%b8%87%e0%b8%81%e0%b8%b1%e0%b8%99%e0%b8%81%e0%b8%b1%e0%b8%9a%e0%b8%81%e0%b8%a3%e0%b8%b2/#post-22902" title="Reply To: ราคาปิดไม่ตรงกันกับกราฟ Metastock">10 months, 2 weeks ago</a>
 		
 		<p class="bbp-topic-meta">
 
@@ -1735,7 +1721,7 @@ img.emoji {
 	<li class="bbp-topic-freshness">
 
 		
-		<a href="http://52.76.37.90/forums/topic/ptt-%e0%b9%81%e0%b8%95%e0%b8%81%e0%b8%9e%e0%b8%b2%e0%b8%a3%e0%b9%8c/" title="PTT แตกพาร์">10 months, 2 weeks ago</a>
+		<a href="http://52.76.37.90/forums/topic/ptt-%e0%b9%81%e0%b8%95%e0%b8%81%e0%b8%9e%e0%b8%b2%e0%b8%a3%e0%b9%8c/" title="PTT แตกพาร์">10 months, 3 weeks ago</a>
 		
 		<p class="bbp-topic-meta">
 
@@ -1827,7 +1813,7 @@ img.emoji {
 	<li class="bbp-topic-freshness">
 
 		
-		<a href="http://52.76.37.90/forums/topic/cdcdl-%e0%b8%82%e0%b9%89%e0%b8%ad%e0%b8%a1%e0%b8%b9%e0%b8%a5-forex-%e0%b9%84%e0%b8%a1%e0%b9%88%e0%b8%ad%e0%b8%b1%e0%b8%9e%e0%b9%80%e0%b8%94%e0%b8%97/#post-22459" title="Reply To: [CDCDL] ข้อมูล FOREX ไม่อัพเดท">11 months ago</a>
+		<a href="http://52.76.37.90/forums/topic/cdcdl-%e0%b8%82%e0%b9%89%e0%b8%ad%e0%b8%a1%e0%b8%b9%e0%b8%a5-forex-%e0%b9%84%e0%b8%a1%e0%b9%88%e0%b8%ad%e0%b8%b1%e0%b8%9e%e0%b9%80%e0%b8%94%e0%b8%97/#post-22459" title="Reply To: [CDCDL] ข้อมูล FOREX ไม่อัพเดท">11 months, 1 week ago</a>
 		
 		<p class="bbp-topic-meta">
 
@@ -1965,7 +1951,7 @@ img.emoji {
 	<li class="bbp-topic-freshness">
 
 		
-		<a href="http://52.76.37.90/forums/topic/%e0%b8%a3%e0%b8%9a%e0%b8%81%e0%b8%a7%e0%b8%99%e0%b8%94%e0%b9%89%e0%b8%a7%e0%b8%a2%e0%b8%99%e0%b8%b0%e0%b8%84%e0%b8%a3%e0%b8%b1%e0%b8%9a/#post-22195" title="Reply To: รบกวนด้วยนะครับ">11 months, 2 weeks ago</a>
+		<a href="http://52.76.37.90/forums/topic/%e0%b8%a3%e0%b8%9a%e0%b8%81%e0%b8%a7%e0%b8%99%e0%b8%94%e0%b9%89%e0%b8%a7%e0%b8%a2%e0%b8%99%e0%b8%b0%e0%b8%84%e0%b8%a3%e0%b8%b1%e0%b8%9a/#post-22195" title="Reply To: รบกวนด้วยนะครับ">11 months, 3 weeks ago</a>
 		
 		<p class="bbp-topic-meta">
 
@@ -2149,7 +2135,7 @@ img.emoji {
 	<li class="bbp-topic-freshness">
 
 		
-		<a href="http://52.76.37.90/forums/topic/%e0%b9%82%e0%b8%ad%e0%b8%99%e0%b9%80%e0%b8%87%e0%b8%b4%e0%b8%99%e0%b8%84%e0%b9%88%e0%b8%b2%e0%b8%aa%e0%b8%a1%e0%b8%b2%e0%b8%8a%e0%b8%b4%e0%b8%81%e0%b9%81%e0%b8%a5%e0%b9%89%e0%b8%a7%e0%b8%a2%e0%b8%b1/#post-20447" title="Reply To: โอนเงินค่าสมาชิกแล้วยังไม่ได้รับการติดต่อกลับครับ">1 year, 1 month ago</a>
+		<a href="http://52.76.37.90/forums/topic/%e0%b9%82%e0%b8%ad%e0%b8%99%e0%b9%80%e0%b8%87%e0%b8%b4%e0%b8%99%e0%b8%84%e0%b9%88%e0%b8%b2%e0%b8%aa%e0%b8%a1%e0%b8%b2%e0%b8%8a%e0%b8%b4%e0%b8%81%e0%b9%81%e0%b8%a5%e0%b9%89%e0%b8%a7%e0%b8%a2%e0%b8%b1/#post-20447" title="Reply To: โอนเงินค่าสมาชิกแล้วยังไม่ได้รับการติดต่อกลับครับ">1 year, 2 months ago</a>
 		
 		<p class="bbp-topic-meta">
 
@@ -2235,7 +2221,7 @@ img.emoji {
 
 					
 					
-						<div>23 hours, 6 minutes ago</div>
+						<div>4 days, 22 hours ago</div>
 
 					
 				</li>
@@ -2246,7 +2232,7 @@ img.emoji {
 
 					
 					
-						<div>1 week, 2 days ago</div>
+						<div>1 week, 6 days ago</div>
 
 					
 				</li>
@@ -2257,7 +2243,7 @@ img.emoji {
 
 					
 					
-						<div>1 week, 3 days ago</div>
+						<div>2 weeks ago</div>
 
 					
 				</li>
@@ -2268,7 +2254,7 @@ img.emoji {
 
 					
 					
-						<div>2 weeks, 1 day ago</div>
+						<div>2 weeks, 5 days ago</div>
 
 					
 				</li>
@@ -2296,7 +2282,7 @@ img.emoji {
 
 					
 					
-						<div>23 hours, 6 minutes ago</div>
+						<div>4 days, 22 hours ago</div>
 
 					
 				</li>
@@ -2307,7 +2293,7 @@ img.emoji {
 
 					
 					
-						<div>1 day, 19 hours ago</div>
+						<div>5 days, 18 hours ago</div>
 
 					
 				</li>
@@ -2318,7 +2304,7 @@ img.emoji {
 
 					
 					
-						<div>6 days ago</div>
+						<div>1 week, 3 days ago</div>
 
 					
 				</li>
@@ -2329,7 +2315,7 @@ img.emoji {
 
 					
 					
-						<div>13 hours, 21 minutes ago</div>
+						<div>4 days, 13 hours ago</div>
 
 					
 				</li>
@@ -2340,7 +2326,7 @@ img.emoji {
 
 					
 					
-						<div>1 week, 2 days ago</div>
+						<div>1 week, 6 days ago</div>
 
 					
 				</li>
@@ -2351,7 +2337,7 @@ img.emoji {
 
 					
 					
-						<div>1 week, 3 days ago</div>
+						<div>2 weeks ago</div>
 
 					
 				</li>
@@ -2362,7 +2348,7 @@ img.emoji {
 
 					
 					
-						<div>2 weeks, 1 day ago</div>
+						<div>2 weeks, 5 days ago</div>
 
 					
 				</li>
@@ -2373,7 +2359,7 @@ img.emoji {
 
 					
 					
-						<div>2 weeks, 3 days ago</div>
+						<div>3 weeks ago</div>
 
 					
 				</li>
@@ -2384,24 +2370,24 @@ img.emoji {
 		</div><div id="d4p_bbw_newposts-4" class="widget cls_d4p_bbw_newposts"><span class="gamma widget-title">New Posts</span><div class="d4p-bbw-widget bbx-newposts">
 <ul>
 <li>
-<a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/%e0%b9%81%e0%b8%88%e0%b9%89%e0%b8%87%e0%b8%8a%e0%b8%b3%e0%b8%a3%e0%b8%b0%e0%b8%84%e0%b9%88%e0%b8%b2%e0%b8%aa%e0%b8%a1%e0%b8%b1%e0%b8%84%e0%b8%a3%e0%b8%aa%e0%b8%a1%e0%b8%b2%e0%b8%8a%e0%b8%b4%e0%b8%81/#post-27963" title="Reply To: แจ้งชำระค่าสมัครสมาชิก">Reply To: แจ้งชำระค่าสมัครสมาชิก</a>
-<em class="bbp-last-active">13 hours, 19 minutes ago</em>
+<a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/%e0%b9%81%e0%b8%88%e0%b9%89%e0%b8%87%e0%b8%8a%e0%b8%b3%e0%b8%a3%e0%b8%b0%e0%b8%84%e0%b9%88%e0%b8%b2%e0%b8%aa%e0%b8%a1%e0%b8%b1%e0%b8%84%e0%b8%a3%e0%b8%aa%e0%b8%a1%e0%b8%b2%e0%b8%8a%e0%b8%b4%e0%b8%81/#post-28197" title="Reply To: แจ้งชำระค่าสมัครสมาชิก">Reply To: แจ้งชำระค่าสมัครสมาชิก</a>
+<em class="bbp-last-active">12 hours, 5 minutes ago</em>
 </li>
 <li>
 <a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/cdc-downloader-%e0%b8%94%e0%b8%b2%e0%b8%a7%e0%b8%99%e0%b9%8c%e0%b9%82%e0%b8%ab%e0%b8%a5%e0%b8%94%e0%b9%84%e0%b8%a1%e0%b9%88%e0%b9%84%e0%b8%94%e0%b9%89%e0%b8%84%e0%b8%a3%e0%b8%b1%e0%b8%9a/#post-27962" title="Reply To: CDC Downloader ดาวน์โหลดไม่ได้ครับ">Reply To: CDC Downloader ดาวน์โหลดไม่ได้ครับ</a>
-<em class="bbp-last-active">13 hours, 21 minutes ago</em>
+<em class="bbp-last-active">4 days, 13 hours ago</em>
 </li>
 <li>
 <a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/cdc-d1912/" title="CDC-D1912 งานบุญโต๊ะหมู่บูชา">CDC-D1912 งานบุญโต๊ะหมู่บูชา</a>
-<em class="bbp-last-active">23 hours, 6 minutes ago</em>
+<em class="bbp-last-active">4 days, 22 hours ago</em>
 </li>
 <li>
 <a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/cdc-downloader/#post-27887" title="Reply To: CDC Downloader">Reply To: CDC Downloader</a>
-<em class="bbp-last-active">1 day, 17 hours ago</em>
+<em class="bbp-last-active">5 days, 17 hours ago</em>
 </li>
 <li>
 <a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/%e0%b8%aa%e0%b8%ad%e0%b8%9a%e0%b8%96%e0%b8%b2%e0%b8%a1%e0%b9%80%e0%b8%a3%e0%b8%b7%e0%b9%88%e0%b8%ad%e0%b8%87%e0%b8%82%e0%b9%89%e0%b8%ad%e0%b8%a1%e0%b8%b9%e0%b8%a5dw%e0%b8%ab%e0%b8%99%e0%b9%88%e0%b8%ad/#post-27882" title="Reply To: สอบถามเรื่องข้อมูลDWหน่อยครับ">Reply To: สอบถามเรื่องข้อมูลDWหน่อยครับ</a>
-<em class="bbp-last-active">1 day, 19 hours ago</em>
+<em class="bbp-last-active">5 days, 18 hours ago</em>
 </li>
 </ul>
 </div></div><div id="archives-2" class="widget widget_archive"><span class="gamma widget-title">Archives</span>		<ul>
@@ -2508,7 +2494,7 @@ img.emoji {
 
 					
 					
-						<div>6 months, 3 weeks ago</div>
+						<div>6 months, 4 weeks ago</div>
 
 					
 				</li>
@@ -2527,7 +2513,7 @@ img.emoji {
 
 					
 					
-						<div>23 hours, 6 minutes ago</div>
+						<div>4 days, 22 hours ago</div>
 
 					
 				</li>
@@ -2538,7 +2524,7 @@ img.emoji {
 
 					
 					
-						<div>1 day, 19 hours ago</div>
+						<div>5 days, 18 hours ago</div>
 
 					
 				</li>
@@ -2549,7 +2535,7 @@ img.emoji {
 
 					
 					
-						<div>6 days ago</div>
+						<div>1 week, 3 days ago</div>
 
 					
 				</li>
@@ -2560,7 +2546,7 @@ img.emoji {
 
 					
 					
-						<div>13 hours, 21 minutes ago</div>
+						<div>4 days, 13 hours ago</div>
 
 					
 				</li>
@@ -2571,7 +2557,7 @@ img.emoji {
 
 					
 					
-						<div>1 week, 2 days ago</div>
+						<div>1 week, 6 days ago</div>
 
 					
 				</li>
@@ -2590,7 +2576,7 @@ img.emoji {
 
 					
 					
-						<div>13 hours, 19 minutes ago</div>
+						<div>12 hours, 5 minutes ago</div>
 
 					
 				</li>
@@ -2601,7 +2587,7 @@ img.emoji {
 
 					
 					
-						<div>13 hours, 21 minutes ago</div>
+						<div>4 days, 13 hours ago</div>
 
 					
 				</li>
@@ -2612,7 +2598,7 @@ img.emoji {
 
 					
 					
-						<div>23 hours, 6 minutes ago</div>
+						<div>4 days, 22 hours ago</div>
 
 					
 				</li>
@@ -2623,7 +2609,7 @@ img.emoji {
 
 					
 					
-						<div>1 day, 17 hours ago</div>
+						<div>5 days, 17 hours ago</div>
 
 					
 				</li>
@@ -2634,7 +2620,7 @@ img.emoji {
 
 					
 					
-						<div>1 day, 19 hours ago</div>
+						<div>5 days, 18 hours ago</div>
 
 					
 				</li>
@@ -2678,8 +2664,8 @@ img.emoji {
 <script type='text/javascript'>
 /* <![CDATA[ */
 r3f5x9JS=escape(document['referrer']);
-hf4N='d113cd76a6702f8042daf053e317918c';
-hf4V='4ebc074a0451c9776c4e4829934cf045';
+hf4N='1f78e9a4584232a892d55221d0786f85';
+hf4V='c82145947f1a21e7a7f67e8ee32e548d';
 jQuery(document).ready(function($){var e="#commentform, .comment-respond form, .comment-form, #lostpasswordform, #registerform, #loginform, #login_form, #wpss_contact_form, .wpcf7-form";$(e).submit(function(){$("<input>").attr("type","hidden").attr("name","r3f5x9JS").attr("value",r3f5x9JS).appendTo(e);return true;});var h="form[method='post']";$(h).submit(function(){$("<input>").attr("type","hidden").attr("name",hf4N).attr("value",hf4V).appendTo(h);return true;});});
 /* ]]> */
 </script> 
@@ -2688,15 +2674,7 @@ jQuery(document).ready(function($){var e="#commentform, .comment-respond form, .
 		c = c.replace(/woocommerce-no-js/, 'woocommerce-js');
 		document.body.className = c;
 	</script>
-	<br />
-<b>Notice</b>:  woocommerce_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
-<br />
-<b>Notice</b>:  wc_checkout_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
-<br />
-<b>Notice</b>:  woocommerce_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
-<br />
-<b>Notice</b>:  wc_checkout_params is <strong>deprecated</strong> since version 3.5.6! Use woocommerce_get_script_data instead. in <b>/var/www/staging/wp-includes/functions.php</b> on line <b>4605</b><br />
-<script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/gd-bbpress-toolbox/d4pjs/fitvids/jquery.fitvids.js?ver=4.7.2.625'></script>
+	<script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/gd-bbpress-toolbox/d4pjs/fitvids/jquery.fitvids.js?ver=4.7.2.625'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/gd-bbpress-toolbox/js/front-core.min.js?ver=4.7.2.625'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/bbpress/templates/default/js/editor.js?ver=2.5.14-6684'></script>
 <script type='text/javascript'>
@@ -2744,8 +2722,8 @@ jQuery(document).ready(function(jQuery){jQuery.datepicker.setDefaults({"closeTex
 </html>
 
 <!--
-Object Caching 3/1047 objects using disk
+Object Caching 180/800 objects using disk
 Page Caching using disk: enhanced 
 
-Served from: 52.76.37.90 @ 2019-03-09 08:50:41 by W3 Total Cache
+Served from: 52.76.37.90 @ 2019-03-13 08:30:56 by W3 Total Cache
 -->
