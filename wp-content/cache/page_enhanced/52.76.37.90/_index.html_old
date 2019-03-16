@@ -14,7 +14,7 @@
 <link rel="alternate" type="application/rss+xml" title="Chaloke Dot Com &raquo; Feed" href="http://52.76.37.90/feed/" />
 <link rel="alternate" type="application/rss+xml" title="Chaloke Dot Com &raquo; Comments Feed" href="http://52.76.37.90/comments/feed/" />
 		<script type="text/javascript">
-			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/11.2.0\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/11.2.0\/svg\/","svgExt":".svg","source":{"concatemoji":"http:\/\/52.76.37.90\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.1"}};
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/11.2.0\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/11.2.0\/svg\/","svgExt":".svg","source":{"concatemoji":"http:\/\/52.76.37.90\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.1.1"}};
 			!function(a,b,c){function d(a,b){var c=String.fromCharCode;l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,a),0,0);var d=k.toDataURL();l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,b),0,0);var e=k.toDataURL();return d===e}function e(a){var b;if(!l||!l.fillText)return!1;switch(l.textBaseline="top",l.font="600 32px Arial",a){case"flag":return!(b=d([55356,56826,55356,56819],[55356,56826,8203,55356,56819]))&&(b=d([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]),!b);case"emoji":return b=d([55358,56760,9792,65039],[55358,56760,8203,9792,65039]),!b}return!1}function f(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var g,h,i,j,k=b.createElement("canvas"),l=k.getContext&&k.getContext("2d");for(j=Array("flag","emoji"),c.supports={everything:!0,everythingExceptFlag:!0},i=0;i<j.length;i++)c.supports[j[i]]=e(j[i]),c.supports.everything=c.supports.everything&&c.supports[j[i]],"flag"!==j[i]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[j[i]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(h=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",h,!1),a.addEventListener("load",h,!1)):(a.attachEvent("onload",h),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),g=c.source||{},g.concatemoji?f(g.concatemoji):g.wpemoji&&g.twemoji&&(f(g.twemoji),f(g.wpemoji)))}(window,document,window._wpemojiSettings);
 		</script>
 		<style type="text/css">
@@ -32,11 +32,11 @@ img.emoji {
 }
 </style>
 	<link rel='stylesheet' id='gdbbx-front-widgets-css'  href='http://52.76.37.90/wp-content/plugins/gd-bbpress-toolbox/css/front-widgets.min.css?ver=4.7.2.625' type='text/css' media='all' />
-<link rel='stylesheet' id='wp-block-library-css'  href='http://52.76.37.90/wp-includes/css/dist/block-library/style.min.css?ver=5.1' type='text/css' media='all' />
-<link rel='stylesheet' id='wp-block-library-theme-css'  href='http://52.76.37.90/wp-includes/css/dist/block-library/theme.min.css?ver=5.1' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-block-library-css'  href='http://52.76.37.90/wp-includes/css/dist/block-library/style.min.css?ver=5.1.1' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-block-library-theme-css'  href='http://52.76.37.90/wp-includes/css/dist/block-library/theme.min.css?ver=5.1.1' type='text/css' media='all' />
 <link rel='stylesheet' id='bbp-default-css'  href='http://52.76.37.90/wp-content/plugins/bbpress/templates/default/css/bbpress.css?ver=2.5.14-6684' type='text/css' media='screen' />
 <link rel='stylesheet' id='cptch_stylesheet-css'  href='http://52.76.37.90/wp-content/plugins/captcha/css/front_end_style.css?ver=4.4.5' type='text/css' media='all' />
-<link rel='stylesheet' id='dashicons-css'  href='http://52.76.37.90/wp-includes/css/dashicons.min.css?ver=5.1' type='text/css' media='all' />
+<link rel='stylesheet' id='dashicons-css'  href='http://52.76.37.90/wp-includes/css/dashicons.min.css?ver=5.1.1' type='text/css' media='all' />
 <link rel='stylesheet' id='cptch_desktop_style-css'  href='http://52.76.37.90/wp-content/plugins/captcha/css/desktop_style.css?ver=4.4.5' type='text/css' media='all' />
 <link rel='stylesheet' id='contact-form-7-css'  href='http://52.76.37.90/wp-content/plugins/contact-form-7/includes/css/styles.css?ver=5.1.1' type='text/css' media='all' />
 <link rel='stylesheet' id='cf7cf-style-css'  href='http://52.76.37.90/wp-content/plugins/cf7-conditional-fields/style.css?ver=1.4.1' type='text/css' media='all' />
@@ -51,7 +51,7 @@ img.emoji {
 <link rel='stylesheet' id='wpfcas_style-css'  href='http://52.76.37.90/wp-content/plugins/wp-featured-content-and-slider/assets/css/featured-content-style.css?ver=1.3.2' type='text/css' media='all' />
 <link rel='stylesheet' id='wpfcas_slick_style-css'  href='http://52.76.37.90/wp-content/plugins/wp-featured-content-and-slider/assets/css/slick.css?ver=1.3.2' type='text/css' media='all' />
 <link rel='stylesheet' id='wc-memberships-frontend-css'  href='http://52.76.37.90/wp-content/plugins/woocommerce-memberships/assets/css/frontend/wc-memberships-frontend.min.css?ver=1.12.4' type='text/css' media='all' />
-<link rel='stylesheet' id='storefront-style-css'  href='http://52.76.37.90/wp-content/themes/storefront/style.css?ver=2.4.3' type='text/css' media='all' />
+<link rel='stylesheet' id='storefront-style-css'  href='http://52.76.37.90/wp-content/themes/storefront/style.css?ver=2.4.4' type='text/css' media='all' />
 <style id='storefront-style-inline-css' type='text/css'>
 
 			.plus,
@@ -268,7 +268,7 @@ img.emoji {
 				}
 			
 </style>
-<link rel='stylesheet' id='storefront-gutenberg-blocks-css'  href='http://52.76.37.90/wp-content/themes/storefront/assets/css/base/gutenberg-blocks.css?ver=2.4.3' type='text/css' media='all' />
+<link rel='stylesheet' id='storefront-gutenberg-blocks-css'  href='http://52.76.37.90/wp-content/themes/storefront/assets/css/base/gutenberg-blocks.css?ver=2.4.4' type='text/css' media='all' />
 <style id='storefront-gutenberg-blocks-inline-css' type='text/css'>
 
 				.wp-block-button__link:not(.has-text-color) {
@@ -335,14 +335,14 @@ img.emoji {
 				}
 			
 </style>
-<link rel='stylesheet' id='storefront-icons-css'  href='http://52.76.37.90/wp-content/themes/storefront/assets/css/base/icons.css?ver=2.4.3' type='text/css' media='all' />
+<link rel='stylesheet' id='storefront-icons-css'  href='http://52.76.37.90/wp-content/themes/storefront/assets/css/base/icons.css?ver=2.4.4' type='text/css' media='all' />
 <link rel='stylesheet' id='storefront-fonts-css'  href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,300italic,400italic,600,700,900&#038;subset=latin%2Clatin-ext' type='text/css' media='all' />
-<link rel='stylesheet' id='sbc-styles-css'  href='http://52.76.37.90/wp-content/plugins/storefront-blog-customiser/assets/css/style.css?ver=5.1' type='text/css' media='all' />
-<link rel='stylesheet' id='sd-styles-css'  href='http://52.76.37.90/wp-content/plugins/storefront-designer/assets/css/style.css?ver=5.1' type='text/css' media='all' />
-<link rel='stylesheet' id='sd-styles-2-css'  href='http://52.76.37.90/wp-content/plugins/storefront-designer/assets/css/style-2.css?ver=5.1' type='text/css' media='all' />
+<link rel='stylesheet' id='sbc-styles-css'  href='http://52.76.37.90/wp-content/plugins/storefront-blog-customiser/assets/css/style.css?ver=5.1.1' type='text/css' media='all' />
+<link rel='stylesheet' id='sd-styles-css'  href='http://52.76.37.90/wp-content/plugins/storefront-designer/assets/css/style.css?ver=5.1.1' type='text/css' media='all' />
+<link rel='stylesheet' id='sd-styles-2-css'  href='http://52.76.37.90/wp-content/plugins/storefront-designer/assets/css/style-2.css?ver=5.1.1' type='text/css' media='all' />
 <link rel='stylesheet' id='bfa-font-awesome-css'  href='//cdn.jsdelivr.net/fontawesome/4.7.0/css/font-awesome.min.css?ver=4.7.0' type='text/css' media='all' />
 <link rel='stylesheet' id='jquery-ui-smoothness-css'  href='http://52.76.37.90/wp-content/plugins/contact-form-7/includes/js/jquery-ui/themes/smoothness/jquery-ui.min.css?ver=1.11.4' type='text/css' media='screen' />
-<link rel='stylesheet' id='storefront-woocommerce-style-css'  href='http://52.76.37.90/wp-content/themes/storefront/assets/css/woocommerce/woocommerce.css?ver=2.4.3' type='text/css' media='all' />
+<link rel='stylesheet' id='storefront-woocommerce-style-css'  href='http://52.76.37.90/wp-content/themes/storefront/assets/css/woocommerce/woocommerce.css?ver=2.4.4' type='text/css' media='all' />
 <style id='storefront-woocommerce-style-inline-css' type='text/css'>
 
 			a.cart-contents,
@@ -580,28 +580,28 @@ img.emoji {
 				}
 			
 </style>
-<link rel='stylesheet' id='storefront-woocommerce-bundles-style-css'  href='http://52.76.37.90/wp-content/themes/storefront/assets/css/woocommerce/extensions/bundles.css?ver=2.4.3' type='text/css' media='all' />
-<link rel='stylesheet' id='storefront-woocommerce-memberships-style-css'  href='http://52.76.37.90/wp-content/themes/storefront/assets/css/woocommerce/extensions/memberships.css?ver=2.4.3' type='text/css' media='all' />
+<link rel='stylesheet' id='storefront-woocommerce-bundles-style-css'  href='http://52.76.37.90/wp-content/themes/storefront/assets/css/woocommerce/extensions/bundles.css?ver=2.4.4' type='text/css' media='all' />
+<link rel='stylesheet' id='storefront-woocommerce-memberships-style-css'  href='http://52.76.37.90/wp-content/themes/storefront/assets/css/woocommerce/extensions/memberships.css?ver=2.4.4' type='text/css' media='all' />
 <link rel='stylesheet' id='sp-header-frontend-css'  href='http://52.76.37.90/wp-content/plugins/storefront-powerpack/includes/customizer/header/assets/css/sp-header-frontend.css?ver=1.4.15' type='text/css' media='all' />
 <link rel='stylesheet' id='sp-layout-css'  href='http://52.76.37.90/wp-content/plugins/storefront-powerpack/includes/customizer/layout/assets/css/layout.css?ver=1.4.15' type='text/css' media='all' />
 <link rel='stylesheet' id='sp-styles-css'  href='http://52.76.37.90/wp-content/plugins/storefront-powerpack/assets/css/style.css?ver=1.4.15' type='text/css' media='all' />
 <link rel='stylesheet' id='wc-bundle-style-css'  href='http://52.76.37.90/wp-content/plugins/woocommerce-product-bundles/assets/css/frontend/woocommerce.css?ver=5.9.2' type='text/css' media='all' />
-<link rel='stylesheet' id='custom-css-css'  href='http://52.76.37.90/wp-content/plugins/theme-customisations-master/custom/style.css?ver=5.1' type='text/css' media='all' />
+<link rel='stylesheet' id='custom-css-css'  href='http://52.76.37.90/wp-content/plugins/theme-customisations-master/custom/style.css?ver=5.1.1' type='text/css' media='all' />
 <script type='text/javascript' src='http://52.76.37.90/wp-includes/js/jquery/jquery.js?ver=1.12.4'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1'></script>
-<script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/theme-customisations-master/custom/custom.js?ver=5.1'></script>
+<script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/theme-customisations-master/custom/custom.js?ver=5.1.1'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/storefront-designer/assets/js/jquery-sticky.min.js?ver=1.0.0'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/storefront-designer/assets/js/sticky-navigation.min.js?ver=1.0.0'></script>
 <link rel='https://api.w.org/' href='http://52.76.37.90/wp-json/' />
 <link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://52.76.37.90/xmlrpc.php?rsd" />
 <link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://52.76.37.90/wp-includes/wlwmanifest.xml" /> 
-<meta name="generator" content="WordPress 5.1" />
+<meta name="generator" content="WordPress 5.1.1" />
 <meta name="generator" content="WooCommerce 3.5.6" />
 <meta name="generator" content="GD bbPress Toolbox Pro 4.7.2, Build 625" />
 
 <script type="text/javascript">
     /* <![CDATA[ */
-    var gdbxRender_Data = { url: "http://52.76.37.90/wp-admin/admin-ajax.php", run_quote: true, run_report: false, run_thanks: false, run_attachments: true, run_canned_replies: false, run_bbcodes: true, run_fitvids: true, wp_editor: true, wp_version: 51, last_cookie: 1552500478, bbpress_version: 25, text_are_you_sure: "Are you sure? Operation is not reversible.", now: 1552496878, thanks_thanks: "Thanks", thanks_unthanks: "Remove Thanks", thanks_saved: "Thanks Saved", thanks_removal: true, validate_attachments: true, insert_into_content: true, max_files: 5, max_size: 5120000, limiter: true, allowed_extensions: "jpg jpeg jpe gif png bmp tiff tif ico asf asx wmv wmx wm avi divx flv mov qt mpeg mpg mpe mp4 m4v ogv webm mkv 3gp 3gpp 3g2 3gp2 txt asc c cc h srt csv tsv ics rtx css vtt dfxp mp3 m4a m4b aac ra ram wav ogg oga flac mid midi wma wax mka rtf pdf class tar zip gz gzip rar 7z psd xcf doc pot pps ppt wri xla xls xlt xlw mdb mpp docx docm dotx dotm xlsx xlsm xlsb xltx xltm xlam pptx pptm ppsx ppsm potx potm ppam sldx sldm onetoc onetoc2 onetmp onepkg oxps xps odt odp ods odg odc odb odf wp wpd key numbers pages afl", text_select_file: "Select File", text_file_name: "Name", text_file_size: "Size", text_file_type: "Extension", text_file_validation: "Error!", text_file_validation_size: "The file is too big.", text_file_validation_type: "File type not allowed.", text_file_remove: "Remove this file", text_file_shortcode: "Insert into content", text_file_caption: "Set file caption", text_file_caption_placeholder: "Caption..." };
+    var gdbxRender_Data = { url: "http://52.76.37.90/wp-admin/admin-ajax.php", run_quote: true, run_report: false, run_thanks: false, run_attachments: true, run_canned_replies: false, run_bbcodes: true, run_fitvids: true, wp_editor: true, wp_version: 51, last_cookie: 1552676610, bbpress_version: 25, text_are_you_sure: "Are you sure? Operation is not reversible.", now: 1552673010, thanks_thanks: "Thanks", thanks_unthanks: "Remove Thanks", thanks_saved: "Thanks Saved", thanks_removal: true, validate_attachments: true, insert_into_content: true, max_files: 5, max_size: 5120000, limiter: true, allowed_extensions: "jpg jpeg jpe gif png bmp tiff tif ico asf asx wmv wmx wm avi divx flv mov qt mpeg mpg mpe mp4 m4v ogv webm mkv 3gp 3gpp 3g2 3gp2 txt asc c cc h srt csv tsv ics rtx css vtt dfxp mp3 m4a m4b aac ra ram wav ogg oga flac mid midi wma wax mka rtf pdf class tar zip gz gzip rar 7z psd xcf doc pot pps ppt wri xla xls xlt xlw mdb mpp docx docm dotx dotm xlsx xlsm xlsb xltx xltm xlam pptx pptm ppsx ppsm potx potm ppam sldx sldm onetoc onetoc2 onetmp onepkg oxps xps odt odp ods odg odc odb odf wp wpd key numbers pages afl", text_select_file: "Select File", text_file_name: "Name", text_file_size: "Size", text_file_type: "Extension", text_file_validation: "Error!", text_file_validation_size: "The file is too big.", text_file_validation_type: "File type not allowed.", text_file_remove: "Remove this file", text_file_shortcode: "Insert into content", text_file_caption: "Set file caption", text_file_caption_placeholder: "Caption..." };
     /* ]]> */
 </script>
 
@@ -629,7 +629,7 @@ img.emoji {
 
 <div id="page" class="hfeed site">
 	
-	<header id="masthead" class="site-header" role="banner" style="">
+	<header id="masthead" class="site-header" role="banner" style="background-image: url(http://www.chaloke.com/wp-content/uploads/2019/03/cropped-header2019.png); ">
 
 		<div class="col-full">		<a class="skip-link screen-reader-text" href="#site-navigation">Skip to navigation</a>
 		<a class="skip-link screen-reader-text" href="#content">Skip to content</a>
@@ -638,7 +638,6 @@ img.emoji {
 					<nav class="secondary-navigation" role="navigation" aria-label="Secondary Navigation">
 				<div class="menu-user-control-container"><ul id="menu-user-control" class="menu"><li><a href="http://52.76.37.90/wp-login.php">Log In</a></li><li><a href="http://52.76.37.90/wp-login.php?action=register">Register</a></li></ul></div>			</nav><!-- #site-navigation -->
 			</div><div class="storefront-primary-navigation"><div class="col-full"><section class="sd-sticky-navigation fixedsticky">		<nav id="site-navigation" class="main-navigation" role="navigation" aria-label="Primary Navigation">
-		<button class="menu-toggle" aria-controls="site-navigation" aria-expanded="false"><span>Menu</span></button>
 			<div class="primary-navigation"><ul id="menu-navigation" class="menu"><li id="menu-item-103" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-103"><a href="/" aria-current="page">Home</a></li>
 <li id="menu-item-77" class="menu-item menu-item-type-post_type menu-item-object-forum menu-item-77"><a href="http://52.76.37.90/forums/forum/cdc/">Forums</a></li>
 <li id="menu-item-19308" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-19308"><a href="http://52.76.37.90/%e0%b8%a5%e0%b8%b2%e0%b8%99%e0%b8%84%e0%b8%a7%e0%b8%b2%e0%b8%a1%e0%b8%a3%e0%b8%b9%e0%b9%89/">คลังความรู้</a>
@@ -664,11 +663,13 @@ img.emoji {
 </li>
 <li id="menu-item-19318" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-19318"><a href="http://52.76.37.90/%e0%b8%a5%e0%b8%b2%e0%b8%99%e0%b8%aa%e0%b8%a1%e0%b8%b2%e0%b8%8a%e0%b8%b4%e0%b8%81/">สมาชิก</a>
 <ul class="sub-menu">
-	<li id="menu-item-28236" class="menu-item menu-item-type-post_type menu-item-object-product menu-item-28236"><a href="http://52.76.37.90/product/supporting-membership-2/">สมัคร Supporting Membership (ชำระผ่านการโอนเงิน)</a></li>
+	<li id="menu-item-28236" class="menu-item menu-item-type-post_type menu-item-object-product menu-item-28236"><a href="http://52.76.37.90/product/supporting-membership-2/">สมัคร Supporting Member</a></li>
+	<li id="menu-item-28395" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-28395"><a href="http://www.chaloke.com/my-account/members-area/22/my-membership-details/">ตรวจสอบสถาณะสมาชิก</a></li>
 	<li id="menu-item-16343" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-16343"><a href="http://52.76.37.90/payment-confirmation/">แจ้งชำระเงิน</a></li>
 </ul>
 </li>
-</ul></div><div class="handheld-navigation"><ul id="menu-navigation-1" class="menu"><li class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-103"><a href="/" aria-current="page">Home</a></li>
+</ul></div>			<button class="menu-toggle" aria-haspopup="true" aria-expanded="false"><span>Menu</span></button>
+			<div class="handheld-navigation"><ul id="menu-navigation-1" class="menu"><li class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-103"><a href="/" aria-current="page">Home</a></li>
 <li class="menu-item menu-item-type-post_type menu-item-object-forum menu-item-77"><a href="http://52.76.37.90/forums/forum/cdc/">Forums</a></li>
 <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-19308"><a href="http://52.76.37.90/%e0%b8%a5%e0%b8%b2%e0%b8%99%e0%b8%84%e0%b8%a7%e0%b8%b2%e0%b8%a1%e0%b8%a3%e0%b8%b9%e0%b9%89/">คลังความรู้</a>
 <ul class="sub-menu">
@@ -693,7 +694,8 @@ img.emoji {
 </li>
 <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-19318"><a href="http://52.76.37.90/%e0%b8%a5%e0%b8%b2%e0%b8%99%e0%b8%aa%e0%b8%a1%e0%b8%b2%e0%b8%8a%e0%b8%b4%e0%b8%81/">สมาชิก</a>
 <ul class="sub-menu">
-	<li class="menu-item menu-item-type-post_type menu-item-object-product menu-item-28236"><a href="http://52.76.37.90/product/supporting-membership-2/">สมัคร Supporting Membership (ชำระผ่านการโอนเงิน)</a></li>
+	<li class="menu-item menu-item-type-post_type menu-item-object-product menu-item-28236"><a href="http://52.76.37.90/product/supporting-membership-2/">สมัคร Supporting Member</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-28395"><a href="http://www.chaloke.com/my-account/members-area/22/my-membership-details/">ตรวจสอบสถาณะสมาชิก</a></li>
 	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-16343"><a href="http://52.76.37.90/payment-confirmation/">แจ้งชำระเงิน</a></li>
 </ul>
 </li>
@@ -869,6 +871,36 @@ Official News and Announcements</div>
 		<main id="main" class="site-main" role="main">
 
 		
+<article id="post-28278" class="post-28278 post type-post status-publish format-standard has-post-thumbnail sticky hentry category-uncategorized">
+
+			<header class="entry-header">
+		<h2 class="alpha entry-title"><a href="http://52.76.37.90/2019/03/14/cdcag012019/" rel="bookmark">CDC Astrology 1/2019</a></h2>		</header><!-- .entry-header -->
+				<div class="entry-content">
+		<img width="1734" height="907" src="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/03/14170536/Artboard-1-100.jpg" class="attachment- size- wp-post-image" alt="" srcset="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/03/14170536/Artboard-1-100.jpg 1734w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/03/14170536/Artboard-1-100-500x262.jpg 500w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/03/14170536/Artboard-1-100-768x402.jpg 768w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/03/14170536/Artboard-1-100-1024x536.jpg 1024w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/03/14170536/Artboard-1-100-600x314.jpg 600w" sizes="(max-width: 1734px) 100vw, 1734px" />
+<h2>CDC Astrology 1/2019</h2>
+
+
+
+<p class="has-text-color has-large-font-size has-vivid-cyan-blue-color"> วันเสาร์ที่ 30 มีนาคม 2562 เชิญผู้สนใจเรียนรู้วิชาโหราศาสตร์  เพื่อให้รู้ถึงเรื่องกาลเวลา กาลเวลาของชีวิตตัวเราเอง <strong>(ไม่ใช่นำไปทำนายทายทักผู้อื่น !!! )</strong></p>
+
+
+
+<h3>วัน – เวลาเรียน:</h3>
+
+
+
+<p class="has-medium-font-size">วันเสาร์ที่<strong> 30 มีนาคม 2562</strong><br />ตั้งแต่เวลา 9:30 – 17:00 น. ลงทะเบียน 09:00</p>
+
+
+
+<p class="has-medium-font-size">ค่าเรียน <del>2800</del> 2520 <br />(ส่วนลดสำหรับสมาชิกสนับสนุนและนักเรียนเก่า อ่านรายละเอียดด้านล่าง) </p>
+
+
+
+ <a href="http://52.76.37.90/2019/03/14/cdcag012019/#more-28278" class="more-link">Continue reading <span class="screen-reader-text">CDC Astrology 1/2019</span></a>		</div><!-- .entry-content -->
+		
+</article><!-- #post-## -->
+
 <article id="post-27221" class="post-27221 post type-post status-publish format-standard has-post-thumbnail sticky hentry category-uncategorized">
 
 			<header class="entry-header">
@@ -1092,7 +1124,7 @@ CDCDL มีการเปลี่ยน username/password สำหรับ�
 
 
 
-<p>e-mail: <a href="mailt&#111;&#58;&#x69;&#x6e;&#x66;&#x6f;&#x40;&#x63;&#x68;aloke&#46;&#99;&#111;&#x6d;">&#x69;n&#x66;&#x6f;&#64;&#x63;&#104;a&#x6c;&#111;k&#x65;.&#x63;&#x6f;m</a></p>
+<p>e-mail: <a href="&#x6d;a&#x69;&#x6c;t&#x6f;&#58;i&#x6e;&#102;o&#x40;&#99;h&#x61;&#108;o&#x6b;e&#x2e;&#x63;o&#x6d;">inf&#111;&#64;&#x63;&#x68;&#x61;&#x6c;&#x6f;ke.&#99;&#111;&#x6d;</a></p>
 
 
 
@@ -1187,30 +1219,6 @@ CDCDL มีการเปลี่ยน username/password สำหรับ�
 		</div><!-- .entry-content -->
 		
 </article><!-- #post-## -->
-
-<article id="post-21369" class="post-21369 post type-post status-publish format-standard has-post-thumbnail hentry category-uncategorized">
-
-			<header class="entry-header">
-		<h2 class="alpha entry-title"><a href="http://52.76.37.90/2018/02/19/ef-12018/" rel="bookmark">&#8212;&#8212;&#8212;&#8211;ปิดรับสมัครแล้ว&#8212;&#8212;&#8212;&#8212;CDC Mastering Elliott Wave &#038; Fibnacci 1/2018</a></h2>		</header><!-- .entry-header -->
-				<div class="entry-content">
-		<img width="1600" height="837" src="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/02/19112427/CDC-Elliot-Wave002.jpg" class="attachment- size- wp-post-image" alt="" srcset="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/02/19112427/CDC-Elliot-Wave002.jpg 1600w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/02/19112427/CDC-Elliot-Wave002-600x314.jpg 600w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/02/19112427/CDC-Elliot-Wave002-500x262.jpg 500w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/02/19112427/CDC-Elliot-Wave002-768x402.jpg 768w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/02/19112427/CDC-Elliot-Wave002-1024x536.jpg 1024w" sizes="(max-width: 1600px) 100vw, 1600px" /><h1>&#8212;&#8212;&#8212;&#8211;ปิดรับสมัครแล้ว&#8212;&#8212;&#8212;&#8212;</h1>
-<h2 class="hP" tabindex="-1">CDC Mastering Elliott Wave &amp; Fibnacci 1/2018</h2>
-<h2 class="hP" tabindex="-1">( ระยะเวลา 2 วัน โดยเรียนที่อาคาร CDC Foundation )</h2>
-<h2>วันเสาร์ที่ 24 มีนาคม 2561<br />
-วันอาทิตย์ที่ 25 มีนาคม 2561</h2>
-<h2 id=":o5" class="hP" tabindex="-1">ตั้งแต่เวลา 9:30 – 16:30 น.</h2>
-<p>&nbsp;</p>
-<h2 class="hP" tabindex="-1">CDC Mastering Elliott Wave &amp; Fibnacci 1/2018</h2>
-<h2></h2>
-<h2>สมาชิกสนับสนุน = 7,200 บาท/คน*</h2>
-<h2>นักเรียนเก่าทุกคอร์ส = 7200บาท/คน*</h2>
-<h2>(ช่วยแจ้งหรือระบุ username ของสมาชิกสนับสนุน เพื่อใช้สิทธิด้วยนะครับ<br />
-และใช้สิทธิได้เฉพาะตนเองเท่านั้น)<br />
-สมาชิกทั่วไป = 8,000 บาท/คน*</h2>
-<p> <a href="http://52.76.37.90/2018/02/19/ef-12018/#more-21369" class="more-link">Continue reading <span class="screen-reader-text">&#8212;&#8212;&#8212;&#8211;ปิดรับสมัครแล้ว&#8212;&#8212;&#8212;&#8212;CDC Mastering Elliott Wave &#038; Fibnacci 1/2018</span></a></p>
-		</div><!-- .entry-content -->
-		
-</article><!-- #post-## -->
 <nav id="post-navigation" class="navigation pagination" role="navigation" aria-label="Post Navigation"><h2 class="screen-reader-text">Posts navigation</h2><div class="nav-links"><ul class='page-numbers'>
 	<li><span aria-current='page' class='page-numbers current'>1</span></li>
 	<li><a class='page-numbers' href='http://52.76.37.90/page/2/'>2</a></li>
@@ -1234,11 +1242,22 @@ CDCDL มีการเปลี่ยน username/password สำหรับ�
 
 			
 				<li>
+					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/cdc-d1913/">CDC-D1913 ทำบุญวัดป่านาแก่ ยโสธร</a>
+
+					
+					
+						<div>1 day, 1 hour ago</div>
+
+					
+				</li>
+
+			
+				<li>
 					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/cdc-d1912/">CDC-D1912 งานบุญโต๊ะหมู่บูชา</a>
 
 					
 					
-						<div>5 days, 14 hours ago</div>
+						<div>1 week ago</div>
 
 					
 				</li>
@@ -1249,7 +1268,7 @@ CDCDL มีการเปลี่ยน username/password สำหรับ�
 
 					
 					
-						<div>1 week, 6 days ago</div>
+						<div>2 weeks, 1 day ago</div>
 
 					
 				</li>
@@ -1260,7 +1279,7 @@ CDCDL มีการเปลี่ยน username/password สำหรับ�
 
 					
 					
-						<div>2 weeks, 1 day ago</div>
+						<div>2 weeks, 3 days ago</div>
 
 					
 				</li>
@@ -1271,18 +1290,7 @@ CDCDL มีการเปลี่ยน username/password สำหรับ�
 
 					
 					
-						<div>2 weeks, 6 days ago</div>
-
-					
-				</li>
-
-			
-				<li>
-					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/cdc-d1908/">CDC-D1908 งานบุญนอกพระพุทธศาสนา</a>
-
-					
-					
-						<div>1 month ago</div>
+						<div>3 weeks, 1 day ago</div>
 
 					
 				</li>
@@ -1295,11 +1303,22 @@ CDCDL มีการเปลี่ยน username/password สำหรับ�
 
 			
 				<li>
+					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/cdc-d1913/">CDC-D1913 ทำบุญวัดป่านาแก่ ยโสธร</a>
+
+					
+					
+						<div>1 day, 1 hour ago</div>
+
+					
+				</li>
+
+			
+				<li>
 					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/cdc-d1912/">CDC-D1912 งานบุญโต๊ะหมู่บูชา</a>
 
 					
 					
-						<div>5 days, 14 hours ago</div>
+						<div>1 week ago</div>
 
 					
 				</li>
@@ -1310,7 +1329,7 @@ CDCDL มีการเปลี่ยน username/password สำหรับ�
 
 					
 					
-						<div>6 days, 10 hours ago</div>
+						<div>1 week, 1 day ago</div>
 
 					
 				</li>
@@ -1321,7 +1340,7 @@ CDCDL มีการเปลี่ยน username/password สำหรับ�
 
 					
 					
-						<div>1 week, 3 days ago</div>
+						<div>1 week, 5 days ago</div>
 
 					
 				</li>
@@ -1332,7 +1351,7 @@ CDCDL มีการเปลี่ยน username/password สำหรับ�
 
 					
 					
-						<div>5 days, 4 hours ago</div>
+						<div>1 week ago</div>
 
 					
 				</li>
@@ -1343,7 +1362,7 @@ CDCDL มีการเปลี่ยน username/password สำหรับ�
 
 					
 					
-						<div>1 week, 6 days ago</div>
+						<div>2 weeks, 1 day ago</div>
 
 					
 				</li>
@@ -1354,7 +1373,7 @@ CDCDL มีการเปลี่ยน username/password สำหรับ�
 
 					
 					
-						<div>2 weeks, 1 day ago</div>
+						<div>2 weeks, 3 days ago</div>
 
 					
 				</li>
@@ -1362,17 +1381,6 @@ CDCDL มีการเปลี่ยน username/password สำหรับ�
 			
 				<li>
 					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/cdc-d1909-%e0%b8%96%e0%b8%a7%e0%b8%b2%e0%b8%a2%e0%b8%aa%e0%b8%b1%e0%b8%87%e0%b8%86%e0%b8%97%e0%b8%b2%e0%b8%99%e0%b8%ad%e0%b8%b2%e0%b8%ab%e0%b8%b2%e0%b8%a3-%e0%b8%a7%e0%b8%b1%e0%b8%94%e0%b9%82%e0%b8%a1/">CDC-D1909 ถวายสังฆทานอาหาร วัดโมลีโลกยาราม</a>
-
-					
-					
-						<div>2 weeks, 6 days ago</div>
-
-					
-				</li>
-
-			
-				<li>
-					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/%e0%b8%84%e0%b8%a7%e0%b8%b2%e0%b8%a1%e0%b9%81%e0%b8%95%e0%b8%81%e0%b8%95%e0%b9%88%e0%b8%b2%e0%b8%87%e0%b9%82%e0%b8%9b%e0%b8%a3%e0%b9%81%e0%b8%81%e0%b8%a3%e0%b8%a1-metastock%e0%b8%81%e0%b8%b1%e0%b8%9aa/">ความแตกต่างโปรแกรม MetastockกับAmibroker</a>
 
 					
 					
@@ -1387,41 +1395,33 @@ CDCDL มีการเปลี่ยน username/password สำหรับ�
 		</div><div id="d4p_bbw_newposts-4" class="widget cls_d4p_bbw_newposts"><span class="gamma widget-title">New Posts</span><div class="d4p-bbw-widget bbx-newposts">
 <ul>
 <li>
-<a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/%e0%b9%81%e0%b8%88%e0%b9%89%e0%b8%87%e0%b8%8a%e0%b8%b3%e0%b8%a3%e0%b8%b0%e0%b8%84%e0%b9%88%e0%b8%b2%e0%b8%aa%e0%b8%a1%e0%b8%b1%e0%b8%84%e0%b8%a3%e0%b8%aa%e0%b8%a1%e0%b8%b2%e0%b8%8a%e0%b8%b4%e0%b8%81/#post-28197" title="Reply To: แจ้งชำระค่าสมัครสมาชิก">Reply To: แจ้งชำระค่าสมัครสมาชิก</a>
+<a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/cdc-d1913/" title="CDC-D1913 ทำบุญวัดป่านาแก่ ยโสธร">CDC-D1913 ทำบุญวัดป่านาแก่ ยโสธร</a>
+<em class="bbp-last-active">1 day, 1 hour ago</em>
+</li>
+<li>
+<a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/%e0%b9%81%e0%b8%88%e0%b9%89%e0%b8%87%e0%b8%8a%e0%b8%b3%e0%b8%a3%e0%b8%b0%e0%b8%84%e0%b9%88%e0%b8%b2%e0%b8%aa%e0%b8%a1%e0%b8%b1%e0%b8%84%e0%b8%a3%e0%b8%aa%e0%b8%a1%e0%b8%b2%e0%b8%8a%e0%b8%b4%e0%b8%81/#post-28354" title="Reply To: แจ้งชำระค่าสมัครสมาชิก">Reply To: แจ้งชำระค่าสมัครสมาชิก</a>
 <em class="bbp-last-active">1 day, 3 hours ago</em>
 </li>
-<li>
-<a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/cdc-downloader-%e0%b8%94%e0%b8%b2%e0%b8%a7%e0%b8%99%e0%b9%8c%e0%b9%82%e0%b8%ab%e0%b8%a5%e0%b8%94%e0%b9%84%e0%b8%a1%e0%b9%88%e0%b9%84%e0%b8%94%e0%b9%89%e0%b8%84%e0%b8%a3%e0%b8%b1%e0%b8%9a/#post-27962" title="Reply To: CDC Downloader ดาวน์โหลดไม่ได้ครับ">Reply To: CDC Downloader ดาวน์โหลดไม่ได้ครับ</a>
-<em class="bbp-last-active">5 days, 4 hours ago</em>
-</li>
-<li>
-<a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/cdc-d1912/" title="CDC-D1912 งานบุญโต๊ะหมู่บูชา">CDC-D1912 งานบุญโต๊ะหมู่บูชา</a>
-<em class="bbp-last-active">5 days, 14 hours ago</em>
-</li>
-<li>
-<a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/cdc-downloader/#post-27887" title="Reply To: CDC Downloader">Reply To: CDC Downloader</a>
-<em class="bbp-last-active">6 days, 8 hours ago</em>
-</li>
-<li>
-<a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/%e0%b8%aa%e0%b8%ad%e0%b8%9a%e0%b8%96%e0%b8%b2%e0%b8%a1%e0%b9%80%e0%b8%a3%e0%b8%b7%e0%b9%88%e0%b8%ad%e0%b8%87%e0%b8%82%e0%b9%89%e0%b8%ad%e0%b8%a1%e0%b8%b9%e0%b8%a5dw%e0%b8%ab%e0%b8%99%e0%b9%88%e0%b8%ad/#post-27882" title="Reply To: สอบถามเรื่องข้อมูลDWหน่อยครับ">Reply To: สอบถามเรื่องข้อมูลDWหน่อยครับ</a>
-<em class="bbp-last-active">6 days, 10 hours ago</em>
-</li>
 </ul>
-</div></div><div id="archives-2" class="widget widget_archive"><span class="gamma widget-title">Archives</span>		<ul>
-				<li><a href='http://52.76.37.90/2019/03/'>March 2019</a></li>
-	<li><a href='http://52.76.37.90/2019/02/'>February 2019</a></li>
-	<li><a href='http://52.76.37.90/2019/01/'>January 2019</a></li>
-	<li><a href='http://52.76.37.90/2018/12/'>December 2018</a></li>
-	<li><a href='http://52.76.37.90/2018/11/'>November 2018</a></li>
-	<li><a href='http://52.76.37.90/2018/07/'>July 2018</a></li>
-	<li><a href='http://52.76.37.90/2018/06/'>June 2018</a></li>
-	<li><a href='http://52.76.37.90/2018/03/'>March 2018</a></li>
-	<li><a href='http://52.76.37.90/2018/02/'>February 2018</a></li>
-	<li><a href='http://52.76.37.90/2017/12/'>December 2017</a></li>
-	<li><a href='http://52.76.37.90/2017/11/'>November 2017</a></li>
-	<li><a href='http://52.76.37.90/2017/07/'>July 2017</a></li>
-		</ul>
-			</div></div><!-- #secondary -->
+</div></div><div id="archives-2" class="widget widget_archive"><span class="gamma widget-title">Archives</span>		<label class="screen-reader-text" for="archives-dropdown-2">Archives</label>
+		<select id="archives-dropdown-2" name="archive-dropdown" onchange='document.location.href=this.options[this.selectedIndex].value;'>
+			
+			<option value="">Select Month</option>
+				<option value='http://52.76.37.90/2019/03/'> March 2019 </option>
+	<option value='http://52.76.37.90/2019/02/'> February 2019 </option>
+	<option value='http://52.76.37.90/2019/01/'> January 2019 </option>
+	<option value='http://52.76.37.90/2018/12/'> December 2018 </option>
+	<option value='http://52.76.37.90/2018/11/'> November 2018 </option>
+	<option value='http://52.76.37.90/2018/07/'> July 2018 </option>
+	<option value='http://52.76.37.90/2018/06/'> June 2018 </option>
+	<option value='http://52.76.37.90/2018/03/'> March 2018 </option>
+	<option value='http://52.76.37.90/2018/02/'> February 2018 </option>
+	<option value='http://52.76.37.90/2017/12/'> December 2017 </option>
+	<option value='http://52.76.37.90/2017/11/'> November 2017 </option>
+	<option value='http://52.76.37.90/2017/07/'> July 2017 </option>
+
+		</select>
+		</div></div><!-- #secondary -->
 
 		</div><!-- .col-full -->
 	</div><!-- #content -->
@@ -1526,11 +1526,22 @@ CDCDL มีการเปลี่ยน username/password สำหรับ�
 
 			
 				<li>
+					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/cdc-d1913/">CDC-D1913 ทำบุญวัดป่านาแก่ ยโสธร</a>
+
+					
+					
+						<div>1 day, 1 hour ago</div>
+
+					
+				</li>
+
+			
+				<li>
 					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/cdc-d1912/">CDC-D1912 งานบุญโต๊ะหมู่บูชา</a>
 
 					
 					
-						<div>5 days, 14 hours ago</div>
+						<div>1 week ago</div>
 
 					
 				</li>
@@ -1541,7 +1552,7 @@ CDCDL มีการเปลี่ยน username/password สำหรับ�
 
 					
 					
-						<div>6 days, 10 hours ago</div>
+						<div>1 week, 1 day ago</div>
 
 					
 				</li>
@@ -1552,7 +1563,7 @@ CDCDL มีการเปลี่ยน username/password สำหรับ�
 
 					
 					
-						<div>1 week, 3 days ago</div>
+						<div>1 week, 5 days ago</div>
 
 					
 				</li>
@@ -1563,18 +1574,7 @@ CDCDL มีการเปลี่ยน username/password สำหรับ�
 
 					
 					
-						<div>5 days, 4 hours ago</div>
-
-					
-				</li>
-
-			
-				<li>
-					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/cdc-d1911/">CDC-D1911 ทำบุญโรงทาน</a>
-
-					
-					
-						<div>1 week, 6 days ago</div>
+						<div>1 week ago</div>
 
 					
 				</li>
@@ -1586,6 +1586,17 @@ CDCDL มีการเปลี่ยน username/password สำหรับ�
 											<div class="block footer-widget-4">
 						<div id="bbp_topics_widget-5" class="widget widget_display_topics"><span class="gamma widget-title">Most Recent Replies</span>
 		<ul>
+
+			
+				<li>
+					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/cdc-d1913/">CDC-D1913 ทำบุญวัดป่านาแก่ ยโสธร</a>
+
+					
+					
+						<div>1 day, 1 hour ago</div>
+
+					
+				</li>
 
 			
 				<li>
@@ -1604,7 +1615,7 @@ CDCDL มีการเปลี่ยน username/password สำหรับ�
 
 					
 					
-						<div>5 days, 4 hours ago</div>
+						<div>1 week ago</div>
 
 					
 				</li>
@@ -1615,7 +1626,7 @@ CDCDL มีการเปลี่ยน username/password สำหรับ�
 
 					
 					
-						<div>5 days, 14 hours ago</div>
+						<div>1 week ago</div>
 
 					
 				</li>
@@ -1626,18 +1637,7 @@ CDCDL มีการเปลี่ยน username/password สำหรับ�
 
 					
 					
-						<div>6 days, 8 hours ago</div>
-
-					
-				</li>
-
-			
-				<li>
-					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/%e0%b8%aa%e0%b8%ad%e0%b8%9a%e0%b8%96%e0%b8%b2%e0%b8%a1%e0%b9%80%e0%b8%a3%e0%b8%b7%e0%b9%88%e0%b8%ad%e0%b8%87%e0%b8%82%e0%b9%89%e0%b8%ad%e0%b8%a1%e0%b8%b9%e0%b8%a5dw%e0%b8%ab%e0%b8%99%e0%b9%88%e0%b8%ad/">สอบถามเรื่องข้อมูลDWหน่อยครับ</a>
-
-					
-					
-						<div>6 days, 10 hours ago</div>
+						<div>1 week, 1 day ago</div>
 
 					
 				</li>
@@ -1681,8 +1681,8 @@ CDCDL มีการเปลี่ยน username/password สำหรับ�
 <script type='text/javascript'>
 /* <![CDATA[ */
 r3f5x9JS=escape(document['referrer']);
-hf4N='1f78e9a4584232a892d55221d0786f85';
-hf4V='c82145947f1a21e7a7f67e8ee32e548d';
+hf4N='a6d77f47bb117ce0a63d8bf8f61d6ffd';
+hf4V='c10c9148eac7f5d2746438627c46a393';
 jQuery(document).ready(function($){var e="#commentform, .comment-respond form, .comment-form, #lostpasswordform, #registerform, #loginform, #login_form, #wpss_contact_form, .wpcf7-form";$(e).submit(function(){$("<input>").attr("type","hidden").attr("name","r3f5x9JS").attr("value",r3f5x9JS).appendTo(e);return true;});var h="form[method='post']";$(h).submit(function(){$("<input>").attr("type","hidden").attr("name",hf4N).attr("value",hf4V).appendTo(h);return true;});});
 /* ]]> */
 </script> 
@@ -1718,7 +1718,7 @@ var wc_cart_fragments_params = {"ajax_url":"\/wp-admin\/admin-ajax.php","wc_ajax
 var storefrontScreenReaderText = {"expand":"Expand child menu","collapse":"Collapse child menu"};
 /* ]]> */
 </script>
-<script type='text/javascript' src='http://52.76.37.90/wp-content/themes/storefront/assets/js/navigation.min.js?ver=2.4.3'></script>
+<script type='text/javascript' src='http://52.76.37.90/wp-content/themes/storefront/assets/js/navigation.min.js?ver=2.4.4'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-content/themes/storefront/assets/js/skip-link-focus-fix.min.js?ver=20130115'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-content/themes/storefront/assets/js/vendor/pep.min.js?ver=0.4.3'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-includes/js/jquery/ui/core.min.js?ver=1.11.4'></script>
@@ -1729,9 +1729,10 @@ jQuery(document).ready(function(jQuery){jQuery.datepicker.setDefaults({"closeTex
 <script type='text/javascript' src='http://52.76.37.90/wp-includes/js/jquery/ui/widget.min.js?ver=1.11.4'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-includes/js/jquery/ui/button.min.js?ver=1.11.4'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-includes/js/jquery/ui/spinner.min.js?ver=1.11.4'></script>
-<script type='text/javascript' src='http://52.76.37.90/wp-content/themes/storefront/assets/js/woocommerce/header-cart.min.js?ver=2.4.3'></script>
+<script type='text/javascript' src='http://52.76.37.90/wp-content/themes/storefront/assets/js/woocommerce/header-cart.min.js?ver=2.4.4'></script>
+<script type='text/javascript' src='http://52.76.37.90/wp-content/themes/storefront/assets/js/footer.min.js?ver=2.4.4'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/wp-spamshield/js/jscripts-ftr2-min.js'></script>
-<script type='text/javascript' src='http://52.76.37.90/wp-includes/js/wp-embed.min.js?ver=5.1'></script>
+<script type='text/javascript' src='http://52.76.37.90/wp-includes/js/wp-embed.min.js?ver=5.1.1'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/ticker-ultimate/assets/js/wptu-ticker.js?ver=1.2.2'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/ticker-ultimate/assets/js/wptu-public.js?ver=1.2.2'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/wp-featured-content-and-slider/assets/js/slick.min.js?ver=1.3.2'></script>
@@ -1740,8 +1741,8 @@ jQuery(document).ready(function(jQuery){jQuery.datepicker.setDefaults({"closeTex
 </html>
 
 <!--
-Object Caching 22/755 objects using disk
+Object Caching 20/736 objects using disk
 Page Caching using disk: enhanced 
 
-Served from: 52.76.37.90 @ 2019-03-14 00:07:59 by W3 Total Cache
+Served from: 52.76.37.90 @ 2019-03-16 01:03:30 by W3 Total Cache
 -->

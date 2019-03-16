@@ -15,7 +15,7 @@
 <link rel="alternate" type="application/rss+xml" title="Chaloke Dot Com &raquo; Comments Feed" href="http://52.76.37.90/comments/feed/" />
 <link rel="alternate" type="application/rss+xml" title="Chaloke Dot Com &raquo; CDC-D1811 สมทบทุนค่ารักษาพยาบาลพระภิกษุอาพาธ***)ปิดแล้ว*** Comments Feed" href="http://52.76.37.90/forums/topic/cdc-d1811/feed/" />
 		<script type="text/javascript">
-			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/11.2.0\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/11.2.0\/svg\/","svgExt":".svg","source":{"concatemoji":"http:\/\/52.76.37.90\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.1"}};
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/11.2.0\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/11.2.0\/svg\/","svgExt":".svg","source":{"concatemoji":"http:\/\/52.76.37.90\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.1.1"}};
 			!function(a,b,c){function d(a,b){var c=String.fromCharCode;l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,a),0,0);var d=k.toDataURL();l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,b),0,0);var e=k.toDataURL();return d===e}function e(a){var b;if(!l||!l.fillText)return!1;switch(l.textBaseline="top",l.font="600 32px Arial",a){case"flag":return!(b=d([55356,56826,55356,56819],[55356,56826,8203,55356,56819]))&&(b=d([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]),!b);case"emoji":return b=d([55358,56760,9792,65039],[55358,56760,8203,9792,65039]),!b}return!1}function f(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var g,h,i,j,k=b.createElement("canvas"),l=k.getContext&&k.getContext("2d");for(j=Array("flag","emoji"),c.supports={everything:!0,everythingExceptFlag:!0},i=0;i<j.length;i++)c.supports[j[i]]=e(j[i]),c.supports.everything=c.supports.everything&&c.supports[j[i]],"flag"!==j[i]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[j[i]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(h=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",h,!1),a.addEventListener("load",h,!1)):(a.attachEvent("onload",h),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),g=c.source||{},g.concatemoji?f(g.concatemoji):g.wpemoji&&g.twemoji&&(f(g.twemoji),f(g.wpemoji)))}(window,document,window._wpemojiSettings);
 		</script>
 		<style type="text/css">
@@ -35,11 +35,13 @@ img.emoji {
 	<link rel='stylesheet' id='fontawesome-css'  href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css?ver=4.7.0' type='text/css' media='all' />
 <link rel='stylesheet' id='gdbbx-front-core-css'  href='http://52.76.37.90/wp-content/plugins/gd-bbpress-toolbox/css/front-core.min.css?ver=4.7.2.625' type='text/css' media='all' />
 <link rel='stylesheet' id='gdbbx-front-widgets-css'  href='http://52.76.37.90/wp-content/plugins/gd-bbpress-toolbox/css/front-widgets.min.css?ver=4.7.2.625' type='text/css' media='all' />
-<link rel='stylesheet' id='wp-block-library-css'  href='http://52.76.37.90/wp-includes/css/dist/block-library/style.min.css?ver=5.1' type='text/css' media='all' />
-<link rel='stylesheet' id='wp-block-library-theme-css'  href='http://52.76.37.90/wp-includes/css/dist/block-library/theme.min.css?ver=5.1' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-block-library-css'  href='http://52.76.37.90/wp-includes/css/dist/block-library/style.min.css?ver=5.1.1' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-block-library-theme-css'  href='http://52.76.37.90/wp-includes/css/dist/block-library/theme.min.css?ver=5.1.1' type='text/css' media='all' />
+<link rel='stylesheet' id='wc-vendors-css'  href='http://52.76.37.90/wp-content/plugins/woo-gutenberg-products-block/build/vendors.css?ver=1.4.0' type='text/css' media='all' />
+<link rel='stylesheet' id='wc-featured-product-editor-css'  href='http://52.76.37.90/wp-content/plugins/woo-gutenberg-products-block/build/featured-product.css?ver=1.4.0' type='text/css' media='all' />
 <link rel='stylesheet' id='bbp-default-css'  href='http://52.76.37.90/wp-content/plugins/bbpress/templates/default/css/bbpress.css?ver=2.5.14-6684' type='text/css' media='screen' />
 <link rel='stylesheet' id='cptch_stylesheet-css'  href='http://52.76.37.90/wp-content/plugins/captcha/css/front_end_style.css?ver=4.4.5' type='text/css' media='all' />
-<link rel='stylesheet' id='dashicons-css'  href='http://52.76.37.90/wp-includes/css/dashicons.min.css?ver=5.1' type='text/css' media='all' />
+<link rel='stylesheet' id='dashicons-css'  href='http://52.76.37.90/wp-includes/css/dashicons.min.css?ver=5.1.1' type='text/css' media='all' />
 <link rel='stylesheet' id='cptch_desktop_style-css'  href='http://52.76.37.90/wp-content/plugins/captcha/css/desktop_style.css?ver=4.4.5' type='text/css' media='all' />
 <link rel='stylesheet' id='contact-form-7-css'  href='http://52.76.37.90/wp-content/plugins/contact-form-7/includes/css/styles.css?ver=5.1.1' type='text/css' media='all' />
 <link rel='stylesheet' id='cf7cf-style-css'  href='http://52.76.37.90/wp-content/plugins/cf7-conditional-fields/style.css?ver=1.4.1' type='text/css' media='all' />
@@ -340,9 +342,9 @@ img.emoji {
 </style>
 <link rel='stylesheet' id='storefront-icons-css'  href='http://52.76.37.90/wp-content/themes/storefront/assets/css/base/icons.css?ver=2.4.3' type='text/css' media='all' />
 <link rel='stylesheet' id='storefront-fonts-css'  href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,300italic,400italic,600,700,900&#038;subset=latin%2Clatin-ext' type='text/css' media='all' />
-<link rel='stylesheet' id='sbc-styles-css'  href='http://52.76.37.90/wp-content/plugins/storefront-blog-customiser/assets/css/style.css?ver=5.1' type='text/css' media='all' />
-<link rel='stylesheet' id='sd-styles-css'  href='http://52.76.37.90/wp-content/plugins/storefront-designer/assets/css/style.css?ver=5.1' type='text/css' media='all' />
-<link rel='stylesheet' id='sd-styles-2-css'  href='http://52.76.37.90/wp-content/plugins/storefront-designer/assets/css/style-2.css?ver=5.1' type='text/css' media='all' />
+<link rel='stylesheet' id='sbc-styles-css'  href='http://52.76.37.90/wp-content/plugins/storefront-blog-customiser/assets/css/style.css?ver=5.1.1' type='text/css' media='all' />
+<link rel='stylesheet' id='sd-styles-css'  href='http://52.76.37.90/wp-content/plugins/storefront-designer/assets/css/style.css?ver=5.1.1' type='text/css' media='all' />
+<link rel='stylesheet' id='sd-styles-2-css'  href='http://52.76.37.90/wp-content/plugins/storefront-designer/assets/css/style-2.css?ver=5.1.1' type='text/css' media='all' />
 <link rel='stylesheet' id='bfa-font-awesome-css'  href='//cdn.jsdelivr.net/fontawesome/4.7.0/css/font-awesome.min.css?ver=4.7.0' type='text/css' media='all' />
 <link rel='stylesheet' id='jquery-ui-smoothness-css'  href='http://52.76.37.90/wp-content/plugins/contact-form-7/includes/js/jquery-ui/themes/smoothness/jquery-ui.min.css?ver=1.11.4' type='text/css' media='screen' />
 <link rel='stylesheet' id='storefront-woocommerce-style-css'  href='http://52.76.37.90/wp-content/themes/storefront/assets/css/woocommerce/woocommerce.css?ver=2.4.3' type='text/css' media='all' />
@@ -589,17 +591,17 @@ img.emoji {
 <link rel='stylesheet' id='sp-layout-css'  href='http://52.76.37.90/wp-content/plugins/storefront-powerpack/includes/customizer/layout/assets/css/layout.css?ver=1.4.15' type='text/css' media='all' />
 <link rel='stylesheet' id='sp-styles-css'  href='http://52.76.37.90/wp-content/plugins/storefront-powerpack/assets/css/style.css?ver=1.4.15' type='text/css' media='all' />
 <link rel='stylesheet' id='wc-bundle-style-css'  href='http://52.76.37.90/wp-content/plugins/woocommerce-product-bundles/assets/css/frontend/woocommerce.css?ver=5.9.2' type='text/css' media='all' />
-<link rel='stylesheet' id='custom-css-css'  href='http://52.76.37.90/wp-content/plugins/theme-customisations-master/custom/style.css?ver=5.1' type='text/css' media='all' />
+<link rel='stylesheet' id='custom-css-css'  href='http://52.76.37.90/wp-content/plugins/theme-customisations-master/custom/style.css?ver=5.1.1' type='text/css' media='all' />
 <script type='text/javascript' src='http://52.76.37.90/wp-includes/js/jquery/jquery.js?ver=1.12.4'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1'></script>
-<script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/theme-customisations-master/custom/custom.js?ver=5.1'></script>
+<script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/theme-customisations-master/custom/custom.js?ver=5.1.1'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/storefront-designer/assets/js/jquery-sticky.min.js?ver=1.0.0'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/storefront-designer/assets/js/sticky-navigation.min.js?ver=1.0.0'></script>
 <link rel='https://api.w.org/' href='http://52.76.37.90/wp-json/' />
 <link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://52.76.37.90/xmlrpc.php?rsd" />
 <link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://52.76.37.90/wp-includes/wlwmanifest.xml" /> 
 <link rel='next' title='Oh no! Topic is wonky' href='http://52.76.37.90/forums/topic/oh-no-topic-is-wonky/' />
-<meta name="generator" content="WordPress 5.1" />
+<meta name="generator" content="WordPress 5.1.1" />
 <meta name="generator" content="WooCommerce 3.5.6" />
 <link rel='shortlink' href='http://52.76.37.90/?p=23407' />
 <link rel="alternate" type="application/json+oembed" href="http://52.76.37.90/wp-json/oembed/1.0/embed?url=http%3A%2F%2F52.76.37.90%2Fforums%2Ftopic%2Fcdc-d1811%2F" />
@@ -608,7 +610,7 @@ img.emoji {
 
 <script type="text/javascript">
     /* <![CDATA[ */
-    var gdbxRender_Data = { url: "http://52.76.37.90/wp-admin/admin-ajax.php", run_quote: true, run_report: false, run_thanks: false, run_attachments: true, run_canned_replies: false, run_bbcodes: true, run_fitvids: true, wp_editor: true, wp_version: 51, last_cookie: 1552531885, bbpress_version: 25, text_are_you_sure: "Are you sure? Operation is not reversible.", now: 1552528285, thanks_thanks: "Thanks", thanks_unthanks: "Remove Thanks", thanks_saved: "Thanks Saved", thanks_removal: true, validate_attachments: true, insert_into_content: true, max_files: 5, max_size: 5120000, limiter: true, allowed_extensions: "jpg jpeg jpe gif png bmp tiff tif ico asf asx wmv wmx wm avi divx flv mov qt mpeg mpg mpe mp4 m4v ogv webm mkv 3gp 3gpp 3g2 3gp2 txt asc c cc h srt csv tsv ics rtx css vtt dfxp mp3 m4a m4b aac ra ram wav ogg oga flac mid midi wma wax mka rtf pdf class tar zip gz gzip rar 7z psd xcf doc pot pps ppt wri xla xls xlt xlw mdb mpp docx docm dotx dotm xlsx xlsm xlsb xltx xltm xlam pptx pptm ppsx ppsm potx potm ppam sldx sldm onetoc onetoc2 onetmp onepkg oxps xps odt odp ods odg odc odb odf wp wpd key numbers pages afl", text_select_file: "Select File", text_file_name: "Name", text_file_size: "Size", text_file_type: "Extension", text_file_validation: "Error!", text_file_validation_size: "The file is too big.", text_file_validation_type: "File type not allowed.", text_file_remove: "Remove this file", text_file_shortcode: "Insert into content", text_file_caption: "Set file caption", text_file_caption_placeholder: "Caption..." };
+    var gdbxRender_Data = { url: "http://52.76.37.90/wp-admin/admin-ajax.php", run_quote: true, run_report: false, run_thanks: false, run_attachments: true, run_canned_replies: false, run_bbcodes: true, run_fitvids: true, wp_editor: true, wp_version: 51, last_cookie: 1552591576, bbpress_version: 25, text_are_you_sure: "Are you sure? Operation is not reversible.", now: 1552587976, thanks_thanks: "Thanks", thanks_unthanks: "Remove Thanks", thanks_saved: "Thanks Saved", thanks_removal: true, validate_attachments: true, insert_into_content: true, max_files: 5, max_size: 5120000, limiter: true, allowed_extensions: "jpg jpeg jpe gif png bmp tiff tif ico asf asx wmv wmx wm avi divx flv mov qt mpeg mpg mpe mp4 m4v ogv webm mkv 3gp 3gpp 3g2 3gp2 txt asc c cc h srt csv tsv ics rtx css vtt dfxp mp3 m4a m4b aac ra ram wav ogg oga flac mid midi wma wax mka rtf pdf class tar zip gz gzip rar 7z psd xcf doc pot pps ppt wri xla xls xlt xlw mdb mpp docx docm dotx dotm xlsx xlsm xlsb xltx xltm xlam pptx pptm ppsx ppsm potx potm ppam sldx sldm onetoc onetoc2 onetmp onepkg oxps xps odt odp ods odg odc odb odf wp wpd key numbers pages afl", text_select_file: "Select File", text_file_name: "Name", text_file_size: "Size", text_file_type: "Extension", text_file_validation: "Error!", text_file_validation_size: "The file is too big.", text_file_validation_type: "File type not allowed.", text_file_remove: "Remove this file", text_file_shortcode: "Insert into content", text_file_caption: "Set file caption", text_file_caption_placeholder: "Caption..." };
     /* ]]> */
 </script>
 
@@ -636,7 +638,7 @@ img.emoji {
 
 <div id="page" class="hfeed site">
 	
-	<header id="masthead" class="site-header" role="banner" style="">
+	<header id="masthead" class="site-header" role="banner" style="background-image: url(http://www.chaloke.com/wp-content/uploads/2019/03/cropped-header2019.png); ">
 
 		<div class="col-full">		<a class="skip-link screen-reader-text" href="#site-navigation">Skip to navigation</a>
 		<a class="skip-link screen-reader-text" href="#content">Skip to content</a>
@@ -906,11 +908,22 @@ img.emoji {
 
 			
 				<li>
+					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/cdc-d1913/">CDC-D1913 ทำบุญวัดป่านาแก่ ยโสธร</a>
+
+					
+					
+						<div>1 hour, 33 minutes ago</div>
+
+					
+				</li>
+
+			
+				<li>
 					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/cdc-d1912/">CDC-D1912 งานบุญโต๊ะหมู่บูชา</a>
 
 					
 					
-						<div>5 days, 23 hours ago</div>
+						<div>6 days, 15 hours ago</div>
 
 					
 				</li>
@@ -932,7 +945,7 @@ img.emoji {
 
 					
 					
-						<div>2 weeks, 1 day ago</div>
+						<div>2 weeks, 2 days ago</div>
 
 					
 				</li>
@@ -943,18 +956,7 @@ img.emoji {
 
 					
 					
-						<div>2 weeks, 6 days ago</div>
-
-					
-				</li>
-
-			
-				<li>
-					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/cdc-d1908/">CDC-D1908 งานบุญนอกพระพุทธศาสนา</a>
-
-					
-					
-						<div>1 month ago</div>
+						<div>3 weeks ago</div>
 
 					
 				</li>
@@ -967,11 +969,22 @@ img.emoji {
 
 			
 				<li>
+					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/cdc-d1913/">CDC-D1913 ทำบุญวัดป่านาแก่ ยโสธร</a>
+
+					
+					
+						<div>1 hour, 33 minutes ago</div>
+
+					
+				</li>
+
+			
+				<li>
 					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/cdc-d1912/">CDC-D1912 งานบุญโต๊ะหมู่บูชา</a>
 
 					
 					
-						<div>5 days, 23 hours ago</div>
+						<div>6 days, 15 hours ago</div>
 
 					
 				</li>
@@ -982,7 +995,7 @@ img.emoji {
 
 					
 					
-						<div>6 days, 19 hours ago</div>
+						<div>1 week ago</div>
 
 					
 				</li>
@@ -1004,7 +1017,7 @@ img.emoji {
 
 					
 					
-						<div>5 days, 13 hours ago</div>
+						<div>6 days, 5 hours ago</div>
 
 					
 				</li>
@@ -1026,7 +1039,7 @@ img.emoji {
 
 					
 					
-						<div>2 weeks, 1 day ago</div>
+						<div>2 weeks, 2 days ago</div>
 
 					
 				</li>
@@ -1037,18 +1050,7 @@ img.emoji {
 
 					
 					
-						<div>2 weeks, 6 days ago</div>
-
-					
-				</li>
-
-			
-				<li>
-					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/%e0%b8%84%e0%b8%a7%e0%b8%b2%e0%b8%a1%e0%b9%81%e0%b8%95%e0%b8%81%e0%b8%95%e0%b9%88%e0%b8%b2%e0%b8%87%e0%b9%82%e0%b8%9b%e0%b8%a3%e0%b9%81%e0%b8%81%e0%b8%a3%e0%b8%a1-metastock%e0%b8%81%e0%b8%b1%e0%b8%9aa/">ความแตกต่างโปรแกรม MetastockกับAmibroker</a>
-
-					
-					
-						<div>3 weeks, 1 day ago</div>
+						<div>3 weeks ago</div>
 
 					
 				</li>
@@ -1059,41 +1061,41 @@ img.emoji {
 		</div><div id="d4p_bbw_newposts-4" class="widget cls_d4p_bbw_newposts"><span class="gamma widget-title">New Posts</span><div class="d4p-bbw-widget bbx-newposts">
 <ul>
 <li>
-<a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/%e0%b9%81%e0%b8%88%e0%b9%89%e0%b8%87%e0%b8%8a%e0%b8%b3%e0%b8%a3%e0%b8%b0%e0%b8%84%e0%b9%88%e0%b8%b2%e0%b8%aa%e0%b8%a1%e0%b8%b1%e0%b8%84%e0%b8%a3%e0%b8%aa%e0%b8%a1%e0%b8%b2%e0%b8%8a%e0%b8%b4%e0%b8%81/#post-28197" title="Reply To: แจ้งชำระค่าสมัครสมาชิก">Reply To: แจ้งชำระค่าสมัครสมาชิก</a>
-<em class="bbp-last-active">1 day, 12 hours ago</em>
+<a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/cdc-d1913/" title="CDC-D1913 ทำบุญวัดป่านาแก่ ยโสธร">CDC-D1913 ทำบุญวัดป่านาแก่ ยโสธร</a>
+<em class="bbp-last-active">1 hour, 33 minutes ago</em>
+</li>
+<li>
+<a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/%e0%b9%81%e0%b8%88%e0%b9%89%e0%b8%87%e0%b8%8a%e0%b8%b3%e0%b8%a3%e0%b8%b0%e0%b8%84%e0%b9%88%e0%b8%b2%e0%b8%aa%e0%b8%a1%e0%b8%b1%e0%b8%84%e0%b8%a3%e0%b8%aa%e0%b8%a1%e0%b8%b2%e0%b8%8a%e0%b8%b4%e0%b8%81/#post-28354" title="Reply To: แจ้งชำระค่าสมัครสมาชิก">Reply To: แจ้งชำระค่าสมัครสมาชิก</a>
+<em class="bbp-last-active">4 hours, 21 minutes ago</em>
 </li>
 <li>
 <a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/cdc-downloader-%e0%b8%94%e0%b8%b2%e0%b8%a7%e0%b8%99%e0%b9%8c%e0%b9%82%e0%b8%ab%e0%b8%a5%e0%b8%94%e0%b9%84%e0%b8%a1%e0%b9%88%e0%b9%84%e0%b8%94%e0%b9%89%e0%b8%84%e0%b8%a3%e0%b8%b1%e0%b8%9a/#post-27962" title="Reply To: CDC Downloader ดาวน์โหลดไม่ได้ครับ">Reply To: CDC Downloader ดาวน์โหลดไม่ได้ครับ</a>
-<em class="bbp-last-active">5 days, 13 hours ago</em>
+<em class="bbp-last-active">6 days, 5 hours ago</em>
 </li>
 <li>
 <a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/cdc-d1912/" title="CDC-D1912 งานบุญโต๊ะหมู่บูชา">CDC-D1912 งานบุญโต๊ะหมู่บูชา</a>
-<em class="bbp-last-active">5 days, 23 hours ago</em>
-</li>
-<li>
-<a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/cdc-downloader/#post-27887" title="Reply To: CDC Downloader">Reply To: CDC Downloader</a>
-<em class="bbp-last-active">6 days, 17 hours ago</em>
-</li>
-<li>
-<a class="bbp-topic-title" href="http://52.76.37.90/forums/topic/%e0%b8%aa%e0%b8%ad%e0%b8%9a%e0%b8%96%e0%b8%b2%e0%b8%a1%e0%b9%80%e0%b8%a3%e0%b8%b7%e0%b9%88%e0%b8%ad%e0%b8%87%e0%b8%82%e0%b9%89%e0%b8%ad%e0%b8%a1%e0%b8%b9%e0%b8%a5dw%e0%b8%ab%e0%b8%99%e0%b9%88%e0%b8%ad/#post-27882" title="Reply To: สอบถามเรื่องข้อมูลDWหน่อยครับ">Reply To: สอบถามเรื่องข้อมูลDWหน่อยครับ</a>
-<em class="bbp-last-active">6 days, 19 hours ago</em>
+<em class="bbp-last-active">6 days, 15 hours ago</em>
 </li>
 </ul>
-</div></div><div id="archives-2" class="widget widget_archive"><span class="gamma widget-title">Archives</span>		<ul>
-				<li><a href='http://52.76.37.90/2019/03/'>March 2019</a></li>
-	<li><a href='http://52.76.37.90/2019/02/'>February 2019</a></li>
-	<li><a href='http://52.76.37.90/2019/01/'>January 2019</a></li>
-	<li><a href='http://52.76.37.90/2018/12/'>December 2018</a></li>
-	<li><a href='http://52.76.37.90/2018/11/'>November 2018</a></li>
-	<li><a href='http://52.76.37.90/2018/07/'>July 2018</a></li>
-	<li><a href='http://52.76.37.90/2018/06/'>June 2018</a></li>
-	<li><a href='http://52.76.37.90/2018/03/'>March 2018</a></li>
-	<li><a href='http://52.76.37.90/2018/02/'>February 2018</a></li>
-	<li><a href='http://52.76.37.90/2017/12/'>December 2017</a></li>
-	<li><a href='http://52.76.37.90/2017/11/'>November 2017</a></li>
-	<li><a href='http://52.76.37.90/2017/07/'>July 2017</a></li>
-		</ul>
-			</div></div><!-- #secondary -->
+</div></div><div id="archives-2" class="widget widget_archive"><span class="gamma widget-title">Archives</span>		<label class="screen-reader-text" for="archives-dropdown-2">Archives</label>
+		<select id="archives-dropdown-2" name="archive-dropdown" onchange='document.location.href=this.options[this.selectedIndex].value;'>
+			
+			<option value="">Select Month</option>
+				<option value='http://52.76.37.90/2019/03/'> March 2019 </option>
+	<option value='http://52.76.37.90/2019/02/'> February 2019 </option>
+	<option value='http://52.76.37.90/2019/01/'> January 2019 </option>
+	<option value='http://52.76.37.90/2018/12/'> December 2018 </option>
+	<option value='http://52.76.37.90/2018/11/'> November 2018 </option>
+	<option value='http://52.76.37.90/2018/07/'> July 2018 </option>
+	<option value='http://52.76.37.90/2018/06/'> June 2018 </option>
+	<option value='http://52.76.37.90/2018/03/'> March 2018 </option>
+	<option value='http://52.76.37.90/2018/02/'> February 2018 </option>
+	<option value='http://52.76.37.90/2017/12/'> December 2017 </option>
+	<option value='http://52.76.37.90/2017/11/'> November 2017 </option>
+	<option value='http://52.76.37.90/2017/07/'> July 2017 </option>
+
+		</select>
+		</div></div><!-- #secondary -->
 
 		</div><!-- .col-full -->
 	</div><!-- #content -->
@@ -1198,11 +1200,22 @@ img.emoji {
 
 			
 				<li>
+					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/cdc-d1913/">CDC-D1913 ทำบุญวัดป่านาแก่ ยโสธร</a>
+
+					
+					
+						<div>1 hour, 33 minutes ago</div>
+
+					
+				</li>
+
+			
+				<li>
 					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/cdc-d1912/">CDC-D1912 งานบุญโต๊ะหมู่บูชา</a>
 
 					
 					
-						<div>5 days, 23 hours ago</div>
+						<div>6 days, 15 hours ago</div>
 
 					
 				</li>
@@ -1213,7 +1226,7 @@ img.emoji {
 
 					
 					
-						<div>6 days, 19 hours ago</div>
+						<div>1 week ago</div>
 
 					
 				</li>
@@ -1235,18 +1248,7 @@ img.emoji {
 
 					
 					
-						<div>5 days, 13 hours ago</div>
-
-					
-				</li>
-
-			
-				<li>
-					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/cdc-d1911/">CDC-D1911 ทำบุญโรงทาน</a>
-
-					
-					
-						<div>2 weeks ago</div>
+						<div>6 days, 5 hours ago</div>
 
 					
 				</li>
@@ -1261,11 +1263,22 @@ img.emoji {
 
 			
 				<li>
+					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/cdc-d1913/">CDC-D1913 ทำบุญวัดป่านาแก่ ยโสธร</a>
+
+					
+					
+						<div>1 hour, 33 minutes ago</div>
+
+					
+				</li>
+
+			
+				<li>
 					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/%e0%b9%81%e0%b8%88%e0%b9%89%e0%b8%87%e0%b8%8a%e0%b8%b3%e0%b8%a3%e0%b8%b0%e0%b8%84%e0%b9%88%e0%b8%b2%e0%b8%aa%e0%b8%a1%e0%b8%b1%e0%b8%84%e0%b8%a3%e0%b8%aa%e0%b8%a1%e0%b8%b2%e0%b8%8a%e0%b8%b4%e0%b8%81/">แจ้งชำระค่าสมัครสมาชิก</a>
 
 					
 					
-						<div>1 day, 12 hours ago</div>
+						<div>4 hours, 21 minutes ago</div>
 
 					
 				</li>
@@ -1276,7 +1289,7 @@ img.emoji {
 
 					
 					
-						<div>5 days, 13 hours ago</div>
+						<div>6 days, 5 hours ago</div>
 
 					
 				</li>
@@ -1287,7 +1300,7 @@ img.emoji {
 
 					
 					
-						<div>5 days, 23 hours ago</div>
+						<div>6 days, 15 hours ago</div>
 
 					
 				</li>
@@ -1298,18 +1311,7 @@ img.emoji {
 
 					
 					
-						<div>6 days, 17 hours ago</div>
-
-					
-				</li>
-
-			
-				<li>
-					<a class="bbp-forum-title" href="http://52.76.37.90/forums/topic/%e0%b8%aa%e0%b8%ad%e0%b8%9a%e0%b8%96%e0%b8%b2%e0%b8%a1%e0%b9%80%e0%b8%a3%e0%b8%b7%e0%b9%88%e0%b8%ad%e0%b8%87%e0%b8%82%e0%b9%89%e0%b8%ad%e0%b8%a1%e0%b8%b9%e0%b8%a5dw%e0%b8%ab%e0%b8%99%e0%b9%88%e0%b8%ad/">สอบถามเรื่องข้อมูลDWหน่อยครับ</a>
-
-					
-					
-						<div>6 days, 19 hours ago</div>
+						<div>1 week ago</div>
 
 					
 				</li>
@@ -1353,8 +1355,8 @@ img.emoji {
 <script type='text/javascript'>
 /* <![CDATA[ */
 r3f5x9JS=escape(document['referrer']);
-hf4N='1f78e9a4584232a892d55221d0786f85';
-hf4V='c82145947f1a21e7a7f67e8ee32e548d';
+hf4N='a6d77f47bb117ce0a63d8bf8f61d6ffd';
+hf4V='c10c9148eac7f5d2746438627c46a393';
 jQuery(document).ready(function($){var e="#commentform, .comment-respond form, .comment-form, #lostpasswordform, #registerform, #loginform, #login_form, #wpss_contact_form, .wpcf7-form";$(e).submit(function(){$("<input>").attr("type","hidden").attr("name","r3f5x9JS").attr("value",r3f5x9JS).appendTo(e);return true;});var h="form[method='post']";$(h).submit(function(){$("<input>").attr("type","hidden").attr("name",hf4N).attr("value",hf4V).appendTo(h);return true;});});
 /* ]]> */
 </script> 
@@ -1368,7 +1370,7 @@ jQuery(document).ready(function($){var e="#commentform, .comment-respond form, .
 <script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/bbpress/templates/default/js/editor.js?ver=2.5.14-6684'></script>
 <script type='text/javascript'>
 /* <![CDATA[ */
-var bbpTopicJS = {"bbp_ajaxurl":"http:\/\/52.76.37.90\/forums\/topic\/cdc-d1811\/?bbp-ajax=true","generic_ajax_error":"Something went wrong. Refresh your browser and try again.","is_user_logged_in":"","fav_nonce":"966b09c3df","subs_nonce":"203e388a2f"};
+var bbpTopicJS = {"bbp_ajaxurl":"http:\/\/52.76.37.90\/forums\/topic\/cdc-d1811\/?bbp-ajax=true","generic_ajax_error":"Something went wrong. Refresh your browser and try again.","is_user_logged_in":"","fav_nonce":"8893737365","subs_nonce":"67bb03348a"};
 /* ]]> */
 </script>
 <script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/bbpress/templates/default/js/topic.js?ver=2.5.14-6684'></script>
@@ -1412,14 +1414,14 @@ jQuery(document).ready(function(jQuery){jQuery.datepicker.setDefaults({"closeTex
 <script type='text/javascript' src='http://52.76.37.90/wp-includes/js/jquery/ui/spinner.min.js?ver=1.11.4'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-content/themes/storefront/assets/js/woocommerce/header-cart.min.js?ver=2.4.3'></script>
 <script type='text/javascript' src='http://52.76.37.90/wp-content/plugins/wp-spamshield/js/jscripts-ftr2-min.js'></script>
-<script type='text/javascript' src='http://52.76.37.90/wp-includes/js/wp-embed.min.js?ver=5.1'></script>
+<script type='text/javascript' src='http://52.76.37.90/wp-includes/js/wp-embed.min.js?ver=5.1.1'></script>
 
 </body>
 </html>
 
 <!--
-Object Caching 20/577 objects using disk
+Object Caching 25/549 objects using disk
 Page Caching using disk: enhanced 
 
-Served from: 52.76.37.90 @ 2019-03-14 08:51:26 by W3 Total Cache
+Served from: 52.76.37.90 @ 2019-03-15 01:26:17 by W3 Total Cache
 -->
