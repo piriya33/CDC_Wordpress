@@ -1,0 +1,16 @@
+2019-04-07T04:56:05+00:00 CRITICAL syntax error, unexpected ':' in /var/www/staging/wp-content/plugins/my-custom-functions/inc/php/functional.php(103) : eval()'d code on line 23
+
+2019-04-07T04:56:10+00:00 CRITICAL syntax error, unexpected ':' in /var/www/staging/wp-content/plugins/my-custom-functions/inc/php/functional.php(103) : eval()'d code on line 23
+
+2019-04-07T04:56:12+00:00 CRITICAL syntax error, unexpected ':' in /var/www/staging/wp-content/plugins/my-custom-functions/inc/php/functional.php(103) : eval()'d code on line 23
+
+2019-04-07T04:56:26+00:00 CRITICAL syntax error, unexpected ':' in /var/www/staging/wp-content/plugins/my-custom-functions/inc/php/functional.php(103) : eval()'d code on line 23
+
+2019-04-07T04:58:43+00:00 CRITICAL syntax error, unexpected ':' in /var/www/staging/wp-content/plugins/my-custom-functions/inc/php/functional.php(103) : eval()'d code on line 23
+
+2019-04-07T05:42:14+00:00 CRITICAL syntax error, unexpected ':' in /var/www/staging/wp-content/plugins/my-custom-functions/inc/php/functional.php(103) : eval()'d code on line 23
+
+2019-04-07T05:42:18+00:00 CRITICAL syntax error, unexpected ':' in /var/www/staging/wp-content/plugins/my-custom-functions/inc/php/functional.php(103) : eval()'d code on line 23
+
+2019-04-07T05:42:20+00:00 CRITICAL syntax error, unexpected ':' in /var/www/staging/wp-content/plugins/my-custom-functions/inc/php/functional.php(103) : eval()'d code on line 23
+
