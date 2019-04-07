@@ -1,133 +1,46 @@
-=== Plugin Name ===
-Contributors: terrytsang
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=terry@terrytsang.com&item_name=Donation+for+TerryTsang+Wordpress+WebDev
-Plugin Name: WooCommerce Custom Direct Checkout
-Plugin URI:  http://terrytsang.com/shop/shop/woocommerce-direct-checkout/
-Tags: woocommerce, custom fields, direct, checkout, e-commerce
-Requires at least: 3.0
-Tested up to: 4.6.1
-Stable tag: 1.1.2
-Version: 1.1.2
+=== WooCommerce Direct Checkout ===
+Contributors: quadlayers
+Tags: woocommerce, woocommerce ajax, woocommerce ajax cart, add to cart, woocommerce direct checkout, woocommerce quick buy, woocommerce remove checkout fields, woocommerce ajax single products, woocommerce one page checkout
+Requires at least: 4.8
+Tested up to: 5.1
+Stable tag: 2.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-You can skip shopping cart page and implement add to cart button redirect to checkout page or you can redirect to other existing page.
+Simplifies the entire checkout process to improve your sales rate.
 
 == Description ==
 
-A WooCommerce plugin that aims to simplify the checkout process, leading to an immediate increase in sales.
+[WooCommerce Direct Checkout](https://quadlayers.com/portfolio/woocommerce-direct-checkout/) allows you to simplifies the checkout process by skipping the shopping cart page. The “Add to cart” button is added in each product to redirect customers to the checkout page. This can encourage buyers to shop more and quickly process the transaction, which can lead to a possible increase in sales.
 
-In WooCommerce Settings Panel, there will be a new submenu link called 'Direct Checkout' where you can:
+== Ajax add to cart ==
 
-*   Enabled / Disabled the direct checkout option
-*   Add "Continue Shopping" button to product page
-*   Change "Add to cart" to any text (Option to exclude external product)
-*   Update "Redirect to Page" option
+The Ajax add to cart option allows you to include single products, variable, grouped and virtual products in the cart without the need to reload the entire site each time.
 
-= Features =
+== Speed checkout process ==
 
-*   Implement add to cart button redirect to checkout page pattern
-*   2 languages available : English UK (en_GB) and Chinese (zh_CN)
+WooCommerce Direct Checkout aims to simplify the checkout process, leading to an immediate increase in sales. This plugin for WooCommerce allows you to redirect users to the checkout instead of cart page, change the text and link of the added to cart alert and include the ajax add to cart button in the products pages.
 
-= IMPORTANT NOTES =
-*   Do use POEdit and open 'wc-direct-checkout.pot' file and save the file as wc-direct-checkout-[language code].po, then put that into languages folder for this plugin.
-*   Please uncheck the option "Enable AJAX add to cart buttons on archives" at WooCommerce > Settings > Catalog to make the rediection working without ajax.
+== Remove checkout fields ==
 
-= GET PRO VERSION =
-*   [WooCommerce Direct Checkout PRO](http://terrytsang.com/shop/shop/woocommerce-direct-checkout-pro/) - Added Per Product Setings and Additional Button. 
+The checkout options allow you to easily remove the unnecessary fields to reduce the user spend completing those fields. Also WooCommerce Direct Checkot allows you to remove other unnecessary things in the checkout process like the order comments, shipping address, coupon form, policy text, and terms and conditions.
 
-= In addition to these features, over 20 WooCommerce extensions are available: =
-* [Facebook Share Like Button](http://terrytsang.com/shop/shop/woocommerce-facebook-share-like-button/) - add Facebook Share and Like button at product page.
-* [Custom Checkout Options](http://terrytsang.com/shop/shop/woocommerce-custom-checkout-options/) - implement customization for entire checkout process.
-* [Social Buttons PRO](http://terrytsang.com/shop/shop/woocommerce-social-buttons-pro/) - additional 9 social share buttons where you can engage more audience.
-* [Extra Fee Option PRO](http://terrytsang.com/shop/shop/woocommerce-extra-fee-option-pro/) - add multiple extra fee for any order with multiple options.
-* [Custom Product Tabs](http://terrytsang.com/shop/shop/woocommerce-custom-product-tabs/) - add multiple tabs to WooCommerce product page.
-* [Facebook Social Plugins](http://terrytsang.com/shop/shop/woocommerce-facebook-social-plugins/) - implement Facebook Social Plugins that let the users liked, commented or shared your site's contents.
-* [Custom Payment Method](http://terrytsang.com/shop/shop/woocommerce-custom-payment-method/) - customise the custom payment method with flexible options.
-* [Custom Shipping Method](http://terrytsang.com/shop/shop/woocommerce-custom-shipping-method/) - define own settings for custom shipping method.
-* [Donation/Tip Checkout](http://terrytsang.com/shop/shop/woocommerce-donation-tip-checkout/) - add donation/tip amount option for their customers at WooCommerce checkout page.
-* [Product Badge](http://terrytsang.com/shop/shop/woocommerce-product-badge/) - add mulitple badges to the products.
-* [Facebook Connect Checkout](http://terrytsang.com/shop/shop/woocommerce-facebook-login-checkout/) - implement Facebook Login so that new customers can sign in woocommerce site by using their Facebook account.
-* [Product Catalog](http://terrytsang.com/shop/shop/woocommerce-product-catalog/) - turn WooCommerce into a product catalog with a few clicks.
-* [Coming Soon Product](http://terrytsang.com/shop/shop/woocommerce-coming-soon-product/) - show 'Coming Soon' default message and countdown clock for pre launch product
+== One page checkout ==
 
-and many more...
+In the premium version of WooCommerce Direct Checkot, we've included an incredible feature that includes a cart form in the checkout. This allows your users to edit the cart items directly in the checkout page, avoiding the need to force them to edit the order in the cart page.
 
-= Free & Popular WooCommerce Bundle extensions: =
-* [WooCommerce Free Extensions Bundle](http://terrytsang.com/shop/shop/woocommerce-free-extensions-bundle/) - 5 free plugins in 1 download
-* [WooCommerce Popular Extensions Bundle](http://terrytsang.com/shop/shop/woocommerce-popular-extensions-bundle/) - 5 unlimited licenses premium plugins with only $99
+== Quick purchase button ==
 
-== Installation ==
+The premium version of WooCommerce Direct Checkot allows to include a quick purchase button in the single products page that redirects your users directly to the checkout page, avoiding the need to force them to add the products in the cart.
 
-1. Upload the entire *woocommerce-direct-checkout* folder to the */wp-content/plugins/* directory
-2. Activate the plugin through the 'Plugins' menu in WordPress
-3. Go to WooCommerce Settings panel at left sidebar menu and update the options at Tab *Direct Checkout* there.
-4. That's it. You're ready to go and cheers!
+== Improvements ==
 
-== Screenshots ==
-
-1. [screenhot-1.png] Screenshot Admin WooCommerce Settings - Direct Checkout options
-2. [screenhot-2.png] Screenshot Frontend WooCommerce - Catalog page
-3. [screenhot-3.png] Screenshot Frontend WooCommerce - Product page
+1. Use less bandwidth
+2. Reduce server load
+3. Speed user experience
+4. Increase your sales!
 
 == Changelog ==
 
-= 1.1.1 =
-
-* Updated deprecated function from 'add_to_cart_redirect' to 'woocommerce_add_to_cart_redirect'
-
-= 1.1.0 =
-
-* Updated continue shopping button css
-* Updated pro version additional features
-
-= 1.0.10 =
-
-* Removed WooCommerce installation checking
-
-= 1.0.9 =
-
-* Fixed narrow form layout bugs
- 
-= 1.0.8 =
-
-* Add Continue Shopping button at product page
-* Fixed missing variable warning
-
-= 1.0.7 =
-
-* Updated PRO version download link
-
-= 1.0.6 =
-
-* Added 'Exclude external product' checkbox for Custom Add to Cart Text option
-
-= 1.0.5 =
-
-* Updated "Add to cart" filter with WooCommere v2.1.x
-* Fixed table width problem for option settings page
-
-= 1.0.4 =
-
-* Added pro version link 
-
-= 1.0.3 =
-
-* Updated reademe file for instruction and notes
-
-
-= 1.0.2 =
-
-* Update 'Redirect to Page' option
-* Updated table style for Firefox display bugs
-
-= 1.0.1 =
-
-* Add 'Redirect to Page' option, let user choose redirecting to any page after add to cart pressed
-* Updated wrong hyperlink
-
-= 1.0.0 =
-
-* Initial Release
-* Customize add to cart text and change add to cart function directly to checkout page
-
+= 2.0.0 =
+* initial release of the woocommerce direct checkout by quadlayers

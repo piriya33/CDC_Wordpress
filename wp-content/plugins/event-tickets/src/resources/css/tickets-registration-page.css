@@ -344,6 +344,11 @@ body.tribe-theme-twentyseventeen .tribe-block__tickets__registration__back__to__
  * Attendee Registration Checkout Form
  */
 
+.tribe-block__tickets__registration__checkout {
+	 margin-bottom: 30px;
+	 text-align: right;
+ }
+
 .tribe-block__tickets__registration__checkout__submit:disabled {
 		background-color: #eeeff1;
 		color: #8b959f;

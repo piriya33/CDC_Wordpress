@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: My Custom Functions\n"
-"POT-Creation-Date: 2019-03-01 06:43+0300\n"
-"PO-Revision-Date: 2019-03-01 06:43+0300\n"
+"POT-Creation-Date: 2019-03-31 16:12+0300\n"
+"PO-Revision-Date: 2019-03-31 16:12+0300\n"
 "Last-Translator: Arthur Gareginyan\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -20,114 +20,114 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 
-#: inc/php/core.php:23
+#: inc/php/core.php:32
 msgid "Settings"
 msgstr "Ajustes"
 
-#: inc/php/core.php:33 inc/php/core.php:48
+#: inc/php/core.php:40 inc/php/core.php:65
 msgid "Upgrade to PRO"
 msgstr "Actualiza a PRO"
 
-#: inc/php/core.php:47
+#: inc/php/core.php:61
 msgid "Donate"
 msgstr "Donar"
 
-#: inc/php/core.php:63
+#: inc/php/core.php:90
 msgid "PHP Inserter"
 msgstr "PHP Inserter"
 
-#: inc/php/messages.php:27 inc/php/tabs/support.php:25
+#: inc/php/messages.php:33 inc/php/tabs/support.php:25
 msgid "Hello!"
 msgstr "¡Hola!"
 
-#: inc/php/messages.php:28
+#: inc/php/messages.php:34
 msgid "We are the team of Space X-Chimp."
 msgstr "Somos el equipo de Space X-Chimp."
 
-#: inc/php/messages.php:33
+#: inc/php/messages.php:39
 #, php-format
 msgid "Thank you for installing our plugin! We hope you will love it! %s"
 msgstr "Gracias por instalar este complemento! Espero que te encante! %s"
 
-#: inc/php/messages.php:74
+#: inc/php/messages.php:90
 msgid "You have installed an old version of this plugin."
 msgstr "Has instalado una versión antigua de este complemento."
 
-#: inc/php/messages.php:75
+#: inc/php/messages.php:91
 msgid "Please update the plugin to the latest version, and all will be fine."
 msgstr "Actualiza el complemento a la versión más reciente y todo estará bien."
 
-#: inc/php/messages.php:99
-msgid "Custom code updated successfully."
+#: inc/php/messages.php:126
+msgid "Custom code saved successfully."
 msgstr ""
 
-#: inc/php/messages.php:119
+#: inc/php/messages.php:146
 msgid "Sorry, but your code causes a \"Fatal error\", so it is not applied!"
 msgstr ""
 
-#: inc/php/messages.php:120
+#: inc/php/messages.php:147
 msgid "Please, check the code and try again."
 msgstr ""
 
-#: inc/php/page.php:35
+#: inc/php/page.php:30
 #, php-format
 msgid "by %s Space X-Chimp %s"
 msgstr "por %s Space X-Chimp %s"
 
-#: inc/php/page.php:41
+#: inc/php/page.php:36
 msgid "Version"
 msgstr "Versión"
 
-#: inc/php/page.php:48
+#: inc/php/page.php:43
 msgid "Main"
 msgstr "Principal"
 
-#: inc/php/page.php:49
+#: inc/php/page.php:44
 msgid "Usage"
 msgstr "Uso"
 
-#: inc/php/page.php:50
+#: inc/php/page.php:45
 msgid "F.A.Q."
 msgstr "Preguntas ?"
 
-#: inc/php/page.php:51 inc/php/sidebar.php:47 inc/php/tabs/settings.php:54
+#: inc/php/page.php:46 inc/php/sidebar.php:56 inc/php/tabs/settings.php:57
 msgid "Support"
 msgstr "Soporte"
 
-#: inc/php/page.php:52
+#: inc/php/page.php:47
 msgid "Store"
 msgstr "Tienda"
 
-#: inc/php/sidebar.php:16
+#: inc/php/sidebar.php:17
 msgid "We are «Space X-Chimp»"
 msgstr ""
 
-#: inc/php/sidebar.php:33
+#: inc/php/sidebar.php:38
 msgid "About"
 msgstr "Acerca de"
 
-#: inc/php/sidebar.php:35
+#: inc/php/sidebar.php:40
 msgid "This plugin gives you the ability to easily and safely add your custom PHP code to your WordPress website, directly out of the WordPress Admin Area, without the need to have an external editor."
 msgstr "Este complemento le brinda la posibilidad de agregar de forma fácil y segura sus código PHP personalizado a su sitio web de WordPress, directamente fuera del área de administración de WordPress, sin la necesidad de tener un editor externo."
 
-#: inc/php/sidebar.php:40
+#: inc/php/sidebar.php:47
 msgid "Help"
 msgstr "Ayuda"
 
-#: inc/php/sidebar.php:42
+#: inc/php/sidebar.php:49
 msgid "If you have a question, please read the information in the FAQ section."
 msgstr "Si tiene alguna pregunta, lee la información en la sección de preguntas frecuentes."
 
-#: inc/php/sidebar.php:49 inc/php/tabs/settings.php:56
+#: inc/php/sidebar.php:58 inc/php/tabs/settings.php:59
 msgid "Every little contribution helps to cover our costs and allows us to spend more time creating things for awesome people like you to enjoy."
 msgstr "Soy un desarrollador independiente, sin un ingreso regular, por lo que cada pequeña contribución ayuda a cubrir mis costos y me deja pasar más tiempo construyendo cosas para que personas como tú las disfruten."
 
-#: inc/php/sidebar.php:54 inc/php/tabs/settings.php:61
+#: inc/php/sidebar.php:63 inc/php/tabs/settings.php:64
 #: inc/php/tabs/support.php:21
 msgid "Donate with PayPal"
 msgstr "Donar con PayPal"
 
-#: inc/php/sidebar.php:56 inc/php/tabs/settings.php:63
+#: inc/php/sidebar.php:65 inc/php/tabs/settings.php:66
 msgid "Thanks for your support!"
 msgstr "¡Gracias por tu apoyo!"
 
@@ -235,7 +235,7 @@ msgstr ""
 
 #: inc/php/tabs/faq.php:101
 msgid "It is also possible that not all existing translations are up-to-date or correct, so you are welcome to make corrections."
-msgstr "Quizás no todas las traducciones existentes estén actualizadas. Le invitamos a contribuir correcciones!"
+msgstr "Quizás no todas las traducciones existentes estén actualizadas. Le invitamos a contribuir correcciones."
 
 #: inc/php/tabs/faq.php:102
 msgid "Many of plugin users would be delighted if you share your translation with the community."
@@ -666,7 +666,7 @@ msgstr ""
 msgid "Enter your PHP functions here"
 msgstr ""
 
-#: inc/php/tabs/settings.php:51
+#: inc/php/tabs/settings.php:52
 msgid "Save changes"
 msgstr "Guardar cambios"
 
