@@ -203,6 +203,7 @@ class Tribe__Tickets__Editor__REST__V1__Endpoints__Single_ticket
 	 * Add ticket callback executed to update / add a new ticket.
 	 *
 	 * @since 4.9
+	 * @since 4.10.9 Use customizable ticket name functions.
 	 *
 	 * @param WP_REST_Request $request
 	 * @param $nonce_action
@@ -256,6 +257,7 @@ class Tribe__Tickets__Editor__REST__V1__Endpoints__Single_ticket
 			'ticket_end_date' => $body['end_date'],
 			'ticket_end_time' => $body['end_time'],
 			'ticket_sku' => $body['sku'],
+			'ticket_menu_order' => $body['menu_order'],
 			'tribe-ticket' => $body['ticket'],
 		);
 
@@ -269,7 +271,7 @@ class Tribe__Tickets__Editor__REST__V1__Endpoints__Single_ticket
 		if ( ! $ticket ) {
 			return new WP_Error(
 				'not_acceptable',
-				__( 'Ticket was not able to be updated', 'event-tickets' ),
+				esc_html( sprintf( __( '%s was not able to be updated', 'event-tickets' ), tribe_get_ticket_label_singular( 'rest_add_ticket_error' ) ) ),
 				array( 'status' => 406 )
 			);
 		}

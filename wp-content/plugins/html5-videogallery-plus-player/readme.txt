@@ -2,7 +2,7 @@
 Contributors: wponlinesupport, anoopranawat, pratik-jain
 Tags: wponlinesupport, HTML5, video.js,  HTML5 video, youtube video gallery, vimeo video gallery, youtube video gallery with popup,  Youtube-video, youtube embed, youtube gallery, youtube player, magnific Popup, vimeo video gallery gallery, HTML5 video player, HTML5 video gallery, wordpress HTML5 video, wordpress HTML5 video player, wordpress HTML5 video gallery, responsive, wordpress responsive video gallery  
 Requires at least: 4.0
-Tested up to: 5.1
+Tested up to: 5.2.3
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -13,11 +13,12 @@ Easy to add and display your HTML5, YouTube, Vimeo vedio gallery with Magnific P
 
 This plugin add a responsive HTML5, YouTube, Vimeo vedio gallery with Magnific Popup to your  WordPress website. Display video gallery in grid view(1,2,3,4) etc. You can also use category id to create multiple vedio galleries.
 
-View [DEMO](https://www.wponlinesupport.com/wp-plugin/video-gallery-player/) | [PRO DEMO and Features](https://www.wponlinesupport.com/wp-plugin/video-gallery-player/) for additional information.
+Check [FREE DEMO](https://demo.wponlinesupport.com/video-gallery-and-player-demo/) 
+Check [PRO DEMO and Features](https://demo.wponlinesupport.com/prodemo/video-gallery-and-player-pro-demo/) for additional information.
 
 The plugin adds a Video gallery tab to your admin menu, which allows you to enter Video Title and Video source items just as you would regular posts.
 
-Also work with Gutenberg shortcode block.
+**Also work with Gutenberg shortcode block.**
 
 = Gallery Options: = 
 * Create a YouTube gallery page.
@@ -74,6 +75,7 @@ directly to your template file.
 > * [video_gallery] – Grid Shortcode
 > * [video_gallery_slider] – Slider Shortcode
 > * 20 Predefined designs.
+> * Gutenberg block support.
 > * Display videos in a grid view.
 > * Display video with title and description.
 > * Display video in slider view.
@@ -116,6 +118,9 @@ OR
 7. Also work with Gutenberg shortcode block.
 
 == Changelog ==
+
+= 2.3.3 (14, Sep  2019) =
+* [*] Tested with latest version of WordPress.
 
 = 2.3.2 (13, Feb 2019) =
 * [*] Minor change in Opt-in flow.

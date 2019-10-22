@@ -2,18 +2,18 @@
 # This file is distributed under the same license as the CF7 Google Sheet Connector package.
 msgid ""
 msgstr ""
-"Project-Id-Version: CF7 Google Sheet Connector 2.8\n"
+"Project-Id-Version: CF7 Google Sheet Connector 3.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/cf7-google-sheets-"
 "connector\n"
-"POT-Creation-Date: 2019-02-01 18:11+0530\n"
-"PO-Revision-Date: 2019-02-01 18:11+0530\n"
+"POT-Creation-Date: 2019-09-20 18:27+0530\n"
+"PO-Revision-Date: 2019-09-20 18:27+0530\n"
 "Last-Translator: \n"
 "Language-Team: Westerndeal\n"
 "Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.2\n"
+"X-Generator: Poedit 2.2.3\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-KeywordsList: __;_e;esc_html\n"
 "X-Poedit-Basepath: ..\n"
@@ -25,129 +25,129 @@ msgid ""
 "and activated."
 msgstr ""
 
-#: google-sheet-connector.php:180 google-sheet-connector.php:204
-#: includes/class-gs-service.php:81
+#: google-sheet-connector.php:181 google-sheet-connector.php:206
+#: includes/class-gs-service.php:82
 msgid "Google Sheets"
 msgstr ""
 
-#: google-sheet-connector.php:201
+#: google-sheet-connector.php:203
 msgid "Contact Form 7 - Google Sheet Integration"
 msgstr ""
 
-#: google-sheet-connector.php:207
+#: google-sheet-connector.php:209
 msgid ""
 "Click \"Get code\" to retrieve your code from Google Drive to allow us to "
 "access your spreadsheets. And paste the code in the below textbox. "
 msgstr ""
 
-#: google-sheet-connector.php:209
+#: google-sheet-connector.php:211
 msgid "Google Access Code"
 msgstr ""
 
-#: google-sheet-connector.php:212
+#: google-sheet-connector.php:214
 msgid "Currently Active"
 msgstr ""
 
-#: google-sheet-connector.php:220
+#: google-sheet-connector.php:222
 msgid "Save"
 msgstr ""
 
-#: google-sheet-connector.php:226
+#: google-sheet-connector.php:228
 msgid "Debug Log"
 msgstr ""
 
-#: google-sheet-connector.php:240
+#: google-sheet-connector.php:242
 msgid ""
 "Did Contact Form 7 - Google Sheet Connector help you out ? Please leave a 5-"
 "star review. Thank you!"
 msgstr ""
 
-#: google-sheet-connector.php:244
+#: google-sheet-connector.php:246
 msgid "Need a helping hand ?"
 msgstr ""
 
-#: google-sheet-connector.php:245
+#: google-sheet-connector.php:247
 msgid "Please ask for help on "
 msgstr ""
 
-#: google-sheet-connector.php:245
+#: google-sheet-connector.php:247
 msgid "Support Forum"
 msgstr ""
 
-#: google-sheet-connector.php:245
+#: google-sheet-connector.php:247
 msgid " and "
 msgstr ""
 
-#: google-sheet-connector.php:245
+#: google-sheet-connector.php:247
 msgid "Email. "
 msgstr ""
 
-#: google-sheet-connector.php:245
+#: google-sheet-connector.php:247
 msgid ""
 "Do provide us detailed information about the issue along with wordpress "
 "version. "
 msgstr ""
 
-#: google-sheet-connector.php:326
+#: google-sheet-connector.php:328
 msgid "Settings"
 msgstr ""
 
-#: google-sheet-connector.php:331
+#: google-sheet-connector.php:333
 msgid "Google Sheet Connector"
 msgstr ""
 
-#: includes/class-gs-service.php:194
+#: includes/class-gs-service.php:195
 msgid "Google Sheet Settings"
 msgstr ""
 
-#: includes/class-gs-service.php:194
+#: includes/class-gs-service.php:195
 msgid ""
 "( Fetch your sheets automatically using <a href=\"https://www."
 "gsheetconnector.com/cf7-google-sheet-connector-pro\" target=\"__blank\">PRO "
 "version</a> )"
 msgstr ""
 
-#: includes/class-gs-service.php:196
+#: includes/class-gs-service.php:197
 msgid "Google Sheet Name"
 msgstr ""
 
-#: includes/class-gs-service.php:199
+#: includes/class-gs-service.php:200
 msgid "Where do i get Google Sheet Name ?"
 msgstr ""
 
-#: includes/class-gs-service.php:199
+#: includes/class-gs-service.php:200
 msgid ""
 "Go to your google account and click on\"Google apps\" icon and than click "
 "\"Sheets\". Select the name of the appropriate sheet you want to link your "
 "contact form or create new sheet."
 msgstr ""
 
-#: includes/class-gs-service.php:202
+#: includes/class-gs-service.php:203
 msgid "Google Sheet Tab Name"
 msgstr ""
 
-#: includes/class-gs-service.php:205
+#: includes/class-gs-service.php:206
 msgid "Where do i get Google Sheet Tab Name ?"
 msgstr ""
 
-#: includes/class-gs-service.php:205
+#: includes/class-gs-service.php:206
 msgid ""
 "Open your Google Sheet with which you want to link your contact form . You "
 "will notice a tab names at bottom of the screen. Copy the tab name where you "
 "want to have an entry of contact form."
 msgstr ""
 
-#: includes/class-gs-service.php:286
+#: includes/class-gs-service.php:289
 msgid "No mail tags available."
 msgstr ""
 
-#: includes/class-gs-service.php:325
+#: includes/class-gs-service.php:328
 msgid ""
 "Map special mail tags with custom header name and save automatically to "
 "google sheet. "
 msgstr ""
 
-#: includes/class-gs-service.php:392
+#: includes/class-gs-service.php:395
 msgid "No custom mail tags available."
 msgstr ""
 
@@ -186,6 +186,16 @@ msgstr ""
 
 #: includes/pages/gs-custom-mail-tags.php:4
 msgid "Custom Mail Tags "
+msgstr ""
+
+#: includes/pages/gs-custom-ordering.php:4
+msgid "Custom Ordering - "
+msgstr ""
+
+#: includes/pages/gs-custom-ordering.php:8
+msgid ""
+"Not showing correct header name ? Un-select and select the fields checkbox "
+"again. It happens due to various reasons like change in field/mail tag name."
 msgstr ""
 
 #: includes/pages/gs-demo-details.php:4

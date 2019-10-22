@@ -45,7 +45,7 @@ describe( 'Details reducer', () => {
 	it( 'should set the currency position', () => {
 		expect( reducer(
 			DEFAULT_STATE,
-			actions.setTicketCurrencyPosition( 'block-id', 'suffix' ),
+			actions.setTicketCurrencyPosition( 'block-id', 'postfix' ),
 		) ).toMatchSnapshot();
 	} );
 
@@ -67,6 +67,13 @@ describe( 'Details reducer', () => {
 		expect( reducer(
 			DEFAULT_STATE,
 			actions.setTicketIsLoading( 'block-id', true ),
+		) ).toMatchSnapshot();
+	} );
+
+	it( 'should set the is modal open', () => {
+		expect( reducer(
+			DEFAULT_STATE,
+			actions.setTicketIsModalOpen( 'block-id', true ),
 		) ).toMatchSnapshot();
 	} );
 

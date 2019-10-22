@@ -101,7 +101,7 @@
 				'letter-spacing':     css.letterSpacing + css.letterSpacingUnit,
 				'line-height':        css.lineHeight + 'px',
 				'font-style':         ( ( 'italic' === css.fontStyle ) ? 'italic' : 'normal' ),
-				'font-weight':        ( ( 'bold' === css.fontWeight ) ? 700 : 400 ),
+				'font-weight':        css.fontWeight,
 				'margin-top':         css.marginTop + css.marginTopUnit,
 				'margin-bottom':      css.marginBottom + css.marginBottomUnit,
 				'margin-left':        css.marginLeft + css.marginLeftUnit,
@@ -133,11 +133,7 @@
 
 						// Set the correct weight for this variant.
 						if ( ! _.isNaN( variantWeight ) ) {
-							if ( 'bold' === css.fontWeight && 700 < variantWeight ) {
-								newStyle['font-weight'] = variantWeight;
-							} else if ( 700 > variantWeight ) {
-								newStyle['font-weight'] = variantWeight;
-							}
+							newStyle['font-weight'] = variantWeight;
 						}
 					}
 

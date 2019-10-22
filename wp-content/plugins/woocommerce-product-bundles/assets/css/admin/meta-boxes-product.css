@@ -46,12 +46,9 @@ table.wp-list-table span.product-type.bundle {
 
 #bundled_product_data .hr-section {
   display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-flex-basis: 100%;
-          flex-basis: 100%;
+  flex-basis: 100%;
   -webkit-box-align: center;
-  -webkit-align-items: center;
           align-items: center;
   font-size: 10.5px;
   letter-spacing: 1px;
@@ -64,7 +61,6 @@ table.wp-list-table span.product-type.bundle {
 #bundled_product_data .hr-section::before, #bundled_product_data .hr-section::after {
   content: "";
   -webkit-box-flex: 1;
-  -webkit-flex-grow: 1;
           flex-grow: 1;
   background: #eee;
   height: 1px;
@@ -133,34 +129,26 @@ table.wp-list-table span.product-type.bundle {
 }
 
 #bundled_product_data .wc-metabox h3 .bundled-item-status {
-  display: inline;
-  margin-left: 10px;
-  position: relative;
-  top: 1.5px;
-  cursor: help;
+  margin-left: 5px;
 }
 
 #bundled_product_data .wc-metabox h3 .bundled-item-status:after {
-  content: '';
-  display: inline-block;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  border: 3px solid #eee;
-  background-color: white;
+  content: '\f348';
+  -webkit-transform: rotate(180deg);
+      -ms-transform: rotate(180deg);
+          transform: rotate(180deg);
 }
 
-#bundled_product_data .wc-metabox h3 .bundled-item-status--insufficient_stock:after,
-#bundled_product_data .wc-metabox h3 .bundled-item-status--out_of_stock:after {
-  border-color: #a00;
+#bundled_product_data .wc-metabox h3 .bundled-item-status--insufficient_stock:after, #bundled_product_data .wc-metabox h3 .bundled-item-status--out_of_stock:after {
+  color: #a00;
 }
 
 #bundled_product_data .wc-metabox h3 .bundled-item-status--on_backorder:after {
-  border-color: #2ea2cc;
+  color: #2ea2cc;
 }
 
 #bundled_product_data .wc-metabox h3 .bundled-item-status--low_stock:after {
-  border-color: #ffba00;
+  color: #ffba00;
 }
 
 #bundled_product_data .wc-metabox h3 .handle {
@@ -177,6 +165,7 @@ table.wp-list-table span.product-type.bundle {
   line-height: 27px;
   visibility: hidden;
 }
+
 @media (max-width: 782px) {
   #bundled_product_data .wc-metabox h3 .handle .handle-item {
     visibility: visible;
@@ -243,6 +232,7 @@ table.wp-list-table span.product-type.bundle {
   visibility: hidden;
   line-height: 28px;
 }
+
 @media (max-width: 980px) {
   #bundled_product_data .wc-metabox h3 .item-sku {
     display: none;
@@ -294,16 +284,13 @@ span.wc-bundled-items-title {
 #bundled_product_data .add_bundled_product {
   padding: 1em 1em;
   display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
   -webkit-box-align: center;
-  -webkit-align-items: center;
           align-items: center;
 }
 
 #bundled_product_data .wc-bundle-metaboxes-wrapper--boarding .add_bundled_product {
   -webkit-box-pack: center;
-  -webkit-justify-content: center;
           justify-content: center;
   text-align: center;
   padding: 0 0 40px;
@@ -596,6 +583,7 @@ span.wc-bundled-items-title {
   -webkit-transition: width 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55) 0.2s;
   transition: width 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55) 0.2s;
 }
+
 @media (max-width: 980px) {
   #bundled_product_data .sw-expanding-button--open {
     width: 100%;
@@ -621,19 +609,24 @@ span.wc-bundled-items-title {
   text-align: center;
   overflow: hidden;
   display: none;
+  line-height: 1.4em;
 }
+
 .wc-bundled-items__boarding__message {
   padding-top: 120px;
   margin: 20px 0 0;
   position: relative;
 }
+
 .wc-bundled-items__boarding__message h3 {
   margin: 0;
   color: #3c3c3c;
 }
+
 .wc-bundled-items__boarding__message p {
   color: #aaaaaa;
 }
+
 .wc-bundled-items__boarding__message:before {
   font-family: FontAwesomePB;
   content: '\e800';

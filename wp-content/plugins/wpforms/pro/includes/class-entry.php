@@ -289,6 +289,7 @@ class WPForms_Entry_Handler extends WPForms_DB {
 			'offset'        => 0,
 			'form_id'       => 0,
 			'entry_id'      => 0,
+			'is_filtered'   => false,
 			'post_id'       => '',
 			'user_id'       => '',
 			'status'        => '',
@@ -308,6 +309,8 @@ class WPForms_Entry_Handler extends WPForms_DB {
 			wp_parse_args( $args, $defaults )
 		);
 
+		$fields_table = wpforms()->entry_fields->table_name;
+
 		/*
 		 * Modify the SELECT.
 		 */
@@ -317,7 +320,7 @@ class WPForms_Entry_Handler extends WPForms_DB {
 			'wpforms_entry_handler_get_entries_select',
 			array(
 				'all'       => '*',
-				'entry_ids' => '`entry_id`',
+				'entry_ids' => "{$this->table_name}.entry_id",
 			)
 		);
 		if ( array_key_exists( $args['select'], $possible_select_values ) ) {
@@ -336,12 +339,10 @@ class WPForms_Entry_Handler extends WPForms_DB {
 		);
 
 		// Allowed int arg items.
-		$keys = array( 'entry_id', 'form_id', 'post_id', 'user_id', 'viewed', 'starred' );
-		foreach ( $keys as $key ) {
+		foreach ( array( 'entry_id', 'form_id', 'post_id', 'user_id', 'viewed', 'starred' ) as $key ) {
 			// Value `$args[ $key ]` can be a natural number and a numeric string.
 			// We should skip empty string values, but continue working with '0'.
-			// For sad reason using `==` makes various parts of the code work.
-			if ( '' == $args[ $key ] ) {
+			if ( ! is_array( $args[ $key ] ) && ( ! is_numeric( $args[ $key ] ) || 0 === $args[ $key ] ) ) {
 				continue;
 			}
 
@@ -351,21 +352,59 @@ class WPForms_Entry_Handler extends WPForms_DB {
 				$ids = (int) $args[ $key ];
 			}
 
-			$where[ 'arg_' . $key ] = "`{$key}` IN ( {$ids} )";
+			$where[ 'arg_' . $key ] = "{$this->table_name}.{$key} IN ( {$ids} )";
 		}
 
 		// Allowed string arg items.
-		$keys = array( 'status', 'type', 'user_uuid' );
-		foreach ( $keys as $key ) {
+		foreach ( array( 'status', 'type', 'user_uuid' ) as $key ) {
 
 			if ( '' !== $args[ $key ] ) {
-				$where[ 'arg_' . $key ] = "`{$key}` = '" . esc_sql( $args[ $key ] ) . "'";
+				$where[ 'arg_' . $key ] = "{$this->table_name}.{$key} = '" . esc_sql( $args[ $key ] ) . "'";
 			}
 		}
 
+		// Processing value and value_compare.
+		if ( ! empty( $args['value'] ) && ! empty( $args['value_compare'] ) ) {
+			switch ( $args['value_compare'] ) {
+				case '': // Preserving backward compatibility.
+				case 'is':
+					$where['arg_value'] = "{$fields_table}.value = '" . esc_sql( $args['value'] ) . "'";
+					break;
+
+				case 'is_not':
+					$where['arg_value'] = "{$fields_table}.value <> '" . esc_sql( $args['value'] ) . "'";
+					break;
+
+				case 'contains':
+					$where['arg_value'] = "{$fields_table}.value LIKE '%" . esc_sql( $args['value'] ) . "%'";
+					break;
+
+				case 'contains_not':
+					$where['arg_value'] = "{$fields_table}.value NOT LIKE '%" . esc_sql( $args['value'] ) . "%'";
+					break;
+			}
+		}
+
+		if ( empty( $args['value'] ) && ! empty( $args['value_compare'] ) ) {
+			// Empty value should be allowed in case certain comparisons are used.
+			switch ( $args['value_compare'] ) {
+				case 'is':
+					$where['arg_value'] = "{$fields_table}.value = ''";
+					break;
+
+				case 'is_not':
+					$where['arg_value'] = "{$fields_table}.value <> ''";
+					break;
+			}
+		}
+
+		if ( isset( $args['field_id'] ) && is_numeric( $args['field_id'] ) ) {
+			$args['field_id']      = (int) $args['field_id'];
+			$where['arg_field_id'] = "{$fields_table}.field_id = '{$args['field_id']}'";
+		}
+
 		// Process dates.
-		$keys = array( 'date', 'date_modified' );
-		foreach ( $keys as $key ) {
+		foreach ( array( 'date', 'date_modified' ) as $key ) {
 			if ( empty( $args[ $key ] ) ) {
 				continue;
 			}
@@ -376,8 +415,8 @@ class WPForms_Entry_Handler extends WPForms_DB {
 				$date_end   = wpforms_get_day_period_date( 'end_of_day', strtotime( $args[ $key ][1] ) );
 
 				if ( ! empty( $date_start ) && ! empty( $date_end ) ) {
-					$where[ 'arg_' . $key . '_start' ] = "`{$key}` >= '{$date_start}'";
-					$where[ 'arg_' . $key . '_end' ]   = "`{$key}` <= '{$date_end}'";
+					$where[ 'arg_' . $key . '_start' ] = "{$this->table_name}.{$key} >= '{$date_start}'";
+					$where[ 'arg_' . $key . '_end' ]   = "{$this->table_name}.{$key} <= '{$date_end}'";
 				}
 			} elseif ( is_string( $args[ $key ] ) ) {
 				/*
@@ -390,10 +429,15 @@ class WPForms_Entry_Handler extends WPForms_DB {
 				$date_end   = wpforms_get_day_period_date( 'end_of_day', $timestamp );
 
 				if ( ! empty( $date_start ) && ! empty( $date_end ) ) {
-					$where[ 'arg_' . $key . '_start' ] = "`{$key}` >= '{$date_start}'";
-					$where[ 'arg_' . $key . '_end' ]   = "`{$key}` <= '{$date_end}'";
+					$where[ 'arg_' . $key . '_start' ] = "{$this->table_name}.{$key} >= '{$date_start}'";
+					$where[ 'arg_' . $key . '_end' ]   = "{$this->table_name}.{$key} <= '{$date_end}'";
 				}
 			}
+		}
+
+		// Remove filtering by id if it is not a filtered query.
+		if ( ! $args['is_filtered'] ) {
+			unset( $where['arg_entry_id'] );
 		}
 
 		// Give developers an ability to modify WHERE (unset clauses, add new, etc).
@@ -403,7 +447,8 @@ class WPForms_Entry_Handler extends WPForms_DB {
 		/*
 		 * Modify the ORDER BY.
 		 */
-		$args['orderby'] = ! array_key_exists( $args['orderby'], $this->get_columns() ) ? $this->primary_key : $args['orderby'];
+		$args['orderby']  = "{$this->table_name}.";
+		$args['orderby'] .= ! array_key_exists( $args['orderby'], $this->get_columns() ) ? $this->primary_key : $args['orderby'];
 
 		if ( 'ASC' === strtoupper( $args['order'] ) ) {
 			$args['order'] = 'ASC';
@@ -424,30 +469,29 @@ class WPForms_Entry_Handler extends WPForms_DB {
 		 * Retrieve the results.
 		 */
 
-		if ( true === $count ) {
+		$sql_from = $this->table_name;
+		if ( ! empty( $args['value'] ) || ! empty( $args['value_compare'] ) ) {
+			$sql_from .= " JOIN {$fields_table} ON {$this->table_name}.entry_id={$fields_table}.entry_id";
+		}
 
+		if ( true === $count ) {
 			// @codingStandardsIgnoreStart
-			$results = absint( $wpdb->get_var(
-				"SELECT COUNT({$this->primary_key})
-				FROM {$this->table_name}
+			return absint( $wpdb->get_var(
+				"SELECT COUNT({$this->table_name}.{$this->primary_key}) 
+				FROM {$sql_from}
 				WHERE {$where_sql};"
 			) );
 			// @codingStandardsIgnoreEnd
-
-		} else {
-
-			// @codingStandardsIgnoreStart
-			$results = $wpdb->get_results(
-				"SELECT {$select}
-				FROM {$this->table_name}
-				WHERE {$where_sql}
-				ORDER BY {$args['orderby']} {$args['order']}
-				LIMIT {$args['offset']}, {$args['number']};"
-			);
-			// @codingStandardsIgnoreEnd
 		}
 
-		return $results;
+		$sql = "SELECT {$select} 
+			FROM {$sql_from}";
+
+		$sql .= " WHERE {$where_sql} 
+			ORDER BY {$args['orderby']} {$args['order']} 
+			LIMIT {$args['offset']}, {$args['number']};";
+
+		return $wpdb->get_results( $sql ); // phpcs:ignore
 	}
 
 	/**

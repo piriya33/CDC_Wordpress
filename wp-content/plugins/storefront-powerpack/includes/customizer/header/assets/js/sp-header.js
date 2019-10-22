@@ -169,7 +169,7 @@
 				cellHeight: 40,
 				cell_width: 40,
 				acceptWidgets: '.grid-stack-item',
-				'float': false,
+				'float': true,
 				resizable: {
 					handles: 'e, w'
 				}

@@ -47,7 +47,6 @@ function wpfcas_featuredcslider_shortcode( $atts) {
 		$imagestyle = 'square';
 	}
 	
-	
 	if( $design ) { 
 		$designfc = $design; 
 	} else {
@@ -141,8 +140,7 @@ function wpfcas_featuredcslider_shortcode( $atts) {
     }
 
 	$query = new WP_Query($args);
-	
-	$post_count = $query->post_count; ?>
+?>
 	<div class="wpfcas-content-slider-<?php echo $unique; ?> featured-content-slider <?php echo $designfc; ?>">
 		 <?php while ($query->have_posts()) : $query->the_post();
 				$class = "";
@@ -161,15 +159,13 @@ function wpfcas_featuredcslider_shortcode( $atts) {
 				case "design-4":
 					include('designs/design-4.php');
 					break;
-				 default:		 
-
+				 default:
 						include('designs/design-1.php');
-
 					}
 
 		endwhile; ?>
 	</div>
-	<?php wp_reset_query(); ?>
+	<?php wp_reset_postdata(); ?>
 	<script type="text/javascript">
 		jQuery(document).ready(function(){
 		jQuery('.wpfcas-content-slider-<?php echo $unique; ?>').slick({
@@ -210,6 +206,7 @@ function wpfcas_featuredcslider_shortcode( $atts) {
 	});
 	</script>    
 <?php
-return ob_get_clean();
+	return ob_get_clean();
 }
-add_shortcode('featured-content-slider','wpfcas_featuredcslider_shortcode');
+
+add_shortcode('featured-content-slider', 'wpfcas_featuredcslider_shortcode');

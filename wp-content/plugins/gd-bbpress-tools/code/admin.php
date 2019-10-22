@@ -103,8 +103,7 @@ class gdbbT_Admin {
                 <a href="https://wordpress.org/plugins/gd-bbpress-tools/" target="_blank">'.__("Home Page on WordPress.org", "gd-bbpress-tools").'</a></p> 
                 <h5>'.__("Getting Plugin Support", "gd-bbpress-tools").'</h5>
                 <p><a href="https://support.dev4press.com/forums/forum/plugins-free/gd-bbpress-tools/" target="_blank">'.__("Support Forum on Dev4Press.com", "gd-bbpress-tools").'</a> | 
-                <a href="https://wordpress.org/support/plugin/gd-bbpress-tools" target="_blank">'.__("Support Forum on WordPress.org", "gd-bbpress-tools").'</a> | 
-                <a href="https://support.dev4press.com/forums/forum/plugins-free/gd-bbpress-tools/" target="_blank">'.__("Support Forum on Dev4Press", "gd-bbpress-tools").'</a></p>'));
+                <a href="https://wordpress.org/support/plugin/gd-bbpress-tools" target="_blank">'.__("Support Forum on WordPress.org", "gd-bbpress-tools").'</a></p>'));
 
         $screen->add_help_tab(array(
             "id" => "gdpt-screenhelp-website",

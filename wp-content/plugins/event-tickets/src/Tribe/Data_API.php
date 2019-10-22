@@ -2,7 +2,7 @@
 
 
 /**
- * Class to connect ticketing infomation requests with ticket provider
+ * Class to connect ticketing information requests with ticket provider
  *
  * Class Tribe__Tickets__Data_API
  */
@@ -67,8 +67,8 @@ class Tribe__Tickets__Data_API {
 
 		// only the rsvp order key is non numeric
 		if ( is_object( $post ) && ! empty( $post->ID ) ) {
-			$post = (int) $post->ID;
 			$cpt  = get_post_type( $post->ID );
+			$post = (int) $post->ID;
 		} elseif ( ! is_numeric( $post ) ) {
 			$post = esc_attr( $post );
 			$cpt  = $this->check_rsvp_order_key_exists( $post );
@@ -164,7 +164,7 @@ class Tribe__Tickets__Data_API {
 			'post_type'      => $ticket_cpt,
 			'meta_key'       => $order_id_key,
 			'meta_value'     => $post_id,
-			'posts_per_page' => - 1,
+			'posts_per_page' => -1,
 		) );
 
 		foreach ( $order_tickets as $ticket ) {
@@ -181,7 +181,7 @@ class Tribe__Tickets__Data_API {
 
 
 	/**
-	 * Return Ticket Provider by Order, Product, Attendee, or Ticket ID
+	 * Return Ticket Provider by Order, Product, Attendee, or Ticket ID.
 	 *
 	 * @param $post_id
 	 *
@@ -195,7 +195,7 @@ class Tribe__Tickets__Data_API {
 			return false;
 		}
 
-		return call_user_func( array( $services['class'], 'get_instance' ) );
+		return call_user_func( [ $services['class'], 'get_instance' ] );
 	}
 
 	/**
@@ -395,7 +395,7 @@ class Tribe__Tickets__Data_API {
 	 */
 	protected function check_rsvp_order_key_exists( $order_key ) {
 
-		$attendees_query = $this->query_by_rsvp_order_key( $order_key );
+		$attendees_query = $this->query_by_rsvp_order_key( $order_key, 1 );
 		if ( ! $attendees_query->have_posts() ) {
 			return '';
 		}

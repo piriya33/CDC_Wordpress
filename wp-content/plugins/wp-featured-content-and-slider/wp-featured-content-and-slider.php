@@ -6,7 +6,7 @@
  * Domain Path: /languages/
  * Description: Easy to add and display what features your company, product or service offers, using our shortcode OR template code. Also work with Gutenberg shortcode block.
  * Author: WP OnlineSupport
- * Version: 1.3.2
+ * Version: 1.3.3
  * Author URI: https://www.wponlinesupport.com/
  *
  * @package WordPress
@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if( !defined( 'WPFCAS_VERSION' ) ) {
-	define( 'WPFCAS_VERSION', '1.3.2' ); // Version of plugin
+	define( 'WPFCAS_VERSION', '1.3.3' ); // Version of plugin
 }
 if( !defined( 'WPFCAS_DIR' ) ) {
 	define( 'WPFCAS_DIR', dirname( __FILE__ ) ); // Plugin dir

@@ -409,11 +409,17 @@ function wc_pb_template_bundled_item_product_details( $bundled_item, $bundle ) {
 
 			if ( ! $do_ajax && empty( $variations ) ) {
 
+				$is_out_of_stock = sizeof( $variations ) === 0 && false === $bundled_item->is_in_stock();
+
 				// Unavailable Product template.
 				wc_get_template( 'single-product/bundled-product-unavailable.php', array(
 					'bundled_item'        => $bundled_item,
 					'bundle'              => $bundle,
-					'custom_product_data' => apply_filters( 'woocommerce_bundled_product_custom_data', array(), $bundled_item )
+					'custom_product_data' => apply_filters( 'woocommerce_bundled_product_custom_data', array(
+						'is_unavailable'  => 'yes',
+						'is_out_of_stock' => $is_out_of_stock ? 'yes' : 'no',
+						'is_required'     => $bundled_item->get_quantity( 'min', array( 'check_optional' => true ) ) > 0 ? 'yes' : 'no'
+					), $bundled_item )
 				), false, WC_PB()->plugin_path() . '/templates/' );
 
 			} else {
@@ -445,7 +451,10 @@ function wc_pb_template_bundled_item_product_details( $bundled_item, $bundle ) {
 		wc_get_template( 'single-product/bundled-product-unavailable.php', array(
 			'bundled_item'        => $bundled_item,
 			'bundle'              => $bundle,
-			'custom_product_data' => apply_filters( 'woocommerce_bundled_product_custom_data', array(), $bundled_item )
+			'custom_product_data' => apply_filters( 'woocommerce_bundled_product_custom_data', array(
+				'is_unavailable'  => 'yes',
+				'is_required'     => $bundled_item->get_quantity( 'min', array( 'check_optional' => true ) ) > 0 ? 'yes' : 'no'
+			), $bundled_item )
 		), false, WC_PB()->plugin_path() . '/templates/' );
 	}
 }
@@ -487,7 +496,17 @@ function wc_pb_template_before_bundled_items( $bundle ) {
 
 	if ( 'tabular' === $layout ) {
 
-		?><table cellspacing="0" class="bundled_products">
+		/**
+		 * 'woocommerce_bundles_tabular_classes' filter.
+		 *
+		 * @since  5.10.1
+		 *
+		 * @param  array              $classes
+		 * @param  WC_Product_Bundle  $bundle
+		 */
+		$table_classes = apply_filters( 'woocommerce_bundles_tabular_classes', array( 'bundled_products' ), $bundle );
+
+		?><table cellspacing="0" class="<?php echo esc_attr( implode( ' ', $table_classes ) ); ?>">
 			<thead>
 				<th class="bundled_item_col bundled_item_images_head"></th>
 				<th class="bundled_item_col bundled_item_details_head"><?php _e( 'Product', 'woocommerce-product-bundles' ); ?></th>
@@ -542,33 +561,19 @@ function wc_pb_template_bundled_item_attributes( $product ) {
 					continue;
 				}
 
-				$bundled_product        = $bundled_item->product;
-				$display_physical_props = $bundled_item->is_shipped_individually() && apply_filters( 'wc_product_enable_dimensions_display', $bundled_product->has_weight() || $bundled_product->has_dimensions() );
+				$args = $bundled_item->get_bundled_item_display_attribute_args();
 
-				/**
-				 * 'woocommerce_bundle_show_bundled_product_physical_props' filter.
-				 * Whether to display the bundled item's physical props.
-				 *
-				 * @since  5.8.0
-				 *
-				 * @param  boolean             $display_physical_props
-				 * @param  WC_Product_Bundles  $product
-				 * @param  WC_Bundled_Item     $bundled_item
-				 */
-				$display_physical_props = apply_filters( 'woocommerce_bundle_show_bundled_product_physical_props', $display_physical_props, $product, $bundled_item );
+				if ( empty( $args[ 'product_attributes' ] ) ) {
+					continue;
+				}
 
-				if ( $bundled_product->has_attributes() || $display_physical_props ) {
-
-					// Filter bundled item attributes based on active variation filters.
+				if ( ! WC_PB_Core_Compatibility::is_wc_version_gte( '3.6' ) ) {
 					add_filter( 'woocommerce_attribute', array( $bundled_item, 'filter_bundled_item_attribute' ), 10, 3 );
+				}
 
-					wc_get_template( 'single-product/bundled-item-attributes.php', array(
-						'title'              => $bundled_item->get_title(),
-						'product'            => $bundled_product,
-						'attributes'         => array_filter( $bundled_product->get_attributes(), 'wc_attributes_array_filter_visible' ),
-						'display_dimensions' => $display_physical_props
-					), false, WC_PB()->plugin_path() . '/templates/' );
+				wc_get_template( 'single-product/bundled-item-attributes.php', $args, false, WC_PB()->plugin_path() . '/templates/' );
 
+				if ( ! WC_PB_Core_Compatibility::is_wc_version_gte( '3.6' ) ) {
 					remove_filter( 'woocommerce_attribute', array( $bundled_item, 'filter_bundled_item_attribute' ), 10, 3 );
 				}
 			}

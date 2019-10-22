@@ -89,12 +89,12 @@ function wptu_ticker( $atts, $content = null ) {
 	?>
 
 	<style>
-	#wptu-ticker-<?php echo $unique; ?> {border-color: <?php echo $background_color; ?>;}
-	#wptu-ticker-<?php echo $unique; ?> > .wptu-ticker-title {background: <?php echo $background_color; ?>;}
-	#wptu-ticker-<?php echo $unique; ?> > .wptu-ticker-title > span {border-color: transparent transparent transparent <?php echo $background_color; ?>}
-	#wptu-ticker-<?php echo $unique; ?> > .wptu-ticker-block > ul > li > a:hover {color: <?php echo $background_color; ?>}
-	#wptu-ticker-<?php echo $unique; ?> > .wptu-ticker-block > ul > li > a {color: <?php echo $color; ?>;font-style: <?php echo $fontstyle; ?>}
-	#wptu-ticker-<?php echo $unique; ?> > .wptu-ticker-title .wptu-ticker-head {background-color: <?php echo $background_color; ?>;color: <?php echo $title_color; ?>}
+	#wptu-ticker-<?php echo $unique; ?> {border-color: <?php echo esc_attr($background_color); ?>;}
+	#wptu-ticker-<?php echo $unique; ?> > .wptu-ticker-title {background: <?php echo esc_attr($background_color); ?>;}
+	#wptu-ticker-<?php echo $unique; ?> > .wptu-ticker-title > span {border-color: transparent transparent transparent <?php echo esc_attr($background_color); ?>}
+	#wptu-ticker-<?php echo $unique; ?> > .wptu-ticker-block > ul > li > a:hover {color: <?php echo esc_attr($background_color); ?>}
+	#wptu-ticker-<?php echo $unique; ?> > .wptu-ticker-block > ul > li > a {color: <?php echo esc_attr($color); ?>;font-style: <?php echo esc_attr($fontstyle); ?>}
+	#wptu-ticker-<?php echo $unique; ?> > .wptu-ticker-title .wptu-ticker-head {background-color: <?php echo esc_attr($background_color); ?>;color: <?php echo esc_attr($title_color); ?>}
 	</style>
 	
 	<div class="wptu-ticker wptu-ticker-main wptu-clearfix <?php echo $border_class; ?>" id="wptu-ticker-<?php echo $unique; ?>">		

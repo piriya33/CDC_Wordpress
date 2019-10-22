@@ -2,7 +2,7 @@
 /*
 Plugin Name: Display PHP Version
 Description: Displays the current PHP version in the "At a Glance" admin dashboard widget.
-Version: 1.4
+Version: 1.5
 Author: David Gwyer
 Author URI: http://www.wpgoplugins.com
 */

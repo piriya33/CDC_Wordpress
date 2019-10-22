@@ -117,9 +117,8 @@ function wpforms_verify_license() {
 		wp_send_json_error( esc_html__( 'Please enter a license key.', 'wpforms' ) );
 	}
 
-	wpforms()->license->verify_key( $_POST['license'], true );
+	wpforms()->license->verify_key( sanitize_text_field( wp_unslash( $_POST['license'] ) ), true );
 }
-
 add_action( 'wp_ajax_wpforms_verify_license', 'wpforms_verify_license' );
 
 /**

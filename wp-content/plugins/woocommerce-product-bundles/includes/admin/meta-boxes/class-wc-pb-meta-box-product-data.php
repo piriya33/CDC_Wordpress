@@ -575,7 +575,6 @@ class WC_PB_Meta_Box_Product_Data {
 												$filtered_attributes[ $attribute_name ][] = $attribute_value;
 											}
 										}
-
 									}
 
 									// Check validity.
@@ -624,7 +623,7 @@ class WC_PB_Meta_Box_Product_Data {
 								if ( ! empty( $data[ 'default_variation_attributes' ] ) ) {
 
 									foreach ( $data[ 'default_variation_attributes' ] as $default_name => $default_value ) {
-										if ( ! $default_value ) {
+										if ( '' === $default_value ) {
 											$visibility[ 'product' ] = 'visible';
 											self::add_admin_error( sprintf( __( 'To hide item <strong>#%1$s: %2$s</strong> from the single-product template, please define defaults for its variation attributes.', 'woocommerce-product-bundles' ), $loop, $item_title ) );
 											break;

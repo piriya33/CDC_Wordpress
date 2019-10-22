@@ -158,20 +158,22 @@ class WC_PB_Admin_Notices {
 				echo '</div>';
 			}
 
-			wc_enqueue_js( "
-				jQuery( function( $ ) {
-					jQuery( '.wc_pb_notice .notice-dismiss' ).on( 'click', function() {
+			if ( function_exists( 'wc_enqueue_js' ) ) {
+				wc_enqueue_js( "
+					jQuery( function( $ ) {
+						jQuery( '.wc_pb_notice .notice-dismiss' ).on( 'click', function() {
 
-						var data = {
-							action: 'woocommerce_dismiss_bundle_notice',
-							notice: jQuery( this ).parent().data( 'dismiss_class' ),
-							security: '" . wp_create_nonce( 'wc_pb_dismiss_notice_nonce' ) . "'
-						};
+							var data = {
+								action: 'woocommerce_dismiss_bundle_notice',
+								notice: jQuery( this ).parent().data( 'dismiss_class' ),
+								security: '" . wp_create_nonce( 'wc_pb_dismiss_notice_nonce' ) . "'
+							};
 
-						jQuery.post( '" . WC()->ajax_url() . "', data );
+							jQuery.post( '" . WC()->ajax_url() . "', data );
+						} );
 					} );
-				} );
-			" );
+				" );
+			}
 
 			// Clear.
 			delete_option( 'wc_pb_meta_box_notices' );

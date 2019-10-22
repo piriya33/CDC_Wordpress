@@ -23,9 +23,9 @@
         <?php
 
             _e("PHP: ", "gd-bbpress-tools");
-            echo '<strong>5.5 or newer</strong><br/>';
+            echo '<strong>5.6 or newer</strong><br/>';
             _e("WordPress: ", "gd-bbpress-tools");
-            echo '<strong>4.4 or newer</strong><br/>';
+            echo '<strong>4.7 or newer</strong><br/>';
             _e("bbPress: ", "gd-bbpress-tools");
             echo '<strong>2.5 or newer</strong>';
 

@@ -15,10 +15,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Bundled Item Product Container class.
  *
- * The bunded item class is a product container that initializes and holds pricing, availability and variation/attribute-related data of a bundled product.
+ * The bunded item class is a product container that initializes and holds pricing, availability and variation/attribute-related data for a bundled product.
  *
  * @class    WC_Bundled_Item
- * @version  5.9.2
+ * @version  5.13.0
  */
 class WC_Bundled_Item {
 
@@ -446,14 +446,16 @@ class WC_Bundled_Item {
 			$variation_on_backorder_exists = false;
 			$all_variations_on_backorder   = true;
 
-			foreach ( $bundled_product->get_children() as $child_id ) {
+			$variation_ids = $this->get_children();
 
-				// Do not continue if variation is filtered.
-				if ( $this->has_filtered_variations() && ! in_array( $child_id, $this->allowed_variations ) ) {
-					continue;
-				}
+			// Lighten subsequent calls to 'wc_get_product'.
+			if ( is_callable( '_prime_post_caches' ) ) {
+				_prime_post_caches( $variation_ids );
+			}
 
-				$variation = wc_get_product( $child_id );
+			foreach ( $variation_ids as $variation_id ) {
+
+				$variation = wc_get_product( $variation_id );
 
 				if ( ! $variation ) {
 					continue;
@@ -514,8 +516,13 @@ class WC_Bundled_Item {
 		$this->data->update_meta( 'max_stock', $this->max_stock );
 
 		// Save changes if the bundle exists in the DB.
-		if ( $this->get_bundle_id() && ! defined( 'WC_PB_DEBUG_STOCK_SYNC' ) ) {
-			$this->data->save();
+		if ( ! defined( 'WC_PB_DEBUG_STOCK_SYNC' ) && $this->get_bundle_id() ) {
+
+			$bundle = $this->get_bundle();
+
+			if ( $bundle && $bundle->is_type( 'bundle' ) && $bundle->get_type() === $bundle->get_data_store_type() ) {
+				$this->data->save();
+			}
 		}
 	}
 
@@ -745,7 +752,7 @@ class WC_Bundled_Item {
 			$regular_price = $price;
 		}
 
-		$discount           = $this->get_discount();
+		$discount           = $this->get_discount( $context );
 		$bundled_item_price = empty( $discount ) ? $price : ( empty( $regular_price ) ? $regular_price : round( ( double ) $regular_price * ( 100 - $discount ) / 100, WC_PB_Product_Prices::get_discounted_price_precision() ) );
 
 		/**
@@ -755,8 +762,9 @@ class WC_Bundled_Item {
 		 * @param  WC_Product       $product
 		 * @param  mixed            $discount
 		 * @param  WC_Bundled_Item  $this
+		 * @param  string           $context
 		 */
-		$price = apply_filters( 'woocommerce_bundled_item_raw_price' . ( $context ? '_' . $context : '' ), $bundled_item_price, $product, $discount, $this );
+		$price = apply_filters( 'woocommerce_bundled_item_raw_price', $bundled_item_price, $product, $discount, $this, $context );
 
 		return $price;
 	}
@@ -1026,11 +1034,12 @@ class WC_Bundled_Item {
 	/**
 	 * Bundled item sale status.
 	 *
+	 * @param  string  $context
 	 * @return boolean
 	 */
-	public function is_on_sale() {
+	public function is_on_sale( $context = '' ) {
 
-		$discount = $this->get_discount();
+		$discount = $this->get_discount( $context );
 		$on_sale  = ! empty( $discount ) || $this->product->is_on_sale();
 
 		return $on_sale;
@@ -1259,23 +1268,45 @@ class WC_Bundled_Item {
 
 				if ( $this->has_filtered_variations() ) {
 
-					$variations = $this->get_children();
+					$variation_ids  = $this->get_children();
+					$variation_data = array();
 
-					// Non-configurable only when a single variation is active.
-					if ( 1 === sizeof( $variations ) ) {
+					// Lighten subsequent calls to 'get_post_meta' in 'wc_get_product_variation_attributes'.
+					update_postmeta_cache( $variation_ids );
 
-						$variation_id    = current( $variations );
-						$variation       = wc_get_product( $variation_id );
-						$variation_data  = $variation->get_variation_attributes();
+					// Find attributes that have just one value.
+					foreach ( $this->product_attributes[ 'all' ] as $attribute_name => $options ) {
 
-						// Make sure all attributes of the single active variation have a value.
-						foreach ( $this->product_attributes[ 'all' ] as $attribute_name => $options ) {
-							if ( isset( $variation_data[ wc_variation_attribute_name( $attribute_name ) ] ) ) {
-								$value = $variation_data[ wc_variation_attribute_name( $attribute_name ) ];
-								if ( '' !== $value && '' !== $this->get_selected_product_variation_attribute( $attribute_name ) ) {
-									unset( $this->product_attributes[ 'configurable' ][ $attribute_name ] );
+						if ( '' === $this->get_selected_product_variation_attribute( $attribute_name ) ) {
+							continue;
+						}
+
+						$attribute_value = false;
+
+						foreach ( $variation_ids as $variation_id ) {
+
+							if ( '' === $attribute_value ) {
+								continue;
+							}
+
+							if ( empty( $variation_data[ $variation_id ] ) ) {
+								$variation_data[ $variation_id ] = wc_get_product_variation_attributes( $variation_id );
+							}
+
+							if ( isset( $variation_data[ $variation_id ][ wc_variation_attribute_name( $attribute_name ) ] ) ) {
+
+								$value = $variation_data[ $variation_id ][ wc_variation_attribute_name( $attribute_name ) ];
+
+								if ( false === $attribute_value ) {
+									$attribute_value = $value;
+								} elseif ( $attribute_value !== $value ) {
+									$attribute_value = '';
 								}
 							}
+						}
+
+						if ( false !== $attribute_value && '' !== $attribute_value ) {
+							unset( $this->product_attributes[ 'configurable' ][ $attribute_name ] );
 						}
 					}
 				}
@@ -1324,6 +1355,10 @@ class WC_Bundled_Item {
 				if ( ! empty( $selected_product_attributes ) && $this->has_filtered_variations() ) {
 
 					$variation_attribute_values = array();
+
+					if ( empty( $this->product_variations ) && ! $this->use_ajax_for_product_variations() ) {
+						$this->get_product_variations();
+					}
 
 					if ( ! empty( $this->product_variations ) ) {
 						foreach ( $this->product_variations as $variation_data ) {
@@ -1436,7 +1471,7 @@ class WC_Bundled_Item {
 
 		if ( ! $this->exists() ) {
 			$use_ajax = false;
-		} elseif ( did_action( 'woocommerce_composite_show_composited_product' ) ) {
+		} elseif ( doing_action( 'woocommerce_composite_show_composited_product' ) || doing_action( 'woocommerce_composited_product_single' ) ) {
 			$use_ajax = false;
 		} elseif ( $this->has_filtered_variations() && apply_filters( 'woocommerce_bundled_item_filtered_variations_disable_ajax', true, $this ) ) {
 			$use_ajax = false;
@@ -1812,16 +1847,17 @@ class WC_Bundled_Item {
 	/**
 	 * Item discount.
 	 *
+	 * @param  string  $context
 	 * @return double
 	 */
-	public function get_discount() {
+	public function get_discount( $context = '' ) {
 		/**
 		 * 'woocommerce_bundled_item_discount' filter.
 		 *
 		 * @param  mixed            $discount
 		 * @param  WC_Bundled_Item  $this
 		 */
-		return $this->is_priced_individually() ? apply_filters( 'woocommerce_bundled_item_discount', $this->discount, $this ) : '';
+		return $this->is_priced_individually() ? apply_filters( 'woocommerce_bundled_item_discount', $this->discount, $this, $context ) : '';
 	}
 
 	/**
@@ -1898,7 +1934,7 @@ class WC_Bundled_Item {
 	 */
 	public function get_classes( $implode = true ) {
 
-		$classes = array( 'bundled_product', 'bundled_product_summary', 'product' );
+		$classes = array( 'bundled_item_' . $this->get_id(), 'bundled_product', 'bundled_product_summary', 'product' );
 
 		if ( $this->get_quantity( 'min' ) !== $this->get_quantity( 'max' ) && $this->is_in_stock() ) {
 			$classes[] = 'has_qty_input';
@@ -2171,7 +2207,135 @@ class WC_Bundled_Item {
 	}
 
 	/**
-	 * Filters bundled product attributes, hiding attributes that correspond to filtered-out variations.
+	 * Builds a list of product attributes for a bundled item.
+	 *
+	 * @since  5.10.1
+	 *
+	 * @return array
+	 */
+	public function get_bundled_item_display_attribute_args() {
+
+		$product            = $this->get_product();
+		$product_attributes = array();
+		$display_dimensions = $this->is_shipped_individually() && $product && apply_filters( 'wc_product_enable_dimensions_display', $product->has_weight() || $product->has_dimensions() );
+
+		/**
+		 * 'woocommerce_bundle_show_bundled_product_physical_props' filter.
+		 * Whether to display the bundled item's physical props.
+		 *
+		 * @since  5.8.0
+		 *
+		 * @param  boolean             $display_dimensions
+		 * @param  WC_Product_Bundles  $product
+		 * @param  WC_Bundled_Item     $bundled_item
+		 */
+		$display_dimensions = apply_filters( 'woocommerce_bundle_show_bundled_product_physical_props', $display_dimensions, $product, $this );
+
+		// Display weight and dimensions before attribute list.
+		$display_dimensions = apply_filters( 'wc_product_enable_dimensions_display', $product->has_weight() || $product->has_dimensions() );
+
+		if ( $display_dimensions && $product->has_weight() ) {
+			$product_attributes[ 'weight' ] = array(
+				'label' => __( 'Weight', 'woocommerce' ),
+				'value' => wc_format_weight( $product->get_weight() ),
+			);
+		}
+
+		if ( $display_dimensions && $product->has_dimensions() ) {
+			$product_attributes[ 'dimensions' ] = array(
+				'label' => __( 'Dimensions', 'woocommerce' ),
+				'value' => wc_format_dimensions( $product->get_dimensions( false ) ),
+			);
+		}
+
+		$attributes                      = array_filter( $product->get_attributes(), 'wc_attributes_array_filter_visible' );
+		$use_ajax_for_product_variations = $this->use_ajax_for_product_variations();
+		$bundled_item_variation_data     = $use_ajax_for_product_variations ? false : $this->get_product_variations();
+
+		foreach ( $attributes as $attribute ) {
+
+			$values                     = array();
+			$is_variation               = $attribute->get_variation();
+			$variation_attribute_values = array();
+
+			if ( ! empty( $bundled_item_variation_data ) ) {
+
+				$attribute_key = wc_variation_attribute_name( $attribute->get_name() );
+
+				foreach ( $bundled_item_variation_data as $variation_data ) {
+					if ( isset( $variation_data[ 'attributes' ][ $attribute_key ] ) ) {
+
+						$variation_attribute_values[] = $variation_data[ 'attributes' ][ $attribute_key ];
+						$variation_attribute_values   = array_unique( $variation_attribute_values );
+					}
+				}
+			}
+
+			$check_values = ! empty( $variation_attribute_values ) && ! in_array( '', $variation_attribute_values );
+
+			if ( $attribute->is_taxonomy() ) {
+
+				$attribute_taxonomy = $attribute->get_taxonomy_object();
+				$attribute_values   = wc_get_product_terms( $product->get_id(), $attribute->get_name(), array( 'fields' => 'all' ) );
+
+				foreach ( $attribute_values as $attribute_value ) {
+
+					if ( $check_values ) {
+						if ( ! in_array( $attribute_value->slug, $variation_attribute_values ) ) {
+							continue;
+						}
+					}
+
+					$value_name = esc_html( $attribute_value->name );
+
+					if ( $attribute_taxonomy->attribute_public ) {
+						$values[] = '<a href="' . esc_url( get_term_link( $attribute_value->term_id, $attribute->get_name() ) ) . '" rel="tag">' . $value_name . '</a>';
+					} else {
+						$values[] = $value_name;
+					}
+				}
+
+			} else {
+
+				$options = $attribute->get_options();
+
+				foreach ( $options as $option ) {
+
+					if ( $check_values ) {
+						if ( ! in_array( $option, $variation_attribute_values ) ) {
+							continue;
+						}
+					}
+
+					$values[] = make_clickable( esc_html( $option ) );
+				}
+			}
+
+			$product_attributes[ 'attribute_' . sanitize_title_with_dashes( $attribute->get_name() ) ] = array(
+				'label' => wc_attribute_label( $attribute->get_name() ),
+				'value' => apply_filters( 'woocommerce_attribute', wpautop( wptexturize( implode( ', ', $values ) ) ), $attribute, $values ),
+			);
+		}
+
+		/**
+		 * "woocommerce_display_product_attributes" filter.
+		 *
+		 * @param array       $product_attributes
+		 * @param WC_Product  $product
+		 */
+		$this->product_attributes = apply_filters( 'woocommerce_display_product_attributes', $product_attributes, $product );
+
+		return array(
+			'title'              => $this->get_title(),
+			'product'            => $product,
+			'attributes'         => $attributes,
+			'product_attributes' => $product_attributes,
+			'display_dimensions' => $display_dimensions
+		);
+	}
+
+	/**
+	 * Filters bundled product attributes, hiding attributes that correspond to filtered-out variations. Useful up to WC 3.5 only.
 	 *
 	 * @param  string  $output
 	 * @param  array   $attribute
@@ -2180,63 +2344,12 @@ class WC_Bundled_Item {
 	 */
 	public function filter_bundled_item_attribute( $output, $attribute, $values ) {
 
-		if ( $attribute[ 'is_variation' ] ) {
+		if ( $attribute->get_variation() ) {
 
-			$variation_attribute_values = array();
+			$key = 'attribute_' . sanitize_title_with_dashes( $attribute->get_name() );
 
-			// We can only work past this point only when the variations count is acceptable.
-			if ( $this->use_ajax_for_product_variations() ) {
-				return $output;
-			}
-
-			$bundled_item_variations = $this->get_product_variations();
-
-			if ( empty( $bundled_item_variations ) ) {
-				return $output;
-			}
-
-			$attribute_key = wc_variation_attribute_name( $attribute[ 'name' ] );
-
-			// Find active attribute values from the bundled item variation data.
-			foreach ( $bundled_item_variations as $variation_data ) {
-				if ( isset( $variation_data[ 'attributes' ][ $attribute_key ] ) ) {
-					$variation_attribute_values[] = $variation_data[ 'attributes' ][ $attribute_key ];
-					$variation_attribute_values   = array_unique( $variation_attribute_values );
-				}
-			}
-
-			if ( ! empty( $variation_attribute_values ) && in_array( '', $variation_attribute_values ) ) {
-				return $output;
-			}
-
-			$attribute_name = $attribute[ 'name' ];
-
-			$filtered_values = array();
-
-			if ( $attribute[ 'is_taxonomy' ] ) {
-
-				$product_terms = wc_get_product_terms( $this->get_product_id(), $attribute_name, array( 'fields' => 'all' ) );
-
-				foreach ( $product_terms as $product_term ) {
-					if ( in_array( $product_term->slug, $variation_attribute_values ) ) {
-						$filtered_values[] = $product_term->name;
-					}
-				}
-
-				return wpautop( wptexturize( implode( ', ', $filtered_values ) ) );
-
-			} else {
-
-				foreach ( $values as $value ) {
-
-					$check_value = $value;
-
-					if ( in_array( $check_value, $variation_attribute_values ) ) {
-						$filtered_values[] = $value;
-					}
-				}
-
-				return wpautop( wptexturize( implode( ', ', $filtered_values ) ) );
+			if ( ! empty( $this->product_attributes[ $key ] ) ) {
+				return $this->product_attributes[ $key ][ 'value' ];
 			}
 		}
 

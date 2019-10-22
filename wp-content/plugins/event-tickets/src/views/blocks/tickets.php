@@ -10,8 +10,12 @@
  * @link {INSERT_ARTICLE_LINK_HERE}
  *
  * @since 4.9
- * @version 4.9.4
+ * @since 4.10.8 Updated loading logic for including a renamed template.
+ * @since 4.10.10 - Removed initial check for tickets.
  *
+ * @version 4.10.10
+ *
+ * @var Tribe__Tickets__Editor__Template $this
  */
 
 $post_id             = $this->get( 'post_id' );
@@ -25,12 +29,18 @@ $is_sale_past        = $this->get( 'is_sale_past' );
 $cart_classes        = array( 'tribe-block', 'tribe-block__tickets' );
 
 // We don't display anything if there is no provider or tickets
-if ( ! $provider || empty( $tickets ) ) {
+if ( ! $provider ) {
 	return false;
 }
-?>
 
-<?php $this->template( 'blocks/attendees/order-links', array( 'type' => 'ticket' ) ); ?>
+$html = $this->template( 'blocks/attendees/order-links', [], false );
+
+if ( empty( $html ) ) {
+	$html = $this->template( 'blocks/attendees/view-link', [], false );;
+}
+
+echo $html;
+?>
 
 <form
 	id="tribe-block__tickets"

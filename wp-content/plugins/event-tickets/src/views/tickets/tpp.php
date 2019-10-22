@@ -6,21 +6,28 @@
  *
  *     [your-theme]/tribe-events/tickets/tpp.php
  *
- * @version 4.9.3
+ * @since   4.5
+ * @since   4.7    Make the ticket form more readable.
+ * @since   4.7.6  Add support for showing description option.
+ * @since   4.8.2  Add date_in_range() logic so past tickets do not show.
+ * @since   4.9.3  Display login link if visitor is logged out and logging in is required to purchase.
+ * @since   4.10.8 Removed the date_in_range() check per ticket, since it now happens upstream. Better checking of max quantity available.
+ * @since   4.10.10  Use customizable ticket name functions.
+ *
+ * @version 4.10.9
  *
  * @var bool $must_login
  * @var bool $display_login_link
  */
 
-$is_there_any_product         = false;
 $is_there_any_product_to_sell = false;
-$are_products_available       = false;
 
 /** @var Tribe__Tickets__Commerce__PayPal__Main $commerce */
-$commerce       = tribe( 'tickets.commerce.paypal' );
+$commerce = tribe( 'tickets.commerce.paypal' );
+
 $messages       = $commerce->get_messages();
 $messages_class = $messages ? 'tribe-tpp-message-display' : '';
-$now            = current_time( 'timestamp' );
+$now            = time();
 $cart_url       = '';
 ?>
 <form
@@ -33,7 +40,7 @@ $cart_url       = '';
 	<input type="hidden" name="provider" value="Tribe__Tickets__Commerce__PayPal__Main">
 	<input type="hidden" name="add" value="1">
 	<h2 class="tribe-events-tickets-title tribe--tpp">
-		<?php echo esc_html_x( 'Tickets', 'form heading', 'event-tickets' ) ?>
+		<?php echo esc_html( tribe_get_ticket_label_plural( basename( __FILE__ ) ) ); ?>
 	</h2>
 
 	<div class="tribe-tpp-messages">
@@ -59,19 +66,24 @@ $cart_url       = '';
 		<?php
 		$item_counter = 1;
 		foreach ( $tickets as $ticket ) {
+			if ( ! $ticket instanceof Tribe__Tickets__Ticket_Object ) {
+				continue;
+			}
+
 			// if the ticket isn't a Tribe Commerce ticket, then let's skip it
-			if ( 'Tribe__Tickets__Commerce__PayPal__Main' !== $ticket->provider_class ) {
+			if (
+				! $ticket instanceof Tribe__Tickets__Ticket_Object
+				|| 'Tribe__Tickets__Commerce__PayPal__Main' !== $ticket->provider_class
+			) {
 				continue;
 			}
 
-			if ( ! $ticket->date_in_range() ) {
-				continue;
-			}
+			/** @var Tribe__Tickets__Tickets_Handler $handler */
+			$handler = tribe( 'tickets.handler' );
 
-			$is_there_any_product         = true;
-			$is_there_any_product_to_sell = $ticket->is_in_stock();
-			$inventory                    = (int) $ticket->inventory();
-			$max_quantity                 = $inventory > 0 ? $inventory : '';
+			$available = $handler->get_ticket_max_purchase( $ticket->ID );
+
+			$is_there_any_product_to_sell = 0 !== $available;
 			?>
 			<tr>
 				<td class="tribe-ticket quantity" data-product-id="<?php echo esc_attr( $ticket->ID ); ?>">
@@ -81,15 +93,17 @@ $cart_url       = '';
 							type="number"
 							class="tribe-ticket-quantity qty"
 							min="0"
-							<?php if ( $max_quantity ) { echo 'max="' . esc_attr( $max_quantity ) . '"'; } ?>
+							<?php if ( -1 !== $available ) : ?>
+								max="<?php echo esc_attr( $available ); ?>"
+							<?php endif; ?>
 							name="quantity_<?php echo absint( $ticket->ID ); ?>"
 							value="0"
 							<?php disabled( $must_login ); ?>
 						>
-						<?php if ( $ticket->managing_stock() ) : ?>
+						<?php if ( -1 !== $available ) : ?>
 							<span class="tribe-tickets-remaining">
 							<?php
-							$readable_amount = tribe_tickets_get_readable_amount( $ticket->available(), null, false );
+							$readable_amount = tribe_tickets_get_readable_amount( $available, null, false );
 							echo sprintf( esc_html__( '%1$s available', 'event-tickets' ), '<span class="available-stock" data-product-id="' . esc_attr( $ticket->ID ) . '">' . esc_html( $readable_amount ) . '</span>' );
 							?>
 							</span>

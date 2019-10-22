@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<td>
 			<?php
 
-				if ( version_compare( $debug_data[ 'db_version' ], WC_PB()->plugin_version( true ), '<=' ) ) {
+				if ( version_compare( $debug_data[ 'db_version' ], WC_PB()->plugin_version( true ), '==' ) ) {
 					echo '<mark class="yes">' . esc_html( $debug_data[ 'db_version' ] ) . '</mark>';
 				} else {
 					echo '<mark class="error"><span class="dashicons dashicons-warning"></span> ' . esc_html( $debug_data[ 'db_version' ] ) . ' - ' . __( 'Database version mismatch.', 'woocommerce-product-bundles' ) . '</mark>';

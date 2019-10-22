@@ -57,7 +57,10 @@ if ( ! class_exists( 'SP_Frontend_Checkout' ) ) :
 				/* Remove everything from the Header and the re-add only the branding section.
 				   This ensures compatiblity with the Header Customizer. */
 				remove_all_actions( 'storefront_header' );
+
+				add_action( 'storefront_header', 'storefront_header_container', 5 );
 				add_action( 'storefront_header', 'storefront_site_branding', 10 );
+				add_action( 'storefront_header', 'storefront_header_container_close', 15 );
 			}
 		}
 

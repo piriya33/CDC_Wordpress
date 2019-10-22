@@ -4,8 +4,8 @@ Donate link: https://www.paypal.me/WesternDeal
 Author URL: https://www.gsheetconnector.com/
 Tags: cf7, contact form 7, Contact Form 7 Integrations, contact forms, Google Sheets, Google Sheets Integrations, Google, Sheets
 Requires at least: 3.6
-Tested up to: 5.0.3
-Stable tag: 2.8
+Tested up to: 5.2.3
+Stable tag: 3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,7 +13,7 @@ Send your Contact Form 7 data directly to your Google Sheets spreadsheet.
 
 == Description ==
 
-[Homepage](https://www.gsheetconnector.com/) | [Documentation](https://www.gsheetconnector.com/documentation) | [Support](https://www.gsheetconnector.com/support) | [Demo](https://cf7demo.gsheetconnector.com/) | [Premium Version](https://www.gsheetconnector.com/cf7-google-sheet-connector-pro?wp-repo)
+[Homepage](https://www.gsheetconnector.com/) | [Documentation](https://www.gsheetconnector.com/docs) | [Support](https://www.gsheetconnector.com/support) | [Demo](https://cf7demo.gsheetconnector.com/) | [Premium Version](https://www.gsheetconnector.com/cf7-google-sheet-connector-pro?wp-repo)
 
 This plugin is a bridge between your [WordPress](https://wordpress.org/) [Contact Form 7](https://wordpress.org/plugins/contact-form-7/) forms and [Google Sheets](https://www.google.com/sheets/about/).
 
@@ -44,6 +44,13 @@ Google Sheet URL to Check submitted Data<br><a href="https://docs.google.com/spr
 * In the Google sheets tab, provide column names in row 1. The first column should be "date". For each further column, copy paste mail tags from the Contact Form 7 form (e.g. "your-name", "your-email", "your-subject", "your-message", etc).  
 * Test your form submit and verify that the data shows up in your Google Sheet.
 
+= Videos to help you get started with CF7 Google Sheets Connector =
+
+How to Install, Authenticate and Integrate Contact Form with your Google Sheet.
+
+[youtube https://www.youtube.com/watch?v=E_dVAQHyBlw]
+
+
 = Important Notes = 
 
 * You must pay very careful attention to your naming. This plugin will have unpredictable results if names and spellings do not match between your Google Sheets and form settings.
@@ -68,7 +75,7 @@ Sometimes it can take a while of spinning before it goes through. But if the ent
 
 1. Wrong access code ( Check debug log )
 2. Wrong Sheet name or tab name
-3. Wrong Column name mapping ( Column names are the contact form mail-tags. It cannot have underscore or any special characters )
+3. Wrong Column name mapping ( keep in mind that not to use capital letters, number as initial and special characters like underscores, double or single code, space etc. You can only use small letters and hyphen. )
 
 Please double-check those items and hopefully getting them right will fix the issue.
 
@@ -80,6 +87,13 @@ Please double-check those items and hopefully getting them right will fix the is
 * Now you can paste this code back on the `Admin Panel > Contact form 7 > Google Sheets` screen. 
 
 == Changelog ==
+
+= 3.0 =
+* Update API Library.
+* Allowed user to permanently close Google Sheet Connector Pro notice.
+
+= 2.9 =
+* Hide Google Sheet menu and settings as per user role contact form 7 edit capabilities.
 
 = 2.8 =
 * Fixed - Displaying of Google Sheet Connector notice to be dismissible.

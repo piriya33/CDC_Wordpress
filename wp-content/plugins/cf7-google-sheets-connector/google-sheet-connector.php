@@ -3,7 +3,7 @@
   Plugin Name: CF7 Google Sheet Connector
   Plugin URI: https://wordpress.org/plugins/cf7-google-sheets-connector/
   Description: Send your Contact Form 7 data to your Google Sheets spreadsheet.
-  Version: 2.8
+  Version: 3.0
   Author: WesternDeal
   Author URI: https://www.gsheetconnector.com/
   Text Domain: gsconnector
@@ -14,8 +14,8 @@ if ( !defined( 'ABSPATH' ) ) {
 }
 
 // Declare some global constants
-define( 'GS_CONNECTOR_VERSION', '2.8' );
-define( 'GS_CONNECTOR_DB_VERSION', '2.8' );
+define( 'GS_CONNECTOR_VERSION', '3.0' );
+define( 'GS_CONNECTOR_DB_VERSION', '3.0' );
 define( 'GS_CONNECTOR_ROOT', dirname( __FILE__ ) );
 define( 'GS_CONNECTOR_URL', plugins_url( '/', __FILE__ ) );
 define( 'GS_CONNECTOR_BASE_FILE', basename( dirname( __FILE__ ) ) . '/google-sheet-connector.php' );
@@ -34,7 +34,7 @@ if ( !class_exists( 'Gs_Connector_Utility' ) ) {
 if ( !class_exists( 'Gs_Connector_Service' ) ) {
    include( GS_CONNECTOR_ROOT . '/includes/class-gs-service.php' );
 }
-require_once GS_CONNECTOR_ROOT . '/lib/php-google-oauth/Google_Client.php';
+require_once GS_CONNECTOR_ROOT . '/lib/cf7gsc/Client.php';
 
 /*
  * Main GS connector class
@@ -176,8 +176,10 @@ class Gs_Connector_Free_Init {
     * @since 1.0
     */
    public function register_gs_menu_pages() {
-      $current_role = Gs_Connector_Utility::instance()->get_current_user_role();
-      add_submenu_page( 'wpcf7', __( 'Google Sheets', 'gsconnector' ), __( 'Google Sheets', 'gsconnector' ), $current_role, 'wpcf7-google-sheet-config', array( $this, 'google_sheet_configuration' ) );
+      if ( current_user_can( 'wpcf7_edit_contact_form' ) ) {
+         $current_role = Gs_Connector_Utility::instance()->get_current_user_role();
+         add_submenu_page( 'wpcf7', __( 'Google Sheets', 'gsconnector' ), __( 'Google Sheets', 'gsconnector' ), $current_role, 'wpcf7-google-sheet-config', array( $this, 'google_sheet_configuration' ) );
+      }
    }
 
    /**

@@ -70,7 +70,6 @@ class WPForms_Entries_Single {
 		if ( 'wpforms-entries' === $page && 'details' === $view ) {
 
 			// Entry processing and setup.
-			add_action( 'wpforms_entries_init',          array( $this, 'process_export'        ),  8, 1 );
 			add_action( 'wpforms_entries_init',          array( $this, 'process_star'          ),  8, 1 );
 			add_action( 'wpforms_entries_init',          array( $this, 'process_unread'        ),  8, 1 );
 			add_action( 'wpforms_entries_init',          array( $this, 'process_note_delete'   ),  8, 1 );
@@ -117,19 +116,18 @@ class WPForms_Entries_Single {
 	 * @since 1.1.6
 	 */
 	public function process_export() {
-
 		// Check for run switch.
 		if ( empty( $_GET['export'] ) || ! is_numeric( $_GET['export'] ) ) {
 			return;
 		}
 
+		_deprecated_function( __CLASS__ . '::' . __METHOD__, '1.5.5 of WPForms plugin', 'WPForms\Pro\Admin\Export\Export class' );
+
 		// Security check
 		if ( empty( $_GET['_wpnonce'] ) || ! wp_verify_nonce( $_GET['_wpnonce'], 'wpforms_entry_details_export' ) ) {
 			return;
 		}
-
 		require_once WPFORMS_PLUGIN_DIR . 'pro/includes/admin/entries/class-entries-export.php';
-
 		$export = new WPForms_Entries_Export();
 		$export->entry_type = absint( $_GET['export'] );
 		$export->export();
@@ -1006,12 +1004,16 @@ class WPForms_Entries_Single {
 		$export_url = wp_nonce_url(
 			add_query_arg(
 				array(
-					'form_id'  => absint( $form_data['id'] ),
-					'export'   => absint( $entry->entry_id ),
+					'page'     => 'wpforms-tools',
+					'view'     => 'export',
+					'action'   => 'wpforms_tools_single_entry_export_download',
+					'form'     => absint( $form_data['id'] ),
+					'entry_id' => absint( $entry->entry_id ),
 				),
-				$base
+				admin_url( 'admin.php' )
 			),
-			'wpforms_entry_details_export'
+			'wpforms-tools-single-entry-export-nonce',
+			'nonce'
 		);
 
 		// Resend Entry Notifications URL

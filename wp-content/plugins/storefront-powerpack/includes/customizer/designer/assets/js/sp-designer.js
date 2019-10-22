@@ -392,11 +392,17 @@
 						value = ( value ) ? element.element.val() : '';
 					}
 
+					if ( 'fontWeight' === property && 'bold' === value ) {
+						value = 700;
+					}
+
 					var settingValue = control.setting();
+
 					if ( settingValue && settingValue[ property ] !== value ) {
 						settingValue = _.clone( settingValue );
 						settingValue[ property ] = value;
 						control.setting.set( settingValue );
+						element.set( settingValue[ property ] );
 					}
 				});
 
@@ -769,14 +775,11 @@
 
 			// Font Weight
 			defaults.fontWeight = '';
-			if ( isNaN( cssProperties.fontWeight ) ) {
-				if ( 'bold' === cssProperties.fontWeight ) {
-					defaults.fontWeight = 'bold';
-				}
-			} else {
-				if ( 700 === parseInt( cssProperties.fontWeight, 10 ) ) {
-					defaults.fontWeight = 'bold';
-				}
+
+			if ( isNaN( cssProperties.fontWeight ) && 'bold' === cssProperties.fontWeight ) {
+				defaults.fontWeight = 700;
+			} else if ( _.contains( [ 100, 200, 300, 400, 500, 600, 700, 800, 900 ], parseInt( cssProperties.fontWeight, 10 ) ) ) {
+				defaults.fontWeight = parseInt( cssProperties.fontWeight, 10 );
 			}
 
 			// Text Decoration

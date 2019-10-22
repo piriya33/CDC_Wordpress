@@ -8,13 +8,6 @@
  * @see: http://moderntribe.github.io/products-engineering/css/
  */
 
-:root {
-	--text-light-color: #777;
-	--text-dark-color: #464646;
-	--border-color: #dfdfdf;
-	--table-background-color: #f8f8f8;
-}
-
 .tribe-rsvp {
 	padding: 20px 0;
 }
@@ -204,7 +197,6 @@
 
 .tribe-events-tickets {
 	background: #f8f8f8;
-	background: var(--table-background-color);
 	border: 0;
 	border-radius: 3px;
 	max-width: 100%;
@@ -218,8 +210,10 @@
 	}
 
 .tribe-events-tickets tr {
+		display: -webkit-flex;
 		display: flex;
-		flex-flow: row wrap;
+		-webkit-flex-flow: row wrap;
+		        flex-flow: row wrap;
 	}
 
 .tribe-events-tickets tr:not(:first-child) {
@@ -227,7 +221,8 @@
 		}
 
 .tribe-events-tickets td {
-		flex: none;
+		-webkit-flex: none;
+		        flex: none;
 		padding: 8px 10px;
 		width: 100%;
 		word-break: normal;
@@ -239,7 +234,8 @@
 
 .tribe-events-tickets td.quantity,
 		.tribe-events-tickets td.woocommerce {
-			order: 2;
+			-webkit-order: 2;
+			        order: 2;
 		}
 
 .tribe-events-tickets td.quantity input[type="number"], .tribe-events-tickets td.woocommerce input[type="number"] {
@@ -251,7 +247,8 @@
 			}
 
 .tribe-events-tickets td.tickets_submit {
-			order: 3;
+			-webkit-order: 3;
+			        order: 3;
 		}
 
 .tribe-events-tickets td.tickets_submit .tribe-button {
@@ -283,14 +280,12 @@
 
 .tribe-events-tickets .tribe-tickets-remaining {
 		color: #777;
-		color: var(--text-light-color);
 		display: block;
 		font-size: 11px;
 	}
 
 .tribe-events-tickets .tribe-tickets-attendees-list-optout label {
 			color: #777;
-			color: var( --text-light-color );
 			font-size: 13px;
 		}
 
@@ -304,7 +299,6 @@
 	.tribe-events-tickets .tickets_description,
 	.tribe-events-tickets .tickets_price {
 		color: #464646;
-		color: var(--text-dark-color);
 		font-size: 15px;
 		padding: 16px 10px;
 	}

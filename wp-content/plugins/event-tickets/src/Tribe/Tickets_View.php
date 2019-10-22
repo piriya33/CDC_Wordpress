@@ -50,7 +50,7 @@ class Tribe__Tickets__Tickets_View {
 
 		// Intercept Template file for Tickets
 		add_action( 'tribe_events_pre_get_posts', array( $myself, 'modify_ticket_display_query' ) );
-		add_filter( 'tribe_events_template', array( $myself, 'intercept_template' ), 20, 2 );
+		add_filter( 'tribe_events_template_single-event.php', array( $myself, 'intercept_template' ), 20, 2 );
 
 		// We will inject on the Priority 4, to be happen before RSVP
 		add_action( 'tribe_events_single_event_after_the_meta', array( $myself, 'inject_link_template' ), 4 );
@@ -144,8 +144,12 @@ class Tribe__Tickets__Tickets_View {
 	}
 
 	/**
-	 * Add a new Query Var to allow tickets editing
+	 * Register a new public (URL query parameters can use it) Query Var to allow tickets editing.
+	 *
+	 * @see \WP::parse_request()
+	 *
 	 * @param array $vars
+	 *
 	 * @return array
 	 */
 	public function add_query_vars( $vars ) {
@@ -175,16 +179,25 @@ class Tribe__Tickets__Tickets_View {
 		$is_correct_page = $this->is_edit_page();
 
 		// Now fetch the display and check it
-		$display = get_query_var( 'eventDisplay', false );
-		if ( 'tickets' !== $display && ! $is_correct_page ) {
+		if (
+			'tickets' !== get_query_var( 'eventDisplay', false )
+			&& ! $is_correct_page
+		) {
 			return;
 		}
 
-		if ( empty( $_POST['process-tickets'] ) || ( empty( $_POST['attendee'] ) && empty( $_POST['tribe-tickets-meta'] ) ) ) {
+		if (
+			empty( $_POST['process-tickets'] )
+			|| (
+				empty( $_POST['attendee'] )
+				&& empty( $_POST['tribe-tickets-meta'] )
+			)
+		) {
 			return;
 		}
 
 		$post_id = get_the_ID();
+
 		$attendees = ! empty( $_POST['attendee'] ) ? $_POST['attendee'] : array();
 
 		/**
@@ -202,9 +215,9 @@ class Tribe__Tickets__Tickets_View {
 			/**
 			 * An Action fired for each one of the Attendees that were posted on the Order Tickets page
 			 *
-			 * @var array $data     Infomation that we are trying to save
-			 * @var int   $order_id ID of attendee ticket
-			 * @var int   $post_id  ID of event
+			 * @var array $data     Information that we are trying to save.
+			 * @var int   $order_id ID of attendee ticket.
+			 * @var int   $post_id  ID of event.
 			 */
 			do_action( 'event_tickets_attendee_update', $data, $order_id, $post_id );
 		}
@@ -216,7 +229,7 @@ class Tribe__Tickets__Tickets_View {
 		 */
 		do_action( 'event_tickets_after_attendees_update', $post_id );
 
-		// After Editing the Values we Update the Transient
+		// After editing the values, we update the transient.
 		Tribe__Post_Transient::instance()->delete( $post_id, Tribe__Tickets__Tickets::ATTENDEES_CACHE );
 
 		// If it's not events CPT
@@ -250,9 +263,9 @@ class Tribe__Tickets__Tickets_View {
 				? add_query_arg( 'tribe-edit-orders', 1, untrailingslashit( $event_url ) )
 				: home_url( '/tickets/' . $event_id );
 		}
+
 		return $link;
 	}
-
 
 	/**
 	 * Makes sure only logged users can See the Tickets page.
@@ -276,8 +289,7 @@ class Tribe__Tickets__Tickets_View {
 		}
 
 		// Now fetch the display and check it
-		$display = get_query_var( 'eventDisplay', false );
-		if ( 'tickets' !== $display ) {
+		if ( 'tickets' !== get_query_var( 'eventDisplay', false ) && ! $this->is_edit_page() ) {
 			return;
 		}
 
@@ -361,13 +373,23 @@ class Tribe__Tickets__Tickets_View {
 		// Prevents firing more then it needs too outside of the loop
 		$in_the_loop = isset( $GLOBALS['wp_query']->in_the_loop ) && $GLOBALS['wp_query']->in_the_loop;
 
-		// Prevents Weird
-		if ( ! $this->is_edit_page() || ! $in_the_loop ) {
+		// Now fetch the display and check it
+		$display = get_query_var( 'eventDisplay', false );
+
+		if (
+			! $in_the_loop
+			|| (
+				'tickets' !== $display
+				&& ! $this->is_edit_page()
+			)
+		) {
 			return $content;
 		}
 
 		ob_start();
+
 		include Tribe__Tickets__Templates::get_template_hierarchy( 'tickets/orders.php' );
+
 		$content = ob_get_clean();
 
 		return $content;
@@ -389,8 +411,7 @@ class Tribe__Tickets__Tickets_View {
 			return;
 		}
 
-		$display = get_query_var( 'eventDisplay', false );
-		if ( 'tickets' !== $display ) {
+		if ( 'tickets' !== get_query_var( 'eventDisplay', false ) ) {
 			return;
 		}
 
@@ -398,13 +419,13 @@ class Tribe__Tickets__Tickets_View {
 	}
 
 	/**
-	 * We need to intercept the template loading and load the correct file
+	 * We need to intercept the template loading and load the correct file.
 	 *
-	 * @param  string $old_file Non important variable with the previous path
-	 * @param  string $template Which template we are dealing with
-	 * @return string           The correct File path for the tickets endpoint
+	 * @param string $old_file Non important variable with the previous path.
+	 *
+	 * @return string The correct File path for the tickets endpoint.
 	 */
-	public function intercept_template( $old_file, $template ) {
+	public function intercept_template( $old_file ) {
 		global $wp_query;
 
 		/**
@@ -424,16 +445,12 @@ class Tribe__Tickets__Tickets_View {
 
 		// Now fetch the display and check it
 		$display = get_query_var( 'eventDisplay', false );
-		if ( 'tickets' !== $display ) {
+
+		if ( 'tickets' !== $display && ! $this->is_edit_page() ) {
 			return $old_file;
 		}
 
-		// If for some reason it's not `single-event.php` we don't care either
-		if ( 'single-event.php' !== $template ) {
-			return $old_file;
-		}
-
-		// Fetch the Correct File using the Tickets Hiearchy
+		// Fetch the correct file using the Tickets Hierarchy
 		$file = Tribe__Tickets__Templates::get_template_hierarchy( 'tickets/orders.php' );
 
 		return $file;
@@ -474,6 +491,14 @@ class Tribe__Tickets__Tickets_View {
 		}
 
 		$file = Tribe__Tickets__Templates::get_template_hierarchy( 'tickets/orders-link.php' );
+
+		/**
+		 * @since 4.10.8 Attempt to load from old location to account for pre-existing theme overrides. If not found,
+		 *            go through the motions with the new location.
+		 */
+		if ( empty( $file ) ) {
+			$file = Tribe__Tickets__Templates::get_template_hierarchy( 'tickets/view-link.php' );
+		}
 
 		include $file;
 
@@ -518,7 +543,19 @@ class Tribe__Tickets__Tickets_View {
 		}
 
 		ob_start();
-		include Tribe__Tickets__Templates::get_template_hierarchy( 'tickets/orders-link.php' );
+
+		$file = Tribe__Tickets__Templates::get_template_hierarchy( 'tickets/orders-link.php' );
+
+		/**
+		 * @since 4.10.8 Attempt to load from old location to account for pre-existing theme overrides. If not found,
+		 *            go through the motions with the new location.
+		 */
+		if ( empty( $file ) ) {
+			$file = Tribe__Tickets__Templates::get_template_hierarchy( 'tickets/view-link.php' );
+		}
+
+		include $file;
+
 		$content .= ob_get_clean();
 
 		return $content;
@@ -534,20 +571,27 @@ class Tribe__Tickets__Tickets_View {
 	 * @return array                    List of Attendees grouped by order id
 	 */
 	public function get_event_attendees_by_order( $event_id, $user_id = null, $include_rsvp = false ) {
-		$attendees = Tribe__Tickets__Tickets::get_event_attendees( $event_id );
+		if ( ! $user_id ) {
+			$attendees = Tribe__Tickets__Tickets::get_event_attendees( $event_id );
+		} else {
+			// If we have a user_id then limit by that.
+			$args = [
+				'by' => [
+					'user' => $user_id,
+				],
+			];
+
+			$attendee_data = Tribe__Tickets__Tickets::get_event_attendees_by_args( $event_id, $args );
+
+			$attendees = $attendee_data['attendees'];
+		}
+
 		$orders = array();
 
 		foreach ( $attendees as $key => $attendee ) {
 			// Ignore RSVP if we don't tell it specifically
 			if ( 'rsvp' === $attendee['provider_slug'] && ! $include_rsvp ) {
 				continue;
-			}
-
-			// If we have a user_id then test it and ignore the ones that don't have it
-			if ( ! is_null( $user_id ) ) {
-				if ( empty( $attendee['user_id'] ) || $attendee['user_id'] != $user_id ) {
-					continue;
-				}
 			}
 
 			$orders[ (int) $attendee['order_id'] ][] = $attendee;
@@ -565,26 +609,16 @@ class Tribe__Tickets__Tickets_View {
 	 * @return array                   Array with the RSVP attendees
 	 */
 	public function get_event_rsvp_attendees( $event_id, $user_id = null ) {
-		$all_attendees = Tribe__Tickets__Tickets::get_event_attendees( $event_id );
 		$attendees = array();
 
-		foreach ( $all_attendees as $key => $attendee ) {
-			// Skip Non RSVP
-			if ( 'rsvp' !== $attendee['provider_slug'] ) {
-				continue;
-			}
+		/** @var Tribe__Tickets__RSVP $rsvp */
+		$rsvp = tribe( 'tickets.rsvp' );
 
-			// If we have a user_id then test it and ignore the ones that don't have it
-			if ( ! is_null( $user_id ) ) {
-				if ( empty( $attendee['user_id'] ) || $attendee['user_id'] != $user_id ) {
-					continue;
-				}
-			}
-
-			$attendees[] = $attendee;
+		if ( ! $user_id ) {
+			return $rsvp->get_attendees_by_id( $event_id );
 		}
 
-		return $attendees;
+		return $rsvp->get_attendees_by_user_id( $user_id, $event_id );
 	}
 
 	/**
@@ -671,15 +705,29 @@ class Tribe__Tickets__Tickets_View {
 	}
 
 	/**
-	 * Counts the Amount of RSVP attendees
+	 * Counts the amount of RSVP attendees.
 	 *
-	 * @param  int       $event_id     The Event ID it relates to
-	 * @param  int|null  $user_id      An Optional User ID
+	 * @param int      $event_id The Event ID it relates to.
+	 * @param int|null $user_id  An Optional User ID.
+	 *
 	 * @return int
 	 */
 	public function count_rsvp_attendees( $event_id, $user_id = null ) {
-		$rsvp_orders = $this->get_event_rsvp_attendees( $event_id, $user_id );
-		return count( $rsvp_orders );
+		if ( ! $user_id && null !== $user_id ) {
+			// No attendees for this user.
+			return 0;
+		}
+
+		/** @var Tribe__Tickets__RSVP $rsvp */
+		$rsvp = tribe( 'tickets.rsvp' );
+
+		// Get total attendees count for all users.
+		if ( ! $user_id ) {
+			return $rsvp->get_attendees_count( $event_id );
+		}
+
+		// Get total attendees count for this user.
+		return $rsvp->get_attendees_count_by_user( $event_id, $user_id );
 	}
 
 	/**
@@ -690,12 +738,23 @@ class Tribe__Tickets__Tickets_View {
 	 * @return int
 	 */
 	public function count_ticket_attendees( $event_id, $user_id = null ) {
-		$ticket_orders = $this->get_event_attendees_by_order( $event_id, $user_id );
-		$i = 0;
-		foreach ( $ticket_orders as $orders ) {
-			$i += count( $orders );
+		if ( ! $user_id && null !== $user_id ) {
+			// No attendees for this user.
+			return 0;
 		}
-		return $i;
+
+		$args = [
+			'by' => [
+				'provider__not_in' => 'rsvp',
+			],
+		];
+
+		// Get total attendees count for this user.
+		if ( $user_id ) {
+			$args['by']['user'] = $user_id;
+		}
+
+		return Tribe__Tickets__Tickets::get_event_attendees_count( $event_id, $args );
 	}
 
 	/**
@@ -706,7 +765,7 @@ class Tribe__Tickets__Tickets_View {
 	 * @return int
 	 */
 	public function has_rsvp_attendees( $event_id, $user_id = null ) {
-		$rsvp_orders = $this->get_event_rsvp_attendees( $event_id, $user_id );
+		$rsvp_orders = $this->count_rsvp_attendees( $event_id, $user_id );
 		return ! empty( $rsvp_orders );
 	}
 
@@ -718,35 +777,47 @@ class Tribe__Tickets__Tickets_View {
 	 * @return int
 	 */
 	public function has_ticket_attendees( $event_id, $user_id = null ) {
-		$ticket_orders = $this->get_event_attendees_by_order( $event_id, $user_id );
+		$ticket_orders = $this->count_ticket_attendees( $event_id, $user_id );
 		return ! empty( $ticket_orders );
 	}
 
 	/**
-	 * Gets a String to descript which type of Tickets/RSVP we are dealign with
+	 * Gets the name(s) of the type(s) of ticket(s) the specified user (optional) has for the specified event.
 	 *
-	 * @param  int       $event_id     The Event ID it relates to
-	 * @param  int|null  $user_id      An Optional User ID
-	 * @param  boolean   $plurals      Return the Strings as Plural
-	 * @return int
+	 * @since 4.2
+	 * @since 4.10.8 Deprecated the 3rd parameter (whether or not to use 'plurals') in favor of figuring it out per type.
+	 *
+	 * @param int      $event_id   The Event ID it relates to.
+	 * @param int|null $user_id    An optional User ID.
+	 * @param null     $deprecated Deprecated argument.
+	 *
+	 * @return string
 	 */
-	public function get_description_rsvp_ticket( $event_id, $user_id = null, $plurals = false ) {
-		$what_to_update = array();
+	public function get_description_rsvp_ticket( $event_id, $user_id = null, $deprecated = null ) {
+		$descriptions = [];
 
-		if ( $this->has_rsvp_attendees( $event_id, $user_id ) ) {
-			$what_to_update[] = $plurals ? esc_html__( 'RSVPs', 'event-tickets' ) : esc_html__( 'RSVP', 'event-tickets' );
+		$rsvp_count = $this->count_rsvp_attendees( $event_id, $user_id );
+
+		$ticket_count = $this->count_ticket_attendees( $event_id, $user_id );
+
+		if ( 1 === $rsvp_count ) {
+			$descriptions[] = tribe_get_rsvp_label_singular( 'tickets_view_description' );
+		} elseif ( 1 < $rsvp_count ) {
+			$descriptions[] = tribe_get_rsvp_label_plural( 'tickets_view_description' );
 		}
 
-		if ( $this->has_ticket_attendees( $event_id, $user_id ) ) {
-			$what_to_update[] = $plurals ? esc_html__( 'Tickets', 'event-tickets' ) : esc_html__( 'Ticket', 'event-tickets' );
+		if ( 1 === $ticket_count ) {
+			$descriptions[] = tribe_get_ticket_label_singular( 'tickets_view_description' );
+		} elseif ( 1 < $ticket_count ) {
+			$descriptions[] = tribe_get_ticket_label_plural( 'tickets_view_description' );
 		}
 
-		// Just Return false if array is empty
-		if ( empty( $what_to_update ) ) {
-			return false;
+		// Just return false if array is empty
+		if ( empty( $descriptions ) ) {
+			return '';
 		}
 
-		return implode( esc_html__( ' and ', 'event-tickets' ), $what_to_update );
+		return esc_html( implode( _x( ' and ', 'separator if there are both RSVPs and Tickets', 'event-tickets' ), $descriptions ) );
 	}
 
 	/**
@@ -796,16 +867,18 @@ class Tribe__Tickets__Tickets_View {
 	}
 
 	/**
-	 * Gets a HTML Attribute for input/select/textarea to be disabled
+	 * Gets a HTML Attribute for input/select/textarea to be disabled.
 	 *
-	 * @param  int  $event_id   The Event/Post ID (optional)
-	 * @param  int  $ticket_id  The Ticket/RSVP ID (optional)
-	 * @return boolean
+	 * @param int $event_id  The Event/Post ID (optional).
+	 * @param int $ticket_id The Ticket/RSVP ID (optional).
+	 *
+	 * @return bool
 	 */
 	public function get_restriction_attr( $event_id = null, $ticket_id = null ) {
 		$is_disabled = '';
+
 		if ( $this->is_rsvp_restricted( $event_id, $ticket_id ) ) {
-			$is_disabled = 'disabled title="' . esc_attr__( 'This RSVP is no longer active.', 'event-tickets' ) . '"';
+			$is_disabled = 'disabled title="' . esc_attr( sprintf( __( 'This %s is no longer active.', 'event-tickets' ), tribe_get_rsvp_label_singular( 'rsvp_restricted_title_text' ) ) ) . '"';
 		}
 
 		return $is_disabled;

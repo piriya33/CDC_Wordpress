@@ -1,4 +1,4 @@
-q��\<?php exit; ?>a:1:{s:7:"content";O:8:"stdClass":24:{s:2:"ID";i:19313;s:11:"post_author";s:4:"1985";s:9:"post_date";s:19:"2017-11-27 14:52:09";s:13:"post_date_gmt";s:19:"2017-11-27 07:52:09";s:12:"post_content";s:903:"<h4 class="title style-scope ytd-video-primary-info-renderer">ลุงโฉลกเฉลยเรื่อง Beauty 9 07 2018</h4>
+�ޮ]<?php exit; ?>a:1:{s:7:"content";O:8:"stdClass":24:{s:2:"ID";i:19313;s:11:"post_author";s:4:"1985";s:9:"post_date";s:19:"2017-11-27 14:52:09";s:13:"post_date_gmt";s:19:"2017-11-27 07:52:09";s:12:"post_content";s:903:"<h4 class="title style-scope ytd-video-primary-info-renderer">ลุงโฉลกเฉลยเรื่อง Beauty 9 07 2018</h4>
 https://www.youtube.com/watch?v=QFHq1cYeLjw
 <h4 class="title style-scope ytd-video-primary-info-renderer">คุยกับลุงโฉลก 22 06 2018</h4>
 https://www.youtube.com/watch?v=Cfx55SSvlBk

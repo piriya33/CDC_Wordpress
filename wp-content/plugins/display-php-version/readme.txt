@@ -1,17 +1,19 @@
 === Display PHP Version ===
-Contributors: dgwyer
+Contributors: dgwyer, wpgoplugins
 Tags: admin, server, support, version, dashboard, widget, display, PHP
-Requires at least: 2.7
-Tested up to: 4.7
-Stable tag: 1.4
+Requires at least: 3.0
+Tested up to: 5.1
+Stable tag: 1.5
 
-Displays the current PHP version in the "At a Glance" admin dashboard widget.
+Displays the currently installed PHP version in the "At a Glance" admin dashboard widget.
 
 == Description ==
 
-Displays the current PHP version in the "At a Glance" admin dashboard widget.
+Very lightweight and simple plugin that displays the currently installed PHP version in the "At a Glance" admin dashboard widget.
 
-Please rate the Plugin if you find it useful, thanks. Also, why not take a moment to check out our other WordPress plugins <a href="http://www.wpgoplugins.com" target="_blank">here</a>.
+Please <a href="https://wordpress.org/support/view/plugin-reviews/display-php-version"><strong>rate</strong></a> this Plugin if you find it useful. It only takes a moment but it's very much appreciated. :)
+
+For more top plugins see our <a href="https://www.wpgoplugins.com" target="_blank">WordPress plugin site</a>. Why not stop by and say hello, we'd love to hear from you!
 
 == Installation ==
 
@@ -25,9 +27,13 @@ Instructions for installing the Display PHP Version Plugin.
 
 == Screenshots ==
 
-1. Show the current PHP version.
+1. Display the currently installed PHP version in the "At a Glance" admin dashboard widget.
 
 == Changelog ==
+
+= 1.5 - April 26, 2019 =
+
+* Tested plugin for WordPress 5.1.
 
 *1.4 update*
 

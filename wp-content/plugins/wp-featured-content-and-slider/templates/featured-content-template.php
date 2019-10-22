@@ -1,6 +1,6 @@
-<?php 
+<?php
 function wpfcas_featuredc_shortcode( $atts) {
-	
+
 	extract(shortcode_atts(array(
 		'limit' 				=> '',
 		'post_type' 			=> WPFCAS_POST_TYPE,
@@ -15,8 +15,9 @@ function wpfcas_featuredc_shortcode( $atts) {
 		'content_words_limit' 	=> '',
 	), $atts));
 
-	$post_type 		= (!empty($post_type))		? $post_type 		: WPFCAS_POST_TYPE;
-	$taxonomy 		= (!empty($taxonomy))		? $taxonomy 		: WPFCAS_CAT;
+	$post_type 	= (!empty($post_type))	? $post_type	: WPFCAS_POST_TYPE;
+	$taxonomy 	= (!empty($taxonomy))	? $taxonomy		: WPFCAS_CAT;
+	$grid		= ( !empty( $grid ) && is_numeric($grid) && $grid <= 4 ) ? intval( $grid ) : 1;
 
 	// Define limit
 	if( $limit ) { 
@@ -50,7 +51,6 @@ function wpfcas_featuredc_shortcode( $atts) {
 		$imagestyle = 'square';
 	}
 	
-	
 	if( $design ) { 
 		$designfc = $design; 
 	} else {
@@ -73,16 +73,10 @@ function wpfcas_featuredc_shortcode( $atts) {
         $showContent = 'true';
     }
 
-	ob_start();
-
-	$posts_type 	= $post_type;
-	$orderby 		= 'post_date';
-	$order 			= 'DESC';
-
 	$args = array ( 
-            'post_type'      => $posts_type, 
-            'orderby'        => $orderby, 
-            'order'          => $order,
+            'post_type'      => $post_type, 
+            'orderby'        => 'post_date', 
+            'order'          => 'DESC',
             'posts_per_page' => $posts_per_page,
            );
 
@@ -96,15 +90,16 @@ function wpfcas_featuredc_shortcode( $atts) {
     }
 	
 	$query = new WP_Query($args);
-	$post_count = $query->post_count; ?>
+
+	ob_start();
+?>
 	<div class="featured-content-list <?php echo $designfc; ?>">
-		 <?php $count = 0;
-		 while ($query->have_posts()) : $query->the_post();		
-			$count++;
-			
-			$css_class = 'featured-content';
-				if ( ( is_numeric( $perrow ) && ( $perrow > 0 ) && ( 0 == ( $count - 1 ) % $perrow ) ) || 1 == $count ) { $css_class .= ' first'; }
-				if ( ( is_numeric( $perrow ) && ( $perrow > 0 ) && ( 0 == $count % $perrow ) ) || count( $query ) == $count ) { $css_class .= ' last'; }
+		<?php $count = 0;
+			while ($query->have_posts()) : $query->the_post();		
+				$count++;
+
+				$css_class = 'featured-content';
+				$css_class .= ( $count % $grid  == 1 ) ? ' first' : '';
 
 				if($perrow == 2){
 						$per_row = 6;
@@ -138,13 +133,14 @@ function wpfcas_featuredc_shortcode( $atts) {
 					break;
 				 default:	
 						include('designs/design-1.php');
-
-					}
+			}
 
 		endwhile; ?>
 	</div>
 
-	<?php wp_reset_query();
-return ob_get_clean();
+	<?php wp_reset_postdata();
+
+	return ob_get_clean();
 }
-add_shortcode('featured-content','wpfcas_featuredc_shortcode');
+
+add_shortcode('featured-content', 'wpfcas_featuredc_shortcode');

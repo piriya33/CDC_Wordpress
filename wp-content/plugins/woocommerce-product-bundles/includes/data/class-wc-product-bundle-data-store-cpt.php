@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Bundle data stored as Custom Post Type. For use with the WC 2.7+ CRUD API.
  *
  * @class    WC_Product_Bundle_Data_Store_CPT
- * @version  5.8.0
+ * @version  5.10.0
  */
 class WC_Product_Bundle_Data_Store_CPT extends WC_Product_Data_Store_CPT {
 
@@ -160,6 +160,13 @@ class WC_Product_Bundle_Data_Store_CPT extends WC_Product_Data_Store_CPT {
 			do_action( 'woocommerce_product_set_stock_status', $product->get_id(), $product->get_stock_status(), $product );
 		}
 
+		// Update WC 3.6+ lookup table.
+		if ( WC_PB_Core_Compatibility::is_wc_version_gte( '3.6' ) ) {
+			if ( array_intersect( $this->updated_props, array( 'sku', 'total_sales', 'average_rating', 'stock_quantity', 'stock_status', 'manage_stock', 'downloadable', 'virtual' ) ) ) {
+				$this->update_lookup_table( $product->get_id(), 'wc_product_meta_lookup' );
+			}
+		}
+
 		// Trigger action so 3rd parties can deal with updated props.
 		do_action( 'woocommerce_product_object_updated_props', $product, $this->updated_props );
 
@@ -206,6 +213,45 @@ class WC_Product_Bundle_Data_Store_CPT extends WC_Product_Data_Store_CPT {
 	}
 
 	/**
+	 * Get data to save to a lookup table.
+	 *
+	 * @since  4.0.0
+	 *
+	 * @param  int     $id
+	 * @param  string  $table
+	 * @return array
+	 */
+	protected function get_data_for_lookup_table( $id, $table ) {
+
+		if ( 'wc_product_meta_lookup' === $table ) {
+
+			$min_price_meta   = (array) get_post_meta( $id, '_price', false );
+			$max_price_meta   = (array) get_post_meta( $id, '_wc_sw_max_price', false );
+			$manage_stock = get_post_meta( $id, '_manage_stock', true );
+			$stock        = 'yes' === $manage_stock ? wc_stock_amount( get_post_meta( $id, '_stock', true ) ) : null;
+			$price        = wc_format_decimal( get_post_meta( $id, '_price', true ) );
+			$sale_price   = wc_format_decimal( get_post_meta( $id, '_sale_price', true ) );
+
+			return array(
+				'product_id'     => absint( $id ),
+				'sku'            => get_post_meta( $id, '_sku', true ),
+				'virtual'        => 'yes' === get_post_meta( $id, '_virtual', true ) ? 1 : 0,
+				'downloadable'   => 'yes' === get_post_meta( $id, '_downloadable', true ) ? 1 : 0,
+				'min_price'      => reset( $min_price_meta ),
+				'max_price'      => end( $max_price_meta ),
+				'onsale'         => $sale_price && $price === $sale_price ? 1 : 0,
+				'stock_quantity' => $stock,
+				'stock_status'   => get_post_meta( $id, '_stock_status', true ),
+				'rating_count'   => array_sum( (array) get_post_meta( $id, '_wc_rating_count', true ) ),
+				'average_rating' => get_post_meta( $id, '_wc_average_rating', true ),
+				'total_sales'    => get_post_meta( $id, 'total_sales', true ),
+			);
+		}
+
+		return array();
+	}
+
+	/**
 	 * Writes bundle raw price meta to the DB.
 	 *
 	 * @param  WC_Product_Bundle  $product
@@ -249,14 +295,21 @@ class WC_Product_Bundle_Data_Store_CPT extends WC_Product_Data_Store_CPT {
 
 			$sale_price_changed = false;
 
+			// Update sale price.
 			if ( $product->is_on_sale( 'edit' ) ) {
 				$sale_price_changed = update_post_meta( $id, '_sale_price', $product->get_min_raw_price( 'edit' ) );
 			} else {
 				$sale_price_changed = update_post_meta( $id, '_sale_price', '' );
 			}
 
+			// Delete on-sale transient.
 			if ( $sale_price_changed ) {
 				delete_transient( 'wc_products_onsale' );
+			}
+
+			// Update WC 3.6+ lookup table.
+			if ( WC_PB_Core_Compatibility::is_wc_version_gte( '3.6' ) ) {
+				$this->update_lookup_table( $product->get_id(), 'wc_product_meta_lookup' );
 			}
 
 			do_action( 'woocommerce_product_object_updated_props', $product, $updated_props );

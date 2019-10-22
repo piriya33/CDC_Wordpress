@@ -276,7 +276,9 @@ class WC_Bundled_Item_Data {
 	public function set_meta_data( $data ) {
 		if ( ! empty( $data ) && is_array( $data ) ) {
 			foreach ( $data as $key => $value ) {
-				$this->meta_data[ $key ] = $this->sanitize_meta_value( $value, $key );
+				if ( $this->has_meta_value( $value ) ) {
+					$this->meta_data[ $key ] = $this->sanitize_meta_value( $value, $key );
+				}
 			}
 		}
 	}
@@ -382,7 +384,6 @@ class WC_Bundled_Item_Data {
 
 		$this->save_meta_data();
 
-
 		if ( $this->get_bundle_id() ) {
 
 			// Clear WC_Bundled_Item_Data objects from cache.
@@ -393,6 +394,7 @@ class WC_Bundled_Item_Data {
 			WC_PB_Helpers::cache_invalidate( 'wc_bundled_item_' . $this->get_id() . '_' . $this->get_bundle_id() );
 
 		} else {
+
 			WC_Cache_Helper::incr_cache_prefix( 'bundled_data_items' );
 		}
 

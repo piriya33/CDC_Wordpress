@@ -75,24 +75,25 @@ class SP_Designer_CSS_Control extends WP_Customize_Control {
 						</div>
 					</li>
 					<li>
-						<label class="sp-designer-sub-title"><?php _e( 'Show/Hide', 'storefront-powerpack' ); ?></label>
+						<label class="customize-control-title"><?php _e( 'Display', 'storefront-powerpack' ); ?></label>
+
+						<div class="sp-designer-css-property sp-designer-update-display">
+							<label class="sp-designer-sub-title"><?php _e( 'Show / Hide', 'storefront-powerpack' ); ?></label>
 
 							<select data-sp-designer-property="updateDisplay">
 								<?php foreach ( array( 'inline' => __( 'Show', 'storefront-powerpack' ), 'none' => __( 'Hide', 'storefront-powerpack' ) ) as $k => $v ) : ?>
 									<option value="<?php echo esc_attr( $k ); ?>" <# if ( '<?php echo esc_attr( $k ); ?>' == data.css.updateDisplay ) { #> selected<# } #>><?php echo esc_attr( $v ); ?></option>
 								<?php endforeach; ?>
 							</select>
+						</div>
+
+						<hr style="margin: 1em 0; clear: both;">
 					</li>
 					<li>
 						<label class="customize-control-title"><?php _e( 'Text', 'storefront-powerpack' ); ?></label>
 
 						<div class="sp-designer-css-property sp-designer-font-style">
 							<label class="sp-designer-sub-title"><?php _e( 'Font Style', 'storefront-powerpack' ); ?></label>
-
-							<label for="bold_{{ data.id }}">
-								<input name="bold_{{ data.id }}" id="bold_{{ data.id }}" class="sp-designer-radio-toggle" type="checkbox" value="bold" data-sp-designer-property="fontWeight" <# if ( 'bold' == data.css.fontWeight ) { #> checked<# } #> />
-								<span class="sp-toggle dashicons dashicons-editor-bold"></span>
-							</label>
 
 							<label for="italic_{{ data.id }}">
 								<input name="italic_{{ data.id }}" id="italic_{{ data.id }}" class="sp-designer-radio-toggle" type="checkbox" value="italic" data-sp-designer-property="fontStyle" <# if ( 'italic' == data.css.fontStyle ) { #> checked<# } #> />
@@ -121,6 +122,23 @@ class SP_Designer_CSS_Control extends WP_Customize_Control {
 										<?php endforeach; ?>
 									</optgroup>
 								<?php endforeach; ?>
+							</select>
+						</div>
+
+						<div class="sp-designer-css-property sp-designer-font-weight">
+							<label class="sp-designer-sub-title"><?php _e( 'Font Weight', 'storefront-powerpack' ); ?></label>
+
+							<select class="font-weight" data-sp-designer-property="fontWeight">
+								<option value=""><?php _e( 'Default', 'storefront-powerpack' ); ?></option>
+								<option value="100" <# if ( 100 == data.css.fontWeight ) { #> selected<# } #>>100 - <?php _e( 'Thin', 'storefront-powerpack' ); ?></option>
+								<option value="200" <# if ( 200 == data.css.fontWeight ) { #> selected<# } #>>200 - <?php _e( 'Extra Light', 'storefront-powerpack' ); ?></option>
+								<option value="300" <# if ( 300 == data.css.fontWeight ) { #> selected<# } #>>300 - <?php _e( 'Light', 'storefront-powerpack' ); ?></option>
+								<option value="400" <# if ( 400 == data.css.fontWeight ) { #> selected<# } #>>400 - <?php _e( 'Normal', 'storefront-powerpack' ); ?></option>
+								<option value="500" <# if ( 500 == data.css.fontWeight ) { #> selected<# } #>>500 - <?php _e( 'Medium', 'storefront-powerpack' ); ?></option>
+								<option value="600" <# if ( 600 == data.css.fontWeight ) { #> selected<# } #>>600 - <?php _e( 'Semi Bold', 'storefront-powerpack' ); ?></option>
+								<option value="700" <# if ( 700 == data.css.fontWeight ) { #> selected<# } #>>700 - <?php _e( 'Bold', 'storefront-powerpack' ); ?></option>
+								<option value="800" <# if ( 800 == data.css.fontWeight ) { #> selected<# } #>>800 - <?php _e( 'Extra Bold', 'storefront-powerpack' ); ?></option>
+								<option value="900" <# if ( 900 == data.css.fontWeight ) { #> selected<# } #>>900 - <?php _e( 'Ultra Bold', 'storefront-powerpack' ); ?></option>
 							</select>
 						</div>
 

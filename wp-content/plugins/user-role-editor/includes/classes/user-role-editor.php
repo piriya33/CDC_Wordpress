@@ -115,7 +115,7 @@ class User_Role_Editor {
             return;
         }
         
-        add_action('admin_init', array($this, 'plugin_init'), 1);
+        add_action( 'admin_init', array($this, 'plugin_init'), 1 );
 
         // Add the translation function after the plugins loaded hook.
         add_action('plugins_loaded', array($this, 'load_translation'));
@@ -123,9 +123,9 @@ class User_Role_Editor {
         // add own submenu 
         add_action('admin_menu', array($this, 'plugin_menu'));
       		
-        if ($multisite) {
+        if ( $multisite ) {
             // add own submenu 
-            add_action('network_admin_menu', array($this, 'network_plugin_menu'));
+            add_action( 'network_admin_menu', array($this, 'network_plugin_menu') );
         }
 
 
@@ -146,6 +146,16 @@ class User_Role_Editor {
     }
     // end of is_pro()
         
+    
+    public function load_users_page() {
+        
+        add_action('restrict_manage_users', array($this, 'show_move_users_from_no_role_button'));
+        add_action('admin_head', array($this, 'add_css_to_users_page'));
+        add_action('admin_footer', array($this, 'add_js_to_users_page'));        
+        
+    }
+    // end of load_users_page()
+    
     
     /**
      * Plugin initialization
@@ -179,12 +189,16 @@ class User_Role_Editor {
                     add_filter('site_option_site_admins', array($this, 'allow_add_user_as_superadmin'));
                 }
             }
+            
+            if ( $pagenow=='site-users.php' ) {
+                // Try to execute before any other function linked to this filter
+                add_filter( 'editable_roles', array($this, 'fix_network_admin_roles_dropdown'), 9 );
+            }
+            
         } else {
             $count_users_without_role = $this->lib->get_option('count_users_without_role', 0);
             if ($count_users_without_role) {
-                add_action('restrict_manage_users', array($this, 'move_users_from_no_role_button'));
-                add_action('admin_head', array($this, 'add_css_to_users_page'));
-                add_action('admin_footer', array($this, 'add_js_to_users_page'));
+                add_action( 'load-users.php', array($this, 'load_users_page') );                
             }
         }
 
@@ -194,9 +208,14 @@ class User_Role_Editor {
         }
        
         add_action('wp_ajax_ure_ajax', array($this, 'ure_ajax'));
+        
+        $sort_roles = apply_filters( 'ure_sort_wp_roles_list', false );
+        if ( $sort_roles ) {
+            add_filter( 'editable_roles', array( $this, 'sort_wp_roles_list' ), 11, 1 );
+        }
     }
     // end of plugin_init()
-    
+
 
     /**
    * Allow non-superadmin user to add/create users to the site as superadmin does.
@@ -235,12 +254,9 @@ class User_Role_Editor {
   // end of allow_add_user_as_superadmin()
   
   
-  public function move_users_from_no_role_button() {
+  public function show_move_users_from_no_role_button() {
       
-      if (!$this->lib->is_right_admin_path('users.php')) {      
-            return;
-      }
-      if (!current_user_can('edit_users')) {
+      if ( !current_user_can( 'promote_users' ) ) {
           return;
       }
       
@@ -249,33 +265,19 @@ class User_Role_Editor {
       
   }
   // end of move_users_from_no_role()
-  
+      
   
   public function add_css_to_users_page() {
       
-      if (isset($_GET['page'])) {
-          return;
-      }
-      if (!$this->lib->is_right_admin_path('users.php')) {
-          return;
-      }                  
-
-      wp_enqueue_style('wp-jquery-ui-dialog');
-      wp_enqueue_style('ure-admin-css', URE_PLUGIN_URL . 'css/ure-admin.css', array(), false, 'screen');
+      wp_enqueue_style( 'wp-jquery-ui-dialog' );
+      wp_enqueue_style( 'ure-admin-css', URE_PLUGIN_URL . 'css/ure-admin.css', array(), false, 'screen' );
       
   }
   // end of add_css_to_users_page()
   
   
   public function add_js_to_users_page() {
-  
-      if (isset($_GET['page'])) {
-          return;
-      }
-      if (!$this->lib->is_right_admin_path('users.php')) {
-          return;
-      }             
-      
+              
       wp_enqueue_script('jquery-ui-dialog', '', array('jquery-ui-core','jquery-ui-button', 'jquery') );
       wp_register_script( 'ure-users', plugins_url( '/js/users.js', URE_PLUGIN_FULL_PATH ) );
       wp_enqueue_script ( 'ure-users' );      
@@ -830,6 +832,57 @@ class User_Role_Editor {
         
     }
     // end of set_role_additional_options_hooks()
+
+
+    /**
+     * Sort roles array alphabetically
+     * @param array $roles
+     * @return array
+     */
+    public function sort_wp_roles_list( $roles ) {
+        
+        ksort( $roles );
+        // wp-admin/includes/template/wp_dropdown_roles() showed roles in reversed order, #906:
+        // $editable_roles = array_reverse( get_editable_roles() );
+        // so we have to reverse them 1st, in order they will be reversed back to the ascending order
+        $roles = array_reverse( $roles  );
+        
+        return $roles;
+    }
+    // end of sort_wp_roles_list()
+
+
+    /** Currently WordPress (tested up to version 5.2.3) shows "Change role to..." drop-down list at Network admin->Sites->selected site->Users with roles filled from the main site,
+    /*  but should use roles list from the selected site. This function replaces roles list with roles from the selected site and 
+     *  excludes error messsage "Sorry, you are not allowed to give users that role.", when you try to grant to a user a role which does not exist at the selected site.
+     * 
+     * @param array $roles
+     * @return array
+     */
+    public function fix_network_admin_roles_dropdown( $roles ) {
+                        
+        // get selected site ID
+        $selected_blog_id = isset( $_REQUEST['id'] ) ? intval( $_REQUEST['id'] ) : 0;
+        if ( !$selected_blog_id ) {
+            return $roles;
+        }
+        
+        $current_blog_id = get_current_blog_id();        
+        if ( $current_blog_id!==$selected_blog_id ) {
+            switch_to_blog( $selected_blog_id );
+        }
+        
+        remove_filter( 'editable_roles', array($this, 'fix_network_admin_roles_dropdown'), 9 );
+        $roles1 = get_editable_roles();
+        add_filter( 'editable_roles', array($this, 'fix_network_admin_roles_dropdown'), 9 );
+        
+        if ( $current_blog_id!==$selected_blog_id ) {
+            restore_current_blog();
+        }
+                
+        return $roles1;
+    }
+    // end of fix_network_admin_roles_dropdown()
     
     
     // execute on plugin deactivation

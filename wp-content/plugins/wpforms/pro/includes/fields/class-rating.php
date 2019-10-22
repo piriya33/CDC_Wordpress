@@ -424,7 +424,7 @@ class WPForms_Rating_Text extends WPForms_Field {
 		$svg = str_replace( 'width=""', 'width="' . absint( $rating['size'] ) . '"', $svg );
 		$svg = str_replace( 'height=""', 'height="' . absint( $rating['size'] ) . '"', $svg );
 		$svg = str_replace( 'style=""', 'style="height:' . absint( $rating['size'] ) . 'px;width:' . absint( $rating['size'] ) . 'px;"', $svg );
-		$svg = str_replace( 'fill=""', 'fill="' . wpforms_sanitize_hex_color( $rating['color'] ) . '"', $svg );
+		$svg = str_replace( 'fill=""', 'fill="currentColor" color="' . wpforms_sanitize_hex_color( $rating['color'] ) . '"', $svg );
 
 		echo '<div class="wpforms-field-rating-items">';
 

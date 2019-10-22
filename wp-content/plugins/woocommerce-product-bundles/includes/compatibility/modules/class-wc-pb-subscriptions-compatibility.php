@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Subscriptions Integration.
  *
- * @version  5.4.1
+ * @version  5.10.1
  */
 class WC_PB_Subscriptions_Compatibility {
 
@@ -74,10 +74,17 @@ class WC_PB_Subscriptions_Compatibility {
 	public static function validate_bundle( $valid, $bundle ) {
 
 		if ( $bundle->contains( 'multiple_subscriptions' ) ) {
-			if ( class_exists( 'WC_Subscriptions_Payment_Gateways' ) && false === WC_Subscriptions_Payment_Gateways::one_gateway_supports( 'multiple_subscriptions' ) ) {
-				wc_add_notice( sprintf( __( '&quot;%1$s&quot; cannot be purchased due to payment gateway restrictions.', 'woocommerce-product-bundles' ), $bundle->get_title() ), 'error' );
-				return false;
+
+			if ( class_exists( 'WC_Subscriptions_Payment_Gateways' ) && class_exists( 'WC_Subscriptions_Admin' ) ) {
+
+				$manual_renewals_enabled = 'yes' === get_option( WC_Subscriptions_Admin::$option_prefix . '_accept_manual_renewals', 'no' );
+
+				if ( false === WC_Subscriptions_Payment_Gateways::one_gateway_supports( 'multiple_subscriptions' ) && false === $manual_renewals_enabled ) {
+					wc_add_notice( sprintf( __( '&quot;%1$s&quot; cannot be purchased due to payment gateway restrictions.', 'woocommerce-product-bundles' ), $bundle->get_title() ), 'error' );
+					return false;
+				}
 			}
+
 		}
 
 		return $valid;

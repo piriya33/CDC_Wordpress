@@ -100,6 +100,7 @@ if ( ! class_exists( 'SP_Frontend_Header' ) ) :
 
 			foreach ( $rows as $row ) {
 				if ( empty( $row ) ) {
+					$rows_html .= '<div class="sp-header-empty"></div>';
 					continue;
 				}
 
@@ -176,6 +177,19 @@ if ( ! class_exists( 'SP_Frontend_Header' ) ) :
 
 			foreach ( $widgets as $key => $widget ) {
 				$widget_rows[ $widget['y'] ][ $key ] = $widget;
+			}
+
+			ksort( $widget_rows );
+
+			// Add empty rows.
+			$row_keys = array_keys( $widget_rows );
+
+			$last_key = end( $row_keys );
+
+			for ( $i = 0; $i < $last_key; $i++ ) {
+				if ( ! array_key_exists( $i, $widget_rows ) ) {
+					$widget_rows[ $i ] = array();
+				}
 			}
 
 			ksort( $widget_rows );

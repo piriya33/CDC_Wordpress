@@ -13,9 +13,10 @@
 <link rel='dns-prefetch' href='//s.w.org' />
 <link rel="alternate" type="application/rss+xml" title="Chaloke Dot Com &raquo; Feed" href="http://dev.chaloke.com/feed/" />
 <link rel="alternate" type="application/rss+xml" title="Chaloke Dot Com &raquo; Comments Feed" href="http://dev.chaloke.com/comments/feed/" />
+<link rel="alternate" type="text/calendar" title="Chaloke Dot Com &raquo; iCal Feed" href="http://dev.chaloke.com/events/?ical=1" />
 		<script type="text/javascript">
-			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/11.2.0\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/11.2.0\/svg\/","svgExt":".svg","source":{"concatemoji":"http:\/\/dev.chaloke.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.1.1"}};
-			!function(a,b,c){function d(a,b){var c=String.fromCharCode;l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,a),0,0);var d=k.toDataURL();l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,b),0,0);var e=k.toDataURL();return d===e}function e(a){var b;if(!l||!l.fillText)return!1;switch(l.textBaseline="top",l.font="600 32px Arial",a){case"flag":return!(b=d([55356,56826,55356,56819],[55356,56826,8203,55356,56819]))&&(b=d([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]),!b);case"emoji":return b=d([55358,56760,9792,65039],[55358,56760,8203,9792,65039]),!b}return!1}function f(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var g,h,i,j,k=b.createElement("canvas"),l=k.getContext&&k.getContext("2d");for(j=Array("flag","emoji"),c.supports={everything:!0,everythingExceptFlag:!0},i=0;i<j.length;i++)c.supports[j[i]]=e(j[i]),c.supports.everything=c.supports.everything&&c.supports[j[i]],"flag"!==j[i]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[j[i]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(h=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",h,!1),a.addEventListener("load",h,!1)):(a.attachEvent("onload",h),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),g=c.source||{},g.concatemoji?f(g.concatemoji):g.wpemoji&&g.twemoji&&(f(g.twemoji),f(g.wpemoji)))}(window,document,window._wpemojiSettings);
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/12.0.0-1\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/12.0.0-1\/svg\/","svgExt":".svg","source":{"concatemoji":"http:\/\/dev.chaloke.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.2.4"}};
+			!function(a,b,c){function d(a,b){var c=String.fromCharCode;l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,a),0,0);var d=k.toDataURL();l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,b),0,0);var e=k.toDataURL();return d===e}function e(a){var b;if(!l||!l.fillText)return!1;switch(l.textBaseline="top",l.font="600 32px Arial",a){case"flag":return!(b=d([55356,56826,55356,56819],[55356,56826,8203,55356,56819]))&&(b=d([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]),!b);case"emoji":return b=d([55357,56424,55356,57342,8205,55358,56605,8205,55357,56424,55356,57340],[55357,56424,55356,57342,8203,55358,56605,8203,55357,56424,55356,57340]),!b}return!1}function f(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var g,h,i,j,k=b.createElement("canvas"),l=k.getContext&&k.getContext("2d");for(j=Array("flag","emoji"),c.supports={everything:!0,everythingExceptFlag:!0},i=0;i<j.length;i++)c.supports[j[i]]=e(j[i]),c.supports.everything=c.supports.everything&&c.supports[j[i]],"flag"!==j[i]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[j[i]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(h=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",h,!1),a.addEventListener("load",h,!1)):(a.attachEvent("onload",h),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),g=c.source||{},g.concatemoji?f(g.concatemoji):g.wpemoji&&g.twemoji&&(f(g.twemoji),f(g.wpemoji)))}(window,document,window._wpemojiSettings);
 		</script>
 		<style type="text/css">
 img.wp-smiley,
@@ -32,14 +33,15 @@ img.emoji {
 }
 </style>
 	<link rel='stylesheet' id='gdbbx-front-widgets-css'  href='http://dev.chaloke.com/wp-content/plugins/gd-bbpress-toolbox/css/front-widgets.min.css?ver=4.7.2.625' type='text/css' media='all' />
-<link rel='stylesheet' id='wp-block-library-css'  href='http://dev.chaloke.com/wp-includes/css/dist/block-library/style.min.css?ver=5.1.1' type='text/css' media='all' />
-<link rel='stylesheet' id='wp-block-library-theme-css'  href='http://dev.chaloke.com/wp-includes/css/dist/block-library/theme.min.css?ver=5.1.1' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-block-library-css'  href='http://dev.chaloke.com/wp-includes/css/dist/block-library/style.min.css?ver=5.2.4' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-block-library-theme-css'  href='http://dev.chaloke.com/wp-includes/css/dist/block-library/theme.min.css?ver=5.2.4' type='text/css' media='all' />
+<link rel='stylesheet' id='wc-vendors-css'  href='http://dev.chaloke.com/wp-content/plugins/woo-gutenberg-products-block/build/vendors.css?ver=1.4.0' type='text/css' media='all' />
+<link rel='stylesheet' id='wc-featured-product-editor-css'  href='http://dev.chaloke.com/wp-content/plugins/woo-gutenberg-products-block/build/featured-product.css?ver=1.4.0' type='text/css' media='all' />
 <link rel='stylesheet' id='bbp-default-css'  href='http://dev.chaloke.com/wp-content/plugins/bbpress/templates/default/css/bbpress.css?ver=2.5.14-6684' type='text/css' media='screen' />
 <link rel='stylesheet' id='cptch_stylesheet-css'  href='http://dev.chaloke.com/wp-content/plugins/captcha/css/front_end_style.css?ver=4.4.5' type='text/css' media='all' />
-<link rel='stylesheet' id='dashicons-css'  href='http://dev.chaloke.com/wp-includes/css/dashicons.min.css?ver=5.1.1' type='text/css' media='all' />
+<link rel='stylesheet' id='dashicons-css'  href='http://dev.chaloke.com/wp-includes/css/dashicons.min.css?ver=5.2.4' type='text/css' media='all' />
 <link rel='stylesheet' id='cptch_desktop_style-css'  href='http://dev.chaloke.com/wp-content/plugins/captcha/css/desktop_style.css?ver=4.4.5' type='text/css' media='all' />
-<link rel='stylesheet' id='contact-form-7-css'  href='http://dev.chaloke.com/wp-content/plugins/contact-form-7/includes/css/styles.css?ver=5.1.1' type='text/css' media='all' />
-<link rel='stylesheet' id='cf7cf-style-css'  href='http://dev.chaloke.com/wp-content/plugins/cf7-conditional-fields/style.css?ver=1.4.1' type='text/css' media='all' />
+<link rel='stylesheet' id='contact-form-7-css'  href='http://dev.chaloke.com/wp-content/plugins/contact-form-7/includes/css/styles.css?ver=5.1.4' type='text/css' media='all' />
 <link rel='stylesheet' id='wp_html5video_css-css'  href='http://dev.chaloke.com/wp-content/plugins/html5-videogallery-plus-player/assets/css/video-js.css?ver=2.3.2' type='text/css' media='all' />
 <link rel='stylesheet' id='wp_html5video_colcss-css'  href='http://dev.chaloke.com/wp-content/plugins/html5-videogallery-plus-player/assets/css/video-style.css?ver=2.3.2' type='text/css' media='all' />
 <link rel='stylesheet' id='wpos-magnific-popup-style-css'  href='http://dev.chaloke.com/wp-content/plugins/html5-videogallery-plus-player/assets/css/magnific-popup.css?ver=2.3.2' type='text/css' media='all' />
@@ -337,11 +339,11 @@ img.emoji {
 </style>
 <link rel='stylesheet' id='storefront-icons-css'  href='http://dev.chaloke.com/wp-content/themes/storefront/assets/css/base/icons.css?ver=2.4.5' type='text/css' media='all' />
 <link rel='stylesheet' id='storefront-fonts-css'  href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,300italic,400italic,600,700,900&#038;subset=latin%2Clatin-ext' type='text/css' media='all' />
-<link rel='stylesheet' id='sbc-styles-css'  href='http://dev.chaloke.com/wp-content/plugins/storefront-blog-customiser/assets/css/style.css?ver=5.1.1' type='text/css' media='all' />
-<link rel='stylesheet' id='sd-styles-css'  href='http://dev.chaloke.com/wp-content/plugins/storefront-designer/assets/css/style.css?ver=5.1.1' type='text/css' media='all' />
-<link rel='stylesheet' id='sd-styles-2-css'  href='http://dev.chaloke.com/wp-content/plugins/storefront-designer/assets/css/style-2.css?ver=5.1.1' type='text/css' media='all' />
+<link rel='stylesheet' id='sbc-styles-css'  href='http://dev.chaloke.com/wp-content/plugins/storefront-blog-customiser/assets/css/style.css?ver=5.2.4' type='text/css' media='all' />
+<link rel='stylesheet' id='sd-styles-css'  href='http://dev.chaloke.com/wp-content/plugins/storefront-designer/assets/css/style.css?ver=5.2.4' type='text/css' media='all' />
+<link rel='stylesheet' id='sd-styles-2-css'  href='http://dev.chaloke.com/wp-content/plugins/storefront-designer/assets/css/style-2.css?ver=5.2.4' type='text/css' media='all' />
 <link rel='stylesheet' id='bfa-font-awesome-css'  href='//cdn.jsdelivr.net/fontawesome/4.7.0/css/font-awesome.min.css?ver=4.7.0' type='text/css' media='all' />
-<link rel='stylesheet' id='jquery-ui-smoothness-css'  href='http://dev.chaloke.com/wp-content/plugins/contact-form-7/includes/js/jquery-ui/themes/smoothness/jquery-ui.min.css?ver=1.11.4' type='text/css' media='screen' />
+<link rel='stylesheet' id='cf7cf-style-css'  href='http://dev.chaloke.com/wp-content/plugins/cf7-conditional-fields/style.css?ver=1.7' type='text/css' media='all' />
 <link rel='stylesheet' id='storefront-woocommerce-style-css'  href='http://dev.chaloke.com/wp-content/themes/storefront/assets/css/woocommerce/woocommerce.css?ver=2.4.5' type='text/css' media='all' />
 <style id='storefront-woocommerce-style-inline-css' type='text/css'>
 
@@ -586,22 +588,20 @@ img.emoji {
 <link rel='stylesheet' id='sp-layout-css'  href='http://dev.chaloke.com/wp-content/plugins/storefront-powerpack/includes/customizer/layout/assets/css/layout.css?ver=1.4.15' type='text/css' media='all' />
 <link rel='stylesheet' id='sp-styles-css'  href='http://dev.chaloke.com/wp-content/plugins/storefront-powerpack/assets/css/style.css?ver=1.4.15' type='text/css' media='all' />
 <link rel='stylesheet' id='wc-bundle-style-css'  href='http://dev.chaloke.com/wp-content/plugins/woocommerce-product-bundles/assets/css/frontend/woocommerce.css?ver=5.9.2' type='text/css' media='all' />
-<link rel='stylesheet' id='custom-css-css'  href='http://dev.chaloke.com/wp-content/plugins/theme-customisations-master/custom/style.css?ver=5.1.1' type='text/css' media='all' />
-<script type='text/javascript' src='http://dev.chaloke.com/wp-includes/js/jquery/jquery.js?ver=1.12.4'></script>
+<link rel='stylesheet' id='custom-css-css'  href='http://dev.chaloke.com/wp-content/plugins/theme-customisations-master/custom/style.css?ver=5.2.4' type='text/css' media='all' />
+<!--n2css--><script>if (document.location.protocol != "https:") {document.location = document.URL.replace(/^http:/i, "https:");}</script><script type='text/javascript' src='http://dev.chaloke.com/wp-includes/js/jquery/jquery.js?ver=1.12.4-wp'></script>
 <script type='text/javascript' src='http://dev.chaloke.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1'></script>
-<script type='text/javascript' src='http://dev.chaloke.com/wp-content/plugins/theme-customisations-master/custom/custom.js?ver=5.1.1'></script>
-<script type='text/javascript' src='http://dev.chaloke.com/wp-content/plugins/storefront-designer/assets/js/jquery-sticky.min.js?ver=1.0.0'></script>
-<script type='text/javascript' src='http://dev.chaloke.com/wp-content/plugins/storefront-designer/assets/js/sticky-navigation.min.js?ver=1.0.0'></script>
+<script type='text/javascript' src='http://dev.chaloke.com/wp-content/plugins/theme-customisations-master/custom/custom.js?ver=5.2.4'></script>
 <link rel='https://api.w.org/' href='http://dev.chaloke.com/wp-json/' />
 <link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://dev.chaloke.com/xmlrpc.php?rsd" />
 <link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://dev.chaloke.com/wp-includes/wlwmanifest.xml" /> 
-<meta name="generator" content="WordPress 5.1.1" />
-<meta name="generator" content="WooCommerce 3.5.6" />
+<meta name="generator" content="WordPress 5.2.4" />
+<meta name="generator" content="WooCommerce 3.5.7" />
 <meta name="generator" content="GD bbPress Toolbox Pro 4.7.2, Build 625" />
-<meta name="et-api-version" content="v1"><meta name="et-api-origin" content="http://dev.chaloke.com"><link rel="https://theeventscalendar.com/" href="http://dev.chaloke.com/wp-json/tribe/tickets/v1/" />
+<meta name="tec-api-version" content="v1"><meta name="tec-api-origin" content="http://dev.chaloke.com"><link rel="https://theeventscalendar.com/" href="http://dev.chaloke.com/wp-json/tribe/events/v1/" />
 <script type="text/javascript">
     /* <![CDATA[ */
-    var gdbxRender_Data = { url: "http://dev.chaloke.com/wp-admin/admin-ajax.php", run_quote: true, run_report: false, run_thanks: false, run_attachments: true, run_canned_replies: false, run_bbcodes: true, run_fitvids: true, wp_editor: true, wp_version: 51, last_cookie: 1554352127, bbpress_version: 25, text_are_you_sure: "Are you sure? Operation is not reversible.", now: 1554348527, thanks_thanks: "Thanks", thanks_unthanks: "Remove Thanks", thanks_saved: "Thanks Saved", thanks_removal: true, validate_attachments: true, insert_into_content: true, max_files: 5, max_size: 5120000, limiter: true, allowed_extensions: "jpg jpeg jpe gif png bmp tiff tif ico asf asx wmv wmx wm avi divx flv mov qt mpeg mpg mpe mp4 m4v ogv webm mkv 3gp 3gpp 3g2 3gp2 txt asc c cc h srt csv tsv ics rtx css vtt dfxp mp3 m4a m4b aac ra ram wav ogg oga flac mid midi wma wax mka rtf pdf class tar zip gz gzip rar 7z psd xcf doc pot pps ppt wri xla xls xlt xlw mdb mpp docx docm dotx dotm xlsx xlsm xlsb xltx xltm xlam pptx pptm ppsx ppsm potx potm ppam sldx sldm onetoc onetoc2 onetmp onepkg oxps xps odt odp ods odg odc odb odf wp wpd key numbers pages afl", text_select_file: "Select File", text_file_name: "Name", text_file_size: "Size", text_file_type: "Extension", text_file_validation: "Error!", text_file_validation_size: "The file is too big.", text_file_validation_type: "File type not allowed.", text_file_remove: "Remove this file", text_file_shortcode: "Insert into content", text_file_caption: "Set file caption", text_file_caption_placeholder: "Caption..." };
+    var gdbxRender_Data = { url: "http://dev.chaloke.com/wp-admin/admin-ajax.php", run_quote: true, run_report: false, run_thanks: false, run_attachments: true, run_canned_replies: false, run_bbcodes: true, run_fitvids: true, wp_editor: true, wp_version: 52, last_cookie: 1571744610, bbpress_version: 25, text_are_you_sure: "Are you sure? Operation is not reversible.", now: 1571741010, thanks_thanks: "Thanks", thanks_unthanks: "Remove Thanks", thanks_saved: "Thanks Saved", thanks_removal: true, validate_attachments: true, insert_into_content: true, max_files: 5, max_size: 5120000, limiter: true, allowed_extensions: "jpg jpeg jpe gif png bmp tiff tif ico asf asx wmv wmx wm avi divx flv mov qt mpeg mpg mpe mp4 m4v ogv webm mkv 3gp 3gpp 3g2 3gp2 txt asc c cc h srt csv tsv ics rtx css vtt dfxp mp3 m4a m4b aac ra ram wav ogg oga flac mid midi wma wax mka rtf pdf class tar zip gz gzip rar 7z psd xcf doc pot pps ppt wri xla xls xlt xlw mdb mpp docx docm dotx dotm xlsx xlsm xlsb xltx xltm xlam pptx pptm ppsx ppsm potx potm ppam sldx sldm onetoc onetoc2 onetmp onepkg oxps xps odt odp ods odg odc odb odf wp wpd key numbers pages afl", text_select_file: "Select File", text_file_name: "Name", text_file_size: "Size", text_file_type: "Extension", text_file_validation: "Error!", text_file_validation_size: "The file is too big.", text_file_validation_type: "File type not allowed.", text_file_remove: "Remove this file", text_file_shortcode: "Insert into content", text_file_caption: "Set file caption", text_file_caption_placeholder: "Caption..." };
     /* ]]> */
 </script>
 
@@ -618,11 +618,16 @@ img.emoji {
                 }
             }
         </style>
-    <link rel="icon" href="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2016/07/04093950/cropped-CDClogo2015_rev1_A-32x32.png" sizes="32x32" />
-<link rel="icon" href="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2016/07/04093950/cropped-CDClogo2015_rev1_A-192x192.png" sizes="192x192" />
-<link rel="apple-touch-icon-precomposed" href="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2016/07/04093950/cropped-CDClogo2015_rev1_A-180x180.png" />
-<meta name="msapplication-TileImage" content="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2016/07/04093950/cropped-CDClogo2015_rev1_A-270x270.png" />
-</head>
+    <link rel="icon" href="https://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2016/07/04093950/cropped-CDClogo2015_rev1_A-32x32.png" sizes="32x32" />
+<link rel="icon" href="https://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2016/07/04093950/cropped-CDClogo2015_rev1_A-192x192.png" sizes="192x192" />
+<link rel="apple-touch-icon-precomposed" href="https://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2016/07/04093950/cropped-CDClogo2015_rev1_A-180x180.png" />
+<meta name="msapplication-TileImage" content="https://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2016/07/04093950/cropped-CDClogo2015_rev1_A-270x270.png" />
+		<style type="text/css" id="wp-custom-css">
+			.home.blog .site-header {
+    margin-bottom: 1.22em;
+}
+		</style>
+		</head>
 
 <body class="home blog wp-custom-logo wp-embed-responsive woocommerce-no-js tribe-no-js group-blog storefront-secondary-navigation storefront-align-wide right-sidebar woocommerce-active sp-designer sp-max-width sp-shop-alignment-center sbc-meta-hidden-2-4 sd-fixed-width sd-buttons-rounded sd-buttons-flat sd-buttons-shadows sd-scale-largest sd-button-size-smaller sd-header-compact sd-typography-helvetica">
 
@@ -634,10 +639,10 @@ img.emoji {
 		<div class="col-full">		<a class="skip-link screen-reader-text" href="#site-navigation">Skip to navigation</a>
 		<a class="skip-link screen-reader-text" href="#content">Skip to content</a>
 				<div class="site-branding">
-			<h1 class="logo"><a href="http://dev.chaloke.com/" class="custom-logo-link" rel="home" itemprop="url"><img width="326" height="110" src="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2016/07/04093949/cropped-CDClogo2015_rev1100px_A-simple-copy-2.png" class="custom-logo" alt="Chaloke Dot Com" itemprop="logo" srcset="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2016/07/04093949/cropped-CDClogo2015_rev1100px_A-simple-copy-2.png 326w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2016/07/04093949/cropped-CDClogo2015_rev1100px_A-simple-copy-2-300x101.png 300w" sizes="(max-width: 326px) 100vw, 326px" /></a></h1>		</div>
+			<h1 class="logo"><a href="http://dev.chaloke.com/" class="custom-logo-link" rel="home"><img width="326" height="110" src="https://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2016/07/04093949/cropped-CDClogo2015_rev1100px_A-simple-copy-2.png" class="custom-logo" alt="Chaloke Dot Com" srcset="https://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2016/07/04093949/cropped-CDClogo2015_rev1100px_A-simple-copy-2.png 326w, https://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2016/07/04093949/cropped-CDClogo2015_rev1100px_A-simple-copy-2-300x101.png 300w" sizes="(max-width: 326px) 100vw, 326px" /></a></h1>		</div>
 					<nav class="secondary-navigation" role="navigation" aria-label="Secondary Navigation">
 				<div class="menu-user-control-container"><ul id="menu-user-control" class="menu"><li><a href="http://dev.chaloke.com/wp-login.php">Log In</a></li><li><a href="http://dev.chaloke.com/wp-login.php?action=register">Register</a></li></ul></div>			</nav><!-- #site-navigation -->
-			</div><div class="storefront-primary-navigation"><div class="col-full"><section class="sd-sticky-navigation fixedsticky">		<nav id="site-navigation" class="main-navigation" role="navigation" aria-label="Primary Navigation">
+			</div><div class="storefront-primary-navigation"><div class="col-full">		<nav id="site-navigation" class="main-navigation" role="navigation" aria-label="Primary Navigation">
 		<button class="menu-toggle" aria-controls="site-navigation" aria-expanded="false"><span>Menu</span></button>
 			<div class="primary-navigation"><ul id="menu-navigation" class="menu"><li id="menu-item-103" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-103"><a href="/" aria-current="page">Home</a></li>
 <li id="menu-item-77" class="menu-item menu-item-type-post_type menu-item-object-forum menu-item-77"><a href="http://dev.chaloke.com/forums/forum/cdc/">Forums</a></li>
@@ -711,160 +716,10 @@ img.emoji {
 			<li>
 				<div class="widget woocommerce widget_shopping_cart"><div class="widget_shopping_cart_content"></div></div>			</li>
 		</ul>
-			</section></div></div>
+			</div></div>
 	</header><!-- #masthead -->
 
-	 
-          <div id"ticker">
-          			
-	<style>
-	#wptu-ticker-1 {border-color: #2096CD;}
-	#wptu-ticker-1 > .wptu-ticker-title {background: #2096CD;}
-	#wptu-ticker-1 > .wptu-ticker-title > span {border-color: transparent transparent transparent #2096CD}
-	#wptu-ticker-1 > .wptu-ticker-block > ul > li > a:hover {color: #2096CD}
-	#wptu-ticker-1 > .wptu-ticker-block > ul > li > a {color: #000;font-style: normal}
-	#wptu-ticker-1 > .wptu-ticker-title .wptu-ticker-head {background-color: #2096CD;color: #000}
-	</style>
 	
-	<div class="wptu-ticker wptu-ticker-main wptu-clearfix " id="wptu-ticker-1">		
-		<div class="wptu-ticker-title"><div class="wptu-ticker-head">Latest News</div><span></span></div><!-- end .wptu-ticker-title -->
-		<div class="wptu-ticker-block">
-			<ul>
-							<li>
-									<a href="http://www.chaloke.com/forums/topic/%E0%B8%9B%E0%B8%B1%E0%B8%8D%E0%B8%AB%E0%B8%B2%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%AA%E0%B9%88%E0%B8%87-email-%E0%B9%84%E0%B8%9B%E0%B8%A2%E0%B8%B1%E0%B8%87%E0%B8%9A%E0%B8%B1%E0%B8%8D%E0%B8%8A%E0%B8%B5-hot/">แจ้งปัญหาการส่ง email ไปยังบัญชี hotmail</a>
-					
-					
-				</li>
-							<li>
-									<a href="http://www.chaloke.com/forums/forum/cdc/the-kitchen/">สมาชิกสนับสนุน Download CDCDL และสูตรต่างๆ ได้ทางนี้นะครับ</a>
-					
-					
-				</li>
-							<li>
-									<a href="http://www.chaloke.com/forums/forum/cdc/charity/">ร่วมทำบุญกับงานบุญต่างๆของชมรม</a>
-					
-					
-				</li>
-							<li>
-									<a href="http://www.chaloke.com/forums/topic/%E0%B8%A2%E0%B9%89%E0%B8%B2%E0%B8%A2%E0%B9%80%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%9A%E0%B9%89%E0%B8%B2%E0%B8%99%E0%B9%83%E0%B8%AB%E0%B8%A1%E0%B9%88-%E0%B8%AA%E0%B8%A1%E0%B8%B2%E0%B8%8A%E0%B8%B4%E0%B8%81/">สมาชิกท่าใด Log In ไม่ได้ อ่านทางนี้</a>
-					
-					
-				</li>
-						</ul>
-		</div><!-- end .wptu-ticker-block -->
-		<div class="wptu-ticker-navi">
-        	<span></span>
-            <span></span>
-        </div><!-- end .wptu-ticker-navi -->
-        <div class="wptu-ticker-conf">{"effect":"fade","fontstyle":"normal","autoplay":"true","timer":4000}</div><!-- end .wptu-ticker-conf -->
-
-	</div><!-- end .wptu-ticker -->
-
- 
-	          </div>
-          
-           <div id="slider">
-                    	<div class="wpfcas-content-slider-1 featured-content-slider design-4">
-		 <div class="  slider-col-2">  
-				<div class="featured-content-position">
-					<div class="featured-content-image-bg"> 
-						<img src="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/11/23223549/cdcTALK2019.png"alt="เปิดรับสมัคร CDC Webinar 2019 Live TALK JAN-JUNE" />						
-					</div>
-					<div class="featured-content-overlay">
-						<div class="featured-content-overlay-inner">
-							<div class="featured-content-image circle"> 
-																<a href="http://www.chaloke.com/2018/11/25/cdctalk201901/" > 	<i style="color:#3ab0e2" class="fa fa-microphone"></i>		</a>
-															</div>
-							<h3 class="entry-title">
-														<a href="http://www.chaloke.com/2018/11/25/cdctalk201901/" >เปิดรับสมัคร CDC Webinar 2019 Live TALK JAN-JUNE</a>
-															</h3>
-														<div class="featured_short_content">
-														<div class="sub-content">เปิดรับสมัคร CDC Webinar 2019 Live TALK JAN-JUNE</div>	
-								
-							</div>					
-														<div class="featured-read-more">					
-							<a href="http://www.chaloke.com/2018/11/25/cdctalk201901/" >Read More</a>					
-							
-							</div>
-													</div>
-					</div>
-					</div>
-					
-					
-					
-				</div>				
-				<div class="  slider-col-2">  
-				<div class="featured-content-position">
-					<div class="featured-content-image-bg"> 
-						<img src="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2017/07/05161718/fc_placeholder_blue.jpg"alt="ติดต่ามข่าวสารชมรม" />						
-					</div>
-					<div class="featured-content-overlay">
-						<div class="featured-content-overlay-inner">
-							<div class="featured-content-image circle"> 
-																<a href="http://www.chaloke.com/forums/forum/cdc/official-announcement-and-faq/" > 	<i style="color:#3ab0e2" class="fa fa-newspaper-o"></i>		</a>
-															</div>
-							<h3 class="entry-title">
-														<a href="http://www.chaloke.com/forums/forum/cdc/official-announcement-and-faq/" >ติดต่ามข่าวสารชมรม</a>
-															</h3>
-														<div class="featured_short_content">
-														<div class="sub-content">ติดตามข่าวสารจากช่องทางประกาศอย่างเป็นทางการ ทาง Forums และ หน้า Home
-Official News and Announcements</div>	
-								
-							</div>					
-														<div class="featured-read-more">					
-							<a href="http://www.chaloke.com/forums/forum/cdc/official-announcement-and-faq/" >Read More</a>					
-							
-							</div>
-													</div>
-					</div>
-					</div>
-					
-					
-					
-				</div>				
-					</div>
-		<script type="text/javascript">
-		jQuery(document).ready(function(){
-		jQuery('.wpfcas-content-slider-1').slick({
-			dots: true,
-			infinite: true,
-			arrows: true,
-			speed: 300,
-			autoplay: true,						
-			autoplaySpeed: 3000,
-			slidesToShow: 2,
-			slidesToScroll: 1,
-			responsive: [
-    {
-      breakpoint: 769,
-      settings: {
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        infinite: true,
-        dots: true
-      }
-    },
-    {
-      breakpoint: 650,
-      settings: {
-        slidesToShow: 1,
-        slidesToScroll: 1
-      }
-    },
-    {
-      breakpoint: 481,
-      settings: {
-        slidesToShow: 1,
-        slidesToScroll: 1
-      }
-    }
-  ]
-		});
-	});
-	</script>    
-          
-            </div> 
-      
 	<div id="content" class="site-content" tabindex="-1">
 		<div class="col-full">
 
@@ -873,70 +728,176 @@ Official News and Announcements</div>
 		<main id="main" class="site-main" role="main">
 
 		
-<article id="post-28218" class="post-28218 post type-post status-publish format-standard has-post-thumbnail sticky hentry category-courses">
+<article id="post-31810" class="post-31810 post type-post status-publish format-standard has-post-thumbnail sticky hentry category-uncategorized">
 
 			<header class="entry-header">
-		<h2 class="alpha entry-title"><a href="http://dev.chaloke.com/2019/03/13/cdc2019/" rel="bookmark">CDC2019 Systematic Trading Course</a></h2>		</header><!-- .entry-header -->
+		<h2 class="alpha entry-title"><a href="http://dev.chaloke.com/2019/10/05/cdcaz012019/" rel="bookmark">CDC Basic : CDC Action Zone 01/2019(online/offline)</a></h2>		</header><!-- .entry-header -->
 				<div class="entry-content">
-		<img width="4775" height="2500" src="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/03/13112933/poster01.png" class="attachment- size- wp-post-image" alt="" srcset="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/03/13112933/poster01.png 4775w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/03/13112933/poster01-500x262.png 500w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/03/13112933/poster01-768x402.png 768w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/03/13112933/poster01-1024x536.png 1024w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/03/13112933/poster01-600x314.png 600w" sizes="(max-width: 4775px) 100vw, 4775px" />
-<h2>คอร์สใหญ่ประจำปีรูปแบบใหม่ เรียนอยู่ที่บ้านก็ได้ เรียนในห้องเรียนก็ได้</h2>
+		<img width="480" height="360" src="https://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/10/05141922/hqdefault.jpg" class="attachment- size- wp-post-image" alt="" srcset="https://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/10/05141922/hqdefault.jpg 480w, https://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/10/05141922/hqdefault-416x312.jpg 416w" sizes="(max-width: 480px) 100vw, 480px" /><br />
+<b>Deprecated</b>:  Function create_function() is deprecated in <b>/var/www/staging/wp-content/plugins/wp-spamshield/wp-spamshield.php</b> on line <b>1961</b><br />
+
+<h2>CDC Basic : CDC Action Zone 01/2019(online/offline)</h2>
 
 
 
-<hr class="wp-block-separator"/>
+<h3>วันเสาร์ที่ 26 ตุลาคม 2562</h3>
 
 
 
-<p class="has-medium-font-size">สวัสดีครับ ก่อนอื่นต้องขออภัยเป็นอย่างยิ่งก่อนเนื่องจาก website chaloke.com ยังต้องแก้ปัญหาอีกมากจึงทำให้การเปิดรับสมัครล่าช้า เอาล่ะ! เรามาเริ่มกันเลยดีกว่า</p>
+<h3> เวลา  9:30 น. – 16:30 น. <strong>ลงทะเบียน</strong> 09:00 น. <br></h3>
 
 
 
-<p class="has-medium-font-size">สำหรับ Course ใหญ่ประจำปี 2019 นี้ เราทำการทดลองรูปแบบการเรียนการสอนรูปแบบใหม่สองประเด็นด้วยกัน โดยมีรายละเอียดดังนี้</p>
+<p> Coffee break 10:30 น. และ 14:30 น.<br> รับประทานอาหารกลางวัน 12:00 – 13:00 น.</p>
 
 
 
- <a href="http://dev.chaloke.com/2019/03/13/cdc2019/#more-28218" class="more-link">Continue reading <span class="screen-reader-text">CDC2019 Systematic Trading Course</span></a>		</div><!-- .entry-content -->
-		
-</article><!-- #post-## -->
+<h2><strong>ท่านสามารถเลือกเรียนได้ทั้งระบบ online และ offline</strong></h2>
 
-<article id="post-27221" class="post-27221 post type-post status-publish format-standard has-post-thumbnail sticky hentry category-uncategorized">
 
-			<header class="entry-header">
-		<h2 class="alpha entry-title"><a href="http://dev.chaloke.com/2019/03/04/username-password-change-for-cdcdl-cdcdl-%e0%b8%a1%e0%b8%b5%e0%b8%81%e0%b8%b2%e0%b8%a3%e0%b9%80%e0%b8%9b%e0%b8%a5%e0%b8%b5%e0%b9%88%e0%b8%a2%e0%b8%99-username-password/" rel="bookmark">USERNAME/PASSWORD CHANGE for CDCDL   / CDCDL มีการเปลี่ยน username/password</a></h2>		</header><!-- .entry-header -->
-				<div class="entry-content">
-		<img width="960" height="960" src="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/03/04002315/chg.jpg" class="attachment- size- wp-post-image" alt="" srcset="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/03/04002315/chg.jpg 960w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/03/04002315/chg-300x300.jpg 300w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/03/04002315/chg-600x600.jpg 600w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/03/04002315/chg-150x150.jpg 150w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/03/04002315/chg-500x500.jpg 500w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/03/04002315/chg-768x768.jpg 768w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/03/04002315/chg-100x100.jpg 100w" sizes="(max-width: 960px) 100vw, 960px" />
-<p> CDCDL มีการเปลี่ยน username/password สำหรับการ download ข้อมูลแล้ว โดย username/password ใหม่สามารถเข้าดูได้ที่ <br><a href="http://www.chaloke.com/forums/topic/cdc-downloader/">http://www.chaloke.com/forums/topic/cdc-downloader/</a><br>(เฉพาะสมาชิกสนับสนุนเท่านั้น) </p>
+
+<ol><li><strong> เดิมทางมาเรียนที่ตึกชมรม (offline) </strong></li><li><strong> เรียนที่บ้านผ่านระบบ goto meeting webinar (online)  </strong></li></ol>
+
+
+
+<h4><strong>ดูวิธีเตรียมพร้อมสำหรับเข้าร่วมสัมนาออนไลน์ทาง Webinar  
+ได้ที่กระทู้ที่คุณหมอสืบพงษ์ทีมงาน CDC Webinar Team  
+อธิบายไว้แล้วตามนี้ครับ</strong></h4>
+
+
+
+<p>Quick Reference Guide <a href="https://goo.gl/VTNsT4">https://goo.gl/VTNsT4</a><br>Mobile Web version <a href="https://goo.gl/i8HD8o">https://goo.gl/i8HD8o</a></p>
+
+
+
+<h2> รายละเอียดค่าเรียน</h2>
+
+
+
+<p>สมาชิกสนับสนุน  ราคา  4,050 บาท/ท่าน* (มีส่วนลด10%) <br> ( กรุณาระบุ username สมาชิกสนับสนุนเพื่อใช้สิทธิ  ใช้สิทธิได้เฉพาะเจ้าของ  <br>username เท่านั้น!! )</p>
+
+
+
+<p> <br>นักเรียนเก่าทุกคอร์ส ราคา 4,050 บาท/ท่าน*(ส่วนลด10%) (กรุณาระบุ <br>คอร์สที่เคยลงเรียนกับทางชมรม)  </p>
+
+
+
+<p>สมาชิกทั่วไป = 4,500 บาท/ท่าน*</p>
+
+
+
+<p>*ราคารวมอาหารว่างและอาหารกลางวัน*</p>
+
+
+
+<h3>******************************************************************</h3>
+
+
+
+<p>ผู้ที่สนใจสมัครเรียน กรุณาทำตามขั้นตอนดังนี้<br> 1.) <strong>โอนเงิน</strong><br> ธนาคาร : ไทยพาณิชย์<br> บัญชี : ออมทรัพย์2<br> เลขที่บัญชี : 026-441-9758<br> ชื่อบัญชี : บริษัทโฉลกดอทคอม<br> (โอนก่อนแจ้งโพสต์ด้านล่าง! กรุณาโอนมีเศษสตางค์ เช่น 5,000.01<br> เพื่อความสะดวกในการตรวจสอบ (เศษสตางค์ เป็นเงินสูญเปล่า ใช้ยืนยันบุคคลเท่านั้น)</p>
+
+
+
+<p>2.) <strong>โพสแจ้งโอนเงินตาม URL ด้านล่างนี้</strong><br> (การจัดลำดับคิว จะนับจากการโพสที่ Google Docs ตาม URL ด้านล่างนี้เป็นหลัก<br> ไม่ได้จัดตามเวลาโอน ซึ่งถ้าโอนเงินแล้วไม่ได้เข้าไปโพส ก็จะยังไม่ได้คิว)</p>
+
+
+
+<h2><a href="https://forms.gle/FvNDr8LTE3Ws9okP7">https://forms.gle/FvNDr8LTE3Ws9okP7</a></h2>
+
+
+
+<p></p>
+
+
+
+<h4>สถานที่เรียน: (Click URL ด้านล่างเพื่อดู Google Maps)</h4>
+
+
+
+<h2><a rel="noreferrer noopener" href="https://www.google.co.th/maps/place/CDC+Foundation/@13.987657,100.701924,17z/data=!3m1!4b1!4m5!3m4!1s0x311d7ece7f50f873:0xe964ee980e267b76!8m2!3d13.987657!4d100.704118" target="_blank">แผนที่ CDC Foundation(chaloke.com)</a></h2>
+
+
+
+<h5>สิ่งที่ต้องเตรียมมา<br> 1. Notebook/Netbook/Ultrabook/Laptop/<br> 2. ปลั๊กพ่วง และอุปกรณ์อื่นๆ ที่ท่านต้องใช้ กรุณานำมาเองทางชมรมไม่มีจัดเตรียมให้</h5>
+
+
+
+<h5>3. โปรแกรมTradingView</h5>
+
+
+
+<h3>เนื้อหาหลักสูตร</h3>
+
+
+
+<h3>สอนวิธีการใช้ โปรแกรม Action Zone ที่ทางชมรมคิดค้นขึ้นมา</h3>
+
+
+
+<h3>เพื่อประยุกต์ใช้งานตามรูปแบบของนักเรียนแต่ละคน</h3>
+
+
+
+<p>สอบถามข้อมูลเพิ่มเติม<br> สามารถโทรติดต่อสอบถามข้อมูลได้ที่หมายเลขโทรศัพท์: 098-765-5641 จันทร์ &#8211; ศุกร์ 9.00 น. &#8211; 17.30 น.<br> หรือ ติดต่อที่</p>
+
+
+
+<p>e-mail: <a href="&#109;&#x61;&#105;&#x6c;&#116;&#x6f;:&#x69;n&#x66;o&#x40;c&#x68;a&#x6c;o&#x6b;e&#x2e;c&#x6f;m">&#x69;n&#x66;&#111;&#x40;&#x63;h&#x61;&#108;&#x6f;&#x6b;e&#x2e;&#99;&#x6f;&#x6d;</a></p>
+
+
+
+<p>FB : CDC ChalokeDotCom</p>
+
+
+
+<p>Youtube : CDC chaloke dot com</p>
+
+
+
+<p>@Line : @chalokedotcom</p>
 		</div><!-- .entry-content -->
 		
 </article><!-- #post-## -->
 
-<article id="post-25604" class="post-25604 post type-post status-publish format-standard has-post-thumbnail sticky hentry category-uncategorized">
+<article id="post-30153" class="post-30153 post type-post status-publish format-standard has-post-thumbnail sticky hentry category-uncategorized">
 
 			<header class="entry-header">
-		<h2 class="alpha entry-title"><a href="http://dev.chaloke.com/2018/11/25/cdctalk201901/" rel="bookmark">เปิดรับสมัคร CDC Webinar 2019 Live TALK JAN-JUNE</a></h2>		</header><!-- .entry-header -->
+		<h2 class="alpha entry-title"><a href="http://dev.chaloke.com/2019/06/02/cdctalk022019/" rel="bookmark">เปิดรับสมัคร CDC Webinar 2019 Live TALK JUL-DEC (กรกฎาคม-ธันวาคม)</a></h2>		</header><!-- .entry-header -->
 				<div class="entry-content">
-		<img width="2000" height="2000" src="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/11/23223549/cdcTALK2019.png" class="attachment- size- wp-post-image" alt="" srcset="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/11/23223549/cdcTALK2019.png 2000w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/11/23223549/cdcTALK2019-300x300.png 300w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/11/23223549/cdcTALK2019-600x600.png 600w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/11/23223549/cdcTALK2019-150x150.png 150w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/11/23223549/cdcTALK2019-500x500.png 500w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/11/23223549/cdcTALK2019-768x768.png 768w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/11/23223549/cdcTALK2019-1024x1024.png 1024w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/11/23223549/cdcTALK2019-100x100.png 100w" sizes="(max-width: 2000px) 100vw, 2000px" /><h2>เปิดรับสมัคร CDC Webinar 2019 Live TALK JAN-JUNE</h2>
-<h3> CDC Webinar 2019 Live TALK JAN-JUNE</h3>
-<p>พบกันทุกคืนวันจันทร์ ตั้งแต่ 2ทุ่มเป็นต้นไป กับCDC Webinar 2019 Live TALK JAN-JUNE</p>
-<p>สัมนาออนไลน์ของชมรมโฉลก<br />
-ที่ให้ความรู้ ความมั่นใจ ในการลงทุนกับเพื่อนๆสมาชิก มาตลอดหลายปี<br />
-สามารถติดตามข่าวสารการลงทุน วิเคราะห์แนวโน้มสถานะการณ์การลงทุนในตลาดทุนทั่วโลก<br />
-ปัจจัยสำคัญต่อการลงทุน การวิเคราะห์ทางเทคนิค กับตลาดหุ้น, Commodities<br />
-ต่าง ๆ เช่น ทองคำ, น้ำมัน, ยางพารา และ BITCOINฯลฯ<br />
-และติดตามความเคลื่อนไหวในการพัฒนาระบบการลงทุนตามแนวทางชมรม ฝึกวินัยการลงทุน<br />
-และพัฒนาพอร์ตการลงทุนให้เติบโตอย่างยั่งยืนไปด้วยกันทุกสัปดาห์<br />
-คุณลุงโฉลกสอนเคล็บลับต่างๆในการลงทุน ทั้งทางด้สนเทคนิค วิธีคิด และการปฏิบัติตน ที่เพื่อนสมาชิกนักลงทุนไม่ควรพลาดเป็นอย่างยิ่ง</p>
-<p> <a href="http://dev.chaloke.com/2018/11/25/cdctalk201901/#more-25604" class="more-link">Continue reading <span class="screen-reader-text">เปิดรับสมัคร CDC Webinar 2019 Live TALK JAN-JUNE</span></a></p>
+		<img width="2000" height="2000" src="https://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/06/02122006/cdcTALK201902.png" class="attachment- size- wp-post-image" alt="" srcset="https://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/06/02122006/cdcTALK201902.png 2000w, https://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/06/02122006/cdcTALK201902-150x150.png 150w, https://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/06/02122006/cdcTALK201902-500x500.png 500w, https://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/06/02122006/cdcTALK201902-768x768.png 768w, https://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/06/02122006/cdcTALK201902-1024x1024.png 1024w, https://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/06/02122006/cdcTALK201902-300x300.png 300w, https://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/06/02122006/cdcTALK201902-600x600.png 600w, https://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/06/02122006/cdcTALK201902-100x100.png 100w" sizes="(max-width: 2000px) 100vw, 2000px" />
+<h2> <strong>CDC Webinar 2019 Live TALK JUL-DEC</strong>(กรกฎาคม-ธันวาคม)</h2>
+
+
+
+<p>พบกันทุกคืนวันจันทร์ ตั้งแต่ 2ทุ่มเป็นต้นไป กับCDC Webinar 2019 Live TALK  <strong>JUL-DEC</strong> 🙂 </p>
+
+
+
+<p>สัมนาออนไลน์ของชมรมโฉลก<br />ที่ให้ความรู้ ความมั่นใจ ในการลงทุนกับเพื่อนๆสมาชิก มาตลอดหลายปี<br />สามารถติดตามข่าวสารการลงทุน วิเคราะห์แนวโน้มสถานะการณ์การลงทุนในตลาดทุนทั่วโลก<br />ปัจจัยสำคัญต่อการลงทุน การวิเคราะห์ทางเทคนิค กับตลาดหุ้น, Commodities<br />ต่าง ๆ เช่น ทองคำ, น้ำมัน, ยางพารา และ BITCOINฯลฯ<br />และติดตามความเคลื่อนไหวในการพัฒนาระบบการลงทุนตามแนวทางชมรม ฝึกวินัยการลงทุน<br />และพัฒนาพอร์ตการลงทุนให้เติบโตอย่างยั่งยืนไปด้วยกันทุกสัปดาห์<br />คุณลุงโฉลกสอนเคล็บลับต่างๆในการลงทุน ทั้งทางด้สนเทคนิค วิธีคิด และการปฏิบัติตน ที่เพื่อนสมาชิกนักลงทุนไม่ควรพลาดเป็นอย่างยิ่ง</p>
+
+
+
+ <a href="http://dev.chaloke.com/2019/06/02/cdctalk022019/#more-30153" class="more-link">Continue reading <span class="screen-reader-text">เปิดรับสมัคร CDC Webinar 2019 Live TALK JUL-DEC (กรกฎาคม-ธันวาคม)</span></a>		</div><!-- .entry-content -->
+		
+</article><!-- #post-## -->
+
+<article id="post-27221" class="post-27221 post type-post status-publish format-standard has-post-thumbnail sticky hentry category-uncategorized category-42 tag-cdcdl tag-supporting-member">
+
+			<header class="entry-header">
+		<h2 class="alpha entry-title"><a href="http://dev.chaloke.com/2019/03/04/username-password-change/" rel="bookmark">USERNAME/PASSWORD CHANGE for CDCDL   / CDCDL มีการเปลี่ยน username/password</a></h2>		</header><!-- .entry-header -->
+				<div class="entry-content">
+		<img width="960" height="960" src="https://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/03/04002315/chg.jpg" class="attachment- size- wp-post-image" alt="" srcset="https://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/03/04002315/chg.jpg 960w, https://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/03/04002315/chg-300x300.jpg 300w, https://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/03/04002315/chg-600x600.jpg 600w, https://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/03/04002315/chg-150x150.jpg 150w, https://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/03/04002315/chg-500x500.jpg 500w, https://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/03/04002315/chg-768x768.jpg 768w, https://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/03/04002315/chg-100x100.jpg 100w" sizes="(max-width: 960px) 100vw, 960px" />
+<p> CDCDL มีการเปลี่ยน username/password สำหรับการ download ข้อมูลแล้ว โดย username/password ใหม่สามารถเข้าดูได้ที่&nbsp;<br><a href="http://www.chaloke.com/forums/topic/cdc-downloader/">http://www.chaloke.com/forums/topic/cdc-downloader/</a><br>(เฉพาะสมาชิกสนับสนุนเท่านั้น) </p>
 		</div><!-- .entry-content -->
 		
 </article><!-- #post-## -->
 
-<article id="post-28278" class="post-28278 post type-post status-publish format-standard has-post-thumbnail hentry category-uncategorized">
+<article id="post-28278" class="post-28278 post type-post status-publish format-standard has-post-thumbnail hentry category-courses">
 
 			<header class="entry-header">
-		<h2 class="alpha entry-title"><a href="http://dev.chaloke.com/2019/03/14/cdcag012019/" rel="bookmark">CDC Astrology 1/2019</a></h2>		</header><!-- .entry-header -->
+		<h2 class="alpha entry-title"><a href="http://dev.chaloke.com/2019/03/14/cdcag012019/" rel="bookmark">[closed] CDC Astrology 1/2019</a></h2>		</header><!-- .entry-header -->
 				<div class="entry-content">
-		<img width="1734" height="907" src="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/03/14170536/Artboard-1-100.jpg" class="attachment- size- wp-post-image" alt="" srcset="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/03/14170536/Artboard-1-100.jpg 1734w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/03/14170536/Artboard-1-100-500x262.jpg 500w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/03/14170536/Artboard-1-100-768x402.jpg 768w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/03/14170536/Artboard-1-100-1024x536.jpg 1024w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/03/14170536/Artboard-1-100-600x314.jpg 600w" sizes="(max-width: 1734px) 100vw, 1734px" />
+		<img width="1734" height="907" src="https://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/03/14170536/Artboard-1-100.jpg" class="attachment- size- wp-post-image" alt="" srcset="https://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/03/14170536/Artboard-1-100.jpg 1734w, https://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/03/14170536/Artboard-1-100-500x262.jpg 500w, https://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/03/14170536/Artboard-1-100-768x402.jpg 768w, https://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/03/14170536/Artboard-1-100-1024x536.jpg 1024w, https://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/03/14170536/Artboard-1-100-600x314.jpg 600w" sizes="(max-width: 1734px) 100vw, 1734px" />
 <h2>CDC Astrology 1/2019</h2>
 
 
@@ -957,7 +918,37 @@ Official News and Announcements</div>
 
 
 
- <a href="http://dev.chaloke.com/2019/03/14/cdcag012019/#more-28278" class="more-link">Continue reading <span class="screen-reader-text">CDC Astrology 1/2019</span></a>		</div><!-- .entry-content -->
+ <a href="http://dev.chaloke.com/2019/03/14/cdcag012019/#more-28278" class="more-link">Continue reading <span class="screen-reader-text">[closed] CDC Astrology 1/2019</span></a>		</div><!-- .entry-content -->
+		
+</article><!-- #post-## -->
+
+<article id="post-28218" class="post-28218 post type-post status-publish format-standard has-post-thumbnail hentry category-courses">
+
+			<header class="entry-header">
+		<h2 class="alpha entry-title"><a href="http://dev.chaloke.com/2019/03/13/cdc2019/" rel="bookmark">[ปิดรับสมัครแล้ว] CDC2019 Systematic Trading Course</a></h2>		</header><!-- .entry-header -->
+				<div class="entry-content">
+		<img width="3056" height="1600" src="https://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/03/07104804/poster01-e1554608903371.png" class="attachment- size- wp-post-image" alt="" />
+<h1>คอร์สใหญ่ประจำปีรูปแบบใหม่ เรียนอยู่ที่บ้านก็ได้ เรียนในห้องเรียนก็ได้</h1>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p class="has-large-font-size">สวัสดีครับ! พบกันอีกครั้งกับคอร์สใหญ่ประจำปีของชมรมโฉลกดอทคอม! </p>
+
+
+
+<p class="has-medium-font-size">ปีนี้เรากลับมาในรูปแบบใหม่ ตาม feed back ที่เราได้รับตลอดมา โดยเราแยกวิชาต่างๆออกเป็นสามกลุ่ม และเรียบเรียงไว้เป็นแพ็คเกจจำนวน 4 แพ็คเกจด้วยกัน เพื่อให้เหมาะกับความต้องการที่แตกต่างกันมากยิ่งขึ้น </p>
+
+
+
+<p class="has-medium-font-size">และนอกจากนั้น ปีนี้เราจะจัดการเรียนการสอนทั้งในรูปแบบ <strong>Classroom (เดินทางมาเรียน)</strong> กับ <strong>Online (เรียนสดทางอินเตอร์เน็ต)</strong> ซึ่งผู้สมัครสามารถเลือกได้ตามความสะดวกอีกด้วย <em>(ถ้าสามารถเดินทางมาได้ แนะนำให้เดินทางมาเจอกันดีกว่า แต่ถ้ามีปัญหาด้านเวลาเรียนหรือการเดินทาง การเรียน Online ก็เป็นทางเลือกที่ดีไม่แพ้กัน)</em></p>
+
+
+
+ <a href="http://dev.chaloke.com/2019/03/13/cdc2019/#more-28218" class="more-link">อ่านเพิ่มเติม / read more!</a>		</div><!-- .entry-content -->
 		
 </article><!-- #post-## -->
 
@@ -966,7 +957,7 @@ Official News and Announcements</div>
 			<header class="entry-header">
 		<h2 class="alpha entry-title"><a href="http://dev.chaloke.com/2019/02/01/cdccha012019/" rel="bookmark">CDC Trading Pattern by Chaloke 1/2019(1วัน)</a></h2>		</header><!-- .entry-header -->
 				<div class="entry-content">
-		<img width="1127" height="542" src="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/02/01215748/chaloke001.jpg" class="attachment- size- wp-post-image" alt="" srcset="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/02/01215748/chaloke001.jpg 1127w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/02/01215748/chaloke001-600x289.jpg 600w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/02/01215748/chaloke001-500x240.jpg 500w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/02/01215748/chaloke001-768x369.jpg 768w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/02/01215748/chaloke001-1024x492.jpg 1024w" sizes="(max-width: 1127px) 100vw, 1127px" /><br />
+		<img width="1127" height="542" src="https://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/02/01215748/chaloke001.jpg" class="attachment- size- wp-post-image" alt="" srcset="https://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/02/01215748/chaloke001.jpg 1127w, https://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/02/01215748/chaloke001-600x289.jpg 600w, https://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/02/01215748/chaloke001-500x240.jpg 500w, https://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/02/01215748/chaloke001-768x369.jpg 768w, https://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/02/01215748/chaloke001-1024x492.jpg 1024w" sizes="(max-width: 1127px) 100vw, 1127px" /><br />
 <b>Deprecated</b>:  Function create_function() is deprecated in <b>/var/www/staging/wp-content/plugins/wp-spamshield/wp-spamshield.php</b> on line <b>1961</b><br />
 <p>
 <!--StartFragment--></p>
@@ -1116,7 +1107,7 @@ Official News and Announcements</div>
 
 
 
-<p>e-mail: <a href="&#109;&#x61;&#105;&#x6c;t&#x6f;:&#x69;n&#x66;o&#x40;c&#x68;a&#108;&#x6f;&#107;&#x65;&#46;&#x63;o&#x6d;">&#105;&#x6e;f&#x6f;&#64;&#x63;h&#97;&#x6c;&#111;&#x6b;e&#x2e;c&#x6f;m</a></p>
+<p>e-mail: <a href="&#x6d;&#x61;il&#x74;&#x6f;&#58;in&#x66;&#x6f;&#64;c&#x68;&#x61;&#108;ok&#x65;&#x2e;co&#x6d;">&#105;&#x6e;&#102;&#x6f;&#64;&#x63;h&#x61;l&#x6f;k&#x65;.&#x63;o&#109;</a></p>
 
 
 
@@ -1141,7 +1132,7 @@ Official News and Announcements</div>
 			<header class="entry-header">
 		<h2 class="alpha entry-title"><a href="http://dev.chaloke.com/2019/01/31/cdccan12019/" rel="bookmark">CDC Candlestick pattern และ สัญญาณแมงเม่า 1/2019(1วัน)</a></h2>		</header><!-- .entry-header -->
 				<div class="entry-content">
-		<img width="1245" height="665" src="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/01/31101000/candle_4.jpg" class="attachment- size- wp-post-image" alt="" srcset="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/01/31101000/candle_4.jpg 1245w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/01/31101000/candle_4-600x320.jpg 600w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/01/31101000/candle_4-500x267.jpg 500w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/01/31101000/candle_4-768x410.jpg 768w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/01/31101000/candle_4-1024x547.jpg 1024w" sizes="(max-width: 1245px) 100vw, 1245px" />
+		<img width="1245" height="665" src="https://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/01/31101000/candle_4.jpg" class="attachment- size- wp-post-image" alt="" srcset="https://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/01/31101000/candle_4.jpg 1245w, https://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/01/31101000/candle_4-600x320.jpg 600w, https://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/01/31101000/candle_4-500x267.jpg 500w, https://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/01/31101000/candle_4-768x410.jpg 768w, https://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/01/31101000/candle_4-1024x547.jpg 1024w" sizes="(max-width: 1245px) 100vw, 1245px" />
 <h2>เปิดรับสมัครแล้ว</h2>
 
 
@@ -1209,26 +1200,6 @@ Official News and Announcements</div>
 		</div><!-- .entry-content -->
 		
 </article><!-- #post-## -->
-
-<article id="post-23261" class="post-23261 post type-post status-publish format-standard has-post-thumbnail hentry category-courses">
-
-			<header class="entry-header">
-		<h2 class="alpha entry-title"><a href="http://dev.chaloke.com/2018/06/05/cdcwebinar2018b/" rel="bookmark">เปิดรับสมัคร CDC Talk Webinar 2018 รอบที 2 (ก.ค. &#8211; ธ.ค.)</a></h2>		</header><!-- .entry-header -->
-				<div class="entry-content">
-		<img width="1734" height="907" src="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/06/05162206/WBN2018_2_th.jpg" class="attachment- size- wp-post-image" alt="" srcset="http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/06/05162206/WBN2018_2_th.jpg 1734w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/06/05162206/WBN2018_2_th-600x314.jpg 600w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/06/05162206/WBN2018_2_th-500x262.jpg 500w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/06/05162206/WBN2018_2_th-768x402.jpg 768w, http://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2018/06/05162206/WBN2018_2_th-1024x536.jpg 1024w" sizes="(max-width: 1734px) 100vw, 1734px" /><h2>เปิดรับสมัคร CDC Talk Webinar 2018 รอบที 2 (ก.ค. &#8211; ธ.ค.)</h2>
-<h3>CDC Talk Webinar 2018 (JUL-DEC)</h3>
-<p>พบกันทุกคืนวันจันทร์ ตั้งแต่ 2ทุ่มเป็นต้นไป กับ CDC Talk Webinar 2018 สัมนาออนไลน์ของชมรมโฉลก<br />
-ที่ให้ความรู้ ความมั่นใจ ในการลงทุนกับเพื่อนๆสมาชิก มาตลอดหลายปี<br />
-สามารถติดตามข่าวสารการลงทุน วิเคราะห์แนวโน้มสถานะการณ์การลงทุนในตลาดทุนทั่วโลก<br />
-ปัจจัยสำคัญต่อการลงทุน การวิเคราะห์ทางเทคนิค กับตลาดหุ้น, Commodities<br />
-ต่าง ๆ เช่น ทองคำ, น้ำมัน, ยางพารา และ BITCOINฯลฯ<br />
-และติดตามความเคลื่อนไหวในการพัฒนาระบบการลงทุนตามแนวทางชมรม ฝึกวินัยการลงทุน<br />
-และพัฒนาพอร์ตการลงทุนให้เติบโตอย่างยั่งยืนไปด้วยกันทุกสัปดาห์<br />
-คุณลุงโฉลกสอนเคล็บลับต่างๆในการลงทุน ทั้งทางด้สนเทคนิค วิธีคิด และการปฏิบัติตน ที่เพื่อนสมาชิกนักลงทุนไม่ควรพลาดเป็นอย่างยิ่ง</p>
-<p> <a href="http://dev.chaloke.com/2018/06/05/cdcwebinar2018b/#more-23261" class="more-link">Continue reading <span class="screen-reader-text">เปิดรับสมัคร CDC Talk Webinar 2018 รอบที 2 (ก.ค. &#8211; ธ.ค.)</span></a></p>
-		</div><!-- .entry-content -->
-		
-</article><!-- #post-## -->
 <nav id="post-navigation" class="navigation pagination" role="navigation" aria-label="Post Navigation"><h2 class="screen-reader-text">Posts navigation</h2><div class="nav-links"><ul class='page-numbers'>
 	<li><span aria-current='page' class='page-numbers current'>1</span></li>
 	<li><a class='page-numbers' href='http://dev.chaloke.com/page/2/'>2</a></li>
@@ -1252,55 +1223,55 @@ Official News and Announcements</div>
 
 			
 				<li>
-					<a class="bbp-forum-title" href="http://dev.chaloke.com/forums/topic/cdc-d1917/">CDC-D1917 ทอดผ้าป่า วัดหินลาด</a>
+					<a class="bbp-forum-title" href="http://dev.chaloke.com/forums/topic/cdc-d1941/">CDC-D1941 ผ้าป่าสามัคคีวัดป่าบ้านหินตั้ง</a>
 
 					
 					
-						<div>1 week, 6 days ago</div>
-
-					
-				</li>
-
-			
-				<li>
-					<a class="bbp-forum-title" href="http://dev.chaloke.com/forums/topic/cdc-d1916/">CDC-D1916  ทอดผ้าป่าสร้างพระเจดีย์ วัดป่ากิ่วดู่</a>
-
-					
-					
-						<div>1 week, 6 days ago</div>
+						<div>1 week, 4 days ago</div>
 
 					
 				</li>
 
 			
 				<li>
-					<a class="bbp-forum-title" href="http://dev.chaloke.com/forums/topic/cdc-d1915/">CDC-D1915 เชิญร่วมเป็นเจ้าภาพบวชเณร</a>
+					<a class="bbp-forum-title" href="http://dev.chaloke.com/forums/topic/cdc-d1940/">CDC-D1940 ทอดกฐืนสามัคคี ศูนย์ปฏิบัติธรรมมหาสติปัฏฐาน ๔</a>
 
 					
 					
-						<div>2 weeks ago</div>
-
-					
-				</li>
-
-			
-				<li>
-					<a class="bbp-forum-title" href="http://dev.chaloke.com/forums/topic/cdc-d1914/">CDC-D1914 ทำบุญโรงเรียนบ้านห้วยเสือ</a>
-
-					
-					
-						<div>2 weeks, 3 days ago</div>
+						<div>1 week, 4 days ago</div>
 
 					
 				</li>
 
 			
 				<li>
-					<a class="bbp-forum-title" href="http://dev.chaloke.com/forums/topic/cdc-d1913/">CDC-D1913 ทำบุญวัดป่านาแก่ ยโสธร</a>
+					<a class="bbp-forum-title" href="http://dev.chaloke.com/forums/topic/cdc-d1939/">CDC-D1939 ไถ่ชีวิตโคกระบือ ***ปิดแล้ว***</a>
 
 					
 					
-						<div>2 weeks, 6 days ago</div>
+						<div>1 month ago</div>
+
+					
+				</li>
+
+			
+				<li>
+					<a class="bbp-forum-title" href="http://dev.chaloke.com/forums/topic/cdc-d1938/">CDC-D1938 กองทุนรองเท้าและพระเครื่องสำหรับพระภิกษุสามเณร</a>
+
+					
+					
+						<div>1 month, 1 week ago</div>
+
+					
+				</li>
+
+			
+				<li>
+					<a class="bbp-forum-title" href="http://dev.chaloke.com/forums/topic/cdc-d1937/">CDC-D1937 ทอดกฐินวัดป่าอ้อดอนชัย</a>
+
+					
+					
+						<div>1 month, 1 week ago</div>
 
 					
 				</li>
@@ -1313,62 +1284,29 @@ Official News and Announcements</div>
 
 			
 				<li>
-					<a class="bbp-forum-title" href="http://dev.chaloke.com/forums/topic/cdc-d1917/">CDC-D1917 ทอดผ้าป่า วัดหินลาด</a>
+					<a class="bbp-forum-title" href="http://dev.chaloke.com/forums/topic/cdc-d1941/">CDC-D1941 ผ้าป่าสามัคคีวัดป่าบ้านหินตั้ง</a>
 
 					
 					
-						<div>1 week, 6 days ago</div>
-
-					
-				</li>
-
-			
-				<li>
-					<a class="bbp-forum-title" href="http://dev.chaloke.com/forums/topic/cdc-d1916/">CDC-D1916  ทอดผ้าป่าสร้างพระเจดีย์ วัดป่ากิ่วดู่</a>
-
-					
-					
-						<div>1 week, 6 days ago</div>
+						<div>1 week, 4 days ago</div>
 
 					
 				</li>
 
 			
 				<li>
-					<a class="bbp-forum-title" href="http://dev.chaloke.com/forums/topic/cdc-d1915/">CDC-D1915 เชิญร่วมเป็นเจ้าภาพบวชเณร</a>
+					<a class="bbp-forum-title" href="http://dev.chaloke.com/forums/topic/cdc-d1940/">CDC-D1940 ทอดกฐืนสามัคคี ศูนย์ปฏิบัติธรรมมหาสติปัฏฐาน ๔</a>
 
 					
 					
-						<div>2 weeks ago</div>
-
-					
-				</li>
-
-			
-				<li>
-					<a class="bbp-forum-title" href="http://dev.chaloke.com/forums/topic/cdc-d1914/">CDC-D1914 ทำบุญโรงเรียนบ้านห้วยเสือ</a>
-
-					
-					
-						<div>2 weeks, 3 days ago</div>
+						<div>1 week, 4 days ago</div>
 
 					
 				</li>
 
 			
 				<li>
-					<a class="bbp-forum-title" href="http://dev.chaloke.com/forums/topic/%e0%b8%82%e0%b9%89%e0%b8%ad%e0%b8%a1%e0%b8%b9%e0%b8%a5%e0%b8%95%e0%b8%a5%e0%b8%b2%e0%b8%94%e0%b8%ab%e0%b8%b8%e0%b9%89%e0%b8%99%e0%b8%95%e0%b9%88%e0%b8%b2%e0%b8%87%e0%b8%9b%e0%b8%a3%e0%b8%b0%e0%b9%80-2/">ข้อมูลตลาดหุ้นต่างประเทศไม่ Update ครับ</a>
-
-					
-					
-						<div>2 weeks, 3 days ago</div>
-
-					
-				</li>
-
-			
-				<li>
-					<a class="bbp-forum-title" href="http://dev.chaloke.com/forums/topic/cdc-d1913/">CDC-D1913 ทำบุญวัดป่านาแก่ ยโสธร</a>
+					<a class="bbp-forum-title" href="http://dev.chaloke.com/forums/topic/%e0%b8%82%e0%b8%ad%e0%b8%84%e0%b8%b3%e0%b9%81%e0%b8%99%e0%b8%b0%e0%b8%99%e0%b8%b3%e0%b8%81%e0%b8%b2%e0%b8%a3%e0%b9%83%e0%b8%8a%e0%b9%89%e0%b9%82%e0%b8%9b%e0%b8%a3%e0%b8%a1%e0%b9%81%e0%b8%81%e0%b8%a3/">ขอคำแนะนำการใช้โปรมแกรมCDC Action zone เบื้องต้นครับ</a>
 
 					
 					
@@ -1379,22 +1317,55 @@ Official News and Announcements</div>
 
 			
 				<li>
-					<a class="bbp-forum-title" href="http://dev.chaloke.com/forums/topic/cdc-d1912/">CDC-D1912 งานบุญโต๊ะหมู่บูชา</a>
+					<a class="bbp-forum-title" href="http://dev.chaloke.com/forums/topic/%e0%b8%a3%e0%b8%9a%e0%b8%81%e0%b8%a7%e0%b8%99%e0%b8%82%e0%b8%ad%e0%b8%a7%e0%b8%b4%e0%b8%98%e0%b8%b5-set-profit-trailer-%e0%b9%80%e0%b8%97%e0%b8%a3%e0%b8%94%e0%b8%9a%e0%b8%b4%e0%b8%97%e0%b8%84%e0%b8%ad/">รบกวนขอวิธี set profit trailer เทรดบิทคอยครับ</a>
 
 					
 					
-						<div>3 weeks, 6 days ago</div>
+						<div>1 month ago</div>
 
 					
 				</li>
 
 			
 				<li>
-					<a class="bbp-forum-title" href="http://dev.chaloke.com/forums/topic/%e0%b8%aa%e0%b8%ad%e0%b8%9a%e0%b8%96%e0%b8%b2%e0%b8%a1%e0%b9%80%e0%b8%a3%e0%b8%b7%e0%b9%88%e0%b8%ad%e0%b8%87%e0%b8%82%e0%b9%89%e0%b8%ad%e0%b8%a1%e0%b8%b9%e0%b8%a5dw%e0%b8%ab%e0%b8%99%e0%b9%88%e0%b8%ad/">สอบถามเรื่องข้อมูลDWหน่อยครับ</a>
+					<a class="bbp-forum-title" href="http://dev.chaloke.com/forums/topic/cdc-d1939/">CDC-D1939 ไถ่ชีวิตโคกระบือ ***ปิดแล้ว***</a>
 
 					
 					
-						<div>3 weeks, 6 days ago</div>
+						<div>1 month ago</div>
+
+					
+				</li>
+
+			
+				<li>
+					<a class="bbp-forum-title" href="http://dev.chaloke.com/forums/topic/cdc-d1938/">CDC-D1938 กองทุนรองเท้าและพระเครื่องสำหรับพระภิกษุสามเณร</a>
+
+					
+					
+						<div>1 month, 1 week ago</div>
+
+					
+				</li>
+
+			
+				<li>
+					<a class="bbp-forum-title" href="http://dev.chaloke.com/forums/topic/cdc-d1937/">CDC-D1937 ทอดกฐินวัดป่าอ้อดอนชัย</a>
+
+					
+					
+						<div>1 month, 1 week ago</div>
+
+					
+				</li>
+
+			
+				<li>
+					<a class="bbp-forum-title" href="http://dev.chaloke.com/forums/topic/cdc-d1936/">CDC-D1936 มูลนิธินักอ่านบ้านนา</a>
+
+					
+					
+						<div>1 month, 1 week ago</div>
 
 					
 				</li>
@@ -1404,14 +1375,15 @@ Official News and Announcements</div>
 
 		</div><div id="d4p_bbw_newposts-4" class="widget cls_d4p_bbw_newposts"><span class="gamma widget-title">New Posts</span><div class="d4p-bbw-widget bbx-newposts">
 <span class="bbx-no-topics">No topics found</span></div></div><div id="archives-2" class="widget widget_archive"><span class="gamma widget-title">Archives</span>		<label class="screen-reader-text" for="archives-dropdown-2">Archives</label>
-		<select id="archives-dropdown-2" name="archive-dropdown" onchange='document.location.href=this.options[this.selectedIndex].value;'>
+		<select id="archives-dropdown-2" name="archive-dropdown">
 			
 			<option value="">Select Month</option>
-				<option value='http://dev.chaloke.com/2019/03/'> March 2019 </option>
+				<option value='http://dev.chaloke.com/2019/10/'> October 2019 </option>
+	<option value='http://dev.chaloke.com/2019/06/'> June 2019 </option>
+	<option value='http://dev.chaloke.com/2019/03/'> March 2019 </option>
 	<option value='http://dev.chaloke.com/2019/02/'> February 2019 </option>
 	<option value='http://dev.chaloke.com/2019/01/'> January 2019 </option>
 	<option value='http://dev.chaloke.com/2018/12/'> December 2018 </option>
-	<option value='http://dev.chaloke.com/2018/11/'> November 2018 </option>
 	<option value='http://dev.chaloke.com/2018/07/'> July 2018 </option>
 	<option value='http://dev.chaloke.com/2018/06/'> June 2018 </option>
 	<option value='http://dev.chaloke.com/2018/03/'> March 2018 </option>
@@ -1421,6 +1393,21 @@ Official News and Announcements</div>
 	<option value='http://dev.chaloke.com/2017/07/'> July 2017 </option>
 
 		</select>
+
+<script type='text/javascript'>
+/* <![CDATA[ */
+(function() {
+	var dropdown = document.getElementById( "archives-dropdown-2" );
+	function onSelectChange() {
+		if ( dropdown.options[ dropdown.selectedIndex ].value !== '' ) {
+			document.location.href = this.options[ this.selectedIndex ].value;
+		}
+	}
+	dropdown.onchange = onSelectChange;
+})();
+/* ]]> */
+</script>
+
 		</div></div><!-- #secondary -->
 
 		</div><!-- .col-full -->
@@ -1467,7 +1454,18 @@ Official News and Announcements</div>
 
 					
 					
-						<div>8 months ago</div>
+						<div>1 year, 2 months ago</div>
+
+					
+				</li>
+
+			
+				<li>
+					<a class="bbp-forum-title" href="http://dev.chaloke.com/forums/topic/cdc-downloader/">CDC Downloader</a>
+
+					
+					
+						<div>1 week, 2 days ago</div>
 
 					
 				</li>
@@ -1478,7 +1476,7 @@ Official News and Announcements</div>
 
 					
 					
-						<div>1 year, 5 months ago</div>
+						<div>2 years ago</div>
 
 					
 				</li>
@@ -1489,7 +1487,7 @@ Official News and Announcements</div>
 
 					
 					
-						<div>1 year, 3 months ago</div>
+						<div>1 year, 10 months ago</div>
 
 					
 				</li>
@@ -1500,18 +1498,7 @@ Official News and Announcements</div>
 
 					
 					
-						<div>10 months, 4 weeks ago</div>
-
-					
-				</li>
-
-			
-				<li>
-					<a class="bbp-forum-title" href="http://dev.chaloke.com/forums/topic/%e0%b8%a3%e0%b8%9a%e0%b8%81%e0%b8%a7%e0%b8%99%e0%b8%82%e0%b8%ad%e0%b8%aa%e0%b8%b9%e0%b8%95%e0%b8%a3%e0%b8%97%e0%b8%b1%e0%b9%89%e0%b8%87%e0%b8%ab%e0%b8%a1%e0%b8%94%e0%b8%aa%e0%b8%b3%e0%b8%ab%e0%b8%a3/">รบกวนขอสูตรทั้งหมดสำหรับ Amibroker ครับ</a>
-
-					
-					
-						<div>7 months, 3 weeks ago</div>
+						<div>1 year, 5 months ago</div>
 
 					
 				</li>
@@ -1526,55 +1513,55 @@ Official News and Announcements</div>
 
 			
 				<li>
-					<a class="bbp-forum-title" href="http://dev.chaloke.com/forums/topic/cdc-d1917/">CDC-D1917 ทอดผ้าป่า วัดหินลาด</a>
+					<a class="bbp-forum-title" href="http://dev.chaloke.com/forums/topic/cdc-d1941/">CDC-D1941 ผ้าป่าสามัคคีวัดป่าบ้านหินตั้ง</a>
 
 					
 					
-						<div>1 week, 6 days ago</div>
-
-					
-				</li>
-
-			
-				<li>
-					<a class="bbp-forum-title" href="http://dev.chaloke.com/forums/topic/cdc-d1916/">CDC-D1916  ทอดผ้าป่าสร้างพระเจดีย์ วัดป่ากิ่วดู่</a>
-
-					
-					
-						<div>1 week, 6 days ago</div>
+						<div>1 week, 4 days ago</div>
 
 					
 				</li>
 
 			
 				<li>
-					<a class="bbp-forum-title" href="http://dev.chaloke.com/forums/topic/cdc-d1915/">CDC-D1915 เชิญร่วมเป็นเจ้าภาพบวชเณร</a>
+					<a class="bbp-forum-title" href="http://dev.chaloke.com/forums/topic/cdc-d1940/">CDC-D1940 ทอดกฐืนสามัคคี ศูนย์ปฏิบัติธรรมมหาสติปัฏฐาน ๔</a>
 
 					
 					
-						<div>2 weeks ago</div>
-
-					
-				</li>
-
-			
-				<li>
-					<a class="bbp-forum-title" href="http://dev.chaloke.com/forums/topic/cdc-d1914/">CDC-D1914 ทำบุญโรงเรียนบ้านห้วยเสือ</a>
-
-					
-					
-						<div>2 weeks, 3 days ago</div>
+						<div>1 week, 4 days ago</div>
 
 					
 				</li>
 
 			
 				<li>
-					<a class="bbp-forum-title" href="http://dev.chaloke.com/forums/topic/%e0%b8%82%e0%b9%89%e0%b8%ad%e0%b8%a1%e0%b8%b9%e0%b8%a5%e0%b8%95%e0%b8%a5%e0%b8%b2%e0%b8%94%e0%b8%ab%e0%b8%b8%e0%b9%89%e0%b8%99%e0%b8%95%e0%b9%88%e0%b8%b2%e0%b8%87%e0%b8%9b%e0%b8%a3%e0%b8%b0%e0%b9%80-2/">ข้อมูลตลาดหุ้นต่างประเทศไม่ Update ครับ</a>
+					<a class="bbp-forum-title" href="http://dev.chaloke.com/forums/topic/%e0%b8%82%e0%b8%ad%e0%b8%84%e0%b8%b3%e0%b9%81%e0%b8%99%e0%b8%b0%e0%b8%99%e0%b8%b3%e0%b8%81%e0%b8%b2%e0%b8%a3%e0%b9%83%e0%b8%8a%e0%b9%89%e0%b9%82%e0%b8%9b%e0%b8%a3%e0%b8%a1%e0%b9%81%e0%b8%81%e0%b8%a3/">ขอคำแนะนำการใช้โปรมแกรมCDC Action zone เบื้องต้นครับ</a>
 
 					
 					
-						<div>2 weeks, 3 days ago</div>
+						<div>2 weeks, 6 days ago</div>
+
+					
+				</li>
+
+			
+				<li>
+					<a class="bbp-forum-title" href="http://dev.chaloke.com/forums/topic/%e0%b8%a3%e0%b8%9a%e0%b8%81%e0%b8%a7%e0%b8%99%e0%b8%82%e0%b8%ad%e0%b8%a7%e0%b8%b4%e0%b8%98%e0%b8%b5-set-profit-trailer-%e0%b9%80%e0%b8%97%e0%b8%a3%e0%b8%94%e0%b8%9a%e0%b8%b4%e0%b8%97%e0%b8%84%e0%b8%ad/">รบกวนขอวิธี set profit trailer เทรดบิทคอยครับ</a>
+
+					
+					
+						<div>1 month ago</div>
+
+					
+				</li>
+
+			
+				<li>
+					<a class="bbp-forum-title" href="http://dev.chaloke.com/forums/topic/cdc-d1939/">CDC-D1939 ไถ่ชีวิตโคกระบือ ***ปิดแล้ว***</a>
+
+					
+					
+						<div>1 month ago</div>
 
 					
 				</li>
@@ -1589,55 +1576,55 @@ Official News and Announcements</div>
 
 			
 				<li>
-					<a class="bbp-forum-title" href="http://dev.chaloke.com/forums/topic/cdc-d1917/">CDC-D1917 ทอดผ้าป่า วัดหินลาด</a>
+					<a class="bbp-forum-title" href="http://dev.chaloke.com/forums/topic/%e0%b9%81%e0%b8%88%e0%b9%89%e0%b8%87%e0%b8%8a%e0%b8%b3%e0%b8%a3%e0%b8%b0%e0%b8%84%e0%b9%88%e0%b8%b2%e0%b8%aa%e0%b8%a1%e0%b8%b1%e0%b8%84%e0%b8%a3%e0%b8%aa%e0%b8%a1%e0%b8%b2%e0%b8%8a%e0%b8%b4%e0%b8%81/">แจ้งชำระค่าสมัครสมาชิก</a>
 
 					
 					
-						<div>1 week, 6 days ago</div>
-
-					
-				</li>
-
-			
-				<li>
-					<a class="bbp-forum-title" href="http://dev.chaloke.com/forums/topic/cdc-d1916/">CDC-D1916  ทอดผ้าป่าสร้างพระเจดีย์ วัดป่ากิ่วดู่</a>
-
-					
-					
-						<div>1 week, 6 days ago</div>
+						<div>1 week ago</div>
 
 					
 				</li>
 
 			
 				<li>
-					<a class="bbp-forum-title" href="http://dev.chaloke.com/forums/topic/cdc-d1915/">CDC-D1915 เชิญร่วมเป็นเจ้าภาพบวชเณร</a>
+					<a class="bbp-forum-title" href="http://dev.chaloke.com/forums/topic/cdc-downloader/">CDC Downloader</a>
 
 					
 					
-						<div>2 weeks ago</div>
-
-					
-				</li>
-
-			
-				<li>
-					<a class="bbp-forum-title" href="http://dev.chaloke.com/forums/topic/%e0%b8%aa%e0%b8%ad%e0%b8%9a%e0%b8%96%e0%b8%b2%e0%b8%a1%e0%b8%81%e0%b8%a3%e0%b8%b0%e0%b8%9a%e0%b8%a7%e0%b8%99%e0%b8%81%e0%b8%b2%e0%b8%a3adjuxt%e0%b8%a3%e0%b8%b2%e0%b8%84%e0%b8%b2/">สอบถามกระบวนการadjuxtราคา</a>
-
-					
-					
-						<div>2 weeks, 2 days ago</div>
+						<div>1 week, 2 days ago</div>
 
 					
 				</li>
 
 			
 				<li>
-					<a class="bbp-forum-title" href="http://dev.chaloke.com/forums/topic/cdc-d1914/">CDC-D1914 ทำบุญโรงเรียนบ้านห้วยเสือ</a>
+					<a class="bbp-forum-title" href="http://dev.chaloke.com/forums/topic/cdc-d1941/">CDC-D1941 ผ้าป่าสามัคคีวัดป่าบ้านหินตั้ง</a>
 
 					
 					
-						<div>2 weeks, 3 days ago</div>
+						<div>1 week, 4 days ago</div>
+
+					
+				</li>
+
+			
+				<li>
+					<a class="bbp-forum-title" href="http://dev.chaloke.com/forums/topic/cdc-d1940/">CDC-D1940 ทอดกฐืนสามัคคี ศูนย์ปฏิบัติธรรมมหาสติปัฏฐาน ๔</a>
+
+					
+					
+						<div>1 week, 4 days ago</div>
+
+					
+				</li>
+
+			
+				<li>
+					<a class="bbp-forum-title" href="http://dev.chaloke.com/forums/topic/%e0%b8%82%e0%b8%ad%e0%b8%aa%e0%b8%b9%e0%b8%95%e0%b8%a3-td-sequential-%e0%b8%ab%e0%b8%99%e0%b9%88%e0%b8%ad%e0%b8%a2%e0%b8%84%e0%b8%a3%e0%b8%b1%e0%b8%9a/">ขอสูตร td sequential หน่อยครับ</a>
+
+					
+					
+						<div>2 weeks, 1 day ago</div>
 
 					
 				</li>
@@ -1681,8 +1668,8 @@ Official News and Announcements</div>
 <script type='text/javascript'>
 /* <![CDATA[ */
 r3f5x9JS=escape(document['referrer']);
-hf4N='fc46cf6480658f66e872720b6e15ca2f';
-hf4V='6f95d4c5719a63dc1e99d8bc63523afb';
+hf4N='bf1510a3769224e4ff77488f73c2c2f2';
+hf4V='12909ac442a3ab45122231015fc75c80';
 jQuery(document).ready(function($){var e="#commentform, .comment-respond form, .comment-form, #lostpasswordform, #registerform, #loginform, #login_form, #wpss_contact_form, .wpcf7-form";$(e).submit(function(){$("<input>").attr("type","hidden").attr("name","r3f5x9JS").attr("value",r3f5x9JS).appendTo(e);return true;});var h="form[method='post']";$(h).submit(function(){$("<input>").attr("type","hidden").attr("name",hf4N).attr("value",hf4V).appendTo(h);return true;});});
 /* ]]> */
 </script> 
@@ -1692,7 +1679,7 @@ jQuery(document).ready(function($){var e="#commentform, .comment-respond form, .
 			body.className = body.className.replace( /\btribe-no-js\b/, 'tribe-js' );
 		} )( document.body );
 		</script>
-		<script type="application/ld+json">{"@context":"https:\/\/schema.org\/","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"name":"Home","@id":"http:\/\/dev.chaloke.com"}}]}</script><script> /* <![CDATA[ */var tribe_l10n_datatables = {"aria":{"sort_ascending":": activate to sort column ascending","sort_descending":": activate to sort column descending"},"length_menu":"Show _MENU_ entries","empty_table":"No data available in table","info":"Showing _START_ to _END_ of _TOTAL_ entries","info_empty":"Showing 0 to 0 of 0 entries","info_filtered":"(filtered from _MAX_ total entries)","zero_records":"No matching records found","search":"Search:","all_selected_text":"All items on this page were selected. ","select_all_link":"Select all pages","clear_selection":"Clear Selection.","pagination":{"all":"All","next":"Next","previous":"Previous"},"select":{"rows":{"0":"","_":": Selected %d rows","1":": Selected 1 row"}},"datepicker":{"dayNames":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],"dayNamesShort":["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],"dayNamesMin":["S","M","T","W","T","F","S"],"monthNames":["January","February","March","April","May","June","July","August","September","October","November","December"],"monthNamesShort":["January","February","March","April","May","June","July","August","September","October","November","December"],"monthNamesMin":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"nextText":"Next","prevText":"Prev","currentText":"Today","closeText":"Done","today":"Today","clear":"Clear"},"registration_prompt":"There is unsaved attendee information. Are you sure you want to continue?"};var tribe_system_info = {"sysinfo_optin_nonce":"0b5f863f39","clipboard_btn_text":"Copy to clipboard","clipboard_copied_text":"System info copied","clipboard_fail_text":"Press \"Cmd + C\" to copy"};/* ]]> */ </script>	<script type="text/javascript">
+		<script type="application/ld+json">{"@context":"https:\/\/schema.org\/","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"name":"Home","@id":"http:\/\/dev.chaloke.com"}}]}</script><script> /* <![CDATA[ */var tribe_l10n_datatables = {"aria":{"sort_ascending":": activate to sort column ascending","sort_descending":": activate to sort column descending"},"length_menu":"Show _MENU_ entries","empty_table":"No data available in table","info":"Showing _START_ to _END_ of _TOTAL_ entries","info_empty":"Showing 0 to 0 of 0 entries","info_filtered":"(filtered from _MAX_ total entries)","zero_records":"No matching records found","search":"Search:","all_selected_text":"All items on this page were selected. ","select_all_link":"Select all pages","clear_selection":"Clear Selection.","pagination":{"all":"All","next":"Next","previous":"Previous"},"select":{"rows":{"0":"","_":": Selected %d rows","1":": Selected 1 row"}},"datepicker":{"dayNames":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],"dayNamesShort":["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],"dayNamesMin":["S","M","T","W","T","F","S"],"monthNames":["January","February","March","April","May","June","July","August","September","October","November","December"],"monthNamesShort":["January","February","March","April","May","June","July","August","September","October","November","December"],"monthNamesMin":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"nextText":"Next","prevText":"Prev","currentText":"Today","closeText":"Done","today":"Today","clear":"Clear"}};var tribe_system_info = {"sysinfo_optin_nonce":"e0be9c8219","clipboard_btn_text":"Copy to clipboard","clipboard_copied_text":"System info copied","clipboard_fail_text":"Press \"Cmd + C\" to copy"};/* ]]> */ </script>	<script type="text/javascript">
 		var c = document.body.className;
 		c = c.replace(/woocommerce-no-js/, 'woocommerce-js');
 		document.body.className = c;
@@ -1700,10 +1687,10 @@ jQuery(document).ready(function($){var e="#commentform, .comment-respond form, .
 	<script type='text/javascript' src='http://dev.chaloke.com/wp-content/plugins/bbpress/templates/default/js/editor.js?ver=2.5.14-6684'></script>
 <script type='text/javascript'>
 /* <![CDATA[ */
-var wpcf7 = {"apiSettings":{"root":"http:\/\/dev.chaloke.com\/wp-json\/contact-form-7\/v1","namespace":"contact-form-7\/v1"},"cached":"1","jqueryUi":"1"};
+var wpcf7 = {"apiSettings":{"root":"http:\/\/dev.chaloke.com\/wp-json\/contact-form-7\/v1","namespace":"contact-form-7\/v1"},"cached":"1"};
 /* ]]> */
 </script>
-<script type='text/javascript' src='http://dev.chaloke.com/wp-content/plugins/contact-form-7/includes/js/scripts.js?ver=5.1.1'></script>
+<script type='text/javascript' src='http://dev.chaloke.com/wp-content/plugins/contact-form-7/includes/js/scripts.js?ver=5.1.4'></script>
 <script type='text/javascript' src='http://dev.chaloke.com/wp-content/plugins/html5-videogallery-plus-player/assets/js/video.js?ver=2.3.2'></script>
 <script type='text/javascript' src='http://dev.chaloke.com/wp-content/plugins/woocommerce/assets/js/jquery-blockui/jquery.blockUI.min.js?ver=2.70'></script>
 <script type='text/javascript' src='http://dev.chaloke.com/wp-content/plugins/woocommerce/assets/js/js-cookie/js.cookie.min.js?ver=2.1.4'></script>
@@ -1712,13 +1699,13 @@ var wpcf7 = {"apiSettings":{"root":"http:\/\/dev.chaloke.com\/wp-json\/contact-f
 var woocommerce_params = {"ajax_url":"\/wp-admin\/admin-ajax.php","wc_ajax_url":"\/?wc-ajax=%%endpoint%%"};
 /* ]]> */
 </script>
-<script type='text/javascript' src='http://dev.chaloke.com/wp-content/plugins/woocommerce/assets/js/frontend/woocommerce.min.js?ver=3.5.6'></script>
+<script type='text/javascript' src='http://dev.chaloke.com/wp-content/plugins/woocommerce/assets/js/frontend/woocommerce.min.js?ver=3.5.7'></script>
 <script type='text/javascript'>
 /* <![CDATA[ */
 var wc_cart_fragments_params = {"ajax_url":"\/wp-admin\/admin-ajax.php","wc_ajax_url":"\/?wc-ajax=%%endpoint%%","cart_hash_key":"wc_cart_hash_bd790035fa6c6885d2a10c3bd4443aaf","fragment_name":"wc_fragments_bd790035fa6c6885d2a10c3bd4443aaf"};
 /* ]]> */
 </script>
-<script type='text/javascript' src='http://dev.chaloke.com/wp-content/plugins/woocommerce/assets/js/frontend/cart-fragments.min.js?ver=3.5.6'></script>
+<script type='text/javascript' src='http://dev.chaloke.com/wp-content/plugins/woocommerce/assets/js/frontend/cart-fragments.min.js?ver=3.5.7'></script>
 <script type='text/javascript'>
 /* <![CDATA[ */
 var storefrontScreenReaderText = {"expand":"Expand child menu","collapse":"Collapse child menu"};
@@ -1727,28 +1714,23 @@ var storefrontScreenReaderText = {"expand":"Expand child menu","collapse":"Colla
 <script type='text/javascript' src='http://dev.chaloke.com/wp-content/themes/storefront/assets/js/navigation.min.js?ver=2.4.5'></script>
 <script type='text/javascript' src='http://dev.chaloke.com/wp-content/themes/storefront/assets/js/skip-link-focus-fix.min.js?ver=20130115'></script>
 <script type='text/javascript' src='http://dev.chaloke.com/wp-content/themes/storefront/assets/js/vendor/pep.min.js?ver=0.4.3'></script>
-<script type='text/javascript' src='http://dev.chaloke.com/wp-includes/js/jquery/ui/core.min.js?ver=1.11.4'></script>
-<script type='text/javascript' src='http://dev.chaloke.com/wp-includes/js/jquery/ui/datepicker.min.js?ver=1.11.4'></script>
 <script type='text/javascript'>
-jQuery(document).ready(function(jQuery){jQuery.datepicker.setDefaults({"closeText":"Close","currentText":"Today","monthNames":["January","February","March","April","May","June","July","August","September","October","November","December"],"monthNamesShort":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"nextText":"Next","prevText":"Previous","dayNames":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],"dayNamesShort":["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],"dayNamesMin":["S","M","T","W","T","F","S"],"dateFormat":"dd\/mm\/yy","firstDay":1,"isRTL":false});});
+/* <![CDATA[ */
+var wpcf7cf_global_settings = {"ajaxurl":"http:\/\/dev.chaloke.com\/wp-admin\/admin-ajax.php"};
+/* ]]> */
 </script>
-<script type='text/javascript' src='http://dev.chaloke.com/wp-includes/js/jquery/ui/widget.min.js?ver=1.11.4'></script>
-<script type='text/javascript' src='http://dev.chaloke.com/wp-includes/js/jquery/ui/button.min.js?ver=1.11.4'></script>
-<script type='text/javascript' src='http://dev.chaloke.com/wp-includes/js/jquery/ui/spinner.min.js?ver=1.11.4'></script>
+<script type='text/javascript' src='http://dev.chaloke.com/wp-content/plugins/cf7-conditional-fields/js/scripts.js?ver=1.7'></script>
 <script type='text/javascript' src='http://dev.chaloke.com/wp-content/themes/storefront/assets/js/woocommerce/header-cart.min.js?ver=2.4.5'></script>
 <script type='text/javascript' src='http://dev.chaloke.com/wp-content/themes/storefront/assets/js/footer.min.js?ver=2.4.5'></script>
 <script type='text/javascript' src='http://dev.chaloke.com/wp-content/plugins/wp-spamshield/js/jscripts-ftr2-min.js'></script>
-<script type='text/javascript' src='http://dev.chaloke.com/wp-includes/js/wp-embed.min.js?ver=5.1.1'></script>
-<script type='text/javascript' src='http://dev.chaloke.com/wp-content/plugins/ticker-ultimate/assets/js/wptu-ticker.js?ver=1.2.2'></script>
-<script type='text/javascript' src='http://dev.chaloke.com/wp-content/plugins/ticker-ultimate/assets/js/wptu-public.js?ver=1.2.2'></script>
-<script type='text/javascript' src='http://dev.chaloke.com/wp-content/plugins/wp-featured-content-and-slider/assets/js/slick.min.js?ver=1.3.2'></script>
+<script type='text/javascript' src='http://dev.chaloke.com/wp-includes/js/wp-embed.min.js?ver=5.2.4'></script>
 
 </body>
 </html>
 
 <!--
-Object Caching 0/765 objects using disk
+Object Caching 29/720 objects using disk
 Page Caching using disk: enhanced 
 
-Served from: dev.chaloke.com @ 2019-04-04 10:28:48 by W3 Total Cache
+Served from: dev.chaloke.com @ 2019-10-22 17:43:31 by W3 Total Cache
 -->

@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Composite Products Compatibility.
  *
- * @version  5.8.0
+ * @version  5.10.0
  */
 class WC_PB_CP_Compatibility {
 
@@ -48,7 +48,10 @@ class WC_PB_CP_Compatibility {
 		 * Templates.
 		 */
 
+		// CP < 4.0.
 		add_action( 'woocommerce_composite_show_composited_product_bundle', array( __CLASS__, 'composite_show_product_bundle' ), 10, 3 );
+		// CP >= 4.0.
+		add_action( 'woocommerce_composited_product_bundle', array( __CLASS__, 'composited_product_bundle' ), 10 );
 
 		/*
 		 * Cart and Orders.
@@ -165,7 +168,15 @@ class WC_PB_CP_Compatibility {
 			}
 
 			WC_PB_Compatibility::$bundle_prefix = $component_id;
+
 			$configuration[ $component_id ][ 'stamp' ] = WC_PB()->cart->get_posted_bundle_configuration( $composited_product );
+
+			if ( doing_filter( 'woocommerce_add_cart_item_data' ) ) {
+				foreach ( $configuration[ $component_id ][ 'stamp' ] as $bundled_item_id => $bundled_item_configuration ) {
+					$configuration[ $component_id ][ 'stamp' ][ $bundled_item_id ] = apply_filters( 'woocommerce_bundled_item_cart_item_identifier', $bundled_item_configuration, $bundled_item_id, $composited_product->get_id() );
+				}
+			}
+
 			WC_PB_Compatibility::$bundle_prefix = '';
 		}
 
@@ -217,6 +228,71 @@ class WC_PB_CP_Compatibility {
 	*/
 
 	/**
+	 * Hook into 'woocommerce_composited_product_bundle' to show bundle type product content.
+	 *
+	 * @since  5.10.0
+	 *
+	 * @param  WC_CP_Product  $component_option
+	 * @return void
+	 */
+	public static function composited_product_bundle( $component_option ) {
+
+		$product = $component_option->get_product();
+
+		if ( $product->contains( 'subscriptions' ) ) {
+
+			?><div class="woocommerce-error"><?php
+				echo __( 'This item cannot be purchased at the moment.', 'woocommerce-product-bundles' );
+			?></div><?php
+
+			return false;
+		}
+
+		if ( class_exists( 'WC_CP_Admin_Ajax' ) && WC_CP_Admin_Ajax::is_composite_edit_request() ) {
+			$product->set_layout( 'tabular' );
+		}
+
+		$product_id   = $product->get_id();
+		$component    = $component_option->get_component();
+		$component_id = $component_option->get_component_id();
+		$composite    = $component_option->get_composite();
+		$composite_id = $component_option->get_composite_id();
+
+		WC_PB_Compatibility::$compat_product = $product;
+		WC_PB_Compatibility::$bundle_prefix  = $component_id;
+
+		$quantity_min = $component_option->get_quantity_min();
+		$quantity_max = $component_option->get_quantity_max( true );
+
+		$form_classes = array();
+
+		if ( ! $product->is_in_stock() ) {
+			$form_classes[] = 'bundle_out_of_stock';
+		}
+
+		if ( $product->contains( 'out_of_stock' ) ) {
+			$form_classes[] = 'bundle_insufficient_stock';
+		}
+
+ 		wc_get_template( 'composited-product/bundle-product.php', array(
+			'product_id'         => $product_id,
+			'product'            => $product,
+			'quantity_min'       => $quantity_min,
+			'quantity_max'       => $quantity_max,
+			'bundle_price_data'  => $product->get_bundle_price_data(),
+			'bundled_items'      => $product->get_bundled_items(),
+			'component_id'       => $component_id,
+			'composited_product' => $component_option,
+			'composite_product'  => $composite,
+			'classes'            => implode( ' ', $form_classes ),
+			'legacy_attributes'  => ''
+		), false, WC_PB()->plugin_path() . '/templates/' );
+
+		WC_PB_Compatibility::$compat_product = '';
+		WC_PB_Compatibility::$bundle_prefix  = '';
+	}
+
+	/**
 	 * Hook into 'woocommerce_composite_show_composited_product_bundle' to show bundle type product content.
 	 *
 	 * @param  WC_Product  $product
@@ -249,25 +325,34 @@ class WC_PB_CP_Compatibility {
 		$composited_product = $component->get_option( $product_id );
 		$quantity_min       = $composited_product->get_quantity_min();
 		$quantity_max       = $composited_product->get_quantity_max( true );
-		$availability       = $composited_product->get_availability();
 		$tax_ratio          = WC_PB_Product_Prices::get_tax_ratios( $product );
 
 		/** Filter documented in CP file 'includes/wc-cp-template-functions.php'. */
-		$custom_data = apply_filters( 'woocommerce_composited_product_custom_data', array( 'price_tax' => $tax_ratio, 'image_data' => $composited_product->get_image_data() ), $product, $component_id, $component, $composite );
+		$custom_data       = apply_filters( 'woocommerce_composited_product_custom_data', array( 'price_tax' => $tax_ratio, 'image_data' => $composited_product->get_image_data() ), $product, $component_id, $component, $composite );
+		$legacy_attributes = 'data-price="' . esc_attr( $product->get_price() ) . '" data-regular_price="' . esc_attr( $product->get_regular_price() ) . '" data-product_type="bundle" data-custom="' . esc_attr( json_encode( $custom_data ) ) . '"';
+		$form_classes      = array();
+
+		if ( ! $product->is_in_stock() ) {
+			$form_classes[] = 'bundle_out_of_stock';
+		}
+
+		if ( $product->contains( 'out_of_stock' ) ) {
+			$form_classes[] = 'bundle_insufficient_stock';
+		}
 
  		wc_get_template( 'composited-product/bundle-product.php', array(
 			'product_id'         => $product_id,
 			'product'            => $product,
-			'composite_id'       => $composite_id,
 			'quantity_min'       => $quantity_min,
 			'quantity_max'       => $quantity_max,
 			'custom_data'        => $custom_data,
+			'legacy_attributes'  => $legacy_attributes,
 			'bundle_price_data'  => $product->get_bundle_price_data(),
 			'bundled_items'      => $product->get_bundled_items(),
 			'component_id'       => $component_id,
-			'availability'       => $availability,
 			'composited_product' => $composited_product,
-			'composite_product'  => $composite
+			'composite_product'  => $composite,
+			'classes'            => implode( ' ', $form_classes )
 		), false, WC_PB()->plugin_path() . '/templates/' );
 
 		WC_PB_Compatibility::$compat_product = '';

@@ -86,7 +86,7 @@ function wpforms_get_currencies() {
 		'HKD' => array(
 			'name'                => esc_html__( 'Hong Kong Dollar', 'wpforms' ),
 			'symbol'              => '&#36;',
-			'symbol_pos'          => 'right',
+			'symbol_pos'          => 'left',
 			'thousands_separator' => ',',
 			'decimal_separator'   => '.',
 			'decimals'            => 2,
@@ -306,7 +306,7 @@ function wpforms_format_amount( $amount, $symbol = false, $currency = '' ) {
 	}
 
 	$decimals = apply_filters( 'wpforms_sanitize_amount_decimals', 2, $amount );
-	$number   = number_format( $amount, $decimals, $decimal_sep, $thousands_sep );
+	$number   = number_format( (float) $amount, $decimals, $decimal_sep, $thousands_sep );
 
 	if ( $symbol ) {
 		$symbol_padding = apply_filters( 'wpforms_currency_symbol_padding', ' ' );

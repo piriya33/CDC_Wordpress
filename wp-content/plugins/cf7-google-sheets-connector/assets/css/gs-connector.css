@@ -20,6 +20,14 @@
    margin-top: 20px;
    width:50%;
 }
+a.order-val {
+    color: #51ac56;
+    font-size: 16px;
+    font-weight: 700;
+}
+.card-gs{
+  padding: 20px;
+}
 .help-link {
    margin-left:5px;
 }

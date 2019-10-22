@@ -109,6 +109,12 @@
     content: "";
     display: table;
     clear: both; }
+  .sp-header-active .sp-header-empty {
+    padding: 1.618034em 0; }
+    .sp-header-active .sp-header-empty:after {
+      content: "";
+      display: table;
+      clear: both; }
   .sp-header-active .sp-header-last {
     float: right;
     margin-right: 0; } }

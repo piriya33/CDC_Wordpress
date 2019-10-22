@@ -150,8 +150,8 @@ class SP_Designer_CSS_Setting extends WP_Customize_Setting {
 
 		// Font Weight
 		$sanitized[ 'fontWeight' ] = '';
-		if ( array_key_exists( 'fontWeight', $value ) && 'bold' === $value['fontWeight'] ) {
-			$sanitized['fontWeight'] = 'bold';
+		if ( array_key_exists( 'fontWeight', $value ) && in_array( absint( $value['fontWeight'] ), array( 100, 200, 300, 400, 500, 600, 700, 800, 900 ) ) ) {
+			$sanitized['fontWeight'] = absint( $value['fontWeight'] );
 		}
 
 		// Text Underline

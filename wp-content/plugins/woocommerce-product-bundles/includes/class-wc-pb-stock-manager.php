@@ -320,7 +320,7 @@ class WC_PB_Stock_Manager {
  * These 2 will differ only if stock for a variation is managed by its parent.
  *
  * @class    WC_PB_Stock_Manager_Item
- * @version  5.5.0
+ * @version  5.10.0
  * @since    4.8.7
  */
 class WC_PB_Stock_Manager_Item {
@@ -339,18 +339,8 @@ class WC_PB_Stock_Manager_Item {
 		$this->quantity     = $quantity;
 		$this->bundled_item = isset( $args[ 'bundled_item' ] ) ? $args[ 'bundled_item' ] : false;
 
-		if ( $this->variation_id ) {
-
-			$variation = is_object( $variation ) ? $variation : wc_get_product( $variation );
-
-			// If stock is managed at variation level.
-			if ( $variation && $variation->managing_stock() ) {
-				$this->managed_by_id = $this->variation_id;
-			// Otherwise stock is managed by the parent.
-			} else {
-				$this->managed_by_id = $this->product_id;
-			}
-
+		if ( $this->variation_id && ( $variation = is_object( $variation ) ? $variation : wc_get_product( $variation ) ) ) {
+			$this->managed_by_id = $variation->get_stock_managed_by_id();
 		} else {
 			$this->managed_by_id = $this->product_id;
 		}

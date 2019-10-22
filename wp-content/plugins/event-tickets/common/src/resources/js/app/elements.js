@@ -14244,16 +14244,10 @@ function baseClone(value, bitmask, customizer, key, object, stack) {
     value.forEach(function(subValue) {
       result.add(baseClone(subValue, bitmask, customizer, subValue, value, stack));
     });
-
-    return result;
-  }
-
-  if (isMap(value)) {
+  } else if (isMap(value)) {
     value.forEach(function(subValue, key) {
       result.set(key, baseClone(subValue, bitmask, customizer, key, value, stack));
     });
-
-    return result;
   }
 
   var keysFunc = isFull
@@ -59841,12 +59835,12 @@ var element_ModalButton = function (_PureComponent) {
 		_this.onClick = function (e) {
 			_this.props.onClick && _this.props.onClick(e);
 			_this.onOpen();
-			_this.setState({ isOpen: true });
+			_this.props.isOpen === undefined && _this.setState({ isOpen: true });
 		};
 
 		_this.onRequestClose = function () {
 			_this.onClose();
-			_this.setState({ isOpen: false });
+			_this.props.isOpen === undefined && _this.setState({ isOpen: false });
 		};
 
 		_this.onOpen = function () {
@@ -59865,7 +59859,9 @@ var element_ModalButton = function (_PureComponent) {
 			    modalTitle = _this$props.modalTitle;
 
 
-			return _this.state.isOpen && wp.element.createElement(
+			var isOpen = _this.props.isOpen !== undefined ? _this.props.isOpen : _this.state.isOpen;
+
+			return isOpen && wp.element.createElement(
 				external_var_wp_components_root_wp_components_["Modal"],
 				{
 					className: classnames_default()('tribe-editor__modal-button__modal-content', modalClassName),
@@ -59914,6 +59910,7 @@ var element_ModalButton = function (_PureComponent) {
 element_ModalButton.propTypes = {
 	className: prop_types_default.a.string,
 	disabled: prop_types_default.a.bool,
+	isOpen: prop_types_default.a.bool,
 	label: prop_types_default.a.string,
 	modalClassName: prop_types_default.a.string,
 	modalContent: prop_types_default.a.node,
@@ -59948,6 +59945,7 @@ var label_with_modal_style = __webpack_require__(653);
 
 var element_LabelWithModal = function LabelWithModal(_ref) {
 	var className = _ref.className,
+	    isOpen = _ref.isOpen,
 	    label = _ref.label,
 	    modalButtonDisabled = _ref.modalButtonDisabled,
 	    modalButtonLabel = _ref.modalButtonLabel,
@@ -59967,6 +59965,7 @@ var element_LabelWithModal = function LabelWithModal(_ref) {
 		wp.element.createElement(modal_button_element, {
 			className: 'tribe-editor__label-with-modal__modal-button',
 			disabled: modalButtonDisabled,
+			isOpen: isOpen,
 			label: modalButtonLabel,
 			modalClassName: modalClassName,
 			modalContent: modalContent,
@@ -59987,6 +59986,7 @@ element_LabelWithModal.defaultProps = {
 
 element_LabelWithModal.propTypes = {
 	className: prop_types_default.a.string,
+	isOpen: prop_types_default.a.bool,
 	label: prop_types_default.a.node,
 	modalButtonDisabled: prop_types_default.a.bool,
 	modalButtonLabel: prop_types_default.a.string,

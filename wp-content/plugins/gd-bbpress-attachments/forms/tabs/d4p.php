@@ -1,6 +1,6 @@
 <div class="d4p-information">
     <fieldset>
-        <h3><?php _e("Premium Plugins for bbPress", "gd-bbpress-tools"); ?></h3>
+        <h3><?php _e("Premium Plugins for bbPress", "gd-bbpress-attachments"); ?></h3>
         <a target="_blank" href="https://plugins.dev4press.com/gd-bbpress-toolbox/">GD bbPress Toolbox Pro</a><br/>
         <a target="_blank" href="https://plugins.dev4press.com/gd-quantum-theme-for-bbpress/">GD Quantum Theme Pro</a><br/>
         <a target="_blank" href="https://plugins.dev4press.com/gd-power-search-for-bbpress/">GD Power Search Pro</a><br/>
@@ -9,7 +9,7 @@
     </fieldset>
 
     <fieldset>
-        <h3><?php _e("More Free Plugins for bbPress", "gd-bbpress-tools"); ?></h3>
+        <h3><?php _e("More Free Plugins for bbPress", "gd-bbpress-attachments"); ?></h3>
         <a target="_blank" href="https://wordpress.org/plugins/gd-bbpress-tools/">GD bbPress Tools</a><br/>
         <a target="_blank" href="https://wordpress.org/plugins/gd-topic-polls/">GD Topic Polls</a><br/>
         <a target="_blank" href="https://wordpress.org/plugins/gd-power-search-for-bbpress/">GD Power Search</a><br/>

@@ -4,15 +4,15 @@ Plugin Name: Ticker Ultimate
 Plugin URL: https://www.wponlinesupport.com/plugins/
 Text Domain: ticker-ultimate
 Domain Path: /languages/
-Description: Ultimate Ticker Plugin. Also work with Gutenberg shortcode block.
-Version: 1.2.2
+Description: Ultimate Ticker Plugin : Add and display horizontal or vertical tickers on your website that work with WordPress posts and Custom Post Type with the help of shortcode. Also work with Gutenberg shortcode block.
+Version: 1.2.4
 Author: WP OnlineSupport
 Author URI: https://www.wponlinesupport.com/
 Contributors: WP OnlineSupport
 */
 
 if( !defined( 'WPTU_VERSION' ) ) {
-	define( 'WPTU_VERSION', '1.2.2' ); // Version of plugin
+	define( 'WPTU_VERSION', '1.2.4' ); // Version of plugin
 }
 if( !defined( 'WPTU_POST_TYPE' ) ) {
 	define( 'WPTU_POST_TYPE', 'wptu_ticker' ); // Plugin post type

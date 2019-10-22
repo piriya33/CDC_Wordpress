@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Product Bundle Class.
  *
  * @class    WC_Product_Bundle
- * @version  5.9.2
+ * @version  5.13.0
  */
 class WC_Product_Bundle extends WC_Product {
 
@@ -80,6 +80,11 @@ class WC_Product_Bundle extends WC_Product {
 	 * @var array
 	 */
 	private $bundle_price_cache = array();
+
+	/**
+	 * Bundle object instance context.
+	 */
+	private $object_context = '';
 
 	/**
 	 * Storage of 'contains' keys, most set during sync.
@@ -538,14 +543,10 @@ class WC_Product_Bundle extends WC_Product {
 			$totals->price_incl_tax = 0.0;
 			$totals->price_excl_tax = 0.0;
 
-			$bundle_price_data[ 'base_price_subtotals' ] = $totals;
-			$bundle_price_data[ 'base_price_totals' ]    = $totals;
-
-			$bundle_price_data[ 'subtotals' ] = $totals;
-			$bundle_price_data[ 'totals' ]    = $totals;
-
-			$bundle_price_data[ 'recurring_subtotals' ] = $totals;
-			$bundle_price_data[ 'recurring_totals' ]    = $totals;
+			$bundle_price_data[ 'base_price_totals' ] = $totals;
+			$bundle_price_data[ 'subtotals' ]         = $totals;
+			$bundle_price_data[ 'totals' ]            = $totals;
+			$bundle_price_data[ 'recurring_totals' ]  = $totals;
 
 			$bundled_items = $this->get_bundled_items();
 
@@ -573,10 +574,8 @@ class WC_Product_Bundle extends WC_Product {
 
 				$bundle_price_data[ 'addons_prices' ][ $bundled_item->get_id() ] = '';
 
-				$bundle_price_data[ 'bundled_item_' . $bundled_item->get_id() . '_subtotals' ]           = $totals;
-				$bundle_price_data[ 'bundled_item_' . $bundled_item->get_id() . '_totals' ]              = $totals;
-				$bundle_price_data[ 'bundled_item_' . $bundled_item->get_id() . '_recurring_totals' ]    = $totals;
-				$bundle_price_data[ 'bundled_item_' . $bundled_item->get_id() . '_recurring_subtotals' ] = $totals;
+				$bundle_price_data[ 'bundled_item_' . $bundled_item->get_id() . '_totals' ]           = $totals;
+				$bundle_price_data[ 'bundled_item_' . $bundled_item->get_id() . '_recurring_totals' ] = $totals;
 
 				$bundle_price_data[ 'quantities' ][ $bundled_item->get_id() ] = '';
 
@@ -780,6 +779,10 @@ class WC_Product_Bundle extends WC_Product {
 								continue;
 							}
 
+							if ( false === $bundled_item->is_priced_individually() ) {
+								continue;
+							}
+
 							$bundled_item_qty = $qty * $bundled_item->get_quantity( $min_or_max, array( 'context' => 'price', 'check_optional' => $min_or_max === 'min' ) );
 
 							if ( $bundled_item_qty ) {
@@ -802,6 +805,10 @@ class WC_Product_Bundle extends WC_Product {
 							foreach ( $bundled_items as $bundled_item ) {
 
 								if ( false === $bundled_item->is_purchasable() ) {
+									continue;
+								}
+
+								if ( false === $bundled_item->is_priced_individually() ) {
 									continue;
 								}
 
@@ -850,33 +857,40 @@ class WC_Product_Bundle extends WC_Product {
 	 */
 	public function get_price_suffix( $price = '', $qty = 1 ) {
 
-		if ( $this->contains( 'priced_individually' ) ) {
+		if ( ! $this->contains( 'priced_individually' ) ) {
+			return parent::get_price_suffix();
+		}
 
-			$price_suffix = '';
+		$suffix      = get_option( 'woocommerce_price_display_suffix' );
+		$suffix_html = '';
 
-			if ( ( $suffix = get_option( 'woocommerce_price_display_suffix' ) ) && wc_tax_enabled() ) {
+		if ( $suffix && wc_tax_enabled() ) {
+
+			if ( 'range' === $price && strstr( $suffix, '{' ) ) {
+				$suffix = false;
+				$price  = '';
+			}
+
+			if ( $suffix ) {
 
 				$replacements = array(
 					'{price_including_tax}' => wc_price( $this->get_bundle_price_including_tax( 'min', $qty ) ),
 					'{price_excluding_tax}' => wc_price( $this->get_bundle_price_excluding_tax( 'min', $qty ) )
 				);
 
-				$price_suffix = str_replace( array_keys( $replacements ), array_values( $replacements ), ' <small class="woocommerce-price-suffix">' . wp_kses_post( $suffix ) . '</small>' );
+				$suffix_html = str_replace( array_keys( $replacements ), array_values( $replacements ), ' <small class="woocommerce-price-suffix">' . wp_kses_post( $suffix ) . '</small>' );
 			}
-
-			/**
-			 * 'woocommerce_get_price_suffix' filter.
-			 *
-			 * @param  string             $price_suffix
-			 * @param  WC_Product_Bundle  $this
-			 * @param  mixed              $price
-			 * @param  int                $qty
-			 */
-			return apply_filters( 'woocommerce_get_price_suffix', $price_suffix, $this, $price, $qty );
-
-		} else {
-			return parent::get_price_suffix();
 		}
+
+		/**
+		 * 'woocommerce_get_price_suffix' filter.
+		 *
+		 * @param  string             $suffix_html
+		 * @param  WC_Product_Bundle  $this
+		 * @param  mixed              $price
+		 * @param  int                $qty
+		 */
+		return apply_filters( 'woocommerce_get_price_suffix', $suffix_html, $this, $price, $qty );
 	}
 
 	/**
@@ -1109,7 +1123,7 @@ class WC_Product_Bundle extends WC_Product {
 						}
 
 						/** Documented above. */
-						$price = apply_filters( 'woocommerce_bundle_sale_price_html', wc_format_sale_price( $regular_price, $price ) . ( $is_range ? '' : $this->get_price_suffix() ), $this );
+						$price = apply_filters( 'woocommerce_bundle_sale_price_html', wc_format_sale_price( $regular_price, $price ) . $this->get_price_suffix( 'range' ), $this );
 
 					} elseif ( 0.0 === $price_min && 0.0 === $price_max ) {
 
@@ -1118,7 +1132,7 @@ class WC_Product_Bundle extends WC_Product {
 
 					} else {
 						/** Documented above. */
-						$price = apply_filters( 'woocommerce_bundle_price_html', $price . ( $is_range ? '' : $this->get_price_suffix() ), $this );
+						$price = apply_filters( 'woocommerce_bundle_price_html', $price . $this->get_price_suffix( 'range' ), $this );
 					}
 				}
 			}
@@ -1174,7 +1188,7 @@ class WC_Product_Bundle extends WC_Product {
 	 */
 	public function add_to_cart_url() {
 
-		$url = esc_url( $this->is_purchasable() && $this->is_in_stock() && ! $this->requires_input() ? remove_query_arg( 'added-to-cart', add_query_arg( 'add-to-cart', $this->get_id() ) ) : get_permalink( $this->get_id() ) );
+		$url = $this->is_purchasable() && $this->is_in_stock() && ! $this->has_options() ? remove_query_arg( 'added-to-cart', add_query_arg( 'add-to-cart', $this->get_id() ) ) : get_permalink( $this->get_id() );
 
 		/** WC core filter. */
 		return apply_filters( 'woocommerce_product_add_to_cart_url', $url, $this );
@@ -1191,7 +1205,7 @@ class WC_Product_Bundle extends WC_Product {
 
 		if ( $this->is_purchasable() && $this->is_in_stock() ) {
 
-			if ( $this->requires_input() ) {
+			if ( $this->has_options() ) {
 				$text =  __( 'Select options', 'woocommerce' );
 			} else {
 				$text =  __( 'Add to cart', 'woocommerce' );
@@ -2035,7 +2049,7 @@ class WC_Product_Bundle extends WC_Product {
 
 		$is_on_sale = false;
 
-		if ( 'update-price' !== $context && $this->contains( 'priced_individually' ) ) {
+		if ( 'update-price' !== $context && $this->contains( 'priced_individually' ) && 'cart' !== $this->get_object_context() ) {
 			$is_on_sale = parent::is_on_sale( $context ) || ( $this->contains( 'discounted_mandatory' ) && $this->get_min_raw_regular_price( $context ) > 0 );
 		} else {
 			$is_on_sale = parent::is_on_sale( $context );
@@ -2048,6 +2062,28 @@ class WC_Product_Bundle extends WC_Product {
 		 * @param  WC_Product_Bundle  $this
 		 */
 		return 'view' === $context ? apply_filters( 'woocommerce_product_is_on_sale', $is_on_sale, $this ) : $is_on_sale;
+	}
+
+	/**
+	 * Sets Bundle object instance context.
+	 *
+	 * @since 5.13.0
+	 *
+	 * @param string $context
+	 */
+	public function set_object_context( $context ) {
+		$this->object_context = $context;
+	}
+
+	/**
+	 * Retrieves Bundle object instance context.
+	 *
+	 * @since 5.13.0
+	 *
+	 * @return string
+	 */
+	public function get_object_context() {
+		return $this->object_context;
 	}
 
 	/**
@@ -2213,6 +2249,17 @@ class WC_Product_Bundle extends WC_Product {
 		return apply_filters( 'woocommerce_bundle_requires_input', $requires_input, $this );
 	}
 
+	/**
+	 * Returns whether or not the product has additional options that must be selected before adding to cart.
+	 *
+	 * @since  5.12.0
+	 *
+	 * @return boolean
+	 */
+	public function has_options() {
+		return $this->requires_input();
+	}
+
 	/*
 	|--------------------------------------------------------------------------
 	| Other CRUD Methods
@@ -2346,8 +2393,8 @@ class WC_Product_Bundle extends WC_Product {
 				'description' => __( 'The add-to-cart form is displayed inside the single-product summary.', 'woocommerce-product-bundles' )
 			),
 			'after_summary' => array(
-				'title'       => __( 'After summary', 'woocommerce-product-bundles' ),
-				'description' => __( 'The add-to-cart form is displayed after the single-product summary. Usually allocates the entire page width for displaying form content. Note that some themes may not support this option.', 'woocommerce-product-bundles' )
+				'title'       => __( 'Before Tabs', 'woocommerce-product-bundles' ),
+				'description' => __( 'The add-to-cart form is displayed before the single-product tabs. Usually allocates the entire page width for displaying form content. Note that some themes may not support this option.', 'woocommerce-product-bundles' )
 			)
 		);
 

@@ -25,6 +25,11 @@ class WC_PB_TAWS_Variation_Swatches_Compatibility {
 		add_action( 'woocommerce_bundle_add_to_cart', array( __CLASS__, 'tawc_variation_swatches_form_support' ) );
 	}
 
+	/**
+	 * Add footer script to support ThemeAlien's Variation Swatches.
+	 *
+	 * @return void
+	 */
 	public static function tawc_variation_swatches_form_support() {
 
 		wc_enqueue_js( "

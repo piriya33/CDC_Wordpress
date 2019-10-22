@@ -524,10 +524,12 @@ if ( ! class_exists( 'SP_Designer' ) ) :
 				}
 
 				// Font weight
-				if ( isset( $css_properties['fontWeight'] ) && 'bold' === $css_properties['fontWeight'] ) {
-					$output .= 'font-weight:700;';
-				} else {
-					$output .= 'font-weight:400;';
+				if ( isset( $css_properties['fontWeight'] ) && '' !== $css_properties['fontWeight'] ) {
+					if ( 'bold' === $css_properties['fontWeight'] ) {
+						$output .= 'font-weight:700;';
+					} else {
+						$output .= 'font-weight:' . esc_attr( $css_properties['fontWeight'] ) . ';';
+					}
 				}
 
 				// Text decoration

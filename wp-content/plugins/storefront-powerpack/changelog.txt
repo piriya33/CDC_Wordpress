@@ -1,5 +1,11 @@
 *** Storefront Powerpack Changelog ***
 
+2019.06.27 - version 1.5.0
+* Enhancement - Header Customizer: Add support for floating elements and empty rows.
+* Enhancement - Designer: New "Font Weight" select box for granular control over your typography.
+* Fix - Add back Storefront header wrappers to the "Distraction Free Checkout" option header area.
+* Fix - Update Sticky Header `z-index` value to stop overlapping with the product image full screen lightbox.
+
 2019.03.04 - version 1.4.15
 * Tweak - Use original string when homepage section title is left empty. Useful for multi language sites.
 

@@ -593,6 +593,10 @@
     cursor: grabbing;
 }
 
+.n2-ss-slider .n2-grabbing .n2-ss-slide {
+    pointer-events: none;
+}
+
 .n2-ss-slider .n2-ss-item-input-form {
     display: flex;
     flex-flow: row;
@@ -992,4 +996,8 @@
     width: 100%;
     height: 100%;
 
+}
+
+.elementor-sticky__spacer .n2-section-smartslider * {
+    visibility: hidden !important;
 }

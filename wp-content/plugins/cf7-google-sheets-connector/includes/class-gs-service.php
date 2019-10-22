@@ -49,7 +49,7 @@ class Gs_Connector_Service {
 
       if ( get_option( 'gs_access_code' ) != '' ) {
          include_once( GS_CONNECTOR_ROOT . '/lib/google-sheets.php');
-         CF7GSC_googlesheet::preauth( get_option( 'gs_access_code' ) );
+         cf7gsc_googlesheet::preauth( get_option( 'gs_access_code' ) );
          update_option( 'gs_verify', 'valid' );
          wp_send_json_success();
       } else {
@@ -77,11 +77,12 @@ class Gs_Connector_Service {
     * @since 1.0
     */
    public function cf7_gs_editor_panels( $panels ) {
-      $panels['google_sheets'] = array(
-         'title' => __( 'Google Sheets', 'contact-form-7' ),
-         'callback' => array( $this, 'cf7_editor_panel_google_sheet' )
-      );
-
+      if ( current_user_can( 'wpcf7_edit_contact_form' ) ) {
+         $panels['google_sheets'] = array(
+            'title' => __( 'Google Sheets', 'contact-form-7' ),
+            'callback' => array( $this, 'cf7_editor_panel_google_sheet' )
+         );
+      }
       return $panels;
    }
 
@@ -118,7 +119,7 @@ class Gs_Connector_Service {
          // make sure the form ID matches the setting otherwise don't do anything
          try {
             include_once( GS_CONNECTOR_ROOT . "/lib/google-sheets.php" );
-            $doc = new CF7GSC_googlesheet();
+            $doc = new cf7gsc_googlesheet();
             $doc->auth();
             $doc->settitleSpreadsheet( $form_data[0]['sheet-name'] );
             $doc->settitleWorksheet( $form_data[0]['sheet-tab-name'] );
@@ -212,7 +213,9 @@ class Gs_Connector_Service {
 		
 		include( GS_CONNECTOR_PATH . "includes/pages/gs-special-mailtags.php" );
       
-      include( GS_CONNECTOR_PATH . "includes/pages/gs-custom-mail-tags.php" );
+    include( GS_CONNECTOR_PATH . "includes/pages/gs-custom-mail-tags.php" );
+
+    include( GS_CONNECTOR_PATH . "includes/pages/gs-custom-ordering.php");
 	  
 		include( GS_CONNECTOR_PATH . "includes/pages/gs-demo-details.php" );
    }

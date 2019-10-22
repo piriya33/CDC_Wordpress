@@ -289,7 +289,7 @@ class Tribe__Tickets__Commerce__PayPal__Orders__Sales {
 		/** @var Tribe__Tickets__Commerce__PayPal__Main $paypal */
 		$paypal = tribe( 'tickets.commerce.paypal' );
 
-		$orders = $paypal->get_orders_by_post_id( $post_id, $ticket_ids, array( 'posts_per_page' => - 1 ) );
+		$orders = $paypal->get_orders_by_post_id( $post_id, $ticket_ids, array( 'posts_per_page' => -1 ) );
 
 		$this->cache[ $cache_key ] = $orders;
 
@@ -353,15 +353,28 @@ class Tribe__Tickets__Commerce__PayPal__Orders__Sales {
 	 *
 	 * @since 4.7
 	 *
+	 * @since 4.10.5 - add check for Global Stock
+	 *
 	 * @param int                            $available
 	 * @param \Tribe__Tickets__Ticket_Object $ticket
-	 * @param   int                          $sold
-	 * @param      int                       $stock
+	 * @param int                            $sold
+	 * @param int                            $stock
 	 *
 	 * @return int
 	 */
 	public function filter_available( $available, Tribe__Tickets__Ticket_Object $ticket, $sold, $stock ) {
-		if ( 'Tribe__Tickets__Commerce__PayPal__Main' !== $ticket->provider_class ) {
+		if (
+			'Tribe__Tickets__Commerce__PayPal__Main' !== $ticket->provider_class
+			|| -1 === $available
+			|| $ticket::UNLIMITED_STOCK === $available
+		) {
+			return $available;
+		}
+
+		// if using global stock then return available
+		$event        = Tribe__Tickets__Tickets::find_matching_event( $ticket );
+		$global_stock = new Tribe__Tickets__Global_Stock( $event->ID );
+		if ( Tribe__Tickets__Global_Stock::GLOBAL_STOCK_MODE === $ticket->global_stock_mode() && $global_stock->is_enabled() ) {
 			return $available;
 		}
 
@@ -382,7 +395,7 @@ class Tribe__Tickets__Commerce__PayPal__Orders__Sales {
 		$all_statuses = (array) tribe( 'tickets.status' )->get_statuses_by_action( 'all', 'tpp' );
 		$args = array(
 			'post_type'      => 'tribe_tpp_orders',
-			'posts_per_page' => - 1,
+			'posts_per_page' => -1,
 			'post_status'    => $all_statuses,
 			'meta_query'     => array(
 				array(

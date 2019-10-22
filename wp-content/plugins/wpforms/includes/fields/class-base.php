@@ -188,6 +188,9 @@ abstract class WPForms_Field {
 					if ( 'default' === $key ) {
 						$value = false;
 					}
+					if ( 'wpforms-selected' === $value ) {
+						$value = '';
+					}
 				}
 			);
 		}
@@ -337,7 +340,8 @@ abstract class WPForms_Field {
 			if ( null !== $default_key ) {
 				foreach ( $properties['inputs'] as $input_key => $choice_arr ) {
 					if ( $input_key === $default_key ) {
-						$properties['inputs'][ $input_key ]['default'] = true;
+						$properties['inputs'][ $input_key ]['default']              = true;
+						$properties['inputs'][ $input_key ]['container']['class'][] = 'wpforms-selected';
 						// Stop iterating over choices.
 						break;
 					}
@@ -373,7 +377,8 @@ abstract class WPForms_Field {
 			if ( null !== $default_key ) {
 				foreach ( $field['choices'] as $choice_key => $choice_arr ) {
 					if ( $choice_key === $default_key ) {
-						$properties['inputs'][ $choice_key ]['default'] = true;
+						$properties['inputs'][ $choice_key ]['default']              = true;
+						$properties['inputs'][ $choice_key ]['container']['class'][] = 'wpforms-selected';
 						break;
 					}
 				}
@@ -881,7 +886,7 @@ abstract class WPForms_Field {
 			case 'choices_payments':
 				$values     = ! empty( $field['choices'] ) ? $field['choices'] : $this->defaults;
 				$class      = array();
-				$input_type = 'payment-multiple' === $field['type'] ? 'radio' : 'checkbox';
+				$input_type = in_array( $field['type'], array( 'payment-multiple', 'payment-select' ), true ) ? 'radio' : 'checkbox';
 
 				if ( ! empty( $field['choices_images'] ) ) {
 					$class[] = 'show-images';
@@ -1615,8 +1620,10 @@ abstract class WPForms_Field {
 		$this->field_preview( $field );
 		$prev     = ob_get_clean();
 		$preview  = sprintf( '<div class="wpforms-field wpforms-field-%s %s %s" id="wpforms-field-%d" data-field-id="%d" data-field-type="%s">', $field_type, $field_required, $field_class, $field['id'], $field['id'], $field_type );
-		$preview .= sprintf( '<a href="#" class="wpforms-field-duplicate" title="%s"><i class="fa fa-files-o" aria-hidden="true"></i></a>', esc_attr__( 'Duplicate Field', 'wpforms-lite' ) );
-		$preview .= sprintf( '<a href="#" class="wpforms-field-delete" title="%s"><i class="fa fa-times-circle"></i></a>', esc_attr__( 'Delete Field', 'wpforms-lite' ) );
+		if ( apply_filters( 'wpforms_field_new_display_duplicate_button', true, $field ) ) {
+			$preview .= sprintf( '<a href="#" class="wpforms-field-duplicate" title="%s"><i class="fa fa-files-o" aria-hidden="true"></i></a>', esc_attr__( 'Duplicate Field', 'wpforms-lite' ) );
+		}
+		$preview .= sprintf( '<a href="#" class="wpforms-field-delete" title="%s"><i class="fa fa-trash"></i></a>', esc_attr__( 'Delete Field', 'wpforms-lite' ) );
 		$preview .= sprintf( '<span class="wpforms-field-helper">%s</span>', esc_html__( 'Click to edit. Drag to reorder.', 'wpforms-lite' ) );
 		$preview .= $prev;
 		$preview .= '</div>';
@@ -1713,7 +1720,7 @@ abstract class WPForms_Field {
 	 * @since 1.0.0
 	 *
 	 * @param int   $field_id     Field ID.
-	 * @param array $field_submit Field value that was submitted.
+	 * @param mixed $field_submit Field value that was submitted.
 	 * @param array $form_data    Form data and settings.
 	 */
 	public function validate( $field_id, $field_submit, $form_data ) {

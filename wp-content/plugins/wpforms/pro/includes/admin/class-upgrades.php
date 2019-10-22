@@ -62,6 +62,10 @@ class WPForms_Upgrades {
 			$this->v150_upgrade();
 		}
 
+		if ( version_compare( $version, '1.5.4.2', '<' ) ) {
+			$this->v1542_upgrade();
+		}
+
 		// If upgrade has occurred, update version options in database.
 		if ( $this->upgraded ) {
 			update_option( 'wpforms_version_upgraded_from', $version );
@@ -139,7 +143,7 @@ class WPForms_Upgrades {
 		$fields_table  = $wpdb->prefix . 'wpforms_entry_fields';
 		$entries_table = $wpdb->prefix . 'wpforms_entries';
 
-		// Check if this is the inital total check.
+		// Check if this is the initial total check.
 		if ( ! empty( $_POST['init'] ) ) {
 
 			$upgraded = count( $wpdb->get_results( "SELECT DISTINCT entry_id FROM {$fields_table}" ) );
@@ -250,6 +254,26 @@ class WPForms_Upgrades {
 
 		foreach ( $forms as $form_id ) {
 			delete_post_meta( $form_id, 'wpforms_entries_count' );
+		}
+
+		$this->upgraded = true;
+	}
+
+	/**
+	 * Check to make sure that database tables are present for Lite users
+	 * who upgraded to Pro using the settings workflow using v1.5.4.
+	 *
+	 * @since 1.5.4.2
+	 */
+	private function v1542_upgrade() {
+
+		global $wpdb;
+
+		$table_name = $wpdb->prefix . 'wpforms_entries';
+
+		if ( $wpdb->get_var( $wpdb->prepare( "SHOW TABLES LIKE %s", $table_name ) ) !== $table_name ) {
+			$installer = new WPForms_Install();
+			$installer->manual( true );
 		}
 
 		$this->upgraded = true;

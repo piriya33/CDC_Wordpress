@@ -100,37 +100,43 @@ class WPForms_Entries_List {
 	public function init() {
 
 		// Check what page and view.
-		$page = ! empty( $_GET['page'] ) ? $_GET['page'] : '';
+		$page = ! empty( $_GET['page'] ) ? sanitize_key( wp_unslash( $_GET['page'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification
 		$view = $this->get_current_screen_view();
 
 		// Only load if we are actually on the overview page.
-		if ( 'wpforms-entries' === $page && 'list' === $view ) {
-
-			// Load the classes that builds the entries table.
-			if ( ! class_exists( 'WP_List_Table', false ) ) {
-				require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
-			}
-			require_once WPFORMS_PLUGIN_DIR . 'pro/includes/admin/entries/class-entries-list-table.php';
-
-			// Processing and setup.
-			add_action( 'wpforms_entries_init', array( $this, 'process_export' ), 8, 1 );
-			add_action( 'wpforms_entries_init', array( $this, 'process_read' ), 8, 1 );
-			add_action( 'wpforms_entries_init', array( $this, 'process_columns' ), 8, 1 );
-			add_action( 'wpforms_entries_init', array( $this, 'process_delete' ), 8, 1 );
-			add_action( 'wpforms_entries_init', array( $this, 'process_filter_dates' ), 8, 1 );
-			add_action( 'wpforms_entries_init', array( $this, 'process_filter_search' ), 8, 1 );
-			add_action( 'wpforms_entries_init', array( $this, 'setup' ), 10, 1 );
-
-			do_action( 'wpforms_entries_init', 'list' );
-
-			// Output.
-			add_action( 'wpforms_admin_page', array( $this, 'list_all' ) );
-			add_action( 'wpforms_admin_page', array( $this, 'field_column_setting' ) );
-			add_action( 'wpforms_entry_list_title', array( $this, 'list_form_actions' ), 10, 1 );
-
-			// Enqueues.
-			add_action( 'admin_enqueue_scripts', array( $this, 'enqueues' ) );
+		if ( 'wpforms-entries' !== $page || 'list' !== $view ) {
+			return;
 		}
+
+		// Init default entries screen.
+		if ( empty( $_GET['form_id'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+			return;
+		}
+
+		// Load the classes that builds the entries table.
+		if ( ! class_exists( 'WP_List_Table', false ) ) {
+			require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
+		}
+		require_once WPFORMS_PLUGIN_DIR . 'pro/includes/admin/entries/class-entries-list-table.php';
+
+		// Processing and setup.
+		add_action( 'wpforms_entries_init', array( $this, 'process_filter_dates' ), 7, 1 );
+		add_action( 'wpforms_entries_init', array( $this, 'process_filter_search' ), 7, 1 );
+		add_action( 'wpforms_entries_init', array( $this, 'process_read' ), 8, 1 );
+		add_action( 'wpforms_entries_init', array( $this, 'process_columns' ), 8, 1 );
+		add_action( 'wpforms_entries_init', array( $this, 'process_delete' ), 8, 1 );
+		add_action( 'wpforms_entries_init', array( $this, 'setup' ), 10, 1 );
+
+		do_action( 'wpforms_entries_init', 'list' );
+
+		// Output.
+		add_action( 'wpforms_admin_page', array( $this, 'list_all' ) );
+		add_action( 'wpforms_admin_page', array( $this, 'field_column_setting' ) );
+		add_action( 'wpforms_entry_list_title', array( $this, 'list_form_actions' ), 10, 1 );
+
+		// Enqueues.
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueues' ) );
+
 	}
 
 	/**
@@ -142,7 +148,7 @@ class WPForms_Entries_List {
 	 */
 	protected function get_current_screen_view() {
 
-		$view = ! empty( $_GET['view'] ) ? $_GET['view'] : 'list';
+		$view = ! empty( $_GET['view'] ) ? sanitize_key( $_GET['view'] ) : 'list';
 
 		return apply_filters( 'wpforms_entries_list_get_current_screen_view', $view );
 	}
@@ -202,7 +208,7 @@ class WPForms_Entries_List {
 			'wpforms-flatpickr',
 			WPFORMS_PLUGIN_URL . 'assets/js/flatpickr.min.js',
 			array( 'jquery' ),
-			'2.3.4'
+			'4.5.5'
 		);
 
 		// CSS.
@@ -210,7 +216,7 @@ class WPForms_Entries_List {
 			'wpforms-flatpickr',
 			WPFORMS_PLUGIN_URL . 'assets/css/flatpickr.min.css',
 			array(),
-			'2.3.4'
+			'4.5.5'
 		);
 
 		// Hook for addons.
@@ -229,13 +235,13 @@ class WPForms_Entries_List {
 			return;
 		}
 
+		_deprecated_function( __CLASS__ . '::' . __METHOD__, '1.5.5 of WPForms plugin', 'WPForms\Pro\Admin\Export\Export class' );
+
 		// Security check.
 		if ( empty( $_GET['_wpnonce'] ) || ! wp_verify_nonce( $_GET['_wpnonce'], 'wpforms_entry_list_export' ) ) {
 			return;
 		}
-
 		require_once WPFORMS_PLUGIN_DIR . 'pro/includes/admin/entries/class-entries-export.php';
-
 		$export             = new WPForms_Entries_Export();
 		$export->entry_type = 'all';
 		$export->form_id    = absint( $_GET['form_id'] );
@@ -341,21 +347,30 @@ class WPForms_Entries_List {
 			return;
 		}
 
-		$dates = explode( ' - ', $_GET['date'] );
-		$args  = array();
+		$dates = explode( ' - ', $_GET['date'] ); // phpcs:ignore
 
-		// Prepare the params for the entries retrieval.
-		if ( is_array( $dates ) && count( $dates ) === 2 ) {
-			$args = array(
-				'select'  => 'entry_ids',
-				'number'  => 0,
-				'form_id' => (int) $_GET['form_id'],
-				'date'    => $dates,
-			);
+		if ( empty( $dates ) ) {
+			return;
 		}
 
-		if ( empty( $args ) ) {
-			return;
+		// Prepare the params for the entries retrieval.
+		$args = array(
+			'select'  => 'entry_ids',
+			'number'  => 0,
+			'form_id' => (int) $_GET['form_id'] // phpcs:ignore
+		);
+
+		switch ( count( $dates ) ) {
+			case 1:
+				$args['date'] = sanitize_text_field( $_GET['date'] ); // phpcs:ignore
+				break;
+
+			case 2:
+				$args['date'] = array_map( 'sanitize_text_field', $dates );
+				break;
+
+			default:
+				return;
 		}
 
 		$this->prepare_entry_ids_for_get_entries_args(
@@ -430,19 +445,20 @@ class WPForms_Entries_List {
 
 		$entry_ids = array();
 
-		if ( ! empty( $entries ) && is_array( $entries ) ) {
-
+		if ( is_array( $entries ) ) {
 			foreach ( $entries as $entry ) {
 				$entry_ids[] = $entry->entry_id;
 			}
+		}
 
-			if ( ! empty( $this->filter['entry_id'] ) ) {
-				$this->filter['entry_id'] = array_intersect( $this->filter['entry_id'], array_unique( $entry_ids ) );
-			} else {
-				$this->filter = array(
-					'entry_id' => array_unique( $entry_ids ),
-				);
-			}
+		$entry_ids = array_unique( $entry_ids );
+
+		if ( empty( $this->filter['entry_id'] ) ) {
+			$this->filter = array(
+				'entry_id' => $entry_ids,
+			);
+		} else {
+			$this->filter['entry_id'] = array_intersect( $this->filter['entry_id'], $entry_ids );
 		}
 
 		// TODO: when we will drop PHP 5.2 support, this can be changed to a closure.
@@ -459,6 +475,7 @@ class WPForms_Entries_List {
 	 * @return array Filtered arguments.
 	 */
 	public function get_filtered_entry_table_args( $args ) {
+		$this->filter['is_filtered'] = true;
 		return array_merge( $args, $this->filter );
 	}
 
@@ -621,16 +638,18 @@ class WPForms_Entries_List {
 							}
 						}
 					}
-					foreach ( $form_data['fields'] as $id => $field ) {
-						if (
-							! empty( $form_data['meta']['entry_columns'] ) &&
-							in_array( $id, $form_data['meta']['entry_columns'], true )
-						) {
-							continue;
-						}
-						if ( ! in_array( $field['type'], WPForms_Entries_Table::get_columns_form_disallowed_fields(), true ) ) {
-							$name = ! empty( $field['label'] ) ? wp_strip_all_tags( $field['label'] ) : esc_html__( 'Field', 'wpforms' );
-							printf( '<option value="%d">%s</option>', $id, $name );
+					if ( ! empty( $form_data['fields'] ) && is_array( $form_data['fields'] ) ) {
+						foreach ( $form_data['fields'] as $id => $field ) {
+							if (
+								! empty( $form_data['meta']['entry_columns'] ) &&
+								in_array( $id, $form_data['meta']['entry_columns'], true )
+							) {
+								continue;
+							}
+							if ( ! in_array( $field['type'], WPForms_Entries_Table::get_columns_form_disallowed_fields(), true ) ) {
+								$name = ! empty( $field['label'] ) ? wp_strip_all_tags( $field['label'] ) : esc_html__( 'Field', 'wpforms' );
+								printf( '<option value="%d">%s</option>', $id, $name );
+							}
 						}
 					}
 					?>
@@ -673,14 +692,15 @@ class WPForms_Entries_List {
 		$preview_url = esc_url( wpforms_get_form_preview_url( $this->form_id ) );
 
 		// Export Entry URL.
-		$export_url = wp_nonce_url(
-			add_query_arg(
-				array(
-					'export' => 'all',
-				),
-				$base
+		$export_url = add_query_arg(
+			array(
+				'page'   => 'wpforms-tools',
+				'view'   => 'export',
+				'form'   => absint( $this->form_id ),
+				'search' => ! empty( $_GET['search'] ) ? $_GET['search'] : array(), // phpcs:ignore
+				'date'   => ! empty( $_GET['date'] ) ? $_GET['date'] : array(), // phpcs:ignore
 			),
-			'wpforms_entry_list_export'
+			admin_url( 'admin.php' )
 		);
 
 		// Mark Read URL.
@@ -760,7 +780,7 @@ class WPForms_Entries_List {
 
 				<a href="<?php echo $export_url; ?>" class="form-details-actions-export">
 					<span class="dashicons dashicons-migrate"></span>
-					<?php esc_html_e( 'Download Export (CSV)', 'wpforms' ); ?>
+					<?php echo $this->is_list_filtered() ? esc_html__( 'Export Filtered (CSV)', 'wpforms' ) : esc_html__( 'Export All (CSV)', 'wpforms' ); ?>
 				</a>
 
 				<a href="<?php echo $read_url; ?>" class="form-details-actions-read">

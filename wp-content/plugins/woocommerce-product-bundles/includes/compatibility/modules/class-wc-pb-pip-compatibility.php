@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Print Invoices & Packing Lists Integration.
  *
- * @version  5.9.1
+ * @version  5.10.2
  */
 class WC_PB_PIP_Compatibility {
 
@@ -193,6 +193,8 @@ class WC_PB_PIP_Compatibility {
 
 			foreach ( $table_rows as $table_row_key => $table_row_data ) {
 
+				$filtered_table_rows[ $table_row_key ] = $table_row_data;
+
 				if ( empty( $table_row_data[ 'items' ] ) ) {
 					continue;
 				}
@@ -279,13 +281,12 @@ class WC_PB_PIP_Compatibility {
 					}
 				}
 
-				$filtered_table_rows[ $table_row_key ]            = $table_row_data;
 				$filtered_table_rows[ $table_row_key ][ 'items' ] = $sorted_rows;
 			}
 
 			// Ensure empty categories are not displayed at all.
 			foreach ( $filtered_table_rows as $table_row_key => $table_row_data ) {
-				if ( empty( $table_row_data[ 'items' ] ) ) {
+				if ( empty( $table_row_data[ 'items' ] ) && isset( $table_row_data[ 'headings' ] ) && isset( $table_row_data[ 'headings' ][ 'breadcrumbs' ] ) ) {
 					unset( $filtered_table_rows[ $table_row_key ] );
 				}
 			}

@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Product-related functions and filters.
  *
  * @class    WC_PB_BS_Product
- * @version  5.8.0
+ * @version  5.10.0
  */
 class WC_PB_BS_Product {
 
@@ -114,7 +114,7 @@ class WC_PB_BS_Product {
 				'shipped_individually' => 'yes',
 				'optional'             => 'yes',
 				'discount'             => null,
-				'stock_status'         => 'in_stock',
+				'stock_status'         => null,
 				'disable_addons'       => 'yes'
 			)
 		), $bundle_sell_id, $product );
@@ -142,6 +142,6 @@ class WC_PB_BS_Product {
 
 		$bundle->set_bundled_data_items( $bundled_data_items );
 
-		return $bundle;
+		return apply_filters( 'wc_pb_bundle_sells_dummy_bundle', $bundle );
 	}
 }

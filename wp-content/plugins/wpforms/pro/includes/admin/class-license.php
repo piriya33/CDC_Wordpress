@@ -35,7 +35,7 @@ class WPForms_License {
 	public function __construct() {
 
 		// Admin notices.
-		if ( ! isset( $_GET['page'] ) || 'wpforms-settings' !== $_GET['page'] ) {
+		if ( wpforms()->pro && ( ! isset( $_GET['page'] ) || 'wpforms-settings' !== $_GET['page'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
 			add_action( 'admin_notices', array( $this, 'notices' ) );
 		}
 
@@ -355,7 +355,7 @@ class WPForms_License {
 					<?php
 					printf(
 						wp_kses(
-							/* translators: %s - plugin settings page URL. */
+						/* translators: %s - plugin settings page URL. */
 							__( 'Please <a href="%s">enter and activate</a> your license key for WPForms to enable automatic updates.', 'wpforms' ),
 							array(
 								'a' => array(
@@ -379,7 +379,7 @@ class WPForms_License {
 					<?php
 					printf(
 						wp_kses(
-							/* translators: %s - WPForms.com login page URL. */
+						/* translators: %s - WPForms.com login page URL. */
 							__( 'Your license key for WPForms has expired. <a href="%s" target="_blank" rel="noopener noreferrer">Please click here to renew your license key and continue receiving automatic updates.</a>', 'wpforms' ),
 							array(
 								'a' => array(
@@ -432,7 +432,6 @@ class WPForms_License {
 			</div>
 		<?php
 		endif;
-
 	}
 
 	/**

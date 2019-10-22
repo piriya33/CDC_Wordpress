@@ -93,6 +93,8 @@ class WC_PB_BS_Display {
 			 */
 			$bundle = WC_PB_BS_Product::get_bundle( $bundle_sell_ids, $product );
 
+			do_action( 'woocommerce_before_bundled_items', $bundle );
+
 			if ( false === wp_style_is( 'wc-bundle-css', 'enqueued' ) ) {
 				wp_enqueue_style( 'wc-bundle-css' );
 			}
@@ -140,6 +142,8 @@ class WC_PB_BS_Display {
 				</div>
 			</div>
 			<?php
+
+			do_action( 'woocommerce_after_bundled_items', $bundle );
 		}
 	}
 

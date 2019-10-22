@@ -3,7 +3,7 @@
 Contributors: flippercode
 Tags: author image, author photo, author avatar, avatar, bbPress, profile avatar, profile image, user avatar, user image, user photo, widget
 Requires at least: 3.6
-Tested up to: 5.1.1
+Tested up to: 5.2.1
 Stable tag: 2.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -400,6 +400,12 @@ This would output:
 4. After you've chosen a WP User Avatar image, you will see the option to remove it.
 
 == Changelog ==
+
+= 2.2.4 =
+* Fix: Warning Resolved on Avatar images.
+
+= 2.2.3 =
+* Fix: Broken Avatar in buddypress resolved.
 
 = 2.2.2 =
 * Fix: Broken avatars on comments section.

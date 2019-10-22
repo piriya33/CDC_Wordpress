@@ -317,7 +317,6 @@ class Education {
 
 		$settings = $this->get_addons_available( $addons );
 
-
 		if ( empty( $settings ) ) {
 			return;
 		}
@@ -573,9 +572,12 @@ class Education {
 		}
 
 		foreach ( $this->addons as $addon_data ) {
+
+			$license = ( $this->license === 'elite' ) ? 'agency' : $this->license;
+
 			if (
 				$addon_data->slug === $slug &&
-				in_array( $this->license, $addon_data->types, true )
+				in_array( $license, $addon_data->types, true )
 			) {
 				return true;
 			}

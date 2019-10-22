@@ -21,7 +21,7 @@ if ( ! class_exists( 'WC_Report_Stock' ) ) {
  *
  * Handles reporting of bundles with an "Insufficient stock" status.
  *
- * @version  5.9.0
+ * @version  5.10.0
  */
 class WC_PB_Report_Insufficient_Stock extends WC_Report_Stock {
 
@@ -120,6 +120,8 @@ class WC_PB_Report_Insufficient_Stock extends WC_Report_Stock {
 				'numberposts' => -1
 			) );
 
+			$insufficient_stock_results = array_filter( $insufficient_stock_results, array( $this, 'clean_missing_bundles' ) );
+
 			uasort( $insufficient_stock_results, array( $this, 'order_by_bundle_title' ) );
 
 			$insufficient_stock_results_in_page = array_slice( $insufficient_stock_results, ( $current_page - 1 ) * $per_page, $per_page );
@@ -147,10 +149,22 @@ class WC_PB_Report_Insufficient_Stock extends WC_Report_Stock {
 	}
 
 	/**
+	 * Clean up missing bundles.
+	 *
+	 * @since  5.10.0
+	 *
+	 * @param  array  $a
+	 * @return boolean
+	 */
+	private function clean_missing_bundles( $result ) {
+		return in_array( $result[ 'bundle_id' ], $this->ordered_bundle_ids );
+	}
+
+	/**
 	 * Sorting callback - see 'get_items'.
 	 *
-	 * @param  array $a
-	 * @param  array $b
+	 * @param  array  $a
+	 * @param  array  $b
 	 * @return integer
 	 */
 	private function order_by_bundle_title( $a, $b ) {

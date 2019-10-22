@@ -1,11 +1,11 @@
 === GD bbPress Attachments ===
 Contributors: GDragoN
 Donate link: https://plugins.dev4press.com/gd-bbpress-attachments/
-Version: 3.1
+Version: 3.2
 Tags: dev4press, bbpress, attachments, upload, media library, forum, topic, reply, limit, meta
-Requires at least: 4.6
+Requires at least: 4.7
 Requires PHP: 5.6
-Tested up to: 5.1
+Tested up to: 5.2
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -84,7 +84,7 @@ With more features on the roadmap exclusively for Pro version.
 * PHP: 5.6 or newer
 
 = WordPress Requirements =
-* WordPress: 4.6 or newer
+* WordPress: 4.7 or newer
 
 = bbPress Requirements =
 * bbPress Plugin: 2.5 or newer
@@ -111,26 +111,17 @@ Yes. But, make sure to enable 'Always Include' option for JavaScript and CSS.
 In some cases, it can happen that jQuery is not included on the page, even so, the bbPress requires it to be loaded. That can happen if something else is unloading jQuery. If the jQuery is not present, the upload will not work.
 Another common issue is that WordPress Media Library upload is not working. If that is not set up, attachments upload can't work.
 
-== Translations ==
-* English
-* Serbian
-* Swedish: https://profiles.wordpress.org/lakrisgubben
-* Russian: Pavel Kuznetsov - https://profiles.wordpress.org/pavel-kuznetsov
-* German: David Decker - http://deckerweb.de/
-* Slovak: Branco Radenovich - http://webhostinggeeks.com/blog/
-* French: Marie Bodson - http://mariebodson.com/
-* Polish:Daniel Napora - http://www.hinok.net/
-* Dutch: Wouter van Vliet - http://www.interpotential.com/
-* Spanish: Jhonathan Arroyo - http://www.siswer.com/
-* Persian: Ramin Firooz - http://shayverd.com/
-* Portuguese
-* Italian
-
 == Upgrade Notice ==
-= 3.1 =
-Few minor updates and improvements.
+= 3.2 =
+Various updates, improvements and fixes.
 
 == Changelog ==
+= 3.2 (2019.09.02) =
+* Show KB or MB file size limit depending on the size
+* Removed all outdated translations
+* Removed some duplicated links
+* Fixed a minor sanitation issues related to shortcodes
+
 = 3.1 (2019.03.11) =
 * Few minor updates and improvements
 

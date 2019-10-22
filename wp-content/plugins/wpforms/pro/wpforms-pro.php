@@ -105,8 +105,10 @@ class WPForms_Pro {
 	 * Load plugin updater.
 	 *
 	 * @since 1.0.0
+	 *
+	 * @param string $key License key.
 	 */
-	public function updater() {
+	public function updater( $key ) {
 
 		if ( ! is_admin() ) {
 			return;
@@ -119,14 +121,14 @@ class WPForms_Pro {
 		}
 
 		// Go ahead and initialize the updater.
-		new WPForms_Updater(
+		new \WPForms_Updater(
 			array(
 				'plugin_name' => 'WPForms',
 				'plugin_slug' => 'wpforms',
 				'plugin_path' => plugin_basename( WPFORMS_PLUGIN_FILE ),
 				'plugin_url'  => trailingslashit( WPFORMS_PLUGIN_URL ),
 				'remote_url'  => WPFORMS_UPDATER_API,
-				'version'     => wpforms()->version,
+				'version'     => WPFORMS_VERSION,
 				'key'         => $key,
 			)
 		);
@@ -151,6 +153,20 @@ class WPForms_Pro {
 		$wpforms_install->entry->create_table();
 		$wpforms_install->entry_fields->create_table();
 		$wpforms_install->entry_meta->create_table();
+
+		$license = get_option( 'wpforms_connect', false );
+
+		if ( $license ) {
+			update_option(
+				'wpforms_license',
+				array(
+					'key' => $license,
+				)
+			);
+			$wpforms_install->license = new WPForms_License();
+			$wpforms_install->license->validate_key( $license );
+			delete_option( 'wpforms_connect' );
+		}
 	}
 
 	/**
@@ -233,6 +249,12 @@ class WPForms_Pro {
 			'name'    => esc_html__( 'Credit Card', 'wpforms' ),
 			'type'    => 'text',
 			'default' => esc_html__( 'Please enter a valid credit card number.', 'wpforms' ),
+		);
+		$settings['validation']['validation-post_max_size']   = array(
+			'id'      => 'validation-post_max_size',
+			'name'    => esc_html__( 'File Upload Total Size', 'wpforms' ),
+			'type'    => 'text',
+			'default' => esc_html__( 'The total size of the selected files {totalSize} Mb exceeds the allowed limit {maxSize} Mb.', 'wpforms' ),
 		);
 
 		// Payment settings.
@@ -346,11 +368,14 @@ class WPForms_Pro {
 						'value'    => $field['value'],
 						'date'     => $date,
 					) );
+
+
 				}
 			}
 		}
 
 		wpforms()->process->entry_id = $entry_id;
+
 	}
 
 	/**

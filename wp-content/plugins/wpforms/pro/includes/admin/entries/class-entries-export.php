@@ -8,6 +8,7 @@
  * @package    WPForms
  * @author     WPForms
  * @since      1.1.5
+ * @deprecated 1.5.5
  * @license    GPL-2.0+
  * @copyright  Copyright (c) 2016, WPForms LLC
  */
@@ -70,6 +71,41 @@ class WPForms_Entries_Export {
 	public $file;
 
 	/**
+	 * All fields.
+	 *
+	 * @since 1.5.5
+	 * @return array
+	 */
+	public function all_fields() {
+		return array(
+			'text',
+			'textarea',
+			'select',
+			'radio',
+			'checkbox',
+			'gdpr-checkbox',
+			'email',
+			'address',
+			'url',
+			'name',
+			'hidden',
+			'date-time',
+			'phone',
+			'number',
+			'file-upload',
+			'rating',
+			'likert_scale',
+			'payment-single',
+			'payment-multiple',
+			'payment-checkbox',
+			'payment-select',
+			'payment-total',
+			'signature',
+			'net_promoter_score',
+		);
+	}
+
+	/**
 	 * Field types that are allowed in entry exports.
 	 *
 	 * @since 1.0.0
@@ -78,34 +114,11 @@ class WPForms_Entries_Export {
 	 */
 	public function allowed_fields() {
 
-		$fields = apply_filters(
+		$fields = (array) apply_filters_deprecated(
 			'wpforms_export_fields_allowed',
-			array(
-				'text',
-				'textarea',
-				'select',
-				'radio',
-				'checkbox',
-				'gdpr-checkbox',
-				'email',
-				'address',
-				'url',
-				'name',
-				'hidden',
-				'date-time',
-				'phone',
-				'number',
-				'file-upload',
-				'rating',
-				'likert_scale',
-				'payment-single',
-				'payment-multiple',
-				'payment-checkbox',
-				'payment-select',
-				'payment-total',
-				'signature',
-				'net_promoter_score',
-			)
+			array( $this->all_fields() ),
+			'1.5.5 of the WPForms plugin',
+			'wpforms_pro_admin_entries_export_configuration'
 		);
 
 		return $fields;
@@ -270,6 +283,8 @@ class WPForms_Entries_Export {
 				foreach ( $form_fields as $form_field ) {
 					if ( in_array( $form_field['type'], $allowed, true ) && array_key_exists( $form_field['id'], $fields ) ) {
 						$data[ $entry->entry_id ][ $form_field['id'] ] = wpforms_decode_string( $fields[ $form_field['id'] ]['value'] );
+					} elseif ( in_array( $form_field['type'], $allowed, true ) ) {
+						$data[ $entry->entry_id ][ $form_field['id'] ] = '';
 					}
 				}
 				$date_format                          = sprintf( '%s %s', get_option( 'date_format' ), get_option( 'time_format' ) );

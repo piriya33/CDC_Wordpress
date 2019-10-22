@@ -213,24 +213,28 @@ class WPForms_Entries_Table extends WP_List_Table {
 	 */
 	public function get_columns_form_fields( $columns = array(), $display = 3 ) {
 
+		if ( empty( $this->form_data['fields'] ) ) {
+			return array();
+		}
+
 		$entry_columns = wpforms()->form->get_meta( $this->form_id, 'entry_columns' );
 
-		if ( ! $entry_columns && ! empty( $this->form_data['fields'] ) ) {
+		if ( $entry_columns ) {
+			foreach ( $entry_columns as $id ) {
+				// Check to make sure the field has not been removed.
+				if ( empty( $this->form_data['fields'][ $id ] ) ) {
+					continue;
+				}
+
+				$columns[ 'wpforms_field_' . $id ] = ! empty( $this->form_data['fields'][ $id ]['label'] ) ? wp_strip_all_tags( $this->form_data['fields'][ $id ]['label'] ) : esc_html__( 'Field', 'wpforms' );
+			}
+		} else {
 			$x = 0;
 			foreach ( $this->form_data['fields'] as $id => $field ) {
 				if ( ! in_array( $field['type'], self::get_columns_form_disallowed_fields(), true ) && $x < $display ) {
 					$columns[ 'wpforms_field_' . $id ] = ! empty( $field['label'] ) ? wp_strip_all_tags( $field['label'] ) : esc_html__( 'Field', 'wpforms' );
 					$x ++;
 				}
-			}
-		} else if ( ! empty( $entry_columns ) ) {
-			foreach ( $entry_columns as $id ) {
-				// Check to make sure the field as not been removed.
-				if ( empty( $this->form_data['fields'][ $id ] ) ) {
-					continue;
-				}
-
-				$columns[ 'wpforms_field_' . $id ] = ! empty( $this->form_data['fields'][ $id ]['label'] ) ? wp_strip_all_tags( $this->form_data['fields'][ $id ]['label'] ) : esc_html__( 'Field', 'wpforms' );
 			}
 		}
 
@@ -465,9 +469,10 @@ class WPForms_Entries_Table extends WP_List_Table {
 		if ( ! empty( $_GET['date'] ) ) {
 			$dates = explode( ' - ', $_GET['date'] );
 
-			if ( is_array( $dates ) && count( $dates ) === 2 ) {
-				$default_date = 'defaultDate: [ "' . sanitize_text_field( $dates[0] ) . '", "' . sanitize_text_field( $dates[1] ) . '" ],';
+			if ( count( $dates ) === 1 ) {
+				$dates[1] = $dates[0];
 			}
+			$default_date = 'defaultDate: [ "' . sanitize_text_field( $dates[0] ) . '", "' . sanitize_text_field( $dates[1] ) . '" ],';
 		}
 		?>
 
@@ -478,11 +483,11 @@ class WPForms_Entries_Table extends WP_List_Table {
 				};
 
 			if (
-				Flatpickr !== 'undefined' &&
-				Flatpickr.hasOwnProperty( 'l10ns' ) &&
-				Flatpickr.l10ns.hasOwnProperty( wpforms_lang_code )
+				flatpickr !== 'undefined' &&
+				flatpickr.hasOwnProperty( 'l10ns' ) &&
+				flatpickr.l10ns.hasOwnProperty( wpforms_lang_code )
 			) {
-				flatpickr_locale = Flatpickr.l10ns[ wpforms_lang_code ];
+				flatpickr_locale = flatpickr.l10ns[ wpforms_lang_code ];
 				// Rewrite separator for all locales to make filtering work.
 				flatpickr_locale.rangeSeparator = ' - ';
 			}
@@ -688,7 +693,11 @@ class WPForms_Entries_Table extends WP_List_Table {
 	 * @since 1.0.0
 	 */
 	public function no_items() {
-		esc_html_e( 'Whoops, it appears you do not have any form entries yet.', 'wpforms' );
+		if ( isset( $_GET['search'] ) || isset( $_GET['date'] ) ) { // phpcs:ignore
+			esc_html_e( 'No entries found.', 'wpforms' );
+		} else {
+			esc_html_e( 'Whoops, it appears you do not have any form entries yet.', 'wpforms' );
+		}
 	}
 
 	/**
@@ -704,30 +713,36 @@ class WPForms_Entries_Table extends WP_List_Table {
 		$input_id = $input_id . '-search-input';
 
 		do_action( 'wpforms_entries_list_form_filters_before', $this->form_data );
+
+		$filter_fields = array();
+		if ( ! empty( $this->form_data['fields'] ) ) {
+			foreach ( $this->form_data['fields'] as $id => $field ) {
+				if ( in_array( $field['type'], self::get_columns_form_disallowed_fields(), true ) ) {
+					continue;
+				}
+				$filter_fields[ $id ] = ! empty( $field['label'] ) ? wp_strip_all_tags( $field['label'] ) : esc_html__( 'Field', 'wpforms' );
+			}
+		}
+		$filter_fields = (array) apply_filters( 'wpforms_entries_list_form_filters_search_fields', $filter_fields, $this );
+
+		$cur_field = 'any';
+		if ( isset( $_GET['search']['field'] ) ) {
+			if ( is_numeric( $_GET['search']['field'] ) ) {
+				$cur_field = (int) $_GET['search']['field'];
+			} else {
+				$cur_field = sanitize_key( $_GET['search']['field'] );
+			}
+		}
 		?>
 
 		<p class="search-box wpforms-form-search-box">
 
-			<?php
-			$cur_field = 'contains';
-			if ( isset( $_GET['search']['field'] ) ) {
-				if ( is_numeric( $_GET['search']['field'] ) ) {
-					$cur_field = (int) $_GET['search']['field'];
-				} else {
-					$cur_field = sanitize_key( $_GET['search']['field'] );
-				}
-			}
-			?>
-
 			<select name="search[field]" class="wpforms-form-search-box-field">
 				<option value="any" <?php selected( 'any', $cur_field, true ); ?>><?php esc_html_e( 'Any form field', 'wpforms' ); ?></option>
 				<?php
-				if ( ! empty( $this->form_data['fields'] ) ) {
-					foreach ( $this->form_data['fields'] as $id => $field ) {
-						if ( ! in_array( $field['type'], WPForms_Entries_Table::get_columns_form_disallowed_fields(), true ) ) {
-							$name = ! empty( $field['label'] ) ? wp_strip_all_tags( $field['label'] ) : esc_html__( 'Field', 'wpforms' );
-							printf( '<option value="%d" %s>%s</option>', $id, selected( $id, $cur_field, false), $name );
-						}
+				if ( ! empty( $filter_fields ) ) {
+					foreach ( $filter_fields as $id => $name ) {
+						printf( '<option value="%s" %s>%s</option>', esc_attr( $id ), selected( $id, $cur_field, false ), esc_html( $name ) );
 					}
 				}
 				?>
