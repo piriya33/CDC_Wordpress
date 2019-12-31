@@ -1,4 +1,5 @@
-λή®]<?php exit; ?>a:1:{s:7:"content";O:8:"stdClass":23:{s:2:"ID";s:5:"31902";s:11:"post_author";s:3:"739";s:9:"post_date";s:19:"2019-10-11 00:07:49";s:13:"post_date_gmt";s:19:"2019-10-10 17:07:49";s:12:"post_content";s:2245:"<img src="https://www.chaloke.com/wp-content/uploads/2019/10/IMG_20190928_070623R.jpg" />
+Kι
+^<?php exit; ?>a:1:{s:7:"content";O:8:"stdClass":23:{s:2:"ID";s:5:"31902";s:11:"post_author";s:3:"739";s:9:"post_date";s:19:"2019-10-11 00:07:49";s:13:"post_date_gmt";s:19:"2019-10-10 17:07:49";s:12:"post_content";s:2245:"<img src="https://www.chaloke.com/wp-content/uploads/2019/10/IMG_20190928_070623R.jpg" />
 
 <img src="https://www.chaloke.com/wp-content/uploads/2019/10/IMG_20190928_081822R.jpg" />
 

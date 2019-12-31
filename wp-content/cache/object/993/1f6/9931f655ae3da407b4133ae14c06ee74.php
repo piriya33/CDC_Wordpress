@@ -1,4 +1,5 @@
-�ޮ]<?php exit; ?>a:1:{s:7:"content";O:8:"stdClass":24:{s:2:"ID";i:19059;s:11:"post_author";s:4:"1985";s:9:"post_date";s:19:"2017-11-16 21:19:46";s:13:"post_date_gmt";s:19:"2017-11-16 14:19:46";s:12:"post_content";s:4256:"Jun 28, 2017
+��
+^<?php exit; ?>a:1:{s:7:"content";O:8:"stdClass":24:{s:2:"ID";i:19059;s:11:"post_author";s:4:"1985";s:9:"post_date";s:19:"2017-11-16 21:19:46";s:13:"post_date_gmt";s:19:"2017-11-16 14:19:46";s:12:"post_content";s:4256:"Jun 28, 2017
 <h5>ChalokeDotCom analysis of  ลุงโฉลกคุยเรื่องหุ้น</h5>
 https://www.youtube.com/watch?v=fllwWHUzTvY
 
