@@ -103,9 +103,9 @@ function sp_html5video_shortcode( $atts, $content = null ) {
 			<div class="video_frame">
 				<div class="video_image_frame">
 					<?php if($video_link != '') { ?>
-					<a href="<?php echo $video_link; ?>" class="popup-youtube">
+					<a href="<?php echo esc_url($video_link); ?>" class="popup-youtube">
 						<?php if( $feat_image ) { ?>
-						<img src="<?php echo $feat_image; ?>" alt="<?php the_title(); ?>" />
+						<img src="<?php echo esc_url($feat_image); ?>" alt="<?php the_title(); ?>" />
 						<?php } ?>
 						<span class="video_icon"></span>
 						</a>
@@ -114,17 +114,17 @@ function sp_html5video_shortcode( $atts, $content = null ) {
 					
 						<a href="#video-modal-<?php echo $unique.'-'.$i; ?>" class="popup-modal">
 						<?php if( $feat_image ) { ?>
-						<img src="<?php echo $feat_image; ?>" alt="<?php the_title(); ?>" />
+						<img src="<?php echo esc_url($feat_image); ?>" alt="<?php the_title(); ?>" />
 						<?php } ?>
 						<span class="video_icon"></span>
 						</a>			
 						
 					<?php } ?>
 					<div id="video-modal-<?php echo $unique.'-'.$i; ?>" class="mfp-hide white-popup-block wp-html5vp-popup-wrp">
-						<video id="video_<?php echo get_the_ID(); ?>" class="wp-hvgp-video-frame video-js vjs-default-skin" controls preload="none" width="100%" poster="<?php echo $feat_image; ?>" data-setup="{}">
-							<source src="<?php echo $wpvideo_video_mp4; ?>" type='video/mp4' />
-							<source src="<?php echo $wpvideo_video_wbbm; ?>" type='video/webm' />
-							<source src="<?php echo $wpvideo_video_ogg; ?>" type='video/ogg' />
+						<video id="video_<?php echo get_the_ID(); ?>" class="wp-hvgp-video-frame video-js vjs-default-skin" controls preload="none" width="100%" poster="<?php echo esc_url($feat_image); ?>" data-setup="{}">
+							<source src="<?php echo esc_url($wpvideo_video_mp4); ?>" type='video/mp4' />
+							<source src="<?php echo esc_url($wpvideo_video_wbbm); ?>" type='video/webm' />
+							<source src="<?php echo esc_url($wpvideo_video_ogg); ?>" type='video/ogg' />
 						</video>
 					</div>
 						
@@ -137,16 +137,11 @@ function sp_html5video_shortcode( $atts, $content = null ) {
 		endwhile;	
 	endif;
 	?>
-		<div class="wp-html5vp-popup-conf"><?php echo json_encode( $popup_conf ); ?></div><!-- end of-popup-conf -->
-	</div><!-- end .video-row -->
+	<div class="wp-html5vp-popup-conf"><?php echo json_encode( $popup_conf ); ?></div><!-- end of-popup-conf -->
+	</div>
 	<?php
 	// Reset query to prevent conflicts
-	wp_reset_query();
-	
-	?>
-	
-	<?php
-	
+	wp_reset_postdata();	
 	return ob_get_clean();
 
 }

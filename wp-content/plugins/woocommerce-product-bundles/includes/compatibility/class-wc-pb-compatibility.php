@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Handles compatibility with other WC extensions.
  *
  * @class    WC_PB_Compatibility
- * @version  5.13.0
+ * @version  5.14.2
  */
 class WC_PB_Compatibility {
 
@@ -209,8 +209,10 @@ class WC_PB_Compatibility {
 			$module_paths[ 'min_max_quantities' ] = 'modules/class-wc-pb-min-max-compatibility.php';
 		}
 
-		// WP Import/Export support.
-		$module_paths[ 'wp_import_export' ] = 'modules/class-wc-pb-wp-ie-compatibility.php';
+		// WP Import/Export support -- based on a hack that does not when exporting using WP-CLI.
+		if ( ! defined( 'WP_CLI' )  ) {
+			$module_paths[ 'wp_import_export' ] = 'modules/class-wc-pb-wp-ie-compatibility.php';
+		}
 
 		// WooCommerce Give Products support.
 		if ( class_exists( 'WC_Give_Products' ) ) {

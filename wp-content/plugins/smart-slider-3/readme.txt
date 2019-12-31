@@ -3,8 +3,8 @@ Contributors: nextendweb
 Tags: slider, wordpress slider, image slider, layer slider, responsive slider, slideshow, fullwidth slider, post slider, horizontal slider, vertical slider, photo slider, video slider
 Donate link: https://sites.fastspring.com/nextend/product/smartslider3donate
 Requires at least: 4.6
-Tested up to: 5.2
-Stable tag: 3.3.22
+Tested up to: 5.3
+Stable tag: 3.3.25
 Requires PHP: 5.6.20
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -196,9 +196,36 @@ Of course! Smart Slider use protocol relative urls which works fine on http:// a
 
 == Changelog ==
 
-= 3.3.22 - 12. September 2019. =
+= 3.3.25 - 28. November 2019. =
+* Feature: Keyboard navigation detection improvement
+* Fix: MobileDetect issues in rare cases 
+* Fix: Slider loading in Elementor Popup 
+* Fix: wp_delete_site action is used on WordPress 5.1 or newer sites instead of the deprecated delete_blog
+* Fix: MouseWheel timing adjusted for Apple Touchpad
+* Fix: YouTube video conflict with Revolution Slider
+
+= 3.3.24 - 14. November 2019. =
+* Fix: WordPress 5.3 backend compatibility
+
+= 3.3.23 - 12. November 2019. =
+* Feature: Mobile detection code update 
+* Feature: Easy Fancybox compatibility 
+* Feature: Google font list updated
+* Feature: TranslatePress support 
+* Fix: RTL fix on admin area
+* Fix: ScrollTo offset 
+* Fix: YouTube layer pause 
+* Fix: Gutenberg save (Slider render is disabled over REST API) 
+* Fix: Conflict with Embed Plus for YouTube - Gallery, Channel, Playlist, Live Stream plugin fixed 
+* Fix: The global $post variable is reset properly at generators
+* Fix: Compatibility with Divi plugin to avoid them overriding our styling (not the the Divi theme) 
+* Fix: Scrollable layer is now scrollable when the mouse wheel control is used. 
+* Fix: Generator image fallback 
+* Translation: Italian translation updated (Thanks, Fabio!)
+
+= 3.3.22 - 04. September 2019. =
 * Feature: Accessibility; the arrow's aria label is now the same as their alt tag 
-* Feature: New Google fonts added 
+* Feature: New Google fonts added
 * Fix: Layer defaults 
 * Fix: YouTube video play on IOS in rare cases 
 * Fix: Padding issue in Thumbnails control 

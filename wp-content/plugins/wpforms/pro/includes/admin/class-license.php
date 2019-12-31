@@ -373,25 +373,36 @@ class WPForms_License {
 
 		// If a key has expired, output nag about renewing the key.
 		if ( isset( $option['is_expired'] ) && $option['is_expired'] ) :
+
+			$renew_now_url  = add_query_arg(
+				array(
+					'utm_source'   => 'WordPress',
+					'utm_medium'   => 'Admin Notice',
+					'utm_campaign' => 'plugin',
+					'utm_content'  => 'Renew Now',
+				),
+				'https://wpforms.com/account/licenses/'
+			);
+			$learn_more_url = add_query_arg(
+				array(
+					'utm_source'   => 'WordPress',
+					'utm_medium'   => 'Admin Notice',
+					'utm_campaign' => 'plugin',
+					'utm_content'  => 'Learn More',
+				),
+				'https://wpforms.com/docs/how-to-renew-your-wpforms-license/'
+			);
 			?>
-			<div class="error notice <?php echo $below_h2; ?> wpforms-license-notice">
+			<div class="error notice <?php echo sanitize_html_class( $below_h2 ); ?> wpforms-notice wpforms-license-notice">
+				<h3 style="margin: .75em 0 0 0;">
+					<img src="<?php echo esc_url( WPFORMS_PLUGIN_URL ); ?>assets/images/exclamation-triangle.svg" style="vertical-align: text-top; width: 20px; margin-right: 7px;"><?php esc_html_e( 'Heads up! Your WPForms license has expired.', 'wpforms' ); ?>
+				</h3>
 				<p>
-					<?php
-					printf(
-						wp_kses(
-						/* translators: %s - WPForms.com login page URL. */
-							__( 'Your license key for WPForms has expired. <a href="%s" target="_blank" rel="noopener noreferrer">Please click here to renew your license key and continue receiving automatic updates.</a>', 'wpforms' ),
-							array(
-								'a' => array(
-									'href'   => array(),
-									'target' => array(),
-									'rel'    => array(),
-								),
-							)
-						),
-						'https://wpforms.com/login/'
-					);
-					?>
+					<?php esc_html_e( 'An active license is needed to create new forms and edit existing forms. It also provides access to new features & addons, plugin updates (including security improvements), and our world class support!', 'wpforms' ); ?>
+				</p>
+				<p>
+					<a href="<?php echo esc_url( $renew_now_url ); ?>" class="button-primary"><?php esc_html_e( 'Renew Now', 'wpforms' ); ?></a> &nbsp
+					<a href="<?php echo esc_url( $learn_more_url ); ?>" class="button-secondary"><?php esc_html_e( 'Learn More', 'wpforms' ); ?></a>
 				</p>
 			</div>
 		<?php

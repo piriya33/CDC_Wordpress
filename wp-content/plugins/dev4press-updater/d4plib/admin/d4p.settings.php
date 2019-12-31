@@ -2,13 +2,13 @@
 
 /*
 Name:    d4pLib_Admin_Settings
-Version: v2.5.2
+Version: v2.7.6
 Author:  Milan Petrovic
 Email:   support@dev4press.com
 Website: https://www.dev4press.com/
 
 == Copyright ==
-Copyright 2008 - 2018 Milan Petrovic (email: support@dev4press.com)
+Copyright 2008 - 2019 Milan Petrovic (email: support@dev4press.com)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -24,6 +24,8 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
+
+if (!defined( 'ABSPATH')) { exit; }
 
 if (!class_exists('d4pSettingType')) {
     class d4pSettingType {
@@ -46,6 +48,8 @@ if (!class_exists('d4pSettingType')) {
         const RICH = 'rich';
         const BLOCK = 'block';
         const HTML = 'html';
+        const CODE = 'code';
+        const EMAIL = 'email';
         const LINK = 'link';
         const CHECKBOXES = 'checkboxes';
         const CHECKBOXES_HIERARCHY = 'checkboxes_hierarchy';
@@ -86,13 +90,15 @@ if (!class_exists('d4pSettingType')) {
             'rich' => self::RICH,
             'block' => self::BLOCK,
             'html' => self::HTML,
+            'code' => self::CODE,
+            'email' => self::EMAIL,
             'link' => self::LINK,
             'checkboxes' => self::CHECKBOXES,
             'checkboxes_hierarchy' => self::CHECKBOXES_HIERARCHY,
             'radios' => self::RADIOS,
             'radios_hierarchy' => self::RADIOS_HIERARCHY,
             'select' => self::SELECT,
-            'select_multi' => self::MULTI,
+            'select_multi' => self::SELECT_MULTI,
             'group' => self::GROUP,
             'group_multi' => self::GROUP_MULTI,
             'number' => self::NUMBER,
@@ -149,7 +155,7 @@ if (!class_exists('d4pSettingElement')) {
 if (!class_exists('d4pSettingsRender')) {
     class d4pSettingsRender {
         public $base = 'd4pvalue';
-        public $kb = 'https://support.dev4press.com/kb/article/%url%/';
+        public $kb = 'https://support.dev4press.com/kb/%type%/%url%/';
 
         public $panel;
         public $groups;
@@ -182,6 +188,9 @@ if (!class_exists('d4pSettingsRender')) {
                         $kb = isset($obj['kb']) ? str_replace('%url%', $obj['kb']['url'], $this->kb) : '';
 
                         if ($kb != '') {
+                            $type = isset($obj['kb']['type']) ? $obj['kb']['type'] : 'article';
+                            $kb = str_replace('%type%', $type, $kb);
+
                             $kb = '<a class="d4p-kb-group" href="'.$kb.'" target="_blank">'.$obj['kb']['label'].'</a>';
                         }
 
@@ -321,7 +330,7 @@ if (!class_exists('d4pSettingsRender')) {
                 $url = $media[0];
 
                 echo "<div class='d4plib-images-image'>";
-                echo "<input type='hidden' value='".$id."' name='".$name_base."[]' />";
+                echo "<input type='hidden' value='".esc_attr($id)."' name='".esc_attr($name_base)."[]' />";
                 echo "<a class='button d4plib-button-action d4plib-images-remove' aria-label='".__("Remove", "d4plib")."'><i aria-hidden='true' class='fa fa-ban'></i></a>";
                 echo "<a class='button d4plib-button-action d4plib-images-preview' aria-label='".__("Preview", "d4plib")."'><i aria-hidden='true' class='fa fa-search'></i></a>";
                 echo "<span class='d4plib-image-name'>".$title."</span>";
@@ -357,7 +366,7 @@ if (!class_exists('d4pSettingsRender')) {
 
         private function draw_hidden($element, $value, $name_base, $id_base = '') {
             echo sprintf('<input type="hidden" name="%s" id="%s" value="%s" />',
-                    $name_base, $id_base, esc_attr($value));
+                    esc_attr($name_base), esc_attr($id_base), esc_attr($value));
         }
 
         private function draw_bool($element, $value, $name_base, $id_base = '') {
@@ -366,14 +375,14 @@ if (!class_exists('d4pSettingsRender')) {
             $label = isset($element->args['label']) && $element->args['label'] != '' ? $element->args['label'] : __("Enabled", "d4plib");
 
             echo sprintf('<label for="%s"><input%s type="checkbox" name="%s" id="%s"%s class="widefat" /><span class="d4p-accessibility-show-for-sr">%s: </span>%s</label>',
-                    $id_base, $readonly, $name_base, $id_base, $selected, $element->title, $label);
+                    esc_attr($id_base), $readonly, esc_attr($name_base), esc_attr($id_base), $selected, $element->title, $label);
         }
 
         private function draw_html($element, $value, $name_base, $id_base) {
             $readonly = isset($element->args['readonly']) && $element->args['readonly'] ? ' readonly' : '';
 
             echo sprintf('<label for="%s"><span class="d4p-accessibility-show-for-sr">%s: </span></label><textarea%s name="%s" id="%s" class="widefat">%s</textarea>',
-                    $id_base, $element->title, $readonly, $name_base, $id_base, esc_textarea($value));
+                    $id_base, $element->title, $readonly, esc_attr($name_base), esc_attr($id_base), esc_textarea($value));
         }
 
         private function draw_x_by_y($element, $value, $name_base, $id_base, $cls = '') {
@@ -382,14 +391,36 @@ if (!class_exists('d4pSettingsRender')) {
             $pairs = explode('x', $value);
 
             echo sprintf('<label for="%s_x"><span class="d4p-accessibility-show-for-sr">%s - X: </span></label><input%s type="text" name="%s[x]" id="%s_x" value="%s" class="widefat" />',
-                    $id_base, $element->title, $readonly, $name_base, $id_base, $pairs[0]);
+                    $id_base, $element->title, $readonly, esc_attr($name_base), esc_attr($id_base), esc_attr($pairs[0]));
             echo ' x ';
             echo sprintf('<label for="%s_y"><span class="d4p-accessibility-show-for-sr">%s - Y: </span></label><input%s type="text" name="%s[y]" id="%s_y" value="%s" class="widefat" />',
-                    $id_base, $element->title, $readonly, $name_base, $id_base, $pairs[1]);
+                    $id_base, $element->title, $readonly, esc_attr($name_base), esc_attr($id_base), esc_attr($pairs[1]));
         }
 
         private function draw_listing($element, $value, $name_base, $id_base) {
             $this->draw_html($element, join(D4P_EOL, $value), $name_base, $id_base);
+        }
+
+        private function draw_code($element, $value, $name_base, $id_base) {
+            $mode = isset($element->args['mode']) && $element->args['mode'] ? $element->args['mode'] : 'htmlmixed';
+
+            wp_enqueue_code_editor(array('type' => 'text/html'));
+
+            $this->draw_html($element, $value, $name_base, $id_base);
+
+            echo '<script type="text/javascript">
+(function($){
+    $(function(){
+        var editorSettings = wp.codeEditor.defaultSettings ? _.clone(wp.codeEditor.defaultSettings) : {};
+
+        editorSettings.codemirror = _.extend({}, editorSettings.codemirror, 
+            { indentWithTabs: false, indentUnit: 2, tabSize: 2, mode: \''.$mode.'\' }
+        );
+
+        var editor = wp.codeEditor.initialize($(\'#'.$id_base.'\'), editorSettings);                        
+    });
+})(jQuery);
+</script>';
         }
 
         private function draw_textarea($element, $value, $name_base, $id_base) {
@@ -413,40 +444,46 @@ if (!class_exists('d4pSettingsRender')) {
                 $element->args['placeholder'] = 'http://';
             }
 
-            $this->draw_text($element, $value, $name_base, $id_base);
+            $this->draw_text($element, $value, $name_base, $id_base, 'url');
+        }
+
+        private function draw_email($element, $value, $name_base, $id_base) {
+            $this->draw_text($element, $value, $name_base, $id_base, 'email');
         }
 
         private function draw_text_html($element, $value, $name_base, $id_base) {
             $this->draw_text($element, $value, $name_base, $id_base);
         }
 
-        private function draw_text($element, $value, $name_base, $id_base) {
+        private function draw_text($element, $value, $name_base, $id_base, $type = 'text') {
             $readonly = isset($element->args['readonly']) && $element->args['readonly'] ? ' readonly' : '';
             $placeholder = isset($element->args['placeholder']) && !empty($element->args['placeholder']) ? ' placeholder="'.$element->args['placeholder'].'"' : '';
+            $type = isset($element->args['type']) && !empty($element->args['type']) ? $element->args['type'] : $type;
 
-            echo sprintf('<label for="%s"><span class="d4p-accessibility-show-for-sr">%s: </span></label><input%s%s type="text" name="%s" id="%s" value="%s" class="widefat" />',
-                    $id_base, $element->title, $readonly, $placeholder, $name_base, $id_base, esc_attr($value));
+            echo sprintf('<label for="%s"><span class="d4p-accessibility-show-for-sr">%s: </span></label><input%s%s type="%s" name="%s" id="%s" value="%s" class="widefat" />',
+                    $id_base, $element->title, $readonly, $placeholder, $type, esc_attr($name_base), esc_attr($id_base), esc_attr($value));
         }
 
         private function draw_password($element, $value, $name_base, $id_base) {
             $readonly = isset($element->args['readonly']) && $element->args['readonly'] ? ' readonly' : '';
+            $autocomplete = isset($element->args['autocomplete']) ? d4p_sanitize_slug($element->args['autocomplete']) : 'off';
 
-            echo sprintf('<label for="%s"><span class="d4p-accessibility-show-for-sr">%s: </span></label><input%s type="password" name="%s" id="%s" value="%s" class="widefat" autocomplete="off" />',
-                    $id_base, $element->title, $readonly, $name_base, $id_base, esc_attr($value));
+            echo sprintf('<label for="%s"><span class="d4p-accessibility-show-for-sr">%s: </span></label><input%s type="password" name="%s" id="%s" value="%s" class="widefat" autocomplete="'.$autocomplete.'" />',
+                    $id_base, $element->title, $readonly, esc_attr($name_base), esc_attr($id_base), esc_attr($value));
         }
 
         private function draw_file($element, $value, $name_base, $id_base) {
             $readonly = isset($element->args['readonly']) && $element->args['readonly'] ? ' readonly' : '';
 
             echo sprintf('<label for="%s"><span class="d4p-accessibility-show-for-sr">%s: </span></label><input%s type="file" name="%s" id="%s" value="%s" class="widefat" />',
-                    $id_base, $element->title, $readonly, $name_base, $id_base, esc_attr($value));
+                    $id_base, $element->title, $readonly, esc_attr($name_base), esc_attr($id_base), esc_attr($value));
         }
 
         private function draw_color($element, $value, $name_base, $id_base) {
             $readonly = isset($element->args['readonly']) && $element->args['readonly'] ? ' readonly' : '';
 
             echo sprintf('<label for="%s"><span class="d4p-accessibility-show-for-sr">%s: </span></label><input%s type="text" name="%s" id="%s" value="%s" class="widefat d4p-color-picker" />',
-                    $id_base, $element->title, $readonly, $name_base, $id_base, esc_attr($value));
+                    $id_base, $element->title, $readonly, esc_attr($name_base), esc_attr($id_base), esc_attr($value));
         }
 
         private function draw_absint($element, $value, $name_base, $id_base) {
@@ -469,7 +506,7 @@ if (!class_exists('d4pSettingsRender')) {
             $step = isset($element->args['step']) ? ' step="'.floatval($element->args['step']).'"' : '';
 
             echo sprintf('<label for="%s"><span class="d4p-accessibility-show-for-sr">%s: </span></label><input%s type="number" name="%s" id="%s" value="%s" class="widefat"%s%s%s />',
-                    $id_base, $element->title, $readonly, $name_base, $id_base, $value, $min, $max, $step);
+                    $id_base, $element->title, $readonly, esc_attr($name_base), esc_attr($id_base), esc_attr($value), esc_attr($min), esc_attr($max), esc_attr($step));
 
             if (isset($element->args['label_unit'])) {
                 echo '<span class="d4p-field-unit">'.$element->args['label_unit'].'</span>';
@@ -556,7 +593,7 @@ if (!class_exists('d4pSettingsRender')) {
                 $sel = in_array($real_value, $value) ? ' checked="checked"' : '';
 
                 echo sprintf('<label><input type="%s" value="%s" name="%s%s"%s class="widefat" />%s</label>', 
-                        $multiple ? 'checkbox' : 'radio', $real_value, $name_base, $multiple == 1 ? '[]' : '', $sel, $title);
+                        $multiple ? 'checkbox' : 'radio', esc_attr($real_value), esc_attr($name_base), $multiple == 1 ? '[]' : '', $sel, $title);
             }
         }
 
@@ -595,10 +632,10 @@ if (!class_exists('d4pSettingsRender')) {
         private function _pair_element($name, $id, $i, $value, $element, $hide = false) {
             echo '<div class="pair-element-'.$i.'" style="display: '.($hide ? 'none' : 'block').'">';
             echo '<label>'.$element->args['label_key'].':</label>';
-            echo '<input type="text" name="'.$name.'[key]" id="'.$id.'_key" value="'.esc_attr($value['key']).'" class="widefat" />';
+            echo '<input type="text" name="'.esc_attr($name).'[key]" id="'.esc_attr($id).'_key" value="'.esc_attr($value['key']).'" class="widefat" />';
 
             echo '<label>'.$element->args['label_value'].':</label>';
-            echo '<input type="text" name="'.$name.'[value]" id="'.$id.'_value" value="'.esc_attr($value['value']).'" class="widefat" />';
+            echo '<input type="text" name="'.esc_attr($name).'[value]" id="'.esc_attr($id).'_value" value="'.esc_attr($value['value']).'" class="widefat" />';
 
             echo '<a role="button" class="button-secondary" href="#">'.$element->args['label_buttom_remove'].'</a>';
             echo '</div>';
@@ -614,7 +651,7 @@ if (!class_exists('d4pSettingsRender')) {
             }
 
             echo '<a role="button" class="button-primary" href="#">'.$element->args['label_button_add'].'</a>';
-            echo '<input type="hidden" value="'.$i.'" class="d4p-next-id" />';
+            echo '<input type="hidden" value="'.esc_attr($i).'" class="d4p-next-id" />';
         }
 
         private function _text_element($name, $id, $i, $value, $element, $hide = false) {
@@ -622,6 +659,7 @@ if (!class_exists('d4pSettingsRender')) {
 
             $button = isset($element->args['label_buttom_remove']) && $element->args['label_buttom_remove'] != '';
             $button_width = isset($element->args['width_button_remove']) ? intval($element->args['width_button_remove']) : 100;
+            $type = isset($element->args['type']) && !empty($element->args['type']) ? $element->args['type'] : 'text';
 
             $style_input = '';
             $style_button = '';
@@ -630,7 +668,7 @@ if (!class_exists('d4pSettingsRender')) {
                 $style_button = ' style="width: '.$button_width.'px;"';
             }
 
-            echo '<input type="text" name="'.$name.'[value]" id="'.$id.'_value" value="'.esc_attr($value).'" class="widefat"'.$style_input.' />';
+            echo '<input type="'.$type.'" name="'.esc_attr($name).'[value]" id="'.esc_attr($id).'_value" value="'.esc_attr($value).'" class="widefat"'.$style_input.' />';
 
             if ($button) {
                 echo '<a role="button" class="button-secondary" href="#"'.$style_button.'>'.$element->args['label_buttom_remove'].'</a>';
@@ -649,9 +687,12 @@ if (!class_exists('d4pSettingsRender')) {
             $this->_text_element($name_base.'[0]', $id_base.'_0', 0, '', $element, true);
 
             $i = 1;
-            foreach ($value as $val) {
-                $this->_text_element($name_base.'['.$i.']', $id_base.'_'.$i, $i, $val, $element);
-                $i++;
+
+            if (array($value) && !empty($value)) {
+	            foreach ( $value as $val ) {
+		            $this->_text_element( $name_base . '[' . $i . ']', $id_base . '_' . $i, $i, $val, $element );
+		            $i ++;
+	            }
             }
 
             echo '</ol>';
@@ -659,7 +700,7 @@ if (!class_exists('d4pSettingsRender')) {
             $label = isset($element->args['label_button_add']) ? $element->args['label_button_add'] : __("Add New Value", "d4plib");
 
             echo '<a role="button" class="button-primary" href="#">'.$label.'</a>';
-            echo '<input type="hidden" value="'.$i.'" class="d4p-next-id" />';
+            echo '<input type="hidden" value="'.esc_attr($i).'" class="d4p-next-id" />';
         }
     }
 }
@@ -675,12 +716,16 @@ if (!class_exists('d4pSettingsProcess')) {
             $this->settings = $settings;
         }
 
-        public function process() {
+        public function process($request = false) {
             $list = array();
+
+            if ($request === false) {
+            	$request = $_REQUEST;
+            }
 
             foreach ($this->settings as $setting) {
                 if ($setting->type != '_') {
-                    $post = isset($_REQUEST[$this->base][$setting->type]) ? $_REQUEST[$this->base][$setting->type] : array();
+                    $post = isset($request[$this->base][$setting->type]) ? $request[$this->base][$setting->type] : array();
 
                     $list[$setting->type][$setting->name] = $this->process_single($setting, $post);
                 }
@@ -752,6 +797,7 @@ if (!class_exists('d4pSettingsProcess')) {
                     $value = d4p_sanitize_basic($post[$key]['x']).'x'.d4p_sanitize_basic($post[$key]['y']);
                     break;
                 case 'html':
+                case 'code':
                 case 'text_html':
                 case 'text_rich':
                     $value = d4p_sanitize_html($post[$key]);
@@ -811,6 +857,9 @@ if (!class_exists('d4pSettingsProcess')) {
                     break;
                 case 'link':
                     $value = d4p_sanitize_basic($post[$key]);
+                    break;
+                case 'email':
+                    $value = sanitize_email($post[$key]);
                     break;
                 default:
                 case 'text':

@@ -55,6 +55,12 @@ if (!function_exists('all_operator_options')) {
 		$all_options = array('equals', 'not equals');
 		$all_options = apply_filters('wpcf7cf_get_operators', $all_options);
 		foreach($all_options as $option) {
+			// backwards compat
+			$selected = $selected == '≤' ? 'less than or equals' : $selected;
+			$selected = $selected == '≥' ? 'greater than or equals' : $selected;
+			$selected = $selected == '>' ? 'greater than' : $selected;
+			$selected = $selected == '<' ? 'less than' : $selected;
+
 			?>
 			<option value="<?php echo htmlentities($option) ?>" <?php echo $selected == $option?'selected':'' ?>><?php echo htmlentities($option) ?></option>
 			<?php
@@ -84,8 +90,8 @@ function wpcf7cf_editor_panel_conditional($form) {
             <?php
             print_entries_html($form, $wpcf7cf_entries);
             ?>
-        </div>
-
+		</div>
+		
         <span id="wpcf7cf-add-button" title="add new rule">+ add new conditional rule</span>
 
         <div id="wpcf7cf-text-entries">
@@ -142,7 +148,7 @@ function wpcf7cf_save_contact_form( $contact_form )
 	// unset($_POST['wpcf7cf_options']['{id}']); // remove the dummy entry
 
 	// TODO: only save the one import/export field.
-	$conditions_string = stripslashes(sanitize_text_field($_POST['wpcf7cf-settings-text']));
+	$conditions_string = stripslashes(sanitize_textarea_field($_POST['wpcf7cf-settings-text']));
 
 	$conditions = CF7CF::parse_conditions($conditions_string);
 

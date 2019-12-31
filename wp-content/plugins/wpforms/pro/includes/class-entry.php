@@ -29,11 +29,13 @@ class WPForms_Entry_Handler extends WPForms_DB {
 	 * Get table columns.
 	 *
 	 * @since 1.0.0
+	 * @since 1.5.7 Added an `Entry Notes` column.
 	 */
 	public function get_columns() {
 
 		return array(
 			'entry_id'      => '%d',
+			'notes_count'   => '%d',
 			'form_id'       => '%d',
 			'post_id'       => '%d',
 			'user_id'       => '%d',
@@ -90,6 +92,9 @@ class WPForms_Entry_Handler extends WPForms_DB {
 		$entry  = parent::delete( $row_id );
 		$meta   = wpforms()->entry_meta->delete_by( 'entry_id', $row_id );
 		$fields = wpforms()->entry_fields->delete_by( 'entry_id', $row_id );
+
+		WPForms\Pro\Admin\DashboardWidget::clear_widget_cache();
+		WPForms\Pro\Admin\Entries\DefaultScreen::clear_widget_cache();
 
 		return ( $entry && $meta && $fields );
 	}
@@ -273,6 +278,7 @@ class WPForms_Entry_Handler extends WPForms_DB {
 	 * Get entries from the database.
 	 *
 	 * @since 1.0.0
+	 * @since 1.5.7 Added a `notes_count` argument to request the count of notes for each entry.
 	 *
 	 * @param array $args  Redefine query parameters by providing own arguments.
 	 * @param bool  $count Whether to just count entries or get the list of them. True to just count.
@@ -300,6 +306,7 @@ class WPForms_Entry_Handler extends WPForms_DB {
 			'date'          => '',
 			'date_modified' => '',
 			'ip_address'    => '',
+			'notes_count'   => false,
 			'orderby'       => 'entry_id',
 			'order'         => 'DESC',
 		);
@@ -447,8 +454,8 @@ class WPForms_Entry_Handler extends WPForms_DB {
 		/*
 		 * Modify the ORDER BY.
 		 */
-		$args['orderby']  = "{$this->table_name}.";
-		$args['orderby'] .= ! array_key_exists( $args['orderby'], $this->get_columns() ) ? $this->primary_key : $args['orderby'];
+		$args['orderby'] = ! array_key_exists( $args['orderby'], $this->get_columns() ) ? $this->primary_key : $args['orderby'];
+		$args['orderby'] = "{$this->table_name}.{$args['orderby']}";
 
 		if ( 'ASC' === strtoupper( $args['order'] ) ) {
 			$args['order'] = 'ASC';
@@ -470,6 +477,23 @@ class WPForms_Entry_Handler extends WPForms_DB {
 		 */
 
 		$sql_from = $this->table_name;
+
+		// Adds a LEFT OUTER JOIN for retrieve a notes count.
+		if ( true === $args['notes_count'] ) {
+			$meta_table = wpforms()->entry_meta->table_name;
+			$sql_from  .= ' LEFT JOIN';
+			$sql_from  .= " ( SELECT {$meta_table}.entry_id AS meta_entry_id, COUNT({$meta_table}.id) AS notes_count";
+			$sql_from  .= " FROM {$meta_table}";
+			$sql_from  .= " WHERE {$meta_table}.type = 'note'";
+			$sql_from  .= ' GROUP BY meta_entry_id )';
+			$sql_from  .= " notes_counts ON notes_counts.meta_entry_id = {$this->table_name}.entry_id";
+
+			// Changed the ORDER BY - notes count sorting support.
+			if ( "{$this->table_name}.notes_count" === $args['orderby'] ) {
+				$args['orderby'] = 'notes_counts.notes_count';
+			}
+		}
+
 		if ( ! empty( $args['value'] ) || ! empty( $args['value_compare'] ) ) {
 			$sql_from .= " JOIN {$fields_table} ON {$this->table_name}.entry_id={$fields_table}.entry_id";
 		}

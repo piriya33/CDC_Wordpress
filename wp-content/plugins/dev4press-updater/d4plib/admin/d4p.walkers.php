@@ -2,13 +2,13 @@
 
 /*
 Name:    d4pLib_Admin_Walkers
-Version: v2.5.2
+Version: v2.7.6
 Author:  Milan Petrovic
 Email:   support@dev4press.com
 Website: https://www.dev4press.com/
 
 == Copyright ==
-Copyright 2008 - 2018 Milan Petrovic (email: support@dev4press.com)
+Copyright 2008 - 2019 Milan Petrovic (email: support@dev4press.com)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -24,6 +24,8 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
+
+if (!defined( 'ABSPATH')) { exit; }
 
 if (!class_exists('d4pCheckboxRadioWalker')) {
     class d4pCheckboxRadioWalker extends Walker {
@@ -61,10 +63,10 @@ if (!class_exists('d4pCheckboxRadioWalker')) {
 
             $output.= $indent.sprintf(
                 '<li class="%s"><label><input type="%s" value="%s" name="%s%s"%s class="widefat" />%s</label>',
-                $css_classes,
-                $args['input'],
-                $page->id,
-                $args['name'],
+                esc_attr($css_classes),
+                esc_attr($args['input']),
+                esc_attr($page->id),
+                esc_attr($args['name']),
                 $args['input'] == 'checkbox' ? '[]' : '',
                 $selected,
                 $page->title

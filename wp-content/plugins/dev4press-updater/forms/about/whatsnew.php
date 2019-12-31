@@ -1,4 +1,4 @@
-<?php // include(D4PUPD_PATH.'forms/about/minor.php'); ?>
+<?php include(D4PUPD_PATH.'forms/about/minor.php'); ?>
 
 <div class="d4p-about-whatsnew">
     <div class="d4p-whatsnew-section d4p-whatsnew-heading">

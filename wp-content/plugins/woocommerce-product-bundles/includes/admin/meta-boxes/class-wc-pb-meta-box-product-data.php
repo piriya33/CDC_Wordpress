@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Product meta-box data for the 'Bundle' type.
  *
  * @class    WC_PB_Meta_Box_Product_Data
- * @version  5.9.0
+ * @version  5.14.0
  */
 class WC_PB_Meta_Box_Product_Data {
 
@@ -711,7 +711,7 @@ class WC_PB_Meta_Box_Product_Data {
 
 					if ( sizeof( $variations ) < 50 ) {
 
-						?><select multiple="multiple" name="bundle_data[<?php echo $loop; ?>][allowed_variations][]" style="width: 95%;" data-placeholder="<?php _e( 'Choose variations&hellip;', 'woocommerce-product-bundles' ); ?>" class="wc-enhanced-select" > <?php
+						?><select multiple="multiple" name="bundle_data[<?php echo $loop; ?>][allowed_variations][]" style="width: 95%;" data-placeholder="<?php _e( 'Choose variations&hellip;', 'woocommerce-product-bundles' ); ?>" class="sw-select2"> <?php
 
 							foreach ( $variations as $variation_id ) {
 
@@ -750,7 +750,7 @@ class WC_PB_Meta_Box_Product_Data {
 							}
 						}
 
-						?><select class="wc-product-search" multiple="multiple" style="width: 95%;" name="bundle_data[<?php echo $loop; ?>][allowed_variations][]" data-placeholder="<?php _e( 'Search for variations&hellip;', 'woocommerce-product-bundles' ); ?>" data-action="woocommerce_search_bundled_variations" data-limit="500" data-include="<?php echo $product_id; ?>"><?php
+						?><select class="sw-select2-search--products" multiple="multiple" style="width: 95%;" name="bundle_data[<?php echo $loop; ?>][allowed_variations][]" data-placeholder="<?php _e( 'Search for variations&hellip;', 'woocommerce-product-bundles' ); ?>" data-action="woocommerce_search_bundled_variations" data-limit="500" data-include="<?php echo $product_id; ?>"><?php
 							foreach ( $allowed_variations_descriptions as $allowed_variation_id => $allowed_variation_description ) {
 								echo '<option value="' . esc_attr( $allowed_variation_id ) . '"' . selected( true, true, false ) . '>' . wp_kses_post( $allowed_variation_description ) . '</option>';
 							}
@@ -764,7 +764,7 @@ class WC_PB_Meta_Box_Product_Data {
 				<div class="form-field">
 					<label for="override_default_variation_attributes"><?php echo __( 'Override Default Selections', 'woocommerce-product-bundles' ) ?></label>
 					<input type="checkbox" class="checkbox"<?php echo ( 'yes' === $override_defaults ? ' checked="checked"' : '' ); ?> name="bundle_data[<?php echo $loop; ?>][override_default_variation_attributes]" <?php echo ( 'yes' === $override_defaults ? 'value="1"' : '' ); ?>/>
-					<?php echo wc_help_tip( __( 'In effect for this bundle only. The available options are in sync with the filtering settings above. Always save any changes made above before configuring this section.', 'woocommerce-product-bundles' ) ); ?>
+					<?php echo wc_help_tip( __( 'In effect for this bundle only. When <strong>Filter Variations</strong> is enabled, double-check your selections to make sure they correspond to an active variation.', 'woocommerce-product-bundles' ) ); ?>
 				</div>
 			</div>
 
@@ -916,7 +916,7 @@ class WC_PB_Meta_Box_Product_Data {
 				<div>
 					<input type="checkbox" class="checkbox visibility_order"<?php echo ( 'visible' === $visibility[ 'order' ] ? ' checked="checked"' : '' ); ?> name="bundle_data[<?php echo $loop; ?>][order_visibility]" <?php echo ( 'visible' === $visibility[ 'order' ] ? 'value="1"' : '' ); ?>/>
 					<span class="labelspan"><?php _e( 'Order details', 'woocommerce-product-bundles' ); ?></span>
-					<?php echo wc_help_tip( __( 'Controls the visibility of the bundled item in order details &amp; e-mail templates.', 'woocommerce-product-bundles' ) ); ?>
+					<?php echo wc_help_tip( __( 'Controls the visibility of the bundled item in order-details and e-mail templates.', 'woocommerce-product-bundles' ) ); ?>
 				</div>
 			</div>
 		</div>
@@ -936,7 +936,7 @@ class WC_PB_Meta_Box_Product_Data {
 				<div class="price_visibility_order_wrapper">
 					<input type="checkbox" class="checkbox price_visibility_order"<?php echo ( 'visible' === $price_visibility[ 'order' ] ? ' checked="checked"' : '' ); ?> name="bundle_data[<?php echo $loop; ?>][order_price_visibility]" <?php echo ( 'visible' === $price_visibility[ 'order' ] ? 'value="1"' : '' ); ?>/>
 					<span class="labelspan"><?php _e( 'Order details', 'woocommerce-product-bundles' ); ?></span>
-					<?php echo wc_help_tip( __( 'Controls the visibility of the bundled-item price in order details &amp; e-mail templates.', 'woocommerce-product-bundles' ) ); ?>
+					<?php echo wc_help_tip( __( 'Controls the visibility of the bundled-item price in order-details and e-mail templates.', 'woocommerce-product-bundles' ) ); ?>
 				</div>
 			</div>
 		</div>
@@ -1209,7 +1209,7 @@ class WC_PB_Meta_Box_Product_Data {
 				 */
 				if ( apply_filters( 'woocommerce_bundled_item_legacy_add_input', false ) ) { ?>
 
-					<select class="wc-product-search" id="bundled_product" style="width: 250px;" name="bundled_product" data-placeholder="<?php _e( 'Add a bundled product&hellip;', 'woocommerce-product-bundles' ); ?>" data-action="woocommerce_json_search_products" multiple="multiple" data-limit="500">
+					<select class="sw-select2-search--products" id="bundled_product" style="width: 250px;" name="bundled_product" data-placeholder="<?php _e( 'Add a bundled product&hellip;', 'woocommerce-product-bundles' ); ?>" data-action="woocommerce_json_search_products" multiple="multiple" data-limit="500">
 						<option></option>
 					</select>
 
@@ -1217,7 +1217,7 @@ class WC_PB_Meta_Box_Product_Data {
 
 					<div class="sw-expanding-button sw-expanding-button--large">
 						<span class="sw-title"><?php echo _x( 'Add Product', 'new bundled product button', 'woocommerce-product-bundles' ); ?></span>
-						<select class="wc-product-search" id="bundled_product" name="bundled_product" data-placeholder="<?php _e( 'Search for a product&hellip;', 'woocommerce-product-bundles' ); ?>" data-action="woocommerce_json_search_products" multiple="multiple" data-limit="500">
+						<select class="sw-select2-search--products" id="bundled_product" name="bundled_product" data-placeholder="<?php _e( 'Search for a product&hellip;', 'woocommerce-product-bundles' ); ?>" data-action="woocommerce_json_search_products" multiple="multiple" data-limit="500">
 							<option></option>
 						</select>
 					</div>

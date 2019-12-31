@@ -123,6 +123,26 @@ class WPForms_Admin_Menu {
 			array( $this, 'admin_page' )
 		);
 
+		// Analytics submenu page.
+		add_submenu_page(
+			'wpforms-overview',
+			esc_html__( 'Analytics', 'wpforms-lite' ),
+			esc_html__( 'Analytics', 'wpforms-lite' ),
+			$menu_cap,
+			WPForms\Admin\Pages\Analytics::SLUG,
+			array( $this, 'admin_page' )
+		);
+
+		// SMTP submenu page.
+		add_submenu_page(
+			'wpforms-overview',
+			esc_html__( 'SMTP', 'wpforms-lite' ),
+			esc_html__( 'SMTP', 'wpforms-lite' ),
+			$menu_cap,
+			WPForms\Admin\Pages\SMTP::SLUG,
+			array( $this, 'admin_page' )
+		);
+
 		// About submenu page.
 		add_submenu_page(
 			'wpforms-overview',
@@ -130,6 +150,16 @@ class WPForms_Admin_Menu {
 			esc_html__( 'About Us', 'wpforms-lite' ),
 			$menu_cap,
 			WPForms_About::SLUG,
+			array( $this, 'admin_page' )
+		);
+
+		// Community submenu page.
+		add_submenu_page(
+			'wpforms-overview',
+			esc_html__( 'Community', 'wpforms-lite' ),
+			esc_html__( 'Community', 'wpforms-lite' ),
+			$menu_cap,
+			WPForms\Admin\Pages\Community::SLUG,
 			array( $this, 'admin_page' )
 		);
 	}

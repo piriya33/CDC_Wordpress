@@ -66,7 +66,6 @@ function wpcf7cf_options_page() {
     ?>
 
     <div class="wrap wpcf7cf-admin-wrap">
-        <?php screen_icon(); ?>
         <h2>Contact Form 7 - Conditional Fields Settings</h2>
         <?php if (!$wpcf7cf_options['notice_dismissed']) { ?>
         <div class="wpcf7cf-options-notice notice notice-warning is-dismissible"><div style="padding: 10px 0;"><strong>Notice</strong>: These are global settings for Contact Form 7 - Conditional Fields. <br><br><strong>How to create/edit conditional fields?</strong>

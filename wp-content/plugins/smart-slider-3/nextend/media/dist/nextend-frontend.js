@@ -360,6 +360,8 @@ N2D('Base64', function () {
  */
 
 N2D('ImagesLoaded', function ($, undefined) {
+
+    var local = {};
     /*!
      * EventEmitter v4.2.6 - git.io/ee
      * Oliver Caldwell
@@ -815,7 +817,7 @@ N2D('ImagesLoaded', function ($, undefined) {
         };
 
 
-        this.EventEmitter = EventEmitter;
+        local.EventEmitter = EventEmitter;
     }.call(window));
 
     /*!
@@ -887,7 +889,7 @@ N2D('ImagesLoaded', function ($, undefined) {
         };
 
         // browser global
-        window.eventie = eventie;
+        local.eventie = eventie;
 
     })(window);
 
@@ -902,10 +904,10 @@ N2D('ImagesLoaded', function ($, undefined) {
         // universal module definition
 
         // browser global
-        window.imagesLoaded = factory(
+        factory(
             window,
-            window.EventEmitter,
-            window.eventie
+            local.EventEmitter,
+            local.eventie
         );
 
     })(window,

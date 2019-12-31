@@ -157,22 +157,26 @@ class CF7CF {
      */
     function skip_validation_for_hidden_fields($result, $tags) {
 
-        if (count($this->hidden_fields) == 0) return $result;
-
-        $return_result = new WPCF7_Validation();
+        if(isset($_POST)) {
+            $this->set_hidden_fields_arrays($_POST);
+        }
 
         $invalid_fields = $result->get_invalid_fields();
+        $return_result = new WPCF7_Validation();
 
-        if (!is_array($invalid_fields) || count($invalid_fields) == 0) return $result;
-
-        foreach ($invalid_fields as $invalid_field_key => $invalid_field_data) {
-            if (!in_array($invalid_field_key, $this->hidden_fields)) {
-                // the invalid field is not a hidden field, so we'll add it to the final validation result
-                $return_result->invalidate($invalid_field_key, $invalid_field_data['reason']);
+        if (count($this->hidden_fields) == 0 || !is_array($invalid_fields) || count($invalid_fields) == 0) {
+            $return_result = $result;
+        } else {
+            foreach ($invalid_fields as $invalid_field_key => $invalid_field_data) {
+                if (!in_array($invalid_field_key, $this->hidden_fields)) {
+                    // the invalid field is not a hidden field, so we'll add it to the final validation result
+                    $return_result->invalidate($invalid_field_key, $invalid_field_data['reason']);
+                }
             }
         }
 
-        return $return_result;
+        return apply_filters('wpcf7cf_validate', $return_result, $tags);
+
     }
 
 
@@ -255,6 +259,7 @@ class CF7CF {
         $this->hidden_groups = json_decode(stripslashes($posted_data['_wpcf7cf_hidden_groups']));
         $this->visible_groups = json_decode(stripslashes($posted_data['_wpcf7cf_visible_groups']));
         $this->repeaters = json_decode(stripslashes($posted_data['_wpcf7cf_repeaters']));
+        $this->steps = json_decode(stripslashes($posted_data['_wpcf7cf_steps']));
     }
 
 	function hide_hidden_mail_fields($form,$abort,$submission) {
@@ -420,6 +425,7 @@ function wpcf7cf_form_hidden_fields($hidden_fields) {
         '_wpcf7cf_hidden_groups' => '',
         '_wpcf7cf_visible_groups' => '',
         '_wpcf7cf_repeaters' => '[]',
+        '_wpcf7cf_steps' => '{}',
         '_wpcf7cf_options' => ''.json_encode($options),
     ));
 }

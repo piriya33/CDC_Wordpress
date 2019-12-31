@@ -2,9 +2,9 @@
 # This file is distributed under the GNU General Public License v3.0.
 msgid ""
 msgstr ""
-"Project-Id-Version: WooCommerce Product Bundles 5.13.1\n"
+"Project-Id-Version: WooCommerce Product Bundles 5.14.2\n"
 "Report-Msgid-Bugs-To: https://woocommerce.com/my-account/create-a-ticket/\n"
-"POT-Creation-Date: 2019-10-21 14:37:59+00:00\n"
+"POT-Creation-Date: 2019-12-11 15:34:35+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -13,21 +13,21 @@ msgstr ""
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "X-Generator: grunt-wp-i18n 1.0.3\n"
 
-#: includes/admin/class-wc-pb-admin-ajax.php:185
+#: includes/admin/class-wc-pb-admin-ajax.php:198
 msgid ""
 "The selected product cannot be bundled. Please select a simple product, a "
 "variable product, or a simple/variable subscription."
 msgstr ""
 
-#: includes/admin/class-wc-pb-admin-ajax.php:189
+#: includes/admin/class-wc-pb-admin-ajax.php:202
 msgid "The selected product is invalid."
 msgstr ""
 
-#: includes/admin/class-wc-pb-admin-ajax.php:342
+#: includes/admin/class-wc-pb-admin-ajax.php:355
 msgid "The submitted configuration is invalid."
 msgstr ""
 
-#: includes/admin/class-wc-pb-admin-ajax.php:407
+#: includes/admin/class-wc-pb-admin-ajax.php:420
 msgid "Adjusted %s stock"
 msgstr ""
 
@@ -100,12 +100,12 @@ msgid "Added line items: %s"
 msgstr ""
 
 #: includes/admin/class-wc-pb-admin-order.php:214
-#: includes/admin/class-wc-pb-admin.php:202
+#: includes/admin/class-wc-pb-admin.php:314
 msgid "Edit"
 msgstr ""
 
 #: includes/admin/class-wc-pb-admin-order.php:216
-#: includes/admin/class-wc-pb-admin.php:201
+#: includes/admin/class-wc-pb-admin.php:313
 msgid "Configure"
 msgstr ""
 
@@ -114,7 +114,7 @@ msgid "Done"
 msgstr ""
 
 #: includes/admin/class-wc-pb-admin-post-types.php:49
-#: includes/admin/class-wc-pb-admin.php:301
+#: includes/admin/class-wc-pb-admin.php:413
 #: includes/admin/meta-boxes/class-wc-pb-meta-box-product-data.php:1169
 #: includes/class-wc-bundled-item.php:2032 includes/class-wc-pb-display.php:205
 #: includes/class-wc-product-bundle.php:1172
@@ -126,23 +126,30 @@ msgstr ""
 msgid "View Report"
 msgstr ""
 
-#: includes/admin/class-wc-pb-admin.php:62
+#: includes/admin/class-wc-pb-admin.php:155
+msgid ""
+"The installed version of <strong>Product Bundles</strong> is not compatible "
+"with the <code>selectSW</code> library found on your system. Please update "
+"Product Bundles to the latest version."
+msgstr ""
+
+#: includes/admin/class-wc-pb-admin.php:186
 msgid "Product Bundles does not collect, store or share any personal data."
 msgstr ""
 
-#: includes/admin/class-wc-pb-admin.php:203
+#: includes/admin/class-wc-pb-admin.php:315
 msgid ""
 "Failed to initialize form. If this issue persists, please reload the page "
 "and try again."
 msgstr ""
 
-#: includes/admin/class-wc-pb-admin.php:204
+#: includes/admin/class-wc-pb-admin.php:316
 msgid ""
 "Failed to validate configuration. If this issue persists, please reload the "
 "page and try again."
 msgstr ""
 
-#: includes/admin/class-wc-pb-admin.php:345
+#: includes/admin/class-wc-pb-admin.php:457
 msgid ""
 "You are currently viewing a filtered version of this report for "
 "<strong>%1$s</strong>. <a href=\"%2$s\" class=\"wc_pb_forward\">Clear "
@@ -344,9 +351,9 @@ msgstr ""
 
 #: includes/admin/meta-boxes/class-wc-pb-meta-box-product-data.php:767
 msgid ""
-"In effect for this bundle only. The available options are in sync with the "
-"filtering settings above. Always save any changes made above before "
-"configuring this section."
+"In effect for this bundle only. When <strong>Filter Variations</strong> is "
+"enabled, double-check your selections to make sure they correspond to an "
+"active variation."
 msgstr ""
 
 #: includes/admin/meta-boxes/class-wc-pb-meta-box-product-data.php:784
@@ -441,7 +448,7 @@ msgstr ""
 
 #: includes/admin/meta-boxes/class-wc-pb-meta-box-product-data.php:919
 msgid ""
-"Controls the visibility of the bundled item in order details &amp; e-mail "
+"Controls the visibility of the bundled item in order-details and e-mail "
 "templates."
 msgstr ""
 
@@ -463,7 +470,7 @@ msgstr ""
 
 #: includes/admin/meta-boxes/class-wc-pb-meta-box-product-data.php:939
 msgid ""
-"Controls the visibility of the bundled-item price in order details &amp; "
+"Controls the visibility of the bundled-item price in order-details and "
 "e-mail templates."
 msgstr ""
 
@@ -1182,25 +1189,25 @@ msgstr ""
 msgid "None"
 msgstr ""
 
-#: includes/compatibility/class-wc-pb-compatibility.php:266
-#: includes/compatibility/class-wc-pb-compatibility.php:279
-#: includes/compatibility/class-wc-pb-compatibility.php:302
-#: includes/compatibility/class-wc-pb-compatibility.php:312
-#: includes/compatibility/class-wc-pb-compatibility.php:322
+#: includes/compatibility/class-wc-pb-compatibility.php:268
+#: includes/compatibility/class-wc-pb-compatibility.php:281
+#: includes/compatibility/class-wc-pb-compatibility.php:304
+#: includes/compatibility/class-wc-pb-compatibility.php:314
+#: includes/compatibility/class-wc-pb-compatibility.php:324
 msgid ""
 "The installed version of <strong>%1$s</strong> is not supported by "
 "<strong>Product Bundles</strong>. Please update <strong>%1$s</strong> to "
 "version <strong>%2$s</strong> or higher."
 msgstr ""
 
-#: includes/compatibility/class-wc-pb-compatibility.php:287
+#: includes/compatibility/class-wc-pb-compatibility.php:289
 msgid ""
 "The <strong>Tabular Layout</strong> mini-extension has been rolled into "
 "<strong>Product Bundles</strong>. Please deactivate and remove the "
 "<strong>Product Bundles - Tabular Layout</strong> feature plugin."
 msgstr ""
 
-#: includes/compatibility/class-wc-pb-compatibility.php:293
+#: includes/compatibility/class-wc-pb-compatibility.php:295
 msgid ""
 "The <strong>Bundle-Sells</strong> mini-extension has been rolled into "
 "<strong>Product Bundles</strong>. Please deactivate and remove the "
@@ -1271,7 +1278,7 @@ msgstr ""
 msgid "e.g. \"Frequently Bought Together\""
 msgstr ""
 
-#: includes/wc-pb-template-functions.php:679
+#: includes/wc-pb-template-functions.php:680
 msgid "Clear"
 msgstr ""
 
@@ -1335,7 +1342,7 @@ msgstr ""
 msgid "https://somewherewarm.gr/"
 msgstr ""
 
-#: includes/admin/class-wc-pb-admin-ajax.php:348
+#: includes/admin/class-wc-pb-admin-ajax.php:361
 msgctxt "edit bundle in order: formatted validation message"
 msgid "%1$s %2$s"
 msgstr ""

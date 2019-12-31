@@ -2,13 +2,13 @@
 
 /*
 Name:    d4pLib_WP_Functions
-Version: v2.5.2
+Version: v2.7.6
 Author:  Milan Petrovic
 Email:   support@dev4press.com
 Website: https://www.dev4press.com/
 
 == Copyright ==
-Copyright 2008 - 2018 Milan Petrovic (email: support@dev4press.com)
+Copyright 2008 - 2019 Milan Petrovic (email: support@dev4press.com)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -24,6 +24,8 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
+
+if (!defined( 'ABSPATH')) { exit; }
 
 if (!function_exists('is_wplogin_page')) {
     function is_wplogin_page() {
@@ -62,6 +64,7 @@ if (!function_exists('is_any_tax')) {
 if (!function_exists('d4p_admin_enqueue_defaults')) {
     function d4p_admin_enqueue_defaults() {
         wp_enqueue_script('jquery');
+        wp_enqueue_script('jquery-form');
 
         wp_enqueue_script('wpdialogs');
         wp_enqueue_style('wp-jquery-ui-dialog');
@@ -174,7 +177,7 @@ if (!function_exists('d4p_get_post_content')) {
         }
 
         $content = apply_filters('the_content', $content);
-	$content = str_replace(']]>', ']]&gt;', $content);
+	    $content = str_replace(']]>', ']]&gt;', $content);
 
         return $content;
     }
@@ -381,6 +384,8 @@ if (!function_exists('d4p_is_user_allowed')) {
         } else {
             return $visitor;
         }
+
+        return false;
     }
 }
 
@@ -420,7 +425,7 @@ if (!function_exists('d4p_is_login_page')) {
 
         if ($login_page) {
             if ($action != '') {
-                $real_action = isset($_REQUEST['action']) ? $_REQUEST['action'] : 'login';
+                $real_action = isset($_REQUEST['action']) ? sanitize_text_field($_REQUEST['action']) : 'login';
                 return $real_action == $action;
             }
 
@@ -515,7 +520,7 @@ if (!function_exists('wp_redirect_self')) {
 
 if (!function_exists('wp_redirect_referer')) {
     function wp_redirect_referer() {
-        wp_redirect($_REQUEST['_wp_http_referer']);
+        wp_redirect(wp_get_referer());
     }
 }
 
@@ -524,5 +529,28 @@ if (!function_exists('wp_get_attachment_image_url')) {
         $image = wp_get_attachment_image_src($attachment_id, $size, $icon);
 
         return isset($image['0']) ? $image['0'] : false;
+    }
+}
+
+if (!function_exists('d4p_is_classicpress')) {
+    function d4p_is_classicpress() {
+        return function_exists('classicpress_version') && 
+               function_exists('classicpress_version_short');
+    }
+}
+
+if (!function_exists('d4p_json_die')) {
+    function d4p_json_die($data, $response = null) {
+        if (!headers_sent()) {
+            header('Content-Type: application/json; charset=utf-8');
+
+            if (null !== $response) {
+                status_header($response);
+            }
+
+            nocache_headers();
+        }
+
+        die(wp_json_encode($data));
     }
 }

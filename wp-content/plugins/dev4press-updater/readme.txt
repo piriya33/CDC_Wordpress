@@ -1,9 +1,9 @@
 === Dev4Press Updater ===
 Contributors: GDragoN
-Version: 4.0.1
+Version: 4.0.4
 Requires at least: 4.5
 Requires PHP: 5.6
-Tested up to: 5.0
+Tested up to: 5.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,14 +14,14 @@ Dev4Press Updater is a plugin for performing installation and updating of Dev4Pr
 * PHP: 5.6 or newer
 
 = PHP Notice =
-* Plugin should work with PHP 5.3, 5.4 and 5.5, but these versions are no longer used for testing, and they are no longer supported.
+* Plugin should work with PHP 5.3 to 5.5, but these versions are no longer used for testing, and they are no longer supported.
 * Plugin doesn't work with PHP 5.2 or older versions.
 
 = WordPress Requirements =
 * WordPress: 4.5 or newer
 
 = WordPress Notice =
-* Plugin should work with WordPress 4.0, 4.1, 4.2, 4.3 and 4.4, but these versions are no longer used for testing, and they are no longer supported.
+* Plugin should work with WordPress 4.0 to 4.4, but these versions are no longer used for testing, and they are no longer supported.
 * Plugin doesn't work with WordPress 3.9 or older versions.
 
 == Installation ==

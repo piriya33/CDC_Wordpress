@@ -13,23 +13,26 @@
  * Toggle entry stars from Entries table.
  *
  * @since 1.1.6
+ * @since 1.5.7 Added an entry note about Star/Unstar action.
  */
 function wpforms_entry_list_star() {
 
 	// Run a security check.
 	check_ajax_referer( 'wpforms-admin', 'nonce' );
 
+	if ( empty( $_POST['entryId'] ) || empty( $_POST['task'] ) || empty( $_POST['formId'] ) ) {
+		wp_send_json_error();
+	}
+
 	// Check for permissions.
 	if ( ! wpforms_current_user_can() ) {
 		wp_send_json_error();
 	}
 
-	if ( empty( $_POST['entry_id'] ) || empty( $_POST['task'] ) ) {
-		wp_send_json_error();
-	}
-
-	$task       = $_POST['task'];
-	$entry_id   = absint( $_POST['entry_id'] );
+	$task       = sanitize_key( $_POST['task'] );
+	$entry_id   = absint( $_POST['entryId'] );
+	$form_id    = absint( $_POST['formId'] );
+	$user_id    = get_current_user_id();
 	$is_success = false;
 
 	if ( 'star' === $task ) {
@@ -39,6 +42,9 @@ function wpforms_entry_list_star() {
 				'starred' => '1',
 			)
 		);
+
+		$note_data = esc_html__( 'Entry starred.', 'wpforms' );
+
 	} elseif ( 'unstar' === $task ) {
 		$is_success = wpforms()->entry->update(
 			$entry_id,
@@ -46,9 +52,28 @@ function wpforms_entry_list_star() {
 				'starred' => '0',
 			)
 		);
+
+		$note_data = esc_html__( 'Entry unstarred.', 'wpforms' );
 	}
 
-	$is_success ? wp_send_json_success() : wp_send_json_error();
+	if ( $is_success ) {
+
+		// Adds an entry note about Star/Unstar action.
+		wpforms()->entry_meta->add(
+			array(
+				'entry_id' => $entry_id,
+				'form_id'  => $form_id,
+				'user_id'  => $user_id,
+				'type'     => 'log',
+				'data'     => wpautop( sprintf( '<em>%s</em>', $note_data ) ),
+			),
+			'entry_meta'
+		);
+
+		wp_send_json_success();
+	}
+
+	wp_send_json_error();
 }
 
 add_action( 'wp_ajax_wpforms_entry_list_star', 'wpforms_entry_list_star' );
@@ -63,17 +88,19 @@ function wpforms_entry_list_read() {
 	// Run a security check.
 	check_ajax_referer( 'wpforms-admin', 'nonce' );
 
+	if ( empty( $_POST['entryId'] ) || empty( $_POST['task'] ) || empty( $_POST['formId'] ) ) {
+		wp_send_json_error();
+	}
+
 	// Check for permissions.
 	if ( ! wpforms_current_user_can() ) {
 		wp_send_json_error();
 	}
 
-	if ( empty( $_POST['entry_id'] ) || empty( $_POST['task'] ) ) {
-		wp_send_json_error();
-	}
-
-	$task       = $_POST['task'];
-	$entry_id   = absint( $_POST['entry_id'] );
+	$task       = sanitize_key( $_POST['task'] );
+	$entry_id   = absint( $_POST['entryId'] );
+	$form_id    = absint( $_POST['formId'] );
+	$user_id    = get_current_user_id();
 	$is_success = false;
 
 	if ( 'read' === $task ) {
@@ -83,6 +110,9 @@ function wpforms_entry_list_read() {
 				'viewed' => '1',
 			)
 		);
+
+		$note_data = esc_html__( 'Entry read.', 'wpforms' );
+
 	} elseif ( 'unread' === $task ) {
 		$is_success = wpforms()->entry->update(
 			$entry_id,
@@ -90,9 +120,28 @@ function wpforms_entry_list_read() {
 				'viewed' => '0',
 			)
 		);
+
+		$note_data = esc_html__( 'Entry unread.', 'wpforms' );
 	}
 
-	$is_success ? wp_send_json_success() : wp_send_json_error();
+	if ( $is_success ) {
+
+		// Adds an entry note about Star/Unstar action.
+		wpforms()->entry_meta->add(
+			array(
+				'entry_id' => $entry_id,
+				'form_id'  => $form_id,
+				'user_id'  => $user_id,
+				'type'     => 'log',
+				'data'     => wpautop( sprintf( '<em>%s</em>', $note_data ) ),
+			),
+			'entry_meta'
+		);
+
+		wp_send_json_success();
+	}
+
+	wp_send_json_error();
 }
 
 add_action( 'wp_ajax_wpforms_entry_list_read', 'wpforms_entry_list_read' );

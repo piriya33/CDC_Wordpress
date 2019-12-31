@@ -5,9 +5,9 @@ Author: Jules Colle
 Website: http://bdwm.be
 Tags: wordpress, contact form 7, forms, conditional fields
 Requires at least: 4.1
-Tested up to: 5.2.4
-Stable tag: 1.7
-Requires PHP: 5.3
+Tested up to: 5.3
+Stable tag: 1.7.8
+Requires PHP: 5.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -101,6 +101,40 @@ The conditional fields javascript code is loaded during wp_footer, so a call to 
 2. Defining rules to show/hide groups of input elements in the backend interface
 
 == Changelog ==
+
+= 1.7.8 (11-26-19) =
+* Updated/added Javascript events for groups, repeaters and multistep + added documentation at https://conditional-fields-cf7.bdwm.be/docs/examples/javascript-events/
+* Fixed bug where using invalid regex as a value would give a JS error (https://wordpress.org/support/topic/star-ratings-6/)
+* PRO Multistep: Added attribute to multistep `data-current_step` which holds the current step index. (can be used as css selector like this: `div[data-current_step=1]`)
+* PRO Repeater: The string `{{your-repeater_index}}` inside a repeater called `your-repeater` will be replaced with the index of the current sub repeater. (See updated example at https://conditional-fields-cf7.bdwm.be/repeater/)  
+
+= 1.7.7 (11-05-19) =
+* PRO: Fix problem with parsing the "function" operator
+
+= 1.7.6 (11-01-19) =
+* Fixed small compatibility problem with CF7 Smart Grid (https://wordpress.org/support/topic/problem-on-save-form-when-the-active-tabs-are-not-conditional-form/#post-12085173)
+* Fixed some more porblems with parsing conditions (regex changes)
+* Got rid of screen_icon notice on CF settings page
+
+= 1.7.5 (10-31-19) =
+* Fixed bug in admin where settings got cleared if using some operators (mostly PRO operators)
+
+= 1.7.4 (10-29-19) =
+* PRO: made repeater (80%) compatible with material-design-for-contact-form-7
+* PRO: made exclusive checkbox work with repeater fields
+* PRO: trigger events when a repeater adds fields: 'wpcf7cf_repeater_added' - and when a repeater removes fields: 'wpcf7cf_repeater_removed'. Can be called with `$('form').on('wpcf7cf_repeater_removed', function() { /*...*/ })`
+* PRO: fixed bug with mutistep (formn did not work correctly if there were multiple forms on one page).
+
+= 1.7.3 (10-24-19) =
+* removed @babel/polyfill. All seems to be working fine without it in IE11. JS file is now back to 25kb instead of 100kb.
+
+= 1.7.2 (10-24-19) =
+* Bug fix: new javascript files where throwing errors. Should be okay now. (Also included JS source map for easier debugging)
+
+= 1.7.1 (10-23-19) =
+* PRO: Added basic support for multistep. No options available yet. You can insert [step] tags inside your code. More info at https://conditional-fields-cf7.bdwm.be/multistep/
+* Set up an NPM dev environment with babel and webpack. This means all the client side JS code will look super ugly, and it's also more bytes. But the plus side is that the plugin should also work fine in older browsers now.
+* Tested with WP version 5.3
 
 = 1.7 (10-18-19) =
 * code rewrite. Made code more testable by focusing more on a functional approach. Not completely finished yet, but getting there.

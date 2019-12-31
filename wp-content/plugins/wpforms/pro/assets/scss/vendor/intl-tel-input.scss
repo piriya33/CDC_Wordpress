@@ -308,3 +308,57 @@ div.wpforms-container-full .wpforms-form,
 		}
 	}
 }
+
+body.rtl,
+body.rtl div.wpforms-container .wpforms-form,
+body.rtl div.wpforms-container-full .wpforms-form,
+body.rtl #wpforms-conversational-form-page {
+	.intl-tel-input {
+
+		input, input[type=text], input[type=tel] {
+			padding-right: 0;
+			padding-left: $selectedFlagWidth;
+		}
+
+		.flag-container {
+			right: auto;
+			left: 0;
+		}
+
+		.selected-flag {
+			padding-right: $flagPadding;
+			padding-left: $arrowPadding;
+
+			.iti-arrow {
+				margin-right: $arrowPadding;
+				margin-left: 0;
+			}
+		}
+
+		.country-list {
+			text-align: right;
+
+			.flag-box, .country-name {
+				margin-right: 0;
+				margin-left: 6px;
+			}
+
+			.country-name {
+				unicode-bidi: embed;
+				direction: rtl;
+			}
+		}
+
+		&.allow-dropdown, &.separate-dial-code {
+			input, input[type=text], input[type=tel] {
+				padding-right: $selectedFlagArrowWidth + $inputPadding;
+				padding-left: $inputPadding;
+			}
+
+			.flag-container {
+				right: 0;
+				left: auto;
+			}
+		}
+	}
+}

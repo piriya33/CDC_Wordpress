@@ -70,24 +70,25 @@ class WPForms_Entries_Single {
 		if ( 'wpforms-entries' === $page && 'details' === $view ) {
 
 			// Entry processing and setup.
-			add_action( 'wpforms_entries_init',          array( $this, 'process_star'          ),  8, 1 );
-			add_action( 'wpforms_entries_init',          array( $this, 'process_unread'        ),  8, 1 );
-			add_action( 'wpforms_entries_init',          array( $this, 'process_note_delete'   ),  8, 1 );
-			add_action( 'wpforms_entries_init',          array( $this, 'process_note_add'      ),  8, 1 );
-			add_action( 'wpforms_entries_init',          array( $this, 'process_notifications' ), 15, 1 );
-			add_action( 'wpforms_entries_init',          array( $this, 'setup'                 ), 10, 1 );
+			add_action( 'wpforms_entries_init', array( $this, 'process_star' ), 8, 1 );
+			add_action( 'wpforms_entries_init', array( $this, 'process_unread' ), 8, 1 );
+			add_action( 'wpforms_entries_init', array( $this, 'process_note_delete' ), 8, 1 );
+			add_action( 'wpforms_entries_init', array( $this, 'process_note_add' ), 8, 1 );
+			add_action( 'wpforms_entries_init', array( $this, 'process_notifications' ), 15, 1 );
+			add_action( 'wpforms_entries_init', array( $this, 'setup' ), 10, 1 );
 
 			do_action( 'wpforms_entries_init', 'details' );
 
 			// Output. Entry content and metaboxes.
-			add_action( 'wpforms_admin_page',            array( $this, 'details'             )        );
-			add_action( 'wpforms_entry_details_content', array( $this, 'details_fields'      ), 10, 2 );
-			add_action( 'wpforms_entry_details_content', array( $this, 'details_notes'       ), 10, 2 );
-			add_action( 'wpforms_entry_details_content', array( $this, 'details_debug'       ), 50, 2 );
-			add_action( 'wpforms_entry_details_sidebar', array( $this, 'details_meta'        ), 10, 2 );
-			add_action( 'wpforms_entry_details_sidebar', array( $this, 'details_payment'     ), 15, 2 );
-			add_action( 'wpforms_entry_details_sidebar', array( $this, 'details_actions'     ), 20, 2 );
-			add_action( 'wpforms_entry_details_sidebar', array( $this, 'details_related'     ), 20, 2 );
+			add_action( 'wpforms_admin_page', array( $this, 'details' ) );
+			add_action( 'wpforms_entry_details_content', array( $this, 'details_fields' ), 10, 2 );
+			add_action( 'wpforms_entry_details_content', array( $this, 'details_notes' ), 10, 2 );
+			add_action( 'wpforms_entry_details_content', array( $this, 'details_log' ), 40, 2 );
+			add_action( 'wpforms_entry_details_content', array( $this, 'details_debug' ), 50, 2 );
+			add_action( 'wpforms_entry_details_sidebar', array( $this, 'details_meta' ), 10, 2 );
+			add_action( 'wpforms_entry_details_sidebar', array( $this, 'details_payment' ), 15, 2 );
+			add_action( 'wpforms_entry_details_sidebar', array( $this, 'details_actions' ), 20, 2 );
+			add_action( 'wpforms_entry_details_sidebar', array( $this, 'details_related' ), 20, 2 );
 
 			// Remove Screen Options tab from admin area header.
 			add_filter( 'screen_options_show_screen', '__return_false' );
@@ -137,6 +138,8 @@ class WPForms_Entries_Single {
 	 * Watches for and runs starring/unstarring entry.
 	 *
 	 * @since 1.1.6
+	 * @since 1.5.7 Added creation entry note for Entry Star action.
+	 *
 	 * @todo Convert to AJAX
 	 */
 	public function process_star() {
@@ -145,6 +148,8 @@ class WPForms_Entries_Single {
 		if ( empty( $_GET['_wpnonce'] ) || ! wp_verify_nonce( $_GET['_wpnonce'], 'wpforms_entry_details_star' ) ) {
 			return;
 		}
+
+		$redirect_url = '';
 
 		// Check for starring.
 		if ( ! empty( $_GET['entry_id'] ) && ! empty( $_GET['action'] ) && 'star' === $_GET['action'] ) {
@@ -155,6 +160,21 @@ class WPForms_Entries_Single {
 					'starred' => '1',
 				)
 			);
+
+			if ( ! empty( $_GET['form'] ) ) {
+				wpforms()->entry_meta->add(
+					array(
+						'entry_id' => absint( $_GET['entry_id'] ),
+						'form_id'  => absint( $_GET['form'] ),
+						'user_id'  => get_current_user_id(),
+						'type'     => 'log',
+						'data'     => wpautop( sprintf( '<em>%s</em>', esc_html__( 'Entry starred.', 'wpforms' ) ) ),
+					),
+					'entry_meta'
+				);
+
+				$redirect_url = remove_query_arg( 'form' );
+			}
 
 			$this->alerts[] = array(
 				'type'    => 'success',
@@ -173,11 +193,32 @@ class WPForms_Entries_Single {
 				)
 			);
 
+			if ( ! empty( $_GET['form'] ) ) {
+				wpforms()->entry_meta->add(
+					array(
+						'entry_id' => absint( $_GET['entry_id'] ),
+						'form_id'  => absint( $_GET['form'] ),
+						'user_id'  => get_current_user_id(),
+						'type'     => 'log',
+						'data'     => wpautop( sprintf( '<em>%s</em>', esc_html__( 'Entry unstarred.', 'wpforms' ) ) ),
+					),
+					'entry_meta'
+				);
+
+				$redirect_url = remove_query_arg( 'form' );
+			}
+
 			$this->alerts[] = array(
 				'type'    => 'success',
 				'message' => esc_html__( 'This entry has been unstarred.', 'wpforms' ),
 				'dismiss' => true,
 			);
+		}
+
+		// Clean URL before the next page refresh - stop create a new note.
+		if ( ! empty( $redirect_url ) ) {
+			wp_safe_redirect( $redirect_url );
+			exit;
 		}
 	}
 
@@ -189,22 +230,41 @@ class WPForms_Entries_Single {
 	 */
 	public function process_unread() {
 
+		// Security check.
+		if ( empty( $_GET['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), 'wpforms_entry_details_unread' ) ) {
+			return;
+		}
+
 		// Check for run switch.
 		if ( empty( $_GET['entry_id'] ) || empty( $_GET['action'] ) || 'unread' !== $_GET['action'] ) {
 			return;
 		}
 
-		// Security check.
-		if ( empty( $_GET['_wpnonce'] ) || ! wp_verify_nonce( $_GET['_wpnonce'], 'wpforms_entry_details_unread' ) ) {
-			return;
-		}
+		$entry_id = absint( $_GET['entry_id'] );
 
-		wpforms()->entry->update(
-			absint( $_GET['entry_id'] ),
+		$is_success = wpforms()->entry->update(
+			$entry_id,
 			array(
 				'viewed' => '0',
 			)
 		);
+
+		if ( ! $is_success ) {
+			return;
+		}
+
+		if ( ! empty( $_GET['form'] ) ) {
+			wpforms()->entry_meta->add(
+				array(
+					'entry_id' => $entry_id,
+					'form_id'  => absint( $_GET['form'] ),
+					'user_id'  => get_current_user_id(),
+					'type'     => 'log',
+					'data'     => wpautop( sprintf( '<em>%s</em>', esc_html__( 'Entry unread.', 'wpforms' ) ) ),
+				),
+				'entry_meta'
+			);
+		}
 
 		$this->alerts[] = array(
 			'type'    => 'success',
@@ -221,17 +281,21 @@ class WPForms_Entries_Single {
 	 */
 	public function process_note_delete() {
 
+		// Security check.
+		if ( empty( $_GET['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), 'wpforms_entry_details_deletenote' ) ) {
+			return;
+		}
+
 		// Check for run switch.
 		if ( empty( $_GET['note_id'] ) || empty( $_GET['action'] ) || 'delete_note' !== $_GET['action'] ) {
 			return;
 		}
 
-		// Security check.
-		if ( empty( $_GET['_wpnonce'] ) || ! wp_verify_nonce( $_GET['_wpnonce'], 'wpforms_entry_details_deletenote' ) ) {
+		$deleted = wpforms()->entry_meta->delete( absint( $_GET['note_id'] ) );
+
+		if ( ! $deleted ) {
 			return;
 		}
-
-		wpforms()->entry_meta->delete( absint( $_GET['note_id'] ) );
 
 		$this->alerts[] = array(
 			'type'    => 'success',
@@ -249,12 +313,17 @@ class WPForms_Entries_Single {
 	public function process_note_add() {
 
 		// Check for post trigger and required vars.
-		if ( empty( $_POST['wpforms_add_note'] ) || empty( $_POST['entry_id'] ) || empty( $_POST['entry_id'] ) ) {
+		if ( empty( $_POST['wpforms_add_note'] ) || empty( $_POST['entry_id'] ) || empty( $_POST['form_id'] ) ) {
 			return;
 		}
 
 		// Security check.
 		if ( empty( $_POST['_wpnonce'] ) || ! wp_verify_nonce( $_POST['_wpnonce'], 'wpforms_entry_details_addnote' ) ) {
+			return;
+		}
+
+		// Bail if note has no content.
+		if ( empty( $_POST['entry_note'] ) ) {
 			return;
 		}
 
@@ -264,7 +333,7 @@ class WPForms_Entries_Single {
 				'form_id'  => absint( $_POST['form_id'] ),
 				'user_id'  => get_current_user_id(),
 				'type'     => 'note',
-				'data'     => wpautop( wp_kses_post( $_POST['entry_note'] ) ),
+				'data'     => wpautop( wp_kses_post( wp_unslash( $_POST['entry_note'] ) ) ),
 			),
 			'entry_meta'
 		);
@@ -374,8 +443,20 @@ class WPForms_Entries_Single {
 		$entry->entry_prev_url   = ! empty( $entry->entry_prev ) ? add_query_arg( array( 'page' => 'wpforms-entries', 'view' => 'details', 'entry_id' => absint( $entry->entry_prev->entry_id ) ), admin_url( 'admin.php' ) ) : '#';
 		$entry->entry_prev_class = ! empty( $entry->entry_prev ) ? '' : 'inactive';
 		$entry->entry_prev_count = wpforms()->entry->get_prev_count( $entry->entry_id, $form_data['id'] );
-		$entry->entry_count      = wpforms()->entry->get_entries( array( 'form_id' =>  $form_data['id'] ), true );
-		$entry->entry_notes      = wpforms()->entry_meta->get_meta( array( 'entry_id' => $entry->entry_id, 'type' => 'note' ) );
+		$entry->entry_count      = wpforms()->entry->get_entries( array( 'form_id' => $form_data['id'] ), true );
+
+		$entry->entry_notes = wpforms()->entry_meta->get_meta(
+			array(
+				'entry_id' => $entry->entry_id,
+				'type'     => 'note',
+			)
+		);
+		$entry->entry_logs  = wpforms()->entry_meta->get_meta(
+			array(
+				'entry_id' => $entry->entry_id,
+				'type'     => 'log',
+			)
+		);
 
 		// Check for other entries by this user.
 		if ( ! empty( $entry->user_id ) || ! empty( $entry->user_uuid ) ) {
@@ -399,13 +480,33 @@ class WPForms_Entries_Single {
 
 		// Lastly, mark entry as read if needed.
 		if ( '1' !== $entry->viewed && empty( $_GET['action'] ) ) {
-			wpforms()->entry->update(
+			$is_success = wpforms()->entry->update(
 				$entry->entry_id,
 				array(
 					'viewed' => '1',
 				)
 			);
-			$this->entry->viewed = '1';
+		}
+
+		if ( ! empty( $is_success ) ) {
+			wpforms()->entry_meta->add(
+				array(
+					'entry_id' => $entry->entry_id,
+					'form_id'  => $form_data['id'],
+					'user_id'  => get_current_user_id(),
+					'type'     => 'log',
+					'data'     => wpautop( sprintf( '<em>%s</em>', esc_html__( 'Entry read.', 'wpforms' ) ) ),
+				),
+				'entry_meta'
+			);
+
+			$this->entry->viewed     = '1';
+			$this->entry->entry_logs = wpforms()->entry_meta->get_meta(
+				array(
+					'entry_id' => $entry->entry_id,
+					'type'     => 'log',
+				)
+			);
 		}
 
 		do_action( 'wpforms_entry_details_init', $this );
@@ -589,7 +690,7 @@ class WPForms_Entries_Single {
 
 					<a href="#" class="button add"><?php esc_html_e( 'Add Note', 'wpforms' ); ?></a>
 
-					<form action="<?php echo $action_url; ?>" method="post">
+					<form action="<?php echo esc_url( $action_url ); ?>" method="post">
 						<?php
 						$args = array(
 							'media_buttons' => false,
@@ -618,7 +719,7 @@ class WPForms_Entries_Single {
 					foreach ( $entry->entry_notes as $note ) {
 						$user        = get_userdata( $note->user_id );
 						$user_name   = esc_html( ! empty( $user->display_name ) ? $user->display_name : $user->user_login );
-						$user_url = esc_url(
+						$user_url    = esc_url(
 							add_query_arg(
 								array(
 									'user_id' => absint( $user->ID ),
@@ -643,7 +744,7 @@ class WPForms_Entries_Single {
 							'wpforms_entry_details_deletenote'
 						);
 						?>
-						<div class="wpforms-entry-notes-single <?php echo $class; ?>">
+						<div class="wpforms-entry-notes-single <?php echo esc_attr( $class ); ?>">
 							<div class="wpforms-entry-notes-byline">
 								<?php
 								printf(
@@ -656,7 +757,75 @@ class WPForms_Entries_Single {
 								);
 								?>
 							</div>
-							<?php echo wp_kses_post( $note->data ); ?>
+							<?php echo wp_kses_post( wp_unslash( $note->data ) ); ?>
+						</div>
+						<?php
+						$count++;
+					}
+					echo '</div>';
+				}
+				?>
+
+			</div>
+
+		</div>
+		<?php
+	}
+
+	/**
+	 * Entry log metabox.
+	 *
+	 * @since 1.5.7
+	 *
+	 * @param object $entry     Submitted entry values.
+	 * @param array  $form_data Form data and settings.
+	 */
+	public function details_log( $entry, $form_data ) {
+
+		?>
+		<!-- Entry Logs metabox -->
+		<div id="wpforms-entry-logs" class="postbox">
+
+			<h2 class="hndle">
+				<span><?php esc_html_e( 'Log', 'wpforms' ); ?></span>
+			</h2>
+
+			<div class="inside">
+
+				<?php
+				if ( empty( $entry->entry_logs ) ) {
+					echo '<p class="no-logs">' . esc_html__( 'No logs.', 'wpforms' ) . '</p>';
+				} else {
+					echo '<div class="wpforms-entry-logs-list">';
+					$count = 1;
+					foreach ( $entry->entry_logs as $log ) {
+						$user        = get_userdata( $log->user_id );
+						$user_name   = esc_html( ! empty( $user->display_name ) ? $user->display_name : $user->user_login );
+						$user_url    = esc_url(
+							add_query_arg(
+								array(
+									'user_id' => absint( $user->ID ),
+								),
+								admin_url( 'user-edit.php' )
+							)
+						);
+						$date_format = sprintf( '%s %s', get_option( 'date_format' ), get_option( 'time_format' ) );
+						$date        = date_i18n( $date_format, strtotime( $log->date ) + ( get_option( 'gmt_offset' ) * 3600 ) );
+						$class       = 0 === $count % 2 ? 'even' : 'odd';
+
+						?>
+						<div class="wpforms-entry-logs-single <?php echo esc_attr( $class ); ?>">
+							<div class="wpforms-entry-logs-byline">
+								<?php
+								printf(
+									/* translators: %1$s - user link; %2$s - date; */
+									esc_html__( 'Added by %1$s on %2$s', 'wpforms' ),
+									'<a href="' . esc_url( $user_url ) . '" class="log-user">' . esc_html( $user_name ) . '</a>',
+									esc_html( $date )
+								);
+								?>
+							</div>
+							<?php echo wp_kses_post( wp_unslash( $log->data ) ); ?>
 						</div>
 						<?php
 						$count++;
@@ -808,7 +977,7 @@ class WPForms_Entries_Single {
 							'bulk-entries'
 						);
 						?>
-						<a class="submitdelete deletion" href="<?php echo $delete_link; ?>">
+						<a class="submitdelete deletion" href="<?php echo esc_url( $delete_link ); ?>">
 							<?php esc_html_e( 'Delete Entry', 'wpforms' ); ?>
 						</a>
 					</div>
@@ -1032,6 +1201,7 @@ class WPForms_Entries_Single {
 			add_query_arg(
 				array(
 					'action' => '1' == $entry->starred ? 'unstar' : 'star',
+					'form'   => absint( $form_data['id'] ),
 				),
 				$base
 			),
@@ -1045,6 +1215,7 @@ class WPForms_Entries_Single {
 			add_query_arg(
 				array(
 					'action' => 'unread',
+					'form'   => absint( $form_data['id'] ),
 				),
 				$base
 			),

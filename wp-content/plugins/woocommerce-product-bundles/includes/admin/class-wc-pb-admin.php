@@ -18,19 +18,32 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Loads admin scripts, includes admin classes and adds admin hooks.
  *
  * @class    WC_PB_Admin
- * @version  5.9.0
+ * @version  5.14.0
  */
 class WC_PB_Admin {
+
+	/**
+ 	 * Bundled selectSW library version.
+ 	 *
+ 	 * @var string
+ 	 */
+ 	private static $bundled_selectsw_version = '1.1.1';
 
 	/**
 	 * Setup Admin class.
 	 */
 	public static function init() {
 
+		// Admin includes.
 		add_action( 'init', array( __CLASS__, 'admin_init' ) );
 
 		// Add a message in the WP Privacy Policy Guide page.
 		add_action( 'admin_init', array( __CLASS__, 'add_privacy_policy_guide_content' ) );
+
+		// selectSW scripts.
+ 		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'maybe_register_selectsw' ), 0 );
+ 		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'maybe_load_selectsw' ), 1 );
+ 		add_action( 'admin_notices', array( __CLASS__, 'maybe_display_selectsw_notice' ), 0 );
 
 		// Enqueue scripts.
 		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'admin_scripts' ), 11 );
@@ -45,25 +58,8 @@ class WC_PB_Admin {
 		add_filter( 'woocommerce_admin_reports', array( __CLASS__, 'add_insufficient_stock_report_tab' ) );
 		add_action( 'admin_print_styles', array( __CLASS__, 'maybe_add_insufficient_stock_report_notice' ) );
 
-	}
-
-	/**
-	 * Message to add in the WP Privacy Policy Guide page.
-	 *
-	 * @since  5.7.10
-	 *
-	 * @return string
-	 */
-	protected static function get_privacy_policy_guide_message() {
-
-		$content = '
-			<div contenteditable="false">' .
-				'<p class="wp-policy-help">' .
-					__( 'Product Bundles does not collect, store or share any personal data.', 'woocommerce-product-bundles' ) .
-				'</p>' .
-			'</div>';
-
-		return $content;
+		// Add body class for WP 5.3 compatibility.
+		add_filter( 'admin_body_class', array( __CLASS__, 'include_admin_body_class' ) );
 	}
 
 	/**
@@ -100,6 +96,122 @@ class WC_PB_Admin {
 	}
 
 	/**
+ 	 * Register own version of select2 library.
+ 	 *
+ 	 * @since 5.1.0
+ 	 */
+ 	public static function maybe_register_selectsw() {
+
+ 		$is_registered      = wp_script_is( 'sw-admin-select-init', $list = 'registered' );
+ 		$registered_version = $is_registered ? wp_scripts()->registered[ 'sw-admin-select-init' ]->ver : '';
+ 		$register           = ! $is_registered || version_compare( self::$bundled_selectsw_version, $registered_version, '>' );
+
+ 		if ( $register ) {
+
+ 			if ( $is_registered ) {
+ 				wp_deregister_script( 'sw-admin-select-init' );
+ 			}
+
+ 			$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+
+ 			// Register own select2 initialization library.
+ 			wp_register_script( 'sw-admin-select-init', WC_PB()->plugin_url() . '/assets/js/admin/select2-init' . $suffix . '.js', array( 'jquery', 'sw-admin-select' ), self::$bundled_selectsw_version );
+ 		}
+ 	}
+
+	/**
+ 	 * Load own version of select2 library.
+ 	 *
+ 	 * @since 5.1.0
+ 	 */
+ 	public static function maybe_load_selectsw() {
+
+		// Responsible for loading selectsw?
+ 		if ( self::load_selectsw() ) {
+
+ 			$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+
+ 			// Register selectSW library.
+ 			wp_register_script( 'sw-admin-select', WC_PB()->plugin_url() . '/assets/js/admin/select2' . $suffix . '.js', array( 'jquery' ), self::$bundled_selectsw_version );
+
+ 			// Register selectSW styles.
+ 			wp_register_style( 'sw-admin-css-select', WC_PB()->plugin_url() . '/assets/css/admin/select2.css', array(), self::$bundled_selectsw_version );
+ 			wp_style_add_data( 'sw-admin-css-select', 'rtl', 'replace' );
+ 		}
+ 	}
+
+ 	/**
+ 	 * Display notice when selectSW library is unsupported.
+ 	 *
+ 	 * @since 5.1.0
+ 	 */
+ 	public static function maybe_display_selectsw_notice() {
+
+ 		$registered_version       = wp_scripts()->registered[ 'sw-admin-select-init' ]->ver;
+ 		$registered_version_major = strstr( $registered_version, '.', true );
+ 		$bundled_version_major    = strstr( self::$bundled_selectsw_version, '.', true );
+
+ 		if ( version_compare( $bundled_version_major, $registered_version_major, '<' ) ) {
+ 			$notice = __( 'The installed version of <strong>Product Bundles</strong> is not compatible with the <code>selectSW</code> library found on your system. Please update Product Bundles to the latest version.', 'woocommerce-product-bundles' );
+ 			WC_PB_Admin_Notices::add_notice( $notice, 'error' );
+ 		}
+ 	}
+
+ 	/**
+ 	 * Whether to load own version of select2 library or not.
+ 	 *
+ 	 * @since   5.1.0
+ 	 *
+ 	 * @return  boolean
+ 	 */
+ 	private static function load_selectsw() {
+
+ 		$load_selectsw_from = wp_scripts()->registered[ 'sw-admin-select-init' ]->src;
+
+ 		return strpos( $load_selectsw_from, WC_PB()->plugin_url() ) === 0;
+ 	}
+
+	/**
+	 * Message to add in the WP Privacy Policy Guide page.
+	 *
+	 * @since  5.7.10
+	 *
+	 * @return string
+	 */
+	protected static function get_privacy_policy_guide_message() {
+
+		$content = '
+			<div contenteditable="false">' .
+				'<p class="wp-policy-help">' .
+					__( 'Product Bundles does not collect, store or share any personal data.', 'woocommerce-product-bundles' ) .
+				'</p>' .
+			'</div>';
+
+		return $content;
+	}
+
+	/**
+	 * Include admin classes.
+	 *
+	 * @since  5.13.3
+	 *
+	 * @param  String  $classes
+	 * @return String
+	 */
+	public static function include_admin_body_class( $classes ) {
+
+		if ( strpos( $classes, 'sw-wp-version-gte-53' ) !== false ) {
+			return $classes;
+		}
+
+		if ( WC_PB_Core_Compatibility::is_wp_version_gte( '5.3' ) ) {
+			$classes .= ' sw-wp-version-gte-53';
+		}
+
+		return $classes;
+	}
+
+	/**
 	 * Add a message in the WP Privacy Policy Guide page.
 	 *
 	 * @since  5.7.10
@@ -117,7 +229,7 @@ class WC_PB_Admin {
 
 		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
-		wp_register_script( 'wc-pb-admin-product-panel', WC_PB()->plugin_url() . '/assets/js/admin/meta-boxes-product' . $suffix . '.js', array( 'wc-admin-product-meta-boxes' ), WC_PB()->version );
+		wp_register_script( 'wc-pb-admin-product-panel', WC_PB()->plugin_url() . '/assets/js/admin/meta-boxes-product' . $suffix . '.js', array( 'wc-admin-product-meta-boxes', 'sw-admin-select-init' ), WC_PB()->version );
 		wp_register_script( 'wc-pb-admin-order-panel', WC_PB()->plugin_url() . '/assets/js/admin/meta-boxes-order' . $suffix . '.js', array( 'wc-admin-order-meta-boxes' ), WC_PB()->version );
 
 		wp_register_style( 'wc-pb-admin-css', WC_PB()->plugin_url() . '/assets/css/admin/admin.css', array(), WC_PB()->version );
@@ -139,7 +251,7 @@ class WC_PB_Admin {
 		 * Enqueue styles.
 		 */
 		if ( in_array( $screen_id, array( 'edit-product', 'product' ) ) ) {
-			wp_enqueue_style( 'wc-pb-admin-product-css' );
+			wp_enqueue_style( 'wc-pb-admin-product-css', 'sw-admin-css-select' );
 		} elseif ( in_array( $screen_id, array( 'shop_order', 'edit-shop_order', 'shop_subscription', 'edit-shop_subscription' ) ) ) {
 			wp_enqueue_style( 'wc-pb-admin-edit-order-css' );
 		}

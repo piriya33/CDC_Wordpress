@@ -1,5 +1,24 @@
 *** WooCommerce Product Bundles ***
 
+2019.12.11 - version 5.14.2
+* Tweak - Fix fatal error when exporting products via WP-CLI. Bundled item data cannot be exported via WP-CLI.
+
+2019.11.28 - version 5.14.1
+* Fix - Update in-house WP 5.3+ select2 styles for WC 3.8.1 compatibility.
+
+2019.11.20 - version 5.14.0
+* Tweak - Replaced selectWoo with self-maintained flavor of select2.
+* Tweak - Minor styling tweaks for WordPress 5.3.
+* Tweak - Fix variable bundled item 'for' attribute.
+* Fix - Parent product always included in bundled variation search results due to a bug in WooCommerce search.
+
+2019.11.04 - version 5.13.3
+* Fix - Added WordPress 5.3 and WooCommerce 3.8 support.
+* Fix - Prevent bundled item stock data from being exported.
+
+2019.10.23 - version 5.13.2
+* Fix - Uglify css assets.
+
 2019.10.17 - version 5.13.1
 * Fix - JS error thrown when attempting to add a bundle to the cart, if an optional bundled item that contains required add-ons is unselected.
 * Tweak - Automatically load the variation thumbnail when all but one variations are filtered out in Variable bundled items.

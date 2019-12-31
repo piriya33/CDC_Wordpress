@@ -2,7 +2,7 @@
 Contributors: wponlinesupport, anoopranawat, pratik-jain
 Tags: wponlinesupport, HTML5, video.js,  HTML5 video, youtube video gallery, vimeo video gallery, youtube video gallery with popup,  Youtube-video, youtube embed, youtube gallery, youtube player, magnific Popup, vimeo video gallery gallery, HTML5 video player, HTML5 video gallery, wordpress HTML5 video, wordpress HTML5 video player, wordpress HTML5 video gallery, responsive, wordpress responsive video gallery  
 Requires at least: 4.0
-Tested up to: 5.2.3
+Tested up to: 5.3.2
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -13,8 +13,7 @@ Easy to add and display your HTML5, YouTube, Vimeo vedio gallery with Magnific P
 
 This plugin add a responsive HTML5, YouTube, Vimeo vedio gallery with Magnific Popup to your  WordPress website. Display video gallery in grid view(1,2,3,4) etc. You can also use category id to create multiple vedio galleries.
 
-Check [FREE DEMO](https://demo.wponlinesupport.com/video-gallery-and-player-demo/) 
-Check [PRO DEMO and Features](https://demo.wponlinesupport.com/prodemo/video-gallery-and-player-pro-demo/) for additional information.
+Check [Demo and Features](https://demo.wponlinesupport.com/video-gallery-and-player-demo/) for additional information.
 
 The plugin adds a Video gallery tab to your admin menu, which allows you to enter Video Title and Video source items just as you would regular posts.
 
@@ -75,7 +74,9 @@ directly to your template file.
 > * [video_gallery] – Grid Shortcode
 > * [video_gallery_slider] – Slider Shortcode
 > * 20 Predefined designs.
+> * WP Templating Features. 
 > * Gutenberg block support.
+> * Visual Composer/WPBakery Page Builder Supports.
 > * Display videos in a grid view.
 > * Display video with title and description.
 > * Display video in slider view.
@@ -118,6 +119,11 @@ OR
 7. Also work with Gutenberg shortcode block.
 
 == Changelog ==
+
+= 2.3.4 (31, Dec  2019) =
+* [*] Fixed HTML5 video lightbox background issue. Added white background.
+* [*] Replaced wp_reset_query() with wp_reset_postdata() in both shortcodes.
+* [+] Added esc_url() where needed.
 
 = 2.3.3 (14, Sep  2019) =
 * [*] Tested with latest version of WordPress.

@@ -1,0 +1,15 @@
+--2019-12-31 06:06:43--  https://www.gsheetconnector.com/index.php?eddfile=212021%3A210024%3A1%3A1
+Resolving www.gsheetconnector.com (www.gsheetconnector.com)... 104.24.103.55, 104.24.102.55, 2606:4700:30::6818:6637, ...
+Connecting to www.gsheetconnector.com (www.gsheetconnector.com)|104.24.103.55|:443... connected.
+HTTP request sent, awaiting response... 301 Moved Permanently
+Location: https://www.gsheetconnector.com/?eddfile=212021%3A210024%3A1%3A1 [following]
+--2019-12-31 06:06:46--  https://www.gsheetconnector.com/?eddfile=212021%3A210024%3A1%3A1
+Reusing existing connection to www.gsheetconnector.com:443.
+HTTP request sent, awaiting response... 200 OK
+Length: unspecified [text/html]
+Saving to: ‘index.php?eddfile=212021:210024:1:1’
+
+index.php?eddfile=212021:210024:1     [<=>                                                          ]       0  --.-KB/s               index.php?eddfile=212021:210024:1     [ <=>                                                         ]  70.61K   271KB/s               index.php?eddfile=212021:210024:1     [  <=>                                                        ] 142.79K   545KB/s    in 0.3s    
+
+2019-12-31 06:06:49 (545 KB/s) - ‘index.php?eddfile=212021:210024:1:1’ saved [146220]
+

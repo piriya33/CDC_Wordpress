@@ -134,12 +134,11 @@ if ( ! function_exists( 'tribe_events_partially_soldout' ) ) {
 if ( ! function_exists( 'tribe_events_count_available_tickets' ) ) {
 
 	/**
-	 * Counts the total number of tickets still available for sale for a
-	 * specific event.
+	 * Counts the total number of tickets still available for sale for a specific event.
 	 *
 	 * @param null $event
 	 *
-	 * @return int
+	 * @return int `0` if no tickets available, `-1` if Unlimited, else integer value.
 	 */
 	function tribe_events_count_available_tickets( $event = null ) {
 
@@ -149,6 +148,7 @@ if ( ! function_exists( 'tribe_events_count_available_tickets' ) ) {
 			return 0;
 		}
 
+		/** @var Tribe__Tickets__Ticket_Object $ticket */
 		foreach ( Tribe__Tickets__Tickets::get_all_event_tickets( $event->ID ) as $ticket ) {
 
 			$global_stock_mode = $ticket->global_stock_mode();
@@ -160,7 +160,10 @@ if ( ! function_exists( 'tribe_events_count_available_tickets' ) ) {
 			$stock_level = $global_stock_mode === Tribe__Tickets__Global_Stock::CAPPED_STOCK_MODE ? $ticket->global_stock_cap : $ticket->stock;
 
 			// If we find an unlimited ticket, just return unlimited (-1) so we don't use -1 or an empty string as a numeric stock and try to do math with it
-			if ( Tribe__Tickets__Ticket_Object::UNLIMITED_STOCK === $stock_level || -1 === (int) $stock_level ) {
+			if (
+				$ticket::UNLIMITED_STOCK === $stock_level
+				|| -1 === (int) $stock_level
+			) {
 				return -1;
 			}
 
@@ -202,8 +205,8 @@ if ( ! function_exists( 'tribe_tickets_buy_button' ) ) {
 			return null;
 		}
 
-		$html = array();
-		$parts = array();
+		$html = [];
+		$parts = [];
 
 		// If we have tickets or RSVP, but everything is Sold Out then display the Sold Out message
 		foreach ( $types as $type => $data ) {
@@ -228,7 +231,10 @@ if ( ! function_exists( 'tribe_tickets_buy_button' ) ) {
 				$stock_html = '';
 
 				if ( $stock ) {
-					$threshold = Tribe__Settings_Manager::get_option( 'ticket-display-tickets-left-threshold', 0 );
+					/** @var Tribe__Settings_Manager $settings_manager */
+					$settings_manager = tribe( 'settings.manager' );
+
+					$threshold = $settings_manager::get_option( 'ticket-display-tickets-left-threshold', 0 );
 
 					/**
 					 * Overwrites the threshold to display "# tickets left".
@@ -243,7 +249,12 @@ if ( ! function_exists( 'tribe_tickets_buy_button' ) ) {
 
 					if ( ! $threshold || $stock <= $threshold ) {
 
-						$number = number_format_i18n( $stock );
+						if ( is_numeric( $stock ) ) {
+							$number = number_format_i18n( (float) $stock );
+						} else {
+							$number = $stock;
+						}
+
 						if ( 'rsvp' === $type ) {
 							$text = _n( '%s spot left', '%s spots left', $stock, 'event-tickets' );
 						} else {
@@ -403,8 +414,17 @@ if ( ! function_exists( 'tribe_events_has_tickets_on_sale' ) ) {
 	 */
 	function tribe_events_has_tickets_on_sale( $event_id ) {
 		$has_tickets_on_sale = false;
-		$tickets = Tribe__Tickets__Tickets::get_all_event_tickets( $event_id );
+		$tickets             = Tribe__Tickets__Tickets::get_all_event_tickets( $event_id );
+		$default_provider    = Tribe__Tickets__Tickets::get_event_ticket_provider( $event_id );
+
 		foreach ( $tickets as $ticket ) {
+			$ticket_provider = $ticket->get_provider();
+
+			// Skip tickets that are for a different provider than the event provider.
+			if ( $default_provider !== $ticket_provider->class_name ) {
+				continue;
+			}
+
 			$has_tickets_on_sale = ( $has_tickets_on_sale || tribe_events_ticket_is_on_sale( $ticket ) );
 		}
 
@@ -447,7 +467,7 @@ if ( ! function_exists( 'tribe_tickets_get_ticket_stock_message' ) ) {
 		$pending       = (int) $ticket->qty_pending();
 		$refunded      = (int) $ticket->qty_refunded();
 		$status        = '';
-		$status_counts = array();
+		$status_counts = [];
 
 		$is_global = Tribe__Tickets__Global_Stock::GLOBAL_STOCK_MODE === $ticket->global_stock_mode() && $global_stock->is_enabled();
 		$is_capped = Tribe__Tickets__Global_Stock::CAPPED_STOCK_MODE === $ticket->global_stock_mode() && $global_stock->is_enabled();
@@ -567,7 +587,7 @@ if ( ! function_exists( 'tribe_tickets_get_template_part' ) ) {
 		do_action( 'tribe_tickets_pre_get_template_part', $slug, $name, $data );
 
 		// Setup possible parts
-		$templates = array();
+		$templates = [];
 		if ( isset( $name ) ) {
 			$templates[] = $slug . '-' . $name . '.php';
 		}
@@ -576,7 +596,7 @@ if ( ! function_exists( 'tribe_tickets_get_template_part' ) ) {
 		/**
 		 * Allow users to filter which templates can be included
 		 *
-		 * @param string $template The Template file, which is a relative path from the Folder we are dealing with
+		 * @param string $template The Template file(s), which is a relative path from the Folder we are dealing with.
 		 * @param string $slug     Slug for this template
 		 * @param string $name     Template name
 		 * @param array  $data     The Data that will be used on this template
@@ -704,7 +724,10 @@ if ( ! function_exists( 'tribe_tickets_get_event_ids' ) ) {
 	 * @return array
 	 */
 	function tribe_tickets_get_event_ids( $id ) {
-		return tribe( 'tickets.data_api' )->get_event_ids( $id );
+		/** @var Tribe__Tickets__Data_API $data_api */
+		$data_api = tribe( 'tickets.data_api' );
+
+		return $data_api->get_event_ids( $id );
 	}
 }
 
@@ -715,7 +738,7 @@ if ( ! function_exists( 'tribe_tickets_get_ticket_provider' ) ) {
 	 *
 	 * @param integer|string $id a rsvp order key, order id, attendee id, ticket id, or product id
 	 *
-	 * @return bool|object
+	 * @return bool|Tribe__Tickets__Tickets
 	 */
 	function tribe_tickets_get_ticket_provider( $id ) {
 		/** @var Tribe__Tickets__Data_API $data_api */
@@ -733,7 +756,7 @@ if ( ! function_exists( 'tribe_tickets_get_attendees' ) ) {
 	 * @param integer|string $id a rsvp order key, order id, attendee id, ticket id, or event id
 	 * @param null $context use 'rsvp_order' to get all rsvp tickets from an order based off the post id and not the order key
 	 *
-	 * @return array() an array of all attendee(s) data including custom attendee meta for a given id
+	 * @return array List of all attendee(s) data including custom attendee meta for a given ID.
 	 */
 	function tribe_tickets_get_attendees( $id, $context = null ) {
 		return tribe( 'tickets.data_api' )->get_attendees_by_id( $id, $context );
@@ -794,7 +817,10 @@ if ( ! function_exists( 'tribe_tickets_delete_capacity' ) ) {
 			return false;
 		}
 
-		$deleted = delete_post_meta( $object->ID, tribe( 'tickets.handler' )->key_capacity );
+		/** @var Tribe__Tickets__Tickets_Handler $tickets_handler */
+		$tickets_handler = tribe( 'tickets.handler' );
+
+		$deleted = delete_post_meta( $object->ID, $tickets_handler->key_capacity );
 
 		if ( ! $deleted ) {
 			return $deleted;
@@ -844,7 +870,11 @@ if ( ! function_exists( 'tribe_tickets_update_capacity' ) ) {
 		}
 
 		// Do the actual Updating of the Meta value
-		return update_post_meta( $object->ID, tribe( 'tickets.handler' )->key_capacity, $capacity );
+
+		/** @var Tribe__Tickets__Tickets_Handler $tickets_handler */
+		$tickets_handler = tribe( 'tickets.handler' );
+
+		return update_post_meta( $object->ID, $tickets_handler->key_capacity, $capacity );
 	}
 }
 
@@ -874,21 +904,22 @@ if ( ! function_exists( 'tribe_tickets_get_capacity' ) ) {
 		}
 
 		$event_types = Tribe__Tickets__Main::instance()->post_types();
-			/**
-		 * @var Tribe__Tickets__Tickets_Handler $handler
+
+		/**
+		 * @var Tribe__Tickets__Tickets_Handler $tickets_handler
 		 * @var Tribe__Tickets__Version $version
 		 */
-		$handler = tribe( 'tickets.handler' );
-		$version = tribe( 'tickets.version' );
+		$tickets_handler = tribe( 'tickets.handler' );
+		$version         = tribe( 'tickets.version' );
 
-		$key = $handler->key_capacity;
+		$key = $tickets_handler->key_capacity;
 
 		// When we have a legacy ticket we migrate it
 		if (
 			! in_array( $post->post_type, $event_types )
 			&& $version->is_legacy( $post->ID )
 		) {
-			$legacy_capacity = $handler->filter_capacity_support( null, $post->ID, $key );
+			$legacy_capacity = $tickets_handler->filter_capacity_support( null, $post->ID, $key );
 
 			// Cast as integer as it might be returned as numeric string on some cases
 			return (int) $legacy_capacity;
@@ -939,6 +970,7 @@ if ( ! function_exists( 'tribe_tickets_get_readable_amount' ) ) {
 	 * Turns a Stock, Remaining, or Capacity number into a human-readable format.
 	 *
 	 * @since  4.6
+	 * @since  4.10.11 Run number through formatting, such as commas to separate thousands.
 	 *
 	 * @param string|int $number  Which you are trying to convert.
 	 * @param string     $mode    Mode this post is on.
@@ -954,20 +986,27 @@ if ( ! function_exists( 'tribe_tickets_get_readable_amount' ) ) {
 			$html[] = '(';
 		}
 
-		if ( -1 === (int) $number || Tribe__Tickets__Ticket_Object::UNLIMITED_STOCK === $number ) {
-			/** @var Tribe__Tickets__Tickets_Handler $handler */
-			$handler = tribe( 'tickets.handler' );
+		if (
+			-1 === (int) $number
+			|| Tribe__Tickets__Ticket_Object::UNLIMITED_STOCK === $number
+		) {
+			/** @var Tribe__Tickets__Tickets_Handler $tickets_handler */
+			$tickets_handler = tribe( 'tickets.handler' );
 
-			$html[] = esc_html( $handler->unlimited_term );
+			$html[] = esc_html( $tickets_handler->unlimited_term );
 		} else {
-			$html[] = esc_html( $number );
+			if ( is_numeric( $number ) ) {
+				$html[] = number_format_i18n( (float) $number );
+			} else {
+				$html[] = (string) $number; // might be "Unlimited"
+			}
 		}
 
 		if ( $show_parens ) {
 			$html[] = ')';
 		}
 
-		$html = implode( '', $html );
+		$html = esc_html( implode( '', $html ) );
 
 		if ( true === $display ) {
 			echo $html;
@@ -1265,5 +1304,86 @@ if ( ! function_exists( 'tribe_get_ticket_label_plural_lowercase' ) ) {
 		 * @param string $context The context in which this string is filtered, e.g. 'verb' or 'template.php'.
 		 */
 		return apply_filters( 'tribe_get_ticket_label_plural_lowercase', _x( 'tickets', 'lowercase plural label for Tickets', 'event-tickets' ), $context );
+	}
+}
+
+if ( ! function_exists( 'tribe_tickets_is_event_page' ) ) {
+	/**
+	 * Allows us to test a post ID to see if it is an event page.
+	 *
+	 * @since 4.11.0
+	 *
+	 * @param int|WP_Post|null $post The post (or its ID) we're testing. Default is global post.
+	 *
+	 * @return boolean
+	 */
+	function tribe_tickets_is_event_page( $post = null ) {
+		// Tribe__Events__Main must exist.
+		if ( ! class_exists( 'Tribe__Events__Main' ) ) {
+			return false;
+		}
+
+		// Must be the correct post type.
+		if ( Tribe__Events__Main::POSTTYPE !== get_post_type( $post ) ) {
+			return false;
+		}
+
+		return true;
+	}
+}
+
+if ( ! function_exists( 'tribe_tickets_is_enabled_post_context' ) ) {
+	/**
+	 * If we are in the front-end or back-end (e.g. currently editing or creating) context for a tickets-enabled post.
+	 *
+	 * @since 4.11.1
+	 *
+	 * @see   \Tribe__Tickets__Main::post_types()
+	 *
+	 * @param null|int|WP_Post $post Post ID or object, `null` to get the ID of the global/current post object.
+	 *
+	 * @return bool True if creating/editing (back-end) or viewing single or archive (front-end) of enabled post type.
+	 */
+	function tribe_tickets_is_enabled_post_context( $post = null ) {
+		/** @var Tribe__Context $context */
+		$context = tribe( 'context' );
+
+		/** @var Tribe__Tickets__Main $main */
+		$main = tribe( 'tickets.main' );
+
+		$post_types = $main->post_types();
+
+		// Back-end
+		if ( $context->is_editing_post( $post_types ) ) {
+			return true;
+		}
+
+		// Front-end singular
+		$post = Tribe__Main::post_id_helper( $post );
+
+		if (
+			! empty( $post )
+			&& in_array( get_post_type( $post ), $post_types, true )
+		) {
+			return true;
+		}
+
+		// Front-end archive
+		if ( is_post_type_archive( $post_types ) ) {
+			return true;
+		}
+
+		/**
+		 * Whether or not we are in tickets-enabled context, such as determining if we should load plugin assets.
+		 *
+		 * @since 4.11.1
+		 *
+		 * @param bool           $result
+		 * @param array          $post_types The post types with tickets enabled.
+		 * @param Tribe__Context $context
+		 *
+		 * @return bool
+		 */
+		return apply_filters( 'tribe_tickets_is_enabled_post_context', false, $post_types, $context );
 	}
 }

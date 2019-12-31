@@ -233,6 +233,11 @@ add_action('do_feed_rss2', 'N2SS3Shortcode::shortcodeModeToNoop', 0);
 add_action('do_feed_atom', 'N2SS3Shortcode::shortcodeModeToNoop', 0);
 
 /**
+ * Sliders are not available over REST API! Fixes Gutenberg save problems.
+ */
+add_action('rest_api_init', 'N2SS3Shortcode::shortcodeModeToNoop', 0);
+
+/**
  * Remove sliders from the AMP version of the site
  * @url https://wordpress.org/plugins/amp/
  */

@@ -16,9 +16,15 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Admin AJAX meta-box handlers.
  *
  * @class    WC_PB_Admin_Ajax
- * @version  5.12.1
+ * @version  5.14.0
  */
 class WC_PB_Admin_Ajax {
+
+	/**
+	 * Used by 'ajax_search_bundled_variations'.
+	 * @var int
+	 */
+	private static $searching_variations_of;
 
 	/**
 	 * Hook in.
@@ -110,8 +116,10 @@ class WC_PB_Admin_Ajax {
 
 		if ( ! empty( $_GET[ 'include' ] ) ) {
 			if ( $product = wc_get_product( absint( $_GET[ 'include' ] ) ) ) {
+				self::$searching_variations_of = $product->get_id();
 				$_GET[ 'include' ] = $product->get_children();
 			} else {
+				self::$searching_variations_of = 0;
 				$_GET[ 'include' ] = array();
 			}
 		}
@@ -130,6 +138,11 @@ class WC_PB_Admin_Ajax {
 	public static function tweak_variation_titles( $search_results ) {
 
 		if ( ! empty( $search_results ) ) {
+
+			// Bug in WC -- parent IDs are always included when the 'include' parameter is specified.
+			if ( self::$searching_variations_of ) {
+				$search_results = array_diff_key( $search_results, array( self::$searching_variations_of => 1 ) );
+			}
 
 			$search_result_objects = array_map( 'wc_get_product', array_keys( $search_results ) );
 

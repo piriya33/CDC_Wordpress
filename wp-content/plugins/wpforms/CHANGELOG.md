@@ -1,5 +1,80 @@
-# Change Log
+# Changelog
 All notable changes to this project will be documented in this file, formatted via [this recommendation](https://keepachangelog.com/).
+
+## [1.5.7] - 2019-12-12
+### Added
+- Number Slider field.
+- reCAPTCHA field in Form Builder allowing to easily manage the reCAPTCHA for a form.
+- Label setting for HTML fields to more easily identify them inside the form builder.
+- Ability to display Entry ID and Entry Notes columns in a list of form entries.
+- Entry Log metabox for a single entry view, tracks starring/unstarring and reading/unreading entry.
+- Admin area quick links menu.
+- Analytics sub-menu page.
+- SMTP sub-menu page.
+- New advanced option for Page Break field: disable scroll animation.
+
+### Changed
+- Improved smart Phone field RTL support.
+- Improved forms bulk actions processing.
+- Added a Form Builder splash screen which is displayed on mobile devices.
+- Display warning message if JavaScript is disabled in the browser.
+- Improved "About Us > Versus" page with more details regarding various license types.
+- Improved Form Builder Page Break Progress Indicator discovery.
+- Improved form front-end display and alignment for Gutenberg focused themes.
+- Improved invisible reCAPTCHA behavior when form is submitted.
+- Improved actions and filters for notification emails.
+
+### Fixed
+- Duplicate of the duplicated form created on page reload.
+- Modern file uploader: field styles in Gutenberg editor.
+- Modern file uploader: prevent errors when malformed data submitted.
+- Do not submit the form via AJAX (if enabled in form settings) when in AMP mode.
+- Quotation marks inside Entry Notes being slashed.
+- WordPress 5.3 admin area styling issues.
+- Modern File Upload hidden input styling issues.
+- Number field incorrectly processing negative numbers.
+- `page_url` Smart Tag issues. 
+
+## [1.5.6.2] - 2019-11-07
+### Added
+- Default value for "Paragraph text" field.
+
+### Fixed
+- WordPress 5.3 compatibility.
+- Smart Phone countries squashed dropdown on screen-width <= 600px on themes with Base form styling selected.
+- Properly include Pro form templates on form creation screen in a template selection section. 
+- Classic file uploader: correctly handle uploaded files with the same name.
+- Field's Default value `0` disappears after saving and exiting the form builder.
+- Smart Email field did not recognize `.dev` top level domains as valid.
+
+### Changed
+- Clear DashBoard widget cache and Default Entries Screen cache on entry deletion.
+
+## [1.5.6.1] - 2019-10-30
+### Fixed
+- Modern file uploader: correctly process post_max_size value from php.ini (js should not send that file at all).
+- Modern file uploader: make error message more clear when a file was not uploaded.
+- Modern file uploader: when file is being uploaded do not change Submit button text.
+- Modern file uploader: correctly process WordPress Media library integration and conditional logic.
+- Modern file uploader: some servers don't have mime extension installed, so use WP function to determine mime type.
+- Compatibility with WordPress 5.3 and its changed \WP_Upgrader_Skin::feedback() method signature.
+
+## [1.5.6] - 2019-10-23
+### IMPORTANT
+- Support for PHP 5.3 has been discontinued. If you are running PHP 5.3, you MUST upgrade PHP before installing WPForms 1.5.6. Failure to do that will disable WPForms core functionality.
+
+### Added
+- "Modern" Style File Upload field setting with support for multiple files, AJAX, progress bar, and more!
+- Single Line Text/Paragraph fields limitation options (limit by character or word count).
+- "Community" sub-menu page for easy access to helpful resources and links.
+
+### Fixed
+- Translations not correctly downloading, causing text to be partially translated.
+- Stricter rules for displaying a plugin Welcome Page.
+
+### Changed
+- Minimum PHP version requirement is now PHP 5.4.
+- Minimum WordPress version requirement is now WordPress 4.9.
 
 ## [1.5.5.2] - 2019-09-18
 ### Added

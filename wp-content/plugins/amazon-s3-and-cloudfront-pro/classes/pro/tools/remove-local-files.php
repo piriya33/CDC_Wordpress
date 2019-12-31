@@ -116,7 +116,7 @@ class Remove_Local_Files extends Background_Tool {
 	 * @return bool
 	 */
 	public function should_render() {
-		return $this->count_media_files() && (bool) $this->as3cf->get_setting( 'remove-local-file', false );
+		return (bool) $this->as3cf->get_setting( 'remove-local-file', false ) && $this->count_offloaded_media_files();
 	}
 
 	/**
@@ -153,6 +153,20 @@ class Remove_Local_Files extends Background_Tool {
 	 */
 	public function get_queued_status() {
 		return __( 'Removing Media Library files from your local server.', 'amazon-s3-and-cloudfront' );
+	}
+
+	/**
+	 * Message for error notice
+	 *
+	 * @param null $message Optional message to override the default for the tool.
+	 *
+	 * @return string
+	 */
+	protected function get_error_notice_message( $message = null ) {
+		$title   = __( 'Remove From Local Errors', 'amazon-s3-and-cloudfront' );
+		$message = empty( $message ) ? __( 'Previous attempts at removing your offloaded media library files from the server have resulted in errors.', 'amazon-s3-and-cloudfront' ) : $message;
+
+		return sprintf( '<strong>%s</strong> &mdash; %s', $title, $message );
 	}
 
 	/**

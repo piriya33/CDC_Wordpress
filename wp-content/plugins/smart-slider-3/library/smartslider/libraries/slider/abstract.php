@@ -308,6 +308,11 @@ abstract class N2SmartSliderAbstract extends N2SmartSliderRenderableAbstract {
             }
 
             $jsInlineMode = N2Settings::get('javascript-inline', 'head');
+            if (N2WORDPRESS) {
+                if (class_exists('ElementorPro\Plugin', false)) {
+                    $jsInlineMode = 'body';
+                }
+            }
             switch ($jsInlineMode) {
                 case 'body':
                     $slider .= N2Html::script($this->sliderType->getScript());
@@ -325,9 +330,9 @@ abstract class N2SmartSliderAbstract extends N2SmartSliderRenderableAbstract {
         $alias = $this->data->get('alias', '');
         if (intval($this->params->get('alias-id', 0)) && !empty($alias)) {
             $aliasHTML = '<div id="' . $alias . '" style="height:0; line-height:0; min-height:0; margin:0; padding:0;"></div>';
-			$aliasJS = '';
-            $speed   = N2SmartSliderSettings::get('smooth-scroll-speed', 400);
-			
+            $aliasJS   = '';
+            $speed     = N2SmartSliderSettings::get('smooth-scroll-speed', 400);
+
             if (intval($this->params->get('alias-slideswitch', 0))) {
                 $slide_count = count($this->slides);
                 for ($i = 1; $i < $slide_count + 1; $i++) {
@@ -378,9 +383,9 @@ abstract class N2SmartSliderAbstract extends N2SmartSliderRenderableAbstract {
                 });';
             }
             $slider = $aliasHTML . $slider;
-			if(!empty($aliasJS)){
-				N2JS::addInline($aliasJS);
-			}
+            if (!empty($aliasJS)) {
+                N2JS::addInline($aliasJS);
+            }
         }
 
         $slider = N2Html::tag("div", array(

@@ -1015,7 +1015,7 @@ jQuery.fn.wc_get_bundle_script = function() {
 
 			var out_of_stock_found       = false,
 				$overridden_stock_status = false,
-				validation_status        = bundle.is_initialized ? '' : bundle.api.get_bundle_validation_status(),
+				validation_status        = false === bundle.is_initialized ? '' : bundle.api.get_bundle_validation_status(),
 				unset_count              = 0,
 				unset_titles             = [],
 				total_items_qty          = 0;

@@ -24,7 +24,7 @@ class d4pupd_core_updater {
         'gd-rating-system-rich-snippet-book' => 'book-rich-snippet-addon',
         'gd-rating-system-multi' => 'multi-ratings-addon',
         'gd-rating-system-user-reviews' => 'user-reviews-addon',
-        'gd-rating-system-comment-form' => 'comments-form-addon',
+        'gd-rating-system-comment-form' => 'comment-form-addon',
         'gd-rating-system-data-export' => 'data-export-addon',
         'gd-rating-system-emojione' => 'emojione-pack-addon',
         'gd-rating-system-halloween' => 'halloween-pack-addon',
@@ -33,6 +33,10 @@ class d4pupd_core_updater {
         'gd-press-tools-storage-s3' => 'amazon-s3-storage-addon',
         'gd-knowledge-base-integration-wc' => 'integration-addon-wc',
         'gd-knowledge-base-integration-edd' => 'integration-addon-edd',
+        'gd-mail-queue-aws-ses' => 'aws-ses-addon',
+        'gd-mail-queue-mailgun' => 'mailgun-addon',
+        'gd-mail-queue-gmail' => 'gmail-addon',
+        'gd-mail-queue-sendinblue' => 'sendinblue-addon',
 
         'code-builder-addon' => 'gd-rating-system-builder',
         'mycred-integration-addon' => 'gd-rating-system-mycred',
@@ -41,7 +45,7 @@ class d4pupd_core_updater {
         'book-rich-snippet-addon' => 'gd-rating-system-rich-snippet-book',
         'multi-ratings-addon' => 'gd-rating-system-multi',
         'user-reviews-addon' => 'gd-rating-system-user-reviews',
-        'comments-form-addon' => 'gd-rating-system-comment-form',
+        'comment-form-addon' => 'gd-rating-system-comment-form',
         'data-export-addon' => 'gd-rating-system-data-export',
         'emojione-pack-addon' => 'gd-rating-system-emojione',
         'halloween-pack-addon' => 'gd-rating-system-halloween',
@@ -49,7 +53,11 @@ class d4pupd_core_updater {
         'dropbox-storage-addon' => 'gd-press-tools-storage-dropbox',
         'amazon-s3-storage-addon' => 'gd-press-tools-storage-s3',
         'integration-addon-wc' => 'gd-knowledge-base-integration-wc',
-        'integration-addon-edd' => 'gd-knowledge-base-integration-edd'
+        'integration-addon-edd' => 'gd-knowledge-base-integration-edd',
+        'aws-ses-addon' => 'gd-mail-queue-aws-ses',
+        'mailgun-addon' => 'gd-mail-queue-mailgun',
+        'gmail-addon' => 'gd-mail-queue-gmail',
+        'sendinblue-addon' => 'gd-mail-queue-sendinblue'
     );
 
     public $plugins = array(
@@ -57,6 +65,8 @@ class d4pupd_core_updater {
 
         'gd-security-toolbox/gd-security-toolbox.php',
         'gd-power-search-for-bbpress/gd-power-search-for-bbpress.php',
+		'gd-quantum-theme-for-bbpress/gd-quantum-theme-for-bbpress.php',
+        'gd-members-directory-for-bbpress/gd-members-directory-for-bbpress.php',
         'gd-rating-system/gd-rating-system.php',
         'gd-seo-toolbox/gd-seo-toolbox.php',
         'gd-bbpress-toolbox/gd-bbpress-toolbox.php',
@@ -69,6 +79,7 @@ class d4pupd_core_updater {
         'gd-content-tools/gd-content-tools.php',
         'gd-topic-prefix/gd-topic-prefix.php',
         'gd-topic-polls/gd-topic-polls.php',
+        'gd-mail-queue/gd-mail-queue.php',
 
         'gd-rating-system-emojione/gd-rating-system-emojione.php',
         'gd-rating-system-halloween/gd-rating-system-halloween.php',
@@ -88,6 +99,11 @@ class d4pupd_core_updater {
         'gd-press-tools-storage-dropbox/gd-press-tools-storage-dropbox.php',
         'gd-press-tools-storage-s3/gd-press-tools-storage-s3.php',
 
+        'gd-mail-queue-aws-ses/gd-mail-queue-aws-ses.php',
+        'gd-mail-queue-mailgun/gd-mail-queue-mailgun.php',
+        'gd-mail-queue-gmail/gd-mail-queue-gmail.php',
+        'gd-mail-queue-sendinblue/gd-mail-queue-sendinblue.php',
+
         'gd-knowledge-base-integration-wc/gd-knowledge-base-integration-wc.php',
         'gd-knowledge-base-integration-edd/gd-knowledge-base-integration-edd.php'
     );
@@ -95,7 +111,7 @@ class d4pupd_core_updater {
     public $check = 'https://www.dev4press.com/service/updater/query/';
 
     public $download = 'https://www.dev4press.com/download/%category%/%apikey%/%id%/%build%/';
-    public $cdn = 'https://d2bl2ba2iq9qpr.cloudfront.net/gfx/';
+    public $cdn = 'https://dev4press.s3.amazonaws.com/';
 
     public $feeds = array(
         'promotions' => 'https://www.dev4press.com/service/feeds/promotions/',

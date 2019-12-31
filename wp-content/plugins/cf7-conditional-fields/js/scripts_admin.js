@@ -8,8 +8,8 @@ if ($wpcf7cf_new_entry.length > 0) {
     var wpcf7cf_new_and_rule_html = $wpcf7cf_new_entry.find('.wpcf7cf-and-rule')[0].outerHTML;
     var wpcf7cf_new_entry_html = $wpcf7cf_new_entry.html();
 
-    var regex = /show \[(.*)\] if \[(.*)\] (equals|not equals|equals \(regex\)|not equals \(regex\)|>|>=|<=|<|is empty|not empty) "(.*)"/g;
-    var regex_and = /and if \[(.*)\] (equals|not equals|equals \(regex\)|not equals \(regex\)|>|>=|<=|<|is empty|not empty) "(.*)"/g;
+    var cf_rule_regex = /(?:show \[([^\]]*?)\]) if \[([^\]]*?)\] (?:(equals \(regex\)|not equals \(regex\)|equals|not equals|greater than or equals|greater than|less than or equals|less than|is empty|not empty|function)(?: \"(.*)\")?)/g;
+    var cf_rule_regex_and = /and if \[([^\]]*?)\] (?:(equals \(regex\)|not equals \(regex\)|equals|not equals|greater than or equals|greater than|less than or equals|less than|is empty|not empty|function)(?: \"(.*)\")?)/g;
 
 
     if (_wpcf7 == null) { var _wpcf7 = wpcf7}; // wpcf7 4.8 fix
@@ -123,7 +123,7 @@ if ($wpcf7cf_new_entry.length > 0) {
 
                 var str = lines[i];
 
-                var match = regex.exec(str);
+                var match = cf_rule_regex.exec(str);
 
                 if (match != null) {
 
@@ -138,11 +138,11 @@ if ($wpcf7cf_new_entry.length > 0) {
 
                     index_and = 1; // the next and condition will have and_index [1];
 
-                    regex.lastIndex = 0;
+                    cf_rule_regex.lastIndex = 0;
 
                 }
 
-                match = regex_and.exec(str);
+                match = cf_rule_regex_and.exec(str);
 
                 if (match != null && id != -1) {
 
@@ -152,7 +152,7 @@ if ($wpcf7cf_new_entry.length > 0) {
                     $('#entry-'+id+' .wpcf7cf-and-rule:last-child .operator').val(match[2]);
                     $('#entry-'+id+' .wpcf7cf-and-rule:last-child .if-value').val(match[3]);
 
-                    regex_and.lastIndex = 0;
+                    cf_rule_regex_and.lastIndex = 0;
 
                 }
             }
@@ -161,7 +161,7 @@ if ($wpcf7cf_new_entry.length > 0) {
 
         }
 
-        $('#wpcf7-admin-form-element').on('submit.wpcf7cf', function() {
+        $('#wpcf7-admin-form-element, #post').on('submit.wpcf7cf', function() {
             update_settings_textarea();
             return true;
         });
@@ -186,15 +186,17 @@ if ($wpcf7cf_new_entry.length > 0) {
                 var line = 'show [' + $entry.find('.then-field-select').val() + ']';
                 var text_indent = line.length-3;
                 $entry.find('.wpcf7cf-and-rule').each(function(i) {
-                    $and_rule = $(this);
+                    const $and_rule = $(this);
+                    const operator = $and_rule.find('.operator').val();
                     if (i>0) {
 
                         line += '\n'+' '.repeat(text_indent)+'and';
 
                     }
-                    line += ' if [' + $and_rule.find('.if-field-select').val() + ']'
-                    + ' ' + $and_rule.find('.operator').val()
-                    + ' "' + $and_rule.find('.if-value').val() + '"';
+                    line += ' if [' + $and_rule.find('.if-field-select').val() + ']' + ' ' + operator;
+                    if (!['is empty', 'not empty'].includes(operator)) {
+                        line += ' "' + $and_rule.find('.if-value').val() + '"';
+                    }
                 });
                 $('#wpcf7cf-settings-text').val($('#wpcf7cf-settings-text').val() + line + "\n" );
             });

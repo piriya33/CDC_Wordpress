@@ -41,7 +41,7 @@
 		 * @param {object} $form The form DOM element.
 		 */
 		initDefaultValues: function( $form ) {
-			$form.find( '.wpforms-conditional-field input, .wpforms-conditional-field select' ).each( function() {
+			$form.find( '.wpforms-conditional-field input, .wpforms-conditional-field select, .wpforms-conditional-field textarea' ).each( function() {
 
 				var $field = $( this ),
 					defval = $field.val(),
@@ -125,6 +125,10 @@
 						break;
 					default:
 						if ( $( this ).val() !== '' ) {
+							if ( $( this ).hasClass( 'dropzone-input' ) && $( '[data-name="' + $( this )[0].name + '"]', $form )[0] ) {
+								$( '[data-name="' + $( this )[0].name + '"]', $form )[0].dropzone.removeAllFiles( true );
+							}
+
 							$( this ).val( '' ).trigger( 'input' );
 						}
 						break;

@@ -10,6 +10,8 @@ class SmartSlider3 {
 
     public static function init() {
 
+        global $wp_version;
+
         SmartSlider3::registerApplication();
 
         if (get_option("n2_ss3_version") != N2SS3::$completeVersion) {
@@ -19,7 +21,7 @@ class SmartSlider3 {
             wp_redirect(admin_url('admin.php?page=' . NEXTEND_SMARTSLIDER_3_URL_PATH));
             exit;
         }
-        require_once dirname(__FILE__) . '/summersale.php';
+        require_once dirname(__FILE__) . '/blackfriday.php';
     
     
 
@@ -38,7 +40,11 @@ class SmartSlider3 {
 
         add_filter('plugin_action_links', 'SmartSlider3::plugin_action_links', 10, 2);
 
-        add_action('delete_blog', 'SmartSlider3::delete_blog', 10, 2);
+        if (version_compare($wp_version, '5.1') >= 0) {
+            add_action('wp_delete_site', 'SmartSlider3::delete_site', 10);
+        } else {
+            add_action('delete_blog', 'SmartSlider3::delete_blog', 10, 2);
+        }
 
         add_action('save_post', 'SmartSlider3::clear_slider_cache');
         add_action('wp_untrash_post', 'SmartSlider3::clear_slider_cache');
@@ -109,8 +115,10 @@ class SmartSlider3 {
 
         /**
          * For ajax based page loaders
+         *
+         * HTTP_X_BARBA -> Rubenz theme
          */
-        if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
+        if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest' || isset($_SERVER['HTTP_X_BARBA'])) {
 
             N2Loader::import('libraries.settings.settings', 'smartslider');
             if (intval(N2SmartSliderSettings::get('wp-ajax-iframe-slider', 0))) {
@@ -313,6 +321,10 @@ class SmartSlider3 {
 
 
         return true;
+    }
+
+    public static function delete_site($old_site) {
+        self::delete_blog($old_site->blog_id, true);
     }
 
     public static function delete_blog($blog_id, $drop) {

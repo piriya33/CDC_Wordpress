@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Functions for WC core back-compatibility.
  *
  * @class    WC_PB_Core_Compatibility
- * @version  5.11.1
+ * @version  5.13.3
  */
 class WC_PB_Core_Compatibility {
 
@@ -31,6 +31,22 @@ class WC_PB_Core_Compatibility {
 	 * @var array
 	 */
 	private static $is_wc_version_gt = array();
+
+	/**
+	 * Cache 'gt' comparison results for WP version.
+	 *
+	 * @since  5.13.3
+	 * @var    array
+	 */
+	private static $is_wp_version_gt = array();
+
+	/**
+	 * Cache 'gte' comparison results for WP version.
+	 *
+	 * @since  5.13.3
+	 * @var    array
+	 */
+	private static $is_wp_version_gte = array();
 
 	/**
 	 * Helper method to get the version of the currently installed WooCommerce.
@@ -148,6 +164,38 @@ class WC_PB_Core_Compatibility {
 			self::$is_wc_version_gt[ $version ] = self::get_wc_version() && version_compare( self::get_wc_version(), $version, '>' );
 		}
 		return self::$is_wc_version_gt[ $version ];
+	}
+
+	/**
+	 * Returns true if the installed version of WooCommerce is greater than or equal to $version.
+	 *
+	 * @since  5.13.3
+	 *
+	 * @param  string  $version
+	 * @return boolean
+	 */
+	public static function is_wp_version_gt( $version ) {
+		if ( ! isset( self::$is_wp_version_gt[ $version ] ) ) {
+			global $wp_version;
+			self::$is_wp_version_gt[ $version ] = $wp_version && version_compare( WC_PB()->plugin_version( true, $wp_version ), $version, '>' );
+		}
+		return self::$is_wp_version_gt[ $version ];
+	}
+
+	/**
+	 * Returns true if the installed version of WooCommerce is greater than or equal to $version.
+	 *
+	 * @since  5.13.3
+	 *
+	 * @param  string  $version
+	 * @return boolean
+	 */
+	public static function is_wp_version_gte( $version ) {
+		if ( ! isset( self::$is_wp_version_gte[ $version ] ) ) {
+			global $wp_version;
+			self::$is_wp_version_gte[ $version ] = $wp_version && version_compare( WC_PB()->plugin_version( true, $wp_version ), $version, '>=' );
+		}
+		return self::$is_wp_version_gte[ $version ];
 	}
 
 	/**

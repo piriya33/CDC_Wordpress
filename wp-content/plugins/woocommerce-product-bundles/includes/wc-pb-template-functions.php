@@ -612,6 +612,7 @@ function wc_pb_template_bundled_variation_attribute_options( $args ) {
 	$args[ 'selected' ] = $selected_option;
 	$args[ 'name' ]     = $bundle_fields_prefix . 'bundle_attribute_' . sanitize_title( $variation_attribute_name ) . '_' . $bundled_item->get_id();
 	$args[ 'product' ]  = $bundled_item->product;
+	$args[ 'id' ]       = sanitize_title( $variation_attribute_name ) . '_' . $bundled_item->get_id();
 
 	// Render everything.
 	if ( ! $bundled_item->display_product_variation_attribute_dropdown( $variation_attribute_name ) ) {

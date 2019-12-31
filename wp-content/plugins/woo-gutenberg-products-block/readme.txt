@@ -2,9 +2,9 @@
 Contributors: automattic, claudiulodro, tiagonoronha, jameskoster, ryelle, levinmedia, aljullu, mikejolley, nerrad, joshuawold
 Tags: gutenberg, woocommerce, woo commerce, products, blocks, woocommerce blocks
 Requires at least: 5.0
-Tested up to: 5.2
+Tested up to: 5.3
 Requires PHP: 5.6
-Stable tag: 2.4.3
+Stable tag: 2.5.7
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -57,6 +57,18 @@ Show a list of all product reviews on a landing page, blog post or any other pag
 **Product Search**
 Help shoppers find your products by placing a search box in specific locations.
 
+**All Products**
+Display all products from your store as a grid with pagination and sorting options. Requires WordPress 5.3.
+
+**Filter Products by Price**
+Display a slider to filter products in your store by price. Works in combination with the _All Products_ block. Requires WordPress 5.3.
+
+**Filter Products by Attribute**
+Display a list of filters based on a chosen product attribute. Works in combination with the _All Products_ block. Requires WordPress 5.3.
+
+**Active Product Filters**
+Display a list of active product filters. Works in combination with the _Filter Products by Price_ and _Filter Products by Attribute_ block. Requires WordPress 5.3.
+
 We've also improved the category selection filter. If you select two or more categories, you can now chose to show products that include ANY or ALL selected categories.
 
 == Getting Started ==
@@ -64,7 +76,7 @@ We've also improved the category selection filter. If you select two or more cat
 = Minimum Requirements =
 
 * WordPress 5.0
-* WooCommerce 3.6 or greater
+* WooCommerce 3.7 or greater
 * PHP version 5.2.4 or greater (PHP 7.2 or greater is recommended)
 * MySQL version 5.0 or greater (MySQL 5.6 or greater is recommended)
 
@@ -104,14 +116,66 @@ Release and roadmap notes available on the [WooCommerce Developers Blog](https:/
 
 == Changelog ==
 
-= 2.4.3 - 2019-10-14 =
+= 2.5.7 = 2019-12-20 =
+- Add translation comments and use correct functions #1412, #1415
+- bug: Fix Price Filter constraints when price is decimal #1419
 
--  Refactor permission checks for authors.
+= 2.5.6 = 2019-12-17 =
+- bug: Fix broken build in 2.5.5. Has same changelog as 2.5.5.
 
-= 2.4.2 - 2019-09-23 =
+= 2.5.5 - 2019-12-17 =
+- bug: Fix broken atomic blocks in the All Products Block #1402
+- bug: Only allow one instance of the All Products block per page/post. #1383
+- bug: All Products Block: Fix default sort order changes not updating block in editor. #1385
+- bug: Normalize set minPrice and maxPrice values by step #1379
+- bug: Fix messaging when there are no attributes #1382
+- Price Filter: fix NaN values shown in some occasions while loading . #1386
+- bug: Fix incorrect property name for price format #1397
+- Remove double colon on active filter block price label. #1399
+- Fix: Attribute filters were not updating based on changes in the Price filter when query type was set to OR. #1390
 
-- Fix product grids overflowing in some themes
-- Fix regression that prevented selecting product variations in the Featured Product block.
+= 2.5.4 - 2019-12-11 =
+- bug: Fix increase in some bundle sizes #1363
+
+= 2.5.3 - 2019-12-09 =
+- Prevent Filter Products by Attribute block hiding non-matching options when Querty Type is set to OR. #1339
+- bug: Fix price slider layout in narrow columns #1231
+
+= 2.5.2 - 2019-12-02 =
+- Fixed a PHP Notice in Featured Category Block when the category is invalid. #1291 👏 @strategio
+- Filter Products by Attribute block now uses the attribute label instead of the slug to set the default title. #1271
+- Fix Filter Products by Price slider being reset to 0-0 when filters were cleared from the Active Filters block. #1278
+- Don't enqueue wcSettings unless the route requires it. #1292
+- Add `getAdminLink()` utility method. #1244
+
+= 2.5.1 - 2019-11-26 =
+- Fix Products by Tag, Products by Attribute and Handpicked products blocks showing an invalid attributes error. #1254
+- Fix the price slider updating instantly even when filter button was enabled. #1228
+- Fix price slider layout in narrow columns. #1231
+- Honor CSS classes in the editor for blocks added in 2.5. #1227
+- Fix variable products price format in All Products block. #1210
+- Allow the feature plugin to use WooCommerce Core translated strings. #1242
+- Reduce number of queries ran by multiple filter blocks with All Products block. #1233
+- Fix heading level setting for the All Products Title Block. #1230
+- Fix editor styles (background color) for titles of "Filter by…" blocks. #1256
+- Fix bug with cart not updating. #1258
+- Fix issue in the Filter by Attribute selector that was preventing to reselect the currently selected attribute. #1264
+
+= 2.5.0 - 2019-11-19 =
+
+- Feature: Introduce an All Products block, a new block listing products using client side rendering. Requires WordPress 5.3.
+- Feature: Introduce a Filter Products by Price block. Allow customers to filter the All Products block by price. Requires WordPress 5.3.
+- Feature: Introduce a Filter Products by Attribute block which works alongside the new "All products" block. Requires WordPress 5.3.
+- Feature: Introduce an Active Filters block that lists all currently used filters. Requires WordPress 5.3.
+- Show a friendly error message in the frontend if blocks throw a JS error.
+- Show a message in the editor if no products are found rather than show nothing.
+- Show previews for all included blocks in the block inserter. Requires WordPress 5.3.
+- Products on Sale, Products Tag and Product Search blocks have new icons.
+- Officialy deprecate NPM package `@woocommerce/block-library`.
+- Use Server Side Rendering for Product Category List block to remove the need to pass large amounts of data around when not needed.
+- RTL fixes to several blocks.
+- All block icons are displayed gray in the editor shortcuts inserter.
+- Make it easier for themes to style the Product Categories List block: new class names allow writing simpler selectors and it's now possible to remove the parentheses around the count number.
 
 = 2.4.1 - 2019-08-30 =
 

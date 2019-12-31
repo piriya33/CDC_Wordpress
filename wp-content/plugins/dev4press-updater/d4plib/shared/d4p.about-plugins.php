@@ -1,6 +1,6 @@
 <?php
 
-if (!defined('ABSPATH')) exit;
+if (!defined('ABSPATH')) { exit; }
 
 $_plugins = array(
     array(
@@ -39,11 +39,25 @@ $_plugins = array(
         "color" => "#3c6d29",
     ),
     array(
+        "code" => "gd-mail-queue",
+        "name" => "GD Mail Queue",
+        "description" => "Intercept wp_mail function, convert emails to HTML and implements flexible mail queue system for sending emails, with support for email sending engines and services.",
+        "punchline" => "Queue based, enhanced email sending system",
+        "color" => "#773355",
+    ),
+    array(
         "code" => "gd-power-search-for-bbpress",
         "name" => "GD Power Search for bbPress",
         "description" => "Enhanced and powerful search for bbPress powered forums, with options to filter results by post author, forums, publication period, topic tags and few other things.",
         "punchline" => "Advanced search for bbPress powered forums",
         "color" => "#670240",
+    ),
+    array(
+        "code" => "gd-quantum-theme-for-bbpress",
+        "name" => "GD Quantum Theme for bbPress",
+        "description" => "Responsive and modern theme to fully replace default bbPress theme templates and styles, with multiple colour schemes and Customizer integration for more control.",
+        "punchline" => "New theme for bbPress powered forums",
+        "color" => "#D67500",
     ),
     array(
         "code" => "gd-press-tools",

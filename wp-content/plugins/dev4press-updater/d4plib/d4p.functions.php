@@ -2,13 +2,13 @@
 
 /*
 Name:    d4pLib_Functions
-Version: v2.5.2
+Version: v2.7.6
 Author:  Milan Petrovic
 Email:   support@dev4press.com
 Website: https://www.dev4press.com/
 
 == Copyright ==
-Copyright 2008 - 2018 Milan Petrovic (email: support@dev4press.com)
+Copyright 2008 - 2019 Milan Petrovic (email: support@dev4press.com)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -24,6 +24,8 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
+
+if (!defined( 'ABSPATH')) { exit; }
 
 if (!function_exists('is_odd')) {
     function is_odd($number) {
@@ -70,7 +72,6 @@ if (!function_exists('d4p_scan_dir')) {
         $filter = !in_array($filter, array('folders', 'files', 'all')) ? 'files' : $filter;
         $path = str_replace('\\', '/', $path);
 
-        $files = array();
         $final = array();
 
         if (file_exists($path)) {
@@ -105,7 +106,6 @@ if (!function_exists('d4p_scan_dir')) {
 if (!function_exists('d4p_file_size_format')) {
     function d4p_file_size_format($size, $decimals = 2) {
         $_size = intval($size);
-        $unit = '';
 
         if (strlen($_size) <= 9 && strlen($_size) >= 7) {
             $_size = number_format($_size / 1048576, $decimals);
@@ -375,5 +375,23 @@ if (!function_exists('d4p_render_icon')) {
         $icon.= '></'.$tag.'>';
 
         return $icon;
+    }
+}
+
+if (!function_exists('d4p_user_agent')) {
+    function d4p_user_agent() {
+        if (isset($_SERVER['HTTP_USER_AGENT'])) {
+            $user_agent = d4p_sanitize_basic(trim($_SERVER['HTTP_USER_AGENT']));
+
+            return $user_agent;
+        }
+
+        return '';
+    }
+}
+
+if (!function_exists('d4p_is_request_post')) {
+    function d4p_is_request_post() {
+        return $_SERVER['REQUEST_METHOD'] === 'POST';
     }
 }

@@ -2,13 +2,13 @@
 
 /*
 Name:    d4pLib_Admin_Functions
-Version: v2.5.2
+Version: v2.7.6
 Author:  Milan Petrovic
 Email:   support@dev4press.com
 Website: https://www.dev4press.com/
 
 == Copyright ==
-Copyright 2008 - 2018 Milan Petrovic (email: support@dev4press.com)
+Copyright 2008 - 2019 Milan Petrovic (email: support@dev4press.com)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -25,6 +25,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
+if (!defined( 'ABSPATH')) { exit; }
+
 if (!function_exists('d4p_split_textarea_to_list')) {
     function d4p_split_textarea_to_list($value, $empty_lines = false) {
         $elements = preg_split("/[\n\r]/", $value);
@@ -33,7 +35,7 @@ if (!function_exists('d4p_split_textarea_to_list')) {
             $results = array();
 
             foreach ($elements as $el) {
-                if (trim($el) != "") {
+                if (trim($el) != '') {
                     $results[] = $el;
                 }
             }
@@ -73,11 +75,11 @@ if (!function_exists('d4p_render_select')) {
         $id = d4p_html_id_from_name($name, $id);
 
         if ($class != '') {
-            $attributes[] = 'class="'.$class.'"';
+            $attributes[] = 'class="'.esc_attr($class).'"';
         }
 
         if ($style != '') {
-            $attributes[] = 'style="'.$style.'"';
+            $attributes[] = 'style="'.esc_attr($style).'"';
         }
 
         if ($multi) {
@@ -95,11 +97,11 @@ if (!function_exists('d4p_render_select')) {
         $name = $multi ? $name.'[]' : $name;
 
         if ($id != '') {
-            $attributes[] = 'id="'.$id.'"';
+            $attributes[] = 'id="'.esc_attr($id).'"';
         }
 
         if ($name != '') {
-            $attributes[] = 'name="'.$name.'"';
+            $attributes[] = 'name="'.esc_attr($name).'"';
         }
 
         $render.= '<select '.join(' ', $attributes).'>';
@@ -107,7 +109,7 @@ if (!function_exists('d4p_render_select')) {
             $real_value = $associative ? $display : $value;
 
             $sel = in_array($real_value, $selected) ? ' selected="selected"' : '';
-            $render.= '<option value="'.$value.'"'.$sel.'>'.$display.'</option>';
+            $render.= '<option value="'.esc_attr($value).'"'.$sel.'>'.$display.'</option>';
         }
         $render.= '</select>';
 
@@ -133,11 +135,11 @@ if (!function_exists('d4p_render_grouped_select')) {
         $id = d4p_html_id_from_name($name, $id);
 
         if ($class != '') {
-            $attributes[] = 'class="'.$class.'"';
+            $attributes[] = 'class="'.esc_attr($class).'"';
         }
 
         if ($style != '') {
-            $attributes[] = 'style="'.$style.'"';
+            $attributes[] = 'style="'.esc_attr($style).'"';
         }
 
         if ($multi) {
@@ -155,11 +157,11 @@ if (!function_exists('d4p_render_grouped_select')) {
         $name = $multi ? $name.'[]' : $name;
 
         if ($id != '') {
-            $attributes[] = 'id="'.$id.'"';
+            $attributes[] = 'id="'.esc_attr($id).'"';
         }
 
         if ($name != '') {
-            $attributes[] = 'name="'.$name.'"';
+            $attributes[] = 'name="'.esc_attr($name).'"';
         }
 
         $render.= '<select '.join(' ', $attributes).'>';
@@ -196,11 +198,11 @@ if (!function_exists('d4p_render_checkradios')) {
         $id = d4p_html_id_from_name($name, $id);
 
         if ($class != '') {
-            $attributes[] = 'class="'.$class.'"';
+            $attributes[] = 'class="'.esc_attr($class).'"';
         }
 
         if ($style != '') {
-            $attributes[] = 'style="'.$style.'"';
+            $attributes[] = 'style="'.esc_attr($style).'"';
         }
 
         if ($readonly) {
@@ -214,11 +216,11 @@ if (!function_exists('d4p_render_checkradios')) {
         $name = $multi ? $name.'[]' : $name;
 
         if ($id != '') {
-            $attributes[] = 'id="'.$id.'"';
+            $attributes[] = 'id="'.esc_attr($id).'"';
         }
 
         if ($name != '') {
-            $attributes[] = 'name="'.$name.'"';
+            $attributes[] = 'name="'.esc_attr($name).'"';
         }
 
         if ($multi) {
@@ -235,7 +237,7 @@ if (!function_exists('d4p_render_checkradios')) {
             $sel = in_array($real_value, $selected) ? ' checked="checked"' : '';
 
             $render.= sprintf('<label><input type="%s" id="%s" value="%s" name="%s"%s class="widefat" />%s</label>', 
-                    $multi ? 'checkbox' : 'radio', $id, $real_value, $name, $sel, $title);
+                    $multi ? 'checkbox' : 'radio', esc_attr($id), esc_attr($real_value), esc_attr($name), $sel, $title);
         }
 
         $render.= '</div>';
@@ -248,8 +250,8 @@ if (!function_exists('d4p_render_checkradios')) {
     }
 }
 
-if (!function_exists('d4p_render_checkradios_hierarchy')) {
-    function d4p_render_checkradios_hierarchy($values, $args = array(), $attr = array()) {
+if (!function_exists('d4p_render_checkradios_with_hierarchy')) {
+    function d4p_render_checkradios_with_hierarchy($values, $args = array(), $attr = array()) {
         $defaults = array(
             'selected' => '', 'name' => '', 'id' => '', 'class' => '', 
             'style' => '', 'multi' => true, 'echo' => true, 'readonly' => false);
@@ -263,11 +265,11 @@ if (!function_exists('d4p_render_checkradios_hierarchy')) {
         $id = d4p_html_id_from_name($name, $id);
 
         if ($class != '') {
-            $attributes[] = 'class="'.$class.'"';
+            $attributes[] = 'class="'.esc_attr($class).'"';
         }
 
         if ($style != '') {
-            $attributes[] = 'style="'.$style.'"';
+            $attributes[] = 'style="'.esc_attr($style).'"';
         }
 
         if ($readonly) {
@@ -278,14 +280,12 @@ if (!function_exists('d4p_render_checkradios_hierarchy')) {
             $attributes[] = $key.'="'.esc_attr($value).'"';
         }
 
-        $name = $multi ? $name.'[]' : $name;
-
         if ($id != '') {
-            $attributes[] = 'id="'.$id.'"';
+            $attributes[] = 'id="'.esc_attr($id).'"';
         }
 
         if ($name != '') {
-            $attributes[] = 'name="'.$name.'"';
+            $attributes[] = 'name="'.esc_attr($name).'"';
         }
 
         if ($multi) {

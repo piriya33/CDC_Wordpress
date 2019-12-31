@@ -3,6 +3,25 @@
 <div class="d4p-group d4p-group-changelog">
     <h3><?php _e("Version", "dev4press-updater"); ?> 4</h3>
     <div class="d4p-group-inner">
+        <h4>Version: 4.0.4 / october 22 2019</h4>
+        <ul>
+            <li><strong>new</strong> support for GD Members Directory Pro for bbPress</li>
+        </ul>
+
+        <h4>Version: 4.0.3 / september 1 2019</h4>
+        <ul>
+            <li><strong>new</strong> support for GD Quantum Theme Pro for bbPress</li>
+            <li><strong>edit</strong> switched from the CloudFront CDN to S3 for images</li>
+            <li><strong>edit</strong> d4pLib 2.7.6</li>
+            <li><strong>fix</strong> update for Comments Form Addon was not working correctly</li>
+        </ul>
+
+        <h4>Version: 4.0.2 / june 23 2019</h4>
+        <ul>
+            <li><strong>new</strong> support for GD Mail Queue plugin and it's addons</li>
+            <li><strong>edit</strong> d4pLib 2.7.3</li>
+        </ul>
+
         <h4>Version: 4.0.1 / january 12 2019</h4>
         <ul>
             <li><strong>fix</strong> issue with one of the core plugin filters missing data</li>

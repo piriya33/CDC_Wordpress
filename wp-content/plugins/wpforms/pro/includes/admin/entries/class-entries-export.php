@@ -80,6 +80,7 @@ class WPForms_Entries_Export {
 		return array(
 			'text',
 			'textarea',
+			'number-slider',
 			'select',
 			'radio',
 			'checkbox',

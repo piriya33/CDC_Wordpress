@@ -77,6 +77,11 @@ class WC_PB_Product_Export {
 
 					$bundled_item_id    = $bundled_item->get_id();
 					$bundled_item_data  = $bundled_item->get_data();
+
+					// Bundled item stock information not needed.
+					unset( $bundled_item_data[ 'meta_data' ][ 'stock_status' ] );
+					unset( $bundled_item_data[ 'meta_data' ][ 'max_stock' ] );
+
 					$bundled_product_id = $bundled_item->get_product_id();
 					$bundled_product    = wc_get_product( $bundled_product_id );
 

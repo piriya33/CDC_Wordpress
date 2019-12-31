@@ -131,6 +131,8 @@ jQuery( function($) {
 			self.toggled_visibility( 'product' );
 			self.toggled_visibility( 'cart' );
 			self.toggled_visibility( 'order' );
+
+			self.$element.sw_select2();
 		};
 
 		this.initialize();
@@ -520,6 +522,8 @@ jQuery( function($) {
 		var focus_timer,
 			$button = $bundled_products_panel.find( '.sw-expanding-button' ),
 			$body   = $( document.body );
+
+		$button.sw_select2();
 
 		$button.on( 'click', function( e ) {
 

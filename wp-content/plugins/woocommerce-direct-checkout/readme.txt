@@ -2,9 +2,9 @@
 Contributors: quadlayers
 Donate link: https://quadlayers.com/portfolio/woocommerce-direct-checkout/
 Tags: woocommerce, woocommerce ajax, woocommerce ajax cart, add to cart, woocommerce direct checkout, woocommerce quick buy, woocommerce remove checkout fields, woocommerce ajax single products, woocommerce one page checkout
-Requires at least: 4.8
-Tested up to: 5.2.2
-Stable tag: 2.2.5
+Requires at least: 4.6
+Tested up to: 5.3.2
+Stable tag: 2.3.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -52,6 +52,28 @@ The premium version of WooCommerce Direct Checkot allows to include a quick purc
 [https://quadlayers.com/documentation/woocommerce-direct-checkout/changelog/](https://quadlayers.com/documentation/woocommerce-direct-checkout/changelog/)
 
 == Changelog ==
+
+= 2.3.2 =
+* Fix: WooCommerce Direct Checkout
+
+= 2.3.1 =
+* Fix: WooCommerce Direct Checkout products ajax add to cart
+
+= 2.3.0 =
+* Fix: code refactoring
+
+= 2.2.9 =
+* Fix: WooCommerce Ajax add to cart grouped products
+
+= 2.2.8 =
+* Fix: suggestions plugins update
+* Fix: WooCommerce Direct Checkout products variations quick purchase
+
+= 2.2.7 =
+* Fix. WooCommerce Direct Checkout Premium compatibility
+
+= 2.2.6 =
+* Fix. WooCommerce Direct Checkout Premium compatibility
 
 = 2.2.5 =
 * Fix. WooCommerce Direct Checkout rating request remove non admin users

@@ -3,6 +3,7 @@
 namespace DeliciousBrains\WP_Offload_Media\Pro;
 
 use AS3CF_Utils;
+use DeliciousBrains\WP_Offload_Media\Items\Media_Library_Item;
 
 abstract class Modal_Tool extends Tool {
 
@@ -48,21 +49,9 @@ abstract class Modal_Tool extends Tool {
 	protected $show_file_size = true;
 
 	/**
-	 * Cache the total attachments in the Media Library
-	 *
-	 * @var array
-	 */
-	protected static $total_attachments = array();
-
-	/**
 	 * @var array
 	 */
 	public static $views_rendered = array();
-
-	/**
-	 * @var bool
-	 */
-	public static $assets_loaded = false;
 
 	/**
 	 * Modal_Tool constructor.
@@ -93,9 +82,6 @@ abstract class Modal_Tool extends Tool {
 		// Views
 		add_action( 'as3cf_post_settings_render', array( $this, 'render_modal' ) );
 
-		// Assets
-		add_action( 'as3cfpro_load_assets', array( $this, 'load_assets' ) );
-
 		parent::init();
 	}
 
@@ -107,9 +93,6 @@ abstract class Modal_Tool extends Tool {
 	 * @return mixed
 	 */
 	public function add_js_settings( $settings ) {
-		// Global settings
-		$settings['errors_key_prefix'] = $this->errors_key_prefix;
-
 		// Per tool settings
 		$defaults = array(
 			'show_file_size' => $this->show_file_size,
@@ -220,8 +203,6 @@ abstract class Modal_Tool extends Tool {
 
 	/**
 	 * AJAX handler for initiating the process
-	 *
-	 * @return array $return
 	 */
 	public function ajax_initiate_process() {
 		check_ajax_referer( 'initiate-' . $this->tool_slug, 'nonce' );
@@ -307,7 +288,6 @@ abstract class Modal_Tool extends Tool {
 
 						$this->progress['total_files']++;
 						$count++;
-
 					} else {
 						// Remove it from the grand total
 						$total--;
@@ -451,15 +431,6 @@ abstract class Modal_Tool extends Tool {
 	}
 
 	/**
-	 * Allow child classes to inject custom notices to be updated in the DOM
-	 *
-	 * @return array
-	 */
-	protected function get_custom_notices_to_update() {
-		return array();
-	}
-
-	/**
 	 * Check if the attachment should be processed by the tool. Allows checks to be
 	 * performed that will happen within the batch execution time limit.
 	 *
@@ -502,29 +473,6 @@ abstract class Modal_Tool extends Tool {
 	abstract protected function handle_attachment( $attachment_id, $blog_id );
 
 	/**
-	 * Get the total of attachments in the media library
-	 *
-	 * @param string $prefix table prefix for multisite support
-	 *
-	 * @return mixed
-	 */
-	protected function get_total_attachments( $prefix ) {
-		if ( isset( self::$total_attachments[ $prefix ] ) ) {
-			return self::$total_attachments[ $prefix ];
-		}
-
-		global $wpdb;
-
-		$sql = "SELECT COUNT(*)
-				FROM `{$prefix}posts`
-				WHERE `{$prefix}posts`.`post_type` = 'attachment'";
-
-		self::$total_attachments[ $prefix ] = (int) $wpdb->get_var( $sql );
-
-		return self::$total_attachments[ $prefix ];
-	}
-
-	/**
 	 * Find the counts of attachments to process and overall total of attachments
 	 *
 	 *  - total_to_process
@@ -539,8 +487,13 @@ abstract class Modal_Tool extends Tool {
 		$total_to_process  = 0;
 
 		foreach ( $blogs as $blog_id => $blog ) {
-			$total_attachments += $this->get_total_attachments( $blog['prefix'] );
+			$this->as3cf->switch_to_blog( $blog_id );
+
+			$counts            = Media_Library_Item::count_attachments();
+			$total_attachments += $counts['total'];
 			$total_to_process  += $this->get_attachments_to_process( $blog['prefix'], $blog_id, true, null, null );
+
+			$this->as3cf->restore_current_blog();
 		}
 
 		return compact( 'total_to_process', 'total_attachments' );
@@ -685,18 +638,6 @@ abstract class Modal_Tool extends Tool {
 		if ( ! in_array( 'progress', self::$views_rendered ) ) {
 			$this->as3cf->render_view( 'tool-progress' );
 			self::$views_rendered[] = 'progress';
-		}
-	}
-
-	/**
-	 * Load the assets for the tool once
-	 */
-	public function load_assets() {
-		if ( ! self::$assets_loaded ) {
-			$this->as3cf->enqueue_style( 'as3cf-pro-tool-styles', 'assets/css/pro/tool', array( 'as3cf-pro-styles' ) );
-			$this->as3cf->enqueue_script( 'as3cf-pro-tool-script', 'assets/js/pro/tool', array( 'as3cf-pro-script', 'underscore' ) );
-
-			self::$assets_loaded = true;
 		}
 	}
 

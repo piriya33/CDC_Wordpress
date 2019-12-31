@@ -311,6 +311,20 @@
     margin: 0 0 0 30px;
 }
 
+.d4p-group-divider {
+    margin: 10px 0 15px;
+    float: left;
+    text-align: center;
+    max-width: 800px;
+    width: 100%;
+    clear: both;
+    font-size: 2em;
+    overflow: auto;
+    line-height: normal;
+    padding: 5px 0 0;
+    border-top: 2px solid #DDDDDD;
+}
+
 .d4p-group {
     background: #FFFFFF;
     border: 1px solid #DDDDDD;
@@ -405,6 +419,8 @@
 }
 
 .d4p-group-inner input[type="text"],
+.d4p-group-inner input[type="email"],
+.d4p-group-inner input[type="url"],
 .d4p-group-inner input[type="password"] {
     line-height: 24px;
 }
@@ -415,6 +431,10 @@
 
 .d4p-group-inner select {
     height: 32px;
+}
+
+.d4p-group-inner .d4p-setting-code > .CodeMirror {
+    border: 1px solid #dddddd;
 }
 
 .d4p-field-unit {
@@ -698,6 +718,20 @@
     height: auto;
 }
 
+.d4p-section-toggle.d4p-free-height .form-table {
+    margin: 0;
+}
+
+.d4p-section-toggle.d4p-free-height .form-table > tbody > tr > * {
+    line-height: 22px;
+    width: auto;
+    padding: 2px 0;
+}
+
+.d4p-section-toggle.d4p-free-height .form-table code {
+    font-style: normal;
+}
+
 .d4p-content-topinfo {
     text-align: left;
     background: #ffffff;
@@ -978,7 +1012,7 @@
     background: #fff;
     border-left: 4px solid #00a0d2;
     padding: 12px;
-    margin: 0 0 15px;
+    margin: 15px 0;
 }
 
 .d4p-notice-info blockquote {
@@ -1053,6 +1087,11 @@
     width: calc(50% - 15px);
     max-width: 600px;
     margin-right: 15px;
+}
+
+.d4p-group-dashboard-card.d4p-double-card {
+    width: calc(100% - 15px);
+    max-width: 1215px;
 }
 
 .d4p-group-dashboard-card .d4p-group-stats {
@@ -1325,17 +1364,14 @@
 }
 
 @media screen and (max-width: 800px) {
-    .d4p-header {
-        margin-top: 15px;
-    }
-
     .d4p-plugin {
         display: none;
     }
 
     .d4p-group-inner .form-table th,
     .d4p-options-panel,
-    .d4p-group {
+    .d4p-group,
+    .d4p-group.d4p-double-card {
         width: 100%;
     }
 
@@ -1421,6 +1457,7 @@
 
     .d4p-navigator {
         width: 100%;
+        margin-top: -15px;
     }
 
     .d4p-navigator ul li.d4p-nav-button {

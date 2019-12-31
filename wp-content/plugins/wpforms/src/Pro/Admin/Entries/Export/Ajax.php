@@ -141,7 +141,9 @@ class Ajax {
 			}
 
 			// Unlimited execution time.
-			set_time_limit( 0 );
+			if ( ! in_array( 'set_time_limit', explode( ',', ini_get( 'disable_functions' ) ), true ) ) {
+				set_time_limit( 0 );
+			}
 
 			// Getting request data.
 			if ( empty( $args['request_id'] ) ) {
@@ -441,11 +443,9 @@ class Ajax {
 			return $val;
 		}
 
-		$ths = $this;
-
 		$val = array_reduce(
 			$entry_notes,
-			function ( $carry, $item ) use ( $ths ) {
+			function ( $carry, $item ) {
 
 				$item = (array) $item;
 
@@ -453,7 +453,7 @@ class Ajax {
 				$author_name  = ! empty( $author->first_name ) ? $author->first_name : $author->user_login;
 				$author_name .= ! empty( $author->last_name ) ? ' ' . $author->last_name : '';
 
-				$carry .= date_i18n( $ths->date_format(), strtotime( $item['date'] ) + $ths->gmt_offset_sec() ) . ', ';
+				$carry .= date_i18n( $this->date_format(), strtotime( $item['date'] ) + $this->gmt_offset_sec() ) . ', ';
 				$carry .= $author_name . ': ';
 				$carry .= wp_strip_all_tags( $item['data'] ) . "\n";
 

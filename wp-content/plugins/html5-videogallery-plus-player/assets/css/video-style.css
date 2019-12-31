@@ -7,7 +7,8 @@
 .html5video-medium-12 .video_image_frame{height:350px; position:relative;}
 .html5video-medium-4 .video_image_frame{height:200px; position:relative; }
 .video_image_frame{height:250px; position:relative;}
-.video_image_frame img{height: 100% !important;width: 100% !important;object-fit: cover;object-position: top center; -moz-box-shadow: 0 0 5px #888;-webkit-box-shadow: 0 0 5px#888;box-shadow: 0 0 5px #888;border:3px solid #fff;}
+.wp-html5vp-popup-wrp .wp-hvgp-video-frame{background:#fff; padding:10px;}
+.video_image_frame img{height: 100% !important;width: 100% !important;object-fit: cover;object-position: top center; -moz-box-shadow: 0 0 5px #888;-webkit-box-shadow: 0 0 5px#888;box-shadow: 0 0 5px #888;border:3px solid #fff;  -webkit-transition-duration: 0.4s;  transition-duration: 0.4s;}
 .video_frame:hover .video_image_frame img{-moz-box-shadow: 0 0 5px #555;-webkit-box-shadow: 0 0 5px#555;box-shadow: 0 0 5px #555;border:3px solid #f1f1f1;}
 .video_icon{position:absolute; background:url(../images/video-play-xxl.png) center center no-repeat; background-size:50px 50px; top:0; width:50px; height:50px;
 left:50%; margin-left:-25px; top:50%; margin-top:-25px;}

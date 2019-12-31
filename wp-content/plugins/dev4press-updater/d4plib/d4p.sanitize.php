@@ -2,13 +2,13 @@
 
 /*
 Name:    d4pLib_Sanitize
-Version: v2.5.2
+Version: v2.7.6
 Author:  Milan Petrovic
 Email:   support@dev4press.com
 Website: https://www.dev4press.com/
 
 == Copyright ==
-Copyright 2008 - 2018 Milan Petrovic (email: support@dev4press.com)
+Copyright 2008 - 2019 Milan Petrovic (email: support@dev4press.com)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -24,6 +24,8 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
+
+if (!defined( 'ABSPATH')) { exit; }
 
 if (!function_exists('d4p_sanitize_file_path')) {
     function d4p_sanitize_file_path($filename) {
@@ -105,7 +107,7 @@ if (!function_exists('d4p_sanitize_basic_array')) {
         $output = array();
 
         foreach ($input as $key => $value) {
-            $output[$key] = d4p_sanitize_basic($value);
+            $output[$key] = d4p_sanitize_basic($value, $strip_shortcodes);
         }
 
         return $output;
@@ -133,7 +135,6 @@ if (!function_exists('d4p_kses_expanded_list_of_tags')) {
                 'href' => true,
                 'title' => true,
                 'rel' => true,
-                'class' => true,
                 'style' => true,
                 'download' => true,
                 'target' => true

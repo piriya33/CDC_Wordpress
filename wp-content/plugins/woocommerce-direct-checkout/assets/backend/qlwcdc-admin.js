@@ -43,28 +43,6 @@
     }).change();
     // Archive
     // -----------------------------------------------------------------
-    /*$('select#qlwcdc_add_archive_cart_redirect_page').change(function () {
-     if ('url' === $(this).val() && 'redirect' == $('select#qlwcdc_add_archive_cart').val()) {
-     $('input#qlwcdc_add_archive_cart_redirect_url').closest('tr, p').fadeIn();
-     } else {
-     $('input#qlwcdc_add_archive_cart_redirect_url').closest('tr:not(.qlwcdc-premium-field), p').fadeOut();
-     }
-     });
-     $('select#qlwcdc_add_archive_cart').change(function () {
-     if ('ajax' === $(this).val()) {
-     $('select#qlwcdc_add_archive_cart_ajax_button').closest('tr, p').fadeIn();
-     $('select#qlwcdc_add_archive_cart_ajax_message').closest('tr, p').fadeIn();
-     } else {
-     $('select#qlwcdc_add_archive_cart_ajax_button').closest('tr:not(.qlwcdc-premium-field), p').fadeOut();
-     $('select#qlwcdc_add_archive_cart_ajax_message').closest('tr:not(.qlwcdc-premium-field), p').fadeOut();
-     }
-     if ('redirect' === $(this).val()) {
-     $('select#qlwcdc_add_archive_cart_redirect_page').closest('tr, p').fadeIn();
-     } else {
-     $('select#qlwcdc_add_archive_cart_redirect_page').closest('tr:not(.qlwcdc-premium-field), p').fadeOut();
-     }
-     $('select#qlwcdc_add_archive_cart_redirect_page').change();
-     }).change();*/
     $('select#qlwcdc_add_archive_text').change(function () {
       if ('yes' === $(this).val()) {
         $('select#qlwcdc_add_archive_text_in').closest('tr, p').fadeIn();
@@ -76,28 +54,13 @@
     }).change();
     // Product
     // -----------------------------------------------------------------
-    /*$('select#qlwcdc_add_product_cart_redirect_page').change(function () {
-     if ('url' === $(this).val() && 'redirect' == $('select#qlwcdc_add_product_cart').val()) {
-     $('input#qlwcdc_add_product_cart_redirect_url').closest('tr, p').fadeIn();
-     } else {
-     $('input#qlwcdc_add_product_cart_redirect_url').closest('tr:not(.qlwcdc-premium-field), p').fadeOut();
-     }
-     });
-     $('select#qlwcdc_add_product_cart').change(function () {
-     if ('ajax' === $(this).val()) {
-     $('select#qlwcdc_add_product_cart_ajax_button').closest('tr, p').fadeIn();
-     $('select#qlwcdc_add_product_cart_ajax_message').closest('tr, p').fadeIn();
-     } else {
-     $('select#qlwcdc_add_product_cart_ajax_button').closest('tr:not(.qlwcdc-premium-field), p').fadeOut();
-     $('select#qlwcdc_add_product_cart_ajax_message').closest('tr:not(.qlwcdc-premium-field), p').fadeOut();
-     }
-     if ('redirect' === $(this).val()) {
-     $('select#qlwcdc_add_product_cart_redirect_page').closest('tr, p').fadeIn();
-     } else {
-     $('select#qlwcdc_add_product_cart_redirect_page').closest('tr:not(.qlwcdc-premium-field), p').fadeOut();
-     }
-     $('select#qlwcdc_add_product_cart_redirect_page').change();
-     }).change();*/
+    $('select#qlwcdc_add_product_ajax').change(function () {
+      if ('yes' === $(this).val()) {
+        $('select#qlwcdc_add_product_ajax_alert').closest('tr, p').fadeIn();
+      } else {
+        $('select#qlwcdc_add_product_ajax_alert').closest('tr:not(.qlwcdc-premium-field), p').fadeOut();
+      }
+    }).change();
     $('select#qlwcdc_add_product_quick_purchase').change(function () {
       if ('yes' === $(this).val()) {
         $('select#qlwcdc_add_product_quick_purchase_to').closest('tr, p').fadeIn();

@@ -114,10 +114,7 @@ class WPForms_Entries_List {
 		}
 
 		// Load the classes that builds the entries table.
-		if ( ! class_exists( 'WP_List_Table', false ) ) {
-			require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
-		}
-		require_once WPFORMS_PLUGIN_DIR . 'pro/includes/admin/entries/class-entries-list-table.php';
+		$this->load_entries_list_table();
 
 		// Processing and setup.
 		add_action( 'wpforms_entries_init', array( $this, 'process_filter_dates' ), 7, 1 );
@@ -136,7 +133,23 @@ class WPForms_Entries_List {
 
 		// Enqueues.
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueues' ) );
+	}
 
+	/**
+	 * Load the PHP classes and initialize an entries table.
+	 *
+	 * @since 1.5.7
+	 */
+	public function load_entries_list_table() {
+
+		if ( ! class_exists( 'WP_List_Table', false ) ) {
+			require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
+		}
+		require_once WPFORMS_PLUGIN_DIR . 'pro/includes/admin/entries/class-entries-list-table.php';
+
+		// Create an `WPForms_Entries_Table` instance and process bulk actions.
+		$this->entries = new WPForms_Entries_Table();
+		$this->entries->process_bulk_actions();
 	}
 
 	/**
@@ -568,7 +581,6 @@ class WPForms_Entries_List {
 				return;
 			}
 
-			$this->entries            = new WPForms_Entries_Table();
 			$this->entries->form_id   = $this->form_id;
 			$this->entries->form_data = $form_data;
 			$this->entries->prepare_items();
@@ -607,18 +619,24 @@ class WPForms_Entries_List {
 	 * Settings for field column personalization!
 	 *
 	 * @since 1.4.0
+	 * @since 1.5.7 Added an `Entry Notes` column.
 	 */
 	public function field_column_setting() {
 
-		$form_data = ! empty( $this->form->post_content ) ? wpforms_decode( $this->form->post_content ) : array();
+		$form_data         = ! empty( $this->form->post_content ) ? wpforms_decode( $this->form->post_content ) : array();
+		$entry_id_selected = false;
+
+		if ( ! empty( $form_data['meta']['entry_columns'] ) && is_array( $form_data['meta']['entry_columns'] ) ) {
+			$entry_id_selected = in_array( WPForms_Entries_Table::COLUMN_ENTRY_ID, $form_data['meta']['entry_columns'], true );
+		}
 		?>
 		<div id="wpforms-field-column-select" style="display:none;">
 
-			<form method="post" action="<?php echo admin_url( 'admin.php?page=wpforms-entries&view=list&form_id=' . $this->form_id ); ?>" style="display:none;">
+			<form method="post" action="<?php echo esc_url( admin_url( 'admin.php?page=wpforms-entries&view=list&form_id=' . (int) $this->form_id ) ); ?>" style="display:none;">
 				<input type="hidden" name="action" value="list-columns"/>
-				<input type="hidden" name="form_id" value="<?php echo $this->form_id; ?>"/>
-				<input type="hidden" name="_wpnonce" value="<?php echo wp_create_nonce( 'wpforms_entry_list_columns' ); ?>">
-				<p>
+				<input type="hidden" name="form_id" value="<?php echo (int) $this->form_id; ?>"/>
+				<input type="hidden" name="_wpnonce" value="<?php echo esc_attr( wp_create_nonce( 'wpforms_entry_list_columns' ) ); ?>">
+				<p style="margin-bottom: 20px">
 					<?php
 					esc_html_e( 'Select the fields to show when viewing the entries list for this form.', 'wpforms' );
 					if ( empty( $form_data['meta']['entry_columns'] ) ) {
@@ -628,17 +646,52 @@ class WPForms_Entries_List {
 				</p>
 				<select name="fields[]" multiple>
 					<?php
+					/*
+					 * Display first those that were already saved.
+					 */
 					if ( ! empty( $form_data['meta']['entry_columns'] ) ) {
 						foreach ( $form_data['meta']['entry_columns'] as $id ) {
-							if ( empty( $form_data['fields'][ $id ] ) ) {
-								continue;
-							} else {
-								$name = ! empty( $form_data['fields'][ $id ]['label'] ) ? wp_strip_all_tags( $form_data['fields'][ $id ]['label'] ) : esc_html__( 'Field', 'wpforms' );
-								printf( '<option value="%d" selected>%s</option>', $id, $name );
+
+							switch ( (int) $id ) {
+								case WPForms_Entries_Table::COLUMN_ENTRY_ID:
+									$name = esc_html__( 'Entry ID', 'wpforms' );
+									break;
+
+								case WPForms_Entries_Table::COLUMN_NOTES_COUNT:
+									$name = esc_html__( 'Entry Notes', 'wpforms' );
+									break;
+
+								default:
+									if ( empty( $form_data['fields'][ $id ] ) ) {
+										continue 2;
+									}
+									$name = ! empty( $form_data['fields'][ $id ]['label'] ) ? wp_strip_all_tags( $form_data['fields'][ $id ]['label'] ) : esc_html__( 'Field', 'wpforms' );
 							}
+
+							printf( '<option value="%d" selected>%s</option>', $id, $name );
 						}
 					}
+
+					/*
+					 * Now display all other fields, including special ones (like Entry ID).
+					 */
 					if ( ! empty( $form_data['fields'] ) && is_array( $form_data['fields'] ) ) {
+						// Special column names, that should be at the top of the list.
+						if (
+							empty( $form_data['meta']['entry_columns'] ) ||
+							! in_array( WPForms_Entries_Table::COLUMN_ENTRY_ID, $form_data['meta']['entry_columns'], true )
+						) {
+							printf( '<option value="%d">%s</option>', (int) WPForms_Entries_Table::COLUMN_ENTRY_ID, esc_html__( 'Entry ID', 'wpforms' ) );
+						}
+
+						if (
+							empty( $form_data['meta']['entry_columns'] ) ||
+							! in_array( WPForms_Entries_Table::COLUMN_NOTES_COUNT, $form_data['meta']['entry_columns'], true )
+						) {
+							printf( '<option value="%d">%s</option>', (int) WPForms_Entries_Table::COLUMN_NOTES_COUNT, esc_html__( 'Entry Notes', 'wpforms' ) );
+						}
+
+						// Regular form fields.
 						foreach ( $form_data['fields'] as $id => $field ) {
 							if (
 								! empty( $form_data['meta']['entry_columns'] ) &&
@@ -646,9 +699,10 @@ class WPForms_Entries_List {
 							) {
 								continue;
 							}
+
 							if ( ! in_array( $field['type'], WPForms_Entries_Table::get_columns_form_disallowed_fields(), true ) ) {
 								$name = ! empty( $field['label'] ) ? wp_strip_all_tags( $field['label'] ) : esc_html__( 'Field', 'wpforms' );
-								printf( '<option value="%d">%s</option>', $id, $name );
+								printf( '<option value="%d">%s</option>', (int) $id, esc_html( $name ) );
 							}
 						}
 					}

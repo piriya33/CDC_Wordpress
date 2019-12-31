@@ -34,6 +34,26 @@ class WPForms_Pro {
 		add_action( 'admin_notices', array( $this, 'conditional_logic_addon_notice' ) );
 		add_action( 'wpforms_builder_print_footer_scripts', array( $this, 'builder_templates' ) );
 		add_filter( 'wpforms_email_footer_text', array( $this, 'form_notification_footer' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueues' ) );
+		add_filter( 'wpforms_helpers_templates_get_theme_template_paths', array( $this, 'add_templates' ) );
+	}
+
+	/**
+	 * Add Pro-specific templates to the list of searchable template paths.
+	 *
+	 * @since 1.5.6
+	 *
+	 * @param array $paths Paths to templates.
+	 *
+	 * @return array
+	 */
+	public function add_templates( $paths ) {
+
+		$paths = (array) $paths;
+
+		$paths[102] = trailingslashit( __DIR__ . '/templates' );
+
+		return $paths;
 	}
 
 	/**
@@ -195,6 +215,28 @@ class WPForms_Pro {
 	}
 
 	/**
+	 * Pro admin scripts and styles.
+	 *
+	 * @since 1.5.5
+	 */
+	public function admin_enqueues() {
+
+		if ( ! wpforms_is_admin_page() ) {
+			return;
+		}
+
+		$min = wpforms_get_min_suffix();
+
+		// Pro admin styles.
+		wp_enqueue_style(
+			'wpforms-pro-admin',
+			WPFORMS_PLUGIN_URL . "pro/assets/css/admin{$min}.css",
+			array(),
+			WPFORMS_VERSION
+		);
+	}
+
+	/**
 	 * Register Pro settings fields.
 	 *
 	 * @since 1.3.9
@@ -224,7 +266,7 @@ class WPForms_Pro {
 			'id'      => 'validation-filesize',
 			'name'    => esc_html__( 'File Size', 'wpforms' ),
 			'type'    => 'text',
-			'default' => esc_html__( 'File exceeds max size allowed.', 'wpforms' ),
+			'default' => esc_html__( 'File exceeds max size allowed. File was not uploaded.', 'wpforms' ),
 		);
 		$settings['validation']['validation-time12h']         = array(
 			'id'      => 'validation-time12h',

@@ -122,12 +122,6 @@ function vgap_help_tabs() {
 													'url'				=> 'http://wponlinesupport.com/plugin-data-api/plugins-data.php',
 													'transient_key'		=> 'wpos_plugins_feed',
 													'transient_time'	=> 172800
-												),
-						'offers-feed' 	=> array(
-													'name'				=> __('Hire Us', 'html5-videogallery-plus-player'),
-													'url'				=> 'http://wponlinesupport.com/plugin-data-api/wpos-offers.php',
-													'transient_key'		=> 'wpos_offers_feed',
-													'transient_time'	=> 86400,
 												)
 					);
 	return $wpos_feed_tabs;
@@ -147,6 +141,7 @@ function vgap_howitwork_page() { ?>
 		.postbox-container .wpos-list li:before{font-family: dashicons; content: "\f139"; font-size:20px; color: #0073aa; vertical-align: middle;}
 		.vgap-wrap .wpos-button-full{display:block; text-align:center; box-shadow:none; border-radius:0;}
 		.vgap-shortcode-preview{background-color: #e7e7e7; font-weight: bold; padding: 2px 5px; display: inline-block; margin:0 0 2px 0;}
+		.upgrade-to-pro{font-size:18px; text-align:center; margin-bottom:15px;}
 	</style>
 
 	<div class="post-box-container">
@@ -211,7 +206,7 @@ function vgap_howitwork_page() { ?>
 												<td>
 													<p><?php _e('Check plugin document for shortcode parameters and demo for designs.', 'html5-videogallery-plus-player'); ?></p> <br/>
 													<a class="button button-primary" href="https://www.wponlinesupport.com/plugins-documentation/documentvideo-gallery-player/" target="_blank"><?php _e('Documentation', 'html5-videogallery-plus-player'); ?></a>									
-													<a class="button button-primary" href="http://demo.wponlinesupport.com/video-gallery-and-player-demo/" target="_blank"><?php _e('Demo for Designs', 'html5-videogallery-plus-player'); ?></a>
+													<a class="button button-primary" href="https://demo.wponlinesupport.com/video-gallery-and-player-demo/" target="_blank"><?php _e('Demo for Designs', 'html5-videogallery-plus-player'); ?></a>
 												</td>
 											</tr>
 										</tbody>
@@ -239,13 +234,17 @@ function vgap_howitwork_page() { ?>
 										<li>Slider/Carousel View <br /> <img style="width:100%;" src="<?php echo WP_HTML5VP_URL; ?>assets/images/video-gallery-slider.jpg"></li>
 										<li>Slider/Carousel with center mode <br /> <img style="width:100%;" src="<?php echo WP_HTML5VP_URL; ?>assets/images/video-gallery-slider-center-mode.jpg"></li>
 										<li>Multiple display with category</li>
+										<li>WP Templating Features.</li>
+										<li>Gutenberg Block Supports.</li>
+										<li>Visual Composer/WPBakery Page Builder Supports.</li>
 										<li>Editor support</li>
 										<li>Drag and drop custom ordering</li>
 										<li>Responsive</li>
 										<li>Popup gallery slider</li>
 									</ul>
-									<a class="button button-primary wpos-button-full" href="https://www.wponlinesupport.com/wp-plugin/video-gallery-player/" target="_blank"><?php _e('Go Premium ', 'html5-videogallery-plus-player'); ?></a>	
-									<p><a class="button button-primary wpos-button-full" href="http://demo.wponlinesupport.com/prodemo/video-gallery-and-player-pro-demo/" target="_blank"><?php _e('View PRO Demo ', 'html5-videogallery-plus-player'); ?></a>			</p>								
+									<div class="upgrade-to-pro">Gain access to <strong>Video Gallery and Player</strong> included in <br /><strong>Essential Plugin Bundle</div>
+									<a class="button button-primary wpos-button-full" href="https://www.wponlinesupport.com/wp-plugin/video-gallery-player/?ref=WposPratik&utm_source=WP&utm_medium=WP-Plugins&utm_campaign=Upgrade-PRO" target="_blank"><?php _e('Go Premium ', 'html5-videogallery-plus-player'); ?></a>	
+									<p><a class="button button-primary wpos-button-full" href="https://demo.wponlinesupport.com/prodemo/video-gallery-and-player-pro-demo/" target="_blank"><?php _e('View PRO Demo ', 'html5-videogallery-plus-player'); ?></a>			</p>								
 								</div><!-- .inside -->
 							</div><!-- #general -->
 						</div><!-- .meta-box-sortables ui-sortable -->

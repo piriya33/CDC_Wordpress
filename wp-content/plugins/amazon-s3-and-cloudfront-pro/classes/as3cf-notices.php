@@ -61,7 +61,7 @@ class AS3CF_Notices {
 	 */
 	public function add_notice( $message, $args = array() ) {
 		$defaults = array(
-			'type'                  => 'info',
+			'type'                  => 'notice-info',
 			'dismissible'           => true,
 			'inline'                => false,
 			'flash'                 => true,
@@ -250,7 +250,7 @@ class AS3CF_Notices {
 
 		$users = get_users( $args );
 
-		foreach( $users as $user ) {
+		foreach ( $users as $user ) {
 			$this->undismiss_notice_for_user( $notice_id, $user->ID );
 		}
 	}
@@ -351,7 +351,7 @@ class AS3CF_Notices {
 	 */
 	protected function maybe_show_notice( $notice, $dismissed_notices, $tab ) {
 		$screen = get_current_screen();
-		if ( $notice['only_show_in_settings'] && false === strpos( $screen->id, $this->as3cf->hook_suffix ) ) {
+		if ( $notice['only_show_in_settings'] && false === strpos( strval( $screen->id ), $this->as3cf->hook_suffix ) ) {
 			return;
 		}
 
@@ -464,7 +464,7 @@ class AS3CF_Notices {
 	 */
 	protected function update_user_meta( $user_id, $key, $value ) {
 		if ( empty( $value ) ) {
-			delete_user_meta( $user_id, $key);
+			delete_user_meta( $user_id, $key );
 		} else {
 			update_user_meta( $user_id, $key, $value );
 		}
