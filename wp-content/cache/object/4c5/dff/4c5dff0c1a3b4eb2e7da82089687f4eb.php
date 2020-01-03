@@ -1,2 +1,0 @@
-Jé
-^<?php exit; ?>a:1:{s:7:"content";O:8:"stdClass":10:{s:2:"ID";s:5:"27023";s:10:"user_login";s:10:"Udomporn29";s:9:"user_pass";s:34:"$P$BJ5P9lkD/shTev8a8V3dWCaszCgAKM0";s:13:"user_nicename";s:10:"udomporn29";s:10:"user_email";s:20:"Udomporn29@gmail.com";s:8:"user_url";s:0:"";s:15:"user_registered";s:19:"2017-10-23 08:48:11";s:19:"user_activation_key";s:45:"1515852178:$P$B2fcSGeQfKFbg7DTCwV3qN4OSM/U9B1";s:11:"user_status";s:1:"0";s:12:"display_name";s:10:"Udomporn29";}}

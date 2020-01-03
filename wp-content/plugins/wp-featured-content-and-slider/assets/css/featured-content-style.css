@@ -5,12 +5,12 @@
     content: " ";
     display: table;
 }
-
 .featured-content-list:after,
 .featured-content-slider:after{
     clear: both;
 }
-
+.featured-content-list a,
+.featured-content-slider a{text-decoration:none !important;}
 
 .featured-content-slider *, .featured-content-list *{outline: none !important;}
 .featured-content-list{clear:both !important; margin:0 -15px;}

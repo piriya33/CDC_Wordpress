@@ -1,6 +1,0 @@
-M�
-^<?php exit; ?>a:1:{s:7:"content";O:8:"stdClass":23:{s:2:"ID";s:5:"32164";s:11:"post_author";s:3:"191";s:9:"post_date";s:19:"2019-11-18 16:31:23";s:13:"post_date_gmt";s:19:"2019-11-18 09:31:23";s:12:"post_content";s:162:"อยากได้มาไว้เล่น หน้า short อย่างเดียวครับ
-
-&nbsp;
-
-ขอบคุณมากๆครับ";s:10:"post_title";s:67:"ผมขอ cdc action zone short only หน่อยครับ";s:12:"post_excerpt";s:0:"";s:11:"post_status";s:7:"publish";s:14:"comment_status";s:6:"closed";s:11:"ping_status";s:6:"closed";s:13:"post_password";s:0:"";s:9:"post_name";s:145:"%e0%b8%9c%e0%b8%a1%e0%b8%82%e0%b8%ad-cdc-action-zone-short-only-%e0%b8%ab%e0%b8%99%e0%b9%88%e0%b8%ad%e0%b8%a2%e0%b8%84%e0%b8%a3%e0%b8%b1%e0%b8%9a";s:7:"to_ping";s:0:"";s:6:"pinged";s:0:"";s:13:"post_modified";s:19:"2019-11-18 16:31:23";s:17:"post_modified_gmt";s:19:"2019-11-18 09:31:23";s:21:"post_content_filtered";s:0:"";s:11:"post_parent";s:2:"79";s:4:"guid";s:183:"https://www.chaloke.com/forums/topic/%e0%b8%9c%e0%b8%a1%e0%b8%82%e0%b8%ad-cdc-action-zone-short-only-%e0%b8%ab%e0%b8%99%e0%b9%88%e0%b8%ad%e0%b8%a2%e0%b8%84%e0%b8%a3%e0%b8%b1%e0%b8%9a/";s:10:"menu_order";s:1:"0";s:9:"post_type";s:5:"topic";s:14:"post_mime_type";s:0:"";s:13:"comment_count";s:1:"0";}}

@@ -1,20 +1,20 @@
 <?php 
 function wpfcas_setup_post_types() {
 
-	$wpfcas_labels =  apply_filters( 'wpfcas_labels', array(
-		'name'                => 'Featured Content',
-		'singular_name'       => 'Featured Content',
-		'add_new'             => __('Add Content', 'featured_post'),
-		'add_new_item'        => __('Add Content', 'featured_post'),
-		'edit_item'           => __('Edit Content', 'featured_post'),
-		'new_item'            => __('New Content', 'featured_post'),
-		'all_items'           => __('All Content', 'featured_post'),
-		'view_item'           => __('View Content', 'featured_post'),
-		'search_items'        => __('Search Content', 'featured_post'),
-		'not_found'           => __('No Content found', 'featured_post'),
-		'not_found_in_trash'  => __('No Content found in Trash', 'featured_post'),
+	$wpfcas_labels =  apply_filters( 'wpfcas_labels', array(		
+		'name'                => _x('Featured Content', 'wp-featured-content-and-slider'),
+		'singular_name'       => _x('Featured Content', 'wp-featured-content-and-slider'),
+		'add_new'             => __('Add Content', 'wp-featured-content-and-slider'),
+		'add_new_item'        => __('Add Content', 'wp-featured-content-and-slider'),
+		'edit_item'           => __('Edit Content', 'wp-featured-content-and-slider'),
+		'new_item'            => __('New Content', 'wp-featured-content-and-slider'),
+		'all_items'           => __('All Content', 'wp-featured-content-and-slider'),
+		'view_item'           => __('View Content', 'wp-featured-content-and-slider'),
+		'search_items'        => __('Search Content', 'wp-featured-content-and-slider'),
+		'not_found'           => __('No Content found', 'wp-featured-content-and-slider'),
+		'not_found_in_trash'  => __('No Content found in Trash', 'wp-featured-content-and-slider'),
 		'parent_item_colon'   => '',
-		'menu_name'           => __('Featured Content', 'featured_post'),
+		'menu_name'           => __('Featured Content', 'wp-featured-content-and-slider'),
 		'exclude_from_search' => true
 	));
 
@@ -42,17 +42,17 @@ add_action('init', 'wpfcas_setup_post_types');
 add_action( 'init', 'wpfcas_taxonomies');
 function wpfcas_taxonomies() {
     $labels = array(
-        'name'              => _x( 'Category', 'taxonomy general name' ),
-        'singular_name'     => _x( 'Category', 'taxonomy singular name' ),
-        'search_items'      => __( 'Search Category' ),
-        'all_items'         => __( 'All Category' ),
-        'parent_item'       => __( 'Parent Category' ),
-        'parent_item_colon' => __( 'Parent Category:' ),
-        'edit_item'         => __( 'Edit Category' ),
-        'update_item'       => __( 'Update Category' ),
-        'add_new_item'      => __( 'Add New Category' ),
-        'new_item_name'     => __( 'New Category Name' ),
-        'menu_name'         => __( 'Category' ),
+        'name'              => _x( 'Category', 'wp-featured-content-and-slider' ),
+        'singular_name'     => _x( 'Category', 'wp-featured-content-and-slider' ),
+        'search_items'      => __( 'Search Category', 'wp-featured-content-and-slider' ),
+        'all_items'         => __( 'All Category', 'wp-featured-content-and-slider' ),
+        'parent_item'       => __( 'Parent Category', 'wp-featured-content-and-slider' ),
+        'parent_item_colon' => __( 'Parent Category:', 'wp-featured-content-and-slider' ),
+        'edit_item'         => __( 'Edit Category', 'wp-featured-content-and-slider' ),
+        'update_item'       => __( 'Update Category', 'wp-featured-content-and-slider' ),
+        'add_new_item'      => __( 'Add New Category', 'wp-featured-content-and-slider' ),
+        'new_item_name'     => __( 'New Category Name', 'wp-featured-content-and-slider' ),
+        'menu_name'         => __( 'Category', 'wp-featured-content-and-slider' ),
     );
 
     $args = array(
@@ -80,7 +80,7 @@ function wpfcas_category_manage_columns($theme_columns) {
     $new_columns = array(
             'cb' => '<input type="checkbox" />',
             'name' => __('Name'),
-            'featured_shortcode' => __( 'Category Shortcode', 'featured_post' ),
+            'featured_shortcode' => __( 'Category Shortcode', 'wp-featured-content-and-slider' ),
             'slug' => __('Slug'),
             'posts' => __('Posts')
 			);

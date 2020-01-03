@@ -1,2 +1,0 @@
-Mé
-^<?php exit; ?>a:1:{s:7:"content";O:8:"stdClass":10:{s:2:"ID";s:5:"24401";s:10:"user_login";s:3:"YUT";s:9:"user_pass";s:34:"$P$Bts8sEdv84iXDAE1EFqVGw0CYbPY0n1";s:13:"user_nicename";s:3:"yut";s:10:"user_email";s:22:"Boonya2519@outlook.com";s:8:"user_url";s:0:"";s:15:"user_registered";s:19:"2016-04-29 06:24:02";s:19:"user_activation_key";s:45:"1499775941:$P$BFEh9J6fPC2vJQXnf3TsvHNfn9Oqn4.";s:11:"user_status";s:1:"0";s:12:"display_name";s:3:"YUT";}}

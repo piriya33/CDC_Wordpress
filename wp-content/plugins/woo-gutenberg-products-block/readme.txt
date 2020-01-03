@@ -4,7 +4,7 @@ Tags: gutenberg, woocommerce, woo commerce, products, blocks, woocommerce blocks
 Requires at least: 5.0
 Tested up to: 5.3
 Requires PHP: 5.6
-Stable tag: 2.5.7
+Stable tag: 2.5.8
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -116,12 +116,17 @@ Release and roadmap notes available on the [WooCommerce Developers Blog](https:/
 
 == Changelog ==
 
-= 2.5.7 = 2019-12-20 =
+= 2.5.8 - 2020-01-02 =
+- Fixed a bug where Filter by Price didn't show up. #1450
+- Price filter now allows entering any number in the input fields, even if it's out of constrains. #1457 
+- Make price slider accurately represent the selected price #1453 
+
+= 2.5.7 - 2019-12-20 =
 - Add translation comments and use correct functions #1412, #1415
 - bug: Fix Price Filter constraints when price is decimal #1419
 
-= 2.5.6 = 2019-12-17 =
-- bug: Fix broken build in 2.5.5. Has same changelog as 2.5.5.
+= 2.5.6 - 2019-12-17 =
+- Fix broken build resulting in blocks not working.
 
 = 2.5.5 - 2019-12-17 =
 - bug: Fix broken atomic blocks in the All Products Block #1402

@@ -32,7 +32,7 @@ class Wpfcas_Admin {
 	function wpfcas_register_menu() {
 		
 		// Plugin features menu
-		add_submenu_page( 'edit.php?post_type='.WPFCAS_POST_TYPE, __('Upgrade to PRO - WP Featured Content and Slider', 'wp-featured-content-and-slider'), '<span style="color:#2ECC71">'.__('Upgrade to PRO', 'wp-featured-content-and-slider').'</span>', 'edit_posts', 'wpfcas-premium', array($this, 'wpfcas_premium_page') );
+		add_submenu_page( 'edit.php?post_type='.WPFCAS_POST_TYPE, __('Upgrade to PRO - WP Featured Content and Slider', 'wp-featured-content-and-slider'), '<span style="color:#2ECC71">'.__('Upgrade to PRO', 'wp-featured-content-and-slider').'</span>', 'edit_posts', 'wpfcas-premium-page', array($this, 'wpfcas_premium_page') );
 		
 		// Hire Us menu
 		add_submenu_page( 'edit.php?post_type='.WPFCAS_POST_TYPE, __('Hire Us', 'wp-featured-content-and-slider'), '<span style="color:#2ECC71">'.__('Hire Us', 'wp-featured-content-and-slider').'</span>', 'edit_posts', 'wpfcas-hireus', array($this, 'wpfcas_hireus_page') );

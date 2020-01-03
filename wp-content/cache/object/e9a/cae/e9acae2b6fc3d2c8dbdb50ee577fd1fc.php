@@ -1,5 +1,4 @@
-��
-^<?php exit; ?>a:1:{s:7:"content";O:8:"stdClass":23:{s:2:"ID";s:5:"21997";s:11:"post_author";s:5:"27417";s:9:"post_date";s:19:"2018-03-15 13:28:44";s:13:"post_date_gmt";s:19:"2018-03-15 06:28:44";s:12:"post_content";s:474:"แจ้งชำระค่าสมัครสมาชิก supporting membership
+��^<?php exit; ?>a:1:{s:7:"content";O:8:"stdClass":23:{s:2:"ID";s:5:"21997";s:11:"post_author";s:5:"27417";s:9:"post_date";s:19:"2018-03-15 13:28:44";s:13:"post_date_gmt";s:19:"2018-03-15 06:28:44";s:12:"post_content";s:474:"แจ้งชำระค่าสมัครสมาชิก supporting membership
 
 order#21992
 

@@ -6,7 +6,7 @@ $wpfcasIcon = get_post_meta( get_the_ID(),'wpfcas_slide_icon', true ); ?>
 <div class="<?php echo $css_class.' '.$class;?>">
      <div class="featured-content-image <?php echo $imagestyle; ?>"> 
 						<?php if($sliderurl != '') { ?>
-						<a href="<?php echo $sliderurl; ?>" > 	<?php if($wpfcasIcon != '') { echo '<i style="color:'.$faIconcolor.'" class="'.$wpfcasIcon.'"></i>'; } else { the_post_thumbnail(array(100,100)); } ?>		</a>
+						<a href="<?php echo esc_url($sliderurl); ?>" > 	<?php if($wpfcasIcon != '') { echo '<i style="color:'.$faIconcolor.'" class="'.$wpfcasIcon.'"></i>'; } else { the_post_thumbnail(array(100,100)); } ?>		</a>
 						<?php } else { ?>
 						<?php if($wpfcasIcon != '') { echo '<i style="color:'.$faIconcolor.'" class="'.$wpfcasIcon.'"></i>'; } else { the_post_thumbnail(array(100,100)); } ?>	
 						<?php } ?>
@@ -15,7 +15,7 @@ $wpfcasIcon = get_post_meta( get_the_ID(),'wpfcas_slide_icon', true ); ?>
 					<div class="featured-content">
 					<h3 class="entry-title">
 					<?php if($sliderurl != '') { ?>
-					<a href="<?php echo $sliderurl; ?>" ><?php the_title(); ?></a>
+					<a href="<?php echo esc_url($sliderurl); ?>" ><?php the_title(); ?></a>
 						<?php } else { ?>
 						<?php the_title(); ?>
 						<?php } ?>
@@ -34,7 +34,7 @@ $wpfcasIcon = get_post_meta( get_the_ID(),'wpfcas_slide_icon', true ); ?>
 					<?php } if($displayreadMore == 'true') {
 							if($sliderurl != '') { ?>
 					<div class="featured-read-more">					
-					<a href="<?php echo $sliderurl; ?>" ><?php esc_html_e( 'Read More', 'wp-featured-content-and-slider' ); ?></a>					
+					<a href="<?php echo esc_url($sliderurl); ?>" ><?php esc_html_e( 'Read More', 'wp-featured-content-and-slider' ); ?></a>					
 					
 					</div>
 					<?php } } ?>

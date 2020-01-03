@@ -2,7 +2,7 @@
 Contributors: wponlinesupport, anoopranawat, pratik-jain
 Tags: content slider, slider, featured, features, services, custom post slider, custom post type display, featured content, featured services, featured content rotator, featured content slider, content gallery, content slideshow, featured content slideshow, featured posts, featured content slider, shortcode
 Requires at least: 4.0
-Tested up to: 5.2.1
+Tested up to: 5.3.2
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -14,11 +14,11 @@ Many CMS site needs to display Featured Content/Featured services on website. "W
 
 Display Featured Content/Featured services, features your product, company or services offers, and display them via a shortcode OR template code.
 
-View [DEMO](http://wponlinesupport.com/wp-plugin/wp-featured-content-and-slider/) | [PRO DEMO and Features](http://wponlinesupport.com/wp-plugin/wp-featured-content-and-slider/) for additional information.
+Check [Demo and Features](https://demo.wponlinesupport.com/featured-content-and-slider-demo/) for additional information.
 
 Now added Custom Post Type support where you can display custom post type content with this plugin.
 
-Also work with Gutenberg shortcode block.
+**Also work with Gutenberg shortcode block.**
 
 **We have given 4 designs with 2 shortcode.**
 
@@ -144,6 +144,11 @@ Where you can display Featured Content in list view, in grid view and Featured C
 4. Category Shortcode
 
 == Changelog ==
+
+= 1.3.3 (31, Dec 2019) =
+* [*] Fixed some css related issue.
+* [+] Added esc_url() where needed.
+* [*] Fixed text domain issue.
 
 = 1.3.3 (31, May 2019) =
 * [*] Fix - Resolved warning of count varible with PHP latest version.

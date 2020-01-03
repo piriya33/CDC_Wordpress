@@ -1,5 +1,4 @@
-��
-^<?php exit; ?>a:1:{s:7:"content";O:8:"stdClass":24:{s:2:"ID";i:19246;s:11:"post_author";s:4:"1985";s:9:"post_date";s:19:"2017-11-24 14:29:06";s:13:"post_date_gmt";s:19:"2017-11-24 07:29:06";s:12:"post_content";s:4210:"<h4 class="title style-scope ytd-video-primary-info-renderer">CDC LIVE: Bitcoin นอกจากเก็งกำไรแล้วทำไรได้อีก? 26 07 2018</h4>
+�^<?php exit; ?>a:1:{s:7:"content";O:8:"stdClass":24:{s:2:"ID";i:19246;s:11:"post_author";s:4:"1985";s:9:"post_date";s:19:"2017-11-24 14:29:06";s:13:"post_date_gmt";s:19:"2017-11-24 07:29:06";s:12:"post_content";s:4210:"<h4 class="title style-scope ytd-video-primary-info-renderer">CDC LIVE: Bitcoin นอกจากเก็งกำไรแล้วทำไรได้อีก? 26 07 2018</h4>
 https://www.youtube.com/watch?v=LnnxJk_74bc&amp;t=825s
 <h4 class="title style-scope ytd-video-primary-info-renderer">CDC Live: Bitcoin Update 10 07 2018</h4>
 https://www.youtube.com/watch?v=cPtRN9hGZI0

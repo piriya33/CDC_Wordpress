@@ -122,12 +122,6 @@ function wpfcasm_help_tabs() {
 													'url'				=> 'http://wponlinesupport.com/plugin-data-api/plugins-data.php',
 													'transient_key'		=> 'wpos_plugins_feed',
 													'transient_time'	=> 172800
-												),
-						'offers-feed' 	=> array(
-													'name'				=> __('Hire Us', 'wp-featured-content-and-slider'),
-													'url'				=> 'http://wponlinesupport.com/plugin-data-api/wpos-offers.php',
-													'transient_key'		=> 'wpos_offers_feed',
-													'transient_time'	=> 86400,
 												)
 					);
 	return $wpos_feed_tabs;
@@ -147,6 +141,7 @@ function wpfcasm_howitwork_page() { ?>
 		.postbox-container .wpos-list li:before{font-family: dashicons; content: "\f139"; font-size:20px; color: #0073aa; vertical-align: middle;}
 		.wpfcasm-wrap .wpos-button-full{display:block; text-align:center; box-shadow:none; border-radius:0;}
 		.wpfcasm-shortcode-preview{background-color: #e7e7e7; font-weight: bold; padding: 2px 5px; display: inline-block; margin:0 0 2px 0;}
+		.upgrade-to-pro{font-size:18px; text-align:center; margin-bottom:15px;}
 	</style>
 
 	<div class="post-box-container">
@@ -212,8 +207,8 @@ function wpfcasm_howitwork_page() { ?>
 												</th>
 												<td>
 													<p><?php _e('Check plugin document for shortcode parameters and demo for designs.', 'wp-featured-content-and-slider'); ?></p> <br/>
-													<a class="button button-primary" href="http://www.wponlinesupport.com/plugins-documentation/document-wp-featured-content-and-slider/" target="_blank"><?php _e('Documentation', 'wp-featured-content-and-slider'); ?></a>									
-													<a class="button button-primary" href="http://demo.wponlinesupport.com/featured-content-and-slider-demo/" target="_blank"><?php _e('Demo for Designs', 'wp-featured-content-and-slider'); ?></a>
+													<a class="button button-primary" href="https://www.wponlinesupport.com/plugins-documentation/document-wp-featured-content-and-slider/" target="_blank"><?php _e('Documentation', 'wp-featured-content-and-slider'); ?></a>									
+													<a class="button button-primary" href="https://demo.wponlinesupport.com/featured-content-and-slider-demo/" target="_blank"><?php _e('Demo for Designs', 'wp-featured-content-and-slider'); ?></a>
 												</td>
 											</tr>
 										</tbody>
@@ -238,7 +233,9 @@ function wpfcasm_howitwork_page() { ?>
 										<li>35+ Designs</li>
 										<li>Display category wise</li>
 										<li>3 Shortcodes</li>
-										<li>Visual Composer Support</li>
+										<li>WP Templating Features.</li>
+										<li>Gutenberg Block Supports.</li>
+										<li>Visual Composer/WPBakery Page Builder Supports.</li>
 										<li>Drag & Drop order change</li>									
 										<li>Custom read more button and link</li>
 										<li>Custom css</li>
@@ -246,8 +243,9 @@ function wpfcasm_howitwork_page() { ?>
 										<li>Fully responsive</li>
 										<li>100% Multi language</li>
 									</ul>
-									<a class="button button-primary wpos-button-full" href="https://www.wponlinesupport.com/wp-plugin/wp-featured-content-and-slider/" target="_blank"><?php _e('Go Premium ', 'wp-featured-content-and-slider'); ?></a>	
-									<p><a class="button button-primary wpos-button-full" href="http://demo.wponlinesupport.com/prodemo/pro-wp-featured-content-and-slider/" target="_blank"><?php _e('View PRO Demo ', 'wp-featured-content-and-slider'); ?></a>			</p>								
+									<div class="upgrade-to-pro">Gain access to <strong>WP Featured Content and Slider</strong> included in <br /><strong>Essential Plugin Bundle</div>
+									<a class="button button-primary wpos-button-full" href="https://www.wponlinesupport.com/wp-plugin/wp-featured-content-and-slider/?ref=WposPratik&utm_source=WP&utm_medium=WP-Plugins&utm_campaign=Upgrade-PRO" target="_blank"><?php _e('Go Premium ', 'wp-featured-content-and-slider'); ?></a>	
+									<p><a class="button button-primary wpos-button-full" href="https://demo.wponlinesupport.com/prodemo/pro-wp-featured-content-and-slider/" target="_blank"><?php _e('View PRO Demo ', 'wp-featured-content-and-slider'); ?></a>			</p>								
 								</div><!-- .inside -->
 							</div><!-- #general -->
 						</div><!-- .meta-box-sortables ui-sortable -->

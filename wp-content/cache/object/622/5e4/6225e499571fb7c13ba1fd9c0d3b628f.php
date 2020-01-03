@@ -1,5 +1,4 @@
-��
-^<?php exit; ?>a:1:{s:7:"content";O:8:"stdClass":23:{s:2:"ID";s:5:"26668";s:11:"post_author";s:1:"1";s:9:"post_date";s:19:"2019-01-31 10:18:53";s:13:"post_date_gmt";s:19:"2019-01-31 03:18:53";s:12:"post_content";s:7227:"<!-- wp:heading -->
+��^<?php exit; ?>a:1:{s:7:"content";O:8:"stdClass":23:{s:2:"ID";s:5:"26668";s:11:"post_author";s:1:"1";s:9:"post_date";s:19:"2019-01-31 10:18:53";s:13:"post_date_gmt";s:19:"2019-01-31 03:18:53";s:12:"post_content";s:7227:"<!-- wp:heading -->
 <h2>เปิดรับสมัครแล้ว</h2>
 <!-- /wp:heading -->
 

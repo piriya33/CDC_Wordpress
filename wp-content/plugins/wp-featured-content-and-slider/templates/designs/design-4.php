@@ -8,13 +8,13 @@ if(isset($slidesColumn) && $slidesColumn != ''){ $slideClass = $slidesColumn; }e
 <div class="<?php echo $css_class.' '.$class.' slider-col-'.$slideClass; ?>">  
 				<div class="featured-content-position">
 					<div class="featured-content-image-bg"> 
-						<img src="<?php echo $wpfcasfeat_image; ?>"alt="<?php the_title(); ?>" />						
+						<img src="<?php echo esc_url($wpfcasfeat_image); ?>"alt="<?php the_title(); ?>" />						
 					</div>
 					<div class="featured-content-overlay">
 						<div class="featured-content-overlay-inner">
 							<div class="featured-content-image <?php echo $imagestyle; ?>"> 
 								<?php if($sliderurl != '') { ?>
-								<a href="<?php echo $sliderurl; ?>" > 	<?php if($wpfcasIcon != '') { echo '<i style="color:'.$faIconcolor.'" class="'.$wpfcasIcon.'"></i>';  } ?>		</a>
+								<a href="<?php echo esc_url($sliderurl); ?>" > 	<?php if($wpfcasIcon != '') { echo '<i style="color:'.$faIconcolor.'" class="'.$wpfcasIcon.'"></i>';  } ?>		</a>
 								<?php } 
 									else
 										{								
@@ -23,7 +23,7 @@ if(isset($slidesColumn) && $slidesColumn != ''){ $slideClass = $slidesColumn; }e
 							</div>
 							<h3 class="entry-title">
 							<?php if($sliderurl != '') { ?>
-							<a href="<?php echo $sliderurl; ?>" ><?php the_title(); ?></a>
+							<a href="<?php echo esc_url($sliderurl); ?>" ><?php the_title(); ?></a>
 								<?php } else { ?>
 								<?php the_title(); ?>
 								<?php } ?>
@@ -42,7 +42,7 @@ if(isset($slidesColumn) && $slidesColumn != ''){ $slideClass = $slidesColumn; }e
 							<?php } if($displayreadMore == 'true') {
 									if($sliderurl != '') { ?>
 							<div class="featured-read-more">					
-							<a href="<?php echo $sliderurl; ?>" ><?php esc_html_e( 'Read More', 'wp-featured-content-and-slider' ); ?></a>					
+							<a href="<?php echo esc_url($sliderurl); ?>" ><?php esc_html_e( 'Read More', 'wp-featured-content-and-slider' ); ?></a>					
 							
 							</div>
 							<?php } } ?>
