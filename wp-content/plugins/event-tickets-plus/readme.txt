@@ -1,10 +1,10 @@
 === Event Tickets Plus ===
 
-Contributors: ModernTribe, brianjessee, camwynsp, sc0ttkclark
+Contributors: ModernTribe, brianjessee, camwynsp, paulkim, sc0ttkclark, aguseo, barry.hughes, bordoni, borkweb, cliffpaulick, courane01, faction23, GeoffBel, geoffgraham, ggwicz, jbrinley, jentheo, leahkoerper, lucatume, mastromktg, MZAWeb, neillmcshea, nicosantos, patriciahillebrandt, peterchester, reid.peifer, roblagatta, ryancurban, shane.pearlman, tribecari, vicskf, zbtirrell
 Tags: events, WooCommerce, WooTickets, add-on, ticket sales, tickets, calendar, community, registration, api, dates, date, posts, workshop, conference, meeting, seminar, concert, summit, The Events Calendar, Events Calendar PRO, ticket integration, event ticketing, RSVP, EDD, Easy Digital Downloads
-Requires at least: 4.7
-Tested up to: 5.1
-Stable tag: 4.10.1.1
+Requires at least: 4.9
+Tested up to: 5.3
+Stable tag: 4.11.1
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -34,9 +34,6 @@ Event Tickets Plus adds features and functionality onto the core Event Tickets p
 
 = Requirements =
 
-* PHP 5.2.4 or greater (recommended: PHP 7.0 or greater)
-* WordPress 4.5 or above
-* jQuery 1.11.x
 * Event Tickets 4.6 or above
 * Event Tickets Plus 4.6 or above
 * The Events Calendar 4.6 or above (optional)
@@ -137,6 +134,169 @@ Our Premium Plugins:
 * <a href="http://m.tri.be/fa" target="_blank">The Events Calendar: Filter Bar</a>
 
 == Changelog ==
+
+= [4.11.1] 2019-12-19 =
+
+* Tweak - Avoid loading plugin assets on post types that are not tickets-enabled post types [124403]
+* Tweak - Tweak styles around asterisk for required attendee registration inputs. [137285]
+* Tweak - Ensure font weight is standardized for attendee fields on single-event and tickets views. [137285]
+* Fix - WooCommerce tickets no longer show negative quantity available to purchase, such as if a ticket product is already oversold and backorders are not allowed [133432]
+* Language - 0 new strings added, 22 updated, 0 fuzzied, and 0 obsoleted
+
+= [4.11.0.2] 2019-12-12 =
+
+* Fix - Clean up the way we query pending orders for tickets, add caching to prevent repeated queries, and optimize meta calls for order information. [138485]
+* Fix - Update the WooCommerce minimum version as version prior to 3.7 are now incompatible. [138483]
+
+= [4.11.0.1] 2019-12-11 =
+
+* Fix - Prevent Composer Autoloader from taking too much time loading files and stop autoloading a class unnecessarily on each page load [138389]
+* Fix - Correct a bad `self` reference in `Tribe__Tickets_Plus__Commerce__WooCommerce__Meta` that could cause a fatal. [138383]
+
+= [4.11] 2019-12-10 =
+
+* Feature - Utilize the new `tribe-dialog` for WooCommerce & Easy Digital Downloads "Get Tickets" buttons [129434]
+* Feature - Add option to turn on/off Attendee Registration Modal. On by default _for new installs_ only [133048]
+* Feature - Detect changes of WooCommerce Ticket Products in the cart with AR fields and redirect to AR page on change [131139]
+* Feature - Use the block ticket template for WooCommerce and Easy Digital Downloads ticket views [132568]
+* Feature - Deprecate templates for WooCommerce and Easy Digital Downloads ticket views [132568]
+* Tweak - Change the way we add options to the ticket settings tab. [133048]
+* Tweak - Add ability to track installed version history. Added `$version_history_slug` and `$latest_version_slug` properties to `Tribe__Tickets_Plus__Main` [133048]
+* Tweak - Add links back to the Attendee Registration page from WooCommerce and Easy Digital Downloads checkout pages. [129449]
+* Tweak - Minimum required WordPress version updated to WordPress 4.9
+* Tweak - Added filters: `tribe_tickets_plus_edd_cart_url`, `tribe_tickets_plus_edd_checkout_url`, `woocommerce_add_to_cart_validation`, `tribe_tickets_plus_woo_checkout_url`, `tribe_tickets_plus_meta_storage_get_hash_cookie`, `tribe_tickets_plus_meta_storage_combine_new_and_saved_meta`
+* Tweak - Removed filters: `tribe_tickets_plus_hide_attendees_list_optout`, `tribe_events_tickets_woo_cart_class`, `tribe_events_tickets_woo_quantity_column_class`, `tribe_events_tickets_row_class`, `tribe_events_tickets_woo_quantity_column_class`, `tribe_tickets_plus_hide_attendees_list_optout`
+* Tweak - Added actions: `event_tickets_plus_edd_send_ticket_emails`, `tribe_tickets_plus_meta_storage_set_hash_cookie`, `tribe_tickets_plus_meta_storage_delete_hash_cookie`, `event_tickets_plus_attendee_meta_update`
+* Tweak - Removed actions: `wootickets_tickets_after_quantity_input`
+* Tweak - Changed views: `eddtickets/tickets`, `wootickets/tickets`
+* Fix - Make sure we're done processing RSVP attendee meta before we clear the cookie used to sync with the temporary transient meta. [138003]
+* Language - 3 new strings added, 5 updated, 0 fuzzied, and 0 obsoleted
+
+= [4.10.10] 2019-11-13 =
+
+* Feature - Added an 'Unlimited' drop-down option to the Stock filter for Advanced Post Manager to avoid having to manually filter by '-1' [123365]
+* Feature - Stock and Sales values for Advanced Post Manager now display as formatted numbers (such as 'Unlimited' instead of '-1' stock and '2,520' instead of '2520' sales)
+* Fix - Adjust Stock and Sales filter values for Advanced Post Manager display [123365]
+* Fix - Avoid potential PHP fatal errors with Advanced Post Manager [120782]
+* Fix - Correct display value for Advanced Post Manager's Stock column for events with Global Stock [73766]
+* Fix - Unlimited stock events now appear when searching "Ticket Stock is at least ..." [73766]
+* Language - 0 new strings added, 16 updated, 0 fuzzied, and 0 obsoleted
+
+= [4.10.9] 2019-10-14 =
+
+* Fix - Attendees Report's "Orders" tab now displays amount sold and available regardless of amount, including for unlimited and zero remaining for Easy Digital Downloads and WooCommerce attendees [134108]
+* Fix - Prevent Attendee Registration saving from storing only the last attendee's information for all Easy Digital Downloads attendees [134408]
+* Language - 0 new strings added, 13 updated, 0 fuzzied, and 0 obsoleted
+
+= [4.10.8] 2019-10-01 =
+
+* Tweak - Add compatibility for plugins that separate tickets into separate line items and allow filtering those tickets found in the cart [133639]
+* Tweak - Added filters: `tribe_tickets_plus_edd_tickets_in_cart`, `tribe_tickets_plus_woocommerce_tickets_in_cart`
+* Fix - Prevent PHP notices when updating Attendee Fields on the My Tickets Page [132829]
+* Fix - Prevent throwing notices on the orders view if there are no orders to show [127506]
+* Fix - Update outdated gradient direction syntax in `wootickets.pcss` [133243]
+* Language: 0 new strings added, 1 updated, 0 fuzzied, and 0 obsoleted
+
+= [4.10.7] 2019-09-16 =
+
+* Tweak - Reduced file size by removing .po files and directing anyone creating or editing local translations to translations.theeventscalendar.com [128053]
+* Tweak - Add class exists check for `Tribe__Tickets_Plus__Commerce__WooCommerce__Email` to prevent fatal error in rare cases [130183]
+* Tweak - Added filters: `tribe_tickets_plus_get_total_complete`, `tribe_tickets_plus_get_total_refunded`, `event_tickets_plus_commerce_edd_refunded_payment_statuses`
+* Tweak - Changed views: `eddtickets/tickets`, `meta/checkbox`, `meta/number`, `meta/radio`, `meta/select`, `meta/text`, `tickets-plus/orders-edit-meta`, `wootickets/tickets`
+* Fix - Adjust WooCommerce attendee totals to account for refunded (do not include refunded in completed) [126734]
+* Fix - Correctly check for attendees created just before sending ticket emails, which resolves ticket email problems when adding a ticket and then another product to the cart and checking out [130597]
+* Fix - Get each ticket's quantity available in a filterable way [119822]
+* Fix - Dependency checker now correctly identifies missing Event Tickets on activation or deactivation of Event Tickets with The Events Calendar active [123459]
+* Fix - Fix the attendee registration settings slugs used in the `retro_attendee_page_option` functionality [128264]
+* Fix - Check for available stock by using `_tribe_ticket_capacity` instead of `_stock` meta field in EDD [132585]
+* Fix - Resolved issue with saving Attendee Information checkbox and radio field values when editing them [131727]
+* Fix - Prevent PHP notices when an optional radio button is left empty in attendee information [134109]
+* Language - 1 new strings added, 36 updated, 0 fuzzied, and 0 obsoleted
+
+= [4.10.6] 2019-08-22 =
+
+* Tweak - Don't duplicate IDs, correct templates as needed [131430]
+* Tweak - Remove fee calculation coding from WooCommerce Tickets Order Report and replace with filters for Community Tickets to utilize [128843]
+* Tweak - Added filters: `tribe_tickets_plus_edd_order_table_classes`, `tribe_tickets_plus_woocommerce_order_table_classes`, `tribe_tickets_plus_woocommerce_orders_columns`, `tribe_tickets_plus_woocommerce_filter_column_total`, `tribe_tickets_plus_woocommerce_filter_individual_order_totals_in_event_sales`, `tribe_tickets_plus_woocommerce_filter_report_event_sales_total`, `tribe_tickets_order_report_show_title`, `tribe_tickets_edd_order_report_show_title`, `tribe_tickets_edd_order_report_title`, `tribe_tickets_order_report_show_title`, `tribe_tickets_woocommerce_order_report_show_title`, `tribe_tickets_woocommerce_order_report_title`
+* Tweak - Removed filters: `tribe_events_orders_report_site_fees_note`
+* Tweak - Added actions: `tribe_tickets_plus_woocommerce_sales_report_after_order_breakdown`
+* Fix - Replace calculations in WC order report to utilize filters so Community Tickets (and other plugins) can add/modify them as needed. [130279]
+* Language - 1 new strings added, 18 updated, 0 fuzzied, and 2 obsoleted
+
+= [4.10.5.1] 2019-06-13 =
+
+* Fix - Correct broken attendee list in classic editor [128946]
+* Fix - Account for visitors getting to the WooCommerce cart or checkout screens in a manner other than our checkout flow, such as directly visiting the URL [128505]
+* Fix - Correctly query and join the necessary tables when WooCommerce or EDD are not activated for queries against `purchaser_name` or `purchaser_email` [128881]
+* Language - 0 new strings added, 2 updated, 0 fuzzied, and 0 obsoleted
+
+= [4.10.5] 2019-05-23 =
+
+* Feature - Implemented our abstract Object-relational Mapping layer for Easy Digital Downloads / WooCommerce Attendees and increased stability with more automated tests [123468]
+* Tweak - Added ability to query attendees by provider using `tribe_attendees( 'woo' )` and `tribe_attendees( 'edd' )` [123468]
+* Tweak - Added filters: `tribe_tickets_plus_attendees_list_limit_attendees`
+* Language - 0 new strings added, 18 updated, 0 fuzzied, and 0 obsoleted
+
+= [4.10.4] 2019-05-14 =
+
+* Feature - Add tooltips to Attendee report, utilizing new tooltip object in tribe-common [120856]
+* Feature - Add support for checkbox values returning as "Checked" when populating data for attendee list exports [126735]
+* Tweak - Verify the status of attendee as complete when checking in using the REST API [122458]
+* Tweak - Utilize the order items to generate the Order Report for WooCommerce instead of attendees [93785]
+* Tweak - Remove canceled orders from counting as Pending Competition on the WooCommerce Tickets Order Page [120862]
+* Tweak - Changed some tooltip text on the attendee report page for clarity around capacity/inventory/stock [126342]
+* Tweak - Adjust styling of the Attendee Information required fields indicator [126779]
+* Tweak - Added filters: `tribe_tickets_plus_get_total_cancelled`, `tribe_events_tickets_plus_attendees_list_checkbox_label`
+* Fix - Update shared capacity on deletion of attendee for WooCommerce and EDD Attendees [106516]
+* Fix - Make Attendees Report match the order report, specifically "Total Tickets Issued" should not include cancelled tickets [69823]
+* Fix - Make sure that `WC()->cart` is set before we try to get it's contents [126779]
+* Fix - Prevent tickets from being counted twice in the order report when 2 or more tickets included in an order [106516]
+* Fix - Ensure capacity changes for source and target tickets when moving a ticket from one type to another [102636]
+* Fix - Deprecate old option key `ticket-attendee-info-slug` for attendee registration shortcode to prevent errors [126856]
+* Fix - Change cookie settings so that Attendee Information is passed through to checkout on non-secure sites properly [25964]
+* Fix - Alter query so EDD `Stock_Control->get_purchased_inventory()` takes moved tickets into account [124657]
+* Language - 9 new strings added, 26 updated, 0 fuzzied, and 1 obsoleted
+
+= [4.10.3] 2019-04-23 =
+
+* Tweak - Changed minimum supported version of The Events Calendar to 4.9
+* Tweak - Allow menu order to be saved when saving tickets [121703]
+* Tweak - Add hooks before WooCommerce and EDD Attendees are generated `tribe_tickets_plus_woo_before_generate_tickets` and `tribe_tickets_plus_edd_before_generate_tickets` [124675]
+* Tweak - Add CSS for `tribe_events_modal` class when query string is present in URL [123818]
+* Tweak - Modify the attendee meta to remove empty values, but keep zero and improve the escaping of data [123892]
+* Tweak - Add support for display 0 when it is a value in attendee meta [123892]
+* Tweak - Change Attendee Registration page options to use ID instead of page slug [124997]
+* Tweak - Use new `tribe_attendee_registration_form_classes` hook to add form classes for EDD/WooCommerce [124997]
+* Tweak - Added actions: `tribe_tickets_plus_woo_before_generate_tickets`, `tribe_tickets_plus_woo_before_generate_tickets`
+* Fix - Add Deleted Attendees Count to EDD and add checks for EDD/WooCommerce Tickets to only increase counter once per attendee [122083]
+* Fix - Filter the Attendee Registration display to only show tickets for the current provider. Add functions to add provider to cart and Attendee Registration URL [122317]
+* Language - 0 new strings added, 16 updated, 1 fuzzied, and 0 obsoleted
+
+= [4.10.2] 2019-04-01 =
+
+* Tweak - Change text on Tickets WooCommerce settings to properly reflect delay changes [123623]
+* Tweak - Add option to use a different page as the default Attendee Registration page using the `[tribe_attendee_registration]` shortcode [123044]
+* Tweak - Update hooks used to notify promoter of changes [124118]
+* Tweak - Add new hook `tribe_tickets_plus_woo_reset_attendee_cache` to notify when an WooCommerce attendee is reset on cache [124118]
+* Tweak - Changed views: `meta/checkbox`, `meta/radio`, `tickets-plus/orders-edit-meta`
+* Fix - Change priority of initializing of CSV mapping [123401]
+* Fix - Use a md5 hash for checkbox and radio option names to prevent fields from not saving if they a large amount of characters and handle the processing of them [119448]
+* Fix - Swap similar methods with each other for statuses of ticket generation and emails in WooCommerce, thanks to @aaemnnosttv for the code! [123242]
+* Fix - Add filter for better overriding of archive title [123065]
+* Fix - Prevent missing stati causing query errors [123011]
+* Fix - Trigger showing the submit button in "my tickets" view [114111]
+* Fix - Handle null/empty values when iterating through attendee fields [123516]
+* Language - 5 new strings added, 27 updated, 0 fuzzied, and 1 obsoleted
+
+= [4.10.1.3] 2019-03-15 =
+
+* Fix - Correct issue with WooCommerce ticket charges not being sent to Stripe and other gateways [124123]
+
+= [4.10.1.2] 2019-03-14 =
+
+* Tweak - Add new hook `tribe_tickets_plus_woo_reset_attendee_cache` to notify when an WooCommerce attendee is reset on cache [124118]
+* Tweak - Added actions: `tribe_tickets_plus_woo_reset_attendee_cache`
+* Language - 0 new strings added, 1 updated, 0 fuzzied, and 0 obsoleted
 
 = [4.10.1.1] 2019-03-06 =
 

@@ -11,6 +11,7 @@ class Tribe__Tickets_Plus__Commerce__EDD__Global_Stock {
 	 */
 	public function __construct() {
 		add_action( 'event_tickets_edd_tickets_purchased_inventory_recorded', array( $this, 'adjust_stock_levels' ) );
+		add_action( 'eddtickets_ticket_deleted', array( $this, 'increase_global_stock_on_delete' ), 10, 3 );
 	}
 
 	/**
@@ -86,8 +87,8 @@ class Tribe__Tickets_Plus__Commerce__EDD__Global_Stock {
 			$product = get_post( $cart_item['id'] );
 			$event   = $edd_tickets->get_event_for_ticket( $product->ID );
 
-			// Skip if we are not looking at an event ticket
-			if ( ! $event ) {
+			// Skip on no event
+			if ( ! $event instanceof WP_Post ) {
 				continue;
 			}
 
@@ -254,6 +255,35 @@ class Tribe__Tickets_Plus__Commerce__EDD__Global_Stock {
 					$original_level = $global_stock->get_stock_level();
 					$global_stock->set_stock_level( $original_level - $amount_purchased );
 					break;
+			}
+		}
+	}
+
+	/**
+	 * Increase Global Stock on Delete of EDD Attendee
+	 *
+	 * @since 4.10.4
+	 *
+	 * @param int $ticket_id the attendee id being deleted
+	 * @param int $post_id the post or event id for the attendee
+	 * @param int $product_id the ticket-product id in EDD
+	 */
+	public function increase_global_stock_on_delete( $ticket_id, $post_id, $product_id ) {
+
+		$ticket  = tribe( 'tickets-plus.commerce.edd' )->get_ticket( $post_id, $product_id );
+
+		if ( Tribe__Tickets__Global_Stock::OWN_STOCK_MODE !== $ticket->global_stock_mode() ) {
+			$global_stock_obj = new Tribe__Tickets__Global_Stock( $post_id );
+
+			$old_stock = $global_stock_obj->get_stock_level();
+			$new_stock = $global_stock_obj->get_stock_level() + 1;
+			$global_stock_obj->set_stock_level( $new_stock );
+
+			if ( Tribe__Tickets__Global_Stock::CAPPED_STOCK_MODE === $ticket->global_stock_mode() ) {
+				$capped_stock     = get_post_meta( $product_id, Tribe__Tickets__Global_Stock::TICKET_STOCK_CAP, true );
+				$new_capped_stock = $capped_stock + ( $new_stock - $old_stock );
+
+				update_post_meta( $product_id, Tribe__Tickets__Global_Stock::TICKET_STOCK_CAP, $new_capped_stock, $capped_stock );
 			}
 		}
 	}

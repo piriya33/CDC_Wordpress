@@ -1,1 +1,1 @@
-S¥^<?php exit; ?>a:1:{s:7:"content";i:2;}
+/ï^<?php exit; ?>a:1:{s:7:"content";i:2;}

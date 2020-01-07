@@ -38,7 +38,7 @@ img.emoji {
 <link rel='stylesheet' id='tribe-tooltip-css'  href='http://dev.chaloke.com/wp-content/plugins/event-tickets/common/src/resources/css/tooltip.min.css?ver=4.10.3' type='text/css' media='all' />
 <link rel='stylesheet' id='wp-block-library-css'  href='http://dev.chaloke.com/wp-includes/css/dist/block-library/style.min.css?ver=5.3.2' type='text/css' media='all' />
 <link rel='stylesheet' id='wp-block-library-theme-css'  href='http://dev.chaloke.com/wp-includes/css/dist/block-library/theme.min.css?ver=5.3.2' type='text/css' media='all' />
-<link rel='stylesheet' id='wc-block-style-css'  href='http://dev.chaloke.com/wp-content/plugins/woo-gutenberg-products-block/build/style.css?ver=2.5.7' type='text/css' media='all' />
+<link rel='stylesheet' id='wc-block-style-css'  href='http://dev.chaloke.com/wp-content/plugins/woo-gutenberg-products-block/build/style.css?ver=2.5.8' type='text/css' media='all' />
 <link rel='stylesheet' id='storefront-gutenberg-blocks-css'  href='http://dev.chaloke.com/wp-content/themes/storefront/assets/css/base/gutenberg-blocks.css?ver=2.5.3' type='text/css' media='all' />
 <style id='storefront-gutenberg-blocks-inline-css' type='text/css'>
 
@@ -119,7 +119,6 @@ img.emoji {
 <link rel='stylesheet' id='cptch_stylesheet-css'  href='http://dev.chaloke.com/wp-content/plugins/captcha/css/front_end_style.css?ver=4.4.5' type='text/css' media='all' />
 <link rel='stylesheet' id='dashicons-css'  href='http://dev.chaloke.com/wp-includes/css/dashicons.min.css?ver=5.3.2' type='text/css' media='all' />
 <link rel='stylesheet' id='cptch_mobile_style-css'  href='http://dev.chaloke.com/wp-content/plugins/captcha/css/mobile_style.css?ver=4.4.5' type='text/css' media='all' />
-<link rel='stylesheet' id='contact-form-7-css'  href='http://dev.chaloke.com/wp-content/plugins/contact-form-7/includes/css/styles.css?ver=5.1.6' type='text/css' media='all' />
 <link rel='stylesheet' id='wp_html5video_css-css'  href='http://dev.chaloke.com/wp-content/plugins/html5-videogallery-plus-player/assets/css/video-js.css?ver=2.3.4' type='text/css' media='all' />
 <link rel='stylesheet' id='wp_html5video_colcss-css'  href='http://dev.chaloke.com/wp-content/plugins/html5-videogallery-plus-player/assets/css/video-style.css?ver=2.3.4' type='text/css' media='all' />
 <link rel='stylesheet' id='wpos-magnific-popup-style-css'  href='http://dev.chaloke.com/wp-content/plugins/html5-videogallery-plus-player/assets/css/magnific-popup.css?ver=2.3.4' type='text/css' media='all' />
@@ -127,9 +126,9 @@ img.emoji {
 <style id='woocommerce-inline-inline-css' type='text/css'>
 .woocommerce form .form-row .required { visibility: visible; }
 </style>
-<link rel='stylesheet' id='wpfcas-font-awesome-css'  href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css?ver=1.3.3' type='text/css' media='all' />
-<link rel='stylesheet' id='wpfcas_style-css'  href='http://dev.chaloke.com/wp-content/plugins/wp-featured-content-and-slider/assets/css/featured-content-style.css?ver=1.3.3' type='text/css' media='all' />
-<link rel='stylesheet' id='wpfcas_slick_style-css'  href='http://dev.chaloke.com/wp-content/plugins/wp-featured-content-and-slider/assets/css/slick.css?ver=1.3.3' type='text/css' media='all' />
+<link rel='stylesheet' id='wpfcas-font-awesome-css'  href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css?ver=1.3.4' type='text/css' media='all' />
+<link rel='stylesheet' id='wpfcas_style-css'  href='http://dev.chaloke.com/wp-content/plugins/wp-featured-content-and-slider/assets/css/featured-content-style.css?ver=1.3.4' type='text/css' media='all' />
+<link rel='stylesheet' id='wpfcas_slick_style-css'  href='http://dev.chaloke.com/wp-content/plugins/wp-featured-content-and-slider/assets/css/slick.css?ver=1.3.4' type='text/css' media='all' />
 <link rel='stylesheet' id='wc-memberships-frontend-css'  href='http://dev.chaloke.com/wp-content/plugins/woocommerce-memberships/assets/css/frontend/wc-memberships-frontend.min.css?ver=1.12.4' type='text/css' media='all' />
 <link rel='stylesheet' id='storefront-style-css'  href='http://dev.chaloke.com/wp-content/themes/storefront/style.css?ver=2.5.3' type='text/css' media='all' />
 <style id='storefront-style-inline-css' type='text/css'>
@@ -360,7 +359,6 @@ img.emoji {
 <link rel='stylesheet' id='sd-styles-css'  href='http://dev.chaloke.com/wp-content/plugins/storefront-designer/assets/css/style.css?ver=5.3.2' type='text/css' media='all' />
 <link rel='stylesheet' id='sd-styles-2-css'  href='http://dev.chaloke.com/wp-content/plugins/storefront-designer/assets/css/style-2.css?ver=5.3.2' type='text/css' media='all' />
 <link rel='stylesheet' id='bfa-font-awesome-css'  href='//cdn.jsdelivr.net/fontawesome/4.7.0/css/font-awesome.min.css?ver=4.7.0' type='text/css' media='all' />
-<link rel='stylesheet' id='cf7cf-style-css'  href='http://dev.chaloke.com/wp-content/plugins/cf7-conditional-fields/style.css?ver=1.7.8' type='text/css' media='all' />
 <link rel='stylesheet' id='storefront-woocommerce-style-css'  href='http://dev.chaloke.com/wp-content/themes/storefront/assets/css/woocommerce/woocommerce.css?ver=2.5.3' type='text/css' media='all' />
 <style id='storefront-woocommerce-style-inline-css' type='text/css'>
 
@@ -613,13 +611,54 @@ img.emoji {
 <link rel='stylesheet' id='sp-styles-css'  href='http://dev.chaloke.com/wp-content/plugins/storefront-powerpack/assets/css/style.css?ver=1.5.0' type='text/css' media='all' />
 <link rel='stylesheet' id='wc-bundle-style-css'  href='http://dev.chaloke.com/wp-content/plugins/woocommerce-product-bundles/assets/css/frontend/woocommerce.css?ver=5.14.2' type='text/css' media='all' />
 <link rel='stylesheet' id='custom-css-css'  href='http://dev.chaloke.com/wp-content/plugins/theme-customisations-master/custom/style.css?ver=5.3.2' type='text/css' media='all' />
-<!--n2css--><script>if (document.location.protocol != "https:") {document.location = document.URL.replace(/^http:/i, "https:");}</script><script type='text/javascript' src='http://dev.chaloke.com/wp-includes/js/jquery/jquery.js?ver=1.12.4-wp'></script>
+<link rel="stylesheet" type="text/css" href="//dev.chaloke.com/wp-content/plugins/smart-slider-3/library/media/smartslider.min.css?1577769879" media="all" />
+<style type="text/css">.n2-ss-spinner-simple-white-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -20px;
+    background: #fff;
+    width: 20px;
+    height: 20px;
+    padding: 10px;
+    border-radius: 50%;
+    z-index: 1000;
+}
+
+.n2-ss-spinner-simple-white {
+  outline: 1px solid RGBA(0,0,0,0);
+  width:100%;
+  height: 100%;
+}
+
+.n2-ss-spinner-simple-white:before {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin-top: -11px;
+    margin-left: -11px;
+}
+
+.n2-ss-spinner-simple-white:not(:required):before {
+    content: '';
+    border-radius: 50%;
+    border-top: 2px solid #333;
+    border-right: 2px solid transparent;
+    animation: n2SimpleWhite .6s linear infinite;
+}
+@keyframes n2SimpleWhite {
+    to {transform: rotate(360deg);}
+}</style><script>if (document.location.protocol != "https:") {document.location = document.URL.replace(/^http:/i, "https:");}</script><script type='text/javascript' src='http://dev.chaloke.com/wp-includes/js/jquery/jquery.js?ver=1.12.4-wp'></script>
 <script type='text/javascript' src='http://dev.chaloke.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1'></script>
 <script src='http://dev.chaloke.com/wp-content/plugins/event-tickets/common/src/resources/js/underscore-before.js'></script>
 <script type='text/javascript' src='http://dev.chaloke.com/wp-includes/js/underscore.min.js?ver=1.8.3'></script>
 <script src='http://dev.chaloke.com/wp-content/plugins/event-tickets/common/src/resources/js/underscore-after.js'></script>
 <script type='text/javascript' src='http://dev.chaloke.com/wp-includes/js/wp-util.js?ver=5.3.2'></script>
 <script type='text/javascript' src='http://dev.chaloke.com/wp-content/plugins/theme-customisations-master/custom/custom.js?ver=5.3.2'></script>
+<script type='text/javascript' src='http://dev.chaloke.com/wp-content/plugins/storefront-designer/assets/js/jquery-sticky.min.js?ver=1.0.0'></script>
+<script type='text/javascript' src='http://dev.chaloke.com/wp-content/plugins/storefront-designer/assets/js/sticky-navigation.min.js?ver=1.0.0'></script>
 <link rel='https://api.w.org/' href='http://dev.chaloke.com/wp-json/' />
 <link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://dev.chaloke.com/xmlrpc.php?rsd" />
 <link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://dev.chaloke.com/wp-includes/wlwmanifest.xml" /> 
@@ -635,7 +674,7 @@ img.emoji {
 <meta name="et-api-version" content="v1"><meta name="et-api-origin" content="http://dev.chaloke.com"><link rel="https://theeventscalendar.com/" href="http://dev.chaloke.com/wp-json/tribe/tickets/v1/" /><meta name="tec-api-version" content="v1"><meta name="tec-api-origin" content="http://dev.chaloke.com"><link rel="https://theeventscalendar.com/" href="http://dev.chaloke.com/wp-json/tribe/events/v1/" />
 <script type="text/javascript">
     /* <![CDATA[ */
-    var gdbxRender_Data = { url: "http://dev.chaloke.com/wp-admin/admin-ajax.php", run_quote: true, run_report: false, run_thanks: false, run_attachments: true, run_canned_replies: false, run_bbcodes: true, run_fitvids: true, wp_editor: true, wp_version: 53, last_cookie: 1577856307, bbpress_version: 26, text_are_you_sure: "Are you sure? Operation is not reversible.", now: 1577852707, thanks_thanks: "Thanks", thanks_unthanks: "Remove Thanks", thanks_saved: "Thanks Saved", thanks_removal: true, validate_attachments: true, insert_into_content: true, max_files: 5, max_size: 5120000, limiter: true, allowed_extensions: "jpg jpeg jpe gif png bmp tiff tif ico asf asx wmv wmx wm avi divx flv mov qt mpeg mpg mpe mp4 m4v ogv webm mkv 3gp 3gpp 3g2 3gp2 txt asc c cc h srt csv tsv ics rtx css vtt dfxp mp3 m4a m4b aac ra ram wav ogg oga flac mid midi wma wax mka rtf pdf class tar zip gz gzip rar 7z psd xcf doc pot pps ppt wri xla xls xlt xlw mdb mpp docx docm dotx dotm xlsx xlsm xlsb xltx xltm xlam pptx pptm ppsx ppsm potx potm ppam sldx sldm onetoc onetoc2 onetmp onepkg oxps xps odt odp ods odg odc odb odf wp wpd key numbers pages afl", text_select_file: "Select File", text_file_name: "Name", text_file_size: "Size", text_file_type: "Extension", text_file_validation: "Error!", text_file_validation_size: "The file is too big.", text_file_validation_type: "File type not allowed.", text_file_remove: "Remove this file", text_file_shortcode: "Insert into content", text_file_caption: "Set file caption", text_file_caption_placeholder: "Caption..." };
+    var gdbxRender_Data = { url: "http://dev.chaloke.com/wp-admin/admin-ajax.php", run_quote: true, run_report: false, run_thanks: false, run_attachments: true, run_canned_replies: false, run_bbcodes: true, run_fitvids: true, wp_editor: true, wp_version: 53, last_cookie: 1578242812, bbpress_version: 26, text_are_you_sure: "Are you sure? Operation is not reversible.", now: 1578239212, thanks_thanks: "Thanks", thanks_unthanks: "Remove Thanks", thanks_saved: "Thanks Saved", thanks_removal: true, validate_attachments: true, insert_into_content: true, max_files: 5, max_size: 5120000, limiter: true, allowed_extensions: "jpg jpeg jpe gif png bmp tiff tif ico asf asx wmv wmx wm avi divx flv mov qt mpeg mpg mpe mp4 m4v ogv webm mkv 3gp 3gpp 3g2 3gp2 txt asc c cc h srt csv tsv ics rtx css vtt dfxp mp3 m4a m4b aac ra ram wav ogg oga flac mid midi wma wax mka rtf pdf class tar zip gz gzip rar 7z psd xcf doc pot pps ppt wri xla xls xlt xlw mdb mpp docx docm dotx dotm xlsx xlsm xlsb xltx xltm xlam pptx pptm ppsx ppsm potx potm ppam sldx sldm onetoc onetoc2 onetmp onepkg oxps xps odt odp ods odg odc odb odf wp wpd key numbers pages afl", text_select_file: "Select File", text_file_name: "Name", text_file_size: "Size", text_file_type: "Extension", text_file_validation: "Error!", text_file_validation_size: "The file is too big.", text_file_validation_type: "File type not allowed.", text_file_remove: "Remove this file", text_file_shortcode: "Insert into content", text_file_caption: "Set file caption", text_file_caption_placeholder: "Caption..." };
     /* ]]> */
 </script>
 
@@ -658,12 +697,17 @@ img.emoji {
 <meta name="msapplication-TileImage" content="https://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2016/07/04093950/cropped-CDClogo2015_rev1_A-270x270.png" />
 		<style type="text/css" id="wp-custom-css">
 			.home.blog .site-header {
-    margin-bottom: 1.22em;
+    margin-bottom: 0.8em;
 }
 		</style>
-		</head>
+		<script type="text/javascript">(function(){var N=this;N.N2_=N.N2_||{r:[],d:[]},N.N2R=N.N2R||function(){N.N2_.r.push(arguments)},N.N2D=N.N2D||function(){N.N2_.d.push(arguments)}}).call(window);if(!window.n2jQuery){window.n2jQuery={ready:function(cb){console.error('n2jQuery will be deprecated!');N2R(['$'],cb)}}}window.nextend={localization:{},ready:function(cb){console.error('nextend.ready will be deprecated!');N2R('documentReady',function($){cb.call(window,$)})}};nextend.fontsLoaded=false;nextend.fontsLoadedActive=function(){nextend.fontsLoaded=true};var requiredFonts=["Roboto:n3","Roboto:n4"],fontData={google:{families:["Roboto:300,400:latin"]},active:function(){nextend.fontsLoadedActive()},inactive:function(){nextend.fontsLoadedActive()},fontactive:function(f,s){fontData.resolveFont(f+':'+s)},fontinactive:function(f,s){fontData.resolveFont(f+':'+s)},resolveFont:function(n){for(var i=requiredFonts.length-1;i>=0;i--){if(requiredFonts[i]===n){requiredFonts.splice(i,1);break}}if(!requiredFonts.length)nextend.fontsLoadedActive()}};if(typeof WebFontConfig!=='undefined'&&typeof WebFont==='undefined'){var _WebFontConfig=WebFontConfig;for(var k in WebFontConfig){if(k=='active'){fontData.active=function(){nextend.fontsLoadedActive();_WebFontConfig.active()}}else if(k=='inactive'){fontData.inactive=function(){nextend.fontsLoadedActive();_WebFontConfig.inactive()}}else if(k=='fontactive'){fontData.fontactive=function(f,s){fontData.resolveFont(f+':'+s);_WebFontConfig.fontactive.apply(this,arguments)}}else if(k=='fontinactive'){fontData.fontinactive=function(f,s){fontData.resolveFont(f+':'+s);_WebFontConfig.fontinactive.apply(this,arguments)}}else if(k=='google'){if(typeof WebFontConfig.google.families!=='undefined'){for(var i=0;i<WebFontConfig.google.families.length;i++){fontData.google.families.push(WebFontConfig.google.families[i])}}}else{fontData[k]=WebFontConfig[k]}}}fontData.classes=true;fontData.events=true;if(typeof WebFont==='undefined'){window.WebFontConfig=fontData}else{WebFont.load(fontData)}</script><script type="text/javascript" src="//dev.chaloke.com/wp-content/plugins/smart-slider-3/nextend/media/dist/n2.min.js?1577769879"></script>
+<script type="text/javascript" src="//dev.chaloke.com/wp-content/plugins/smart-slider-3/nextend/media/dist/nextend-frontend.min.js?1577769879"></script>
+<script type="text/javascript" src="//dev.chaloke.com/wp-content/plugins/smart-slider-3/library/media/dist/smartslider-frontend.min.js?1577769879"></script>
+<script type="text/javascript" src="//dev.chaloke.com/wp-content/plugins/smart-slider-3/library/media/plugins/type/simple/simple/dist/smartslider-simple-type-frontend.min.js?1577769879"></script>
+<script type="text/javascript" src="//dev.chaloke.com/wp-content/plugins/smart-slider-3/nextend/media/dist/nextend-webfontloader.min.js?1577769879"></script>
+<script type="text/javascript">N2R('documentReady',function($){nextend.fontsDeferred=$.Deferred();if(nextend.fontsLoaded){nextend.fontsDeferred.resolve()}else{nextend.fontsLoadedActive=function(){nextend.fontsLoaded=true;nextend.fontsDeferred.resolve()};var intercalCounter=0;nextend.fontInterval=setInterval(function(){if(intercalCounter>3||document.documentElement.className.indexOf('wf-active')!==-1){nextend.fontsLoadedActive();clearInterval(nextend.fontInterval)}intercalCounter++},1000)}N2R(["nextend-frontend","smartslider-frontend","smartslider-simple-type-frontend"],function(){new N2Classes.SmartSliderSimple('#n2-ss-2',{"admin":false,"translate3d":1,"callbacks":"","background.video.mobile":1,"align":"normal","isDelayed":0,"load":{"fade":1,"scroll":0},"playWhenVisible":1,"playWhenVisibleAt":0.5,"responsive":{"desktop":1,"tablet":1,"mobile":1,"onResizeEnabled":true,"type":"auto","downscale":1,"upscale":1,"minimumHeight":0,"maximumHeight":3000,"maximumSlideWidth":3000,"maximumSlideWidthLandscape":3000,"maximumSlideWidthTablet":3000,"maximumSlideWidthTabletLandscape":3000,"maximumSlideWidthMobile":3000,"maximumSlideWidthMobileLandscape":3000,"maximumSlideWidthConstrainHeight":0,"forceFull":0,"forceFullOverflowX":"body","forceFullHorizontalSelector":"","constrainRatio":1,"sliderHeightBasedOn":"real","decreaseSliderHeight":0,"focusUser":1,"deviceModes":{"desktopPortrait":1,"desktopLandscape":0,"tabletPortrait":1,"tabletLandscape":0,"mobilePortrait":1,"mobileLandscape":0},"normalizedDeviceModes":{"unknownUnknown":["unknown","Unknown"],"desktopPortrait":["desktop","Portrait"],"desktopLandscape":["desktop","Portrait"],"tabletPortrait":["tablet","Portrait"],"tabletLandscape":["tablet","Portrait"],"mobilePortrait":["mobile","Portrait"],"mobileLandscape":["mobile","Portrait"]},"verticalRatioModifiers":{"unknownUnknown":1,"desktopPortrait":1,"desktopLandscape":1,"tabletPortrait":1,"tabletLandscape":1,"mobilePortrait":1,"mobileLandscape":1},"minimumFontSizes":{"desktopPortrait":4,"desktopLandscape":4,"tabletPortrait":4,"tabletLandscape":4,"mobilePortrait":4,"mobileLandscape":4},"ratioToDevice":{"Portrait":{"tablet":0.7,"mobile":0.5},"Landscape":{"tablet":0,"mobile":0}},"sliderWidthToDevice":{"desktopPortrait":1200,"desktopLandscape":1200,"tabletPortrait":840,"tabletLandscape":0,"mobilePortrait":600,"mobileLandscape":0},"basedOn":"combined","orientationMode":"width_and_height","overflowHiddenPage":0,"desktopPortraitScreenWidth":1200,"tabletPortraitScreenWidth":800,"mobilePortraitScreenWidth":440,"tabletLandscapeScreenWidth":800,"mobileLandscapeScreenWidth":440,"focus":{"offsetTop":"#wpadminbar","offsetBottom":""}},"controls":{"mousewheel":0,"touch":"horizontal","keyboard":1,"blockCarouselInteraction":1},"lazyLoad":0,"lazyLoadNeighbor":0,"blockrightclick":0,"maintainSession":0,"autoplay":{"enabled":0,"start":1,"duration":8000,"autoplayToSlide":-1,"autoplayToSlideIndex":-1,"allowReStart":0,"pause":{"click":1,"mouse":"0","mediaStarted":1},"resume":{"click":0,"mouse":0,"mediaEnded":1,"slidechanged":0}},"perspective":1500,"layerMode":{"playOnce":0,"playFirstLayer":1,"mode":"skippable","inAnimation":"mainInEnd"},"initCallbacks":[],"allowBGImageAttachmentFixed":true,"bgAnimationsColor":"RGBA(51,51,51,1)","bgAnimations":0,"mainanimation":{"type":"horizontal","duration":800,"delay":0,"ease":"easeOutQuad","parallax":0,"shiftedBackgroundAnimation":0},"carousel":1,"dynamicHeight":0})})});</script></head>
 
-<body class="post-template-default single single-post postid-21369 single-format-standard wp-custom-logo wp-embed-responsive theme-storefront woocommerce-no-js tribe-no-js group-blog storefront-secondary-navigation storefront-align-wide right-sidebar woocommerce-active sp-designer sp-max-width sp-shop-alignment-center sbc-meta-inline-top-2-4 sd-fixed-width sd-buttons-rounded sd-buttons-flat sd-buttons-shadows sd-scale-largest sd-button-size-smaller sd-header-compact sd-typography-helvetica">
+<body class="post-template-default single single-post postid-21369 single-format-standard wp-custom-logo wp-embed-responsive theme-storefront woocommerce-no-js tribe-no-js group-blog storefront-secondary-navigation storefront-align-wide right-sidebar woocommerce-active sp-designer sp-max-width sp-shop-alignment-center sbc-meta-inline-top-2-4 sd-fixed-width sd-buttons-rounded sd-buttons-flat sd-buttons-shadows sd-scale-larger sd-button-size-smaller sd-header-compact sd-typography-helvetica">
 
 
 <div id="page" class="hfeed site">
@@ -676,7 +720,7 @@ img.emoji {
 			<a href="http://dev.chaloke.com/" class="custom-logo-link" rel="home"><img width="326" height="110" src="https://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2016/07/04093949/cropped-CDClogo2015_rev1100px_A-simple-copy-2.png" class="custom-logo" alt="Chaloke Dot Com" srcset="https://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2016/07/04093949/cropped-CDClogo2015_rev1100px_A-simple-copy-2.png 326w, https://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2016/07/04093949/cropped-CDClogo2015_rev1100px_A-simple-copy-2-300x101.png 300w" sizes="(max-width: 326px) 100vw, 326px" /></a>		</div>
 					<nav class="secondary-navigation" role="navigation" aria-label="Secondary Navigation">
 				<div class="menu-user-control-container"><ul id="menu-user-control" class="menu"><li><a href="http://dev.chaloke.com/wp-login.php">Log In</a></li><li><a href="http://dev.chaloke.com/wp-login.php?action=register">Register</a></li></ul></div>			</nav><!-- #site-navigation -->
-			</div><div class="storefront-primary-navigation"><div class="col-full">		<nav id="site-navigation" class="main-navigation" role="navigation" aria-label="Primary Navigation">
+			</div><div class="storefront-primary-navigation"><div class="col-full"><section class="sd-sticky-navigation fixedsticky">		<nav id="site-navigation" class="main-navigation" role="navigation" aria-label="Primary Navigation">
 		<button class="menu-toggle" aria-controls="site-navigation" aria-expanded="false"><span>Menu</span></button>
 			<div class="primary-navigation"><ul id="menu-navigation" class="menu"><li id="menu-item-103" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-103"><a href="/">Home</a></li>
 <li id="menu-item-77" class="menu-item menu-item-type-post_type menu-item-object-forum menu-item-77"><a href="http://dev.chaloke.com/forums/forum/cdc/">Forums</a></li>
@@ -750,10 +794,23 @@ img.emoji {
 			<li>
 				<div class="widget woocommerce widget_shopping_cart"><div class="widget_shopping_cart_content"></div></div>			</li>
 		</ul>
-			</div></div>
+			</section></div></div>
 	</header><!-- #masthead -->
 
-	<div class="storefront-breadcrumb"><div class="col-full"><nav class="woocommerce-breadcrumb"><a href="http://dev.chaloke.com">Home</a><span class="breadcrumb-separator"> / </span><a href="http://dev.chaloke.com/category/uncategorized/">Uncategorized</a><span class="breadcrumb-separator"> / </span>&#8212;&#8212;&#8212;&#8211;ปิดรับสมัครแล้ว&#8212;&#8212;&#8212;&#8212;CDC Mastering Elliott Wave &#038; Fibnacci 1/2018</nav></div></div>
+			<div class="header-widget-region" role="complementary">
+			<div class="col-full">
+				<div id="smartslider3-4" class="widget widget_smartslider3"><div class="n2-section-smartslider " role="region" aria-label="Slider"><style>div#n2-ss-2{width:1200px;float:left;margin:0px 0px 0px 0px;}html[dir="rtl"] div#n2-ss-2{float:right;}div#n2-ss-2 .n2-ss-slider-1{position:relative;padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;height:400px;border-style:solid;border-width:0px;border-color:#3e3e3e;border-color:RGBA(62,62,62,1);border-radius:0px;background-clip:padding-box;background-repeat:repeat;background-position:50% 50%;background-size:cover;background-attachment:scroll;}div#n2-ss-2 .n2-ss-slider-background-video-container{position:absolute;left:0;top:0;width:100%;height:100%;overflow:hidden;}div#n2-ss-2 .n2-ss-slider-2{position:relative;width:100%;height:100%;}.x-firefox div#n2-ss-2 .n2-ss-slider-2{opacity:0.99999;}div#n2-ss-2 .n2-ss-slider-3{position:relative;width:100%;height:100%;overflow:hidden;outline:1px solid rgba(0,0,0,0);z-index:10;}div#n2-ss-2 .n2-ss-slide-backgrounds,div#n2-ss-2 .n2-ss-slider-3 > .n-particles-js-canvas-el,div#n2-ss-2 .n2-ss-slider-3 > .n2-ss-divider{position:absolute;left:0;top:0;width:100%;height:100%;}div#n2-ss-2 .n2-ss-slide-backgrounds{z-index:10;}div#n2-ss-2 .n2-ss-slider-3 > .n-particles-js-canvas-el{z-index:12;}div#n2-ss-2 .n2-ss-slide-backgrounds > *{overflow:hidden;}div#n2-ss-2 .n2-ss-slide{position:absolute;top:0;left:0;width:100%;height:100%;z-index:20;display:block;-webkit-backface-visibility:hidden;}div#n2-ss-2 .n2-ss-layers-container{position:relative;width:1200px;height:400px;}div#n2-ss-2 .n2-ss-parallax-clip > .n2-ss-layers-container{position:absolute;right:0;}div#n2-ss-2 .n2-ss-slide{perspective:1500px;}div#n2-ss-2[data-ie] .n2-ss-slide{perspective:none;transform:perspective(1500px);}div#n2-ss-2 .n2-ss-slide-active{z-index:21;}div#n2-ss-2 .n2-ss-button-container,div#n2-ss-2 .n2-ss-button-container a{display:inline-block;}div#n2-ss-2 .n2-ss-button-container.n2-ss-fullwidth,div#n2-ss-2 .n2-ss-button-container.n2-ss-fullwidth a{display:block;}div#n2-ss-2 .n2-ss-button-container.n2-ss-nowrap{white-space:nowrap;}div#n2-ss-2 .n2-ss-button-container a div{display:inline;font-size:inherit;text-decoration:inherit;color:inherit;line-height:inherit;font-family:inherit;font-weight:inherit;}div#n2-ss-2 .n2-ss-button-container a > div{display:inline-flex;align-items:center;vertical-align:top;}div#n2-ss-2 .n2-ss-button-container span{font-size:100%;vertical-align:baseline;}div#n2-ss-2 .n2-ss-button-container a[data-iconplacement="left"] span{margin-right:0.3em;}div#n2-ss-2 .n2-ss-button-container a[data-iconplacement="right"] span{margin-left:0.3em;}div#n2-ss-2 .n2-font-e74c737f731d3f4292ba83d599521f5d-hover{font-family: 'Roboto','Arial';color: #ffffff;font-size:281.25%;text-shadow: none;line-height: 1.5;font-weight: normal;font-style: normal;text-decoration: none;text-align: center;letter-spacing: normal;word-spacing: normal;text-transform: none;font-weight: 400;}div#n2-ss-2 .n2-font-af48c6db8e18ee643fbe089c5929ebf4-link a{font-family: 'Roboto','Arial';color: #ffffff;font-size:193.75%;text-shadow: none;line-height: 1.5;font-weight: normal;font-style: normal;text-decoration: none;text-align: center;letter-spacing: normal;word-spacing: normal;text-transform: none;font-weight: 400;}div#n2-ss-2 .n2-style-e35992b5ef20d354589d388be75d9ac2-heading{background: #5cba3c;opacity:0.9;padding:10px 30px 10px 30px ;box-shadow: none;border-width: 0px;border-style: solid;border-color: #000000; border-color: RGBA(0,0,0,1);border-radius:5px;}div#n2-ss-2 .n2-style-e35992b5ef20d354589d388be75d9ac2-heading:Hover, div#n2-ss-2 .n2-style-e35992b5ef20d354589d388be75d9ac2-heading:ACTIVE, div#n2-ss-2 .n2-style-e35992b5ef20d354589d388be75d9ac2-heading:FOCUS{opacity:1;}</style><div id="n2-ss-2-align" class="n2-ss-align"><div class="n2-padding"><div id="n2-ss-2" data-creator="Smart Slider 3" class="n2-ss-slider n2-ow n2-has-hover n2notransition  n2-ss-load-fade " data-minFontSizedesktopPortrait="4" data-minFontSizedesktopLandscape="4" data-minFontSizetabletPortrait="4" data-minFontSizetabletLandscape="4" data-minFontSizemobilePortrait="4" data-minFontSizemobileLandscape="4" style="font-size: 1rem;" data-fontsize="16">
+        <div class="n2-ss-slider-1 n2-ss-swipe-element n2-ow" style="">
+                        <div class="n2-ss-slider-2 n2-ow">
+                                <div class="n2-ss-slider-3 n2-ow" style="">
+
+                    <div class="n2-ss-slide-backgrounds"></div><div data-first="1" data-slide-duration="0" data-id="5" style="" class=" n2-ss-slide n2-ss-canvas n2-ow  n2-ss-slide-5"><div class="n2-ss-slide-background n2-ow" data-mode="fill"><div data-hash="a1448addb14cec14f85757fbb046261c" data-desktop="https://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/12/03103827/CDC-WEBINAR-2020-1.png" class="n2-ss-slide-background-image" data-blur="7"><img src="https://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2019/12/03103827/CDC-WEBINAR-2020-1.png" alt="" /></div><div class="n2-ss-slide-background-color" style="background-color: #000000;background-color: RGBA(0,0,0,0.48);" data-overlay="1"></div></div><div class="n2-ss-layers-container n2-ow" data-csstextalign="center" style=""><div class="n2-ss-layer n2-ow" style="overflow:visible;" data-csstextalign="inherit" data-has-maxwidth="0" data-desktopportraitmaxwidth="0" data-cssselfalign="inherit" data-desktopportraitselfalign="inherit" data-pm="content" data-desktopportraitpadding="10|*|10|*|10|*|10|*|px+" data-desktopportraitinneralign="inherit" data-sstype="content" data-hasbackground="0" data-rotation="0" data-desktopportrait="1" data-desktoplandscape="1" data-tabletportrait="1" data-tabletlandscape="1" data-mobileportrait="1" data-mobilelandscape="1" data-adaptivefont="1" data-desktopportraitfontsize="100" data-plugin="rendered"><div class="n2-ss-section-main-content n2-ss-layer-content n2-ow" style="padding:0.625em 0.625em 0.625em 0.625em ;" data-verticalalign="center"><div class="n2-ss-layer n2-ow" style="margin:0em 0em 0em 0em ;overflow:visible;" data-pm="normal" data-desktopportraitmargin="0|*|0|*|0|*|0|*|px+" data-desktopportraitheight="0" data-has-maxwidth="0" data-desktopportraitmaxwidth="0" data-cssselfalign="inherit" data-desktopportraitselfalign="inherit" data-sstype="layer" data-rotation="0" data-desktopportrait="1" data-desktoplandscape="1" data-tabletportrait="1" data-tabletlandscape="1" data-mobileportrait="1" data-mobilelandscape="1" data-adaptivefont="0" data-desktopportraitfontsize="100" data-plugin="rendered"><div id="n2-ss-2item1" class="  n2-ss-item-content n2-ow" style="display:block;"><a class="n2-ow n2-font-e74c737f731d3f4292ba83d599521f5d-hover " style="display:block;" href="#https://www.chaloke.com/2019/12/02/cdctalk012020/">CDC Talk Webinar 2020 รอบที่ 1 เปิดรับสมัครแล้ว</a></div></div><div class="n2-ss-layer n2-ow" style="margin:0em 0em 0em 0em ;overflow:visible;" data-pm="normal" data-desktopportraitmargin="0|*|0|*|0|*|0|*|px+" data-desktopportraitheight="0" data-has-maxwidth="0" data-desktopportraitmaxwidth="0" data-cssselfalign="inherit" data-desktopportraitselfalign="inherit" data-sstype="layer" data-rotation="0" data-desktopportrait="1" data-desktoplandscape="1" data-tabletportrait="1" data-tabletlandscape="1" data-mobileportrait="1" data-mobilelandscape="1" data-adaptivefont="0" data-desktopportraitfontsize="100" data-plugin="rendered"><div class="n2-ss-button-container n2-ss-item-content n2-ow n2-font-af48c6db8e18ee643fbe089c5929ebf4-link  n2-ss-nowrap"><a class="n2-style-e35992b5ef20d354589d388be75d9ac2-heading  n2-ow " href="#https://www.chaloke.com/2019/12/02/cdctalk012020/"><div><div>รายละเอียดการสมัคร</div></div></a></div></div></div></div></div></div>                </div>
+            </div>
+            
+        </div>
+        </div><div class="n2-clear"></div><div id="n2-ss-2-spinner" style="display: none;"><div><div class="n2-ss-spinner-simple-white-container"><div class="n2-ss-spinner-simple-white"></div></div></div></div></div></div><div id="n2-ss-2-placeholder" style="position: relative;z-index:2;background-color:RGBA(0,0,0,0);max-height:3000px; background-color:RGBA(255,255,255,0);"><img style="width: 100%; max-width:3000px; display: block;opacity:0;margin:0px;" class="n2-ow" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMCIgd2lkdGg9IjEyMDAiIGhlaWdodD0iNDAwIiA+PC9zdmc+" alt="Slider" /></div></div></div>			</div>
+		</div>
+			<div class="storefront-breadcrumb"><div class="col-full"><nav class="woocommerce-breadcrumb"><a href="http://dev.chaloke.com">Home</a><span class="breadcrumb-separator"> / </span><a href="http://dev.chaloke.com/category/uncategorized/">Uncategorized</a><span class="breadcrumb-separator"> / </span>&#8212;&#8212;&#8212;&#8211;ปิดรับสมัครแล้ว&#8212;&#8212;&#8212;&#8212;CDC Mastering Elliott Wave &#038; Fibnacci 1/2018</nav></div></div>
 	<div id="content" class="site-content" tabindex="-1">
 		<div class="col-full">
 
@@ -841,7 +898,7 @@ img.emoji {
 <h4>สอบถามข้อมูลเพิ่มเติม<br />
 สามารถโทรติดต่อสอบถามข้อมูลได้ที่หมายเลขโทรศัพท์: 098-765-5641<br />
 หรือ ติดต่อที่</h4>
-<h4>e-mail: &#x69;&#x6e;&#x66;&#x6f;&#x40;&#x63;&#x68;&#x61;&#x6c;&#x6f;&#x6b;&#x65;&#x2e;&#x63;&#111;&#109;</h4>
+<h4>e-mail: &#x69;nf&#x6f;&#64;c&#x68;&#97;l&#x6f;&#107;e&#x2e;&#99;o&#x6d;</h4>
 <h4>FB : CDC ChalokeDotCom</h4>
 <h4>Youtube : CDC chaloke dot com</h4>
 <h4>@Line : @chalokedotcom</h4>
@@ -854,12 +911,12 @@ img.emoji {
 <p class="comment-form-email"><label for="email">Email <span class="required">*</span></label> <input id="email" name="email" type="email" value="" size="30" maxlength="100" aria-describedby="email-notes" required='required' /></p>
 <p class="comment-form-url"><label for="url">Website</label> <input id="url" name="url" type="url" value="" size="30" maxlength="200" /></p>
 <p class="cptch_block"><span class="cptch_wrap cptch_math_actions">
-				<label class="cptch_label" for="cptch_input_78"><span class="cptch_span">5</span>
-					<span class="cptch_span">&nbsp;&minus;&nbsp;</span>
-					<span class="cptch_span"><input id="cptch_input_78" class="cptch_input cptch_wp_comments" type="text" autocomplete="off" name="cptch_number" value="" maxlength="2" size="2" aria-required="true" required="required" style="margin-bottom:0;display:inline;font-size: 12px;width: 40px;" /></span>
+				<label class="cptch_label" for="cptch_input_1"><span class="cptch_span"><img class="cptch_img " src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAMAAADDpiTIAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAABhQTFRF////nJycAAAAVVVVw8PD4eHh9fX1NjY2cNxZ0AAABDJJREFUeNrs3cGOmzAYhVHbBPv937gaqZtKUw0koJb/nrOfLoavuTENaWsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3OA1jtr8sgralwCibUMABkAAsQMwBGAABBCrDwEkm0MABkAABkAATgACMAACMAACMAACMAACMAACMAACKGwuARgAAcR6DQEYAAHEXv/3BkAA4QMggPABEED0CUAA8QMggPABEED0CUAA8QMggAL2JYBo2xCAARCAARCAARCAARBA1i2AIQADIAADIIDME8AQgAEQQKw+BGAABGAABGAABGAABBBlbgIwAAIwAALIHIAlAAMgAAMgAAPwrSWA6AFYJx4VEcDj/PwhgH7iLoEACp4AWvOfRtW9/j+/uncBRA/AmK15Exg8AP3Uh4UFUO4W0H7qRoEAqg1AbwJIHoCvdwACqGo79gJw5nkBAdQagDUFUNaRJ8F7E0DyAKwmgOQBGK/Dh0UBVByArQkgeQC+7gEJIHgAehNA2QEYR4+AR18tBFBuAF7TK0BV/dyl9AoQOABjCiB6AHoTgAH4zcfC8wZgF4ABEEDsAKz5x494NCx6AARQyTw/AKe+QVgA9QZAAOEDcOrxcQH83wNw5P18nwIwAAKo6NBn+15NAFWt8yeAw90IoMoATAEYAAE4AQig2vV/7wQggKwBEED2AHz/owIo4Mi/Aa19vn16EEDRE4AJyBmA7ZP7BwJ4/gBMATgBCKCifX125QQQcQIQgBOAAEoOwMfXTQDlB2BMAVTVPx0AATz7FtAFV00A0QMggPABEED0CUAA9QdgF0D0APQmAAMggIrWJQMggPABEED4AAjgmeZVAyCA8AEQwCO9LrxaAig7AFMARa//hQMggKoDsJoAnAAE4AQggMwBmAIwAAKoaLt2AARQcwCmAGo69CDgjx8DFIABEIATgAAMgADiB0AA5QZgF0DVW0DjhgEQQLUBmAIo+vf/ngEQwGNOAPcMgABKDcC/012he/UhAAMgAAMggExLAAIQgAAEIAABCEAAAhCAAAQgAAEIQAACEIAABCAAAQhAAAIQgAAEIAABCEAAAhCAAAQgAAEIQAACEIAABCAAAQhAAAIQgAAEIAABCEAAAhCAAATwBPM+p74j6O9/jGv0VL4kSgACEIAABCAAAQhAAAIQgAAEIAABCEAAAhCAAAQgAAEIQAACEIAABODXJQAEgAAQAAJAAAgAASAABIAAEAACQAAIAAEgAASAABAAAkAACAABIAAEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACe6pcAAwDEd5A+84Xt2wAAAABJRU5ErkJggg==" alt="image"/></span>
+					<span class="cptch_span">&nbsp;&#43;&nbsp;</span>
+					<span class="cptch_span"><input id="cptch_input_1" class="cptch_input cptch_wp_comments" type="text" autocomplete="off" name="cptch_number" value="" maxlength="2" size="2" aria-required="true" required="required" style="margin-bottom:0;display:inline;font-size: 12px;width: 40px;" /></span>
 					<span class="cptch_span">&nbsp;=&nbsp;</span>
-					<span class="cptch_span"><img class="cptch_img " src="data:image/png;base64,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" alt="image"/></span>
-					<input type="hidden" name="cptch_result" value="j7g=" /><input type="hidden" name="cptch_time" value="1577852707" />
+					<span class="cptch_span">n&#105;ne</span>
+					<input type="hidden" name="cptch_result" value="0Vc=" /><input type="hidden" name="cptch_time" value="1578239212" />
 					<input type="hidden" name="cptch_form" value="wp_comments" />
 				</label><span class="cptch_reload_button_wrap hide-if-no-js">
 					<noscript>
@@ -872,7 +929,7 @@ img.emoji {
 					<span class="cptch_reload_button dashicons dashicons-update"></span>
 				</span></span></p><p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="Post Comment" /> <input type='hidden' name='comment_post_ID' value='21369' id='comment_post_ID' />
 <input type='hidden' name='comment_parent' id='comment_parent' value='0' />
-</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="a4d1ed3f08" /></p>
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="426f1db200" /></p>
 <script type='text/javascript'>
 /* <![CDATA[ */
 r3f5x9JS=escape(document['referrer']);
@@ -883,7 +940,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 </script>
 <noscript><input type="hidden" name="JS04X7" value="NS1" /></noscript>
 <noscript><p><strong>Currently you have JavaScript disabled. In order to post comments, please make sure JavaScript and Cookies are enabled, and reload the page.</strong> <a href="http://enable-javascript.com/" rel="nofollow external" >Click here for instructions on how to enable JavaScript in your browser.</a></p></noscript>
-<p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="134"/></p></form>	</div><!-- #respond -->
+<p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="163"/></p></form>	</div><!-- #respond -->
 	
 </section><!-- #comments -->
 
@@ -909,7 +966,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>1 week ago</div>
+						<div>1 week, 4 days ago</div>
 
 					
 				</li>
@@ -920,7 +977,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>2 weeks, 6 days ago</div>
+						<div>3 weeks, 3 days ago</div>
 
 					
 				</li>
@@ -931,7 +988,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>3 weeks, 5 days ago</div>
+						<div>1 month ago</div>
 
 					
 				</li>
@@ -953,7 +1010,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>1 month, 1 week ago</div>
+						<div>1 month, 2 weeks ago</div>
 
 					
 				</li>
@@ -966,11 +1023,22 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 			
 				<li>
+					<a class="bbp-forum-title" href="http://dev.chaloke.com/forums/topic/%e0%b8%a7%e0%b8%b1%e0%b8%99%e0%b8%99%e0%b8%b5%e0%b9%89-set-%e0%b9%84%e0%b8%a1%e0%b9%88%e0%b8%a1%e0%b8%b5-update-%e0%b9%80%e0%b8%ab%e0%b8%a3%e0%b8%ad%e0%b8%84%e0%b8%a3%e0%b8%b1%e0%b8%9a-2/">วันนี้ set ไม่มี update เหรอครับ</a>
+
+					
+					
+						<div>2 days, 3 hours ago</div>
+
+					
+				</li>
+
+			
+				<li>
 					<a class="bbp-forum-title" href="http://dev.chaloke.com/forums/topic/cdc-d1948/">CDC-D1948 เชิญร่วมสร้างห้องน้ำให้โรงเรียนยากจนต่างจังหวัด</a>
 
 					
 					
-						<div>1 week ago</div>
+						<div>1 week, 4 days ago</div>
 
 					
 				</li>
@@ -981,7 +1049,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>1 week, 1 day ago</div>
+						<div>1 week, 5 days ago</div>
 
 					
 				</li>
@@ -992,7 +1060,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>1 week, 6 days ago</div>
+						<div>2 weeks, 4 days ago</div>
 
 					
 				</li>
@@ -1003,7 +1071,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>1 week, 6 days ago</div>
+						<div>2 weeks, 4 days ago</div>
 
 					
 				</li>
@@ -1014,7 +1082,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>2 weeks, 6 days ago</div>
+						<div>3 weeks, 3 days ago</div>
 
 					
 				</li>
@@ -1025,7 +1093,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>3 weeks, 5 days ago</div>
+						<div>1 month ago</div>
 
 					
 				</li>
@@ -1036,18 +1104,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>3 weeks, 6 days ago</div>
-
-					
-				</li>
-
-			
-				<li>
-					<a class="bbp-forum-title" href="http://dev.chaloke.com/forums/topic/cdc-d1945/">CDC-D1945 ทำบุญซื้อกระดานดำ</a>
-
-					
-					
-						<div>1 month, 1 week ago</div>
+						<div>1 month ago</div>
 
 					
 				</li>
@@ -1055,8 +1112,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 			
 		</ul>
 
-		</div><div id="d4p_bbw_newposts-4" class="widget cls_d4p_bbw_newposts"><span class="gamma widget-title">New Posts</span><div class="d4p-bbw-widget bbx-newposts">
-<span class="bbx-no-topics">No topics found</span></div></div><div id="archives-2" class="widget widget_archive"><span class="gamma widget-title">Archives</span>		<label class="screen-reader-text" for="archives-dropdown-2">Archives</label>
+		</div><div id="archives-2" class="widget widget_archive"><span class="gamma widget-title">Archives</span>		<label class="screen-reader-text" for="archives-dropdown-2">Archives</label>
 		<select id="archives-dropdown-2" name="archive-dropdown">
 			
 			<option value="">Select Month</option>
@@ -1156,7 +1212,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>1 week, 1 day ago</div>
+						<div>2 days, 6 hours ago</div>
 
 					
 				</li>
@@ -1167,7 +1223,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>2 months, 2 weeks ago</div>
+						<div>2 months, 3 weeks ago</div>
 
 					
 				</li>
@@ -1178,7 +1234,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>1 year ago</div>
+						<div>1 year, 1 month ago</div>
 
 					
 				</li>
@@ -1200,7 +1256,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>4 months ago</div>
+						<div>4 months, 1 week ago</div>
 
 					
 				</li>
@@ -1215,11 +1271,22 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 			
 				<li>
+					<a class="bbp-forum-title" href="http://dev.chaloke.com/forums/topic/%e0%b8%a7%e0%b8%b1%e0%b8%99%e0%b8%99%e0%b8%b5%e0%b9%89-set-%e0%b9%84%e0%b8%a1%e0%b9%88%e0%b8%a1%e0%b8%b5-update-%e0%b9%80%e0%b8%ab%e0%b8%a3%e0%b8%ad%e0%b8%84%e0%b8%a3%e0%b8%b1%e0%b8%9a-2/">วันนี้ set ไม่มี update เหรอครับ</a>
+
+					
+					
+						<div>2 days, 3 hours ago</div>
+
+					
+				</li>
+
+			
+				<li>
 					<a class="bbp-forum-title" href="http://dev.chaloke.com/forums/topic/cdc-d1948/">CDC-D1948 เชิญร่วมสร้างห้องน้ำให้โรงเรียนยากจนต่างจังหวัด</a>
 
 					
 					
-						<div>1 week ago</div>
+						<div>1 week, 4 days ago</div>
 
 					
 				</li>
@@ -1230,7 +1297,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>1 week, 1 day ago</div>
+						<div>1 week, 5 days ago</div>
 
 					
 				</li>
@@ -1241,7 +1308,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>1 week, 6 days ago</div>
+						<div>2 weeks, 4 days ago</div>
 
 					
 				</li>
@@ -1252,18 +1319,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>1 week, 6 days ago</div>
-
-					
-				</li>
-
-			
-				<li>
-					<a class="bbp-forum-title" href="http://dev.chaloke.com/forums/topic/cdc-d1947/">CDC-D1947 บริจาคผ้าห่มและเสื้อผ้า ให้แก่พระภิกษุสามเณรและเด็กๆ ตามต่างจังหวัด</a>
-
-					
-					
-						<div>2 weeks, 6 days ago</div>
+						<div>2 weeks, 4 days ago</div>
 
 					
 				</li>
@@ -1278,22 +1334,11 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 			
 				<li>
-					<a class="bbp-forum-title" href="http://dev.chaloke.com/forums/topic/cdc-d1948/">CDC-D1948 เชิญร่วมสร้างห้องน้ำให้โรงเรียนยากจนต่างจังหวัด</a>
+					<a class="bbp-forum-title" href="http://dev.chaloke.com/forums/topic/%e0%b8%a7%e0%b8%b1%e0%b8%99%e0%b8%99%e0%b8%b5%e0%b9%89-set-%e0%b9%84%e0%b8%a1%e0%b9%88%e0%b8%a1%e0%b8%b5-update-%e0%b9%80%e0%b8%ab%e0%b8%a3%e0%b8%ad%e0%b8%84%e0%b8%a3%e0%b8%b1%e0%b8%9a-2/">วันนี้ set ไม่มี update เหรอครับ</a>
 
 					
 					
-						<div>1 week ago</div>
-
-					
-				</li>
-
-			
-				<li>
-					<a class="bbp-forum-title" href="http://dev.chaloke.com/forums/topic/%e0%b8%a1%e0%b8%b5-code-cdc-action-zone-%e0%b8%aa%e0%b8%b3%e0%b8%ab%e0%b8%a3%e0%b8%b1%e0%b8%9a-%e0%b9%82%e0%b8%9b%e0%b8%a3%e0%b9%81%e0%b8%81%e0%b8%a3%e0%b8%a1-mt4-%e0%b8%97%e0%b8%b5%e0%b9%88%e0%b9%83/">มี Code CDC Action Zone สำหรับ โปรแกรม MT4 ที่ใช้เทรด Forex ไหมครับ?</a>
-
-					
-					
-						<div>1 week, 1 day ago</div>
+						<div>2 days, 3 hours ago</div>
 
 					
 				</li>
@@ -1304,7 +1349,29 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>1 week, 1 day ago</div>
+						<div>2 days, 6 hours ago</div>
+
+					
+				</li>
+
+			
+				<li>
+					<a class="bbp-forum-title" href="http://dev.chaloke.com/forums/topic/cdc-d1948/">CDC-D1948 เชิญร่วมสร้างห้องน้ำให้โรงเรียนยากจนต่างจังหวัด</a>
+
+					
+					
+						<div>1 week, 4 days ago</div>
+
+					
+				</li>
+
+			
+				<li>
+					<a class="bbp-forum-title" href="http://dev.chaloke.com/forums/topic/%e0%b8%a1%e0%b8%b5-code-cdc-action-zone-%e0%b8%aa%e0%b8%b3%e0%b8%ab%e0%b8%a3%e0%b8%b1%e0%b8%9a-%e0%b9%82%e0%b8%9b%e0%b8%a3%e0%b9%81%e0%b8%81%e0%b8%a3%e0%b8%a1-mt4-%e0%b8%97%e0%b8%b5%e0%b9%88%e0%b9%83/">มี Code CDC Action Zone สำหรับ โปรแกรม MT4 ที่ใช้เทรด Forex ไหมครับ?</a>
+
+					
+					
+						<div>1 week, 5 days ago</div>
 
 					
 				</li>
@@ -1315,18 +1382,7 @@ document.write("<input type='hidden' name='r3f5x9JS' value='"+r3f5x9JS+"' /><inp
 
 					
 					
-						<div>1 week, 6 days ago</div>
-
-					
-				</li>
-
-			
-				<li>
-					<a class="bbp-forum-title" href="http://dev.chaloke.com/forums/topic/cme_dx-%e0%b8%ab%e0%b8%b2%e0%b8%a2%e0%b8%ab%e0%b8%a3%e0%b8%b7%e0%b8%ad%e0%b9%80%e0%b8%9b%e0%b8%a5%e0%b9%88%e0%b8%b2%e0%b8%84%e0%b8%a3%e0%b8%b1%e0%b8%9a/">CME_DX หายหรือเปล่าครับ?</a>
-
-					
-					
-						<div>1 week, 6 days ago</div>
+						<div>2 weeks, 4 days ago</div>
 
 					
 				</li>
@@ -1374,7 +1430,7 @@ r3f5x9JS=escape(document['referrer']);
 hf4N='ddd42b877dafbbad58c9ffe36a4083a5';
 hf4V='4fbe4e4b7419db27ee8b983c7a1197eb';
 cm4S="form[action='http://dev.chaloke.com/wp-comments-post.php']";
-jQuery(document).ready(function($){var e="#commentform, .comment-respond form, .comment-form, "+cm4S+", #lostpasswordform, #registerform, #loginform, #login_form, #wpss_contact_form, .wpcf7-form";$(e).submit(function(){$("<input>").attr("type","hidden").attr("name","r3f5x9JS").attr("value",r3f5x9JS).appendTo(e);return true;});var h="form[method='post']";$(h).submit(function(){$("<input>").attr("type","hidden").attr("name",hf4N).attr("value",hf4V).appendTo(h);return true;});});
+jQuery(document).ready(function($){var e="#commentform, .comment-respond form, .comment-form, "+cm4S+", #lostpasswordform, #registerform, #loginform, #login_form, #wpss_contact_form";$(e).submit(function(){$("<input>").attr("type","hidden").attr("name","r3f5x9JS").attr("value",r3f5x9JS).appendTo(e);return true;});var h="form[method='post']";$(h).submit(function(){$("<input>").attr("type","hidden").attr("name",hf4N).attr("value",hf4V).appendTo(h);return true;});});
 /* ]]> */
 </script> 
 		<script>
@@ -1388,13 +1444,7 @@ jQuery(document).ready(function($){var e="#commentform, .comment-respond form, .
 		c = c.replace(/woocommerce-no-js/, 'woocommerce-js');
 		document.body.className = c;
 	</script>
-	<script type='text/javascript'>
-/* <![CDATA[ */
-var wpcf7 = {"apiSettings":{"root":"http:\/\/dev.chaloke.com\/wp-json\/contact-form-7\/v1","namespace":"contact-form-7\/v1"},"cached":"1"};
-/* ]]> */
-</script>
-<script type='text/javascript' src='http://dev.chaloke.com/wp-content/plugins/contact-form-7/includes/js/scripts.js?ver=5.1.6'></script>
-<script type='text/javascript' src='http://dev.chaloke.com/wp-content/plugins/html5-videogallery-plus-player/assets/js/video.js?ver=2.3.4'></script>
+	<script type='text/javascript' src='http://dev.chaloke.com/wp-content/plugins/html5-videogallery-plus-player/assets/js/video.js?ver=2.3.4'></script>
 <script type='text/javascript' src='http://dev.chaloke.com/wp-content/plugins/woocommerce/assets/js/jquery-blockui/jquery.blockUI.min.js?ver=2.70'></script>
 <script type='text/javascript' src='http://dev.chaloke.com/wp-content/plugins/woocommerce/assets/js/js-cookie/js.cookie.min.js?ver=2.1.4'></script>
 <script type='text/javascript'>
@@ -1418,12 +1468,6 @@ var storefrontScreenReaderText = {"expand":"Expand child menu","collapse":"Colla
 <script type='text/javascript' src='http://dev.chaloke.com/wp-content/themes/storefront/assets/js/skip-link-focus-fix.min.js?ver=20130115'></script>
 <script type='text/javascript' src='http://dev.chaloke.com/wp-includes/js/comment-reply.min.js?ver=5.3.2'></script>
 <script type='text/javascript' src='http://dev.chaloke.com/wp-content/themes/storefront/assets/js/vendor/pep.min.js?ver=0.4.3'></script>
-<script type='text/javascript'>
-/* <![CDATA[ */
-var wpcf7cf_global_settings = {"ajaxurl":"http:\/\/dev.chaloke.com\/wp-admin\/admin-ajax.php"};
-/* ]]> */
-</script>
-<script type='text/javascript' src='http://dev.chaloke.com/wp-content/plugins/cf7-conditional-fields/js/scripts.js?ver=1.7.8'></script>
 <script type='text/javascript' src='http://dev.chaloke.com/wp-content/themes/storefront/assets/js/woocommerce/header-cart.min.js?ver=2.5.3'></script>
 <script type='text/javascript' src='http://dev.chaloke.com/wp-content/themes/storefront/assets/js/footer.min.js?ver=2.5.3'></script>
 <script type='text/javascript' src='http://dev.chaloke.com/wp-content/plugins/wp-spamshield/js/jscripts-ftr2-min.js'></script>
@@ -1431,7 +1475,7 @@ var wpcf7cf_global_settings = {"ajaxurl":"http:\/\/dev.chaloke.com\/wp-admin\/ad
 <script async="async" type='text/javascript' src='http://dev.chaloke.com/wp-content/plugins/akismet/_inc/form.js?ver=4.1.3'></script>
 <script type='text/javascript'>
 /* <![CDATA[ */
-var cptch_vars = {"nonce":"0651ff5220","ajaxurl":"http:\/\/dev.chaloke.com\/wp-admin\/admin-ajax.php","enlarge":""};
+var cptch_vars = {"nonce":"d1bceada56","ajaxurl":"http:\/\/dev.chaloke.com\/wp-admin\/admin-ajax.php","enlarge":""};
 /* ]]> */
 </script>
 <script type='text/javascript' src='http://dev.chaloke.com/wp-content/plugins/captcha/js/front_end_script.js?ver=5.3.2'></script>
@@ -1442,8 +1486,8 @@ var cptch_vars = {"nonce":"0651ff5220","ajaxurl":"http:\/\/dev.chaloke.com\/wp-a
 <!--
 Performance optimized by W3 Total Cache. Learn more: https://www.w3-edge.com/products/
 
-Object Caching 189/323 objects using disk
+Object Caching 196/303 objects using disk
 Page Caching using disk: enhanced 
 
-Served from: dev.chaloke.com @ 2020-01-01 11:25:07 by W3 Total Cache
+Served from: dev.chaloke.com @ 2020-01-05 22:46:52 by W3 Total Cache
 -->

@@ -12,14 +12,28 @@ if ( ! class_exists( 'Tribe__Tickets_Plus__Main' ) ) {
 		/**
 		 * Current version of this plugin
 		 */
-		const VERSION = '4.10.1.1';
+		const VERSION = '4.11.1';
 
 		/**
 		 * Min required Tickets Core version
 		 *
 		 * @deprecated 4.10
 		 */
-		const REQUIRED_TICKETS_VERSION = '4.10';
+		const REQUIRED_TICKETS_VERSION = '4.11.1';
+
+		/**
+		 * Used to store the version history.
+		 *
+		 * @since 4.11.0
+		 */
+		public $version_history_slug = 'previous_event_tickets_plus_versions';
+
+		/**
+		 * Used to store the latest version.
+		 *
+		 * @since 4.11.0
+		 */
+		public $latest_version_slug = 'latest_event_tickets_plus_version';
 
 		/**
 		 * Directory of the plugin
@@ -98,12 +112,16 @@ if ( ! class_exists( 'Tribe__Tickets_Plus__Main' ) ) {
 			$this->plugin_url  = plugins_url() . '/' . $this->plugin_dir;
 			$this->pue         = new Tribe__Tickets_Plus__PUE;
 
-			add_action( 'init', array( $this, 'init' ), 9 );
+			/** @see \Tribe__Events__Pro__Main::init_apm_filters() Is on priority 10. */
+			add_action( 'plugins_loaded', array( $this, 'apm_filters' ), 5 );
 
-			add_action( 'init', array( $this, 'csv_import_support' ) );
+			add_action( 'init', array( $this, 'init' ), 5 );
+
+			// CSV import needs to happen before P10@init but after P5@init
+			add_action( 'init', array( $this, 'csv_import_support' ), 6 );
 			add_filter( 'tribe_support_registered_template_systems', array( $this, 'add_template_updates_check' ) );
 			add_action( 'tribe_events_tickets_attendees_event_details_top', array( $this, 'setup_attendance_totals' ), 5 );
-			add_filter( 'tribe_tickets_settings_tab_fields', array( $this, 'additional_ticket_settings' ) );
+			add_filter( 'tribe_tickets_settings_tab_fields', array( $this, 'tribe_tickets_plus_settings' ) );
 
 			// Unique ticket identifiers
 			add_action( 'event_tickets_rsvp_attendee_created', array( Tribe__Tickets_Plus__Meta__Unique_ID::instance(), 'assign_unique_id' ), 10, 2 );
@@ -112,6 +130,7 @@ if ( ! class_exists( 'Tribe__Tickets_Plus__Main' ) ) {
 
 			add_action( 'admin_init', array( $this, 'run_updates' ), 10, 0 );
 
+			add_filter( 'tribe-events-save-options', [ $this, 'retro_attendee_page_option' ] );
 		}
 
 		/**
@@ -138,6 +157,7 @@ if ( ! class_exists( 'Tribe__Tickets_Plus__Main' ) ) {
 			$this->attendees_list();
 
 			$this->apm_filters();
+			$this->maybe_set_event_tickets_plus_version();
 
 		}
 
@@ -227,7 +247,7 @@ if ( ! class_exists( 'Tribe__Tickets_Plus__Main' ) ) {
 		/**
 		 * Object accessor method for APM filters.
 		 *
-		 * @return Tribe__Tickets_Plus__APM
+		 * @return null|Tribe__Tickets_Plus__APM
 		 */
 		public function apm_filters() {
 			if ( ! class_exists( 'Tribe_APM' ) ) {
@@ -239,6 +259,21 @@ if ( ! class_exists( 'Tribe__Tickets_Plus__Main' ) ) {
 			}
 
 			return self::$apm_filters;
+		}
+
+		/**
+		 * Set the Event Tickets version in the options table if it's not already set.
+		 *
+		 * @since 4.11.0
+		 */
+		public function maybe_set_event_tickets_plus_version() {
+			if ( version_compare( Tribe__Settings_Manager::get_option( $this->latest_version_slug ), self::VERSION, '<' ) ) {
+				$previous_versions   = Tribe__Settings_Manager::get_option( $this->version_history_slug ) ?: [];
+				$previous_versions[] = Tribe__Settings_Manager::get_option( $this->latest_version_slug ) ?: '0';
+
+				Tribe__Settings_Manager::set_option( $this->version_history_slug, $previous_versions );
+				Tribe__Settings_Manager::set_option( $this->latest_version_slug, self::VERSION );
+			}
 		}
 
 		/**
@@ -366,7 +401,22 @@ if ( ! class_exists( 'Tribe__Tickets_Plus__Main' ) ) {
 		}
 
 		/**
+		 * Filter the tickets settings tab to include tickets plus settings
+		 *
+		 * @param $settings array Field settings for the tickets settings tab in the dashboard.
+		 *
+		 * @since 4.11.0
+		 */
+		public function tribe_tickets_plus_settings( $settings ) {
+			include $this->plugin_path . 'src/admin-views/ticket-settings.php';
+
+			return $settings;
+		}
+
+		/**
 		 * Add additional ticket settings to define slug and choose the template for the attendee info page.
+		 *
+		 * @deprecated 4.11.0
 		 *
 		 * @since 4.10.1
 		 *
@@ -375,46 +425,46 @@ if ( ! class_exists( 'Tribe__Tickets_Plus__Main' ) ) {
 		 * @return array List of ticket fields with additional setting fields added.
 		 */
 		public function additional_ticket_settings( $tickets_fields ) {
-			$template_options = array(
-				'default' => esc_html__( 'Default Page Template', 'event-tickets' ),
-			);
+			_deprecated_function( __METHOD__, '4.11.0', 'tribe_tickets_plus_settings' );
 
-			if ( class_exists( 'Tribe__Events__Main' ) ) {
-				$template_options['same']  = esc_html__( 'Same as Event Page Template', 'event-tickets' );
+			$this->tribe_tickets_plus_settings( $tickets_fields );
+		}
+
+		/**
+		 * Handle converting an old key to a new one, in this case
+		 * ticket-attendee-page-slug -> ticket-attendee-page-id
+		 *
+		 * @since 4.10.4
+		 *
+		 * @todo Move this to common at some point for better utility?
+		 *
+		 * @param array $options List of options to save.
+		 * @return array Modified list of options to save.
+		 */
+		public function retro_attendee_page_option( $options ) {
+			// Don't migrate option if old option is not set.
+			if ( empty( $options['ticket-attendee-page-slug'] ) ) {
+				return $options;
 			}
 
-			$templates = get_page_templates();
+			$slug = $options['ticket-attendee-page-slug'];
+			unset( $options['ticket-attendee-page-slug'] );
 
-			ksort( $templates );
-
-			foreach ( array_keys( $templates ) as $template ) {
-				$template_options[ $templates[ $template ] ] = $template;
+			// ID is already set, just return $options without the slug.
+			if ( ! empty( $options['ticket-attendee-page-id'] ) ) {
+				return $options;
 			}
 
-			$options = array(
-				'ticket-attendee-info-slug' => array(
-					'type'                => 'text',
-					'label'               => esc_html__( 'Attendee Registration URL slug', 'event-tickets' ),
-					'tooltip'             => esc_html__( 'The slug used for building the URL for the Attendee Registration Info page.', 'event-tickets' ),
-					'size'                => 'medium',
-					'default'             => tribe( 'tickets.attendee_registration' )->get_slug(),
-					'validation_callback' => 'is_string',
-					'validation_type'     => 'slug',
-				),
-				'ticket-attendee-info-template' => array(
-					'type'            => 'dropdown',
-					'label'           => __( 'Attendee Registration template', 'event-tickets' ),
-					'tooltip'         => __( 'Choose a page template to control the appearance of your attendee registration page.', 'event-tickets' ),
-					'validation_type' => 'options',
-					'size'            => 'large',
-					'default'         => 'default',
-					'options'         => $template_options,
-				),
-			);
+			$page = get_page_by_path( $slug, OBJECT );
 
-			$array_key = array_key_exists( 'ticket-commerce-form-location', $tickets_fields ) ? 'ticket-commerce-form-location' : 'ticket-enabled-post-types';
+			// Slug does not match any pages or it may have changed, just return $options without the slug.
+			if ( empty( $page ) ) {
+				return $options;
+			}
 
-			return Tribe__Main::array_insert_after_key( $array_key, $tickets_fields, $options );
+			// Set ID to the slug page's ID  and return $options without the slug.
+			$options['ticket-attendee-page-id'] = $page->ID;
+			return $options;
 		}
 
 		/**
@@ -437,8 +487,8 @@ if ( ! class_exists( 'Tribe__Tickets_Plus__Main' ) ) {
 		 *
 		 */
 		public function run_updates() {
-			if ( ! class_exists( 'Tribe__Events__Updater' ) ) {
-				return; // core needs to be updated for compatibility
+			if ( ! class_exists( 'Tribe__Updater' ) ) {
+				return;
 			}
 
 			$updater = new Tribe__Tickets_Plus__Updater( self::VERSION );

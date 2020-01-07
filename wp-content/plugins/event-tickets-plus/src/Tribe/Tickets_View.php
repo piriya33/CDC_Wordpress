@@ -32,15 +32,15 @@ class Tribe__Tickets_Plus__Tickets_View {
 	public static function hook() {
 		$myself = self::instance();
 
-		add_action( 'event_tickets_after_attendees_update', array( $myself, 'save_meta' ) );
-		add_action( 'wp_ajax_tribe-tickets-save-attendee-info', array( $myself, 'save_attendee_info' ) );
-		add_action( 'wp_ajax_nopriv_tribe-tickets-save-attendee-info', array( $myself, 'save_attendee_info' ) );
-		add_action( 'event_tickets_orders_attendee_contents', array( $myself, 'output_attendee_meta' ) );
-		add_filter( 'tribe_tickets_template_paths', array( $myself, 'add_template_path' ) );
-		add_action( 'tribe_tickets_orders_rsvp_item', array( $myself, 'add_meta_to_rsvp' ), 10, 2 );
-		add_action( 'tribe_tickets_orders_before_submit', array( $myself, 'output_ticket_order_form' ) );
-		add_action( 'event_tickets_user_details_rsvp', array( $myself, 'output_attendee_list_checkbox' ), 10, 2 );
-		add_action( 'event_tickets_user_details_tickets', array( $myself, 'output_attendee_list_checkbox' ), 10, 2 );
+		add_action( 'event_tickets_after_attendees_update', [ $myself, 'save_meta' ] );
+		add_action( 'wp_ajax_tribe-tickets-save-attendee-info', [ $myself, 'save_attendee_info' ] );
+		add_action( 'wp_ajax_nopriv_tribe-tickets-save-attendee-info', [ $myself, 'save_attendee_info' ] );
+		add_action( 'event_tickets_orders_attendee_contents', [ $myself, 'output_attendee_meta' ] );
+		add_filter( 'tribe_tickets_template_paths', [ $myself, 'add_template_path' ] );
+		add_action( 'tribe_tickets_orders_rsvp_item', [ $myself, 'add_meta_to_rsvp' ], 10, 2 );
+		add_action( 'tribe_tickets_orders_before_submit', [ $myself, 'output_ticket_order_form' ] );
+		add_action( 'event_tickets_user_details_rsvp', [ $myself, 'output_attendee_list_checkbox' ], 10, 2 );
+		add_action( 'event_tickets_user_details_tickets', [ $myself, 'output_attendee_list_checkbox' ], 10, 2 );
 
 		return $myself;
 	}
@@ -89,25 +89,30 @@ class Tribe__Tickets_Plus__Tickets_View {
 		 *
 		 * @return array
 		 */
-		$tickets_in_cart = apply_filters( 'tribe_tickets_tickets_in_cart', array() );
-		$meta_up_to_date = tribe( 'tickets-plus.meta.contents' )->is_stored_meta_up_to_date( $tickets_in_cart );
+		$tickets_in_cart = apply_filters( 'tribe_tickets_tickets_in_cart', [] );
 
-		wp_send_json_success( array(
+		/** @var Tribe__Tickets_Plus__Meta__Contents $contents */
+		$contents = tribe( 'tickets-plus.meta.contents' );
+
+		$meta_up_to_date = $contents->is_stored_meta_up_to_date( $tickets_in_cart );
+
+		wp_send_json_success( [
 			'meta_up_to_date' => $meta_up_to_date,
-		) );
+		] );
 	}
 
 	/**
-	 * Saves the Attendee meta changes
+	 * Saves the Attendee Information from the front-end My Tickets editing form.
 	 *
-	 * @param  int $event_id Which event this change applies to
-	 * @return void
+	 * @since 4.10.7 Handles hashed input names (Checkboxes and Radios since 4.10.2)
+	 *              and only updates post_meta if there's a change detected.
+	 *
+	 * @param int $event_id The event this change applies to.
 	 */
 	public function save_meta( $event_id ) {
-		$user_id   = get_current_user_id();
-		$attendees = Tribe__Tickets__Tickets::get_event_attendees( $event_id );
+		$user_id = get_current_user_id();
 
-		// this block only runs for Tickets
+		// This only runs for Tickets
 		if ( isset( $_POST['attendee'] ) && ! empty( $_POST['event_id'] ) ) {
 			$event_id = absint( $_POST['event_id'] );
 
@@ -124,20 +129,19 @@ class Tribe__Tickets_Plus__Tickets_View {
 					continue;
 				}
 
-				$optout = empty( $_POST['optout'][ $order_id ] ) ? false : true;
-
-				$provider = call_user_func( array( $first_attendee['provider'], 'get_instance' ) );
+				$optout = isset( $_POST['optout'][ $order_id ] ) ? $_POST['optout'][ $order_id ] : 0;
+				$optout = filter_var( $optout, FILTER_VALIDATE_BOOLEAN );
+				$optout = (int) $optout;
 
 				foreach ( $attendees_by_order[ $order_id ] as $attendee ) {
-					$attendee_owner = $this->get_attendee_owner( $attendee['attendee_id'] );
-
-					if ( $user_id !== $attendee_owner ) {
+					if ( $user_id !== (int) $attendee['user_id'] ) {
 						continue;
 					}
 
 					$provider_class = $attendee['provider'];
+
 					if ( ! defined( "{$provider_class}::ATTENDEE_OPTOUT_KEY" ) ) {
-						$attendee_optout_key = call_user_func( array( $provider_class, 'get_key' ), 'ATTENDEE_OPTOUT_KEY' );
+						$attendee_optout_key = call_user_func( [ $provider_class, 'get_key' ], 'ATTENDEE_OPTOUT_KEY' );
 					} else {
 						$attendee_optout_key = constant( "{$provider_class}::ATTENDEE_OPTOUT_KEY" );
 					}
@@ -164,6 +168,7 @@ class Tribe__Tickets_Plus__Tickets_View {
 
 			/**
 			 * Allow developers to prevent users to update specific Attendees or Events
+			 *
 			 * @param boolean $is_meta_update_allowed If is allowed or not
 			 * @param int     $event_id               Which event this applies to
 			 * @param int     $attendee_id            Which attendee this update will be done to
@@ -176,39 +181,75 @@ class Tribe__Tickets_Plus__Tickets_View {
 				continue;
 			}
 
-			// Fetches the Attendee data based on the ID
-			foreach ( $attendees as $attendee ) {
-				if ( isset( $attendee['attendee_id'] ) && $attendee['attendee_id'] === $attendee_id ) {
-					break;
-					// When it breaks the foreach it will keep the $attendee variable as the one where it broke off
-				}
+			$args = [
+				'by' => [
+					'id' => $attendee_id,
+				],
+			];
+
+			$attendee_data = Tribe__Tickets__Tickets::get_event_attendees_by_args( $event_id, $args );
+
+			// Attendee not found.
+			if ( ! isset( $attendee_data['attendees'] ) ) {
+				continue;
 			}
+
+			$attendee = current( $attendee_data['attendees'] );
 
 			$fields = Tribe__Tickets_Plus__Meta::instance()->get_meta_fields_by_ticket( $attendee['product_id'] );
 
 			foreach ( $fields as $field ) {
-				// Don't remove the data if not restricted
-				if ( ! $field->is_restricted( $attendee_id ) ) {
+				if ( ! $field instanceof Tribe__Tickets_Plus__Meta__Field__Abstract_Field ) {
 					continue;
 				}
 
-				$name = null;
-				if ( 'checkbox' === $field->type ) {
-					foreach ( $field->extra['options'] as $label ) {
-						$name = $field->slug . '_' . sanitize_title( $label );
-						if ( isset( $data[ $name ] ) ) {
-							unset( $data[ $name ] );
+				// If a field is restricted, do not allow changing its data
+				if ( $field->is_restricted( $attendee_id ) ) {
+					continue;
+				}
+
+				if (
+					'checkbox' === $field->type
+					|| 'radio' === $field->type
+				) {
+					$map = $field->get_hashed_options_map();
+
+					reset( $data );
+					foreach ( $data as $key => $value ) {
+						if ( array_key_exists( $key, $map ) ) {
+							$data[ $field->slug . '_' . sanitize_title( $value ) ] = $map[$key];
+							unset( $data[$key] );
 						}
-					}
-				} else {
-					if ( isset( $data[ $field->slug ] ) ) {
-						unset( $data[ $field->slug ] );
+
+						// Remove hidden field from Checkbox template that sends an empty field to ensure empty saves work for AJAX
+						if (
+							0 === $key
+							&& '' === $value
+						) {
+							unset( $data[$key] );
+						}
 					}
 				}
 			}
 
-			// Updates the meta information associated with individual attendees
-			update_post_meta( $attendee_id, Tribe__Tickets_Plus__Meta::META_KEY, $data );
+			$values = (array) get_post_meta( $attendee_id, Tribe__Tickets_Plus__Meta::META_KEY, true );
+
+			// Only write to database if arrays do not match, regardless of the order of keys
+			if ( $data != $values ) {
+				// Updates the meta information associated with individual attendees
+				update_post_meta( $attendee_id, Tribe__Tickets_Plus__Meta::META_KEY, $data );
+
+				/**
+				 * An Action fired when an Attendees Meta Data is Updated.
+				 *
+				 * @since 4.11.0
+				 *
+				 * @param array $data        An array of attendee meta that was saved for the attendee.
+				 * @param int   $attendee_id the ID of an attendee.
+				 * @param int   $event_id    the ID of an event.
+				 */
+				do_action( 'event_tickets_plus_attendee_meta_update', $data, $attendee_id, $event_id );
+			}
 		}
 	}
 
@@ -218,12 +259,12 @@ class Tribe__Tickets_Plus__Tickets_View {
 	 * @param int $i          Index of the Attendee
 	 */
 	public function add_meta_to_rsvp( $attendee, $i ) {
-		$args = array(
+		$args = [
 			'order_id' => $attendee['order_id'],
 			'order'    => $attendee,
 			'attendee' => $attendee,
 			'i'        => $i,
-		);
+		];
 		tribe_tickets_get_template_part( 'tickets-plus/orders-edit-meta', null, $args );
 	}
 
@@ -233,9 +274,9 @@ class Tribe__Tickets_Plus__Tickets_View {
 	 * @param array $attendee Attendee data
 	 */
 	public function output_attendee_meta( $attendee ) {
-		$args = array(
+		$args = [
 			'attendee' => $attendee,
-		);
+		];
 
 		tribe_tickets_get_template_part( 'tickets-plus/orders-edit-meta', null, $args );
 	}
@@ -261,20 +302,28 @@ class Tribe__Tickets_Plus__Tickets_View {
 	 * @return array                    List of Attendees grouped by order id
 	 */
 	public function get_event_attendees_by_order( $event_id, $user_id = null, $include_rsvp = false ) {
-		$attendees = Tribe__Tickets__Tickets::get_event_attendees( $event_id );
-		$orders = array();
+		if ( ! $user_id ) {
+			$attendees = Tribe__Tickets__Tickets::get_event_attendees( $event_id );
+		} else {
+			// If we have a user_id then limit by that.
+			$args = [
+				'user' => $user_id,
+			];
 
-		foreach ( $attendees as $key => $attendee ) {
+			$attendee_data = Tribe__Tickets__Tickets::get_event_attendees_by_args( $event_id, $args );
+
+			$attendees = $attendee_data['attendees'];
+		}
+
+		$orders = [];
+
+		foreach ( $attendees as $attendee ) {
 			// Ignore RSVP if we don't tell it specifically
-			if ( 'rsvp' === $attendee['provider_slug'] && ! $include_rsvp ) {
+			if (
+				'rsvp' === $attendee['provider_slug']
+				&& ! $include_rsvp
+			) {
 				continue;
-			}
-
-			// If we have a user_id then test it and ignore the ones that don't have it
-			if ( ! is_null( $user_id ) ) {
-				if ( empty( $attendee['user_id'] ) || $attendee['user_id'] != $user_id ) {
-					continue;
-				}
 			}
 
 			$orders[ (int) $attendee['order_id'] ][] = $attendee;
@@ -301,11 +350,11 @@ class Tribe__Tickets_Plus__Tickets_View {
 		}
 		$first_attendee = reset( $attendee_group );
 
-		$args = array(
+		$args = [
 			'attendee_group' => $attendee_group,
 			'post_id'        => $post_id,
 			'first_attendee' => $first_attendee,
-		);
+		];
 
 		if ( doing_action( 'event_tickets_user_details_rsvp' ) ) {
 			$template_part = 'tickets-plus/attendee-list-checkbox-rsvp';

@@ -39,7 +39,6 @@ class Tribe__Tickets_Plus__Attendees_List {
 
 		// Unhook Event Ticket's "View your RSVPs" rendering logic so that we can re-render with ET+'s "Who's attending?" list.
 		add_action( 'init', array( $myself, 'unhook_event_tickets_order_link_logic' ) );
-		add_action( 'tribe_tickets_before_front_end_ticket_form', array( Tribe__Tickets__Tickets_View::instance(), 'inject_link_template' ), 4 );
 
 		// Add the Admin Option for removing the Attendees List
 		add_action( 'tribe_events_tickets_metabox_pre', array( $myself, 'render_admin_options' ) );
@@ -102,7 +101,8 @@ class Tribe__Tickets_Plus__Attendees_List {
 	/**
 	 * Renders the Administration option to hide Attendees List
 	 *
-	 * @param  int $post_id
+	 * @param int $post_id
+	 *
 	 * @return void
 	 */
 	public function render_admin_options( $post_id = null ) {
@@ -157,7 +157,7 @@ class Tribe__Tickets_Plus__Attendees_List {
 	/**
 	 * Remove the Post Transients for the Tickets Attendees during late ticket generation
 	 *
-	 * @since TBD
+	 * @since 4.10.1.1
 	 *
 	 * @param  int $unused_attendee_id
 	 * @param  int $unused_event_id
@@ -178,8 +178,8 @@ class Tribe__Tickets_Plus__Attendees_List {
 	public function unhook_event_tickets_order_link_logic() {
 		$tickets_view = Tribe__Tickets__Tickets_View::instance();
 
-		remove_action( 'tribe_events_single_event_after_the_meta', array( $tickets_view, 'inject_link_template' ), 4 );
-		remove_filter( 'the_content', array( $tickets_view, 'inject_link_template_the_content' ), 9 );
+		remove_action( 'tribe_events_single_event_after_the_meta', [ $tickets_view, 'inject_link_template' ], 4 );
+		remove_filter( 'the_content', [ $tickets_view, 'inject_link_template_the_content' ], 9 );
 	}
 
 	/**
@@ -201,43 +201,47 @@ class Tribe__Tickets_Plus__Attendees_List {
 			return;
 		}
 
-		// using the Attendees as a variable here allows more template configuration if needed
-		$attendees       = Tribe__Tickets__Tickets::get_event_attendees( $event->ID );
-		$attendees_going = $attendees;
-
-		if ( empty( $attendees ) || ! is_array( $attendees ) ) {
-			return;
-		}
-
-		foreach ( $attendees as $key => $attendee ) {
-			// If the order failed or they choose not to be displayed, take them off the list.
-			if (
-				'no' === $attendee['order_status']
-				|| 'failed' === $attendee['order_status']
-			) {
-				unset( $attendees_going[ $key ] );
-			}
-		}
-
-		$attendees_total = count( $attendees_going );
-
-		if ( 0 === $attendees_total ) {
-			return;
-		}
-
 		$attendees_list = $this->get_attendees( $event->ID, $limit );
 
+		if ( ! $attendees_list ) {
+			return;
+		}
+
+		$attendees_total = count( $attendees_list );
+
+		if ( empty( $attendees_total ) ) {
+			return;
+		}
+
 		include_once Tribe__Tickets_Plus__Main::instance()->get_template_hierarchy( 'attendees-list' );
+
+		$tickets_view = Tribe__Tickets__Tickets_View::instance();
+
+		$tickets_view->inject_link_template();
 	}
 
 	/**
 	 * Returns an Array ready for printing of the Attendees List
 	 *
-	 * @param  int|WP_Post  $event
-	 * @param  int $limit
+	 * @param WP_Post|int $post_id Post object or ID.
+	 * @param  int        $limit   Limit of attendees to be retrieved.
+	 *
 	 * @return array
 	 */
-	public function get_attendees( $event, $limit = 20 ) {
+	public function get_attendees( $post_id, $limit = 20 ) {
+		$post   = get_post( $post_id );
+		$output = [];
+
+		if ( ! $post instanceof WP_Post ) {
+			return $output;
+		}
+
+		$args = [
+			'by' => [
+				// Exclude people who have opted out or not specified optout.
+				'optout' => 'no_or_none',
+			],
+		];
 
 		/**
 		 * Allow for adjusting the limit of attendees retrieved for the front-end "Who's Attending?" list.
@@ -246,38 +250,51 @@ class Tribe__Tickets_Plus__Attendees_List {
 		 *
 		 * @param int $limit Number of attendees to retrieve.
 		 */
-		$limit      = apply_filters( 'tribe_tickets_plus_attendees_list_limit', $limit );
-		$attendees  = Tribe__Tickets__Tickets::get_event_attendees( $event );
-		$total      = count( $attendees );
+		$limit = (int) apply_filters( 'tribe_tickets_plus_attendees_list_limit', $limit );
+
+		/**
+		 * Allow for adjusting the limit of attendees fetched from the database for the front-end "Who's Attending?" list.
+		 *
+		 * @since 4.10.5
+		 *
+		 * @param int $limit_attendees Number of attendees to retrieve. Default is no limit -1.
+		 */
+		$limit_attendees = (int) apply_filters( 'tribe_tickets_plus_attendees_list_limit_attendees', -1 );
+
+		if ( 0 < $limit_attendees ) {
+			$args['per_page'] = $limit_attendees;
+		}
+
+		$attendees  = Tribe__Tickets__Tickets::get_event_attendees( $post->ID, $args );
+		$emails     = [];
 		$has_broken = false;
-		$listing    = array();
-		$emails     = array();
+
+		// Bail if there are no attendees
+		if ( empty( $attendees ) || ! is_array( $attendees ) ) {
+			return $output;
+		}
+
+		$excluded_statuses = [
+			'no',
+			'failed',
+		];
 
 		foreach ( $attendees as $key => $attendee ) {
-			$html = '';
-			// Only Check for optout when It's there
-			if ( isset( $attendee['optout'] ) && false !== $attendee['optout'] ) {
-				continue;
-			}
-
 			// Skip when we already have another email like this one.
-			if ( in_array( $attendee['purchaser_email'], $emails ) ) {
+			if ( in_array( $attendee['purchaser_email'], $emails, true ) ) {
 				continue;
 			}
 
-			// Skip folks who've RSVPed as "Not Going".
-			if ( 'no' === $attendee['order_status'] ) {
+			// Skip "Failed" orders and folks who've RSVPed as "Not Going".
+			if ( in_array( $attendee['order_status'], $excluded_statuses, true ) ) {
 				continue;
 			}
 
-			// Skip "Failed" orders
-			if ( 'failed' === $attendee['order_status'] ) {
-				continue;
-			}
-
-			if ( is_numeric( $limit ) && $limit < $key + 1 ) {
+			if ( ! $has_broken && is_numeric( $limit ) && $limit < $key + 1 ) {
 				$has_broken = true;
 			}
+
+			$html = '';
 
 			if ( $has_broken ) {
 				$html .= '<span class="tribe-attendees-list-hidden">';
@@ -289,14 +306,20 @@ class Tribe__Tickets_Plus__Attendees_List {
 			$html .= '</span>';
 
 			$emails[] = $attendee['purchaser_email'];
-			$listing[ $attendee['attendee_id'] ] = $html;
+
+			$output[ $attendee['attendee_id'] ] = $html;
 		}
 
 		if ( $has_broken ) {
-			$listing['show-more'] = '<a href="#show-all-attendees" data-offset="' . esc_attr( $limit ) . '" title="' . esc_attr__( 'Load all attendees', 'event-tickets-plus' ) . '" class="tribe-attendees-list-showall avatar">' . get_avatar( '', 40, '', esc_attr__( 'Load all attendees', 'event-tickets-plus' ) ) . '</a>';
+			$output['show-more'] = sprintf(
+				'<a href="#show-all-attendees" data-offset="%1$s" title="%2$s" class="tribe-attendees-list-showall avatar">%3$s</a>',
+				esc_attr( $limit ),
+				esc_attr__( 'Load all attendees', 'event-tickets-plus' ),
+				get_avatar( '', 40, '', esc_attr__( 'Load all attendees', 'event-tickets-plus' ) )
+			);
 		}
 
-		return $listing;
+		return $output;
 	}
 
 }

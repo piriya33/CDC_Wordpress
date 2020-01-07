@@ -25,16 +25,29 @@ class Tribe__Tickets_Plus__Commerce__EDD__Stock_Control {
 	/**
 	 * Returns the amount of inventory available for the specified ticket.
 	 *
+	 * @since 4.10.7 Fixed so limit of -1 returns unlimited.
+	 *
 	 * @param  int $ticket_id
+	 *
 	 * @return int
 	 */
 	public function available_units( $ticket_id ) {
+		/** @var Tribe__Tickets__Tickets_Handler $handler */
+		$handler = tribe( 'tickets.handler' );
+
 		// Do we have a limit on the number of tickets?
-		$limit = get_post_meta( $ticket_id, '_stock', true );
-		if ( empty( $limit ) ) return Tribe__Tickets_Plus__Commerce__EDD__Main::UNLIMITED;
+		$limit = get_post_meta( $ticket_id, $handler->key_capacity, true );
+
+		if (
+			empty( $limit )
+			|| -1 === (int) $limit
+		) {
+			return Tribe__Tickets_Plus__Commerce__EDD__Main::UNLIMITED;
+		}
 
 		// If so, calculate the number still available
 		$sold = $this->get_purchased_inventory( $ticket_id );
+
 		return $limit - $sold;
 	}
 
@@ -72,10 +85,12 @@ class Tribe__Tickets_Plus__Commerce__EDD__Stock_Control {
 	public function record_purchased_inventory( $payment, $payment_data ) {
 		$quantity = array();
 
+		$event_key = tribe( 'tickets-plus.commerce.edd' )->event_key;
+
 		// Look through the list of purchased downloads: for any that relate to tickets,
 		// determine how much inventory was purchased
 		foreach ( $payment_data['downloads'] as $purchase ) {
-			if ( ! get_post_meta( $purchase['id'], tribe( 'tickets-plus.commerce.edd' )->event_key ) ) {
+			if ( ! get_post_meta( $purchase['id'], $event_key ) ) {
 				continue;
 			}
 
@@ -87,6 +102,10 @@ class Tribe__Tickets_Plus__Commerce__EDD__Stock_Control {
 		// For each purchased ticket, record the level of inventory purchased
 		foreach ( $quantity as $purchase_id => $amount ) {
 			update_post_meta( $payment, self::PURCHASED_TICKETS . $purchase_id, absint( $quantity[ $purchase_id ] ) );
+			// and update stock to reflect
+			if ( ! empty( $amount ) && is_numeric( $amount ) ) {
+				$this->increment_units( $purchase_id, ( 0 - $amount )  );
+			}
 		}
 
 		if ( ! empty( $quantity ) ) {
@@ -125,10 +144,10 @@ class Tribe__Tickets_Plus__Commerce__EDD__Stock_Control {
 	 * @param  array $order_statuses
 	 * @return int
 	 */
-	public function get_purchased_inventory( $ticket_id, array $order_statuses = null ) {
+	public function get_purchased_inventory( $ticket_id, array $order_statuses = [] ) {
 		global $wpdb;
 
-		if ( null === $order_statuses ) {
+		if ( empty( $order_statuses ) ) {
 			$order_statuses = $this->get_valid_payment_statuses();
 		}
 
@@ -136,16 +155,14 @@ class Tribe__Tickets_Plus__Commerce__EDD__Stock_Control {
 
 		$sql = "
 			SELECT
-			    SUM( $wpdb->postmeta.meta_value)
-			FROM
-			    $wpdb->posts
-			        JOIN
-			    $wpdb->postmeta ON $wpdb->postmeta.post_id = $wpdb->posts.ID
-			WHERE
-			    post_status IN ( $order_statuses )
-			        AND post_type = 'edd_payment'
-			        AND meta_key = '_edd_tickets_qty_%d';
-        ";
+				COUNT( * )
+				FROM $wpdb->postmeta
+					JOIN $wpdb->posts ON $wpdb->posts.ID = $wpdb->postmeta.post_id
+				WHERE
+					$wpdb->postmeta.meta_key = '_tribe_eddticket_product'
+					AND $wpdb->postmeta.meta_value = %s
+		";
+		$sql .= empty( $order_statuses ) ? ';' : "AND post_status IN ( $order_statuses );";
 
 		return (int) $wpdb->get_var( $wpdb->prepare( $sql, $ticket_id ) );
 	}
@@ -156,6 +173,14 @@ class Tribe__Tickets_Plus__Commerce__EDD__Stock_Control {
 	 */
 	public function count_incomplete_order_items( $ticket_id ) {
 		return $this->get_purchased_inventory( $ticket_id, $this->get_pending_payment_statuses() );
+	}
+
+	/**
+	 * @param  int $ticket_id
+	 * @return int
+	 */
+	public function count_refunded_order_items( $ticket_id ) {
+		return $this->get_purchased_inventory( $ticket_id, $this->get_refunded_payment_statuses() );
 	}
 
 	/**
@@ -200,8 +225,8 @@ class Tribe__Tickets_Plus__Commerce__EDD__Stock_Control {
 	 * @return array
 	 */
 	protected function get_pending_payment_statuses() {
+		$pending_statuses = tribe( 'tickets.status' )->get_statuses_by_action( [ 'incomplete', 'count_sales' ], 'edd' );
 
-		$pending_statuses = tribe( 'tickets.status' )->get_statuses_by_action( array( 'incomplete', 'count_sales' ), 'edd' );
 		/**
 		 *  Filter EDD Pending Payment Statuses
 		 *
@@ -210,5 +235,24 @@ class Tribe__Tickets_Plus__Commerce__EDD__Stock_Control {
 		 * @param array an array of payment statuses
 		 */
 		return (array) apply_filters( 'eddtickets_pending_payment_statuses', $pending_statuses );
+	}
+
+	/**
+	 * Returns a filterable list of post statuses considered "refunded" in relation to
+	 * EDD payments.
+	 *
+	 * @return array
+	 */
+	protected function get_refunded_payment_statuses() {
+		$refunded_statuses = tribe( 'tickets.status' )->get_statuses_by_action( 'count_refunded', 'edd' );
+
+		/**
+		 * Filter EDD Refunded Payment Statuses
+		 *
+		 * @since 4.10.7
+		 *
+		 * @param array an array of payment statuses
+		 */
+		return (array) apply_filters( 'event_tickets_plus_commerce_edd_refunded_payment_statuses', $refunded_statuses );
 	}
 }

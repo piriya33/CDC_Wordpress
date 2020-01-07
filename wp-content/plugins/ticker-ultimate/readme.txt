@@ -2,7 +2,7 @@
 Contributors: wponlinesupport, anoopranawat, pratik-jain
 Tags: wponlinesupport, ticker, news ticker, blog ticker, post ticker, ticker slider, ticker vertical slider, ticker horizontal slider
 Requires at least: 4.0
-Tested up to: 5.2.2
+Tested up to: 5.3.2
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -14,8 +14,7 @@ A very simple plugin to add and display horizontal or vertical tickers on your w
 
 Ticker Ultimate Plugin enables you to create and display posts in fade, vertical and horizontal slider effect.
 
-Check [FREE DEMO](https://demo.wponlinesupport.com/ticker-ultimate/) 
-Check [PRO DEMO and Features](https://demo.wponlinesupport.com/prodemo/ticker-ultimate-pro/) for additional information.
+Check [Demo and Features](https://demo.wponlinesupport.com/ticker-ultimate/) for additional information.
 
 Also work with Gutenberg shortcode block.
 
@@ -31,7 +30,7 @@ Where you can display your recent post as headline.
 
 Ticker Ultimate Shortcode:
 
-<code>[wp_ticker category="5" ticker_title="News Tickers" color="#000" background_color="#2096CD" effect="fade" fontstyle="normal" autoplay="false" timer="4000" title_color="#000" border="false" post_type="post" post_cat="category"]</code>
+<code>[wp_ticker category="5" ticker_title="News Tickers" color="#000" background_color="#2096CD" effect="fade" fontstyle="normal" autoplay="false" timer="4000" title_color="#000" border="false" post_type="post" post_cat="category" link="true" link_target="self"]</code>
  
 = Use Following parameters with shortcode =
 
@@ -49,6 +48,8 @@ Ticker Ultimate Shortcode:
 * **Timer:** [wp_ticker timer="3000"] (Control speed of ticker slider.)
 * **Post Type:** [wp_ticker post_type="post"] (You can view the Default wordpress posts with ticker plugin.)
 * **Post Category:** [wp_ticker post_cat="category"] (You can apply the Default wordpress category with ticker plugin.)
+* **Link:** [wp_ticker link="true"] (You can able to remove link of ticker.)
+* **Link Target:** [wp_ticker link_target="self"] (You can able to set target of link to current/new page.)
 
 = Template code is =
 <code><?php echo do_shortcode('[wp_ticker]'); ?></code>
@@ -59,13 +60,36 @@ Ticker Ultimate Shortcode:
 * Custom Background Color Change of the Title
 * Ticker Slider Effect
 * Ticker Slider Timer
-* Default Wordpress Posts Support
+* Default WordPress Posts Support
 * Strong shortcode parameters
 * 100% Multilanguage
 * Also work with Gutenberg shortcode block.
 
+= PRO Features : =
+> <strong>Premium Version</strong><br>
+>
+> * 2 Styles
+> * 2 Shortcodes (Post in ticker mode, RSS feed in ticker mode)	
+> * WP Templating Features Support
+> * Visual Composer / WPBackery Support
+> * Gutenberg Block Support
+> * Default WordPress Posts Support
+> * Custom Color Change of the Title
+> * Custom Background Color Change of the Title
+> * Ticker Slider Effect
+> * Ticker Slider Timer
+> * Exclude and Include categories
+> * Order and OrderBy parameter 
+> * Custom CSS
+> * Fully Responsive
+> * Strong shortcode parameters
+> * 100% Multilanguage
+>
+> Check [Demo and Features](https://demo.wponlinesupport.com/prodemo/ticker-ultimate-pro/) for additional information.
+>
+
 = Privacy & Policy =
-* We have also opt-in e-mail selection , once you download the plugin , so that we can inform you and nurture you about products and its features.
+* We have also opt-in e-mail selection , once you download the plugin, so that we can inform you and nurture you about products and its features.
  
 == Installation ==
 
@@ -80,6 +104,11 @@ Ticker Ultimate Shortcode:
 
 
 == Changelog ==
+
+= 1.2.5 (02, Jan 2020) =
+* [*] Updated features list.
+* [*] Added 'link' and 'link_target' shortcode parameter
+* [*] Replaced wp_reset_query() to wp_reset_postdata().
 
 = 1.2.4 (30, August 2019) =
 * [*] Taken better security with esc_html_e and esc_attr.

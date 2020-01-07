@@ -29,6 +29,8 @@ function wptu_ticker( $atts, $content = null ) {
 		'border'				=> 'true',
 		'post_type'				=> '',
 		'post_cat'				=> '',
+		'link'					=> 'true',
+		'link_target'			=> 'self',
 	), $atts));
 	
     $posts_per_page		= (!empty($limit)) 			  	? $limit 					: '-1';
@@ -45,6 +47,8 @@ function wptu_ticker( $atts, $content = null ) {
 	$post_type 			= (!empty($post_type)) 		  	? $post_type 				: WPTU_POST_TYPE;
 	$post_cat 			= (!empty($post_cat)) 		  	? $post_cat 				: WPTU_CAT;
 	$border_class		= ($border == 'false') 			? 'wptu-bordernone' 		: '';
+	$link				= ( $link == 'false' ) 		    ? false 					: true;
+	$link_target 		= ( $link_target == 'blank' ) 	? '_blank' 					: '_self';
 	
 	// Enqueue required script
 	wp_enqueue_script('wptu-ticker-script');
@@ -104,8 +108,8 @@ function wptu_ticker( $atts, $content = null ) {
 			<?php while ( $query->have_posts() ) : $query->the_post(); 
 				$post_link = wptu_get_post_link( $post->ID ); ?>
 				<li>
-				<?php if(!empty($post_link)) { ?>
-					<a href="<?php echo $post_link; ?>"><?php the_title(); ?></a>
+				<?php if(!empty($post_link) && $link ) { ?>
+					<a href="<?php echo $post_link; ?>" target="<?php echo $link_target; ?>"><?php the_title(); ?></a>
 				<?php } else { ?>
 					<?php the_title(); ?>
 				<?php } ?>	
@@ -125,7 +129,7 @@ function wptu_ticker( $atts, $content = null ) {
  
 	<?php } // End of have_post()
 
-	wp_reset_query(); // Reset WP Query
+	wp_reset_postdata(); // Reset WP Query
 
 	$content .= ob_get_clean();
 	return $content;

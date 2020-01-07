@@ -6,17 +6,18 @@
  *
  *     [your-theme]/tribe-events/meta/checkbox.php
  *
- * @version 4.5.5
+ * @since 4.5.5
+ * @since 4.10.2 Use md5() for field name slugs.
+ * @since 4.10.7 Undo use of md5() within this file to fix editing existing responses.
  *
+ * @version 4.10.7
+ *
+ * @var Tribe__Tickets_Plus__Meta__Field__Checkbox $this
  */
-$options = null;
-
-if ( isset( $field['extra'] ) && ! empty( $field['extra']['options'] ) ) {
-	$options = $field['extra']['options'];
-}
+$options = $this->get_hashed_options_map();
 
 if ( ! is_array( $value ) ) {
-	$value = array();
+	$value = [];
 }
 
 if ( ! $options ) {
@@ -29,10 +30,8 @@ if ( ! $options ) {
 		<?php echo wp_kses_post( $field['label'] ); ?>
 	</header>
 	<?php
-	foreach ( $options as $option ) {
-		$option_slug = sanitize_title( $option );
-		$option_id   = "tribe-tickets-meta_{$this->slug}" . ( $attendee_id ? '_' . $attendee_id : '' ) . "_{$option_slug}";
-		$slug        = $this->slug . '_' . $option_slug;
+	foreach ( $options as $option_hash => $option_value ) {
+		$option_id = "tribe-tickets-meta_{$this->slug}" . ( $attendee_id ? '_' . $attendee_id : '' ) . "_{$option_hash }";
 
 		?>
 		<label for="<?php echo esc_attr( $option_id ); ?>" class="tribe-tickets-meta-field-header">
@@ -40,17 +39,19 @@ if ( ! $options ) {
 				type="checkbox"
 				id="<?php echo esc_attr( $option_id ); ?>"
 				class="ticket-meta"
-				name="tribe-tickets-meta[<?php echo esc_attr( $attendee_id ); ?>][<?php echo esc_attr( $slug ); ?>]"
-				value="<?php echo esc_attr( $option ); ?>"
-				<?php checked( true, in_array( $slug, $value ) ); ?>
+				name="tribe-tickets-meta[<?php echo esc_attr( $attendee_id ); ?>][<?php echo esc_attr( $option_hash ); ?>]"
+				value="<?php echo esc_attr( $option_value ); ?>"
+				<?php checked( true, in_array( $option_value, $value ) ); ?>
 				<?php disabled( $this->is_restricted( $attendee_id ) ); ?>
 			>
 			<span class="tribe-tickets-meta-option-label">
-				<?php echo wp_kses_post( $option ); ?>
+				<?php echo wp_kses_post( $option_value ); ?>
 			</span>
 		</label>
 		<?php
 	}
+
+	// Hidden input enables submitting blank/unchecked set of checkboxes. Gets filtered out to avoid saving to postmeta.
 	?>
 	<input
 		type="hidden"
