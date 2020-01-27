@@ -42,10 +42,12 @@ window.n2c = (function (origConsole) {
 }(window.console));
 
 n2c.debug(false);
+var isIpad13 = navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1;
+
 window.n2const = {
     passiveEvents: false,
     devicePixelRatio: window.devicePixelRatio || 1,
-    isIOS: /iPad|iPhone|iPod/.test(navigator.platform),
+    isIOS: /iPad|iPhone|iPod/.test(navigator.platform) || isIpad13,
     isEdge: (function () {
         var m = navigator.userAgent.match(/Edge\/([0-9]+)/);
         if (m === null) {
@@ -55,7 +57,7 @@ window.n2const = {
         return m[1];
     })(),
     isFirefox: navigator.userAgent.toLowerCase().indexOf('firefox') > -1,
-    isMobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Silk/i.test(navigator.userAgent),
+    isMobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Silk/i.test(navigator.userAgent) || isIpad13,
     isPhone: (/Android/i.test(navigator.userAgent) && /mobile/i.test(navigator.userAgent)) || /webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent),
     isIE: (function () {
         var ua = window.navigator.userAgent;
@@ -118,7 +120,7 @@ window.n2const.IOSVersion = (function () {
 
 window.n2const.isTablet = (function () {
     if (!window.n2const.isPhone) {
-        return /Android|iPad|tablet|Silk/i.test(navigator.userAgent);
+        return /Android|iPad|tablet|Silk/i.test(navigator.userAgent) || isIpad13;
     }
     return false;
 })();
@@ -1602,7 +1604,7 @@ N2D('EventBurrito', function ($, undefined) {
         options && mergeObjects(o, options);
 
         var support = {
-                pointerEvents: !!(window.PointerEvent || window.MSPointerEvent || window.navigator.msPointerEnabled || window.navigator.pointerEnabled)
+                pointerEvents: !!(window.PointerEvent || window.MSPointerEvent || window.navigator.msPointerEnabled || window.navigator.pointerEnabled || window.PointerEventsPolyfill)
             },
             start = {},
             diff = {},

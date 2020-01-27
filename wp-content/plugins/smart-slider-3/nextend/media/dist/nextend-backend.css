@@ -3781,6 +3781,8 @@ NextendList
 
 .n2 .n2-form-element-list select[multiple] {
     height: auto;
+    -webkit-appearance: none;
+    -moz-appearance: none;
 }
 
 .n2 .n2-form-dark .n2-form-element-list select {

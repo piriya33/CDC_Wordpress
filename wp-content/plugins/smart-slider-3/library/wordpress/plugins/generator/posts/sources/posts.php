@@ -97,13 +97,12 @@ class N2GeneratorPostsPosts extends N2GeneratorAbstract {
                 }
             }
         }
+
         return $data;
     }
 
     private function isTimeStamp($timestamp) {
-        return ((string)(int)$timestamp === $timestamp)
-            && ($timestamp <= PHP_INT_MAX)
-            && ($timestamp >= ~PHP_INT_MAX);
+        return ((string)(int)$timestamp === $timestamp) && ($timestamp <= PHP_INT_MAX) && ($timestamp >= ~PHP_INT_MAX);
     }
 
     public function getPostType() {
@@ -132,7 +131,7 @@ class N2GeneratorPostsPosts extends N2GeneratorAbstract {
         return $contents;
     }
 
-    var $ElementorCount      = 0;
+    var $ElementorCount = 0;
     var $ElementorWidgetType = '';
 
     function getElementorTextEditors($array) {
@@ -206,9 +205,9 @@ class N2GeneratorPostsPosts extends N2GeneratorAbstract {
                     );
                 }
                 if (!empty($tax_query)) {
-                    array_unshift($tax_query, array( 'relation' => 'AND' ));
+                    array_unshift($tax_query, array('relation' => 'AND'));
                 } else {
-                    $tax_query = array( 'relation' => 'AND' );
+                    $tax_query = array('relation' => 'AND');
                 }
                 $tax_query = array_merge($tax_query, $term_helper);
             }
@@ -264,12 +263,6 @@ class N2GeneratorPostsPosts extends N2GeneratorAbstract {
         }
 
         $posts = get_posts($postsFilter);
-
-        $prev_timezone   = date_default_timezone_get();
-        $timezone_string = get_option('timezone_string');
-        if ($timezone_string !== '') {
-            date_default_timezone_set($timezone_string);
-        }
 
         $custom_dates  = $this->linesToArray($this->data->get('customdates', ''));
         $translate     = $this->linesToArray($this->data->get('translatecustomdates', ''));
@@ -512,9 +505,6 @@ class N2GeneratorPostsPosts extends N2GeneratorAbstract {
         $wp_query->post = $tmpPost;
         wp_reset_postdata();
 
-        if ($timezone_string !== '') {
-            date_default_timezone_set($prev_timezone);
-        }
         return $data;
     }
 

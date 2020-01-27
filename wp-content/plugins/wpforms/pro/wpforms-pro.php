@@ -3,7 +3,6 @@
  * WPForms Pro. Load Pro specific features/functionality.
  *
  * @since 1.2.1
- * @package WPForms
  */
 class WPForms_Pro {
 
@@ -256,6 +255,12 @@ class WPForms_Pro {
 		}
 
 		// Validation settings for fields only available in Pro.
+		$settings['validation']['validation-phone']           = array(
+			'id'      => 'validation-phone',
+			'name'    => esc_html__( 'Phone', 'wpforms' ),
+			'type'    => 'text',
+			'default' => esc_html__( 'Please enter a valid phone number.', 'wpforms' ),
+		);
 		$settings['validation']['validation-fileextension']   = array(
 			'id'      => 'validation-fileextension',
 			'name'    => esc_html__( 'File Extension', 'wpforms' ),
@@ -470,6 +475,10 @@ class WPForms_Pro {
 	 */
 	public function form_table_columns( $columns ) {
 
+		if ( ! wpforms_current_user_can( 'view_entries' ) ) {
+			return $columns;
+		}
+
 		$columns['entries'] = esc_html__( 'Entries', 'wpforms' );
 
 		return $columns;
@@ -488,26 +497,32 @@ class WPForms_Pro {
 	 */
 	public function form_table_columns_value( $value, $form, $column_name ) {
 
-		if ( 'entries' === $column_name ) {
-			$count = wpforms()->entry->get_entries(
+		if ( 'entries' !== $column_name ) {
+			return $value;
+		}
+
+		if ( ! wpforms_current_user_can( 'view_entries_form_single', $form->ID ) ) {
+			return '-';
+		}
+
+		$count = wpforms()->entry->get_entries(
+			array(
+				'form_id' => $form->ID,
+			),
+			true
+		);
+
+		$value = sprintf(
+			'<a href="%s">%d</a>',
+			add_query_arg(
 				array(
+					'view'    => 'list',
 					'form_id' => $form->ID,
 				),
-				true
-			);
-
-			$value = sprintf(
-				'<a href="%s">%d</a>',
-				add_query_arg(
-					array(
-						'view'    => 'list',
-						'form_id' => $form->ID,
-					),
-					admin_url( 'admin.php?page=wpforms-entries' )
-				),
-				$count
-			);
-		}
+				admin_url( 'admin.php?page=wpforms-entries' )
+			),
+			$count
+		);
 
 		return $value;
 	}

@@ -8,9 +8,12 @@ class N2SS3Shortcode {
 
     public static $iframeReason = '';
 
-    public static function forceIframe($reason) {
-        self::$iframe       = true;
-        self::$iframeReason = $reason;
+    public static $disablePointer = false;
+
+    public static function forceIframe($reason, $disablePointer = false) {
+        self::$iframe         = true;
+        self::$iframeReason   = $reason;
+        self::$disablePointer = $disablePointer;
     }
 
     public static function doShortcode($parameters) {
@@ -48,7 +51,7 @@ class N2SS3Shortcode {
 
         $attributes = array(
             'class'       => "n2-ss-slider-frame",
-            'style'       => 'width:100%;display:block;border:0;',
+            'style'       => 'width:100%;display:block;border:0;' . (self::$disablePointer ? 'pointer-events:none;' : ''),
             'frameborder' => 0,
             'src'         => site_url('/') . '?n2prerender=1&n2app=smartslider&n2controller=slider&n2action=iframe&sliderid=' . $sliderIDorAlias . '&hash=' . md5($sliderIDorAlias . NONCE_SALT)
         );
@@ -82,71 +85,83 @@ class N2SS3Shortcode {
     }
 
     public static function render($parameters, $usage = 'WordPress Shortcode') {
+
+        $parameters = shortcode_atts(array(
+            'id'        => md5(time()),
+            'slider'    => '',
+            'logged_in' => null,
+            'role'      => null,
+            'cap'       => null,
+            'page'      => null,
+            'lang'      => null,
+            'slide'     => null,
+            'get'       => null
+        ), $parameters);
+
         if (empty($parameters['slider'])) {
             return '';
-        } else if (!isset(self::$cacheSliderOutput[$parameters['slider']])) {
+        }
 
-            if (isset($parameters['logged_in'])) {
-                $logged_in = !!$parameters['logged_in'];
-                if (is_user_logged_in() !== $logged_in) {
+        if ($parameters['logged_in'] !== null) {
+            $logged_in = !!$parameters['logged_in'];
+            if (is_user_logged_in() !== $logged_in) {
+                return '';
+            }
+        }
+
+        if ($parameters['role'] !== null || $parameters['cap'] !== null) {
+            $current_user = wp_get_current_user();
+
+            if ($parameters['role'] !== null) {
+                $current_user_roles = $current_user->roles;
+                if (!in_array($parameters['role'], $current_user_roles)) {
                     return '';
                 }
             }
 
-            if (isset($parameters['role']) || isset($parameters['cap'])) {
-                $current_user = wp_get_current_user();
-
-                if (isset($parameters['role'])) {
-                    $current_user_roles = $current_user->roles;
-                    if (!in_array($parameters['role'], $current_user_roles)) {
-                        return '';
-                    }
-                }
-
-                if (isset($parameters['cap'])) {
-                    $current_user_caps = $current_user->allcaps;
-                    if (!isset($current_user_caps[$parameters['cap']]) || !$current_user_caps[$parameters['cap']]) {
-                        return '';
-                    }
-                }
-            }
-
-            if (isset($parameters['slide'])) {
-                $slideTo = intval($parameters['slide']);
-            }
-
-            if (isset($parameters['get']) && !empty($_GET[$parameters['get']])) {
-                $slideTo = intval($_GET[$parameters['get']]);
-            }
-
-            if (isset($slideTo)) {
-                echo "<script type=\"text/javascript\">window['ss" . $parameters['slider'] . "'] = " . ($slideTo - 1) . ";</script>";
-            }
-
-            if (isset($parameters['page'])) {
-                if ($parameters['page'] == 'home') {
-                    $condition = (!is_home() && !is_front_page());
-                } else {
-                    $condition = ((get_the_ID() != intval($parameters['page'])) || (is_home() || is_front_page()));
-                }
-                if ($condition) {
+            if ($parameters['cap'] !== null) {
+                $current_user_caps = $current_user->allcaps;
+                if (!isset($current_user_caps[$parameters['cap']]) || !$current_user_caps[$parameters['cap']]) {
                     return '';
                 }
             }
+        }
 
-            if (isset($parameters['lang'])) {
-                if ($parameters['lang'] != N2Localization::getLocale()) {
-                    return '';
-                }
+        if ($parameters['page'] !== null) {
+            if ($parameters['page'] == 'home') {
+                $condition = (!is_home() && !is_front_page());
+            } else {
+                $condition = ((get_the_ID() != intval($parameters['page'])) || (is_home() || is_front_page()));
             }
+            if ($condition) {
+                return '';
+            }
+        }
 
-            $parameters = shortcode_atts(array(
-                'id'     => md5(time()),
-                'slider' => 0
-            ), $parameters);
+        if ($parameters['lang'] !== null) {
+            if ($parameters['lang'] != N2Localization::getLocale()) {
+                return '';
+            }
+        }
+
+        if (!isset(self::$cacheSliderOutput[$parameters['slider']])) {
 
             if ((is_numeric($parameters['slider']) && intval($parameters['slider']) > 0) || !is_numeric($parameters['slider'])) {
                 ob_start();
+
+                $slideTo = false;
+                if ($parameters['slide'] !== null) {
+                    $slideTo = intval($parameters['slide']);
+                }
+
+                if ($parameters['get'] !== null && !empty($_GET[$parameters['get']])) {
+                    $slideTo = intval($_GET[$parameters['get']]);
+                }
+
+                if ($slideTo) {
+                    echo "<script type=\"text/javascript\">window['ss" . $parameters['slider'] . "'] = " . ($slideTo - 1) . ";</script>";
+                }
+
                 N2Base::getApplication("smartslider")
                       ->getApplicationType('frontend')
                       ->render(array(

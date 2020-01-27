@@ -49,8 +49,6 @@ class N2SmartsliderSettingsModel extends N2Model {
 
         new N2ElementToken($general);
 
-        new N2ElementOnOff($general, 'beacon', n2_('Show help beacon'), 1);        
-
         new N2ElementOnOff($general, 'autoupdatecheck', n2_('Automatic update check'), 1);
 
         $translateUrl = new N2ElementMixed($general, 'translate-url', n2_('Translate url'), '|*|');

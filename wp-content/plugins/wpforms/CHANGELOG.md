@@ -1,6 +1,55 @@
 # Changelog
 All notable changes to this project will be documented in this file, formatted via [this recommendation](https://keepachangelog.com/).
 
+## [1.5.8.2] - 2020-01-13
+### Fixed
+- "Cannot modify header information" warning in Pro/Access/Capabilities.php.
+- Can't add new line in textareas in the form builder (Notifications > Message etc).
+- Choices editing block inside the form builder is hidden if creating a form using a template.
+
+## [1.5.8.1] - 2020-01-09
+### Fixed
+- "Invalid form" error on form submit if AJAX form submissions is enabled and user is not logged in.
+
+## [1.5.8] - 2020-01-09
+### Added
+- Access Controls: let admin control permissions based on website users’ roles via WPForms specific capabilities (with own UI and integration with MemberPress and User Role Editor).
+- Post ID to the Entry details on single entry page for Post Submissions entries (works with any CPT).
+- Better Phone field validation for both US and International formats with an ability to redefine error message on incorrect field value.
+
+### Changed
+- Sullie logo in the Form Builder got his left hand back.
+- Improve the way URL validation is done for "Website / URL" field.
+- Hide image choices options if dynamic choices is enabled.
+- Do not allow to disable Entry storage when Payments are already enabled.
+- Adjusted Number field input to improve consistency across different browsers/devices.
+- Improve Block detection to load CSS styles earlier.
+- Open New Provider Connection modal after account has been added.
+- Process fields/notifications/confirmations conditional logic as usual when CL rule is not fully configured (selected rule field is required).
+- Improve the way Lite and Pro versions of the plugin activation handled.
+- Remove the unnecessary "Required" setting from a Number Slider field.
+
+### Fixed
+- Number slider incorrect label display in the form Builder preview panel.
+- Browser's autofill for address zip code field is incorrect.
+- Quick links menu generating browser console error on Survey Print results page.
+- Required validation message isn't removed immediately on choices selection.
+- Incorrect conditional logic processing for payment "Checkbox Items" field when multiple choices selected.
+- Form Builder styles compatibility with the new WordPress 5.3 styles.
+- Correctly process Enter key press in Smart phone field when Enter is used to submit a form.
+- Remove not-needed GET params from URL in Builder when a new form created to prevent race conditions with certain providers loading logic.
+- Display all selected choices (checkboxes) in the survey results.
+- Properly navigate between pages in a multi-page form when Enter is pressed.
+- Properly scroll in all major browsers to a faulty field in a form, including multi-page forms.
+- Properly work with negative numbers in Conditional logic "greater/less than" operators.
+- Optimize multi-page forms progress indicators for the small screens.
+- Multi-page page breaks incorrectly allowed "Previous" button display in the Builder.
+- Modern file upload: improve upload area hint translations support.
+- RTL support for Phone field, correctly display on both front-end and back-end of the site.
+- Entry export "Payment Gateway Information" not available when Stripe addon is active.
+- Dropdown Items field not properly handling Fallback field population.
+- Textarea character limit check returns an error if the content pasted is too large and contains '\r\n' line breaks.
+
 ## [1.5.7] - 2019-12-12
 ### Added
 - Number Slider field.
@@ -117,7 +166,7 @@ All notable changes to this project will be documented in this file, formatted v
 - Various typos.
 - WP Mail SMTP plugin description on About us page.
 - Set HKD currency symbol ($) position to the left.
-- Аvoid horizontal scroll on mobile devices when using File Upload field.
+- Avoid horizontal scroll on mobile devices when using File Upload field.
 
 ## [1.5.4.2] - 2019-08-06
 ### Changed
@@ -266,7 +315,7 @@ All notable changes to this project will be documented in this file, formatted v
 ### Fixed
 - Entry counts getting off sync with entry heartbeat detection.
 - Typos, grammar, and other i18n related issues.
-- Created alias class for `WPForms` to prevent issue with namespacing introduced in 1.5.0.
+- Created alias class for `WPForms` to prevent issue with namespace introduced in 1.5.0.
 - Dynamic population issue when using Image Choices field.
 
 ## [1.5.0.4] - 2018-12-20
@@ -350,7 +399,7 @@ All notable changes to this project will be documented in this file, formatted v
 - i18n improvements.
 
 ### Fixed
-- Compatiblity issue with MySQL `Strict_Trans_Tables` mode.
+- Compatibility issue with MySQL `Strict_Trans_Tables` mode.
 - Incorrect param used with `shortcode_atts`.
 - NPS and Rating fields not having access to all conditional logic comparisons.
 - Accessing `wpforms_setting` in frontend javascript before checking if it exists.
@@ -417,7 +466,7 @@ All notable changes to this project will be documented in this file, formatted v
 ### Fixed
 - Rating and Likert Scale not included in CSV exports.
 - Typo in base form CSS.
-- Stripping HTML from the checkbox, mulitple choice, and multiple payment choice labels in the form builder.
+- Stripping HTML from the checkbox, multiple choice, and multiple payment choice labels in the form builder.
 - Unreadable errors if 1-click addon install fails.
 - Date and Time field time interval labels not translatable.
 - Form builder icon visibility when field labels are hidden.
@@ -451,18 +500,18 @@ All notable changes to this project will be documented in this file, formatted v
 - Image choices feature with Checkbox, Multiple Choice and Multiple Payments fields; Images can now be uploaded and displayed with your choices!
 - Custom input masks for Single Line Text fields (Advanced Options).
 - No-Conflict Mode for Google reCAPTCHA (Settings > reCAPTCHA). Removes other reCAPTCHA occurrences, to prevent conflicts.
-- SSL Connection Test (Tools > System Info). Quicky verify that your web host correct supports SSL connections.
+- SSL Connection Test (Tools > System Info). Quickly verify that your web host correct supports SSL connections.
 - `{user_full_name}` Smart Tag, displays users first and last name.
-- Discalimer / Terms of Service Display formatting option for Checkbox fields (Advanced Options).
+- Disclaimer / Terms of Service Display formatting option for Checkbox fields (Advanced Options).
 - Basic CSS styling for `disabled` fields.
 - Uninstall routine, available from Settings > Misc.
 - Form builder performance improvements. Editing a form with hundreds of fields is now 500%+ faster!
 - Search field on Addons page to quickly search available Addons.
 
 ### Changed
-- New Settings tab: Misc, moved Hide Annoucements option to new tab.
+- New Settings tab: Misc, moved Hide Announcements option to new tab.
 - "Total" entries column only displays if the form has a gateway configured and enabled.
-- `{user_display}` Smart Tag diplays user's display name (in most cases, this is the user's name).
+- `{user_display}` Smart Tag displays user's display name (in most cases, this is the user's name).
 - All `<form>` attributes can now be changed via `wpforms_frontend_form_atts` filter.
 
 ### Fixed
@@ -482,7 +531,7 @@ All notable changes to this project will be documented in this file, formatted v
 ### Fixed
 - Form builder templates area not aligning correctly in some browsers.
 - Payment transaction IDs not displaying on entry details page.
-- Incorrect permissions check for annoucements feed.
+- Incorrect permissions check for announcements feed.
 
 ## [1.4.4] - 2018-01-30
 ### Added
@@ -543,7 +592,7 @@ All notable changes to this project will be documented in this file, formatted v
 ### Changed
 - Date i18n improvements
 - Dropdown/Checkbox/Multiple Choice "Show Values" setting has been hidden by default to avoid confusion, can be re-enabled using the `wpforms_fields_show_options_setting` filter.
-- Date Time field inputs break into separate lines on mobile to prevent Date picker from going off screen in some scenarioes.
+- Date Time field inputs break into separate lines on mobile to prevent Date picker from going off screen in some scenarios.
 
 ### Fixed
 - reCAPTCHA now showing in the Form Builder preview when enabled.
@@ -561,7 +610,7 @@ All notable changes to this project will be documented in this file, formatted v
 
 ### Fixed
 - Entries export functionality was broken.
-- Multipage indicators behavior when several multipage forms present on the same page.
+- Multi-page indicators behavior when several multi-page forms present on the same page.
 
 ## [1.4.1] - 2017-09-28
 ### Added
@@ -743,7 +792,7 @@ All notable changes to this project will be documented in this file, formatted v
 
 ## [1.3.5] - 2017-02-22
 ### Fixed
-- Some browers allowing unexpected characters inside number input fields.
+- Some browsers allowing unexpected characters inside number input fields.
 - Error when resending email notifications through Single Entry page.
 - Issue with Dropdown field placeholder text.
 - Select few plugins loading conflicting scripts in form builder.
@@ -760,7 +809,7 @@ All notable changes to this project will be documented in this file, formatted v
 ### Added
 - Default value support in the email field.
 - Related Entries metabox on single entry page.
-- Various new hooks and filters for improved extendibility.
+- Various new hooks and filters for improved extensibility.
 
 ### Changed
 - Payment status is now displayed in status column, indicated with money icon.
@@ -833,7 +882,7 @@ All notable changes to this project will be documented in this file, formatted v
 
 ## [1.3.0] - 2016-10-24
 ### Added
-- Email field confirmantion.
+- Email field confirmation.
 - Password field confirmation.
 - Support for Visual Composer.
 - Additional date field type, dropdowns.
@@ -851,7 +900,7 @@ All notable changes to this project will be documented in this file, formatted v
 - Field alignment issues in the form builder when dragging field more than once.
 - PHP fatal erroring if form notification email address provided is not valid upon sending.
 - Date field Datepicker allows empty submit when marked as required.
-- Compatibility issuses when network activated on a Multisite install.
+- Compatibility issues when network activated on a Multisite install.
 
 ## [1.2.9.1] - 2016-10-07
 ### Fixed
@@ -875,7 +924,7 @@ All notable changes to this project will be documented in this file, formatted v
 
 ## [1.2.8.1] - 2016-09-19
 ### Fixed
-- Form javascript email validation being too strict (introducted in 1.2.8).
+- Form javascript email validation being too strict (introduced in 1.2.8).
 - Provider sub-group IDs not correctly stored with connection information.
 
 ## [1.2.8] - 2016-09-15
@@ -894,7 +943,7 @@ All notable changes to this project will be documented in this file, formatted v
 
 ## [1.2.7] - 2016-08-31
 ### Added
-- Store intial plugin activation date.
+- Store initial plugin activation date.
 - Input mask for US zip code within Address field, supports both 5 and 9 digit formats.
 - Duplicate form submit protection.
 
@@ -904,7 +953,7 @@ All notable changes to this project will be documented in this file, formatted v
 - Improved Address field to allow for new schemes/formats to be create and better customizations.
 
 ### Fixed
-- Provider conditonal logic processing when using checkbox field.
+- Provider conditional logic processing when using checkbox field.
 - Strip slashes from entry data before processing.
 - Single Item field price not live updating inside form builder.
 
@@ -941,7 +990,7 @@ All notable changes to this project will be documented in this file, formatted v
 - Additional logging and error reporting.
 
 ### Changed
-- Footer asset detection priority, for improved capatibility with other services.
+- Footer asset detection priority, for improved capability with other services.
 - Refactored and refined front-end javascript.
 
 ### Fixed
@@ -979,7 +1028,7 @@ All notable changes to this project will be documented in this file, formatted v
 ## [1.2.2] - 2016-06-03
 ### Added
 - Page Break navigation buttons now have an alignment setting.
-- Page Break previous navigation button is togglable and defaults to off.
+- Page Break previous navigation button is toggleable and defaults to off.
 
 ### Changed
 - Improved styling of Page Break fields in the builder.
@@ -1049,7 +1098,7 @@ All notable changes to this project will be documented in this file, formatted v
 
 ## [1.1.7] - 2016-04-26
 ### Added
-- Smart Tag for Dropdown/Multiple choice raw values, allowing for conditional email addres notifications ([link].(https://wpforms.com/docs/how-to-create-conditional-form-notifications-in-wpforms/)).
+- Smart Tag for Dropdown/Multiple choice raw values, allowing for conditional email address notifications ([link].(https://wpforms.com/docs/how-to-create-conditional-form-notifications-in-wpforms/)).
 - HTML/Code field Conditional Logic support.
 - HTML/Code field CSS class support.
 - Three column CSS field classes ([link](https://wpforms.com/docs/how-to-create-multi-column-form-layouts-in-wpforms/)).
@@ -1090,7 +1139,7 @@ All notable changes to this project will be documented in this file, formatted v
 - HTML Email template footer text appearance.
 
 ### Fixed
-- Form builder textareas not displaying full width.
+- Form builder textarea's not displaying full width.
 - HTML emails not displaying correctly in Thunderbird.
 
 ## [1.1.4] - 2016-04-12

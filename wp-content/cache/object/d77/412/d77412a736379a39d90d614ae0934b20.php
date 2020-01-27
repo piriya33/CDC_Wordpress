@@ -1,1 +1,0 @@
-Nñ^<?php exit; ?>a:1:{s:7:"content";a:6:{s:13:"not_offloaded";i:5;s:19:"not_offloaded_paths";i:5;s:9:"offloaded";s:3:"667";s:15:"offloaded_paths";s:3:"667";s:5:"total";s:3:"672";s:11:"total_paths";s:3:"672";}}

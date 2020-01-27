@@ -71,12 +71,12 @@ N2D('SmartSliderBackgrounds', function ($, undefined) {
         if (this.lazyLoad == 1) {
             this.preLoadSlides = this.preloadSlidesLazyNeighbor;
 
-            this.load = this.whenWithProgress($, this.preLoadSlides(this.slider.getVisibleSlides(this.slider.currentSlide)));
+            this.load = this.whenWithProgress(this.preLoadSlides(this.slider.getVisibleSlides(this.slider.currentSlide)));
         } else if (this.lazyLoad == 2) { // delayed
             this.preLoadSlides = this._preLoadSlides;
             $(window).on('load', $.proxy(this.preLoadAll, this));
 
-            this.load = this.whenWithProgress($, this.preLoadSlides(this.slider.getVisibleSlides(this.slider.currentSlide)));
+            this.load = this.whenWithProgress(this.preLoadSlides(this.slider.getVisibleSlides(this.slider.currentSlide)));
         } else {
             this.preLoadSlides = this._preLoadSlides;
 
@@ -990,17 +990,27 @@ N2D('SmartSliderAbstract', function ($, undefined) {
 
         this.widgets = new N2Classes.SmartSliderWidgets(this);
 
+        var isHover = false,
+            hoverTimeout;
+
         this.sliderElement.on({
             universalenter: $.proxy(function (e) {
+
                 if (!$(e.target).closest('.n2-full-screen-widget').length) {
+                    clearTimeout(hoverTimeout);
+                    isHover = true;
+
                     this.sliderElement.addClass('n2-hover');
                     this.widgets.setState('hover', true);
                 }
             }, this),
             universalleave: $.proxy(function (e) {
                 e.stopPropagation();
-                this.sliderElement.removeClass('n2-hover');
-                this.widgets.setState('hover', false);
+                hoverTimeout = setTimeout($.proxy(function () {
+                    isHover = false;
+                    this.sliderElement.removeClass('n2-hover');
+                    this.widgets.setState('hover', false);
+                }, this), 1000);
             }, this)
         });
 
@@ -1045,48 +1055,12 @@ N2D('SmartSliderAbstract', function ($, undefined) {
                 });
             });
 
-            this.sliderElement.find('[data-click]').each(function (i, el) {
-                var el = $(el).on('click', function (event) {
-                    eval(el.data('click'));
-                }).css('cursor', 'pointer');
-            });
-
             this.sliderElement.find('[data-n2middleclick]').on('mousedown', function (event) {
                 var el = $(this);
                 if (event.which == 2 || event.which == 4) {
                     event.preventDefault();
                     eval(el.data('n2middleclick'));
                 }
-            });
-
-            this.sliderElement.find('[data-mouseenter]').each(function (i, el) {
-                var el = $(el).on('mouseenter', function (event) {
-                    eval(el.data('mouseenter'));
-                });
-            });
-
-            this.sliderElement.find('[data-mouseleave]').each(function (i, el) {
-                var el = $(el).on('mouseleave', function (event) {
-                    eval(el.data('mouseleave'));
-                });
-            });
-
-            this.sliderElement.find('[data-play]').each(function (i, el) {
-                var el = $(el).on('n2play', function (event) {
-                    eval(el.data('play'));
-                });
-            });
-
-            this.sliderElement.find('[data-pause]').each(function (i, el) {
-                var el = $(el).on('n2pause', function (event) {
-                    eval(el.data('pause'));
-                });
-            });
-
-            this.sliderElement.find('[data-stop]').each(function (i, el) {
-                var el = $(el).on('n2stop', function (event) {
-                    eval(el.data('stop'));
-                });
             });
 
 
@@ -1322,35 +1296,61 @@ N2D('SmartSliderAbstract', function ($, undefined) {
                 windowHeight = $(window).height(),
                 sliderBoundingClientRect = this.sliderElement[0].getBoundingClientRect(),
                 topLine = sliderBoundingClientRect.top - focusOffsetTop,
-                bottomLine = windowHeight - sliderBoundingClientRect.bottom - focusOffsetBottom;
+                bottomLine = windowHeight - sliderBoundingClientRect.bottom - focusOffsetBottom,
+                focusEdge = this.responsive.parameters.focusEdge,
+                edge = '';
 
-            if (topLine <= 0 && bottomLine <= 0) {
-                // Do nothing, slider is taller than the screen and the the slider on the screen
-            } else if (topLine > 0 && bottomLine > 0) {
-                // Do nothing, slider is shorter than the screen and the the slider on the screen
+            if (focusEdge === 'top-force') {
+                edge = 'top';
+            } else if (focusEdge === 'bottom-force') {
+                edge = 'bottom';
             } else {
-                var targetTop = scrollTop;
-                if (topLine < 0) {
-                    if (-topLine <= bottomLine) {
-                        // scroll to the top edge
-                        targetTop = scrollTop - focusOffsetTop + sliderBoundingClientRect.top;
-                    } else {
-                        // scroll to the bottom edge
-                        targetTop = scrollTop + focusOffsetBottom + sliderBoundingClientRect.bottom - windowHeight;
-                    }
-                } else if (bottomLine < 0) {
-                    if (-bottomLine <= topLine) {
-                        // scroll to the bottom edge
-                        targetTop = scrollTop + focusOffsetBottom + sliderBoundingClientRect.bottom - windowHeight;
-                    } else {
-                        // scroll to the top edge
-                        targetTop = scrollTop - focusOffsetTop + sliderBoundingClientRect.top;
-                    }
-                }
 
-                if (targetTop !== scrollTop) {
-                    return this._scrollTo(targetTop, Math.abs(scrollTop - targetTop));
+                if (topLine <= 0 && bottomLine <= 0) {
+                    // Slider is taller than the screen and the the slider on the screen
+                } else if (topLine > 0 && bottomLine > 0) {
+                    // Do nothing, slider is shorter than the screen and the the slider on the screen
+                } else {
+                    if (topLine < 0) {
+                        if (focusEdge === 'top') {
+                            edge = 'top';
+                        } else if (focusEdge === 'bottom') {
+                            edge = 'bottom';
+                        } else {
+                            if (-topLine <= bottomLine) {
+                                edge = 'top';
+                            } else {
+                                edge = 'bottom';
+                            }
+                        }
+                    } else if (bottomLine < 0) {
+                        if (focusEdge === 'top') {
+                            edge = 'top';
+                        } else if (focusEdge === 'bottom') {
+                            edge = 'bottom';
+                        } else {
+                            if (-bottomLine <= topLine) {
+                                edge = 'bottom';
+                            } else {
+                                edge = 'top';
+                            }
+                        }
+                    }
                 }
+            }
+
+            var targetTop = scrollTop;
+
+            if (edge === 'top') {
+                // scroll to the top edge
+                targetTop = scrollTop - focusOffsetTop + sliderBoundingClientRect.top;
+            } else if (edge === 'bottom') {
+                // scroll to the bottom edge
+                targetTop = scrollTop + focusOffsetBottom + sliderBoundingClientRect.bottom - windowHeight;
+            }
+
+            if (targetTop !== scrollTop) {
+                return this._scrollTo(targetTop, Math.abs(scrollTop - targetTop));
             }
         }
 
@@ -3249,7 +3249,7 @@ N2D('SmartSliderControlMouseWheel', function ($, undefined) {
 
         this.preventScroll.globalTimeout = setTimeout($.proxy(function () {
             this.preventScroll.global = false;
-        }, this), 1500);
+        }, this), 2000);
     };
 
     return SmartSliderControlMouseWheel;
@@ -3694,6 +3694,10 @@ N2D('SmartSliderControlTouchHorizontal', 'SmartSliderControlTouch', function ($,
         }
 
         this.swipeElement.css('touch-action', touchActions.join(' '));
+
+        if (window.PointerEventsPolyfill) {
+            this.swipeElement.attr('touch-action', touchActions.join(' '));
+        }
     };
 
 
@@ -3790,6 +3794,10 @@ N2D('SmartSliderControlTouchVertical', 'SmartSliderControlTouch', function ($, u
         }
 
         this.swipeElement.css('touch-action', touchActions.join(' '));
+
+        if (window.PointerEventsPolyfill) {
+            this.swipeElement.attr('touch-action', touchActions.join(' '));
+        }
     };
 
     SmartSliderControlTouchVertical.prototype._start = function (event) {
@@ -5295,6 +5303,7 @@ N2D('SmartSliderResponsive', function ($, undefined) {
             decreaseSliderHeight: 0,
 
             focusUser: 1,
+            focusEdge: 'auto',
 
             deviceModes: {
                 desktopLandscape: 1,
@@ -6635,6 +6644,7 @@ N2D('FrontendItemVimeo', function ($, undefined) {
         this.state = {
             scroll: false,
             slide: false,
+            InComplete: false,
             play: false,
             continuePlay: false
         };
@@ -6659,8 +6669,20 @@ N2D('FrontendItemVimeo', function ($, undefined) {
             volume: "-1"
         }, parameters);
 
-        if (navigator.userAgent.toLowerCase().indexOf("android") > -1) {
-            this.parameters.autoplay = 0;
+
+        if (parseInt(this.parameters.autoplay) === 1) {
+            if (navigator.userAgent.toLowerCase().indexOf("android") > -1) {
+                this.parameters.volume = 0;
+            } else if (n2const.isIOS) {
+                this.parameters.autoplay = 0;
+                try {
+                    if ('playsInline' in document.createElement('video')) {
+                        this.parameters.autoplay = 1;
+                        this.parameters.volume = 0;
+                    }
+                } catch (e) {
+                }
+            }
         }
 
         if (parseInt(this.parameters.autoplay) === 1 || !hasImage || n2const.isMobile) {
@@ -6689,6 +6711,7 @@ N2D('FrontendItemVimeo', function ($, undefined) {
     };
 
     FrontendItemVimeo.prototype.initVimeoPlayer = function () {
+
         var playerElement = $('<iframe allow="autoplay; encrypted-media" id="' + this.playerId + '-frame" src="https://player.vimeo.com/video/' + this.parameters.vimeocode + '?autoplay=0&' +
             '_video&title=' + this.parameters.title + '&byline=' + this.parameters.byline + "&background=" + this.parameters.background + '&portrait=' + this.parameters.portrait + '&color=' + this.parameters.color +
             '&loop=' + this.parameters.loop + (this.parameters.quality == '-1' ? '' : '&quality=' + this.parameters.quality) + '" style="position: absolute; top:0; left: 0; width: 100%; height: 100%;" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>');
@@ -6696,7 +6719,8 @@ N2D('FrontendItemVimeo', function ($, undefined) {
 
         this.isStatic = playerElement.closest('.n2-ss-static-slide').length;
 
-        this.player = new Vimeo.Player(playerElement[0], {autoplay: true});
+        this.player = new Vimeo.Player(playerElement[0], {autoplay: false});
+
         this.promise = this.player.ready();
         this.promise.then($.proxy(this.onReady, this));
     };
@@ -6709,13 +6733,14 @@ N2D('FrontendItemVimeo', function ($, undefined) {
 
         this.slide = this.slider.findSlideByElement(this.$playerElement);
 
-        var layer = this.$playerElement.closest(".n2-ss-layer");
+        var $layer = this.$playerElement.closest(".n2-ss-layer");
+        this.layer = $layer.data('layer');
 
         if (this.$cover.length) {
             if (n2const.isMobile) {
-                this.$cover.css('pointer-events', 'none');
+                this.$cover.on('click', $.proxy(this.safePlay, this));
             }
-            layer.one('n2play', $.proxy(function () {
+            $layer.one('n2play', $.proxy(function () {
                 NextendTween.to(this.$cover, 0.3, {
                     opacity: 0,
                     onComplete: $.proxy(function () {
@@ -6729,11 +6754,11 @@ N2D('FrontendItemVimeo', function ($, undefined) {
             if (!this.isStatic) {
                 this.slider.sliderElement.trigger('mediaStarted', this.playerId);
             }
-            layer.triggerHandler('n2play');
+            $layer.triggerHandler('n2play');
         }, this));
 
         this.player.on('pause', $.proxy(function () {
-            layer.triggerHandler('n2pause');
+            $layer.triggerHandler('n2pause');
             if (this.state.continuePlay) {
                 this.setState('continuePlay', false);
                 this.setState('play', true);
@@ -6746,7 +6771,7 @@ N2D('FrontendItemVimeo', function ($, undefined) {
             if (!this.isStatic) {
                 this.slider.sliderElement.trigger('mediaEnded', this.playerId);
             }
-            layer.triggerHandler('n2stop');
+            $layer.triggerHandler('n2stop');
             this.setState('play', false);
         }, this));
 
@@ -6787,6 +6812,8 @@ N2D('FrontendItemVimeo', function ($, undefined) {
     };
 
     FrontendItemVimeo.prototype.initAutoplay = function () {
+        this.setState('InComplete', true, true);
+    
 
         if (!this.isStatic) {
             //change slide
@@ -6815,7 +6842,7 @@ N2D('FrontendItemVimeo', function ($, undefined) {
         this.state[name] = value;
 
         if (doAction) {
-            if (this.state.play && this.state.slide && this.state.scroll) {
+            if (this.state.play && this.state.slide && this.state.InComplete && this.state.scroll) {
                 this.play();
             } else {
                 this.pause();
@@ -7013,7 +7040,7 @@ N2D('FrontendItemYouTube', function ($, undefined) {
 
         if (this.$cover.length) {
             if (n2const.isMobile) {
-                this.$cover.css('pointer-events', 'none');
+                this.$cover.on('click', $.proxy(this.play, this));
             }
             $layer.one('n2play', $.proxy(this.fadeOutCover, this));
         }

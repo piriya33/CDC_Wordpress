@@ -5,11 +5,7 @@ namespace WPForms\Pro\Admin\Entries\Export;
 /**
  * Entries Export.
  *
- * @since      1.5.5
- * @author     WPForms
- * @package    WPForms\Pro\Admin\Entries
- * @license    GPL-2.0+
- * @copyright  Copyright (c) 2019, WPForms LLC
+ * @since 1.5.5
  */
 class Export {
 
@@ -101,6 +97,10 @@ class Export {
 	 * @since 1.5.5
 	 */
 	public function __construct() {
+
+		if ( ! wpforms_current_user_can( 'view_entries' ) ) {
+			return;
+		}
 
 		$this->init_args();
 		$this->init_settings();
@@ -334,6 +334,7 @@ class Export {
 			$this->data['get_args']['form_id'],
 			array(
 				'content_only' => true,
+				'cap'          => 'view_entries_form_single',
 			)
 		);
 	}
@@ -353,7 +354,7 @@ class Export {
 		}
 
 		// Check for user with correct capabilities.
-		if ( ! wpforms_current_user_can() ) {
+		if ( ! wpforms_current_user_can( 'view_entries' ) ) {
 			return false;
 		}
 

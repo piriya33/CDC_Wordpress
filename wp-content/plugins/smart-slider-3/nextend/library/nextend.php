@@ -24,11 +24,13 @@ class N2 {
             $api = self::$api;
         }
 
-        if ($returnUrl) {
-            $posts_default = array(
-                'platform' => N2Platform::getPlatform()
-            );
+        $posts_default = array(
+            'platform' => N2Platform::getPlatform()
+        );
 
+        $posts = $posts + $posts_default;
+
+        if ($returnUrl) {
             return $api . '?' . http_build_query($posts + $posts_default);
         }
 
@@ -36,11 +38,7 @@ class N2 {
             if (function_exists('curl_init') && function_exists('curl_exec') && N2Settings::get('curl', 1)) {
                 $ch = curl_init();
                 curl_setopt($ch, CURLOPT_URL, $api);
-
-                $posts_default = array(
-                    'platform' => N2Platform::getPlatform()
-                );
-                curl_setopt($ch, CURLOPT_POSTFIELDS, $posts + $posts_default);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $posts);
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
                 curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 20);
                 curl_setopt($ch, CURLOPT_TIMEOUT, 30);
@@ -77,15 +75,11 @@ class N2 {
                     );
                 }
             } else {
-                $posts_default = array(
-                    'platform' => N2Platform::getPlatform()
-                );
-
                 $opts    = array(
                     'http' => array(
                         'method'  => 'POST',
                         'header'  => 'Content-type: application/x-www-form-urlencoded',
-                        'content' => http_build_query($posts + $posts_default)
+                        'content' => http_build_query($posts)
                     )
                 );
                 $context = stream_context_create($opts);

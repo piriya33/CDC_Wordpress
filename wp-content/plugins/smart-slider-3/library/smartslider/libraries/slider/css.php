@@ -76,7 +76,7 @@ abstract class N2SmartSliderCSSAbstract {
             ), $css);
         }
 
-        if ($this->slider->params->get('media-query-hide-slider', 0)) {
+        if ($this->slider->params->get('media-query-hide-slider', 0) && !N2Platform::$isAdmin) {
             $css .= '
                 #' . $this->slider->elementId . '{
                     display:block;

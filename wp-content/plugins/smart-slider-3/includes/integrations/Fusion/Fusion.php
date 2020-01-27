@@ -37,7 +37,7 @@ class FusionSmartSlider3 extends Fusion_Element {
     }
 
     public function force_iframe() {
-        \N2SS3Shortcode::forceIframe('fusion');
+        \N2SS3Shortcode::forceIframe('fusion', true);
     }
 }
 

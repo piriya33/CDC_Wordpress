@@ -465,7 +465,20 @@ class N2SmartsliderSlidersModel extends N2Model {
             'unit'   => 'px'
         ));
 
-        new N2ElementOnOff($developerOptions, 'responsiveFocusUser', n2_('Scroll to slider on user interaction'), 1);
+        $focus = new N2ElementGroup($developerOptions, 'responsiveFocus', n2_('Scroll to slider on user interaction'));
+        new N2ElementOnOff($focus, 'responsiveFocusUser', n2_('Enabled'), 1);
+
+
+        new N2ElementList($focus, 'responsiveFocusEdge', n2_('Edge'), 'auto', array(
+            'options' => array(
+                'auto'         => n2_('Auto'),
+                'top'          => n2_('Top - when needed'),
+                'top-force'    => n2_('Top - always'),
+                'bottom'       => n2_('Bottom - when needed'),
+                'bottom-force' => n2_('Bottom - always'),
+            )
+        ));
+
 
         new N2ElementTextarea($developerOptions, 'custom-css-codes', n2_('CSS'), '', array(
             'fieldStyle' => 'width:600px;height:300px;'

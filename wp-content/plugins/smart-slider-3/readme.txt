@@ -4,7 +4,7 @@ Tags: slider, wordpress slider, image slider, layer slider, responsive slider, s
 Donate link: https://sites.fastspring.com/nextend/product/smartslider3donate
 Requires at least: 4.6
 Tested up to: 5.3
-Stable tag: 3.3.25
+Stable tag: 3.3.26
 Requires PHP: 5.6.20
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -195,6 +195,28 @@ Of course! Smart Slider use protocol relative urls which works fine on http:// a
 9. Layer slider with layers styles. Made with FREE version.
 
 == Changelog ==
+
+= 3.3.26 - 8. January 2020. =
+* Feature: Keyboard navigation detection improvement 
+* Feature: Control hover delay increased
+* Feature: WordPress disable pointer events in iframe in page builders  
+* Fix: Multiselect CSS issue at generator settings 
+* Fix: MobileDetect issues in rare cases 
+* Fix: Slider loading in Elementor Popup 
+* Fix: wp_delete_site action is used on WordPress 5.1 or newer sites instead of the deprecated delete_blog 
+* Fix: YouTube video conflict with Revolution Slider 
+* Fix: Shape divider height  
+* Fix: imagesloaded library 
+* Fix: iPhone ligthbox scroll 
+* Fix: Rubenz theme AJAX compatibility 
+* Fix: WordPress Posts by filter generator - wrong date in url variable 
+* Fix: Hide slider with CSS media query in the admin area 
+* Fix: Quix builder fix 
+* Fix: EasySocial user url fix 
+* Fix: Pointer Events Polyfill - Slide switching in browsers that doesn't support pointer events 
+* Fix: WordPress shortcode parameters 
+* Fix: Vimeo and Youtube layers
+* Deprecated: Help beacon
 
 = 3.3.25 - 28. November 2019. =
 * Feature: Keyboard navigation detection improvement

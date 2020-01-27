@@ -8,11 +8,7 @@
  *
  * Sub-classes should define $table_name, $version, and $primary_key in __construct() method.
  *
- * @package    WPForms
- * @author     WPForms
- * @since      1.1.6
- * @license    GPL-2.0+
- * @copyright  Copyright (c) 2016, WPForms LLC
+ * @since 1.1.6
  */
 abstract class WPForms_DB {
 
@@ -234,7 +230,7 @@ abstract class WPForms_DB {
 	}
 
 	/**
-	 * Updates an existing record in the database.
+	 * Update an existing record in the database.
 	 *
 	 * Please note: updating a record flushes the cache.
 	 *
@@ -286,7 +282,7 @@ abstract class WPForms_DB {
 	}
 
 	/**
-	 * Deletes a record from the database.
+	 * Delete a record from the database.
 	 *
 	 * Please note: successfully deleting a record flushes the cache.
 	 *
@@ -318,7 +314,7 @@ abstract class WPForms_DB {
 	}
 
 	/**
-	 * Deletes a record from the database by column.
+	 * Delete a record from the database by column.
 	 *
 	 * Please note: successfully deleting a record flushes the cache.
 	 *
@@ -353,7 +349,7 @@ abstract class WPForms_DB {
 	 *
 	 * @since 1.1.6
 	 *
-	 * @param  string $table The table name.
+	 * @param string $table The table name.
 	 *
 	 * @return string|null If the table name exists.
 	 */

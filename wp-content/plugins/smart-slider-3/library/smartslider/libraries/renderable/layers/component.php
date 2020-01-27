@@ -381,7 +381,6 @@ abstract class  N2SSSlideComponent {
             $click = $this->data->get('click');
             if (!empty($click)) {
                 $this->attributes['data-click'] = $this->pluginAnimationParseEventCode($click, $elementID);
-                $this->attributes['style']      .= 'cursor:pointer;';
             }
             $mouseenter = $this->data->get('mouseenter');
             if (!empty($mouseenter)) {
@@ -441,7 +440,7 @@ abstract class  N2SSSlideComponent {
             } else if ($code == 'previous') {
                 $code = "window['" . $elementId . "'].previous();";
             } else {
-                $code = "n2ss.trigger(this, '" . $code . "');";
+                $code = "n2ss.trigger(e.currentTarget, '" . $code . "');";
             }
         }
 

@@ -631,7 +631,7 @@ class Education {
 			die( esc_html__( 'No form ID found.', 'wpforms' ) );
 		}
 
-		// Gets an actual form data.
+		// Get an actual form data.
 		$form_id   = absint( $_POST['id'] );
 		$form_data = wpforms()->form->get( $form_id, array( 'content_only' => true ) );
 
@@ -642,23 +642,7 @@ class Education {
 		// Check that recaptcha is configured in the settings.
 		$site_key       = wpforms_setting( 'recaptcha-site-key' );
 		$secret_key     = wpforms_setting( 'recaptcha-secret-key' );
-		$recaptcha_type = wpforms_setting( 'recaptcha-type', 'v2' );
-
-		// Get a recaptcha name.
-		switch ( $recaptcha_type ) {
-			case 'v2':
-				$recaptcha_name = esc_html__( 'Google Checkbox v2 reCAPTCHA', 'wpforms' );
-				break;
-			case 'invisible':
-				$recaptcha_name = esc_html__( 'Google Invisible v2 reCAPTCHA', 'wpforms' );
-				break;
-			case 'v3':
-				$recaptcha_name = esc_html__( 'Google v3 reCAPTCHA', 'wpforms' );
-				break;
-			default:
-				$recaptcha_name = '';
-				break;
-		}
+		$recaptcha_name = $this->get_recaptcha_name();
 
 		if ( empty( $recaptcha_name ) ) {
 			wp_send_json_error( esc_html__( 'Something wrong. Please, try again later.', 'wpforms' ) );
@@ -715,5 +699,34 @@ class Education {
 		}
 
 		wp_send_json_success( $data );
+	}
+
+	/**
+	 * Retrive a reCAPTCHA type name.
+	 *
+	 * @since 1.5.8
+	 *
+	 * @return string
+	 */
+	public function get_recaptcha_name() {
+		$recaptcha_type = wpforms_setting( 'recaptcha-type', 'v2' );
+
+		// Get a recaptcha name.
+		switch ( $recaptcha_type ) {
+			case 'v2':
+				$recaptcha_name = esc_html__( 'Google Checkbox v2 reCAPTCHA', 'wpforms' );
+				break;
+			case 'invisible':
+				$recaptcha_name = esc_html__( 'Google Invisible v2 reCAPTCHA', 'wpforms' );
+				break;
+			case 'v3':
+				$recaptcha_name = esc_html__( 'Google v3 reCAPTCHA', 'wpforms' );
+				break;
+			default:
+				$recaptcha_name = '';
+				break;
+		}
+
+		return $recaptcha_name;
 	}
 }

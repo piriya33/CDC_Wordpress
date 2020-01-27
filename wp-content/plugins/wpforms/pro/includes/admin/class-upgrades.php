@@ -3,11 +3,7 @@
 /**
  * Handles plugin upgrades.
  *
- * @package    WPForms
- * @author     WPForms
- * @since      1.0.0
- * @license    GPL-2.0+
- * @copyright  Copyright (c) 2016, WPForms LLC
+ * @since 1.0.0
  */
 class WPForms_Upgrades {
 
@@ -33,7 +29,7 @@ class WPForms_Upgrades {
 	}
 
 	/**
-	 * Checks if a new version is detected, if so perform update.
+	 * Check if a new version is detected, if so perform update.
 	 *
 	 * @since 1.0.0
 	 */

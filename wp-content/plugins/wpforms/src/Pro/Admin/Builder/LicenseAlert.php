@@ -5,7 +5,7 @@ namespace WPForms\Pro\Admin\Builder;
 /**
  * Form Builder License alert/overlay.
  *
- * @since      1.5.7
+ * @since 1.5.7
  */
 class LicenseAlert {
 
