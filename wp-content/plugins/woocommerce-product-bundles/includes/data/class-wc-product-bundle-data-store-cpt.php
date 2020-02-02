@@ -33,6 +33,7 @@ class WC_Product_Bundle_Data_Store_CPT extends WC_Product_Data_Store_CPT {
 		'_wc_pb_base_sale_price',
 		'_wc_pb_layout_style',
 		'_wc_pb_edit_in_cart',
+		'_wc_pb_aggregate_weight',
 		'_wc_pb_sold_individually_context',
 		'_wc_pb_add_to_cart_form_location',
 		'_wc_sw_max_price',
@@ -51,6 +52,7 @@ class WC_Product_Bundle_Data_Store_CPT extends WC_Product_Data_Store_CPT {
 		'sale_price'                 => '_wc_pb_base_sale_price',
 		'layout'                     => '_wc_pb_layout_style',
 		'editable_in_cart'           => '_wc_pb_edit_in_cart',
+		'aggregate_weight'           => '_wc_pb_aggregate_weight',
 		'sold_individually_context'  => '_wc_pb_sold_individually_context',
 		'add_to_cart_form_location'  => '_wc_pb_add_to_cart_form_location',
 		'min_raw_price'              => '_price',
@@ -121,7 +123,7 @@ class WC_Product_Bundle_Data_Store_CPT extends WC_Product_Data_Store_CPT {
 			$meta_value = $product->$property_get_fn( 'edit' );
 
 			// Sanitize it for storage.
-			if ( 'editable_in_cart' === $property ) {
+			if ( in_array( $property, array( 'editable_in_cart', 'aggregate_weight' ) ) ) {
 				$meta_value = wc_bool_to_string( $meta_value );
 			}
 

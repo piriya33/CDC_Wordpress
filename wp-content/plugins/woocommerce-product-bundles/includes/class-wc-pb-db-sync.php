@@ -177,10 +177,6 @@ class WC_PB_DB_Sync {
 	 * @return void
 	 */
 	public static function delete_reserved_price_meta( $product ) {
-
-		$product->delete_meta_data( '_wc_pb_bundled_value' );
-		$product->delete_meta_data( '_wc_pb_bundled_weight' );
-
 		if ( false === in_array( $product->get_type(), array( 'bundle', 'composite' ) ) ) {
 			$product->delete_meta_data( '_wc_sw_max_price' );
 			$product->delete_meta_data( '_wc_sw_max_regular_price' );

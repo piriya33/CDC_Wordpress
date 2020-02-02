@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Price functions and hooks.
  *
  * @class    WC_PB_Product_Prices
- * @version  5.11.0
+ * @version  6.0.1
  */
 class WC_PB_Product_Prices {
 
@@ -26,6 +26,64 @@ class WC_PB_Product_Prices {
 	 * @var WC_Bundled_Item
 	 */
 	public static $bundled_item;
+
+	/**
+	 * Initialize.
+	 */
+	public static function init() {
+
+		// Always-on price filters used in cart context.
+		if ( 'filters' === self::get_bundled_cart_item_discount_method() ) {
+
+			add_filter( 'woocommerce_product_get_price', array( __CLASS__, 'filter_get_price_cart' ), 99, 2 );
+			add_filter( 'woocommerce_product_get_sale_price', array( __CLASS__, 'filter_get_sale_price_cart' ), 99, 2 );
+
+			add_filter( 'woocommerce_product_variation_get_price', array( __CLASS__, 'filter_get_price_cart' ), 99, 2 );
+			add_filter( 'woocommerce_product_variation_get_sale_price', array( __CLASS__, 'filter_get_sale_price_cart' ), 99, 2 );
+		}
+	}
+
+	/*
+	|--------------------------------------------------------------------------
+	| Class methods.
+	|--------------------------------------------------------------------------
+	*/
+
+	/**
+	 * A non-strict way to tell if a product's prices are being altered due to the presence of a parent "bundle".
+	 *
+	 * @since  6.0.0
+	 *
+	 * @param  WC_Product  $product
+	 * @param  string      $context
+	 * @return boolean
+	 */
+	public static function is_bundled_pricing_context( $product, $context = 'any' ) {
+
+		if ( in_array( $context, array( 'any', 'catalog' ) ) ) {
+			return self::$bundled_item && self::$bundled_item->get_product_id() === $product->get_id();
+		} elseif ( in_array( $context, array( 'any', 'cart' ) ) ) {
+			return isset( $product->bundled_cart_item );
+		}
+	}
+
+	/**
+	 * Method to use for calculating cart item discounts. Values: 'filters' | 'props'
+	 *
+	 * @since  6.0.0
+	 *
+	 * @return string  $method
+	 */
+	public static function get_bundled_cart_item_discount_method() {
+		/**
+		 * 'woocommerce_bundled_cart_item_discount_method' filter.
+		 *
+		 * @since  6.0.0
+		 *
+		 * @param  string  $method  Method to use for calculating cart item discounts. Values: 'filters' | 'props'.
+		 */
+		return apply_filters( 'woocommerce_bundled_cart_item_discount_method', 'filters' );
+	}
 
 	/**
 	 * Returns the incl/excl tax coefficients for calculating prices incl/excl tax on the client side.
@@ -211,6 +269,12 @@ class WC_PB_Product_Prices {
 		self::$bundled_item = false;
 	}
 
+	/*
+	|--------------------------------------------------------------------------
+	| Callbacks.
+	|--------------------------------------------------------------------------
+	*/
+
 	/**
 	 * Filter variation prices hash to load different prices for variable products with variation filters and/or discounts.
 	 *
@@ -364,13 +428,20 @@ class WC_PB_Product_Prices {
 	 *
 	 * @param  double      $price
 	 * @param  WC_Product  $product
+	 * @param  string      $context
 	 * @return double
 	 */
-	public static function filter_get_price( $price, $product ) {
+	public static function filter_get_price( $price, $product, $context = '' ) {
 
-		$bundled_item = self::$bundled_item;
+		$bundled_item = false;
 
-		if ( $bundled_item ) {
+		if ( self::$bundled_item ) {
+			$bundled_item = self::$bundled_item;
+		} elseif ( isset( $product->bundled_cart_item ) ) {
+			$bundled_item = $product->bundled_cart_item;
+		}
+
+		if ( $bundled_item && ( $bundled_item instanceof WC_Bundled_Item ) ) {
 
 			if ( $price === '' ) {
 				return $price;
@@ -380,14 +451,27 @@ class WC_PB_Product_Prices {
 				return 0;
 			}
 
+			$offset_price = ! empty( $product->bundled_price_offset ) ? $product->bundled_price_offset : false;
+
 			if ( false === $bundled_item->is_discount_allowed_on_sale_price() ) {
+
 				$regular_price = $product->get_regular_price();
+
 			} else {
+
 				$regular_price = $price;
+
+				if ( $offset_price ) {
+					$regular_price = $regular_price - $offset_price;
+				}
 			}
 
-			$discount = $bundled_item->get_discount();
+			$discount = $bundled_item->get_discount( $context );
 			$price    = empty( $discount ) ? $price : self::get_discounted_price( $regular_price, $discount );
+
+			if ( $offset_price ) {
+				$price = $price + $offset_price;
+			}
 
 			$product->bundled_item_price = $price;
 
@@ -407,18 +491,35 @@ class WC_PB_Product_Prices {
 	 */
 	public static function filter_get_regular_price( $regular_price, $product ) {
 
-		$bundled_item = self::$bundled_item;
+		$bundled_item = false;
 
-		if ( $bundled_item ) {
+		if ( self::$bundled_item ) {
+			$bundled_item = self::$bundled_item;
+		} elseif ( isset( $product->bundled_cart_item ) ) {
+			$bundled_item = $product->bundled_cart_item;
+		}
+
+		if ( $bundled_item && ( $bundled_item instanceof WC_Bundled_Item ) ) {
 
 			if ( ! $bundled_item->is_priced_individually() ) {
 				return 0;
 			}
 
 			if ( empty( $regular_price ) ) {
-				self::$bundled_item = false;
+
+				if ( isset( $product->bundled_cart_item ) ) {
+					$product->bundled_cart_item = false;
+				} else {
+					self::$bundled_item = false;
+				}
+
 				$regular_price = $product->get_price();
-				self::$bundled_item = $bundled_item;
+
+				if ( isset( $product->bundled_cart_item ) ) {
+					$product->bundled_cart_item = $bundled_item;
+				} else {
+					self::$bundled_item = $bundled_item;
+				}
 			}
 		}
 
@@ -430,32 +531,78 @@ class WC_PB_Product_Prices {
 	 *
 	 * @param  double      $price
 	 * @param  WC_Product  $product
+	 * @param  string      $context
 	 * @return double
 	 */
-	public static function filter_get_sale_price( $sale_price, $product ) {
+	public static function filter_get_sale_price( $sale_price, $product, $context = '' ) {
 
-		$bundled_item = self::$bundled_item;
+		$bundled_item = false;
 
-		if ( $bundled_item ) {
+		if ( self::$bundled_item ) {
+			$bundled_item = self::$bundled_item;
+		} elseif ( isset( $product->bundled_cart_item ) ) {
+			$bundled_item = $product->bundled_cart_item;
+		}
+
+		if ( $bundled_item && ( $bundled_item instanceof WC_Bundled_Item ) ) {
 
 			if ( ! $bundled_item->is_priced_individually() ) {
 				return 0;
 			}
 
+			$offset_price = ! empty( $product->bundled_price_offset ) ? $product->bundled_price_offset : false;
+
 			if ( '' === $sale_price || false === $bundled_item->is_discount_allowed_on_sale_price() ) {
+
 				$regular_price = $product->get_regular_price();
+
 			} else {
+
 				$regular_price = $sale_price;
+
+				if ( $offset_price ) {
+					$regular_price = $regular_price - $offset_price;
+				}
 			}
 
-			$discount   = $bundled_item->get_discount();
+			$discount   = $bundled_item->get_discount( $context );
 			$sale_price = empty( $discount ) ? $sale_price : self::get_discounted_price( $regular_price, $discount );
+
+			if ( $offset_price ) {
+				$sale_price = $sale_price + $offset_price;
+			}
 
 			/** Documented in 'WC_Bundled_Item::get_raw_price()'. */
 			$sale_price = apply_filters( 'woocommerce_bundled_item_price', $sale_price, $product, $discount, $bundled_item );
 		}
 
 		return $sale_price;
+	}
+
+	/**
+	 * Filter get_price() calls for bundled cart items to include discounts.
+	 *
+	 * @since  6.0.0
+	 *
+	 * @param  double      $price
+	 * @param  WC_Product  $product
+	 * @return double
+	 */
+	public static function filter_get_price_cart( $price, $product ) {
+		return self::is_bundled_pricing_context( $product, 'cart' ) ? self::filter_get_price( $price, $product, 'cart' ) : $price;
+	}
+
+	/**
+	 * Filter get_sale_price() calls for bundled cart items to include discounts.
+	 *
+	 * @since  6.0.0
+	 *
+	 * @param  double      $price
+	 * @param  WC_Product  $product
+	 * @return double
+	 */
+	public static function filter_get_sale_price_cart( $price, $product ) {
+		return self::is_bundled_pricing_context( $product, 'cart' ) ? self::filter_get_sale_price( $price, $product, 'cart' ) : $price;
 	}
 
 	/**
@@ -479,7 +626,7 @@ class WC_PB_Product_Prices {
 				return '';
 			}
 
-			$quantity = $bundled_item->get_quantity();
+			$quantity = $bundled_item->get_quantity( 'max', array( 'bound_by_stock' => true ) );
 
 			/**
 			 * 'woocommerce_bundled_item_price_html' filter.
@@ -487,7 +634,7 @@ class WC_PB_Product_Prices {
 			 * @param  string           $price_html
 			 * @param  WC_Bundled_Item  $bundled_item
 			 */
-			$price_html = apply_filters( 'woocommerce_bundled_item_price_html', $quantity > 1 ? sprintf( __( '%1$s <span class="bundled_item_price_quantity">/ pc.</span>', 'woocommerce-product-bundles' ), $price_html, $quantity ) : $price_html, $price_html, $bundled_item );
+			$price_html = apply_filters( 'woocommerce_bundled_item_price_html', '' === $quantity || $quantity > 1 ? sprintf( __( '%1$s <span class="bundled_item_price_quantity">/ pc.</span>', 'woocommerce-product-bundles' ), $price_html, $quantity ) : $price_html, $price_html, $bundled_item );
 		}
 
 		return $price_html;
@@ -513,3 +660,5 @@ class WC_PB_Product_Prices {
 		) );
 	}
 }
+
+WC_PB_Product_Prices::init();

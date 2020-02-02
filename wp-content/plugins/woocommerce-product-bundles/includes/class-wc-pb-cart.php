@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Product Bundle cart functions and filters.
  *
  * @class    WC_PB_Cart
- * @version  5.13.0
+ * @version  6.0.0
  */
 class WC_PB_Cart {
 
@@ -728,7 +728,9 @@ class WC_PB_Cart {
 
 				if ( $is_configuration_valid ) {
 
-					if ( ! empty( $bundled_items ) && false === WC_Product_Bundle::group_mode_has( $product->get_group_mode(), 'parent_item' ) ) {
+					$group_mode = $product->get_group_mode();
+
+					if ( ! empty( $bundled_items ) && ( false === WC_Product_Bundle::group_mode_has( $group_mode, 'parent_item' ) || WC_Product_Bundle::group_mode_has( $group_mode, 'component_multiselect' ) ) ) {
 
 						$items_added = $bundled_stock->get_items();
 
@@ -828,11 +830,21 @@ class WC_PB_Cart {
 		$bundled_item    = $bundle->get_bundled_item( $bundled_item_id );
 
 		if ( $bundled_item ) {
+
+			$discount_method = WC_PB_Product_Prices::get_bundled_cart_item_discount_method();
+
+			if ( 'filters' === $discount_method ) {
+				$cart_item[ 'data' ]->bundled_cart_item = $bundled_item;
+			}
+
 			if ( false === $bundled_item->is_priced_individually() ) {
 
-				$cart_item[ 'data' ]->set_regular_price( 0 );
-				$cart_item[ 'data' ]->set_price( 0 );
-				$cart_item[ 'data' ]->set_sale_price( '' );
+				if ( 'props' === $discount_method ) {
+
+					$cart_item[ 'data' ]->set_regular_price( 0 );
+					$cart_item[ 'data' ]->set_price( 0 );
+					$cart_item[ 'data' ]->set_sale_price( '' );
+				}
 
 				if ( WC_PB()->compatibility->is_subscription( $cart_item[ 'data' ] ) ) {
 
@@ -840,15 +852,18 @@ class WC_PB_Cart {
 						$cart_item[ 'data' ]->update_meta_data( '_subscription_sign_up_fee', 0 );
 					}
 
-					$cart_item[ 'data' ]->wc_pb_block_sub = 'yes';
+					$cart_item[ 'data' ]->block_subscription = 'yes';
 				}
 
 			} else {
 
-				$cart_item[ 'data' ]->set_price( $bundled_item->get_raw_price( $cart_item[ 'data' ], 'cart' ) );
+				if ( 'props' === $discount_method ) {
 
-				if ( $bundled_item->is_on_sale( 'cart' ) ) {
-					$cart_item[ 'data' ]->set_sale_price( $cart_item[ 'data' ]->get_price( 'edit' ) );
+					$cart_item[ 'data' ]->set_price( $bundled_item->get_raw_price( $cart_item[ 'data' ], 'cart' ) );
+
+					if ( $bundled_item->is_on_sale( 'cart' ) ) {
+						$cart_item[ 'data' ]->set_sale_price( $cart_item[ 'data' ]->get_price( 'edit' ) );
+					}
 				}
 			}
 
@@ -861,20 +876,17 @@ class WC_PB_Cart {
 
 		if ( $cart_item[ 'data' ]->needs_shipping() ) {
 
-			if ( false === $bundled_item->is_shipped_individually( $cart_item[ 'data' ] ) ) {
+			if ( false === $bundled_item->is_shipped_individually() ) {
 
 				/**
 				 * 'woocommerce_bundled_item_has_bundled_weight' filter.
-				 *
-				 * When the shipping properties of a bundled product are overridden by its container ("Shipped Individually" option unchecked), the bundle container item weight is assumed static and the bundled product weight is ignored.
-				 * You can use this filter to have the weight of bundled items appended to the container weight, instead of ignored, when the "Shipped Individually" option is unchecked.
 				 *
 				 * @param  boolean            $append_weight
 				 * @param  WC_Product         $data
 				 * @param  mixed              $bundled_item_id
 				 * @param  WC_Product_Bundle  $bundle
 				 */
-				if ( apply_filters( 'woocommerce_bundled_item_has_bundled_weight', false, $cart_item[ 'data' ], $bundled_item_id, $bundle ) ) {
+				if ( apply_filters( 'woocommerce_bundled_item_has_bundled_weight', $bundle->get_aggregate_weight(), $cart_item[ 'data' ], $bundled_item_id, $bundle ) ) {
 
 					$cart_item_weight = $cart_item[ 'data' ]->get_weight( 'edit' );
 
@@ -884,10 +896,10 @@ class WC_PB_Cart {
 						$cart_item_weight = $parent_data[ 'weight' ];
 					}
 
-					$cart_item[ 'data' ]->add_meta_data( '_wc_pb_bundled_weight', $cart_item_weight, true );
+					$cart_item[ 'data' ]->bundled_weight = $cart_item_weight;
 				}
 
-				$cart_item[ 'data' ]->add_meta_data( '_wc_pb_bundled_value', $cart_item[ 'data' ]->get_price( 'edit' ), true );
+				$cart_item[ 'data' ]->bundled_value = $cart_item[ 'data' ]->get_price( 'edit' );
 
 				$cart_item[ 'data' ]->set_virtual( 'yes' );
 				$cart_item[ 'data' ]->set_weight( '' );
@@ -1516,17 +1528,23 @@ class WC_PB_Cart {
 		foreach ( $cart->cart_contents as $cart_item_key => $cart_item ) {
 
 			if ( wc_pb_maybe_is_bundled_cart_item( $cart_item ) ) {
+
 				// Remove orphaned child items from the cart.
 				$container_item = wc_pb_get_bundled_cart_item_container( $cart_item );
+
 				if ( ! $container_item || ! isset( $container_item[ 'bundled_items' ] ) || ! is_array( $container_item[ 'bundled_items' ] ) || ! in_array( $cart_item_key, $container_item[ 'bundled_items' ] ) ) {
 					unset( WC()->cart->cart_contents[ $cart_item_key ] );
 				} elseif ( isset( $cart_item[ 'bundled_item_id' ] ) && $container_item[ 'data' ]->is_type( 'bundle' ) && ! $container_item[ 'data' ]->has_bundled_item( $cart_item[ 'bundled_item_id' ] ) ) {
 					unset( WC()->cart->cart_contents[ $cart_item_key ] );
 				}
+
 			} elseif ( wc_pb_is_bundle_container_cart_item( $cart_item ) ) {
+
 				// Remove childless, hidden parents from the cart.
 				if ( false === WC_Product_Bundle::group_mode_has( $cart_item[ 'data' ]->get_group_mode(), 'parent_item' ) ) {
+
 					$bundled_items = wc_pb_get_bundled_cart_items( $cart_item );
+
 					if ( empty( $bundled_items ) ) {
 						unset( WC()->cart->cart_contents[ $cart_item_key ] );
 					}
@@ -1671,8 +1689,8 @@ class WC_PB_Cart {
 									$child_cart_item_data   = WC()->cart->cart_contents[ $child_item_key ];
 									$bundled_product        = $child_cart_item_data[ 'data' ];
 									$bundled_product_qty    = $child_cart_item_data[ 'quantity' ];
-									$bundled_product_value  = $bundled_product->get_meta( '_wc_pb_bundled_value', true );
-									$bundled_product_weight = $bundled_product->get_meta( '_wc_pb_bundled_weight', true );
+									$bundled_product_value  = isset( $bundled_product->bundled_value ) ? $bundled_product->bundled_value : 0.0;
+									$bundled_product_weight = isset( $bundled_product->bundled_weight ) ? $bundled_product->bundled_weight : 0.0;
 
 									// Aggregate price of physically packaged child item - already converted to virtual.
 
@@ -1752,7 +1770,7 @@ class WC_PB_Cart {
 	 * @return bool
 	 */
 	public function is_subscription_filter( $is_sub, $product_id, $product ) {
-		if ( is_object( $product ) && isset( $product->wc_pb_block_sub ) && 'yes' === $product->wc_pb_block_sub ) {
+		if ( is_object( $product ) && isset( $product->block_subscription ) && 'yes' === $product->block_subscription ) {
 			$is_sub = false;
 		}
 

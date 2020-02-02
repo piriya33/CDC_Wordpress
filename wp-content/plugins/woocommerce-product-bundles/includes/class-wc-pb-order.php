@@ -302,7 +302,7 @@ class WC_PB_Order {
 							$shipped_individually = true;
 						} elseif ( $bundled_product->needs_shipping() ) {
 							/** Hook documented in 'WC_PB_Cart::set_bundled_cart_item()'. */
-							if ( apply_filters( 'woocommerce_bundled_item_has_bundled_weight', false, $bundled_product, $bundled_item_id, $bundle ) ) {
+							if ( apply_filters( 'woocommerce_bundled_item_has_bundled_weight', $bundle->get_aggregate_weight(), $bundled_product, $bundled_item_id, $bundle ) ) {
 								$bundled_weight += (double) $bundled_product->get_weight( 'edit' ) * $bundled_item_quantity;
 							}
 						}

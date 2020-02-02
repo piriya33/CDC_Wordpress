@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * The bunded item class is a product container that initializes and holds pricing, availability and variation/attribute-related data for a bundled product.
  *
  * @class    WC_Bundled_Item
- * @version  5.13.0
+ * @version  6.0.0
  */
 class WC_Bundled_Item {
 
@@ -1018,9 +1018,13 @@ class WC_Bundled_Item {
 	 *
 	 * @return boolean
 	 */
-	public function is_shipped_individually( $product = false ) {
+	public function is_shipped_individually() {
 
 		$is_shipped_individually = 'yes' === $this->shipped_individually;
+
+		if ( ( $bundle = $this->get_bundle() ) && $bundle->is_virtual() ) {
+			$is_shipped_individually = true;
+		}
 
 		/**
 		 * 'woocommerce_bundled_item_is_shipped_individually' filter.
@@ -1175,11 +1179,28 @@ class WC_Bundled_Item {
 			$requires_input = true;
 		} elseif ( 'variable' === $this->product->get_type() || 'variable-subscription' === $this->product->get_type() ) {
 			$requires_input = sizeof( $this->get_product_variation_attributes( true ) ) > 0;
-		} elseif ( WC_PB()->compatibility->has_addons( $this->get_product(), true ) ) {
+		} elseif ( false === $this->disable_addons() && WC_PB()->compatibility->has_addons( $this->get_product(), true ) ) {
 			$requires_input = true;
 		}
 
 		return $requires_input;
+	}
+
+	/**
+	 * Disable Add-Ons?
+	 *
+	 * @since  6.0.0
+	 * @return bool
+	 */
+	public function disable_addons() {
+
+		$disable_addons = isset( $this->item_data[ 'disable_addons' ] ) && 'yes' === $this->item_data[ 'disable_addons' ];
+
+		if ( ! defined( 'WC_PRODUCT_ADDONS_VERSION' ) || version_compare( WC_PRODUCT_ADDONS_VERSION, WC_PB()->compatibility->get_required_module_version( 'pao' ) ) < 0 ) {
+			$disable_addons = true;
+		}
+
+		return $disable_addons;
 	}
 
 	/**

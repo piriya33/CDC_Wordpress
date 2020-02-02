@@ -87,11 +87,36 @@ function wc_pb_template_add_to_cart() {
  */
 function wc_pb_template_add_to_cart_wrap( $product ) {
 
+	$is_purchasable     = $product->is_purchasable();
+	$purchasable_notice = __( 'This product is currently unavailable.', 'woocommerce-product-bundles' );
+
+	if ( ! $is_purchasable && current_user_can( 'manage_woocommerce' ) ) {
+
+		$purchasable_notice_reason = '';
+
+		// Give store owners a reason.
+		if ( defined( 'WC_PB_UPDATING' ) ) {
+			$purchasable_notice_reason .= __( 'The Product Bundles database is updating in the background. During this time, all bundles on your site will be unavailable. If this message persists, please <a href="https://woocommerce.com/my-account/marketplace-ticket-form/" target="_blank">get in touch</a> with our support team. This note cannot be viewed by customers.', 'woocommerce-product-bundles' );
+		} elseif ( false === $product->contains( 'priced_individually' ) && '' === $product->get_price() ) {
+			$purchasable_notice_reason .= __( 'The pricing configuration of this bundle is incomplete. To give this bundle a static price, navigate to <strong>Product Data > General</strong> tab and fill in the <strong>Regular Price</strong> field. If you prefer to calculate its price dynamically, go to <strong>Product Data > Bundled Products</strong> and enable <strong>Priced Individually</strong> for all bundled products whose price you want to preserve. Then, save your changes. This note cannot be viewed by customers.', 'woocommerce-product-bundles' );
+		} elseif ( $product->contains( 'non_purchasable' ) ) {
+			$purchasable_notice_reason .= __( 'Please make sure that all products contained in this bundle have a price. WooCommerce does not allow products with a blank price to be purchased. This note cannot be viewed by customers.', 'woocommerce-product-bundles' );
+		} elseif ( $product->contains( 'subscriptions' ) && class_exists( 'WC_Subscriptions_Admin' ) && 'yes' !== get_option( WC_Subscriptions_Admin::$option_prefix . '_multiple_purchase', 'no' ) ) {
+			$purchasable_notice_reason .= __( 'Please enable <strong>Mixed Checkout</strong> under <strong>WooCommerce > Settings > Subscriptions</strong>. Bundles that contain subscription-type products cannot be purchased when <strong>Mixed Checkout</strong> is disabled. This note cannot be viewed by customers.', 'woocommerce-product-bundles' );
+		}
+
+		if ( $purchasable_notice_reason ) {
+			$purchasable_notice .= '<span class="purchasable_notice_reason">' . $purchasable_notice_reason . '</span>';
+		}
+	}
+
 	wc_get_template( 'single-product/add-to-cart/bundle-add-to-cart-wrap.php', array(
-		'availability_html' => wc_get_stock_html( $product ),
-		'bundle_price_data' => $product->get_bundle_price_data(),
-		'product'           => $product,
-		'product_id'        => $product->get_id()
+		'is_purchasable'     => $is_purchasable,
+		'purchasable_notice' => $purchasable_notice,
+		'availability_html'  => wc_get_stock_html( $product ),
+		'bundle_price_data'  => $product->get_bundle_price_data(),
+		'product'            => $product,
+		'product_id'         => $product->get_id()
 	), false, WC_PB()->plugin_path() . '/templates/' );
 }
 
@@ -496,6 +521,12 @@ function wc_pb_template_before_bundled_items( $bundle ) {
 
 	if ( 'tabular' === $layout ) {
 
+		$table_classes = array( 'bundled_products' );
+
+		if ( false === $bundle->contains( 'visible' ) ) {
+			$table_classes[] = 'bundled_products_hidden';
+		}
+
 		/**
 		 * 'woocommerce_bundles_tabular_classes' filter.
 		 *
@@ -504,7 +535,7 @@ function wc_pb_template_before_bundled_items( $bundle ) {
 		 * @param  array              $classes
 		 * @param  WC_Product_Bundle  $bundle
 		 */
-		$table_classes = apply_filters( 'woocommerce_bundles_tabular_classes', array( 'bundled_products' ), $bundle );
+		$table_classes = apply_filters( 'woocommerce_bundles_tabular_classes', $table_classes, $bundle );
 
 		?><table cellspacing="0" class="<?php echo esc_attr( implode( ' ', $table_classes ) ); ?>">
 			<thead>

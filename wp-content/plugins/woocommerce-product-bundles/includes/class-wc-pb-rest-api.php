@@ -54,10 +54,12 @@ class WC_PB_REST_API {
 
 		// Schema.
 		add_filter( 'woocommerce_rest_shop_order_schema', array( __CLASS__, 'filter_order_schema' ) );
+		add_filter( 'woocommerce_rest_shop_subscription_schema', array( __CLASS__, 'filter_order_schema' ) );
 
 		// Add extra data to line items.
 		// v1.
 		add_filter( 'woocommerce_rest_prepare_shop_order', array( __CLASS__, 'filter_order_response' ), 10, 3 );
+		add_filter( 'woocommerce_rest_prepare_shop_subscription', array( __CLASS__, 'filter_order_response' ), 10, 3 );
 		// v2.
 		add_filter( 'woocommerce_rest_prepare_shop_order_object', array( __CLASS__, 'filter_order_response' ), 10, 3 );
 
@@ -67,6 +69,7 @@ class WC_PB_REST_API {
 		// Modify order contents to include bundled items:
 		// v1.
 		add_filter( 'woocommerce_rest_pre_insert_shop_order', array( __CLASS__, 'add_bundle_to_order' ), 10, 2 );
+		add_filter( 'woocommerce_rest_pre_insert_shop_subscription', array( __CLASS__, 'add_bundle_to_order' ), 10, 2 );
 		// v2.
 		add_filter( 'woocommerce_rest_pre_insert_shop_order_object', array( __CLASS__, 'add_bundle_to_order' ), 10, 2 );
 	}

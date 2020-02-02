@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit343fad5aaa80f76d6e1366fb8b27850f
+class ComposerStaticInit2429cc342be24b8387ac3a9afae090dd
 {
     public static $prefixLengthsPsr4 = array (
         'T' => 
@@ -187,6 +187,8 @@ class ComposerStaticInit343fad5aaa80f76d6e1366fb8b27850f
         'Tribe\\Traits\\Cache_User' => __DIR__ . '/../..' . '/src/Tribe/Traits/Cache_User.php',
         'Tribe\\Utils\\Collection_Interface' => __DIR__ . '/../..' . '/src/Tribe/Utils/Collection_Interface.php',
         'Tribe\\Utils\\Collection_Trait' => __DIR__ . '/../..' . '/src/Tribe/Utils/Collection_Trait.php',
+        'Tribe\\Utils\\Date_I18n' => __DIR__ . '/../..' . '/src/Tribe/Utils/Date_I18n.php',
+        'Tribe\\Utils\\Date_I18n_Immutable' => __DIR__ . '/../..' . '/src/Tribe/Utils/Date_I18n_Immutable.php',
         'Tribe\\Utils\\Element_Classes' => __DIR__ . '/../..' . '/src/Tribe/Utils/Element_Classes.php',
         'Tribe\\Utils\\Lazy_Collection' => __DIR__ . '/../..' . '/src/Tribe/Utils/Lazy_Collection.php',
         'Tribe\\Utils\\Lazy_Events' => __DIR__ . '/../..' . '/src/Tribe/Utils/Lazy_Events.php',
@@ -205,10 +207,10 @@ class ComposerStaticInit343fad5aaa80f76d6e1366fb8b27850f
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit343fad5aaa80f76d6e1366fb8b27850f::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit343fad5aaa80f76d6e1366fb8b27850f::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit343fad5aaa80f76d6e1366fb8b27850f::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit343fad5aaa80f76d6e1366fb8b27850f::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit2429cc342be24b8387ac3a9afae090dd::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit2429cc342be24b8387ac3a9afae090dd::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit2429cc342be24b8387ac3a9afae090dd::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit2429cc342be24b8387ac3a9afae090dd::$classMap;
 
         }, null, ClassLoader::class);
     }

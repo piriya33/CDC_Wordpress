@@ -1,7 +1,7 @@
 /* global wc_bundles_admin_params */
 /* global woocommerce_admin_meta_boxes */
 
-jQuery( function($) {
+jQuery( function( $ ) {
 
 	function Bundled_Item( $el ) {
 
@@ -213,6 +213,8 @@ jQuery( function($) {
 	init_event_handlers();
 
 	init_bundled_products();
+
+	init_bundle_shipping();
 
 	init_nux();
 
@@ -552,6 +554,62 @@ jQuery( function($) {
 
 		$body.on( 'click', function() {
 			$button.removeClass( 'sw-expanding-button--open' );
+		} );
+	}
+
+	function init_bundle_shipping() {
+
+		var $shipping_data_container = $bundled_products_panel.parent().find( '#shipping_product_data' ),
+			$virtual_checkbox        = $( 'input#_virtual' ),
+			$bundle_type_container   = $shipping_data_container.find( '.options_group.bundle_type' ),
+			$bundle_type_options     = $bundle_type_container.find( '.bundle_type_options li' ),
+			virtual_state            = $( 'input#_virtual:checked' ).length ? true : false,
+			$product_type_select     = $( 'select#product-type' );
+
+		// Move Bundle type options group first.
+		$bundle_type_container.detach().prependTo( $shipping_data_container );
+
+		// Move "Assembled Weight" to the Weight field.
+		$shipping_data_container.find( '.form-field._weight_field' ).after( $bundle_type_container.find( '.form-field.bundle_aggregate_weight_field' ) );
+
+		// Save virtual state.
+		$virtual_checkbox.on( 'change', function() {
+			if ( 'bundle' !== $product_type_select.val() && 'composite' !== $product_type_select.val() ) {
+				virtual_state = $( this ).prop( 'checked' ) ? true : false;
+			}
+		} );
+
+		$( 'body' ).on( 'woocommerce-product-type-change', function( event, select_val ) {
+
+			if ( 'bundle' !== select_val ) {
+				// Restore virtual state.
+				if ( 'simple' === select_val ) {
+					$virtual_checkbox.prop( 'checked', virtual_state ).change();
+				}
+			}
+
+		} );
+
+		// Toggle container shipping class.
+		// Container classes are removed conditionaly using inline JS. @see WC_PB_Meta_Box_Product_Data::js_handle_container_classes()
+		$bundle_type_options.on( 'click', function() {
+
+			var $option = $( this ),
+				$input  = $option.find( 'input' ),
+				value   = $input.prop( 'checked', 'checked' ).val();
+
+			// Highlight selected.
+			$bundle_type_options.removeClass( 'selected' );
+			$option.addClass( 'selected' );
+
+			if ( 'assembled' === value ) {
+				$shipping_data_container.removeClass( 'bundle_unassembled' );
+				$bundled_products_panel.removeClass( 'bundle_unassembled' );
+			} else if ( 'unassembled' === value ) {
+				$shipping_data_container.addClass( 'bundle_unassembled' );
+				$bundled_products_panel.addClass( 'bundle_unassembled' );
+			}
+
 		} );
 	}
 

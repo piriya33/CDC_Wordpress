@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Cart-related functions and filters.
  *
  * @class    WC_PB_BS_Cart
- * @version  5.8.0
+ * @version  6.0.0
  */
 class WC_PB_BS_Cart {
 
@@ -40,6 +40,11 @@ class WC_PB_BS_Cart {
 
 		// Filter the add-to-cart success message.
 		add_filter( 'wc_add_to_cart_message_html', array( __CLASS__, 'bundle_sells_add_to_cart_message_html' ), 10, 2 );
+
+		if ( 'filters' === WC_PB_Product_Prices::get_bundled_cart_item_discount_method() ) {
+			// Allow bundle-sells discounts to be applied.
+			add_filter( 'woocommerce_cart_loaded_from_session', array( __CLASS__, 'load_bundle_sells_from_session' ), 10 );
+		}
 	}
 
 	/*
@@ -212,6 +217,51 @@ class WC_PB_BS_Cart {
 		}
 
 		return $message;
+	}
+
+	/**
+	 * Allow bundle-sell discounts to be applied by PB.
+	 *
+	 * @since  6.0.0
+	 *
+	 * @param  array  $cart
+	 * @return array
+	 */
+	public static function load_bundle_sells_from_session( $cart ) {
+
+		if ( empty( $cart->cart_contents ) ) {
+			return;
+		}
+
+		foreach ( $cart->cart_contents as $cart_item_key => $cart_item ) {
+
+			$parent_item = wc_pb_get_bundle_sell_cart_item_container( $cart_item );
+
+			if ( empty( $parent_item ) ) {
+				continue;
+			}
+
+			$bundle_sell_ids = WC_PB_BS_Product::get_bundle_sell_ids( $parent_item[ 'data' ] );
+
+			if ( empty( $bundle_sell_ids ) ) {
+				continue;
+			}
+
+			$bundle             = WC_PB_BS_Product::get_bundle( $bundle_sell_ids, $parent_item[ 'data' ] );
+			$bundled_data_items = $bundle->get_bundled_data_items();
+			$bundled_item       = null;
+
+			foreach ( $bundled_data_items as $bundled_data_item ) {
+				if ( $bundled_data_item->get_product_id() === $cart_item[ 'product_id' ] ) {
+					$bundled_item = $bundle->get_bundled_item( $bundled_data_item );
+					break;
+				}
+			}
+
+			if ( $bundled_item ) {
+				$cart_item[ 'data' ]->bundled_cart_item = $bundled_item;
+			}
+		}
 	}
 }
 

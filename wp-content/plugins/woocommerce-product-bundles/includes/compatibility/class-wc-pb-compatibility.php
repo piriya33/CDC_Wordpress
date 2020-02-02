@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Handles compatibility with other WC extensions.
  *
  * @class    WC_PB_Compatibility
- * @version  5.14.2
+ * @version  6.0.0
  */
 class WC_PB_Compatibility {
 
@@ -84,11 +84,11 @@ class WC_PB_Compatibility {
 
 		// Define dependencies.
 		$this->required = array(
-			'cp'     => '5.0.0',
-			'addons' => '2.9.1',
+			'cp'     => '6.0.0',
+			'pao'    => '3.0.14',
 			'minmax' => '1.3.3',
 			'topatc' => '1.0.3',
-			'bd'     => '1.1.0',
+			'bd'     => '1.2.0'
 		);
 
 		// Initialize.
@@ -155,7 +155,7 @@ class WC_PB_Compatibility {
 		$module_paths = array();
 
 		// Addons support.
-		if ( class_exists( 'WC_Product_Addons' ) && defined( 'WC_PRODUCT_ADDONS_VERSION' ) && version_compare( WC_PRODUCT_ADDONS_VERSION, $this->required[ 'addons' ] ) >= 0 ) {
+		if ( class_exists( 'WC_Product_Addons' ) && defined( 'WC_PRODUCT_ADDONS_VERSION' ) && version_compare( WC_PRODUCT_ADDONS_VERSION, $this->required[ 'pao' ] ) >= 0 ) {
 			$module_paths[ 'product_addons' ] = 'modules/class-wc-pb-addons-compatibility.php';
 		}
 
@@ -202,6 +202,11 @@ class WC_PB_Compatibility {
 		// Subscriptions fixes.
 		if ( class_exists( 'WC_Subscriptions' ) ) {
 			$module_paths[ 'subscriptions' ] = 'modules/class-wc-pb-subscriptions-compatibility.php';
+		}
+
+		// Subscriptions fixes.
+		if ( class_exists( 'WC_Memberships' ) ) {
+			$module_paths[ 'memberships' ] = 'modules/class-wc-pb-members-compatibility.php';
 		}
 
 		// Min Max Quantities integration.
@@ -254,6 +259,16 @@ class WC_PB_Compatibility {
 	}
 
 	/**
+	 * Get min module version.
+	 *
+	 * @since  6.0.0
+	 * @return bool
+	 */
+	public function get_required_module_version( $module ) {
+		return isset( $this->required[ $module ] ) ? $this->required[ $module ] : null;
+	}
+
+	/**
 	 * Checks versions of compatible/integrated/deprecated extensions.
 	 *
 	 * @return void
@@ -273,7 +288,7 @@ class WC_PB_Compatibility {
 		// Addons version check.
 		if ( class_exists( 'WC_Product_Addons' ) ) {
 
-			$required_version = $this->required[ 'addons' ];
+			$required_version = $this->required[ 'pao' ];
 
 			if ( ! defined( 'WC_PRODUCT_ADDONS_VERSION' ) || version_compare( WC_PRODUCT_ADDONS_VERSION, $required_version ) < 0 ) {
 

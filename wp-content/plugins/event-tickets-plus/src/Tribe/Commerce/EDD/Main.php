@@ -1019,8 +1019,6 @@ class Tribe__Tickets_Plus__Commerce__EDD__Main extends Tribe__Tickets_Plus__Tick
 		$global_stock         = new Tribe__Tickets__Global_Stock( $post->ID );
 		$global_stock_enabled = $global_stock->is_enabled();
 
-		Tribe__Tickets__Tickets::add_frontend_stock_data( $tickets );
-
 		/**
 		 * Allow for the addition of content (namely the "Who's Attening?" list) above the ticket form.
 		 *

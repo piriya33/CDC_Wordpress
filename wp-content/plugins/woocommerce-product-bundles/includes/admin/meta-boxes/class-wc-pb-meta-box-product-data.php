@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Product meta-box data for the 'Bundle' type.
  *
  * @class    WC_PB_Meta_Box_Product_Data
- * @version  5.14.0
+ * @version  6.0.0
  */
 class WC_PB_Meta_Box_Product_Data {
 
@@ -36,6 +36,10 @@ class WC_PB_Meta_Box_Product_Data {
 
 		// Add type-specific options.
 		add_filter( 'product_type_options', array( __CLASS__, 'bundle_type_options' ) );
+
+		// Add Shipping type image select.
+		add_action( 'woocommerce_product_options_shipping', array( __CLASS__, 'bundle_shipping_type_admin_html' ), -100 );
+		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'js_handle_container_classes' ) );
 
 		// Processes and saves type-specific data.
 		add_action( 'woocommerce_admin_process_product_object', array( __CLASS__, 'process_bundle_data' ) );
@@ -177,9 +181,129 @@ class WC_PB_Meta_Box_Product_Data {
 	public static function bundle_type_options( $options ) {
 
 		$options[ 'downloadable' ][ 'wrapper_class' ] .= ' show_if_bundle';
-		$options[ 'virtual' ][ 'wrapper_class' ]      .= ' show_if_bundle';
+		$options[ 'virtual' ][ 'wrapper_class' ]      .= ' hide_if_bundle';
 
 		return $options;
+	}
+
+	/**
+	 * Shipping type image select html.
+	 *
+	 * @since 6.0.0
+	 *
+	 * @return void
+	 */
+	public static function bundle_shipping_type_admin_html() {
+		global $product_bundle_object, $pagenow;
+
+		$is_new_bundle = $pagenow === 'post-new.php';
+
+		$bundle_type_options = array(
+			array(
+				'title'       => __( 'Unassembled', 'woocommerce-product-bundles' ),
+				'description' => __( 'Bundled products preserve their individual dimensions, weight and shipping classes. A virtual container item keeps them grouped together in the cart.', 'woocommerce-product-bundles' ),
+				'value'       => 'unassembled',
+				'checked'     => $is_new_bundle || $product_bundle_object->is_virtual() ? ' checked="checked"' : ''
+			),
+			array(
+				'title'       => __( 'Assembled', 'woocommerce-product-bundles' ),
+				'description' => __( 'Bundled products are assembled and shipped in a new physical container with the specified dimensions, weight and shipping class. The entire bundle appears as a single physical item.</br></br>To ship a bundled product outside this container, navigate to the <strong>Bundled Products</strong> tab, expand its settings and enable <strong>Shipped Individually</strong>. Bundled products that are <strong>Shipped Individually</strong> preserve their own dimensions, weight and shipping classes.', 'woocommerce-product-bundles' ),
+				'value'       => 'assembled',
+				'checked'     => ! $is_new_bundle && ! $product_bundle_object->is_virtual() ? ' checked="checked"' : ''
+			)
+		);
+
+		?>
+		</div>
+		<div class="options_group bundle_type show_if_bundle">
+			<div class="form-field">
+				<label for="_bundle_type">Bundle type</label>
+				<ul class="bundle_type_options">
+					<?php
+					foreach ( $bundle_type_options as $type ) {
+						$classes = array( $type[ 'value' ] );
+						if ( ! empty( $type[ 'checked' ] ) ) {
+							$classes[] = 'selected';
+						}
+						?>
+						<li class="<?php echo implode( ' ', $classes ); ?>" >
+							<input type="radio"<?php echo $type[ 'checked' ] ?> name="_bundle_type" id="_bundle_type" value="<?php echo $type[ 'value' ] ?>">
+							<?php echo wc_help_tip( '<strong>' . $type[ 'title' ] . '</strong> &ndash; ' . $type[ 'description' ] ); ?>
+						</li>
+						<?php
+					}
+					?>
+				</ul>
+			</div>
+			<div class="wp-clearfix"></div>
+			<div id="message" class="inline notice">
+				<p>
+					<span class="assembled_notice_title"><?php _e( 'Where did the shipping options go?', 'woocommerce-product-bundles' ); ?></span><br/>
+					<?php _e( 'The contents of this bundle preserve their dimensions, weight and shipping classes. Unassembled bundles do not have a physical container. The parent item that groups bundled products in the cart is virtual &ndash; it has no shipping properties of its own.', 'woocommerce-product-bundles' ); ?>
+				</p>
+			</div>
+		<?php
+
+		if ( wc_product_weight_enabled() ) {
+
+			woocommerce_wp_select( array(
+				'id'            => '_wc_pb_aggregate_weight',
+				'wrapper_class' => 'bundle_aggregate_weight_field show_if_bundle',
+				'value'         => $product_bundle_object->get_aggregate_weight( 'edit' ) ? 'preserve' : 'ignore',
+				'label'         => __( 'Assembled weight', 'woocommerce-product-bundles' ),
+				'description'   => __( 'Controls whether to ignore or preserve the weight of assembled bundled items.</br></br> <strong>Ignore</strong> &ndash; The specified Weight is the total weight of the entire bundle.</br></br> <strong>Preserve</strong> &ndash; The specified Weight is treated as a container weight. The total weight of the bundle is the sum of: i) the container weight, and ii) the weight of all assembled bundled items.', 'woocommerce-product-bundles' ),
+				'desc_tip'      => true,
+				'options'       => array(
+					'ignore'        => __( 'Ignore', 'woocommerce-product-bundles' ),
+					'preserve'      => __( 'Preserve', 'woocommerce-product-bundles' ),
+				)
+			) );
+		}
+	}
+
+	/**
+	 * Renders inline JS to handle product_data container classes.
+	 *
+	 * @since 6.0.0
+	 *
+	 * @return void
+	 */
+	public static function js_handle_container_classes() {
+
+		$js = "
+		( function( $ ) {
+			$( function() {
+
+				var shipping_product_data = $( '.product_data #shipping_product_data' ),
+					virtual_checkbox      = $( 'input#_virtual' ),
+					bundled_product_data  = $( '.product_data #bundled_product_data' ),
+					bundle_type_options   = shipping_product_data.find( '.bundle_type_options li' );
+
+				$( 'body' ).on( 'woocommerce-product-type-change', function( event, select_val ) {
+
+					if ( 'bundle' === select_val ) {
+
+						// Force virtual container to always show the shipping tab.
+						virtual_checkbox.removeAttr( 'checked' ).change();
+
+						if ( 'unassembled' === bundle_type_options.find( 'input#_bundle_type:checked' ).first().val() ) {
+							shipping_product_data.addClass( 'bundle_unassembled' );
+							bundled_product_data.addClass( 'bundle_unassembled' );
+						}
+
+					} else {
+						// Clear container classes.
+						shipping_product_data.removeClass( 'bundle_unassembled' );
+						bundled_product_data.removeClass( 'bundle_unassembled' );
+					}
+
+				} );
+			} );
+		} )( jQuery );
+		";
+
+		// Append right after woocommerce_admin script.
+		wp_add_inline_script( 'wc-admin-product-meta-boxes', $js, true );
 	}
 
 	/**
@@ -196,6 +320,7 @@ class WC_PB_Meta_Box_Product_Data {
 				'layout'                    => 'default',
 				'group_mode'                => 'parent',
 				'editable_in_cart'          => false,
+				'aggregate_weight'          => false,
 				'sold_individually'         => false,
 				'sold_individually_context' => 'product'
 			);
@@ -227,6 +352,14 @@ class WC_PB_Meta_Box_Product_Data {
 			}
 
 			/*
+			 * Base weight option.
+			 */
+
+			if ( ! empty( $_POST[ '_wc_pb_aggregate_weight' ] ) ) {
+				$props[ 'aggregate_weight' ] = 'preserve' === $_POST[ '_wc_pb_aggregate_weight' ];
+			}
+
+			/*
 			 * Extended "Sold Individually" option.
 			 */
 
@@ -251,6 +384,13 @@ class WC_PB_Meta_Box_Product_Data {
 				if ( in_array( $form_location, array_keys( WC_Product_Bundle::get_add_to_cart_form_location_options() ) ) ) {
 					$props[ 'add_to_cart_form_location' ] = $form_location;
 				}
+			}
+
+			/*
+			 * Bundle shipping type.
+			 */
+			if ( ! empty( $_POST[ '_bundle_type' ] ) ) {
+				$props[ 'virtual' ] = 'unassembled' === $_POST[ '_bundle_type' ] ? true : false;
 			}
 
 			if ( ! defined( 'WC_PB_UPDATING' ) ) {
@@ -301,9 +441,9 @@ class WC_PB_Meta_Box_Product_Data {
 					}
 				}
 
-				$group_modes_without_parent_msg = sprintf( _n( '%s is only applicable to <a href="https://docs.woocommerce.com/document/bundles/bundles-configuration/#shipping" target="_blank">unassembled</a> bundles.', '%s are only applicable to <a href="https://docs.woocommerce.com/document/bundles/bundles-configuration/#shipping" target="_blank">unassembled</a> bundles.', sizeof( $group_modes_without_parent ), 'woocommerce-product-bundles' ), WC_PB_Helpers::format_list_of_items( $group_modes_without_parent ) );
+				$group_modes_without_parent_msg = sprintf( _n( '%s is only supported by <a href="https://docs.woocommerce.com/document/bundles/bundles-configuration/#shipping" target="_blank">unassembled</a> bundles with an empty <a href="https://docs.woocommerce.com/document/bundles/bundles-configuration/#pricing" target="_blank">base price</a>.', '%s are only supported by <a href="https://docs.woocommerce.com/document/bundles/bundles-configuration/#shipping" target="_blank">unassembled</a> bundles with an empty <a href="https://docs.woocommerce.com/document/bundles/bundles-configuration/#pricing" target="_blank">base price</a>.', sizeof( $group_modes_without_parent ), 'woocommerce-product-bundles' ), WC_PB_Helpers::format_list_of_items( $group_modes_without_parent ) );
 
-				self::add_admin_error( sprintf( __( 'The chosen <strong>Item Grouping</strong> option is invalid. %s To make this bundle an <strong>unassembled</strong> one: <ol><li>Under <strong>Product Data</strong>, enable the <strong>Virtual</strong> option.</li><li>Go to the <strong>General</strong> tab and ensure that <strong>Regular Price</strong> and <strong>Sale Price</strong> are empty.</li><li>Go to the <strong>Bundled Products</strong> tab and enable <strong>Shipped Individually</strong> under the <strong>Basic Settings</strong> of each bundled item.</li></ol>', 'woocommerce-product-bundles' ), $group_modes_without_parent_msg ) );
+				self::add_admin_error( sprintf( __( 'The chosen <strong>Item Grouping</strong> option is invalid. %s', 'woocommerce-product-bundles' ), $group_modes_without_parent_msg ) );
 			}
 
 			// Clear dismissible welcome notice.
@@ -447,14 +587,14 @@ class WC_PB_Meta_Box_Product_Data {
 							if ( $quantity >= 0 && $data[ 'quantity_min' ] - $quantity == 0 ) {
 
 								if ( $quantity !== 1 && $product->is_sold_individually() ) {
-									self::add_admin_error( sprintf( __( 'Item <strong>#%1$s: %2$s</strong> is sold individually &ndash; its minimum quantity cannot be higher than 1.', 'woocommerce-product-bundles' ), $loop, $item_title ) );
+									self::add_admin_error( sprintf( __( '<strong>%s</strong> is sold individually &ndash; its <strong>Quantity Min</strong> cannot be higher than 1.', 'woocommerce-product-bundles' ), $item_title ) );
 									$item_data[ 'quantity_min' ] = 1;
 								} else {
 									$item_data[ 'quantity_min' ] = $quantity;
 								}
 
 							} else {
-								self::add_admin_error( sprintf( __( 'The minimum quantity of item <strong>#%1$s: %2$s</strong> was not valid and has been reset. Please enter a non-negative integer value.', 'woocommerce-product-bundles' ), $loop, $item_title ) );
+								self::add_admin_error( sprintf( __( 'The minimum quantity of <strong>%s</strong> was not valid and has been reset. Please enter a non-negative integer <strong>Quantity Min</strong> value.', 'woocommerce-product-bundles' ), $item_title ) );
 								$item_data[ 'quantity_min' ] = 1;
 							}
 						}
@@ -473,14 +613,14 @@ class WC_PB_Meta_Box_Product_Data {
 						if ( '' === $quantity || ( $quantity > 0 && $quantity >= $quantity_min && $data[ 'quantity_max' ] - $quantity == 0 ) ) {
 
 							if ( $quantity !== 1 && $product->is_sold_individually() ) {
-								self::add_admin_error( sprintf( __( 'Item <strong>#%1$s: %2$s</strong> is sold individually &ndash; its maximum quantity cannot be higher than 1.', 'woocommerce-product-bundles' ), $loop, $item_title ) );
+								self::add_admin_error( sprintf( __( '<strong>%s</strong> is sold individually &ndash; <strong>Quantity Max</strong> cannot be higher than 1.', 'woocommerce-product-bundles' ), $item_title ) );
 								$item_data[ 'quantity_max' ] = 1;
 							} else {
 								$item_data[ 'quantity_max' ] = $quantity;
 							}
 
 						} else {
-							self::add_admin_error( sprintf( __( 'The maximum quantity of item <strong>#%1$s: %2$s</strong> was not valid and has been reset. Please enter a positive integer value, at least as high as the minimum quantity. Otherwise, leave the field empty for an unlimited maximum quantity.', 'woocommerce-product-bundles' ), $loop, $item_title ) );
+							self::add_admin_error( sprintf( __( 'The maximum quantity of <strong>%s</strong> was not valid and has been reset. Please enter a positive integer equal to or higher than <strong>Quantity Min</strong>, or leave the <strong>Quantity Max</strong> field empty for an unlimited maximum quantity.', 'woocommerce-product-bundles' ), $item_title ) );
 							$item_data[ 'quantity_max' ] = $quantity_min;
 						}
 
@@ -496,7 +636,7 @@ class WC_PB_Meta_Box_Product_Data {
 							$discount = wc_format_decimal( $data[ 'discount' ] );
 
 							if ( $discount < 0 || $discount > 100 ) {
-								self::add_admin_error( sprintf( __( 'The discount value of item <strong>#%1$s: %2$s</strong> was not valid and has been reset. Please enter a positive number between 0-100.', 'woocommerce-product-bundles' ), $loop, $item_title ) );
+								self::add_admin_error( sprintf( __( 'The <strong>Discount</strong> of <strong>%s</strong> was not valid and has been reset. Please enter a positive number between 0-100.', 'woocommerce-product-bundles' ), $item_title ) );
 								$item_data[ 'discount' ] = '';
 							} else {
 								$item_data[ 'discount' ] = $discount;
@@ -538,7 +678,7 @@ class WC_PB_Meta_Box_Product_Data {
 								}
 							} else {
 								$item_data[ 'override_variations' ] = 'no';
-								self::add_admin_error( sprintf( __( 'Please activate at least one variation of item <strong>#%1$s: %2$s</strong>.', 'woocommerce-product-bundles' ), $loop, $item_title ) );
+								self::add_admin_error( sprintf( __( 'Failed to save <strong>Filter Variations</strong> for <strong>%s</strong>. Please choose at least one variation.', 'woocommerce-product-bundles' ), $item_title ) );
 							}
 						} else {
 							$item_data[ 'override_variations' ] = 'no';
@@ -588,7 +728,7 @@ class WC_PB_Meta_Box_Product_Data {
 											// Set option to "Any".
 											$data[ 'default_variation_attributes' ][ $name ] = '';
 											// Show an error.
-											self::add_admin_error( sprintf( __( 'The attribute defaults of item <strong>#%1$s: %2$s</strong> are inconsistent with the set of active variations and have been reset.', 'woocommerce-product-bundles' ), $loop, $item_title ) );
+											self::add_admin_error( sprintf( __( 'The default variation attribute values of <strong>%s</strong> are inconsistent with the set of active variations and have been reset.', 'woocommerce-product-bundles' ), $item_title ) );
 											continue;
 										}
 									}
@@ -625,7 +765,7 @@ class WC_PB_Meta_Box_Product_Data {
 									foreach ( $data[ 'default_variation_attributes' ] as $default_name => $default_value ) {
 										if ( '' === $default_value ) {
 											$visibility[ 'product' ] = 'visible';
-											self::add_admin_error( sprintf( __( 'To hide item <strong>#%1$s: %2$s</strong> from the single-product template, please define defaults for its variation attributes.', 'woocommerce-product-bundles' ), $loop, $item_title ) );
+											self::add_admin_error( sprintf( __( 'To hide <strong>%s</strong> from the single-product template, please enable the <strong>Override Default Selections</strong> option and choose default variation attribute values.', 'woocommerce-product-bundles' ), $item_title ) );
 											break;
 										}
 									}
@@ -635,7 +775,7 @@ class WC_PB_Meta_Box_Product_Data {
 								}
 
 							} else {
-								self::add_admin_error( sprintf( __( 'To hide item <strong>#%1$s: %2$s</strong> from the single-product template, please define defaults for its variation attributes.', 'woocommerce-product-bundles' ), $loop, $item_title ) );
+								self::add_admin_error( sprintf( __( 'To hide <strong>%s</strong> from the single-product template, please enable the <strong>Override Default Selections</strong> option and choose default variation attribute values.', 'woocommerce-product-bundles' ), $item_title ) );
 								$visibility[ 'product' ] = 'visible';
 							}
 						}

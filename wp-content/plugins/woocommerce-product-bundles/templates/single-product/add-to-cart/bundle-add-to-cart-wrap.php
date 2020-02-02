@@ -8,7 +8,7 @@
  * We try to do this as little as possible, but it does happen.
  * When this occurs the version of the template file will be bumped and the readme will list any important changes.
  *
- * @version 5.9.1
+ * @version 6.0.0
  */
 
 // Exit if accessed directly.
@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 <div class="cart bundle_data bundle_data_<?php echo $product_id; ?>" data-bundle_price_data="<?php echo esc_attr( json_encode( $bundle_price_data ) ); ?>" data-bundle_id="<?php echo $product_id; ?>"><?php
 
-	if ( $product->is_purchasable() ) {
+	if ( $is_purchasable ) {
 
 		/**
 		 * 'woocommerce_before_add_to_cart_button' action.
@@ -58,7 +58,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	} else {
 
 		?><div class="bundle_unavailable woocommerce-info"><?php
-			echo __( 'This product is currently unavailable.', 'woocommerce-product-bundles' );
+			echo $purchasable_notice;
 		?></div><?php
 	}
 

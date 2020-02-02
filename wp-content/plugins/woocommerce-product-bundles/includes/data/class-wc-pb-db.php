@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Product Bundles DB API for manipulating bundled item data in the database.
  *
  * @class    WC_PB_DB
- * @version  5.8.0
+ * @version  6.0.0
  */
 class WC_PB_DB {
 
@@ -53,6 +53,7 @@ class WC_PB_DB {
 	 *         - 'id=>bundle_id': map of bundled item ids / bundle ids,
 	 *         - 'id=>product_id': map of bundled item ids / bundled product ids,
 	 *         - 'objects': WC_Bundled_Item_Data objects.
+	 *         - 'count': count.
 	 *
 	 *     @type  int|array  $bundled_item_id  Bundled item id(s) in WHERE clause.
 	 *     @type  int|array  $product_id       Bundled product id(s) in WHERE clause.
@@ -68,7 +69,7 @@ class WC_PB_DB {
 		global $wpdb;
 
 		$args = wp_parse_args( $args, array(
-			'return'          => 'all', // 'ids' | 'id=>bundle_id' | 'id=>product_id' | 'objects'
+			'return'          => 'all', // 'ids' | 'id=>bundle_id' | 'id=>product_id' | 'objects' | 'count'
 			'bundled_item_id' => 0,
 			'product_id'      => 0,
 			'bundle_id'       => 0,
@@ -80,6 +81,8 @@ class WC_PB_DB {
 
 		if ( in_array( $args[ 'return' ], array( 'ids', 'objects' ) ) ) {
 			$select = $table . '.bundled_item_id';
+		} elseif ( 'count' === $args[ 'return' ] ) {
+			$select = 'COUNT(' . $table . '.bundled_item_id' . ')';
 		} elseif ( 'id=>bundle_id' === $args[ 'return' ] ) {
 			$select = $table . '.bundled_item_id, ' . $table . '.bundle_id';
 		} else {
@@ -151,6 +154,13 @@ class WC_PB_DB {
 		// Assemble and run the query.
 
 		$sql .= $join . $where . $order_by;
+
+		if ( 'count' === $args[ 'return' ] ) {
+
+			$result = $wpdb->get_var( $sql );
+
+			return $result ? $result : 0;
+		}
 
 		$results = $wpdb->get_results( $sql );
 

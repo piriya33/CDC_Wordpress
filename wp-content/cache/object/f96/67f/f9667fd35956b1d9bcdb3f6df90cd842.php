@@ -1,4 +1,4 @@
-�/^<?php exit; ?>a:1:{s:7:"content";O:8:"stdClass":23:{s:2:"ID";s:5:"32562";s:11:"post_author";s:5:"12373";s:9:"post_date";s:19:"2020-01-02 20:05:01";s:13:"post_date_gmt";s:19:"2020-01-02 13:05:01";s:12:"post_content";s:177:"วันนี้ set ไม่มี update เหรอครับ
+U�6^<?php exit; ?>a:1:{s:7:"content";O:8:"stdClass":23:{s:2:"ID";s:5:"32562";s:11:"post_author";s:5:"12373";s:9:"post_date";s:19:"2020-01-02 20:05:01";s:13:"post_date_gmt";s:19:"2020-01-02 13:05:01";s:12:"post_content";s:177:"วันนี้ set ไม่มี update เหรอครับ
 <div class="entry-content">
 <div class="bbpress-wrapper">
 <div class="bbp-breadcrumb"></div>

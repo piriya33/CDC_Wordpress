@@ -147,9 +147,15 @@ class WC_PB_Install {
 	 * @return boolean
 	 */
 	private static function must_update() {
+
 		$db_update_versions = array_keys( self::$db_updates );
 		$db_version_target  = end( $db_update_versions );
-		return is_null( self::$current_db_version ) || version_compare( self::$current_db_version, $db_version_target, '<' );
+
+		if ( is_null( self::$current_db_version ) ) {
+			return WC_PB_DB::query_bundled_items( array( 'return' => 'count' ) ) === 0;
+		} else {
+			return version_compare( self::$current_db_version, $db_version_target, '<' );
+		}
 	}
 
 	/**
@@ -224,6 +230,7 @@ class WC_PB_Install {
 		if ( self::can_update( false ) ) {
 
 			if ( $bundle_term_exists && self::must_update() ) {
+
 				// Add 'update' notice and save early -- saving on the 'shutdown' action will fail if a chained request arrives before the 'shutdown' hook fires.
 				WC_PB_Admin_Notices::add_maintenance_notice( 'update' );
 				WC_PB_Admin_Notices::save_notices();

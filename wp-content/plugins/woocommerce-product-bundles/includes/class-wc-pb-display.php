@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Product Bundle display functions and filters.
  *
  * @class    WC_PB_Display
- * @version  5.12.0
+ * @version  6.0.0
  */
 class WC_PB_Display {
 
@@ -231,10 +231,6 @@ class WC_PB_Display {
 			'photoswipe_enabled'           => current_theme_supports( 'wc-product-gallery-lightbox' ) ? 'yes' : 'no',
 			'force_min_max_qty_input'      => 'yes'
 		) );
-
-		if ( class_exists( 'WC_Product_Addons' ) && defined( 'WC_PRODUCT_ADDONS_VERSION' ) ) {
-			$params[ 'pao_version_gte_30' ] = version_compare( WC_PRODUCT_ADDONS_VERSION, '3.0' ) >= 0;
-		}
 
 		wp_localize_script( 'wc-add-to-cart-bundle', 'wc_bundle_params', $params );
 	}

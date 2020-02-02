@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Admin functions and filters.
  *
  * @class    WC_PB_BS_Admin
- * @version  5.8.0
+ * @version  6.0.0
  */
 class WC_PB_BS_Admin {
 
@@ -76,10 +76,20 @@ class WC_PB_BS_Admin {
 					'id'            => 'wc_pb_bundle_sells_title',
 					'value'         => esc_html( WC_PB_BS_Product::get_bundle_sells_title( $product_object, 'edit' ) ),
 					'label'         => __( 'Bundle-sells title', 'woocommerce-product-bundles' ),
-					'description'   => __( 'Text to display above the Bundle-Sells section.', 'woocommerce-product-bundles' ),
+					'description'   => __( 'Text to display above the bundle-sells section.', 'woocommerce-product-bundles' ),
 					'placeholder'   => __( 'e.g. "Frequently Bought Together"', 'woocommerce-product-bundles' ),
 					'desc_tip'      => true
 				) );
+
+				woocommerce_wp_text_input( array(
+					'id'            => 'wc_pb_bundle_sells_discount',
+					'value'         => WC_PB_BS_Product::get_bundle_sells_discount( $product_object, 'edit' ),
+					'type'          => 'number',
+					'label'         => __( 'Bundle-sells discount', 'woocommerce-product-bundles' ),
+					'description'   => __( 'Discount to apply to bundle-sells (%). Accepts values from 0 to 100.', 'woocommerce-product-bundles' ),
+					'desc_tip'      => true
+				) );
+
 			?>
 		</div>
 		<?php
@@ -106,14 +116,39 @@ class WC_PB_BS_Admin {
 		 * Process bundle-sells title.
 		 */
 
-		$title = ! empty( $_POST[ 'wc_pb_bundle_sells_title' ] ) ? $_POST[ 'wc_pb_bundle_sells_title' ] : false;
+		$title = ! empty( $_POST[ 'wc_pb_bundle_sells_title' ] ) ? wp_kses_post( stripslashes( $_POST[ 'wc_pb_bundle_sells_title' ] ) ) : false;
 
 		if ( $title ) {
-			$product->update_meta_data( '_wc_pb_bundle_sells_title', wp_kses_post( stripslashes( $title ) ) );
+			$product->update_meta_data( '_wc_pb_bundle_sells_title',  $title );
 		} else {
 			$product->delete_meta_data( '_wc_pb_bundle_sells_title' );
 		}
 
+		/*
+		 * Process bundle-sells discount.
+		 */
+
+		$discount = ! empty( $_POST[ 'wc_pb_bundle_sells_discount' ] ) ? stripslashes( $_POST[ 'wc_pb_bundle_sells_discount' ] ) : false;
+
+		if ( ! empty( $discount ) ) {
+
+			if ( is_numeric( $discount ) ) {
+				$discount = wc_format_decimal( $discount );
+			} else {
+				$discount = -1;
+			}
+
+			if ( $discount < 0 || $discount > 100 ) {
+				$discount = false;
+				WC_PB_Meta_Box_Product_Data::add_admin_error( __( 'Invalid bundle-sells discount value. Please enter a positive number between 0-100.', 'woocommerce-product-bundles' ) );
+			}
+		}
+
+		if ( $discount ) {
+			$product->update_meta_data( '_wc_pb_bundle_sells_discount', $discount );
+		} else {
+			$product->delete_meta_data( '_wc_pb_bundle_sells_discount' );
+		}
 	}
 
 	/**

@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Product-related functions and filters.
  *
  * @class    WC_PB_BS_Product
- * @version  5.10.0
+ * @version  6.0.0
  */
 class WC_PB_BS_Product {
 
@@ -79,7 +79,7 @@ class WC_PB_BS_Product {
 			$title = $product->get_meta( '_wc_pb_bundle_sells_title', true );
 
 			/**
-			 * 'wc_pb_bundle_sell_ids' filter.
+			 * 'wc_pb_bundle_sells_title' filter.
 			 *
 			 * @param  WC_Product  $product  Product containing the bundle-sells.
 			 */
@@ -90,6 +90,46 @@ class WC_PB_BS_Product {
 	}
 
 	/**
+	 * Bundle-sells discount.
+	 *
+	 * @since  6.0.0
+	 *
+	 * @param  mixed  $product
+	 * @return string
+	 */
+	public static function get_bundle_sells_discount( $product, $context = 'view' ) {
+
+		$discount = '';
+
+		if ( 'filters' !== WC_PB_Product_Prices::get_bundled_cart_item_discount_method() ) {
+			return $discount;
+		}
+
+		if ( ! ( $product instanceof WC_Product ) ) {
+			$product = wc_get_product( $product );
+		}
+
+		if ( ( $product instanceof WC_Product ) && false === $product->is_type( 'bundle' ) ) {
+
+			$discount = WC_PB_Helpers::cache_get( 'bundle_sells_discount_' . $product->get_id() );
+
+			if ( null === $discount ) {
+				$discount = $product->get_meta( '_wc_pb_bundle_sells_discount', true, 'edit' );
+				WC_PB_Helpers::cache_get( 'bundle_sells_discount_' . $product->get_id(), $discount );
+			}
+
+			/**
+			 * 'wc_pb_bundle_sells_discount' filter.
+			 *
+			 * @param  WC_Product  $product  Product containing the bundle-sells.
+			 */
+			$discount = 'view' === $context ? apply_filters( 'wc_pb_bundle_sells_discount', $discount, $product ) : $discount;
+		}
+
+		return $discount;
+	}
+
+	/**
 	 * Arguments used to create new bundled item data objects from bundle-sell IDs.
 	 *
 	 * @param  int         $bundle_sell_id  The bundle-sell ID.
@@ -97,6 +137,8 @@ class WC_PB_BS_Product {
 	 * @return array
 	 */
 	public static function get_bundle_sell_data_item_args( $bundle_sell_id, $product ) {
+
+		$discount = self::get_bundle_sells_discount( $product );
 
 		/**
 		 * 'wc_pb_bundle_sell_data_item_args' filter.
@@ -113,7 +155,7 @@ class WC_PB_BS_Product {
 				'priced_individually'  => 'yes',
 				'shipped_individually' => 'yes',
 				'optional'             => 'yes',
-				'discount'             => null,
+				'discount'             => $discount ? $discount : null,
 				'stock_status'         => null,
 				'disable_addons'       => 'yes'
 			)

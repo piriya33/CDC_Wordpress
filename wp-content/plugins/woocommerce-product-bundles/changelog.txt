@@ -1,5 +1,20 @@
 *** WooCommerce Product Bundles ***
 
+2020.01.29 - version 6.0.1
+* Fix - Bundled product discounts applied twice in the single product page when using the 'woocommerce_bundled_item_discount_from_regular' filter to calculate discounts over sale prices.
+
+2020.01.24 - version 6.0.0
+* Feature - Introduced new assembled/unassembled UI for Product Bundles under the 'Product Data > Shipping' tab.
+* Feature - Added 'Assembled weight' option under 'Product Data > Shipping' when the 'Assembled' Bundle type is active.
+* Feature - Support '/subscriptions' REST API endpoint.
+* Feature - Introduced 'Bundle-sells discount' option under 'Product Data > Linked Products' to offer discounts with Bundle-sells.
+* Feature - Introduced support for WooCommerce Memberships: Bundle discounts are now inherited by individually-priced bundled products. Important: Only '%' discounts are supported!
+* Fix - When 'Item Grouping > None' is selected for a composited Bundle, customers can add the Composite to the cart without choosing any bundled items.
+* Tweak - Introduce filter-based method for discounting bundled item prices in the cart instead of modifying price props directly.
+* Tweak - Show '/pc' suffix when max (not min) quantity > 1.
+* Tweak - Added missing actions for before/after quantity input (thank you, bor0!).
+* Tweak - Declared support for WooCommerce 3.9+.
+
 2019.12.11 - version 5.14.2
 * Tweak - Fix fatal error when exporting products via WP-CLI. Bundled item data cannot be exported via WP-CLI.
 

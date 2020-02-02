@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Product Addons Compatibility.
  *
- * @version  5.9.2
+ * @version  6.0.0
  */
 class WC_PB_Addons_Compatibility {
 
@@ -47,6 +47,11 @@ class WC_PB_Addons_Compatibility {
 		// Load child Addons data from the parent cart item data array.
 		add_filter( 'woocommerce_bundled_item_cart_data', array( __CLASS__, 'get_bundled_cart_item_data_from_parent' ), 10, 2 );
 
+		// Save offset price when calculating discounts using the 'filters' method.
+		if ( 'filters' === WC_PB_Product_Prices::get_bundled_cart_item_discount_method() ) {
+			add_filter( 'woocommerce_add_cart_item', array( __CLASS__, 'save_offset_price' ), 1000000 );
+			add_filter( 'woocommerce_get_cart_item_from_session', array( __CLASS__, 'save_offset_price' ), 1000000 );
+		}
 	}
 
 	/**
@@ -160,10 +165,7 @@ class WC_PB_Addons_Compatibility {
 				return;
 			}
 
-			$item_data      = $item->get_data();
-			$disable_addons = ! empty( $item_data ) && isset( $item_data[ 'disable_addons' ] ) && 'yes' === $item_data[ 'disable_addons' ];
-
-			if ( $disable_addons ) {
+			if ( $item->disable_addons() ) {
 				return;
 			}
 
@@ -262,12 +264,9 @@ class WC_PB_Addons_Compatibility {
 
 		if ( ! empty( $Product_Addon_Cart ) ) {
 
-			$item_data      = $bundled_item->get_data();
-			$disable_addons = ! empty( $item_data ) && isset( $item_data[ 'disable_addons' ] ) && 'yes' === $item_data[ 'disable_addons' ];
-
 			WC_PB_Compatibility::$addons_prefix = $bundled_item_id;
 
-			if ( false === $disable_addons && false === $Product_Addon_Cart->validate_add_cart_item( true, $product_id, $quantity ) ) {
+			if ( false === $bundled_item->disable_addons() && false === $Product_Addon_Cart->validate_add_cart_item( true, $product_id, $quantity ) ) {
 				$add = false;
 			}
 
@@ -339,6 +338,23 @@ class WC_PB_Addons_Compatibility {
 		}
 
 		return $bundled_item_cart_data;
+	}
+
+	/**
+	 * Save offset price when calculating discounts using the 'filters' method.
+	 *
+	 * @since  6.0.0
+	 *
+	 * @param  array  $cart_item
+	 * @return array
+	 */
+	public static function save_offset_price( $cart_item ) {
+
+		if ( isset( $cart_item[ 'data' ]->bundled_cart_item ) && ! empty( $cart_item[ 'addons_price_before_calc' ] ) ) {
+			$cart_item[ 'data' ]->bundled_price_offset = $cart_item[ 'data' ]->get_price( 'edit' ) - $cart_item[ 'addons_price_before_calc' ];
+		}
+
+		return $cart_item;
 	}
 }
 

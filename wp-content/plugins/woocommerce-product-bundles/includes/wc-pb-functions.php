@@ -142,7 +142,7 @@ function wc_pb_get_bundled_product_map( $product, $allow_cache = true ) {
 function wc_pb_get_bundled_cart_item_container( $bundled_cart_item, $cart_contents = false, $return_id = false ) {
 
 	if ( ! $cart_contents ) {
-		$cart_contents = WC()->cart->cart_contents;
+		$cart_contents = isset( WC()->cart ) ? WC()->cart->cart_contents : array();
 	}
 
 	$container = false;
@@ -172,7 +172,7 @@ function wc_pb_get_bundled_cart_item_container( $bundled_cart_item, $cart_conten
 function wc_pb_get_bundled_cart_items( $container_cart_item, $cart_contents = false, $return_ids = false ) {
 
 	if ( ! $cart_contents ) {
-		$cart_contents = WC()->cart->cart_contents;
+		$cart_contents = isset( WC()->cart ) ? WC()->cart->cart_contents : array();
 	}
 
 	$bundled_cart_items = array();

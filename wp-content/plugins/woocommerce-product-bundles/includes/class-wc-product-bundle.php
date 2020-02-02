@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Product Bundle Class.
  *
  * @class    WC_Product_Bundle
- * @version  5.13.0
+ * @version  6.0.0
  */
 class WC_Product_Bundle extends WC_Product {
 
@@ -43,6 +43,7 @@ class WC_Product_Bundle extends WC_Product {
 		'bundled_items_stock_status' => '',
 		'layout'                     => 'default',
 		'editable_in_cart'           => false,
+		'aggregate_weight'           => false,
 		'sold_individually_context'  => 'product',
 		'add_to_cart_form_location'  => 'default',
 		'min_raw_price'              => '',
@@ -166,7 +167,6 @@ class WC_Product_Bundle extends WC_Product {
 			'subscriptions_priced_individually' => false,
 			'multiple_subscriptions'            => false,
 			'nyp'                               => false,
-			'hidden'                            => false,
 			'non_purchasable'                   => false,
 			'options'                           => false,
 			'out_of_stock'                      => false, // Not including optional and zero min qty items (bundle can still be purchased).
@@ -175,7 +175,9 @@ class WC_Product_Bundle extends WC_Product {
 			'sold_individually'                 => false,
 			'discounted'                        => false,
 			'discounted_mandatory'              => false,
-			'priced_indefinitely'               => false
+			'priced_indefinitely'               => false,
+			'hidden'                            => false,
+			'visible'                           => false
 		);
 
 		$this->is_synced          = false;
@@ -216,8 +218,8 @@ class WC_Product_Bundle extends WC_Product {
 		}
 
 		$bundled_items = $this->get_bundled_items();
-
-		$is_front_end = WC_PB_Helpers::is_front_end();
+		$group_mode    = $this->get_group_mode();
+		$is_front_end  = WC_PB_Helpers::is_front_end();
 
 		if ( ! empty( $bundled_items ) ) {
 
@@ -301,7 +303,9 @@ class WC_Product_Bundle extends WC_Product {
 					}
 				}
 
-				if ( false === $bundled_item->is_visible() ) {
+				if ( $bundled_item->is_visible() ) {
+					$this->contains[ 'visible' ] = true;
+				} else {
 					$this->contains[ 'hidden' ] = true;
 				}
 			}
@@ -310,7 +314,7 @@ class WC_Product_Bundle extends WC_Product {
 		// Allow adding to cart via ajax if no user input is required.
 		if ( $is_front_end ) {
 			// Is a child selection required by the chosen group mode?
-			if ( false === $this->contains[ 'mandatory' ] && false === self::group_mode_has( $this->get_group_mode(), 'parent_item' ) ) {
+			if ( false === $this->contains[ 'mandatory' ] && ( false === self::group_mode_has( $group_mode, 'parent_item' ) || self::group_mode_has( $group_mode, 'component_multiselect' ) ) ) {
 				$this->contains[ 'options' ] = true;
 			}
 			// Any addons at bundle level?
@@ -504,7 +508,9 @@ class WC_Product_Bundle extends WC_Product {
 			$raw_bundle_price_min = $this->get_bundle_price( 'min', true );
 			$raw_bundle_price_max = $this->get_bundle_price( 'max', true );
 
-			$bundle_price_data[ 'zero_items_allowed' ] = self::group_mode_has( $this->get_group_mode(), 'parent_item' ) ? 'yes' : 'no';
+			$group_mode = $this->get_group_mode();
+
+			$bundle_price_data[ 'zero_items_allowed' ] = self::group_mode_has( $group_mode, 'parent_item' ) && false === self::group_mode_has( $group_mode, 'component_multiselect' ) ? 'yes' : 'no';
 
 			$bundle_price_data[ 'raw_bundle_price_min' ] = (double) $raw_bundle_price_min;
 			$bundle_price_data[ 'raw_bundle_price_max' ] = '' === $raw_bundle_price_max ? '' : (double) $raw_bundle_price_max;
@@ -797,8 +803,10 @@ class WC_Product_Bundle extends WC_Product {
 							}
 						}
 
+						$group_mode = $this->get_group_mode( 'edit' );
+
 						// Calculate the min bundled item price and use it when the parent item is meant to be hidden and all items are optional.
-						if ( 'min' === $min_or_max && false === self::group_mode_has( $this->get_group_mode( 'edit' ), 'parent_item' ) && false === $this->contains( 'mandatory' ) ) {
+						if ( 'min' === $min_or_max && ( false === self::group_mode_has( $group_mode, 'parent_item' ) || self::group_mode_has( $group_mode, 'component_multiselect' )  ) && false === $this->contains( 'mandatory' ) ) {
 
 							$min_price = null;
 
@@ -1392,6 +1400,18 @@ class WC_Product_Bundle extends WC_Product {
 	}
 
 	/**
+	 * "Aggregate weight" getter.
+	 *
+	 * @since  6.0.0
+	 *
+	 * @param  string  $context
+	 * @return boolean
+	 */
+	public function get_aggregate_weight( $context = 'any' ) {
+		return $this->get_prop( 'aggregate_weight', $context );
+	}
+
+	/**
 	 * "Sold Individually" option context.
 	 * Returns 'product' or 'configuration'.
 	 *
@@ -1611,7 +1631,7 @@ class WC_Product_Bundle extends WC_Product {
 	 * @param  string                    $context
 	 * @return WC_Bundled_Item
 	 */
-	public function get_bundled_item( $bundled_data_item, $context = 'view' ) {
+	public function get_bundled_item( $bundled_data_item, $context = 'view', $hash = array() ) {
 
 		if ( $bundled_data_item instanceof WC_Bundled_Item_Data ) {
 			$bundled_item_id = $bundled_data_item->get_id();
@@ -1624,7 +1644,7 @@ class WC_Product_Bundle extends WC_Product {
 		if ( $this->has_bundled_item( $bundled_item_id, $context ) ) {
 
 			$cache_group  = 'wc_bundled_item_' . $bundled_item_id . '_' . $this->get_id();
-			$cache_key    = md5( json_encode( apply_filters( 'woocommerce_bundled_item_hash', array(), $this ) ) );
+			$cache_key    = md5( json_encode( apply_filters( 'woocommerce_bundled_item_hash', $hash, $this ) ) );
 
 			$bundled_item = WC_PB_Helpers::cache_get( $cache_key, $cache_group );
 
@@ -1713,6 +1733,18 @@ class WC_Product_Bundle extends WC_Product {
 				}
 			}
 		}
+	}
+
+	/**
+	 * "Aggregate weight" setter.
+	 *
+	 * @since  6.0.0
+	 *
+	 * @param  string  $aggregate_weight
+	 */
+	public function set_aggregate_weight( $aggregate_weight ) {
+		$aggregate_weight = wc_string_to_bool( $aggregate_weight );
+		$this->set_prop( 'aggregate_weight', $aggregate_weight );
 	}
 
 	/**
@@ -1962,7 +1994,7 @@ class WC_Product_Bundle extends WC_Product {
 
 		} elseif ( 'assembled' === $key ) {
 
-			if ( is_null( $this->contains[ $key ] ) ) {
+			if ( is_null( $this->contains[ $key ] ) && false === $this->get_virtual( 'edit' ) ) {
 
 				$assembled_items_exist = false;
 

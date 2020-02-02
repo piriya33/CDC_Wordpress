@@ -1559,8 +1559,6 @@ class Tribe__Tickets_Plus__Commerce__WooCommerce__Main extends Tribe__Tickets_Pl
 
 		$global_stock_enabled = $this->uses_global_stock( $post->ID );
 
-		Tribe__Tickets__Tickets::add_frontend_stock_data( $tickets );
-
 		/**
 		 * Allow for the addition of content (namely the "Who's Attening?" list) above the ticket form.
 		 *

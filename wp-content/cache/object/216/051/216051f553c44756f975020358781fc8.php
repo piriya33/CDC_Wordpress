@@ -1,4 +1,4 @@
-�/^<?php exit; ?>a:1:{s:7:"content";O:8:"stdClass":24:{s:2:"ID";i:19302;s:11:"post_author";s:4:"1985";s:9:"post_date";s:19:"2017-11-27 14:44:10";s:13:"post_date_gmt";s:19:"2017-11-27 07:44:10";s:12:"post_content";s:5673:"Dec 31, 2016
+U�6^<?php exit; ?>a:1:{s:7:"content";O:8:"stdClass":24:{s:2:"ID";i:19302;s:11:"post_author";s:4:"1985";s:9:"post_date";s:19:"2017-11-27 14:44:10";s:13:"post_date_gmt";s:19:"2017-11-27 07:44:10";s:12:"post_content";s:5673:"Dec 31, 2016
 <h5>ChalokeDotCom analysis of ฺ ลุงโฉลกคุยกันวันส่งท้ายปีเก่า</h5>
 https://www.youtube.com/watch?v=5DiQnDNXIxU
 

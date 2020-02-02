@@ -3,8 +3,8 @@
 Contributors: ModernTribe, brianjessee, camwynsp, paulkim, sc0ttkclark, aguseo, bordoni, borkweb, barry.hughes, cliffpaulick, courane01, faction23, GeoffBel, geoffgraham, ggwicz, jbrinley, jentheo, leahkoerper, lucatume, mastromktg, MZAWeb, neillmcshea, nicosantos, patriciahillebrandt, peterchester, reid.peifer, roblagatta, ryancurban, shane.pearlman, vicskf, zbtirrell
 Tags: RSVP, events, tickets, event management, calendar, ticket sales, community, registration, api, dates, date, posts, workshop, conference, meeting, seminar, concert, summit, ticket integration, event ticketing
 Requires at least: 4.9
-Tested up to: 5.3
-Stable tag: 4.11.1
+Tested up to: 5.3.2
+Stable tag: 4.11.2
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -117,6 +117,12 @@ Currently, the following add-ons are available for Event Tickets:
 
 == Changelog ==
 
+= [4.11.2] 2020-01-27 =
+
+* Tweak - Adding support for The Events Calendar 5.0.0
+* Tweak - Added new `tribe_events_is_current_time_in_date_window()` function that checks if the current datetime is within a post's ticket availability window [TEC-3033]
+* Language - 0 new strings added, 94 updated, 0 fuzzied, and 0 obsoleted
+
 = [4.11.1] 2019-12-19 =
 
 * Feature - Use the same loading icon for the RSVP block that we're using for the tickets block. [135660]
@@ -136,6 +142,7 @@ Currently, the following add-ons are available for Event Tickets:
 * Fix - Handle special characters for Event Ticket field labels like single quotes and colons so they don't break the saving. [136451]
 * Fix - Don't try to load RSVPs with the Tickets block `render()`. [138646]
 * Fix - Correct shared capacity handling when tickets left threshold is set. [138620]
+* Language - 0 new strings added, 131 updated, 1 fuzzied, and 0 obsoleted
 
 = [4.11.0.1] 2019-12-11 =
 
