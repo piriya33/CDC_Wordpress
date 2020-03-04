@@ -10,12 +10,13 @@ namespace Tribe\Events\Pro\Views\V2;
 
 use Tribe\Events\Pro\Views\V2\Geo_Loc\Handler_Interface as Geo_Loc_Handler;
 use Tribe\Events\Views\V2\View_Interface;
+use Tribe\Events\Views\V2\Manager;
 use Tribe__Context as Context;
 use Tribe__Events__Main as TEC;
-use Tribe__Events__Rewrite as TEC_Rewrite;
-use WP_REST_Request as Request;
 use Tribe__Events__Organizer as Organizer;
+use Tribe__Events__Rewrite as TEC_Rewrite;
 use Tribe__Events__Venue as Venue;
+use WP_REST_Request as Request;
 
 /**
  * Class View_Filters
@@ -191,7 +192,7 @@ class View_Filters {
 			! wp_is_mobile()
 			|| tribe_is_truthy( tribe_get_request_var( 'tribe_redirected' ) )
 			|| is_singular()
-			|| is_tax()
+			|| ! is_tax( [ TEC::TAXONOMY, 'post_tag' ] )
 			|| 'all' === tribe_context()->get( 'view' )
 			|| 'embed' === tribe_context()->get( 'view' )
 			|| is_front_page()
@@ -199,23 +200,46 @@ class View_Filters {
 			return;
 		}
 
-		$default_view        = tribe_get_option( 'viewOption', 'month' );
+		$context = tribe_context();
+
+		if ( ! $context->get( 'tec_post_type' ) ) {
+			return;
+		}
+
+		// Make sure users can actually go to the specific views if intentional.
+		if ( 'default' !== $context->get( 'view' ) ) {
+			return;
+		}
+
+		/**
+		 * @var Manager $manager
+		 */
+		$manager = tribe( Manager::class );
+
+		$default_view        = $manager->get_default_view_option( 'desktop' );
 		$default_mobile_view = tribe_get_option( 'mobile_default_view', 'default' );
 
 		if ( $default_view === $default_mobile_view ) {
 			return;
 		}
 
-		$ugly_url = add_query_arg(
+		global $wp;
+
+		$url = home_url( '/' );
+
+		// Add the base WordPress Url Query arguments.
+		$url = add_query_arg( $wp->query_vars, $url );
+
+		// Add our mobile default to the arguments.
+		$url = add_query_arg(
 			[
-				'post_type'        => TEC::POSTTYPE,
 				'eventDisplay'     => $default_mobile_view,
 				'tribe_redirected' => true,
 			],
-			home_url()
+			$url
 		);
 
-		$location = TEC_Rewrite::instance()->get_canonical_url( $ugly_url );
+		$location = TEC_Rewrite::instance()->get_canonical_url( $url );
 
 		wp_redirect(
 			$location,

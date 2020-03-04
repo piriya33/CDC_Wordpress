@@ -1,5 +1,44 @@
 # Changelog
-All notable changes to this project will be documented in this file, formatted via [this recommendation](https://keepachangelog.com/).
+All notable changes to this project will be documented in this file, formatted via [this recommendation](https://keepachangelog.com/en/1.0.0/).
+
+## [1.5.9] - 2020-03-03
+### IMPORTANT
+- Support for PHP 5.4 has been discontinued. If you are running PHP 5.4, you MUST upgrade PHP before installing WPForms 1.5.9. Failure to do that will disable WPForms core functionality.
+
+### Added
+- Access Controls settings panel smart suggestions.
+- Helpful links for Lite and Pro users under plugin name on Plugins page.
+- Additional option to export Payment Status when exporting entries.
+- Capability check for `wpforms()->entry_fields->get_fields()`.
+- New hooks and filters in several places, e.g. pre-deletion for entries/forms.
+- Safety-check on plugin Settings page to make sure all custom DB tables are present.
+- Async/scheduled tasks management support (e.g. sending emails in the background).
+
+### Changed
+- Update the "How to Create Your First Contact Form" video URL.
+- Update the "How to Embed A Form" video URL in a Form Builder "Embed" modal.
+- Datepicker type change refreshes a list of available Date formats in "Date/Time" field.
+- Make the plugin consistent with the updated Mailchimp branding (MailChimp to Mailchimp).
+- Number Slider field: allow empty value in "Value Display" option.
+- Improved admin input field focus states to be more consistent with WordPress core.
+
+### Fixed
+- Numbers/Numbers Slider field: allow `0` value in email notifications and field smart tags output.
+- Required Checkbox fields with `0` value not passing validation.
+- Multiple Choice field could generate a PHP notice when the form was created after using a custom form template.
+- Initialize tooltips properly for newly created Notifications/Confirmations.
+- Ajax button should be re-enabled after incorrect form submission.
+- Remove Javascript alert notice when form is viewed in AMP.
+- Improve compatibility with the "Lazy Loading Feature Plugin" for Ajax spinner image on front-end.
+- Invalid payment amount when empty Payment Checkbox field is used in conditional logic.
+- Modern File Upload field validation issue.
+- Entry information not fully deleted when using "Delete All" link from enties table view.
+- Validation issue with required Checkbox fields using Image Choices.
+- Form builder preview issue with a field using Dynamic Choices setting.
+- Australian mobile phone numbers not passing Smart Phone Field validation (updated intl-tel-put library).
+- Number Field values not allowing leading zeros. 
+- Form Builder: templates search bar shows icon over text.
+- Security hardening and improvements.
 
 ## [1.5.8.2] - 2020-01-13
 ### Fixed
@@ -209,6 +248,7 @@ All notable changes to this project will be documented in this file, formatted v
 ### Added
 - AJAX form submissions.
 - Google reCAPTCHA v3.
+- AMP support.
 
 ### Changed
 - WPForms uninstall script for better cleanup process.
@@ -1254,6 +1294,7 @@ All notable changes to this project will be documented in this file, formatted v
 - Sub labels showing when configured to hide.
 - Forms pagination number screen setting not saving.
 - Email notification setting always displaying "On".
+- Entries counting in a Dashboard widget and Email Summaries (Lite version only).
 
 ## [1.0.4] - 2016-03-16
 ### Changed

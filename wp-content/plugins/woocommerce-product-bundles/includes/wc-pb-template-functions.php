@@ -428,7 +428,7 @@ function wc_pb_template_bundled_item_product_details( $bundled_item, $bundle ) {
 		} elseif ( $bundled_product->get_type() === 'variable' || $bundled_product->get_type() === 'variable-subscription' ) {
 
 			$do_ajax                       = $bundled_item->use_ajax_for_product_variations();
-			$variations                    = $do_ajax ? false : $bundled_item->get_product_variations();
+			$variations                    = $do_ajax ? false : $bundled_item->get_product_variations( false );
 			$variation_attributes          = $bundled_item->get_product_variation_attributes();
 			$selected_variation_attributes = $bundled_item->get_selected_product_variation_attributes();
 

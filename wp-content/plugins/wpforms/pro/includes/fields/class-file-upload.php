@@ -1715,6 +1715,7 @@ class WPForms_Field_File_Upload extends WPForms_Field {
 				}
 			)
 			->array_filter()
+			->array_diff( $this->blacklist )
 			->value();
 	}
 

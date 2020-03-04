@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Product Addons Compatibility.
  *
- * @version  6.0.0
+ * @version  6.0.4
  */
 class WC_PB_Addons_Compatibility {
 
@@ -47,10 +47,21 @@ class WC_PB_Addons_Compatibility {
 		// Load child Addons data from the parent cart item data array.
 		add_filter( 'woocommerce_bundled_item_cart_data', array( __CLASS__, 'get_bundled_cart_item_data_from_parent' ), 10, 2 );
 
-		// Save offset price when calculating discounts using the 'filters' method.
+		/*
+		 * Aggregate add-ons costs and calculate them after PB has applied discounts.
+		 * Also, do not charge anything for add-ons if Priced Individually is disabled and the 'filters' cart pricing method is in use.
+		 */
 		if ( 'filters' === WC_PB_Product_Prices::get_bundled_cart_item_discount_method() ) {
-			add_filter( 'woocommerce_add_cart_item', array( __CLASS__, 'save_offset_price' ), 1000000 );
-			add_filter( 'woocommerce_get_cart_item_from_session', array( __CLASS__, 'save_offset_price' ), 1000000 );
+
+			// Aggregate add-ons costs and calculate them after PB has applied discounts.
+			add_filter( 'woocommerce_bundled_cart_item', array( __CLASS__, 'preprocess_bundled_cart_item_addon_data' ), 0, 2 );
+
+			// Do not let add-ons adjust prices when PB modifies them.
+			add_filter( 'woocommerce_product_addons_adjust_price', array( __CLASS__, 'adjust_addons_price' ), 15, 2 );
+
+			// Remove bundled item add-on prices in product bundle pages when bundled items are not Priced Individually.
+			add_action( 'woocommerce_bundled_product_price_filters_added', array( __CLASS__, 'add_addon_price_zero_filter' ) );
+			add_action( 'woocommerce_bundled_product_price_filters_removed', array( __CLASS__, 'remove_addon_price_zero_filter' ) );
 		}
 	}
 
@@ -341,20 +352,131 @@ class WC_PB_Addons_Compatibility {
 	}
 
 	/**
-	 * Save offset price when calculating discounts using the 'filters' method.
+	 * Aggregate add-ons costs and calculate them after PB has applied discounts.
 	 *
-	 * @since  6.0.0
+	 * @since  6.0.4
 	 *
-	 * @param  array  $cart_item
+	 * @param  array              $cart_item
+	 * @param  WC_Product_Bundle  $bundle
 	 * @return array
 	 */
-	public static function save_offset_price( $cart_item ) {
+	public static function preprocess_bundled_cart_item_addon_data( $cart_item, $bundle ) {
 
-		if ( isset( $cart_item[ 'data' ]->bundled_cart_item ) && ! empty( $cart_item[ 'addons_price_before_calc' ] ) ) {
-			$cart_item[ 'data' ]->bundled_price_offset = $cart_item[ 'data' ]->get_price( 'edit' ) - $cart_item[ 'addons_price_before_calc' ];
+		if ( empty( $cart_item[ 'addons' ] ) ) {
+			return $cart_item;
+		}
+
+		$bundled_item_id = $cart_item[ 'bundled_item_id' ];
+		$bundled_item    = $bundle->get_bundled_item( $bundled_item_id );
+
+		if ( ! $bundled_item ) {
+			return $cart_item;
+		}
+
+		if ( $bundled_item->is_priced_individually() ) {
+
+			// Let PAO handle things on its own.
+			if ( ! $discount = $bundled_item->get_discount( 'cart' ) ) {
+				return $cart_item;
+			}
+
+			$cart_item[ 'data' ]->bundled_price_offset_pct = array();
+			$cart_item[ 'data' ]->bundled_price_offset     = 0.0;
+
+			if ( $bundle_container_item = wc_pb_get_bundled_cart_item_container( $cart_item ) ) {
+
+				// Read original % values from parent item.
+				$addons_data = ! empty( $bundle_container_item[ 'stamp' ][ $bundled_item_id ][ 'addons' ] ) ? $bundle_container_item[ 'stamp' ][ $bundled_item_id ][ 'addons' ] : array();
+
+				foreach ( $addons_data as $addon_key => $addon ) {
+
+					// See 'WC_Bundled_Item::filter_get_price'.
+					if ( 'percentage_based' === $addon[ 'price_type' ] ) {
+						$cart_item[ 'data' ]->bundled_price_offset_pct[] = $addon[ 'price' ];
+						$cart_item[ 'addons' ][ $addon_key ][ 'price' ]  = 0.0;
+					} elseif ( 'flat_fee' === $addon[ 'price_type' ] ) {
+						$cart_item[ 'data' ]->bundled_price_offset += (float) $addon[ 'price' ] / $cart_item[ 'quantity' ];
+					} else {
+						$cart_item[ 'data' ]->bundled_price_offset += (float) $addon[ 'price' ];
+					}
+				}
+			}
+
+		} else {
+
+			// Priced Individually disabled? Give add-ons for free.
+			foreach ( $cart_item[ 'addons' ] as $addon_key => $addon_data ) {
+				$cart_item[ 'addons' ][ $addon_key ][ 'price' ] = 0.0;
+			}
 		}
 
 		return $cart_item;
+	}
+
+	/**
+	 * Do not let add-ons adjust prices when PB modifies them.
+	 *
+	 * @since  6.0.4
+	 *
+	 * @param  bool   $adjust
+	 * @param  array  $cart_item
+	 * @return bool
+	 */
+	public static function adjust_addons_price( $adjust, $cart_item ) {
+
+		if ( $bundle_container_item = wc_pb_get_bundled_cart_item_container( $cart_item ) ) {
+
+			$adjust          = false;
+			$bundle          = $bundle_container_item[ 'data' ];
+			$bundled_item_id = $cart_item[ 'bundled_item_id' ];
+			$bundled_item    = $bundle->get_bundled_item( $bundled_item_id );
+
+			// Only let add-ons adjust prices if PB doesn't modify bundled item prices in any way.
+			if ( $bundled_item->is_priced_individually() && ! $bundled_item->get_discount( 'cart' ) ) {
+				$adjust = true;
+			}
+		}
+
+		return $adjust;
+	}
+
+	/**
+	 * Adds filter that discards bundled item add-on prices in product bundle pages.
+	 *
+	 * @since  6.0.4
+	 *
+	 * @param  WC_Bundled_Item  $bundled_item
+	 */
+	public static function add_addon_price_zero_filter( $bundled_item ) {
+
+		if ( ! $bundled_item->is_priced_individually() ) {
+			add_filter( 'woocommerce_product_addons_option_price_raw', array( __CLASS__, 'option_price_raw_zero_filter' ) );
+		}
+	}
+
+	/**
+	 * Removes filter that discards bundled item add-on prices in product bundle pages.
+	 *
+	 * @since  6.0.4
+	 *
+	 * @param  WC_Bundled_Item  $bundled_item
+	 */
+	public static function remove_addon_price_zero_filter( $bundled_item ) {
+
+		if ( ! $bundled_item->is_priced_individually() ) {
+			remove_filter( 'woocommerce_product_addons_option_price_raw', array( __CLASS__, 'option_price_raw_zero_filter' ) );
+		}
+	}
+
+	/**
+	 * Discards bundled item add-on prices in product bundle pages.
+	 *
+	 * @since  6.0.4
+	 *
+	 * @param  mixed  $price
+	 */
+	public static function option_price_raw_zero_filter( $price ) {
+		return '';
 	}
 }
 

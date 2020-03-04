@@ -1,1 +1,1 @@
-“6^<?php exit; ?>a:1:{s:7:"content";s:179:"O:8:"stdClass":4:{s:12:"last_checked";i:1580634615;s:7:"checked";a:2:{s:10:"storefront";s:5:"2.5.3";s:12:"twentytwenty";s:3:"1.1";}s:8:"response";a:0:{}s:12:"translations";a:0:{}}";}
+Ñ3_^<?php exit; ?>a:1:{s:7:"content";s:179:"O:8:"stdClass":4:{s:12:"last_checked";i:1583297225;s:7:"checked";a:2:{s:10:"storefront";s:5:"2.5.5";s:12:"twentytwenty";s:3:"1.1";}s:8:"response";a:0:{}s:12:"translations";a:0:{}}";}

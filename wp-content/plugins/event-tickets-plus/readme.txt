@@ -3,8 +3,8 @@
 Contributors: ModernTribe, brianjessee, camwynsp, paulkim, sc0ttkclark, aguseo, barry.hughes, bordoni, borkweb, cliffpaulick, courane01, faction23, GeoffBel, geoffgraham, ggwicz, jbrinley, jentheo, leahkoerper, lucatume, mastromktg, MZAWeb, neillmcshea, nicosantos, patriciahillebrandt, peterchester, reid.peifer, roblagatta, ryancurban, shane.pearlman, tribecari, vicskf, zbtirrell
 Tags: events, WooCommerce, WooTickets, add-on, ticket sales, tickets, calendar, community, registration, api, dates, date, posts, workshop, conference, meeting, seminar, concert, summit, The Events Calendar, Events Calendar PRO, ticket integration, event ticketing, RSVP, EDD, Easy Digital Downloads
 Requires at least: 4.9
-Tested up to: 5.3
-Stable tag: 4.11.1.1
+Tested up to: 5.3.2
+Stable tag: 4.11.3
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -134,6 +134,28 @@ Our Premium Plugins:
 * <a href="http://m.tri.be/fa" target="_blank">The Events Calendar: Filter Bar</a>
 
 == Changelog ==
+
+= [4.11.3] 2020-02-26 =
+
+* Fix - The script to check if required Attendee Information exists before purchasing a ticket no longer conflicts with the actual form submission. [ET-686]
+* Fix - Save initial shared capacity value for global stock correctly on first WooCommerce/Easy Digital Downloads ticket so availability shows as expected instead of zero. [ETP-221]
+* Fix - Prevent fatal error when deleting WooCommerce tickets. [ETP-229]
+* Language - 0 new strings added, 21 updated, 0 fuzzied, and 0 obsoleted
+
+= [4.11.2] 2020-02-06 =
+
+* Feature - Implement new functions from Event Tickets to easily rename ticket types and ensure consistent wording. Many translated strings will need updating. [ETP-145]
+* Fix - Correct checks to WooCommerce `is_on_sale()`, `get_regular_price()` and `get_sale_price()`. [ETP-47]
+* Fix - Correct text domain strings that did not match `event-tickets-plus`. [ET-592]
+* Fix - Ensure we are correctly checking `ticket_end_date` when saving the ticket start and end date from the ticket editor. [ETP-159]
+* Fix - Do not add `&provider=tribe_wooticket` query argument to WooCommerce Cart and Checkout URLs if there aren't tickets in the Cart. [ETP-52]
+* Tweak - Modify filter to enable security code check during QR checkin by default. [ETP-91]
+* Tweak - Additional escaping in the `woocommerce-metabox-capacity` admin-view template and clean up code formatting of some view templates. [ETP-145]
+* Tweak - Remove duplicate ticket script to prevent JavaScript conflicts. [ET-596]
+* Tweak - Add a note to the public Attendees List opt-out checkbox in tickets admin (classic editor only). [ET-615]
+* Tweak - Removed filters: `wootickets_email_message`
+* Tweak - Changed views: `attendees-list`, `tickets-plus/orders-edit-meta`, `tickets-plus/orders-tickets`
+* Language - 50 new strings added, 68 updated, 29 fuzzied, and 43 obsoleted
 
 = [4.11.1.1] 2020-01-30 =
 
@@ -328,7 +350,7 @@ Our Premium Plugins:
 = [4.10.0.2] 2019-02-08 =
 
 * Fix - Prevent fatals in Meta when testing for blocks [122361]
-* Fix - Ensure lang files are loadeing correctly [122544]
+* Fix - Ensure lang files are loading correctly [122544]
 * Fix - Reduce WC PayPal delay from 5 minutes to 5 seconds [121818]
 
 = [4.10.0.1] 2019-02-07 =
@@ -476,7 +498,7 @@ Our Premium Plugins:
 
 * Fix - Make sure Stock is updated accordingly based on total sales when updating capacity [93601]
 * Fix - Resolved bug where "Purchase limit" field was not saving correctly [92914]
-* Fix - Fixed an issue where the wrong number of tickets available would be shown in WooCommerce and Eeasy Digital Downloads purchase forms [71118]
+* Fix - Fixed an issue where the wrong number of tickets available would be shown in WooCommerce and Easy Digital Downloads purchase forms [71118]
 * Tweak - Added filter to change the default value for the option to show attendees on the event, 'tribe_tickets_plus_default_show_attendees_value' [80620]
 * Tweak - Prevent EDD from being a provider for front-end Community Tickets, as only WooCommerce is allowed for that [91758]
 * Tweak - Updated tooltip text for Capacity settings when using EDD [94042]

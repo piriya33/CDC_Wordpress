@@ -547,6 +547,10 @@
 		width: 14.285%;
 	}
 
+.tribe-events-pro .tribe-events-pro-week-day-selector--hide-weekends .tribe-events-pro-week-day-selector__days-list-item {
+		width: 20%;
+	}
+
 .tribe-events-pro .tribe-events-pro-week-day-selector__day {
 		display: block;
 		position: relative;
@@ -639,6 +643,14 @@
 		flex: none;
 		border: 0;
 		margin-left: 16px;
+		width: 48px;
+	}
+
+.tribe-events-pro .tribe-events-pro-week-grid--hide-weekends .tribe-events-pro-week-grid__header-column {
+		width: calc(20% - 12.8px);
+	}
+
+.tribe-events-pro .tribe-events-pro-week-grid--hide-weekends .tribe-events-pro-week-grid__header-column--empty {
 		width: 48px;
 	}
 
@@ -737,6 +749,11 @@
 		flex: none;
 		width: calc(14.285% - 9.14286px);
 	}
+
+.tribe-events-pro .tribe-events-pro-week-grid--hide-weekends .tribe-events-pro-week-grid__multiday-events-day,
+		.tribe-events-pro .tribe-events-pro-week-grid--hide-weekends .tribe-events-pro-week-grid__events-day {
+			width: calc(20% - 12.8px);
+		}
 
 .tribe-events-pro .tribe-events-pro-week-grid__multiday-events-day,
 	.tribe-events-pro .tribe-events-pro-week-grid__multiday-events-row-header {
@@ -1976,6 +1993,10 @@
 		margin-top: 8px;
 	}
 
+.tribe-events-pro .tribe-events-pro-map__event-tooltip-cost {
+		margin-top: 16px;
+	}
+
 .tribe-events-pro .tribe-events-pro-map__event-tooltip-navigation {
 		padding-top: 20px;
 	}
@@ -2141,9 +2162,9 @@
 			margin-bottom: 40px;
 		}
 
-.tribe-common--breakpoint-medium.tribe-events-pro .tribe-events-pro-venue__meta-data, .tribe-common--breakpoint-medium.tribe-events-pro .tribe-events-pro-venue__meta-map {
-			width: 50%;
-		}
+.tribe-common--breakpoint-medium.tribe-events-pro .tribe-events-pro-venue__meta--has-map .tribe-events-pro-venue__meta-data, .tribe-common--breakpoint-medium.tribe-events-pro .tribe-events-pro-venue__meta--has-map .tribe-events-pro-venue__meta-map {
+				width: 50%;
+			}
 
 .tribe-events-pro .tribe-events-pro-venue__meta-data {
 		padding: 24px;

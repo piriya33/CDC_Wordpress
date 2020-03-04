@@ -106,7 +106,11 @@ describe( 'Shared recurrence sagas', () => {
 				call( momentUtil.toTime, endMoment )
 			);
 
-			expect( gen.next( args.end_date ).value ).toMatchSnapshot();
+			expect( gen.next( args.end_date ).value ).toEqual(
+				call( [ endMoment, 'diff' ], startMoment, 'days' )
+			);
+
+			expect( gen.next( 1 ).value ).toMatchSnapshot();
 		} );
 	} );
 

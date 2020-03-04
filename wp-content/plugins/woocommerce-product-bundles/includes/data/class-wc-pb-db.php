@@ -308,7 +308,7 @@ class WC_PB_DB {
 			$cache_key = WC_Cache_Helper::get_cache_prefix( 'bundled_item_meta' ) . $item_id;
 			wp_cache_delete( $cache_key, 'bundled_item_meta' );
 
-			WC_Cache_Helper::incr_cache_prefix( 'bundled_data_items' );
+			WC_PB_Core_Compatibility::invalidate_cache_group( 'bundled_data_items' );
 
 			return $meta_id;
 		}
@@ -341,7 +341,7 @@ class WC_PB_DB {
 			$cache_key = WC_Cache_Helper::get_cache_prefix( 'bundled_item_meta' ) . $item_id;
 			wp_cache_delete( $cache_key, 'bundled_item_meta' );
 
-			WC_Cache_Helper::incr_cache_prefix( 'bundled_data_items' );
+			WC_PB_Core_Compatibility::invalidate_cache_group( 'bundled_data_items' );
 
 			return true;
 		}
@@ -363,7 +363,7 @@ class WC_PB_DB {
 			$cache_key = WC_Cache_Helper::get_cache_prefix( 'bundled_item_meta' ) . $item_id;
 			wp_cache_delete( $cache_key, 'bundled_item_meta' );
 
-			WC_Cache_Helper::incr_cache_prefix( 'bundled_data_items' );
+			WC_PB_Core_Compatibility::invalidate_cache_group( 'bundled_data_items' );
 
 			return true;
 		}
@@ -439,7 +439,7 @@ class WC_PB_DB {
 				WHERE meta_key IN ( 'stock_status', 'max_stock' )
 			" );
 
-			WC_Cache_Helper::incr_cache_prefix( 'bundled_item_meta' );
+			WC_PB_Core_Compatibility::invalidate_cache_group( 'bundled_item_meta' );
 		}
 	}
 

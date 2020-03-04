@@ -38,7 +38,7 @@ class WC_PB_Meta_Box_Product_Data {
 		add_filter( 'product_type_options', array( __CLASS__, 'bundle_type_options' ) );
 
 		// Add Shipping type image select.
-		add_action( 'woocommerce_product_options_shipping', array( __CLASS__, 'bundle_shipping_type_admin_html' ), -100 );
+		add_action( 'woocommerce_product_options_shipping', array( __CLASS__, 'bundle_shipping_type_admin_html' ), 10000 );
 		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'js_handle_container_classes' ) );
 
 		// Processes and saves type-specific data.
@@ -613,15 +613,24 @@ class WC_PB_Meta_Box_Product_Data {
 						if ( '' === $quantity || ( $quantity > 0 && $quantity >= $quantity_min && $data[ 'quantity_max' ] - $quantity == 0 ) ) {
 
 							if ( $quantity !== 1 && $product->is_sold_individually() ) {
+
 								self::add_admin_error( sprintf( __( '<strong>%s</strong> is sold individually &ndash; <strong>Quantity Max</strong> cannot be higher than 1.', 'woocommerce-product-bundles' ), $item_title ) );
+
 								$item_data[ 'quantity_max' ] = 1;
+
 							} else {
 								$item_data[ 'quantity_max' ] = $quantity;
 							}
 
 						} else {
+
 							self::add_admin_error( sprintf( __( 'The maximum quantity of <strong>%s</strong> was not valid and has been reset. Please enter a positive integer equal to or higher than <strong>Quantity Min</strong>, or leave the <strong>Quantity Max</strong> field empty for an unlimited maximum quantity.', 'woocommerce-product-bundles' ), $item_title ) );
-							$item_data[ 'quantity_max' ] = $quantity_min;
+
+							if ( 0 === $quantity_min ) {
+								$item_data[ 'quantity_max' ] = 1;
+							} else {
+								$item_data[ 'quantity_max' ] = $quantity_min;
+							}
 						}
 
 					} else {

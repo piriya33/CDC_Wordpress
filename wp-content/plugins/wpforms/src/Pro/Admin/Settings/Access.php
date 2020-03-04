@@ -39,6 +39,45 @@ class Access {
 		\add_filter( 'wpforms_settings_defaults', array( $this, 'add_section' ) );
 		\add_filter( 'wpforms_settings_exclude_view', array( $this, 'exclude_view' ) );
 		\add_filter( 'wpforms_settings_custom_process', array( $this, 'process_settings' ), 10, 2 );
+
+		if ( \wpforms_is_admin_page( 'settings', 'access' ) ) {
+			\add_action( 'admin_enqueue_scripts', array( $this, 'enqueues' ) );
+		}
+	}
+
+	/**
+	 * Load enqueues.
+	 *
+	 * @since 1.5.8.2
+	 */
+	public function enqueues() {
+
+		$min = \wpforms_get_min_suffix();
+
+		\wp_enqueue_script(
+			'wpforms-settings-access',
+			\WPFORMS_PLUGIN_URL . "pro/assets/js/admin/settings-access{$min}.js",
+			array( 'jquery', 'jquery-confirm' ),
+			\WPFORMS_VERSION,
+			true
+		);
+
+		\wp_localize_script(
+			'wpforms-settings-access',
+			'wpforms_settings_access',
+			array(
+				'labels' => array(
+					'caps'  => \wpforms()->get( 'access' )->get_caps(),
+					'roles' => \wp_list_pluck( \get_editable_roles(), 'name' ),
+				),
+				'l10n'   => array(
+					/* translators: %1$s - capability being granted; %2$s - capability(s) required for a capability being granted; %3$s - role a capability is granted to. */
+					'grant_caps'  => '<p>' . \esc_html__( 'In order to give %1$s access, %2$s access is also required.', 'wpforms' ) . '</p><p>' . \esc_html__( 'Would you like to also grant %2$s access to %3$s?', 'wpforms' ) . '</p>',
+					/* translators: %1$s - capability being granted; %2$s - capability(s) required for a capability being granted; %3$s - role a capability is granted to. */
+					'remove_caps' => '<p>' . \esc_html__( 'In order to remove %1$s access, %2$s access is also required to be removed.', 'wpforms' ) . '</p><p>' . \esc_html__( 'Would you like to also remove %2$s access from %3$s?', 'wpforms' ) . '</p>',
+				),
+			)
+		);
 	}
 
 	/**
@@ -153,13 +192,13 @@ class Access {
 
 		$tab = array(
 			self::SLUG => array(
-				'name'   => esc_html__( 'Access', 'wpforms-lite' ),
+				'name'   => \esc_html__( 'Access', 'wpforms-lite' ),
 				'form'   => true,
-				'submit' => esc_html__( 'Save Settings', 'wpforms-lite' ),
+				'submit' => \esc_html__( 'Save Settings', 'wpforms-lite' ),
 			),
 		);
 
-		return wpforms_list_insert_after( $tabs, 'integrations', $tab );
+		return \wpforms_list_insert_after( $tabs, 'integrations', $tab );
 	}
 
 	/**
@@ -175,7 +214,7 @@ class Access {
 
 		$settings[ self::SLUG ][ self::SLUG . '-heading' ] = array(
 			'id'       => self::SLUG . '-heading',
-			'content'  => '<h4>' . esc_html__( 'Access', 'wpforms-lite' ) . '</h4><p>' . esc_html__( 'Select the user roles that are allowed access to WPForms.', 'wpforms-lite' ) . '</p>',
+			'content'  => '<h4>' . \esc_html__( 'Access', 'wpforms-lite' ) . '</h4><p>' . \esc_html__( 'Select the user roles that are allowed access to WPForms.', 'wpforms-lite' ) . '</p>',
 			'type'     => 'content',
 			'no_label' => true,
 			'class'    => array( 'section-heading' ),
@@ -201,7 +240,7 @@ class Access {
 
 			foreach ( $row['caps'] as $cap_id => $cap ) {
 
-				$selected = array_keys( \wp_list_filter( $role_caps, array( $cap_id => $caps[ $cap_id ] ) ) );
+				$selected = \array_keys( \wp_list_filter( $role_caps, array( $cap_id => $caps[ $cap_id ] ) ) );
 
 				$columns[ $cap_id ] = array(
 					'id'        => $cap_id,
@@ -212,6 +251,7 @@ class Access {
 					'multiple'  => true,
 					'options'   => $options,
 					'selected'  => $selected,
+					'data'      => array( 'cap' => $cap_id ),
 				);
 			}
 
@@ -261,19 +301,19 @@ class Access {
 			return;
 		}
 
-		if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'wpforms-settings-nonce' ) ) {
+		if ( ! \wp_verify_nonce( \sanitize_text_field( \wp_unslash( $_POST['nonce'] ) ), 'wpforms-settings-nonce' ) ) {
 			return;
 		}
 
-		if ( ! wpforms_current_user_can() ) {
+		if ( ! \wpforms_current_user_can() ) {
 			return;
 		}
 
-		$columns = wp_filter_object_list( $rows, array( 'type' => 'columns' ), 'and', 'columns' );
+		$columns = \wp_filter_object_list( $rows, array( 'type' => 'columns' ), 'and', 'columns' );
 
 		foreach ( $columns as $column ) {
 
-			if ( empty( $column ) || ! is_array( $column ) ) {
+			if ( empty( $column ) || ! \is_array( $column ) ) {
 				continue;
 			}
 

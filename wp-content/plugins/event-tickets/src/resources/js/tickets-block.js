@@ -34,7 +34,7 @@ window.tribe.tickets.block = {
 		itemExtraAvailableQuantity: '.tribe-tickets__item__extra__available__quantity',
 		itemOptOut: '.tribe-tickets-attendees-list-optout--wrapper',
 		itemOptOutInput: '#tribe-tickets-attendees-list-optout-',
-		itemPrice: '.tribe-amount',
+		itemPrice: '.tribe-tickets__sale_price .tribe-amount',
 		itemQuantity: '.tribe-tickets__item__quantity',
 		itemQuantityInput: '.tribe-tickets-quantity',
 		loader: '.tribe-common-c-loader',
@@ -1692,6 +1692,23 @@ window.tribe.tickets.block = {
 			$( '#tribe_tickets_block_ar_data' ).val( JSON.stringify( params ) );
 
 			$form.submit();
+		}
+	);
+
+	/**
+	 * Handle Enter/Return on the quantity input from the main tickets form.
+	 *
+	 * @since 4.11.4
+	 */
+	obj.document.on(
+		'keypress',
+		obj.selector.itemQuantityInput,
+		function( e ) {
+			if ( e.keyCode === 13 ) {
+				e.preventDefault();
+				e.stopPropagation();
+				return;
+			}
 		}
 	);
 

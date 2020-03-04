@@ -66,7 +66,7 @@ N2D('SmartSliderWidgetBulletTransition', function ($, undefined) {
     SmartSliderWidgetBulletTransition.prototype.onFirstSlideSet = function (slide) {
 
         this.onSlideCountChanged();
-        this.$dots.eq(slide.index).addClass('n2-active').attr('aria-current', 'true');
+        this.$dots.eq(slide.index).addClass('n2-active').attr('aria-current', 'true').removeAttr('tabindex');
     };
 
     SmartSliderWidgetBulletTransition.prototype.onDotClick = function (i, e) {
@@ -75,8 +75,8 @@ N2D('SmartSliderWidgetBulletTransition', function ($, undefined) {
     };
 
     SmartSliderWidgetBulletTransition.prototype.onSlideSwitch = function (e, targetSlideIndex) {
-        this.$dots.filter('.n2-active').removeClass('n2-active').removeAttr('aria-current');
-        this.$dots.eq(targetSlideIndex).addClass('n2-active').attr('aria-current', 'true');
+        this.$dots.filter('.n2-active').removeClass('n2-active').removeAttr('aria-current').attr('tabindex', 0);
+        this.$dots.eq(targetSlideIndex).addClass('n2-active').attr('aria-current', 'true').removeAttr('tabindex');
     };
 
     SmartSliderWidgetBulletTransition.prototype.isVisible = function () {

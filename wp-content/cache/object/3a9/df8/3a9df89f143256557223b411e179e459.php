@@ -1,1 +1,1 @@
-”6^<?php exit; ?>a:1:{s:7:"content";s:162:"a:4:{s:6:"status";a:3:{s:4:"code";i:1;s:4:"text";s:5:"under";s:5:"ratio";d:0.03415;}s:5:"total";s:3:"683";s:5:"limit";s:5:"20000";s:19:"counts_toward_limit";b:1;}";}
+Ñ3_^<?php exit; ?>a:1:{s:7:"content";s:161:"a:4:{s:6:"status";a:3:{s:4:"code";i:1;s:4:"text";s:5:"under";s:5:"ratio";d:0.0349;}s:5:"total";s:3:"698";s:5:"limit";s:5:"20000";s:19:"counts_toward_limit";b:0;}";}

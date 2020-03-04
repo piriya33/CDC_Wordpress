@@ -100,6 +100,20 @@ abstract class N2SmartSliderType {
 
     }
 
+    protected function encodeJavaScriptProperties() {
+
+        $initcallback = implode($this->javaScriptProperties['initCallbacks']);
+        unset($this->javaScriptProperties['initCallbacks']);
+
+        $encoded = array();
+        foreach ($this->javaScriptProperties AS $k => $v) {
+            $encoded[] = '"' . $k . '":' . json_encode($v);
+        }
+        $encoded[] = '"initCallbacks":function($){' . $initcallback . '}';
+
+        return '{' . implode(',', $encoded) . '}';
+    }
+
     protected function initParticleJS() {
     }
 
@@ -191,7 +205,7 @@ class SVGFlip {
                         case 'v':
                         case 'V':
                             break;
-                        case 'c':         
+                        case 'c':
                         case 'h':
                             $points[$j] = -$points[$j];
                             break;

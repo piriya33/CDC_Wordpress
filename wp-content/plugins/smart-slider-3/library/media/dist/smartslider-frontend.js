@@ -843,7 +843,7 @@ N2D('SmartSliderAbstract', function ($, undefined) {
                 enabled: 0
             },
             postBackgroundAnimations: false,
-            initCallbacks: [],
+            initCallbacks: false,
             dynamicHeight: 0,
             lightbox: [],
             lightboxDeviceImages: [],
@@ -980,8 +980,8 @@ N2D('SmartSliderAbstract', function ($, undefined) {
         this.startCurrentSlideIndex();
         this.firstSlideReady.resolve(this.currentSlide);
 
-        for (var j = 0; j < this.parameters.initCallbacks.length; j++) {
-            (new Function('$', this.parameters.initCallbacks[j])).call(this, $);
+        if (typeof this.parameters.initCallbacks === 'function') {
+            this.parameters.initCallbacks.call(this, $);
         }
 
         if (this.disableLayerAnimations === true) {
@@ -1390,13 +1390,16 @@ N2D('SmartSliderAbstract', function ($, undefined) {
     SmartSliderAbstract.prototype.initNotCarousel = function () {
         this.next = function (isSystem, customAnimation) {
             var nextIndex = this.currentSlide.index + 1;
-            if (nextIndex < this.slides.length) {
+            if (nextIndex <= this.slides.length - this.getActivatedSlides()) {
                 return this.changeTo(nextIndex, false, isSystem, customAnimation);
             }
             return false;
         };
         this.previous = function (isSystem, customAnimation) {
             var nextIndex = this.currentSlide.index - 1;
+            if (nextIndex >= this.slides.length - this.getActivatedSlides()) {
+                nextIndex = this.slides.length - this.getActivatedSlides() - 1;
+            }
             if (nextIndex >= 0) {
                 return this.changeTo(nextIndex, true, isSystem, customAnimation);
             }
@@ -1423,12 +1426,13 @@ N2D('SmartSliderAbstract', function ($, undefined) {
         };
 
         var hideOrShowArrows = $.proxy(function (i) {
-            if (i === 0) {
+            if (i === 0 || this.slides.length <= this.getActivatedSlides()) {
                 this.widgets.setState('nonCarouselFirst', true);
             } else {
                 this.widgets.setState('nonCarouselFirst', false);
             }
-            if (i === this.slides.length - 1) {
+
+            if (i > this.slides.length - 1 - this.getActivatedSlides()) {
                 this.widgets.setState('nonCarouselLast', true);
             } else {
                 this.widgets.setState('nonCarouselLast', false);
@@ -1442,6 +1446,14 @@ N2D('SmartSliderAbstract', function ($, undefined) {
         this.sliderElement.on('sliderSwitchTo', function (e, i) {
             hideOrShowArrows(i);
         });
+
+        this.sliderElement.on('SliderResize', $.proxy(function (e) {
+            hideOrShowArrows(this.currentSlide.index);
+        }, this));
+    };
+
+    SmartSliderAbstract.prototype.getActivatedSlides = function () {
+        return 1;
     };
 
     SmartSliderAbstract.prototype.isChangePossibleCarousel = function (direction) {
@@ -1469,6 +1481,28 @@ N2D('SmartSliderAbstract', function ($, undefined) {
         this.next = this.nextCarousel;
         this.previous = this.previousCarousel;
         this.isChangePossible = this.isChangePossibleCarousel;
+
+        var hideOrShowArrows = $.proxy(function () {
+            if (this.slides.length <= this.getActivatedSlides()) {
+                this.widgets.setState('nonCarouselFirst', true);
+                this.widgets.setState('nonCarouselLast', true);
+            } else {
+                this.widgets.setState('nonCarouselFirst', false);
+                this.widgets.setState('nonCarouselLast', false);
+            }
+        }, this);
+
+        this.startedDeferred.done($.proxy(function () {
+            hideOrShowArrows(this.currentSlide.index);
+        }, this));
+
+        this.sliderElement.on('sliderSwitchTo', function (e, i) {
+            hideOrShowArrows(i);
+        });
+
+        this.sliderElement.on('SliderResize', $.proxy(function (e) {
+            hideOrShowArrows(this.currentSlide.index);
+        }, this));
     };
 
     SmartSliderAbstract.prototype.nextCarousel = function (isSystem, customAnimation) {
@@ -1509,33 +1543,35 @@ N2D('SmartSliderAbstract', function ($, undefined) {
             var time = $.now();
             $.when($.when.apply($, this.backgrounds.preLoadSlides(this.getVisibleSlides(this.slides[nextSlideIndex]))), this.focus(isSystem)).done($.proxy(function () {
 
-                if (this.mainAnimationLastChangeTime <= time) {
-                    this.mainAnimationLastChangeTime = time;
-                    // If the current main animation haven't finished yet or the prefered next slide is the same as our current slide we have nothing to do
-                    var state = this.mainAnimation.getState();
-                    if (state === 'ended') {
+                if (nextSlideIndex !== this.currentSlide.index) {
+                    if (this.mainAnimationLastChangeTime <= time) {
+                        this.mainAnimationLastChangeTime = time;
+                        // If the current main animation haven't finished yet or the prefered next slide is the same as our current slide we have nothing to do
+                        var state = this.mainAnimation.getState();
+                        if (state === 'ended') {
 
-                        if (typeof isSystem === 'undefined') {
-                            isSystem = false;
+                            if (typeof isSystem === 'undefined') {
+                                isSystem = false;
+                            }
+
+                            var animation = this.mainAnimation;
+                            if (typeof customAnimation !== 'undefined') {
+                                animation = customAnimation;
+                            }
+
+                            this._changeTo(nextSlideIndex, reversed, isSystem, customAnimation);
+
+                            n2c.log('Change From:', this.currentSlide.index, ' To: ', nextSlideIndex, ' Reversed: ', reversed, ' System: ', isSystem);
+                            animation.changeTo(this.currentSlide, this.slides[nextSlideIndex], reversed, isSystem);
+
+                            this._changeCurrentSlide(nextSlideIndex);
+
+                        } else if (state === 'initAnimation' || state === 'playing') {
+                            this.sliderElement.off('.fastChange').one('mainAnimationComplete.fastChange', $.proxy(function () {
+                                this.changeTo.call(this, nextSlideIndex, reversed, isSystem, customAnimation);
+                            }, this));
+                            this.mainAnimation.timeScale(this.mainAnimation.timeScale() * 2);
                         }
-
-                        var animation = this.mainAnimation;
-                        if (typeof customAnimation !== 'undefined') {
-                            animation = customAnimation;
-                        }
-
-                        this._changeTo(nextSlideIndex, reversed, isSystem, customAnimation);
-
-                        n2c.log('Change From:', this.currentSlide.index, ' To: ', nextSlideIndex, ' Reversed: ', reversed, ' System: ', isSystem);
-                        animation.changeTo(this.currentSlide, this.slides[nextSlideIndex], reversed, isSystem);
-
-                        this._changeCurrentSlide(nextSlideIndex);
-
-                    } else if (state === 'initAnimation' || state === 'playing') {
-                        this.sliderElement.off('.fastChange').one('mainAnimationComplete.fastChange', $.proxy(function () {
-                            this.changeTo.call(this, nextSlideIndex, reversed, isSystem, customAnimation);
-                        }, this));
-                        this.mainAnimation.timeScale(this.mainAnimation.timeScale() * 2);
                     }
                 }
             }, this));
@@ -3145,10 +3181,16 @@ N2D('SmartSliderControlMouseWheel', function ($, undefined) {
 
         this.preventScroll = {
             local: false,
+            curve: false,
+            curveGlobal: false,
             global: false,
             localTimeout: false,
+            curveTimeout: false,
+            curveGlobalTimeout: false,
             globalTimeout: false
         };
+
+        this.maxDelta = 0;
 
         this.slider = slider;
 
@@ -3186,7 +3228,10 @@ N2D('SmartSliderControlMouseWheel', function ($, undefined) {
     };
 
     SmartSliderControlMouseWheel.prototype.onGlobalMouseWheel = function (e) {
-        if (this.preventScroll.local) {
+
+        this.onCurveEvent(e);
+
+        if (this.preventScroll.local || this.preventScroll.curve || Math.abs(e.deltaY) < this.maxDelta / 2) {
             e.preventDefault();
         } else {
             if (this.preventScroll.global) {
@@ -3210,7 +3255,8 @@ N2D('SmartSliderControlMouseWheel', function ($, undefined) {
 
                 e.preventDefault();
 
-                this.local1();
+                this.startCurveWatcher(e);
+                this.local();
                 this.global();
             }
         } else {
@@ -3220,13 +3266,69 @@ N2D('SmartSliderControlMouseWheel', function ($, undefined) {
 
                 e.preventDefault();
 
-                this.local1();
+                this.startCurveWatcher(e);
+                this.local();
                 this.global();
             }
         }
     };
 
-    SmartSliderControlMouseWheel.prototype.local1 = function () {
+    SmartSliderControlMouseWheel.prototype.startCurveWatcher = function (e) {
+
+        if (this.preventScroll.curve !== false) {
+            clearTimeout(this.preventScroll.curveTimeout);
+        }
+
+        if (!this.preventScroll.curveGlobal) {
+            this.dynamicDelta = false;
+            this.lastDeltaY = e.deltaY;
+            this.preventScroll.curveGlobal = true;
+
+            this.preventScroll.curveGlobalTimeout = setTimeout($.proxy(function () {
+                this.preventScroll.curveGlobal = false;
+                this.maxDelta = 0;
+            }, this), 500);
+        }
+
+        this.preventScroll.curve = true;
+
+        this.preventScroll.curveTimeout = setTimeout($.proxy(this.releaseCurveLock, this), 5000);
+    };
+
+    SmartSliderControlMouseWheel.prototype.onCurveEvent = function (e) {
+        if (this.preventScroll.curveGlobal) {
+
+            if (!this.dynamicDelta && this.lastDeltaY !== e.deltaY) {
+                this.lastDeltaY = e.deltaY;
+                this.dynamicDelta = true;
+            }
+
+            var absdeltaY = Math.abs(e.deltaY);
+            if (this.preventScroll.curve && this.maxDelta / 2 > absdeltaY) {
+                // It seems like curve is going to down. We can allow new scroll change action
+                this.releaseCurveLock();
+            }
+
+            this.maxDelta = Math.max(this.maxDelta, absdeltaY);
+
+
+            if (this.preventScroll.curveGlobalTimeout) {
+                clearTimeout(this.preventScroll.curveGlobalTimeout);
+            }
+
+            this.preventScroll.curveGlobalTimeout = setTimeout($.proxy(function () {
+                this.preventScroll.curveGlobal = false;
+                this.maxDelta = 0;
+            }, this), 500);
+        }
+    };
+
+    SmartSliderControlMouseWheel.prototype.releaseCurveLock = function () {
+        this.preventScroll.curve = false;
+        clearTimeout(this.preventScroll.curveTimeout);
+    };
+
+    SmartSliderControlMouseWheel.prototype.local = function () {
 
         if (this.preventScroll.local !== false) {
             clearTimeout(this.preventScroll.localTimeout);
@@ -3236,6 +3338,9 @@ N2D('SmartSliderControlMouseWheel', function ($, undefined) {
 
         this.preventScroll.localTimeout = setTimeout($.proxy(function () {
             this.preventScroll.local = false;
+            if (!this.dynamicDelta) {
+                this.releaseCurveLock();
+            }
         }, this), 1000);
     };
 
@@ -6666,7 +6771,8 @@ N2D('FrontendItemVimeo', function ($, undefined) {
             portrait: "0",
             loop: "0",
             color: "00adef",
-            volume: "-1"
+            volume: "-1",
+            dnt: "0"
         }, parameters);
 
 
@@ -6714,7 +6820,7 @@ N2D('FrontendItemVimeo', function ($, undefined) {
 
         var playerElement = $('<iframe allow="autoplay; encrypted-media" id="' + this.playerId + '-frame" src="https://player.vimeo.com/video/' + this.parameters.vimeocode + '?autoplay=0&' +
             '_video&title=' + this.parameters.title + '&byline=' + this.parameters.byline + "&background=" + this.parameters.background + '&portrait=' + this.parameters.portrait + '&color=' + this.parameters.color +
-            '&loop=' + this.parameters.loop + (this.parameters.quality == '-1' ? '' : '&quality=' + this.parameters.quality) + '" style="position: absolute; top:0; left: 0; width: 100%; height: 100%;" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>');
+            '&loop=' + this.parameters.loop + (this.parameters.quality == '-1' ? '' : '&quality=' + this.parameters.quality) + '&dnt=' + this.parameters['privacy-enhanced'] + '" style="position: absolute; top:0; left: 0; width: 100%; height: 100%;" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>');
         this.$playerElement.prepend(playerElement);
 
         this.isStatic = playerElement.closest('.n2-ss-static-slide').length;

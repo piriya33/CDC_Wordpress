@@ -354,6 +354,13 @@ class Education {
 
 		$addons = array(
 			array(
+				'name'        => esc_html__( 'ActiveCampaign', 'wpforms' ),
+				'slug'        => 'activecampaign',
+				'img'         => 'addon-icon-activecampaign.png',
+				'plugin'      => 'wpforms-activecampaign/wpforms-activecampaign.php',
+				'plugin_slug' => 'wpforms-activecampaign',
+			),
+			array(
 				'name'        => esc_html__( 'AWeber', 'wpforms' ),
 				'slug'        => 'aweber',
 				'img'         => 'addon-icon-aweber.png',
@@ -382,7 +389,7 @@ class Education {
 				'plugin_slug' => 'wpforms-getresponse',
 			),
 			array(
-				'name'        => esc_html__( 'MailChimp', 'wpforms' ),
+				'name'        => esc_html__( 'Mailchimp', 'wpforms' ),
 				'slug'        => 'mailchimp',
 				'img'         => 'addon-icon-mailchimp.png',
 				'plugin'      => 'wpforms-mailchimp/wpforms-mailchimp.php',

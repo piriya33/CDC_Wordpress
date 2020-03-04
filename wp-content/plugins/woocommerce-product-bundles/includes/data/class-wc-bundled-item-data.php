@@ -395,7 +395,7 @@ class WC_Bundled_Item_Data {
 
 		} else {
 
-			WC_Cache_Helper::incr_cache_prefix( 'bundled_data_items' );
+			WC_PB_Core_Compatibility::invalidate_cache_group( 'bundled_data_items' );
 		}
 
 		return $this->get_id();

@@ -89,9 +89,11 @@ class Tribe__Tickets_Plus__QR {
 		/**
 		 * Filters the check for security code when checking in a ticket
 		 *
-		 * @param false bool the default is not to check security code
+		 * @since 4.11.2 Change the default to true.
+		 *
+		 * @param bool true The default is to check the security code.
 		 */
-		$check_security_code = apply_filters( 'tribe_tickets_plus_qr_check_security_code', false );
+		$check_security_code = apply_filters( 'tribe_tickets_plus_qr_check_security_code', true );
 
 		$service_provider = tribe( 'tickets.data_api' )->get_ticket_provider( $ticket_id );
 

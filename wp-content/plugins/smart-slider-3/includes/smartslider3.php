@@ -21,9 +21,6 @@ class SmartSlider3 {
             wp_redirect(admin_url('admin.php?page=' . NEXTEND_SMARTSLIDER_3_URL_PATH));
             exit;
         }
-        require_once dirname(__FILE__) . '/blackfriday.php';
-    
-    
 
         add_action('widgets_init', 'SmartSlider3::widgets_init', 11);
         add_action('widgets_admin_page', 'SmartSlider3::widgets_admin_page');

@@ -87,6 +87,14 @@ export function* handleAddition( { actions } ) {
 	const startTimeInput = yield call( toTime, startMoment );
 	const endTimeInput = yield call( toTime, endMoment );
 
+	let numDaySpan = yield call( [ endMoment, 'diff' ], startMoment, 'days' );
+	if ( numDaySpan > 7 ) {
+		numDaySpan = 7;
+	} else if ( numDaySpan < 1 ) {
+		numDaySpan = 1;
+	}
+	const multiDaySpan = recurringConstants.NUM_DAY_SPAN_MAPPING_TO_MULTI_DAY_SPAN[ numDaySpan ];
+
 	yield put( actions.add( {
 		[ KEY_TYPE ]: recurringConstants.SINGLE,
 		[ KEY_ALL_DAY ]: allDay,
@@ -112,7 +120,7 @@ export function* handleAddition( { actions } ) {
 		/* KEY_MONTH is one-indexed, January is 1, December is 12 */
 		[ KEY_MONTH ]: [ startMonth + 1 ],
 		[ KEY_TIMEZONE ]: timezone,
-		[ KEY_MULTI_DAY_SPAN ]: recurringConstants.NEXT_DAY,
+		[ KEY_MULTI_DAY_SPAN ]: multiDaySpan,
 	} ) );
 }
 

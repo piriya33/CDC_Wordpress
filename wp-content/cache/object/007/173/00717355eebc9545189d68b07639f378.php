@@ -1,4 +1,4 @@
-U�6^<?php exit; ?>a:1:{s:7:"content";O:8:"stdClass":23:{s:2:"ID";s:5:"16283";s:11:"post_author";s:1:"1";s:9:"post_date";s:19:"2017-07-10 17:21:14";s:13:"post_date_gmt";s:19:"2017-07-10 10:21:14";s:12:"post_content";s:970:"<h1>CDC Downloader</h1>
+�3_^<?php exit; ?>a:1:{s:7:"content";O:8:"stdClass":23:{s:2:"ID";s:5:"16283";s:11:"post_author";s:1:"1";s:9:"post_date";s:19:"2017-07-10 17:21:14";s:13:"post_date_gmt";s:19:"2017-07-10 10:21:14";s:12:"post_content";s:970:"<h1>CDC Downloader</h1>
 <h2 style="text-align: left;">โปรแกรม Download และข้อมูลของชมรมฯ</h2>
 <h3></h3>
 <h3>สามารถ Download โปรแกรม CDC Downloader</h3>

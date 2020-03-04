@@ -66,6 +66,10 @@ class N2Image extends N2CacheImage {
                 $y
             ));
 
+            if (substr($resizedPath, 0, 5) == 'http:' || substr($resizedPath, 0, 6) == 'https:') {
+                return $resizedPath;
+            }
+
             if ($resizedPath === $originalImageUrl) {
                 return N2Filesystem::pathToAbsoluteURL($originalImageUrl);
             }

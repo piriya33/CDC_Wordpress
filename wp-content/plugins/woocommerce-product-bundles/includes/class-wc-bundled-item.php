@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * The bunded item class is a product container that initializes and holds pricing, availability and variation/attribute-related data for a bundled product.
  *
  * @class    WC_Bundled_Item
- * @version  6.0.0
+ * @version  6.1.1
  */
 class WC_Bundled_Item {
 
@@ -227,7 +227,7 @@ class WC_Bundled_Item {
 			$bundled_product = wc_get_product( $this->get_product_id() );
 
 			// if not present, item cannot be purchased.
-			if ( $bundled_product ) {
+			if ( $bundled_product && $bundled_product->is_type( array( 'simple', 'variable', 'subscription', 'variable-subscription' ) ) ) {
 
 				$this->product     = $bundled_product;
 				$this->title       = 'yes' === $this->override_title ? $this->title : $bundled_product->get_title();
@@ -677,17 +677,17 @@ class WC_Bundled_Item {
 	 */
 	public function is_discount_allowed_on_sale_price() {
 
-		$discount_from_regular = $this->product->is_type( 'variable-subscription' ) ? false : true;
-
 		/**
 		 * 'woocommerce_bundled_item_discount_from_regular' filter.
 		 *
-		 * Controls whether bundled item discounts will always be applied on the regular price (default), ignoring any defined sale price.
+		 * Controls whether bundled item discounts will always be applied on the regular price, ignoring any defined sale price.
 		 *
 		 * @param  boolean          $discount_from_regular
 		 * @param  WC_Bundled_Item  $this
 		 */
-		return false === apply_filters( 'woocommerce_bundled_item_discount_from_regular', $discount_from_regular, $this );
+		$discount_from_regular = $this->product->is_type( 'variable-subscription' ) ? false : (boolean) apply_filters( 'woocommerce_bundled_item_discount_from_regular', false, $this );
+
+		return false === $discount_from_regular;
 	}
 
 	/**
@@ -1413,9 +1413,10 @@ class WC_Bundled_Item {
 	/**
 	 * Returns this product's available variations array.
 	 *
+	 * @param  boolean  $filter_prices
 	 * @return array
 	 */
-	public function get_product_variations() {
+	public function get_product_variations( $filter_prices = true ) {
 
 		if ( ! empty( $this->product_variations ) ) {
 			return $this->product_variations;
@@ -1429,19 +1430,15 @@ class WC_Bundled_Item {
 			// Filter variations data.
 			add_filter( 'woocommerce_available_variation', array( $this, 'filter_variation' ), 10, 3 );
 
-			$this->add_price_filters();
-
-			if ( 'variable-subscription' === $this->product->get_type() ) {
-				WC_PB_Product_Prices::$bundled_item = $this;
+			if ( $filter_prices ) {
+				$this->add_price_filters();
 			}
 
 			$bundled_item_variations = $this->product->get_available_variations();
 
-			if ( 'variable-subscription' === $this->product->get_type() ) {
-				WC_PB_Product_Prices::$bundled_item = false;
+			if ( $filter_prices ) {
+				$this->remove_price_filters();
 			}
-
-			$this->remove_price_filters();
 
 			remove_filter( 'woocommerce_available_variation', array( $this, 'filter_variation' ), 10, 3 );
 

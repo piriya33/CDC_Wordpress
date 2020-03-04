@@ -16,6 +16,26 @@ class N2TransferData {
             curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 20);
             curl_setopt($ch, CURLOPT_TIMEOUT, 30);
             curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.0.3705; .NET CLR 1.1.4322)');
+            $proxy = new WP_HTTP_Proxy();
+
+            if ($proxy->is_enabled() && $proxy->send_through_proxy($url)) {
+
+
+                curl_setopt($ch, CURLOPT_PROXYTYPE, CURLPROXY_HTTP);
+
+                curl_setopt($ch, CURLOPT_PROXY, $proxy->host());
+
+                curl_setopt($ch, CURLOPT_PROXYPORT, $proxy->port());
+
+
+                if ($proxy->use_authentication()) {
+
+                    curl_setopt($ch, CURLOPT_PROXYAUTH, CURLAUTH_ANY);
+
+                    curl_setopt($ch, CURLOPT_PROXYUSERPWD, $proxy->authentication());
+                }
+            }
+        
 
             if (!empty($options['referer'])) {
                 curl_setopt($ch, CURLOPT_REFERER, $options['referer']);

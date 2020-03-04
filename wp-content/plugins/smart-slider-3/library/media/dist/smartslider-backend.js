@@ -2827,23 +2827,12 @@ N2D('SlidesManager', function ($, undefined) {
                                     html5Video = video.match(/\.(mp4)/i);
 
                                 if (youtubeMatch) {
-                                    N2Classes.AjaxHelper.getJSON('https://www.googleapis.com/youtube/v3/videos?id=' + encodeURI(youtubeMatch[2]) + '&part=snippet&key=AIzaSyC3AolfvPAPlJs-2FgyPJdEEKS6nbPHdSM').done($.proxy(function (data) {
-                                        if (data.items.length) {
-                                            var snippet = data.items[0].snippet;
-
-                                            var thumbnails = data.items[0].snippet.thumbnails,
-                                                thumbnail = thumbnails.maxres || thumbnails.standard || thumbnails.high || thumbnails.medium || thumbnails.default;
-
-                                            manager._addQuickVideo(this, {
-                                                type: 'youtube',
-                                                title: snippet.title,
-                                                description: snippet.description,
-                                                image: thumbnail.url,
-                                                video: video
-                                            });
-                                        }
-                                    }, this)).fail(function (data) {
-                                        N2Classes.Notification.error(data.error.errors[0].message);
+                                    manager._addQuickVideo(this, {
+                                        type: 'youtube',
+                                        title: 'YouTube video',
+                                        description: '',
+                                        image: 'https://i.ytimg.com/vi/' + encodeURI(youtubeMatch[2]) + '/maxresdefault.jpg',
+                                        video: video
                                     });
                                 } else if (vimeoMatch) {
                                     N2Classes.AjaxHelper.getJSON('https://vimeo.com/api/v2/video/' + vimeoMatch[3] + '.json').done($.proxy(function (data) {
@@ -17017,7 +17006,7 @@ N2D('ItemImage', ['Item'], function ($, undefined) {
     ItemImage.prototype._render = function (data) {
         data.styleclass = '';
     
-        var $node = $('<div class="' + data.styleclass + ' n2-ss-img-wrapper n2-ow" style="overflow:hidden"></div>'),
+        var $node = $('<div class="' + data.styleclass + ' n2-ss-img-wrapper n2-ow"></div>'),
             $a = $node;
 
         if (data['href'] != '#' && data['href'] != '') {
@@ -17361,20 +17350,14 @@ N2D('ItemYoutube', ['Item'], function ($, undefined) {
                 youtubeMatch = data.youtubeurl.match(youtubeRegexp);
 
             if (youtubeMatch) {
-                N2Classes.AjaxHelper.getJSON('https://www.googleapis.com/youtube/v3/videos?id=' + encodeURI(youtubeMatch[2]) + '&part=snippet&key=AIzaSyC3AolfvPAPlJs-2FgyPJdEEKS6nbPHdSM').done($.proxy(function (_data) {
-                    if (_data.items.length) {
+                var url = 'https://i.ytimg.com/vi/' + youtubeMatch[2] + '/maxresdefault.jpg';
+                if (this.values.youtubeurl == '{video_url}') {
+                    url = 'https://i.ytimg.com/vi/{video_id}/maxresdefault.jpg';
+                }
 
-                        var thumbnails = _data.items[0].snippet.thumbnails,
-                            thumbnail = thumbnails.maxres || thumbnails.standard || thumbnails.high || thumbnails.medium || thumbnails.default,
-                            url = thumbnail.url;
-                        if (this.values.youtubeurl == '{video_url}') {
-                            url = url.replace(youtubeMatch[2], '{video_id}');
-                        }
-                        $('#item_youtubeimage').val(url).trigger('change');
-                    }
-                }, this)).fail(function (data) {
-                    N2Classes.Notification.error(data.error.errors[0].message);
-                });
+                setTimeout(function () {
+                    $('#item_youtubeimage').val(url).trigger('change');
+                }, 100);
             } else {
                 N2Classes.Notification.error('The provided URL does not match any known YouTube url or code!');
             }

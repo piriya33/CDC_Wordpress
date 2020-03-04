@@ -92,6 +92,13 @@ class N2WordpressAssetInjector {
             }
         }
 
+        if (defined('WP_ROCKET_VERSION')) {
+            add_filter('rocket_buffer', array(
+                'N2WordpressAssetInjector',
+                'platformRenderEnd'
+            ), -100000);
+        }
+
         ob_start("N2WordpressAssetInjector::output_callback");
 
         if (defined('SMART_SLIDER_OB_START')) {

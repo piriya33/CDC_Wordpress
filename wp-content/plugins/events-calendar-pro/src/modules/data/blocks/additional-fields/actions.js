@@ -2,7 +2,6 @@
  * Internal dependencies
  */
 import { types } from '@moderntribe/events-pro/data/blocks/additional-fields';
-import { SET_ADDITIONAL_FIELD_OUTPUT } from './types';
 
 export const setInitialState = ( props ) => ( {
 	type: types.SET_ADDITIONAL_FIELD_INITIAL_STATE,
@@ -11,20 +10,6 @@ export const setInitialState = ( props ) => ( {
 
 export const setFieldChange = ( name ) => ( {
 	type: types.SET_ADDITIONAL_FIELD_CHANGE,
-	payload: {
-		name,
-	},
-} );
-
-export const setFieldBlur = ( name ) => ( {
-	type: types.SET_ADDITIONAL_FIELD_BLUR,
-	payload: {
-		name,
-	},
-} );
-
-export const setFieldBlurWithType = ( name, type ) => ( {
-	type: `${ types.SET_ADDITIONAL_FIELD_BLUR }/${ type }`,
 	payload: {
 		name,
 	},
@@ -125,9 +110,16 @@ export const setFieldMetaKey = ( name, metaKey ) => ( {
 } );
 
 export const setFieldOutput = ( name, output ) => ( {
-	type: SET_ADDITIONAL_FIELD_OUTPUT,
+	type: types.SET_ADDITIONAL_FIELD_OUTPUT,
 	payload: {
 		name,
 		output,
+	},
+} );
+
+export const setFieldOutputByType = ( name, type ) => ( {
+	type: `${ types.SET_ADDITIONAL_FIELD_OUTPUT_BY_TYPE }/${ type }`,
+	payload: {
+		name,
 	},
 } );

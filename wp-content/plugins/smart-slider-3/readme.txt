@@ -4,8 +4,8 @@ Tags: slider, wordpress slider, image slider, layer slider, responsive slider, s
 Donate link: https://sites.fastspring.com/nextend/product/smartslider3donate
 Requires at least: 4.6
 Tested up to: 5.3
-Stable tag: 3.3.26
-Requires PHP: 5.6.20
+Stable tag: 3.3.27
+Requires PHP: 7.0.0
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -195,6 +195,17 @@ Of course! Smart Slider use protocol relative urls which works fine on http:// a
 9. Layer slider with layers styles. Made with FREE version.
 
 == Changelog ==
+
+= 3.3.27 - 12. February 2020. =
+* Feature: Edge selector at Scroll to slider on user interaction 
+* Feature: Vimeo privacy enhanced mode 
+* Fix: Youtube video adding 
+* Fix: Wordfence array to string errors 
+* Fix: Twenty twenty theme video compatibility 
+* Fix: WP Rocket compatibility 
+* Fix: WordPress Post generator author URL and avatar image 
+* Fix: Exclude from OceanWP lightbox 
+* Fix: PHP 7.4.1 PHP notices fixed
 
 = 3.3.26 - 8. January 2020. =
 * Feature: Keyboard navigation detection improvement 

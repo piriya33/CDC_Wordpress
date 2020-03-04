@@ -5,6 +5,14 @@ import { actions } from '@moderntribe/events-pro/data/blocks/additional-fields';
 import { FIELD_TYPES } from '@moderntribe/events-pro/blocks/additional-fields/utils';
 import { DEFAULT_STATE } from '../reducers/field';
 
+jest.mock( '@moderntribe/common/data/plugins', () => {
+	return {
+		constants: {
+			EVENTS_PRO_PLUGIN: 'events-pro',
+		},
+	};
+} );
+
 describe( 'Actions in Additional Fields', () => {
 	const fieldName = '_ecp_custom_23';
 
@@ -69,16 +77,12 @@ describe( 'Actions in Additional Fields', () => {
 		expect( actions.setFieldOutput( fieldName, 'Label on my field' ) ).toMatchSnapshot();
 	} );
 
-	test( 'set field blur', () => {
-		expect( actions.setFieldBlur( fieldName ) ).toMatchSnapshot();
-	} );
-
-	test( 'set field blur with type type', () => {
-		expect( actions.setFieldBlurWithType( fieldName, FIELD_TYPES.text ) ).toMatchSnapshot();
-		expect( actions.setFieldBlurWithType( fieldName, FIELD_TYPES.checkbox ) ).toMatchSnapshot();
-		expect( actions.setFieldBlurWithType( fieldName, FIELD_TYPES.radio ) ).toMatchSnapshot();
-		expect( actions.setFieldBlurWithType( fieldName, FIELD_TYPES.dropdown ) ).toMatchSnapshot();
-		expect( actions.setFieldBlurWithType( fieldName, FIELD_TYPES.textarea ) ).toMatchSnapshot();
-		expect( actions.setFieldBlurWithType( fieldName, FIELD_TYPES.url) ).toMatchSnapshot();
+	test( 'set field output by type', () => {
+		expect( actions.setFieldOutputByType( fieldName, FIELD_TYPES.text ) ).toMatchSnapshot();
+		expect( actions.setFieldOutputByType( fieldName, FIELD_TYPES.checkbox ) ).toMatchSnapshot();
+		expect( actions.setFieldOutputByType( fieldName, FIELD_TYPES.radio ) ).toMatchSnapshot();
+		expect( actions.setFieldOutputByType( fieldName, FIELD_TYPES.dropdown ) ).toMatchSnapshot();
+		expect( actions.setFieldOutputByType( fieldName, FIELD_TYPES.textarea ) ).toMatchSnapshot();
+		expect( actions.setFieldOutputByType( fieldName, FIELD_TYPES.url) ).toMatchSnapshot();
 	} );
 } );

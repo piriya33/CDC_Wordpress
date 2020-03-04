@@ -355,11 +355,7 @@ abstract class N2SmartSliderAbstract extends N2SmartSliderRenderableAbstract {
                         var anchorparts = anchor.split("-");
                         slide = parseInt(anchorparts[anchorparts.length - 1])-1;
                     }
-                    N2R(\'windowLoad\',function($){
-                        N2R("#n2-ss-' . $this->sliderId . '", function($, slider){
-                            slider.slide(slide);
-                        });
-                    });
+                    window[\'ss\' + ' . $this->sliderId . '] = slide;
                 }
 				N2R(\'windowLoad\',function($){';
                 for ($i = 1; $i < $slide_count + 1; $i++) {
@@ -384,7 +380,7 @@ abstract class N2SmartSliderAbstract extends N2SmartSliderRenderableAbstract {
             }
             $slider = $aliasHTML . $slider;
             if (!empty($aliasJS)) {
-                N2JS::addInline($aliasJS);
+                N2JS::addInline($aliasJS, true);
             }
         }
 

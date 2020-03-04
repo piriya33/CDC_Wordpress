@@ -64,14 +64,14 @@ class Tribe__Tickets_Plus__APM {
 	 */
 	public function filter_args( array $filter_args ) {
 		$filter_args[ Tribe__Tickets_Plus__APM__Sales_Filter::$key ] = [
-			'name'        => esc_html__( 'Ticket Sales', 'event-tickets-plus' ),
+			'name'        => esc_html( sprintf( __( '%s Sales', 'event-tickets-plus' ), tribe_get_ticket_label_singular( 'apm_sales_filter_name' ) ) ),
 			'custom_type' => 'custom_ticket_sales',
 			'sortable'    => 'true',
 			'cast'        => 'NUMERIC',
 		];
 
 		$filter_args[ Tribe__Tickets_Plus__APM__Stock_Filter::$key ] = [
-			'name'        => esc_html__( 'Ticket Stock', 'event-tickets-plus' ),
+			'name'        => esc_html( sprintf( __( '%s Stock', 'event-tickets-plus' ), tribe_get_ticket_label_singular( 'apm_stock_filter_name' ) ) ),
 			'custom_type' => 'custom_ticket_stock',
 			'sortable'    => 'true',
 			'cast'        => 'NUMERIC',

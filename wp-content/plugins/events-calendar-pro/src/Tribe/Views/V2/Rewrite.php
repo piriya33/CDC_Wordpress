@@ -9,6 +9,7 @@
 
 namespace Tribe\Events\Pro\Views\V2;
 
+use Tribe__Events__Main as TEC;
 use Tribe__Events__Organizer as Organizer;
 use Tribe__Events__Rewrite as TEC_Rewrite;
 use Tribe__Events__Venue as Venue;
@@ -157,8 +158,13 @@ class Rewrite {
 
 		$pagination_rules = [];
 		foreach ( $rules as $regex => $rewrite ) {
-			$key                      = rtrim( $regex, '/?$' ) . '/' . $page_base . '/(\\d+)/?$';
-			$value                    = add_query_arg( [ 'paged' => '$matches[1]' ], $rewrite );
+			$key            = rtrim( $regex, '/?$' ) . '/' . $page_base . '/(\\d+)/?$';
+			$is_tax_rule    = preg_match( '/(' . TEC::TAXONOMY . '|tag)=\$matches/', $rewrite );
+			$page_match_pos = $is_tax_rule ? 3 : 1;
+			$value          = false !== strpos( $rewrite, '?' ) ?
+				$rewrite . '&paged=$matches[' . $page_match_pos . ']'
+				: '?paged=$matches[' . $page_match_pos . ']';
+
 			$pagination_rules[ $key ] = $value;
 		}
 
@@ -170,7 +176,7 @@ class Rewrite {
 	 * Filters the handled rewrite rules, the one used to parse plain links into permalinks, to add the ones
 	 * managed by PRO.
 	 *
-	 * @since TBD
+	 * @since 5.0.1
 	 *
 	 * @param array<string,string> $handled_rules The handled rules, as produced by The Events Calendar base code; in
 	 *                                            the same format used by WordPress to store and manage rewrite rules.
@@ -195,7 +201,7 @@ class Rewrite {
 	 * Filters the query vars map used by the Rewrite component to parse plain links into permalinks to add the elements
 	 * needed to support PRO components.
 	 *
-	 * @since TBD
+	 * @since 5.0.1
 	 *
 	 * @param array<string,string> $query_vars_map The query variables map, as produced by The Events Calendar code.
 	 *                                             Shape is `[ <pattern> => <query_var> ].

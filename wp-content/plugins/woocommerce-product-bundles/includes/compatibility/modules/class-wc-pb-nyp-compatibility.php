@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * NYP Compatibility.
  *
- * @version  5.5.0
+ * @version  6.0.4
  */
 class WC_PB_NYP_Compatibility {
 
@@ -61,10 +61,29 @@ class WC_PB_NYP_Compatibility {
 
 			WC_PB_Compatibility::$nyp_prefix = $item->get_id();
 
+			if( $item->is_optional() || ! $item->get_quantity( 'min' ) ) {
+				add_filter( 'wc_nyp_data_attributes', array( __CLASS__, 'nyp_data_attributes' ) );
+			}
+
 			WC_Name_Your_Price()->display->display_price_input( $product_id, self::nyp_cart_prefix( false, $product_id ) );
+
+			remove_filter( 'wc_nyp_data_attributes', array( __CLASS__, 'nyp_data_attributes' ) );
 
 			WC_PB_Compatibility::$nyp_prefix = '';
 		}
+	}
+
+	/**
+	 * Adds bundled item's optional setting to the NYP attributes.
+	 *
+	 * @since  6.0.4
+	 *
+	 * @param  array  $atrributes - The array of attributes.
+	 * @return array
+	 */
+	public static function nyp_data_attributes( $attributes ) {
+		$attributes[ 'optional' ] = 'yes';
+		return $attributes;
 	}
 
 	/**

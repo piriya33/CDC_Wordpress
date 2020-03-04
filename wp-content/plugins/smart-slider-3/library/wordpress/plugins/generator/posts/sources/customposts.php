@@ -358,14 +358,16 @@ class N2GeneratorPostsCustomPosts extends N2GeneratorAbstract {
 
             $record['id'] = $post->ID;
 
-            $record['url']         = get_permalink();
-            $record['title']       = apply_filters('the_title', get_the_title(), $post->ID);
-            $record['content']     = get_the_content();
-            $record['description'] = preg_replace('#\[[^\]]+\]#', '', $record['content']);
-            $record['author_name'] = $record['author'] = get_the_author();
-            $record['author_url']  = get_the_author_meta('url');
-            $record['date']        = get_the_date();
-            $record['modified']    = get_the_modified_date();
+            $record['url']           = get_permalink();
+            $record['title']         = apply_filters('the_title', get_the_title(), $post->ID);
+            $record['content']       = get_the_content();
+            $record['description']   = preg_replace('#\[[^\]]+\]#', '', $record['content']);
+            $record['author_name']   = $record['author'] = get_the_author();
+            $userID                  = get_the_author_meta('ID');
+            $record['author_url']    = get_author_posts_url($userID);
+            $record['author_avatar'] = get_avatar_url($userID,$userID);
+            $record['date']          = get_the_date();
+            $record['modified']      = get_the_modified_date();
 
             $thumbnail_id             = get_post_thumbnail_id($post->ID);
             $record['featured_image'] = wp_get_attachment_url($thumbnail_id);
@@ -431,8 +433,14 @@ class N2GeneratorPostsCustomPosts extends N2GeneratorAbstract {
             }
 
             $taxonomies = get_post_taxonomies($post->ID);
+            $args       = array(
+                'orderby' => 'parent',
+                'order'   => 'ASC',
+                'fields'  => 'all'
+            );
+
             foreach ($taxonomies AS $taxonomy) {
-                $post_terms = wp_get_post_terms($post->ID, $taxonomy);
+                $post_terms = wp_get_object_terms($post->ID, $taxonomy, $args);
                 for ($j = 0; $j < count($post_terms); $j++) {
                     $record[$taxonomy . '_' . ($j + 1)]                  = $post_terms[$j]->name;
                     $record[$taxonomy . '_' . ($j + 1) . '_ID']          = $post_terms[$j]->term_id;

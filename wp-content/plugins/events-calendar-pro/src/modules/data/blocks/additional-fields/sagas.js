@@ -31,6 +31,15 @@ export function* setInitialState( props ) {
 	] );
 }
 
+export function* setFieldChange( props ) {
+	const { payload = {} } = props;
+	const { name = '' } = payload;
+	const type = yield select( selectors.getFieldType, payload );
+
+	yield put( actions.setFieldIsPristine( props ) );
+	yield put( actions.setFieldOutputByType( name, type ) );
+}
+
 export function* setPristineState( props ) {
 	const { payload = {} } = props;
 	const { name = '' } = payload;
@@ -57,13 +66,6 @@ export function* removeFieldValue( props ) {
 		.filter( ( text ) => text !== value )
 		.join( '|' );
 	yield put( actions.setFieldValue( name, newValue ) );
-}
-
-export function* onFieldBlur( props ) {
-	const { payload = {} } = props;
-	const { name = '' } = payload;
-	const type = yield select( selectors.getFieldType, payload );
-	yield put( actions.setFieldBlurWithType( name, type ) );
 }
 
 export function* setTextFieldOutput( props ) {
@@ -93,25 +95,24 @@ export function* setCheckboxOutput( props ) {
 
 export default function* watchers() {
 	yield takeEvery( types.SET_ADDITIONAL_FIELD_INITIAL_STATE, setInitialState );
-	yield takeEvery( types.SET_ADDITIONAL_FIELD_CHANGE, setPristineState );
+	yield takeEvery( types.SET_ADDITIONAL_FIELD_CHANGE, setFieldChange );
 	yield takeEvery( types.APPEND_ADDITIONAL_FIELD_VALUE, appendFieldValue );
 	yield takeEvery( types.REMOVE_ADDITIONAL_FIELD_VALUE, removeFieldValue );
-	yield takeEvery( types.SET_ADDITIONAL_FIELD_BLUR, onFieldBlur );
 	yield takeEvery(
 		[
-			`${ types.SET_ADDITIONAL_FIELD_BLUR }/${ FIELD_TYPES.text }`,
-			`${ types.SET_ADDITIONAL_FIELD_BLUR }/${ FIELD_TYPES.radio }`,
-			`${ types.SET_ADDITIONAL_FIELD_BLUR }/${ FIELD_TYPES.url }`,
-			`${ types.SET_ADDITIONAL_FIELD_BLUR }/${ FIELD_TYPES.textarea }`,
+			`${ types.SET_ADDITIONAL_FIELD_OUTPUT_BY_TYPE }/${ FIELD_TYPES.text }`,
+			`${ types.SET_ADDITIONAL_FIELD_OUTPUT_BY_TYPE }/${ FIELD_TYPES.radio }`,
+			`${ types.SET_ADDITIONAL_FIELD_OUTPUT_BY_TYPE }/${ FIELD_TYPES.url }`,
+			`${ types.SET_ADDITIONAL_FIELD_OUTPUT_BY_TYPE }/${ FIELD_TYPES.textarea }`,
 		],
 		setTextFieldOutput,
 	);
 	yield takeEvery(
-		`${ types.SET_ADDITIONAL_FIELD_BLUR }/${ FIELD_TYPES.dropdown }`,
+		`${ types.SET_ADDITIONAL_FIELD_OUTPUT_BY_TYPE }/${ FIELD_TYPES.dropdown }`,
 		setDropdownOutput,
 	);
 	yield takeEvery(
-		`${ types.SET_ADDITIONAL_FIELD_BLUR }/${ FIELD_TYPES.checkbox }`,
+		`${ types.SET_ADDITIONAL_FIELD_OUTPUT_BY_TYPE }/${ FIELD_TYPES.checkbox }`,
 		setCheckboxOutput,
 	);
 }

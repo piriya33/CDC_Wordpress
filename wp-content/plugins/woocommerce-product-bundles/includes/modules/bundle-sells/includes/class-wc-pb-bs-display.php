@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Display-related functions and filters.
  *
  * @class    WC_PB_BS_Display
- * @version  5.8.0
+ * @version  6.1.0
  */
 class WC_PB_BS_Display {
 
@@ -92,6 +92,10 @@ class WC_PB_BS_Display {
 			 * Let's "fake" it.
 			 */
 			$bundle = WC_PB_BS_Product::get_bundle( $bundle_sell_ids, $product );
+
+			if ( ! $bundle->get_bundled_items() ) {
+				return;
+			}
 
 			do_action( 'woocommerce_before_bundled_items', $bundle );
 

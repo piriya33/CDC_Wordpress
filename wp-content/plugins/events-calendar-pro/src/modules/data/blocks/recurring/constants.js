@@ -227,3 +227,13 @@ export const FOURTH_DAY_LABEL = __( '4th day', 'tribe-events-calendar-pro' );
 export const FIFTH_DAY_LABEL = __( '5th day', 'tribe-events-calendar-pro' );
 export const SIXTH_DAY_LABEL = __( '6th day', 'tribe-events-calendar-pro' );
 export const SEVENTH_DAY_LABEL = __( '7th day', 'tribe-events-calendar-pro' );
+
+export const NUM_DAY_SPAN_MAPPING_TO_MULTI_DAY_SPAN = {
+	1: NEXT_DAY,
+	2: SECOND_DAY,
+	3: THIRD_DAY,
+	4: FOURTH_DAY,
+	5: FIFTH_DAY,
+	6: SIXTH_DAY,
+	7: SEVENTH_DAY,
+};

@@ -30,8 +30,8 @@ class Tribe__Tickets_Plus__Commerce__WooCommerce__Main extends Tribe__Tickets_Pl
 	public $attendee_object = 'tribe_wooticket';
 
 	/**
-	 * Prefix used to generate the key of the transient to be associated with a different user session to avoid redirections
-	 * on users with no transient present.
+	 * Prefix used to generate the key of the transient to be associated with a different user session to avoid
+	 * redirection for users with no transient present.
 	 *
 	 * @since 4.7.3
 	 *
@@ -284,6 +284,8 @@ class Tribe__Tickets_Plus__Commerce__WooCommerce__Main extends Tribe__Tickets_Pl
 
 	/**
 	 * Binds implementations that are specific to WooCommerce
+	 *
+	 * @see \Tribe__Tickets_Plus__Commerce__Woocommerce__Cart
 	 */
 	public function bind_implementations() {
 		tribe_singleton( 'tickets-plus.commerce.woo.cart', 'Tribe__Tickets_Plus__Commerce__WooCommerce__Cart', [ 'hook' ] );
@@ -673,7 +675,7 @@ class Tribe__Tickets_Plus__Commerce__WooCommerce__Main extends Tribe__Tickets_Pl
 	 */
 	public function register_wootickets_type() {
 		$args = [
-			'label'           => 'Tickets',
+			'label'           => esc_html( tribe_get_ticket_label_plural( 'woo_post_type_label' ) ),
 			'public'          => false,
 			'show_ui'         => false,
 			'show_in_menu'    => false,
@@ -1060,7 +1062,26 @@ class Tribe__Tickets_Plus__Commerce__WooCommerce__Main extends Tribe__Tickets_Pl
 			return;
 		}
 
-		echo '<br/>' . apply_filters( 'wootickets_email_message', esc_html__( "You'll receive your tickets in another email.", 'event-tickets-plus' ) );
+		echo '<br/>';
+
+		/**
+		 * WooCommerce ticket email content.
+		 *
+		 * @todo Deprecate filter because of outdated filter name prefix.
+		 *
+		 * @param string $message The email message.
+		 *
+		 * @return string
+		 */
+		echo apply_filters(
+			'wootickets_email_message',
+			esc_html(
+				sprintf(
+					__( "You'll receive your %s in another email.", 'event-tickets-plus' ),
+					tribe_get_ticket_label_plural_lowercase( 'woo_email_confirmation' )
+				)
+			)
+		);
 	}
 
 	/**
@@ -1152,10 +1173,13 @@ class Tribe__Tickets_Plus__Commerce__WooCommerce__Main extends Tribe__Tickets_Pl
 			update_post_meta( $ticket->ID, '_sku', $sku );
 		}
 
+		/** @var Tribe__Tickets__Tickets_Handler $tickets_handler */
+		$tickets_handler = tribe( 'tickets.handler' );
 
 		// Updates if we should show Description
 		$ticket->show_description = isset( $ticket->show_description ) && tribe_is_truthy( $ticket->show_description ) ? 'yes' : 'no';
-		update_post_meta( $ticket->ID, tribe( 'tickets.handler' )->key_show_description, $ticket->show_description );
+
+		update_post_meta( $ticket->ID, $tickets_handler->key_show_description, $ticket->show_description );
 
 		/**
 		 * Allow for the prevention of updating ticket price on update.
@@ -1191,6 +1215,9 @@ class Tribe__Tickets_Plus__Commerce__WooCommerce__Main extends Tribe__Tickets_Pl
 		$data['mode'] = filter_var( $data['mode'], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH );
 
 		// Fetch the Global stock Instance for this Event
+		/**
+		 * @var Tribe__Tickets__Global_Stock $event_stock
+		 */
 		$event_stock = new Tribe__Tickets__Global_Stock( $post_id );
 
 		// Only need to do this if we haven't already set one - they shouldn't be able to edit it from here otherwise
@@ -1206,12 +1233,16 @@ class Tribe__Tickets_Plus__Commerce__WooCommerce__Main extends Tribe__Tickets_Pl
 				// Makes sure it's an Int after this point
 				$data['event_capacity'] = (int) $data['event_capacity'];
 
+				$tickets_handler->remove_hooks();
+
 				// We need to update event post meta - if we've set a global stock
 				$event_stock->enable();
-				$event_stock->set_stock_level( $data['event_capacity'] );
+				$event_stock->set_stock_level( $data['event_capacity'], true );
 
 				// Update Event capacity
-				update_post_meta( $post_id, tribe( 'tickets.handler' )->key_capacity, $data['event_capacity'] );
+				update_post_meta( $post_id, $tickets_handler->key_capacity, $data['event_capacity'] );
+
+				$tickets_handler->add_hooks();
 			}
 		} else {
 			// If the Global Stock is configured we pull it from the Event
@@ -1256,7 +1287,7 @@ class Tribe__Tickets_Plus__Commerce__WooCommerce__Main extends Tribe__Tickets_Pl
 
 		if ( '' !== $data['mode'] ) {
 			if ( 'update' === $save_type ) {
-				$totals        = tribe( 'tickets.handler' )->get_ticket_totals( $ticket->ID );
+				$totals        = $tickets_handler->get_ticket_totals( $ticket->ID );
 				$data['stock'] -= $totals['pending'] + $totals['sold'];
 			}
 
@@ -1293,7 +1324,7 @@ class Tribe__Tickets_Plus__Commerce__WooCommerce__Main extends Tribe__Tickets_Pl
 
 		if ( '' !== $data['capacity'] ) {
 			// Update Ticket capacity
-			update_post_meta( $ticket->ID, tribe( 'tickets.handler' )->key_capacity, $data['capacity'] );
+			update_post_meta( $ticket->ID, $tickets_handler->key_capacity, $data['capacity'] );
 		}
 
 		// Delete total Stock cache
@@ -1306,18 +1337,19 @@ class Tribe__Tickets_Plus__Commerce__WooCommerce__Main extends Tribe__Tickets_Pl
 				$start_date .= ' ' . $raw_data['ticket_start_time'];
 			}
 
-			$ticket->start_date  = date( Tribe__Date_Utils::DBDATETIMEFORMAT, strtotime( $start_date ) );
-			$previous_start_date = get_post_meta( $ticket->ID, tribe( 'tickets.handler' )->key_start_date, true );
+			$ticket->start_date = date( Tribe__Date_Utils::DBDATETIMEFORMAT, strtotime( $start_date ) );
+
+			$previous_start_date = get_post_meta( $ticket->ID, $tickets_handler->key_start_date, true );
 
 			// Only update when we are modifying
 			if ( $ticket->start_date !== $previous_start_date ) {
-				update_post_meta( $ticket->ID, tribe( 'tickets.handler' )->key_start_date, $ticket->start_date );
+				update_post_meta( $ticket->ID, $tickets_handler->key_start_date, $ticket->start_date );
 			}
 		} else {
 			delete_post_meta( $ticket->ID, '_ticket_start_date' );
 		}
 
-		if ( ! empty( $raw_data['ticket_start_date'] ) ) {
+		if ( ! empty( $raw_data['ticket_end_date'] ) ) {
 			$end_date = Tribe__Date_Utils::maybe_format_from_datepicker( $raw_data['ticket_end_date'] );
 
 			if ( isset( $raw_data['ticket_end_time'] ) ) {
@@ -1325,11 +1357,11 @@ class Tribe__Tickets_Plus__Commerce__WooCommerce__Main extends Tribe__Tickets_Pl
 			}
 
 			$ticket->end_date  = date( Tribe__Date_Utils::DBDATETIMEFORMAT, strtotime( $end_date ) );
-			$previous_end_date = get_post_meta( $ticket->ID, tribe( 'tickets.handler' )->key_end_date, true );
+			$previous_end_date = get_post_meta( $ticket->ID, $tickets_handler->key_end_date, true );
 
 			// Only update when we are modifying
 			if ( $ticket->end_date !== $previous_end_date ) {
-				update_post_meta( $ticket->ID, tribe( 'tickets.handler' )->key_end_date, $ticket->end_date );
+				update_post_meta( $ticket->ID, $tickets_handler->key_end_date, $ticket->end_date );
 			}
 		} else {
 			delete_post_meta( $ticket->ID, '_ticket_end_date' );
@@ -1396,6 +1428,9 @@ class Tribe__Tickets_Plus__Commerce__WooCommerce__Main extends Tribe__Tickets_Pl
 			return false;
 		}
 
+		/** @var Tribe__Tickets__Tickets_Handler $tickets_handler */
+		$tickets_handler = tribe( 'tickets.handler' );
+
 		Tribe__Tickets__Attendance::instance( $post_id )->increment_deleted_attendees_count();
 
 		// Re-stock the product inventory (on the basis that a "seat" has just been freed)
@@ -1403,7 +1438,7 @@ class Tribe__Tickets_Plus__Commerce__WooCommerce__Main extends Tribe__Tickets_Pl
 
 		$this->clear_attendees_cache( $post_id );
 
-		$has_shared_tickets = 0 !== count( tribe( 'tickets.handler' )->get_event_shared_tickets( $post_id ) );
+		$has_shared_tickets = 0 !== count( $tickets_handler->get_event_shared_tickets( $post_id ) );
 
 		if ( ! $has_shared_tickets ) {
 			tribe_tickets_delete_capacity( $post_id );
@@ -1664,10 +1699,10 @@ class Tribe__Tickets_Plus__Commerce__WooCommerce__Main extends Tribe__Tickets_Pl
 		$return->name          = $product->get_title();
 		$return->menu_order    = $product->get_menu_order();
 		$return->price         = $this->get_price_value_for( $product, $return );
-		$return->regular_price = $product->get_regular_price();
-		$return->on_sale       = (bool) $product->is_on_sale();
+		$return->regular_price = $product->get_regular_price( 'edit' );
+		$return->on_sale       = (bool) $product->is_on_sale( 'edit' );
 		if ( $return->on_sale ) {
-			$return->price = $product->get_sale_price();
+			$return->price = $product->get_sale_price( 'edit' );
 		}
 		$return->capacity         = tribe_tickets_get_capacity( $ticket_id );
 		$return->provider_class   = get_class( $this );
@@ -2357,11 +2392,14 @@ class Tribe__Tickets_Plus__Commerce__WooCommerce__Main extends Tribe__Tickets_Pl
 	 * @return void
 	 */
 	public function do_metabox_capacity_options( $post_id, $ticket_id ) {
-		$is_correct_provider = tribe( 'tickets.handler' )->is_correct_provider( $post_id, $this );
+		/** @var Tribe__Tickets__Tickets_Handler $tickets_handler */
+		$tickets_handler = tribe( 'tickets.handler' );
+
+		$is_correct_provider = $tickets_handler->is_correct_provider( $post_id, $this );
 
 		$url               = '';
 		$stock             = '';
-		$global_stock_mode = tribe( 'tickets.handler' )->get_default_capacity_mode();
+		$global_stock_mode = $tickets_handler->get_default_capacity_mode();
 		$global_stock_cap  = 0;
 		$capacity          = null;
 		$event_capacity    = null;
@@ -2374,7 +2412,7 @@ class Tribe__Tickets_Plus__Commerce__WooCommerce__Main extends Tribe__Tickets_Pl
 
 		if ( ! empty( $ticket_id ) ) {
 			$ticket              = $this->get_ticket( $post_id, $ticket_id );
-			$is_correct_provider = tribe( 'tickets.handler' )->is_correct_provider( $ticket_id, $this );
+			$is_correct_provider = $tickets_handler->is_correct_provider( $ticket_id, $this );
 
 			if ( ! empty( $ticket ) ) {
 				$stock             = $ticket->managing_stock() ? $ticket->stock() : '';
@@ -2435,12 +2473,15 @@ class Tribe__Tickets_Plus__Commerce__WooCommerce__Main extends Tribe__Tickets_Pl
 	 * @return void
 	 */
 	public function do_metabox_sku_options( $post_id, $ticket_id = null ) {
+		/** @var Tribe__Tickets__Tickets_Handler $tickets_handler */
+		$tickets_handler = tribe( 'tickets.handler' );
+
 		$sku                 = '';
-		$is_correct_provider = tribe( 'tickets.handler' )->is_correct_provider( $post_id, $this );
+		$is_correct_provider = $tickets_handler->is_correct_provider( $post_id, $this );
 
 		if ( ! empty( $ticket_id ) ) {
 			$ticket              = $this->get_ticket( $post_id, $ticket_id );
-			$is_correct_provider = tribe( 'tickets.handler' )->is_correct_provider( $ticket_id, $this );
+			$is_correct_provider = $tickets_handler->is_correct_provider( $ticket_id, $this );
 
 			if ( ! empty( $ticket ) ) {
 				$sku = get_post_meta( $ticket_id, '_sku', true );
@@ -2466,14 +2507,17 @@ class Tribe__Tickets_Plus__Commerce__WooCommerce__Main extends Tribe__Tickets_Pl
 	 * @return void
 	 */
 	public function do_metabox_ecommerce_links( $post_id, $ticket_id = null ) {
-		$is_correct_provider = tribe( 'tickets.handler' )->is_correct_provider( $post_id, $this );
+		/** @var Tribe__Tickets__Tickets_Handler $tickets_handler */
+		$tickets_handler = tribe( 'tickets.handler' );
+
+		$is_correct_provider = $tickets_handler->is_correct_provider( $post_id, $this );
 
 		if ( empty( $ticket_id ) ) {
 			$ticket_id = tribe_get_request_var( 'ticket_id' );
 		}
 
 		$ticket              = $this->get_ticket( $post_id, $ticket_id );
-		$is_correct_provider = tribe( 'tickets.handler' )->is_correct_provider( $ticket_id, $this );
+		$is_correct_provider = $tickets_handler->is_correct_provider( $ticket_id, $this );
 
 		// Bail when we are not dealing with this provider
 		if ( ! $is_correct_provider ) {
@@ -2566,8 +2610,17 @@ class Tribe__Tickets_Plus__Commerce__WooCommerce__Main extends Tribe__Tickets_Pl
 	public function woocommerce_meta_box_inside() {
 		$post_id = get_post_meta( get_the_ID(), $this->event_key, true );
 		if ( ! empty( $post_id ) ) {
-			echo sprintf( '%s <a href="%s">%s</a>', esc_html__( 'This is a ticket for the event:', 'event-tickets-plus' ), esc_url( get_edit_post_link( $post_id ) ),
-				esc_html( get_the_title( $post_id ) ) );
+			$text = esc_html( sprintf(
+				__( 'This is a %s for the event:', 'event-tickets-plus' ),
+				tribe_get_ticket_label_singular_lowercase( 'woo_meta_box' )
+			) );
+
+			echo sprintf(
+				'%s <a href="%s">%s</a>',
+				$text,
+				esc_url( get_edit_post_link( $post_id ) ),
+				esc_html( get_the_title( $post_id ) )
+			);
 		}
 	}
 
@@ -2919,6 +2972,7 @@ class Tribe__Tickets_Plus__Commerce__WooCommerce__Main extends Tribe__Tickets_Pl
 		return $price;
 	}
 
+
 	/**
 	 * Renders the tabbed view header before the report.
 	 *
@@ -3193,7 +3247,10 @@ class Tribe__Tickets_Plus__Commerce__WooCommerce__Main extends Tribe__Tickets_Pl
 		$messages  = [];
 		$inventory = (int) $ticket->inventory();
 		$stock     = (int) $ticket->stock();
-		$product = wc_get_product( $ticket->ID );
+		$product   = wc_get_product( $ticket->ID );
+
+		/** @var Tribe__Tickets__Attendees $tickets_attendees */
+		$tickets_attendees = tribe( 'tickets.attendees' );
 
 		if ( -1 !== $ticket->capacity() ) {
 			$shared_stock = new Tribe__Tickets__Global_Stock( $event_id );
@@ -3202,13 +3259,20 @@ class Tribe__Tickets_Plus__Commerce__WooCommerce__Main extends Tribe__Tickets_Pl
 				$inventory !== $stock
 				&& ( ! $shared_stock->is_enabled() || $stock < (int) $shared_stock->get_stock_level() )
 			) {
-				$messages['mismatch'] = _x( 'The number of Complete ticket sales does not match the number of attendees. Please check the <a href="' . tribe( 'tickets.attendees' )->get_report_link( get_post( $event_id ) ) . '">Attendees list</a> and adjust ticket stock in WooCommerce as needed.', 'event-tickets' );
+				$messages['mismatch'] = sprintf(
+					_x( 'The number of Complete ticket sales does not match the number of attendees. Please check the %1$sAttendees list%2$s and adjust ticket stock in WooCommerce as needed.', 'event-tickets-plus' ),
+					'<a href="' . $tickets_attendees->get_report_link( get_post( $event_id ) ) . '">',
+					'</a>'
+				);
 			}
-
 		}
 
 		if ( 'own' === $ticket->global_stock_mode() && ! $product->get_manage_stock() ) {
-			$messages['stock'] = _x( '"Unlimited" will be displayed unless you enable the WooCommerce\'s "Manage stock" setting. You can do so <a href="' . esc_url( $ticket->admin_link ) . '">here</a>.', 'event-tickets' );
+			$messages['stock'] = sprintf(
+				_x( '"Unlimited" will be displayed unless you enable the WooCommerce\'s "Manage stock" setting. You can do so %1$shere%2$s.', 'event-tickets-plus' ),
+				'<a href="' . esc_url( $ticket->admin_link ) . '">',
+				'</a>'
+			);
 		}
 
 		if ( empty( $messages ) ) {

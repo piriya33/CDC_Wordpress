@@ -80,8 +80,20 @@ class Tribe__Tickets__Tickets_Handler {
 	 *    Class constructor.
 	 */
 	public function __construct() {
-		$main = Tribe__Tickets__Main::instance();
 		$this->unlimited_term = __( 'Unlimited', 'event-tickets' );
+
+		$this->add_hooks();
+
+		$this->path = trailingslashit(  dirname( dirname( dirname( __FILE__ ) ) ) );
+	}
+
+	/**
+	 * Add hooks for saving/meta.
+	 *
+	 * @since 4.11.4
+	 */
+	public function add_hooks() {
+		$main = Tribe__Tickets__Main::instance();
 
 		foreach ( $main->post_types() as $post_type ) {
 			add_action( 'save_post_' . $post_type, array( $this, 'save_post' ) );
@@ -92,8 +104,25 @@ class Tribe__Tickets__Tickets_Handler {
 
 		add_filter( 'updated_postmeta', array( $this, 'update_meta_date' ), 15, 4 );
 		add_action( 'wp_insert_post', array( $this, 'update_start_date' ), 15, 3 );
+	}
 
-		$this->path = trailingslashit(  dirname( dirname( dirname( __FILE__ ) ) ) );
+	/**
+	 * Remove hooks for saving/meta.
+	 *
+	 * @since 4.11.4
+	 */
+	public function remove_hooks() {
+		$main = Tribe__Tickets__Main::instance();
+
+		foreach ( $main->post_types() as $post_type ) {
+			remove_action( 'save_post_' . $post_type, array( $this, 'save_post' ) );
+		}
+
+		remove_filter( 'get_post_metadata', array( $this, 'filter_capacity_support' ), 15 );
+		remove_filter( 'updated_postmeta', array( $this, 'update_shared_tickets_capacity' ), 15 );
+
+		remove_filter( 'updated_postmeta', array( $this, 'update_meta_date' ), 15 );
+		remove_action( 'wp_insert_post', array( $this, 'update_start_date' ), 15 );
 	}
 
 	/**
@@ -772,25 +801,41 @@ class Tribe__Tickets__Tickets_Handler {
 		}
 
 		$tickets = Tribe__Tickets__Tickets::get_all_event_tickets( $post->ID );
+		$global  = new Tribe__Tickets__Global_Stock( $post->ID );
+
 		$totals  = [
 			'has_unlimited' => false,
-			'tickets' => count( $tickets ),
-			'capacity' => $this->get_total_event_capacity( $post ),
-			'sold' => 0,
-			'pending' => 0,
-			'stock' => 0,
+			'has_shared'    => $global->is_enabled(),
+			'tickets'       => count( $tickets ),
+			'capacity'      => $this->get_total_event_capacity( $post ),
+			'sold'          => 0,
+			'pending'       => 0,
+			'stock'         => 0,
 		];
 
 		foreach ( $tickets as $ticket ) {
 			$ticket_totals = $this->get_ticket_totals( $ticket->ID );
 			$totals['sold'] += $ticket_totals['sold'];
 			$totals['pending'] += $ticket_totals['pending'];
-			$totals['stock'] += $ticket_totals['stock'];
 
-			// check if we have any unlimited tickets
-			if ( ! $totals['has_unlimited'] ) {
-				$totals['has_unlimited'] = -1 === tribe_tickets_get_capacity( $ticket->ID );
+			if ( ! $this->has_shared_capacity( $ticket ) && ! $this->is_unlimited_ticket( $ticket ) ) {
+				$totals['stock'] += $ticket_totals['stock'];
 			}
+
+			// Check if we have any unlimited tickets. Only have to do this once.
+			if ( ! $totals['has_unlimited'] && $this->is_unlimited_ticket( $ticket ) ) {
+				$totals['has_unlimited'] = true;
+			}
+		}
+
+		// We only want to do this once per event.
+		if ( $totals['has_shared'] ) {
+			$totals['stock'] += $global->get_stock_level();
+			$totals['has_shared'] = true;
+		}
+
+		if ( $totals['has_unlimited'] ) {
+			$totals['stock'] = -1;
 		}
 
 		return $totals;
@@ -856,9 +901,9 @@ class Tribe__Tickets__Tickets_Handler {
 			return false;
 		}
 
-		$mode = get_post_meta( $ticket->ID, Tribe__Tickets__Global_Stock::TICKET_STOCK_MODE, true );
+		$stock_mode = get_post_meta( $ticket->ID, Tribe__Tickets__Global_Stock::TICKET_STOCK_MODE, true );
 
-		return Tribe__Tickets__Global_Stock::CAPPED_STOCK_MODE === $mode || Tribe__Tickets__Global_Stock::GLOBAL_STOCK_MODE === $mode;
+		return Tribe__Tickets__Global_Stock::CAPPED_STOCK_MODE === $stock_mode || Tribe__Tickets__Global_Stock::GLOBAL_STOCK_MODE === $stock_mode;
 	}
 
 	/**
@@ -961,7 +1006,7 @@ class Tribe__Tickets__Tickets_Handler {
 		$has_shared_tickets = 0 !== count( $this->get_event_shared_tickets( $post_id ) );
 
 		if ( $has_shared_tickets ) {
-			$total = tribe_tickets_get_capacity( $post_id );
+			$total = tribe_get_event_capacity( $post_id );
 		}
 
 		// short circuit unlimited stock

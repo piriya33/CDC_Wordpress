@@ -7,7 +7,7 @@ import { compose } from 'redux';
 /**
  * Internal dependencies
  */
-import { withSelected, withStore, withSaveData } from '@moderntribe/common/hoc';
+import { withStore, withSaveData } from '@moderntribe/common/hoc';
 import { actions, selectors } from '@moderntribe/events-pro/data/blocks/additional-fields';
 
 const mapStateToProps = ( state, ownProps ) => ( {
@@ -24,15 +24,10 @@ const mapDispatchToProps = ( dispatch, ownProps ) => ( {
 	setInitialState( props ) {
 		dispatch( actions.setInitialState( props ) );
 	},
-	onBlockBlur() {
-		const { name } = ownProps;
-		dispatch( actions.setFieldBlur( name ) );
-	},
 } );
 
 export default compose(
 	withStore(),
 	connect( mapStateToProps, mapDispatchToProps ),
 	withSaveData(),
-	withSelected(),
 );

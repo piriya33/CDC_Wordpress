@@ -134,6 +134,8 @@ class Hooks extends \tad_DI52_ServiceProvider {
 		// Let's filter AFTER Week View.
 		add_filter( 'tribe_rewrite_handled_rewrite_rules', [ $this, 'filter_handled_rewrite_rules' ], 20, 2 );
 		add_filter( 'tribe_events_rewrite_matchers_to_query_vars_map', [ $this, 'filter_rewrite_query_vars_map' ] );
+
+		add_filter( 'tribe_events_filter_bar_views_v2_should_display_filters', [ $this, 'filter_hide_filter_bar_organizer_venue' ], 10, 2 );
 	}
 
 	/**
@@ -217,6 +219,10 @@ class Hooks extends \tad_DI52_ServiceProvider {
 			Venue::POSTTYPE     => 'venue',
 		];
 		$post_type  = $context->get( 'post_type', $slug );
+
+		if ( empty( $post_type ) ) {
+			return $slug;
+		}
 
 		return isset( $post_types[ $post_type ] ) ? $post_types[ $post_type ] : $slug;
 	}
@@ -529,8 +535,10 @@ class Hooks extends \tad_DI52_ServiceProvider {
 	 *
 	 * @since 4.7.9
 	 *
-	 * @param array           $repository_args An array of repository arguments that will be set for all Views.
-	 * @param \Tribe__Context $context         The current render context object.
+	 * @param array<string,mixed> $repository_args An array of repository arguments that will be set for all Views.
+	 * @param \Tribe__Context     $context         The current render context object.
+	 *
+	 * @return array<string,mixed> The filtered repository arguments.
 	 */
 	public function filter_view_repository_args( $repository_args, $context ) {
 		return $this->container->make( Shortcodes\Tribe_Events::class )->filter_view_repository_args( $repository_args, $context );
@@ -782,7 +790,7 @@ class Hooks extends \tad_DI52_ServiceProvider {
 	 * Filters the handled rewrite rules, the one used to parse plain links into permalinks, to add the ones
 	 * managed by PRO.
 	 *
-	 * @since TBD
+	 * @since 5.0.1
 	 *
 	 * @param array<string,string> $handled_rules The handled rules, as produced by The Events Calendar base code; in
 	 *                                            the same format used by WordPress to store and manage rewrite rules.
@@ -806,7 +814,7 @@ class Hooks extends \tad_DI52_ServiceProvider {
 	 * Filters the query vars map used by the Rewrite component to parse plain links into permalinks to add the elements
 	 * needed to support PRO components.
 	 *
-	 * @since TBD
+	 * @since 5.0.1
 	 *
 	 * @param array<string,string> $query_vars_map The query variables map, as produced by The Events Calendar code.
 	 *                                             Shape is `[ <pattern> => <query_var> ].
@@ -817,5 +825,25 @@ class Hooks extends \tad_DI52_ServiceProvider {
 	 */
 	public function filter_rewrite_query_vars_map( array $query_vars_map = [] ) {
 		return $this->container->make( Rewrite::class )->filter_rewrite_query_vars_map( $query_vars_map );
+	}
+
+	/**
+	 * Filters the should display filters for organizer and venue views.
+	 *
+	 * @since 5.0.1
+	 *
+	 * @param bool           $should_display_filters Boolean on whether to display filters or not.
+	 * @param View_Interface $view                   The View currently rendering.
+	 *
+	 * @return bool
+	 */
+	public function filter_hide_filter_bar_organizer_venue( $should_display_filters, $view ) {
+		$slug = $view->get_slug();
+
+		if ( ! in_array( $slug, [ 'organizer', 'venue' ] ) ) {
+			return $should_display_filters;
+		}
+
+		return false;
 	}
 }

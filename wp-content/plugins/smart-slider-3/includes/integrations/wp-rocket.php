@@ -11,7 +11,7 @@ class NextendSmartSliderWPRocket {
     }
 
     public function init() {
-        if (function_exists('rocket_cdn_enqueue')) {
+        if (function_exists('get_rocket_cdn_url') && get_rocket_option('cdn', 0)) {
             N2Pluggable::addFilter('n2_style_loader_src', array(
                 $this,
                 'filterSrcCDN'
@@ -25,7 +25,7 @@ class NextendSmartSliderWPRocket {
     }
 
     public function filterSrcCDN($src) {
-        return rocket_cdn_enqueue($src);
+        return get_rocket_cdn_url($src);
     }
 }
 

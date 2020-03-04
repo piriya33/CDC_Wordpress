@@ -76,7 +76,7 @@ class N2SmartsliderSettingsModel extends N2Model {
 
         new N2ElementOnOff($general, 'wp-ajax-iframe-slider', n2_('Render sliders as iframe in AJAX calls'), 0);
 
-        new N2ElementOnOff($general, 'youtube-privacy-enhanced', n2_('YouTube privacy enhanced mode'), 0);
+        new N2ElementOnOff($general, 'youtube-privacy-enhanced', n2_('YouTube and Vimeo privacy enhanced mode'), 0);
 
         new N2ElementNumber($general, 'smooth-scroll-speed', n2_('Smooth scroll speed'), 400, array(
             'style' => 'width:35px;',

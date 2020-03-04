@@ -127,3 +127,15 @@ Object {
   "5": "fifth",
 }
 `;
+
+exports[`Recurrence constants recurring multi day num day span mapping to multi day span 1`] = `
+Object {
+  "1": "next_day",
+  "2": "second_day",
+  "3": "third_day",
+  "4": "fourth_day",
+  "5": "fifth_day",
+  "6": "sixth_day",
+  "7": "seventh_day",
+}
+`;

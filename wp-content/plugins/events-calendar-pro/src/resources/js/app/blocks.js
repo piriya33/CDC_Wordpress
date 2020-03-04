@@ -755,6 +755,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FIFTH_DAY_LABEL", function() { return FIFTH_DAY_LABEL; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SIXTH_DAY_LABEL", function() { return SIXTH_DAY_LABEL; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SEVENTH_DAY_LABEL", function() { return SEVENTH_DAY_LABEL; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NUM_DAY_SPAN_MAPPING_TO_MULTI_DAY_SPAN", function() { return NUM_DAY_SPAN_MAPPING_TO_MULTI_DAY_SPAN; });
 /* harmony import */ var babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
 /* harmony import */ var babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var lodash_invert__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(141);
@@ -966,6 +967,16 @@ var FOURTH_DAY_LABEL = Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"]
 var FIFTH_DAY_LABEL = Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('5th day', 'tribe-events-calendar-pro');
 var SIXTH_DAY_LABEL = Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('6th day', 'tribe-events-calendar-pro');
 var SEVENTH_DAY_LABEL = Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('7th day', 'tribe-events-calendar-pro');
+
+var NUM_DAY_SPAN_MAPPING_TO_MULTI_DAY_SPAN = {
+	1: NEXT_DAY,
+	2: SECOND_DAY,
+	3: THIRD_DAY,
+	4: FOURTH_DAY,
+	5: FIFTH_DAY,
+	6: SIXTH_DAY,
+	7: SEVENTH_DAY
+};
 
 /***/ }),
 /* 6 */
@@ -6158,13 +6169,11 @@ __webpack_require__.d(types_namespaceObject, "REMOVE_ADDITIONAL_FIELD_VALUE", fu
 __webpack_require__.d(types_namespaceObject, "SET_ADDITIONAL_FIELD_CHANGE", function() { return SET_ADDITIONAL_FIELD_CHANGE; });
 __webpack_require__.d(types_namespaceObject, "SET_ADDITIONAL_FIELD_META_KEY", function() { return SET_ADDITIONAL_FIELD_META_KEY; });
 __webpack_require__.d(types_namespaceObject, "SET_ADDITIONAL_FIELD_OUTPUT", function() { return SET_ADDITIONAL_FIELD_OUTPUT; });
-__webpack_require__.d(types_namespaceObject, "SET_ADDITIONAL_FIELD_BLUR", function() { return SET_ADDITIONAL_FIELD_BLUR; });
+__webpack_require__.d(types_namespaceObject, "SET_ADDITIONAL_FIELD_OUTPUT_BY_TYPE", function() { return SET_ADDITIONAL_FIELD_OUTPUT_BY_TYPE; });
 var actions_namespaceObject = {};
 __webpack_require__.r(actions_namespaceObject);
 __webpack_require__.d(actions_namespaceObject, "setInitialState", function() { return actions_setInitialState; });
 __webpack_require__.d(actions_namespaceObject, "setFieldChange", function() { return actions_setFieldChange; });
-__webpack_require__.d(actions_namespaceObject, "setFieldBlur", function() { return actions_setFieldBlur; });
-__webpack_require__.d(actions_namespaceObject, "setFieldBlurWithType", function() { return actions_setFieldBlurWithType; });
 __webpack_require__.d(actions_namespaceObject, "addField", function() { return actions_addField; });
 __webpack_require__.d(actions_namespaceObject, "removeField", function() { return actions_removeField; });
 __webpack_require__.d(actions_namespaceObject, "setFieldLabel", function() { return actions_setFieldLabel; });
@@ -6178,6 +6187,7 @@ __webpack_require__.d(actions_namespaceObject, "setFieldDividerList", function()
 __webpack_require__.d(actions_namespaceObject, "setFieldDividerEnd", function() { return actions_setFieldDividerEnd; });
 __webpack_require__.d(actions_namespaceObject, "setFieldMetaKey", function() { return actions_setFieldMetaKey; });
 __webpack_require__.d(actions_namespaceObject, "setFieldOutput", function() { return actions_setFieldOutput; });
+__webpack_require__.d(actions_namespaceObject, "setFieldOutputByType", function() { return actions_setFieldOutputByType; });
 var selectors_namespaceObject = {};
 __webpack_require__.r(selectors_namespaceObject);
 __webpack_require__.d(selectors_namespaceObject, "getPlugin", function() { return selectors_getPlugin; });
@@ -6248,7 +6258,7 @@ var REMOVE_ADDITIONAL_FIELD_VALUE = prefix["a" /* PREFIX_EVENTS_PRO_STORE */] + 
 var SET_ADDITIONAL_FIELD_CHANGE = prefix["a" /* PREFIX_EVENTS_PRO_STORE */] + '/SET_ADDITIONAL_FIELD_CHANGE';
 var SET_ADDITIONAL_FIELD_META_KEY = prefix["a" /* PREFIX_EVENTS_PRO_STORE */] + '/SET_ADDITIONAL_FIELD_META_KEY';
 var SET_ADDITIONAL_FIELD_OUTPUT = prefix["a" /* PREFIX_EVENTS_PRO_STORE */] + '/SET_ADDITIONAL_FIELD_OUTPUT';
-var SET_ADDITIONAL_FIELD_BLUR = prefix["a" /* PREFIX_EVENTS_PRO_STORE */] + '/SET_ADDITIONAL_FIELD_BLUR';
+var SET_ADDITIONAL_FIELD_OUTPUT_BY_TYPE = prefix["a" /* PREFIX_EVENTS_PRO_STORE */] + '/SET_ADDITIONAL_FIELD_OUTPUT_BY_TYPE';
 // EXTERNAL MODULE: external {"var":"wp.i18n","root":["wp","i18n"]}
 var external_var_wp_i18n_root_wp_i18n_ = __webpack_require__(3);
 
@@ -6395,7 +6405,6 @@ var fields_allFields = function allFields() {
  */
 
 
-
 var actions_setInitialState = function setInitialState(props) {
 	return {
 		type: types_namespaceObject.SET_ADDITIONAL_FIELD_INITIAL_STATE,
@@ -6406,24 +6415,6 @@ var actions_setInitialState = function setInitialState(props) {
 var actions_setFieldChange = function setFieldChange(name) {
 	return {
 		type: types_namespaceObject.SET_ADDITIONAL_FIELD_CHANGE,
-		payload: {
-			name: name
-		}
-	};
-};
-
-var actions_setFieldBlur = function setFieldBlur(name) {
-	return {
-		type: types_namespaceObject.SET_ADDITIONAL_FIELD_BLUR,
-		payload: {
-			name: name
-		}
-	};
-};
-
-var actions_setFieldBlurWithType = function setFieldBlurWithType(name, type) {
-	return {
-		type: types_namespaceObject.SET_ADDITIONAL_FIELD_BLUR + '/' + type,
 		payload: {
 			name: name
 		}
@@ -6550,10 +6541,19 @@ var actions_setFieldMetaKey = function setFieldMetaKey(name, metaKey) {
 
 var actions_setFieldOutput = function setFieldOutput(name, output) {
 	return {
-		type: SET_ADDITIONAL_FIELD_OUTPUT,
+		type: types_namespaceObject.SET_ADDITIONAL_FIELD_OUTPUT,
 		payload: {
 			name: name,
 			output: output
+		}
+	};
+};
+
+var actions_setFieldOutputByType = function setFieldOutputByType(name, type) {
+	return {
+		type: types_namespaceObject.SET_ADDITIONAL_FIELD_OUTPUT_BY_TYPE + '/' + type,
+		payload: {
+			name: name
 		}
 	};
 };
@@ -6714,10 +6714,10 @@ var external_tribe_common_utils_ = __webpack_require__(17);
 
 
 var _marked = /*#__PURE__*/regenerator_default.a.mark(sagas_setInitialState),
-    _marked2 = /*#__PURE__*/regenerator_default.a.mark(setPristineState),
-    _marked3 = /*#__PURE__*/regenerator_default.a.mark(sagas_appendFieldValue),
-    _marked4 = /*#__PURE__*/regenerator_default.a.mark(sagas_removeFieldValue),
-    _marked5 = /*#__PURE__*/regenerator_default.a.mark(onFieldBlur),
+    _marked2 = /*#__PURE__*/regenerator_default.a.mark(sagas_setFieldChange),
+    _marked3 = /*#__PURE__*/regenerator_default.a.mark(setPristineState),
+    _marked4 = /*#__PURE__*/regenerator_default.a.mark(sagas_appendFieldValue),
+    _marked5 = /*#__PURE__*/regenerator_default.a.mark(sagas_removeFieldValue),
     _marked6 = /*#__PURE__*/regenerator_default.a.mark(setTextFieldOutput),
     _marked7 = /*#__PURE__*/regenerator_default.a.mark(setDropdownOutput),
     _marked8 = /*#__PURE__*/regenerator_default.a.mark(setCheckboxOutput),
@@ -6759,25 +6759,28 @@ function sagas_setInitialState(props) {
 	}, _marked, this);
 }
 
-function setPristineState(props) {
-	var _props$payload2, payload, _payload$name2, name, value, isPristine;
+function sagas_setFieldChange(props) {
+	var _props$payload2, payload, _payload$name2, name, type;
 
-	return regenerator_default.a.wrap(function setPristineState$(_context2) {
+	return regenerator_default.a.wrap(function setFieldChange$(_context2) {
 		while (1) {
 			switch (_context2.prev = _context2.next) {
 				case 0:
 					_props$payload2 = props.payload, payload = _props$payload2 === undefined ? {} : _props$payload2;
 					_payload$name2 = payload.name, name = _payload$name2 === undefined ? '' : _payload$name2;
 					_context2.next = 4;
-					return Object(effects["g" /* select */])(selectors_namespaceObject.getFieldValue, payload);
+					return Object(effects["g" /* select */])(selectors_namespaceObject.getFieldType, payload);
 
 				case 4:
-					value = _context2.sent;
-					isPristine = value === null || '' === value || isEmpty_default()(value);
-					_context2.next = 8;
-					return Object(effects["e" /* put */])(actions_namespaceObject.setFieldIsPristine(name, isPristine));
+					type = _context2.sent;
+					_context2.next = 7;
+					return Object(effects["e" /* put */])(actions_namespaceObject.setFieldIsPristine(props));
 
-				case 8:
+				case 7:
+					_context2.next = 9;
+					return Object(effects["e" /* put */])(actions_namespaceObject.setFieldOutputByType(name, type));
+
+				case 9:
 				case 'end':
 					return _context2.stop();
 			}
@@ -6785,23 +6788,23 @@ function setPristineState(props) {
 	}, _marked2, this);
 }
 
-function sagas_appendFieldValue(props) {
-	var _props$payload3, payload, _payload$name3, name, value, current, newValue;
+function setPristineState(props) {
+	var _props$payload3, payload, _payload$name3, name, value, isPristine;
 
-	return regenerator_default.a.wrap(function appendFieldValue$(_context3) {
+	return regenerator_default.a.wrap(function setPristineState$(_context3) {
 		while (1) {
 			switch (_context3.prev = _context3.next) {
 				case 0:
 					_props$payload3 = props.payload, payload = _props$payload3 === undefined ? {} : _props$payload3;
-					_payload$name3 = payload.name, name = _payload$name3 === undefined ? '' : _payload$name3, value = payload.value;
+					_payload$name3 = payload.name, name = _payload$name3 === undefined ? '' : _payload$name3;
 					_context3.next = 4;
-					return Object(effects["g" /* select */])(selectors_namespaceObject.getFieldCheckboxValue, payload);
+					return Object(effects["g" /* select */])(selectors_namespaceObject.getFieldValue, payload);
 
 				case 4:
-					current = _context3.sent;
-					newValue = [].concat(toConsumableArray_default()(current), [value]).filter(identity_default.a).join('|');
+					value = _context3.sent;
+					isPristine = value === null || '' === value || isEmpty_default()(value);
 					_context3.next = 8;
-					return Object(effects["e" /* put */])(actions_namespaceObject.setFieldValue(name, newValue));
+					return Object(effects["e" /* put */])(actions_namespaceObject.setFieldIsPristine(name, isPristine));
 
 				case 8:
 				case 'end':
@@ -6811,10 +6814,10 @@ function sagas_appendFieldValue(props) {
 	}, _marked3, this);
 }
 
-function sagas_removeFieldValue(props) {
+function sagas_appendFieldValue(props) {
 	var _props$payload4, payload, _payload$name4, name, value, current, newValue;
 
-	return regenerator_default.a.wrap(function removeFieldValue$(_context4) {
+	return regenerator_default.a.wrap(function appendFieldValue$(_context4) {
 		while (1) {
 			switch (_context4.prev = _context4.next) {
 				case 0:
@@ -6825,9 +6828,7 @@ function sagas_removeFieldValue(props) {
 
 				case 4:
 					current = _context4.sent;
-					newValue = current.filter(function (text) {
-						return text !== value;
-					}).join('|');
+					newValue = [].concat(toConsumableArray_default()(current), [value]).filter(identity_default.a).join('|');
 					_context4.next = 8;
 					return Object(effects["e" /* put */])(actions_namespaceObject.setFieldValue(name, newValue));
 
@@ -6839,24 +6840,27 @@ function sagas_removeFieldValue(props) {
 	}, _marked4, this);
 }
 
-function onFieldBlur(props) {
-	var _props$payload5, payload, _payload$name5, name, type;
+function sagas_removeFieldValue(props) {
+	var _props$payload5, payload, _payload$name5, name, value, current, newValue;
 
-	return regenerator_default.a.wrap(function onFieldBlur$(_context5) {
+	return regenerator_default.a.wrap(function removeFieldValue$(_context5) {
 		while (1) {
 			switch (_context5.prev = _context5.next) {
 				case 0:
 					_props$payload5 = props.payload, payload = _props$payload5 === undefined ? {} : _props$payload5;
-					_payload$name5 = payload.name, name = _payload$name5 === undefined ? '' : _payload$name5;
+					_payload$name5 = payload.name, name = _payload$name5 === undefined ? '' : _payload$name5, value = payload.value;
 					_context5.next = 4;
-					return Object(effects["g" /* select */])(selectors_namespaceObject.getFieldType, payload);
+					return Object(effects["g" /* select */])(selectors_namespaceObject.getFieldCheckboxValue, payload);
 
 				case 4:
-					type = _context5.sent;
-					_context5.next = 7;
-					return Object(effects["e" /* put */])(actions_namespaceObject.setFieldBlurWithType(name, type));
+					current = _context5.sent;
+					newValue = current.filter(function (text) {
+						return text !== value;
+					}).join('|');
+					_context5.next = 8;
+					return Object(effects["e" /* put */])(actions_namespaceObject.setFieldValue(name, newValue));
 
-				case 7:
+				case 8:
 				case 'end':
 					return _context5.stop();
 			}
@@ -6958,7 +6962,7 @@ function watchers() {
 
 				case 2:
 					_context9.next = 4;
-					return Object(effects["i" /* takeEvery */])(types_namespaceObject.SET_ADDITIONAL_FIELD_CHANGE, setPristineState);
+					return Object(effects["i" /* takeEvery */])(types_namespaceObject.SET_ADDITIONAL_FIELD_CHANGE, sagas_setFieldChange);
 
 				case 4:
 					_context9.next = 6;
@@ -6970,21 +6974,17 @@ function watchers() {
 
 				case 8:
 					_context9.next = 10;
-					return Object(effects["i" /* takeEvery */])(types_namespaceObject.SET_ADDITIONAL_FIELD_BLUR, onFieldBlur);
+					return Object(effects["i" /* takeEvery */])([types_namespaceObject.SET_ADDITIONAL_FIELD_OUTPUT_BY_TYPE + '/' + utils["a" /* FIELD_TYPES */].text, types_namespaceObject.SET_ADDITIONAL_FIELD_OUTPUT_BY_TYPE + '/' + utils["a" /* FIELD_TYPES */].radio, types_namespaceObject.SET_ADDITIONAL_FIELD_OUTPUT_BY_TYPE + '/' + utils["a" /* FIELD_TYPES */].url, types_namespaceObject.SET_ADDITIONAL_FIELD_OUTPUT_BY_TYPE + '/' + utils["a" /* FIELD_TYPES */].textarea], setTextFieldOutput);
 
 				case 10:
 					_context9.next = 12;
-					return Object(effects["i" /* takeEvery */])([types_namespaceObject.SET_ADDITIONAL_FIELD_BLUR + '/' + utils["a" /* FIELD_TYPES */].text, types_namespaceObject.SET_ADDITIONAL_FIELD_BLUR + '/' + utils["a" /* FIELD_TYPES */].radio, types_namespaceObject.SET_ADDITIONAL_FIELD_BLUR + '/' + utils["a" /* FIELD_TYPES */].url, types_namespaceObject.SET_ADDITIONAL_FIELD_BLUR + '/' + utils["a" /* FIELD_TYPES */].textarea], setTextFieldOutput);
+					return Object(effects["i" /* takeEvery */])(types_namespaceObject.SET_ADDITIONAL_FIELD_OUTPUT_BY_TYPE + '/' + utils["a" /* FIELD_TYPES */].dropdown, setDropdownOutput);
 
 				case 12:
 					_context9.next = 14;
-					return Object(effects["i" /* takeEvery */])(types_namespaceObject.SET_ADDITIONAL_FIELD_BLUR + '/' + utils["a" /* FIELD_TYPES */].dropdown, setDropdownOutput);
+					return Object(effects["i" /* takeEvery */])(types_namespaceObject.SET_ADDITIONAL_FIELD_OUTPUT_BY_TYPE + '/' + utils["a" /* FIELD_TYPES */].checkbox, setCheckboxOutput);
 
 				case 14:
-					_context9.next = 16;
-					return Object(effects["i" /* takeEvery */])(types_namespaceObject.SET_ADDITIONAL_FIELD_BLUR + '/' + utils["a" /* FIELD_TYPES */].checkbox, setCheckboxOutput);
-
-				case 16:
 				case 'end':
 					return _context9.stop();
 			}
@@ -8115,13 +8115,13 @@ if (false) {}
 /* 20 */
 /***/ (function(module, exports) {
 
-module.exports = tribe.common.hoc;
+module.exports = tribe.common.elements;
 
 /***/ }),
 /* 21 */
 /***/ (function(module, exports) {
 
-module.exports = tribe.common.elements;
+module.exports = tribe.common.hoc;
 
 /***/ }),
 /* 22 */
@@ -10068,7 +10068,7 @@ function handleAddition(_ref) {
 	var _actions$add;
 
 	var actions = _ref.actions;
-	var start, end, allDay, multiDay, timezone, startMoment, endMoment, startMomentDate, startWeekNum, startWeek, startWeekday, startMonth, startDate, startTime, endDate, endTime, startDateInput, startDateObj, endDateInput, endDateObj, startTimeInput, endTimeInput;
+	var start, end, allDay, multiDay, timezone, startMoment, endMoment, startMomentDate, startWeekNum, startWeek, startWeekday, startMonth, startDate, startTime, endDate, endTime, startDateInput, startDateObj, endDateInput, endDateObj, startTimeInput, endTimeInput, numDaySpan, multiDaySpan;
 	return babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function handleAddition$(_context) {
 		while (1) {
 			switch (_context.prev = _context.next) {
@@ -10172,9 +10172,21 @@ function handleAddition(_ref) {
 				case 59:
 					endTimeInput = _context.sent;
 					_context.next = 62;
-					return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_2__[/* put */ "e"])(actions.add((_actions$add = {}, babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()(_actions$add, KEY_TYPE, _moderntribe_events_pro_data_blocks_recurring_constants__WEBPACK_IMPORTED_MODULE_4__["SINGLE"]), babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()(_actions$add, KEY_ALL_DAY, allDay), babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()(_actions$add, KEY_MULTI_DAY, multiDay), babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()(_actions$add, KEY_START_DATE, startDate), babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()(_actions$add, KEY_START_DATE_INPUT, startDateInput), babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()(_actions$add, KEY_START_DATE_OBJ, startDateObj), babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()(_actions$add, KEY_START_TIME, startTime), babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()(_actions$add, KEY_START_TIME_INPUT, startTimeInput), babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()(_actions$add, KEY_END_DATE, endDate), babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()(_actions$add, KEY_END_DATE_INPUT, endDateInput), babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()(_actions$add, KEY_END_DATE_OBJ, endDateObj), babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()(_actions$add, KEY_END_TIME, endTime), babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()(_actions$add, KEY_END_TIME_INPUT, endTimeInput), babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()(_actions$add, KEY_BETWEEN, 1), babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()(_actions$add, KEY_LIMIT_TYPE, _moderntribe_events_pro_data_blocks_recurring_constants__WEBPACK_IMPORTED_MODULE_4__["COUNT"]), babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()(_actions$add, KEY_LIMIT, 7), babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()(_actions$add, KEY_LIMIT_DATE_INPUT, endDateInput), babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()(_actions$add, KEY_LIMIT_DATE_OBJ, endDateObj), babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()(_actions$add, KEY_DAYS, [startWeekday]), babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()(_actions$add, KEY_WEEK, startWeek), babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()(_actions$add, KEY_DAY, startWeekday), babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()(_actions$add, KEY_MONTH, [startMonth + 1]), babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()(_actions$add, KEY_TIMEZONE, timezone), babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()(_actions$add, KEY_MULTI_DAY_SPAN, _moderntribe_events_pro_data_blocks_recurring_constants__WEBPACK_IMPORTED_MODULE_4__["NEXT_DAY"]), _actions$add)));
+					return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_2__[/* call */ "b"])([endMoment, 'diff'], startMoment, 'days');
 
 				case 62:
+					numDaySpan = _context.sent;
+
+					if (numDaySpan > 7) {
+						numDaySpan = 7;
+					} else if (numDaySpan < 1) {
+						numDaySpan = 1;
+					}
+					multiDaySpan = _moderntribe_events_pro_data_blocks_recurring_constants__WEBPACK_IMPORTED_MODULE_4__["NUM_DAY_SPAN_MAPPING_TO_MULTI_DAY_SPAN"][numDaySpan];
+					_context.next = 67;
+					return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_2__[/* put */ "e"])(actions.add((_actions$add = {}, babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()(_actions$add, KEY_TYPE, _moderntribe_events_pro_data_blocks_recurring_constants__WEBPACK_IMPORTED_MODULE_4__["SINGLE"]), babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()(_actions$add, KEY_ALL_DAY, allDay), babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()(_actions$add, KEY_MULTI_DAY, multiDay), babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()(_actions$add, KEY_START_DATE, startDate), babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()(_actions$add, KEY_START_DATE_INPUT, startDateInput), babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()(_actions$add, KEY_START_DATE_OBJ, startDateObj), babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()(_actions$add, KEY_START_TIME, startTime), babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()(_actions$add, KEY_START_TIME_INPUT, startTimeInput), babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()(_actions$add, KEY_END_DATE, endDate), babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()(_actions$add, KEY_END_DATE_INPUT, endDateInput), babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()(_actions$add, KEY_END_DATE_OBJ, endDateObj), babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()(_actions$add, KEY_END_TIME, endTime), babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()(_actions$add, KEY_END_TIME_INPUT, endTimeInput), babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()(_actions$add, KEY_BETWEEN, 1), babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()(_actions$add, KEY_LIMIT_TYPE, _moderntribe_events_pro_data_blocks_recurring_constants__WEBPACK_IMPORTED_MODULE_4__["COUNT"]), babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()(_actions$add, KEY_LIMIT, 7), babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()(_actions$add, KEY_LIMIT_DATE_INPUT, endDateInput), babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()(_actions$add, KEY_LIMIT_DATE_OBJ, endDateObj), babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()(_actions$add, KEY_DAYS, [startWeekday]), babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()(_actions$add, KEY_WEEK, startWeek), babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()(_actions$add, KEY_DAY, startWeekday), babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()(_actions$add, KEY_MONTH, [startMonth + 1]), babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()(_actions$add, KEY_TIMEZONE, timezone), babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()(_actions$add, KEY_MULTI_DAY_SPAN, multiDaySpan), _actions$add)));
+
+				case 67:
 				case 'end':
 					return _context.stop();
 			}
@@ -11387,7 +11399,7 @@ var es = __webpack_require__(22);
 var redux = __webpack_require__(19);
 
 // EXTERNAL MODULE: external "tribe.common.hoc"
-var external_tribe_common_hoc_ = __webpack_require__(20);
+var external_tribe_common_hoc_ = __webpack_require__(21);
 
 // EXTERNAL MODULE: ./src/modules/data/blocks/additional-fields/index.js + 7 modules
 var additional_fields = __webpack_require__(13);
@@ -11421,16 +11433,11 @@ var container_mapDispatchToProps = function mapDispatchToProps(dispatch, ownProp
 	return {
 		setInitialState: function setInitialState(props) {
 			dispatch(additional_fields["a" /* actions */].setInitialState(props));
-		},
-		onBlockBlur: function onBlockBlur() {
-			var name = ownProps.name;
-
-			dispatch(additional_fields["a" /* actions */].setFieldBlur(name));
 		}
 	};
 };
 
-/* harmony default export */ var container = (Object(redux["c" /* compose */])(Object(external_tribe_common_hoc_["withStore"])(), Object(es["a" /* connect */])(container_mapStateToProps, container_mapDispatchToProps), Object(external_tribe_common_hoc_["withSaveData"])(), Object(external_tribe_common_hoc_["withSelected"])()));
+/* harmony default export */ var container = (Object(redux["c" /* compose */])(Object(external_tribe_common_hoc_["withStore"])(), Object(es["a" /* connect */])(container_mapStateToProps, container_mapDispatchToProps), Object(external_tribe_common_hoc_["withSaveData"])()));
 // EXTERNAL MODULE: external "React"
 var external_React_ = __webpack_require__(8);
 
@@ -11537,7 +11544,7 @@ var isArray = __webpack_require__(30);
 var isArray_default = /*#__PURE__*/__webpack_require__.n(isArray);
 
 // EXTERNAL MODULE: external "tribe.common.elements"
-var external_tribe_common_elements_ = __webpack_require__(21);
+var external_tribe_common_elements_ = __webpack_require__(20);
 
 // EXTERNAL MODULE: ./src/modules/blocks/additional-fields/elements/preview/style.pcss
 var style = __webpack_require__(381);
@@ -16904,7 +16911,7 @@ var uniqid = __webpack_require__(156);
 var uniqid_default = /*#__PURE__*/__webpack_require__.n(uniqid);
 
 // EXTERNAL MODULE: external "tribe.common.elements"
-var external_tribe_common_elements_ = __webpack_require__(21);
+var external_tribe_common_elements_ = __webpack_require__(20);
 
 // CONCATENATED MODULE: ./src/modules/elements/multi-day-checkbox/element.js
 
@@ -17105,7 +17112,7 @@ var external_tribe_events_data_ = __webpack_require__(27);
 var external_tribe_common_utils_ = __webpack_require__(17);
 
 // EXTERNAL MODULE: external "tribe.common.hoc"
-var external_tribe_common_hoc_ = __webpack_require__(20);
+var external_tribe_common_hoc_ = __webpack_require__(21);
 
 // CONCATENATED MODULE: ./src/modules/elements/series-ends/element.js
 
@@ -43713,7 +43720,7 @@ var es = __webpack_require__(22);
 var redux = __webpack_require__(19);
 
 // EXTERNAL MODULE: external "tribe.common.hoc"
-var external_tribe_common_hoc_ = __webpack_require__(20);
+var external_tribe_common_hoc_ = __webpack_require__(21);
 
 // EXTERNAL MODULE: ./src/modules/data/ui/index.js + 4 modules
 var ui = __webpack_require__(43);

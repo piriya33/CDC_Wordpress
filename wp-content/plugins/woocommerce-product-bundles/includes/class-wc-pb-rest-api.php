@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Add custom REST API fields.
  *
  * @class    WC_PB_REST_API
- * @version  5.11.1
+ * @version  6.1.2
  */
 class WC_PB_REST_API {
 
@@ -50,13 +50,14 @@ class WC_PB_REST_API {
 	 */
 	public static function filter_order_fields() {
 
-		// Filter WC REST API order response content to add bundle container/children references.
+		// Modify product bundle responses to return prices with the string data type.
+		add_filter( 'woocommerce_rest_prepare_product_object', array( __CLASS__, 'filter_product_response' ), 10, 2 );
 
 		// Schema.
 		add_filter( 'woocommerce_rest_shop_order_schema', array( __CLASS__, 'filter_order_schema' ) );
 		add_filter( 'woocommerce_rest_shop_subscription_schema', array( __CLASS__, 'filter_order_schema' ) );
 
-		// Add extra data to line items.
+		// Modify order responses to include extra line item parent/child relationships and data.
 		// v1.
 		add_filter( 'woocommerce_rest_prepare_shop_order', array( __CLASS__, 'filter_order_response' ), 10, 3 );
 		add_filter( 'woocommerce_rest_prepare_shop_subscription', array( __CLASS__, 'filter_order_response' ), 10, 3 );
@@ -66,7 +67,7 @@ class WC_PB_REST_API {
 		// Add bundle configuration data as meta for later post-processing.
 		add_action( 'woocommerce_rest_set_order_item', array( __CLASS__, 'set_order_item' ), 10, 2 );
 
-		// Modify order contents to include bundled items:
+		// Make it possible to add entire bundles to orders via the REST API.
 		// v1.
 		add_filter( 'woocommerce_rest_pre_insert_shop_order', array( __CLASS__, 'add_bundle_to_order' ), 10, 2 );
 		add_filter( 'woocommerce_rest_pre_insert_shop_subscription', array( __CLASS__, 'add_bundle_to_order' ), 10, 2 );
@@ -79,6 +80,31 @@ class WC_PB_REST_API {
 	| Products.
 	|--------------------------------------------------------------------------
 	*/
+
+	/**
+	 * Filters WC REST API product responses to cast prices to string, as per the schema.
+	 *
+	 * @since  6.1.1
+	 *
+	 * @param  WP_REST_Response   $response
+	 * @param  WC_Data            $product
+	 * @return WP_REST_Response
+	 */
+	public static function filter_product_response( $response, $product ) {
+
+		if ( $product->is_type( 'bundle' ) ) {
+
+			$data = $response->get_data();
+
+			$data[ 'price' ]         = strval( $data[ 'price' ] );
+			$data[ 'regular_price' ] = strval( $data[ 'regular_price' ] );
+			$data[ 'sale_price' ]    = strval( $data[ 'sale_price' ] );
+
+			$response->set_data( $data );
+		}
+
+		return $response;
+	}
 
 	/**
 	 * Register custom REST API fields for product requests.
@@ -113,7 +139,7 @@ class WC_PB_REST_API {
 			'bundle_layout'              => array(
 				'description' => __( 'Single-product details page layout. Applicable for bundle-type products only.', 'woocommerce-product-bundles' ),
 				'type'        => 'string',
-				'enum'        => array( 'default', 'tabular' ),
+				'enum'        => array_keys( WC_Product_Bundle::get_layout_options() ),
 				'context'     => array( 'view', 'edit' )
 			),
 			'bundled_by'                 => array(

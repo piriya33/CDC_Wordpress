@@ -409,15 +409,22 @@ class WPForms_Field_Date_Time extends WPForms_Field {
 		// Time.
 		$time_placeholder = ! empty( $field['time_placeholder'] ) ? $field['time_placeholder'] : '';
 		$time_format      = ! empty( $field['time_format'] ) ? esc_attr( $field['time_format'] ) : 'g:i A';
-		$time_formats     = array(
-			'g:i A' => '12 H',
-			'H:i'   => '24 H',
+		$time_formats     = apply_filters(
+			'wpforms_datetime_time_formats',
+			array(
+				'g:i A' => '12 H',
+				'H:i'   => '24 H',
+			)
 		);
+
 		$time_interval    = ! empty( $field['time_interval'] ) ? esc_attr( $field['time_interval'] ) : '30';
-		$time_intervals   = array(
-			'15' => esc_html__( '15 minutes', 'wpforms' ),
-			'30' => esc_html__( '30 minutes', 'wpforms' ),
-			'60' => esc_html__( '1 hour', 'wpforms' ),
+		$time_intervals   = apply_filters(
+			'wpforms_datetime_time_intervals',
+			array(
+				'15' => esc_html__( '15 minutes', 'wpforms' ),
+				'30' => esc_html__( '30 minutes', 'wpforms' ),
+				'60' => esc_html__( '1 hour', 'wpforms' ),
+			)
 		);
 		printf(
 			'<div class="wpforms-clear wpforms-field-option-row wpforms-field-option-row-time" id="wpforms-field-option-row-%d-time" data-subfield="time" data-field-id="%d">',
@@ -604,6 +611,11 @@ class WPForms_Field_Date_Time extends WPForms_Field {
 		$container  = isset( $properties['input_container'] ) ? $properties['input_container'] : array();
 		$date_prop  = isset( $field['properties']['inputs']['date'] ) ? $field['properties']['inputs']['date'] : array();
 		$time_prop  = isset( $field['properties']['inputs']['time'] ) ? $field['properties']['inputs']['time'] : array();
+
+		$date_prop['data']['date-format'] = apply_filters( 'wpforms_datetime_date_format', $date_prop['data']['date-format'], $form_data, $field );
+
+		$time_prop['data']['step']        = apply_filters( 'wpforms_datetime_time_interval', $time_prop['data']['step'], $form_data, $field );
+		$time_prop['data']['time-format'] = apply_filters( 'wpforms_datetime_time_format', $time_prop['data']['time-format'], $form_data, $field );
 
 		$field_required = ! empty( $field['required'] ) ? ' required' : '';
 		$field_format   = ! empty( $field['format'] ) ? $field['format'] : 'date-time';

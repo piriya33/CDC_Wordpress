@@ -528,4 +528,18 @@ class WC_PB_Core_Compatibility {
 	public static function is_rest_api_request() {
 		return method_exists( WC(), 'is_rest_api_request' ) ? WC()->is_rest_api_request() : defined( 'REST_REQUEST' );
 	}
+
+	/**
+	 * Compatibility wrapper for invalidating cache groups.
+	 *
+	 * @param  string  $group
+	 * @return void
+	 */
+	public static function invalidate_cache_group( $group ) {
+		if ( self::is_wc_version_gte( '3.9' ) ) {
+			WC_Cache_Helper::invalidate_cache_group( $group );
+		} else {
+			WC_Cache_Helper::incr_cache_prefix( $group );
+		}
+	}
 }

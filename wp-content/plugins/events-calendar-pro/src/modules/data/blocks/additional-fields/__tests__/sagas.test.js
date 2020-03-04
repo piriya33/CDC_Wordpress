@@ -29,29 +29,26 @@ describe( 'Event Date time Block sagas', () => {
 			expect( gen.next().value ).toEqual(
 				takeEvery( types.REMOVE_ADDITIONAL_FIELD_VALUE, sagas.removeFieldValue ),
 			);
-			expect( gen.  next().value ).toEqual(
-				takeEvery( types.SET_ADDITIONAL_FIELD_BLUR, sagas.onFieldBlur )
-			);
 			expect( gen.next().value ).toEqual(
 				takeEvery(
 					[
-						`${ types.SET_ADDITIONAL_FIELD_BLUR }/${ FIELD_TYPES.text }`,
-						`${ types.SET_ADDITIONAL_FIELD_BLUR }/${ FIELD_TYPES.radio }`,
-						`${ types.SET_ADDITIONAL_FIELD_BLUR }/${ FIELD_TYPES.url }`,
-						`${ types.SET_ADDITIONAL_FIELD_BLUR }/${ FIELD_TYPES.textarea }`,
+						`${ types.SET_ADDITIONAL_FIELD_OUTPUT_BY_TYPE }/${ FIELD_TYPES.text }`,
+						`${ types.SET_ADDITIONAL_FIELD_OUTPUT_BY_TYPE }/${ FIELD_TYPES.radio }`,
+						`${ types.SET_ADDITIONAL_FIELD_OUTPUT_BY_TYPE }/${ FIELD_TYPES.url }`,
+						`${ types.SET_ADDITIONAL_FIELD_OUTPUT_BY_TYPE }/${ FIELD_TYPES.textarea }`,
 					],
 					sagas.setTextFieldOutput
 				),
 			);
 			expect( gen.next().value ).toEqual(
 				takeEvery(
-					`${ types.SET_ADDITIONAL_FIELD_BLUR }/${ FIELD_TYPES.dropdown }`,
+					`${ types.SET_ADDITIONAL_FIELD_OUTPUT_BY_TYPE }/${ FIELD_TYPES.dropdown }`,
 					sagas.setDropdownOutput,
 				),
 			);
 			expect( gen.next().value ).toEqual(
 				takeEvery(
-					`${ types.SET_ADDITIONAL_FIELD_BLUR }/${ FIELD_TYPES.checkbox }`,
+					`${ types.SET_ADDITIONAL_FIELD_OUTPUT_BY_TYPE }/${ FIELD_TYPES.checkbox }`,
 					sagas.setCheckboxOutput,
 				),
 			);

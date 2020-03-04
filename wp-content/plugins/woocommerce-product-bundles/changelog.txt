@@ -1,5 +1,32 @@
 *** WooCommerce Product Bundles ***
 
+2020.02.29 - version 6.1.2
+* Fix - Declared support for WooCommerce 4.0.
+* Tweak - Check product type before modifying REST API responses.
+
+2020.02.28 - version 6.1.1
+* Fix - Return bundle prices using the string data type in REST API, to comply with the product schema.
+* Fix - Fatal error 'Call to a member function is_priced_individually() on boolean' in Bundles with Variable Subscription products when Product Add-Ons is active.
+* Fix - Changed '/pc.' to 'each'.
+
+2020.02.25 - version 6.1.0
+* Important - Bundled product Add-On prices are no longer preserved when Priced Individually is disabled. To restore this behavior, use the 'props' price filtering method -- see https://gist.github.com/franticpsyx/7a9bfc3abb62d7651f19976213b88791 .
+* Important - Bundled product discounts are now applied over sale prices by default.
+* Feature - Add support for importing/exporting Bundle-Sells using the WC core Importer/Exporter.
+* Fix - Support 'Grid' layout in REST API put/post requests.
+* Fix - All Products for WooCommerce Subscriptions does not calculate regular subscription plan prices correctly when Product Add-Ons exist at Bundle or bundled item level (requires APFS 3.1+).
+* Fix - Product Add-On percentage costs not calculated correctly in the cart.
+* Fix - Added compatibility with Name Your Price 3.0.
+* Fix - Prevent Quantity Max from being saved with zero value.
+* Fix - Replace deprecated 'WC_Cache_Helper::incr_cache_prefix'.
+
+2020.02.07 - version 6.0.3
+* Tweak - Move 'Product Data > Shipping > Bundle type' div to priority 10000 to avoid conflicts with plugins that add their own fields in the Shipping tab.
+* Fix - All Products for WooCommerce Subscriptions now applies discounts to Product Add-Ons correctly when calculating subscription plan prices in Product Bundle pages (requires APFS 3.1+).
+
+2020.02.05 - version 6.0.2
+* Fix - Bundled product add-on prices applied twice in the cart.
+
 2020.01.29 - version 6.0.1
 * Fix - Bundled product discounts applied twice in the single product page when using the 'woocommerce_bundled_item_discount_from_regular' filter to calculate discounts over sale prices.
 

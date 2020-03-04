@@ -31,19 +31,40 @@ class N2 {
         $posts = $posts + $posts_default;
 
         if ($returnUrl) {
-            return $api . '?' . http_build_query($posts + $posts_default);
+            return $api . '?' . http_build_query($posts + $posts_default, '', '&');
         }
 
         if (!isset($data)) {
             if (function_exists('curl_init') && function_exists('curl_exec') && N2Settings::get('curl', 1)) {
                 $ch = curl_init();
+
                 curl_setopt($ch, CURLOPT_URL, $api);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, $posts);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($posts, '', '&'));
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
                 curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 20);
                 curl_setopt($ch, CURLOPT_TIMEOUT, 30);
                 curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.0.3705; .NET CLR 1.1.4322)');
                 curl_setopt($ch, CURLOPT_REFERER, $_SERVER['REQUEST_URI']);
+                $proxy = new WP_HTTP_Proxy();
+
+                if ($proxy->is_enabled() && $proxy->send_through_proxy($api)) {
+
+
+                    curl_setopt($ch, CURLOPT_PROXYTYPE, CURLPROXY_HTTP);
+
+                    curl_setopt($ch, CURLOPT_PROXY, $proxy->host());
+
+                    curl_setopt($ch, CURLOPT_PROXYPORT, $proxy->port());
+
+
+                    if ($proxy->use_authentication()) {
+
+                        curl_setopt($ch, CURLOPT_PROXYAUTH, CURLAUTH_ANY);
+
+                        curl_setopt($ch, CURLOPT_PROXYUSERPWD, $proxy->authentication());
+                    }
+                }
+            
 
                 if (N2Settings::get('curl-clean-proxy', 0)) {
                     curl_setopt($ch, CURLOPT_PROXY, '');
@@ -79,7 +100,7 @@ class N2 {
                     'http' => array(
                         'method'  => 'POST',
                         'header'  => 'Content-type: application/x-www-form-urlencoded',
-                        'content' => http_build_query($posts)
+                        'content' => http_build_query($posts, '', '&')
                     )
                 );
                 $context = stream_context_create($opts);

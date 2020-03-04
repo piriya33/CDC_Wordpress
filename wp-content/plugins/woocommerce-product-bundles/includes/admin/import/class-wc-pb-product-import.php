@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * WooCommerce core Product Importer support.
  *
  * @class    WC_PB_Product_Import
- * @version  5.8.1
+ * @version  6.1.0
  */
 class WC_PB_Product_Import {
 
@@ -31,6 +31,9 @@ class WC_PB_Product_Import {
 
 		// Parse bundled items.
 		add_filter( 'woocommerce_product_importer_parsed_data', array( __CLASS__, 'parse_bundled_items' ), 10, 2 );
+
+		// Parse Bundle Sells IDs.
+		add_filter( 'woocommerce_product_importer_parsed_data', array( __CLASS__, 'parse_bundle_sells' ), 10, 2 );
 
 		// Set bundle-type props.
 		add_filter( 'woocommerce_product_import_pre_insert_product_object', array( __CLASS__, 'set_bundle_props' ), 10, 2 );
@@ -50,6 +53,9 @@ class WC_PB_Product_Import {
 		$options[ 'wc_pb_editable_in_cart' ]          = __( 'Bundle Cart Editing', 'woocommerce-product-bundles' );
 		$options[ 'wc_pb_sold_individually_context' ] = __( 'Bundle Sold Individually', 'woocommerce-product-bundles' );
 		$options[ 'wc_pb_add_to_cart_form_location' ] = __( 'Bundle Form Location', 'woocommerce-product-bundles' );
+		$options[ 'wc_pb_bundle_sells' ]              = __( 'Bundle Sells', 'woocommerce-product-bundles' );
+		$options[ 'wc_pb_bundle_sells_title' ]        = __( 'Bundle Sells Title', 'woocommerce-product-bundles' );
+		$options[ 'wc_pb_bundle_sells_discount' ]     = __( 'Bundle Sells Discount', 'woocommerce-product-bundles' );
 
 		return $options;
 	}
@@ -68,6 +74,9 @@ class WC_PB_Product_Import {
 		$columns[ __( 'Bundle Cart Editing', 'woocommerce-product-bundles' ) ]          = 'wc_pb_editable_in_cart';
 		$columns[ __( 'Bundle Sold Individually', 'woocommerce-product-bundles' ) ]     = 'wc_pb_sold_individually_context';
 		$columns[ __( 'Bundle Form Location', 'woocommerce-product-bundles' ) ]         = 'wc_pb_add_to_cart_form_location';
+		$columns[ __( 'Bundle Sells', 'woocommerce-product-bundles' ) ]                 = 'wc_pb_bundle_sells';
+		$columns[ __( 'Bundle Sells Title', 'woocommerce-product-bundles' ) ]           = 'wc_pb_bundle_sells_title';
+		$columns[ __( 'Bundle Sells Discount', 'woocommerce-product-bundles' ) ]        = 'wc_pb_bundle_sells_discount';
 
 		// Always add English mappings.
 		$columns[ 'Bundled Items (JSON-encoded)' ] = 'wc_pb_bundled_items';
@@ -76,6 +85,9 @@ class WC_PB_Product_Import {
 		$columns[ 'Bundle Cart Editing' ]          = 'wc_pb_editable_in_cart';
 		$columns[ 'Bundle Sold Individually' ]     = 'wc_pb_sold_individually_context';
 		$columns[ 'Bundle Form Location' ]         = 'wc_pb_add_to_cart_form_location';
+		$columns[ 'Bundle Sells' ]                 = 'wc_pb_bundle_sells';
+		$columns[ 'Bundle Sells Title' ]           = 'wc_pb_bundle_sells_title';
+		$columns[ 'Bundle Sells Discount' ]        = 'wc_pb_bundle_sells_discount';
 
 		return $columns;
 	}
@@ -111,6 +123,45 @@ class WC_PB_Product_Import {
 
 		return $parsed_data;
 	}
+
+	/**
+	 * Decode Bundle Sells and parse relative IDs.
+	 *
+	 * @since  6.1.0
+	 *
+	 * @param  array                    $parsed_data
+	 * @param  WC_Product_CSV_Importer  $importer
+	 * @return array
+	 */
+	public static function parse_bundle_sells( $parsed_data, $importer ) {
+
+		if ( ! empty( $parsed_data[ 'wc_pb_bundle_sells' ] ) ) {
+
+			$parsed_data[ 'meta_data' ][] = array(
+				'key'   => '_wc_pb_bundle_sell_ids',
+				'value' => $importer->parse_relative_comma_field( $parsed_data[ 'wc_pb_bundle_sells' ] )
+			);
+		}
+
+		if ( ! empty( $parsed_data[ 'wc_pb_bundle_sells_title' ] ) ) {
+
+			$parsed_data[ 'meta_data' ][] = array(
+				'key'   => '_wc_pb_bundle_sells_title',
+				'value' => wp_kses_post( $parsed_data[ 'wc_pb_bundle_sells_title' ] )
+			);
+		}
+
+		if ( ! empty( $parsed_data[ 'wc_pb_bundle_sells_discount' ] ) ) {
+
+			$parsed_data[ 'meta_data' ][] = array(
+				'key'   => '_wc_pb_bundle_sells_discount',
+				'value' => wc_format_decimal( $parsed_data[ 'wc_pb_bundle_sells_discount' ] )
+			);
+		}
+
+		return $parsed_data;
+	}
+
 
 	/**
 	 * Set bundle-type props.

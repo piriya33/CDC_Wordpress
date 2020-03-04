@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * WooCommerce core Product Exporter support.
  *
  * @class    WC_PB_Product_Export
- * @version  5.8.1
+ * @version  6.1.0
  */
 class WC_PB_Product_Export {
 
@@ -36,6 +36,9 @@ class WC_PB_Product_Export {
 		add_filter( 'woocommerce_product_export_product_column_wc_pb_editable_in_cart', array( __CLASS__, 'export_editable_in_cart' ), 10, 2 );
 		add_filter( 'woocommerce_product_export_product_column_wc_pb_sold_individually_context', array( __CLASS__, 'export_sold_individually_context' ), 10, 2 );
 		add_filter( 'woocommerce_product_export_product_column_wc_pb_add_to_cart_form_location', array( __CLASS__, 'export_add_to_cart_form_location' ), 10, 2 );
+		add_filter( 'woocommerce_product_export_product_column_wc_pb_bundle_sells', array( __CLASS__, 'export_bundle_sells' ), 10, 2 );
+		add_filter( 'woocommerce_product_export_product_column_wc_pb_bundle_sells_title', array( __CLASS__, 'export_bundle_sells_title' ), 10, 2 );
+		add_filter( 'woocommerce_product_export_product_column_wc_pb_bundle_sells_discount', array( __CLASS__, 'export_bundle_sells_discount' ), 10, 2 );
 	}
 
 	/**
@@ -52,6 +55,9 @@ class WC_PB_Product_Export {
 		$columns[ 'wc_pb_editable_in_cart' ]          = __( 'Bundle Cart Editing', 'woocommerce-product-bundles' );
 		$columns[ 'wc_pb_sold_individually_context' ] = __( 'Bundle Sold Individually', 'woocommerce-product-bundles' );
 		$columns[ 'wc_pb_add_to_cart_form_location' ] = __( 'Bundle Form Location', 'woocommerce-product-bundles' );
+		$columns[ 'wc_pb_bundle_sells' ]              = __( 'Bundle Sells', 'woocommerce-product-bundles' );
+		$columns[ 'wc_pb_bundle_sells_title' ]        = __( 'Bundle Sells Title', 'woocommerce-product-bundles' );
+		$columns[ 'wc_pb_bundle_sells_discount' ]     = __( 'Bundle Sells Discount', 'woocommerce-product-bundles' );
 
 		return $columns;
 	}
@@ -185,6 +191,90 @@ class WC_PB_Product_Export {
 
 		if ( $product->is_type( 'bundle' ) ) {
 			$value = $product->get_add_to_cart_form_location( 'edit' );
+		}
+
+		return $value;
+	}
+
+	/**
+	 * "Bundle Sells" field content.
+	 *
+	 * @since  6.1.0
+	 *
+	 * @param  mixed       $value
+	 * @param  WC_Product  $product
+	 * @return mixed       $value
+	 */
+	public static function export_bundle_sells( $value, $product ) {
+
+		if ( ! $product->is_type( 'bundle' ) ) {
+
+			$bundle_sells = $product->get_meta( '_wc_pb_bundle_sell_ids', true );
+
+			if ( ! empty( $bundle_sells ) ) {
+
+				$product_list = array();
+
+				foreach ( $bundle_sells as $bundle_sell ) {
+
+					if ( $linked_product = wc_get_product( $bundle_sell ) ) {
+
+						if ( $linked_product->get_sku() ) {
+							$product_list[] = str_replace( ',', '\\,', $linked_product->get_sku() );
+						} else {
+							$product_list[] = 'id:' . $linked_product->get_id();
+						}
+					}
+				}
+
+				$value = implode( ', ', $product_list );
+			}
+		}
+
+		return $value;
+	}
+
+	/**
+	 * "Bundle Sells Title" field content.
+	 *
+	 * @since  6.1.0
+	 *
+	 * @param  mixed       $value
+	 * @param  WC_Product  $product
+	 * @return mixed       $value
+	 */
+	public static function export_bundle_sells_title( $value, $product ) {
+
+		if ( ! $product->is_type( 'bundle' ) ) {
+
+			$bundle_sells_title = $product->get_meta( '_wc_pb_bundle_sells_title', true );
+
+			if ( ! empty( $bundle_sells_title ) ) {
+				$value = $bundle_sells_title;
+			}
+		}
+
+		return $value;
+	}
+
+	/**
+	 * "Bundle Sells Discount" field content.
+	 *
+	 * @since  6.1.0
+	 *
+	 * @param  mixed       $value
+	 * @param  WC_Product  $product
+	 * @return mixed       $value
+	 */
+	public static function export_bundle_sells_discount( $value, $product ) {
+
+		if ( ! $product->is_type( 'bundle' ) ) {
+
+			$bundle_sells_discount = $product->get_meta( '_wc_pb_bundle_sells_discount', true );
+
+			if ( ! empty( $bundle_sells_discount ) ) {
+				$value = $bundle_sells_discount;
+			}
 		}
 
 		return $value;

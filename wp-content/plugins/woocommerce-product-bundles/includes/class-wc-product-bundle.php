@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Product Bundle Class.
  *
  * @class    WC_Product_Bundle
- * @version  6.0.0
+ * @version  6.0.4
  */
 class WC_Product_Bundle extends WC_Product {
 
@@ -524,7 +524,8 @@ class WC_Product_Bundle extends WC_Product {
 
 			$bundle_price_data[ 'prices_tax' ] = array();
 
-			$bundle_price_data[ 'addons_prices' ] = array();
+			$bundle_price_data[ 'addons_prices' ]         = array();
+			$bundle_price_data[ 'regular_addons_prices' ] = array();
 
 			$bundle_price_data[ 'quantities' ] = array();
 
@@ -578,7 +579,8 @@ class WC_Product_Bundle extends WC_Product {
 
 				$bundle_price_data[ 'prices_tax' ][ $bundled_item->get_id() ] = WC_PB_Product_Prices::get_tax_ratios( $bundled_item->product );
 
-				$bundle_price_data[ 'addons_prices' ][ $bundled_item->get_id() ] = '';
+				$bundle_price_data[ 'addons_prices' ][ $bundled_item->get_id() ]         = '';
+				$bundle_price_data[ 'regular_addons_prices' ][ $bundled_item->get_id() ] = '';
 
 				$bundle_price_data[ 'bundled_item_' . $bundled_item->get_id() . '_totals' ]           = $totals;
 				$bundle_price_data[ 'bundled_item_' . $bundled_item->get_id() . '_recurring_totals' ] = $totals;

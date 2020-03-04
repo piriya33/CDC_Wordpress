@@ -336,6 +336,10 @@ class WPForms_Entries_List {
 
 		wpforms()->entry->delete_by( 'form_id', absint( $_GET['form_id'] ) );
 		wpforms()->entry_meta->delete_by( 'form_id', absint( $_GET['form_id'] ) );
+		wpforms()->entry_fields->delete_by( 'form_id', absint( $_GET['form_id'] ) );
+
+		WPForms\Pro\Admin\DashboardWidget::clear_widget_cache();
+		WPForms\Pro\Admin\Entries\DefaultScreen::clear_widget_cache();
 
 		$this->alerts[] = array(
 			'type'    => 'success',

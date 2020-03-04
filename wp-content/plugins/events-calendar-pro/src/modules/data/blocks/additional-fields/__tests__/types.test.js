@@ -2,7 +2,7 @@
  * Internal dependencies
  */
 import { PREFIX_EVENTS_PRO_STORE } from '@moderntribe/events-pro/data/prefix';
-import { types } from '@moderntribe/events-pro/data/blocks/additional-fields';
+import * as types from '@moderntribe/events-pro/data/blocks/additional-fields/types';
 
 describe( 'Additional Field types', () => {
 	test( 'Should match the types', () => {
@@ -36,7 +36,7 @@ describe( 'Additional Field types', () => {
 			.toBe( `${ PREFIX_EVENTS_PRO_STORE }/SET_ADDITIONAL_FIELD_META_KEY` );
 		expect( types.SET_ADDITIONAL_FIELD_OUTPUT )
 			.toBe( `${ PREFIX_EVENTS_PRO_STORE }/SET_ADDITIONAL_FIELD_OUTPUT` );
-		expect( types.SET_ADDITIONAL_FIELD_BLUR )
-			.toBe( `${ PREFIX_EVENTS_PRO_STORE }/SET_ADDITIONAL_FIELD_BLUR` );
+		expect( types.SET_ADDITIONAL_FIELD_OUTPUT_BY_TYPE )
+			.toBe( `${ PREFIX_EVENTS_PRO_STORE }/SET_ADDITIONAL_FIELD_OUTPUT_BY_TYPE` );
 	} );
 } );

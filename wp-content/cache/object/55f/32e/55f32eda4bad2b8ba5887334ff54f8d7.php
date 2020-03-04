@@ -1,4 +1,4 @@
-U�6^<?php exit; ?>a:1:{s:7:"content";O:8:"stdClass":23:{s:2:"ID";s:5:"33681";s:11:"post_author";s:3:"766";s:9:"post_date";s:19:"2020-01-31 20:24:56";s:13:"post_date_gmt";s:19:"2020-01-31 13:24:56";s:12:"post_content";s:268:"ขึ้น No Internet Connection
+�3_^<?php exit; ?>a:1:{s:7:"content";O:8:"stdClass":23:{s:2:"ID";s:5:"33681";s:11:"post_author";s:3:"766";s:9:"post_date";s:19:"2020-01-31 20:24:56";s:13:"post_date_gmt";s:19:"2020-01-31 13:24:56";s:12:"post_content";s:268:"ขึ้น No Internet Connection
 
 แต่คอมพ์ของผมเล่นเน็ตได้ปกติครับ
 

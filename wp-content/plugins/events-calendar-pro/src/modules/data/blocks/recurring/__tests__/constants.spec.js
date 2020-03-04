@@ -496,5 +496,9 @@ describe( 'Recurrence constants', () => {
 		test( 'seventh day label', () => {
 			expect( constants.SEVENTH_DAY_LABEL ).toEqual( '7th day' );
 		} );
+
+		test( 'num day span mapping to multi day span', () => {
+			expect( constants.NUM_DAY_SPAN_MAPPING_TO_MULTI_DAY_SPAN ).toMatchSnapshot();
+		} );
 	} );
 } );

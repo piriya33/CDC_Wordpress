@@ -131,6 +131,7 @@ class Export {
 				'ip_address' => esc_html__( 'User IP', 'wpforms' ),
 				'user_uuid'  => esc_html__( 'Unique Generated User ID', 'wpforms' ),
 				'geodata'    => esc_html__( 'Geolocation Details', 'wpforms' ),
+				'pstatus'    => esc_html__( 'Payment Status', 'wpforms' ),
 				'pginfo'     => esc_html__( 'Payment Gateway Information', 'wpforms' ),
 				'del_fields' => esc_html__( 'Include data of previously deleted fields', 'wpforms' ),
 			)

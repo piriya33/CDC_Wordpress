@@ -380,8 +380,8 @@ class Tribe__Tickets_Plus__Commerce__EDD__Main extends Tribe__Tickets_Plus__Tick
 	 */
 	public function register_eddtickets_type() {
 
-		$args = array(
-			'label'           => 'Tickets',
+		$args = [
+			'label'           => esc_html( tribe_get_ticket_label_plural( 'edd_post_type_label' ) ),
 			'public'          => false,
 			'show_ui'         => false,
 			'show_in_menu'    => false,
@@ -390,7 +390,7 @@ class Tribe__Tickets_Plus__Commerce__EDD__Main extends Tribe__Tickets_Plus__Tick
 			'capability_type' => 'post',
 			'has_archive'     => false,
 			'hierarchical'    => true,
-		);
+		];
 
 		register_post_type( $this->attendee_object, $args );
 	}
@@ -597,9 +597,8 @@ class Tribe__Tickets_Plus__Commerce__EDD__Main extends Tribe__Tickets_Plus__Tick
 		if ( ! $has_tickets )
 			return $email_body;
 
-		$message = __( "You'll receive your tickets in another email.", 'event-tickets-plus' );
+		$message = esc_html( sprintf( __( "You'll receive your %s in another email.", 'event-tickets-plus' ), tribe_get_ticket_label_plural_lowercase( 'edd_email_confirmation' ) ) );
 		return $email_body . '<br/>' . apply_filters( 'eddtickets_email_message', $message );
-
 	}
 
 	/**
@@ -648,9 +647,12 @@ class Tribe__Tickets_Plus__Commerce__EDD__Main extends Tribe__Tickets_Plus__Tick
 			return false;
 		}
 
+		/** @var Tribe__Tickets__Tickets_Handler $tickets_handler */
+		$tickets_handler = tribe( 'tickets.handler' );
+
 		// Updates if we should show Description
 		$ticket->show_description = isset( $ticket->show_description ) && tribe_is_truthy( $ticket->show_description ) ? 'yes' : 'no';
-		update_post_meta( $ticket->ID, tribe( 'tickets.handler' )->key_show_description, $ticket->show_description );
+		update_post_meta( $ticket->ID, $tickets_handler->key_show_description, $ticket->show_description );
 
 		// Fetches all Ticket Form Datas
 		$data = Tribe__Utils__Array::get( $raw_data, 'tribe-ticket', array() );
@@ -685,12 +687,16 @@ class Tribe__Tickets_Plus__Commerce__EDD__Main extends Tribe__Tickets_Plus__Tick
 				// Makes sure it's an Int after this point
 				$data['event_capacity'] = (int) $data['event_capacity'];
 
+				$tickets_handler->remove_hooks();
+
 				// We need to update event post meta - if we've set a global stock
 				$event_stock->enable();
-				$event_stock->set_stock_level( $data['event_capacity'] );
+				$event_stock->set_stock_level( $data['event_capacity'], true );
 
 				// Update Event capacity
-				update_post_meta( $post_id, tribe( 'tickets.handler' )->key_capacity, $data['event_capacity'] );
+				update_post_meta( $post_id, $tickets_handler->key_capacity, $data['event_capacity'] );
+
+				$tickets_handler->add_hooks();
 			}
 		} else {
 			// If the Global Stock is configured we pull it from the Event
@@ -772,7 +778,7 @@ class Tribe__Tickets_Plus__Commerce__EDD__Main extends Tribe__Tickets_Plus__Tick
 
 		if ( '' !== $data['capacity'] ) {
 			// Update Ticket capacity
-			update_post_meta( $ticket->ID, tribe( 'tickets.handler' )->key_capacity, $data['capacity'] );
+			update_post_meta( $ticket->ID, $tickets_handler->key_capacity, $data['capacity'] );
 		}
 
 		update_post_meta( $ticket->ID, 'ticket_price', $ticket->price );
@@ -790,14 +796,14 @@ class Tribe__Tickets_Plus__Commerce__EDD__Main extends Tribe__Tickets_Plus__Tick
 			}
 
 			$ticket->start_date  = date( Tribe__Date_Utils::DBDATETIMEFORMAT, strtotime( $start_date ) );
-			$previous_start_date = get_post_meta( $ticket->ID, tribe( 'tickets.handler' )->key_start_date, true );
+			$previous_start_date = get_post_meta( $ticket->ID, $tickets_handler->key_start_date, true );
 
 			// Only update when we are modifying
 			if ( $ticket->start_date !== $previous_start_date ) {
-				update_post_meta( $ticket->ID, tribe( 'tickets.handler' )->key_start_date, $ticket->start_date );
+				update_post_meta( $ticket->ID, $tickets_handler->key_start_date, $ticket->start_date );
 			}
 		} else {
-			delete_post_meta( $ticket->ID, tribe( 'tickets.handler' )->key_start_date );
+			delete_post_meta( $ticket->ID, $tickets_handler->key_start_date );
 		}
 
 		if ( ! empty( $raw_data['ticket_end_date'] ) ) {
@@ -808,11 +814,11 @@ class Tribe__Tickets_Plus__Commerce__EDD__Main extends Tribe__Tickets_Plus__Tick
 			}
 
 			$ticket->end_date  = date( Tribe__Date_Utils::DBDATETIMEFORMAT, strtotime( $end_date ) );
-			$previous_end_date = get_post_meta( $ticket->ID, tribe( 'tickets.handler' )->key_end_date, true );
+			$previous_end_date = get_post_meta( $ticket->ID, $tickets_handler->key_end_date, true );
 
 			// Only update when we are modifying
 			if ( $ticket->end_date !== $previous_end_date ) {
-				update_post_meta( $ticket->ID, tribe( 'tickets.handler' )->key_end_date, $ticket->end_date );
+				update_post_meta( $ticket->ID, $tickets_handler->key_end_date, $ticket->end_date );
 			}
 		} else {
 			delete_post_meta( $ticket->ID, '_ticket_end_date' );
@@ -1768,7 +1774,17 @@ class Tribe__Tickets_Plus__Commerce__EDD__Main extends Tribe__Tickets_Plus__Tick
 
 		$post_id = get_post_meta( get_the_ID(), $this->event_key, true );
 		if ( ! empty( $post_id ) ) {
-			echo sprintf( '%s <a href="%s">%s</a>', __( 'This is a ticket for the event:', 'event-tickets-plus' ), esc_url( get_edit_post_link( $post_id ) ), esc_html( get_the_title( $post_id ) ) );
+			$text = esc_html( sprintf(
+				__( 'This is a %s for the event:', 'event-tickets-plus' ),
+				tribe_get_ticket_label_singular_lowercase( 'edd_meta_box' )
+			) );
+
+			echo sprintf(
+				'%s <a href="%s">%s</a>',
+				$text,
+				esc_url( get_edit_post_link( $post_id ) ),
+				esc_html( get_the_title( $post_id ) )
+			);
 		}
 	}
 

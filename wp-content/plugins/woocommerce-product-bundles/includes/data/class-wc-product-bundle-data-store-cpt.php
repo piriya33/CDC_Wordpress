@@ -336,7 +336,7 @@ class WC_Product_Bundle_Data_Store_CPT extends WC_Product_Data_Store_CPT {
 				WHERE meta_key = '_wc_pb_bundled_items_stock_status'
 			" );
 
-			WC_Cache_Helper::incr_cache_prefix( 'bundled_data_items' );
+			WC_PB_Core_Compatibility::invalidate_cache_group( 'bundled_data_items' );
 
 		} else {
 

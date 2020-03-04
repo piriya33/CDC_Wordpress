@@ -5,7 +5,7 @@ Tags: events, calendar, event, venue, organizer, dates, date, google maps, confe
 Donate link: http://m.tri.be/29
 Requires at least: 4.9
 Tested up to: 5.3.2
-Stable tag: 5.0.0.1
+Stable tag: 5.0.2
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -52,10 +52,10 @@ That's it! Just configure your settings as you see fit, and you're on your way t
 
 = Requirements =
 
-* PHP 5.2.4 or greater (recommended: PHP 5.4 or greater)
-* WordPress 3.9 or above
+* PHP 5.6 or greater (recommended: PHP 7.0 or greater)
+* WordPress 4.9 or above
 * jQuery 1.11.x
-* The Events Calendar 3.12 or newer
+* The Events Calendar 5.0 or newer
 
 = Where to Begin =
 
@@ -204,6 +204,33 @@ Our Premium Plugins:
 * <a href="http://m.tri.be/fa" target="_blank">The Events Calendar: Filter Bar</a>
 
 == Changelog ==
+
+= [5.0.2] 2020-02-19 =
+
+* Version - Events Calendar PRO 5.0.2 is only compatible with The Events Calendar 5.0.2 and higher
+* Fix - Prevent PHP warning when using WP front-page as Main Events Page.
+* Fix - Shortcode support for multiple categories on `[tribe_events]` [ECP-343].
+* Language - 0 new strings added, 52 updated, 0 fuzzied, and 0 obsoleted
+
+= [5.0.1] 2020-02-12 =
+
+* Version - Events Calendar PRO 5.0.1 is only compatible with The Events Calendar 5.0.1 and higher
+* Fix - Fix width of days and day selector on new week view when using hide weekend setting. [ECP-30]
+* Fix - Do not display filter bar on venue and organizer pages for new views. [FBAR-60]
+* Fix - Fix additional fields blocks dropdown from being covered by the add block button in the block editor and additional fields not saving on change. [ECP-188]
+* Fix - Only show distance on events for new map view if location is searched. [ECP-317]
+* Fix - Prevent iframe from refreshing the default map if an event with the same venue as the current event is clicked in the new map view. [ECP-57]
+* Fix - Do not display map on new venue view if enable maps setting is disabled. [ECP-26]
+* Fix - Add recurrence rule that matches the date span of the multiday dates. [ECP-319]
+* Tweak - Remove find events button and related data when events bar is disabled. [TEC-3074]
+* Language - 10 new strings added, 69 updated, 0 fuzzied, and 0 obsoleted
+
+= [5.0.0.2] 2020-02-05 =
+
+* Fix - Recurrent Events single page properly loads without a 404. [ECP-334]
+* Fix - Non-Extension related fatal errors are now solved when doing a batch update of plugins [ECP-334]
+* Fix - Fix redirection of post category and tag to the default event list on mobile. [TEC-3226]
+* Fix - New views mobile breakpoints interactions with Caching plugins resolved. [TEC-3221]
 
 = [5.0.0.1] 2020-01-31 =
 

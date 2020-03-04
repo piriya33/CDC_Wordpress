@@ -35,7 +35,13 @@ class Tribe__Tickets_Plus__Commerce__WooCommerce__Global_Stock {
 	public function __construct() {
 		add_action( 'woocommerce_check_cart_items', array( $this, 'cart_check_stock' ) );
 		add_action( 'woocommerce_reduce_order_stock', array( $this, 'stock_equalize' ) );
-		add_action( 'wootickets_ticket_deleted', array( $this, 'increase_global_stock_on_delete' ), 10, 3 );
+
+		/*
+		 * This currently causes a fatal error because it needs a ticket object but the ticket has already been deleted.
+		 *
+		 * See [GTRIA-77] for more details. This ticket was created to follow up on the temporary workaround.
+		 */
+		//add_action( 'wootickets_ticket_deleted', array( $this, 'increase_global_stock_on_delete' ), 10, 3 );
 	}
 
 	/**
@@ -324,7 +330,6 @@ class Tribe__Tickets_Plus__Commerce__WooCommerce__Global_Stock {
 	 * @param int $product_id the ticket-product id in WooCommerce
 	 */
 	public function increase_global_stock_on_delete( $ticket_id, $post_id, $product_id ) {
-
 		$ticket  = tribe( 'tickets-plus.commerce.woo' )->get_ticket( $post_id, $product_id );
 
 		$this->maybe_increase_global_stock( $post_id, $product_id, $ticket );

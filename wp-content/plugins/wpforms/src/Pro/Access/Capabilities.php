@@ -50,7 +50,8 @@ class Capabilities {
 
 		\add_filter( 'map_meta_cap', array( $this, 'filter_map_meta_cap' ), 10, 4 );
 		\add_filter( 'wpforms_get_multiple_forms_args', array( $this, 'filter_wpforms_get_multiple_forms_args' ) );
-		\add_filter( 'wpforms_entry_handler_get_entries_where', array( $this, 'filter_wpforms_entry_handler_get_entries_where' ), 10, 2 );
+		\add_filter( 'wpforms_entry_fields_get_fields_where', array( $this, 'filter_wpforms_get_fields_get_entries_where' ), 10, 2 );
+		\add_filter( 'wpforms_entry_handler_get_entries_where', array( $this, 'filter_wpforms_get_fields_get_entries_where' ), 10, 2 );
 	}
 
 	/**
@@ -66,18 +67,18 @@ class Capabilities {
 			// Forms capabilities.
 			'wpforms_create_forms'                => \esc_html__( 'Create Forms', 'wpforms' ),
 			'wpforms_view_own_forms'              => \esc_html__( 'View Own Forms', 'wpforms' ),
-			'wpforms_view_others_forms'           => \esc_html__( 'View Others Forms', 'wpforms' ),
+			'wpforms_view_others_forms'           => \esc_html__( 'View Others\' Forms', 'wpforms' ),
 			'wpforms_edit_own_forms'              => \esc_html__( 'Edit Own Forms', 'wpforms' ),
-			'wpforms_edit_others_forms'           => \esc_html__( 'Edit Others Forms', 'wpforms' ),
+			'wpforms_edit_others_forms'           => \esc_html__( 'Edit Others\' Forms', 'wpforms' ),
 			'wpforms_delete_own_forms'            => \esc_html__( 'Delete Own Forms', 'wpforms' ),
-			'wpforms_delete_others_forms'         => \esc_html__( 'Delete Others Forms', 'wpforms' ),
+			'wpforms_delete_others_forms'         => \esc_html__( 'Delete Others\' Forms', 'wpforms' ),
 			// Entries capabilities.
 			'wpforms_view_entries_own_forms'      => \esc_html__( 'View Own Forms Entries', 'wpforms' ),
-			'wpforms_view_entries_others_forms'   => \esc_html__( 'View Others Forms Entries', 'wpforms' ),
+			'wpforms_view_entries_others_forms'   => \esc_html__( 'View Others\' Forms Entries', 'wpforms' ),
 			'wpforms_edit_entries_own_forms'      => \esc_html__( 'Edit Own Forms Entries', 'wpforms' ),
-			'wpforms_edit_entries_others_forms'   => \esc_html__( 'Edit Others Forms Entries', 'wpforms' ),
+			'wpforms_edit_entries_others_forms'   => \esc_html__( 'Edit Others\' Forms Entries', 'wpforms' ),
 			'wpforms_delete_entries_own_forms'    => \esc_html__( 'Delete Own Forms Entries', 'wpforms' ),
-			'wpforms_delete_entries_others_forms' => \esc_html__( 'Delete Others Forms Entries', 'wpforms' ),
+			'wpforms_delete_entries_others_forms' => \esc_html__( 'Delete Others\' Forms Entries', 'wpforms' ),
 		);
 
 		return \apply_filters( 'wpforms_access_capabilities_get_caps', $capabilities );
@@ -265,7 +266,7 @@ class Capabilities {
 	/**
 	 * Filter wpforms()->form->get_multiple() arguments to fetch the same results
 	 * as if a full list of forms was filtered using a meta capability.
-	 * Saves the resources by making the filtering upfront.
+	 * Save the resources by making the filtering upfront.
 	 *
 	 * @since 1.5.8
 	 *
@@ -332,18 +333,18 @@ class Capabilities {
 	}
 
 	/**
-	 * Filter wpforms()->entry->get_entries() arguments to fetch the same results
-	 * as if a full list of entries was filtered using a meta capability.
-	 * Saves the resources by making the filtering upfront.
+	 * Filter wpforms()->entry_fields->get_fields() or wpforms()->entry->get_entries()
+	 * arguments to fetch the same results as if a full list of entries was filtered using a meta capability.
+	 * Save the resources by making the filtering upfront.
 	 *
-	 * @since 1.5.8
+	 * @since 1.5.9
 	 *
 	 * @param array $where Array of 'where' clauses.
-	 * @param array $args  Array of wpforms()->form->get() arguments.
+	 * @param array $args  Array of wpforms()->entry_fields->get_fields() or wpforms()->entry->get_entries() arguments.
 	 *
 	 * @return array
 	 */
-	public function filter_wpforms_entry_handler_get_entries_where( $where, $args ) {
+	public function filter_wpforms_get_fields_get_entries_where( $where, $args ) {
 
 		if ( ! isset( $args['cap'] ) ) {
 			$args['cap'] = 'view_entries_form_single';
