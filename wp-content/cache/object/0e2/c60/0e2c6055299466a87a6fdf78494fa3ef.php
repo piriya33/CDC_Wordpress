@@ -1,4 +1,4 @@
-Ù3_^<?php exit; ?>a:1:{s:7:"content";O:8:"stdClass":23:{s:2:"ID";s:5:"33639";s:11:"post_author";s:3:"739";s:9:"post_date";s:19:"2020-01-30 16:57:40";s:13:"post_date_gmt";s:19:"2020-01-30 09:57:40";s:12:"post_content";s:1528:"<img src="https://www.chaloke.com/wp-content/uploads/2020/01/3u.jpg" />
+DÅa^<?php exit; ?>a:1:{s:7:"content";O:8:"stdClass":23:{s:2:"ID";s:5:"33639";s:11:"post_author";s:3:"739";s:9:"post_date";s:19:"2020-01-30 16:57:40";s:13:"post_date_gmt";s:19:"2020-01-30 09:57:40";s:12:"post_content";s:1528:"<img src="https://www.chaloke.com/wp-content/uploads/2020/01/3u.jpg" />
 
 <img src="https://www.chaloke.com/wp-content/uploads/2020/01/maxresdefault.jpg" />
 

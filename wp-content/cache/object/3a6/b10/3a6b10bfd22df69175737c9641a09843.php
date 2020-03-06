@@ -1,4 +1,4 @@
-�3_^<?php exit; ?>a:1:{s:7:"content";O:8:"stdClass":23:{s:2:"ID";s:5:"34144";s:11:"post_author";s:3:"744";s:9:"post_date";s:19:"2020-02-11 10:52:34";s:13:"post_date_gmt";s:19:"2020-02-11 03:52:34";s:12:"post_content";s:11395:"<!-- wp:group -->
+Z�a^<?php exit; ?>a:1:{s:7:"content";O:8:"stdClass":23:{s:2:"ID";s:5:"34144";s:11:"post_author";s:3:"744";s:9:"post_date";s:19:"2020-02-11 10:52:34";s:13:"post_date_gmt";s:19:"2020-02-11 03:52:34";s:12:"post_content";s:11395:"<!-- wp:group -->
 <div class="wp-block-group"><div class="wp-block-group__inner-container"><!-- wp:heading {"align":"center","level":1,"textColor":"vivid-red"} -->
 <h1 class="has-vivid-red-color has-text-color has-text-align-center">** ปิดรับสมัครแล้ว ** </h1>
 <!-- /wp:heading -->
