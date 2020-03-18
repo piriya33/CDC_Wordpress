@@ -1,4 +1,4 @@
-D�a^<?php exit; ?>a:1:{s:7:"content";a:13:{s:19:"_bbp_akismet_result";a:1:{i:0;s:5:"false";}s:20:"_bbp_akismet_history";a:1:{i:0;s:154:"a:4:{s:4:"time";d:1580477096.987099;s:7:"message";s:37:"Akismet cleared this post as not spam";s:5:"event";s:9:"check-ham";s:4:"user";s:11:"teerawatyai";}";}s:25:"_bbp_akismet_as_submitted";a:1:{i:0;s:4575:"a:82:{s:14:"comment_author";s:0:"";s:20:"comment_author_email";s:0:"";s:18:"comment_author_url";s:0:"";s:15:"comment_content";s:335:"วันนี้ Downloader ของผม No Internet Connect
+v8r^<?php exit; ?>a:1:{s:7:"content";a:13:{s:19:"_bbp_akismet_result";a:1:{i:0;s:5:"false";}s:20:"_bbp_akismet_history";a:1:{i:0;s:154:"a:4:{s:4:"time";d:1580477096.987099;s:7:"message";s:37:"Akismet cleared this post as not spam";s:5:"event";s:9:"check-ham";s:4:"user";s:11:"teerawatyai";}";}s:25:"_bbp_akismet_as_submitted";a:1:{i:0;s:4575:"a:82:{s:14:"comment_author";s:0:"";s:20:"comment_author_email";s:0:"";s:18:"comment_author_url";s:0:"";s:15:"comment_content";s:335:"วันนี้ Downloader ของผม No Internet Connect
 
 ขึ้น No Internet Connection
 

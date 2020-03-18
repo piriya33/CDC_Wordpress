@@ -1,1 +1,1 @@
-¹Àa^<?php exit; ?>a:1:{s:7:"content";s:179:"O:8:"stdClass":4:{s:12:"last_checked";i:1583463857;s:7:"checked";a:2:{s:10:"storefront";s:5:"2.5.5";s:12:"twentytwenty";s:3:"1.1";}s:8:"response";a:0:{}s:12:"translations";a:0:{}}";}
+[6r^<?php exit; ?>a:1:{s:7:"content";s:179:"O:8:"stdClass":4:{s:12:"last_checked";i:1584542667;s:7:"checked";a:2:{s:10:"storefront";s:5:"2.5.5";s:12:"twentytwenty";s:3:"1.1";}s:8:"response";a:0:{}s:12:"translations";a:0:{}}";}

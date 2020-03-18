@@ -75,7 +75,11 @@ class FeaturePlugin {
 		if ( did_action( 'plugins_loaded' ) ) {
 			self::on_plugins_loaded();
 		} else {
-			add_action( 'plugins_loaded', array( $this, 'on_plugins_loaded' ) );
+			// Make sure we hook into `plugins_loaded` before core's Automattic\WooCommerce\Package::init().
+			// If core is network activated but we aren't, the packaged version of WooCommerce Admin will
+			// attempt to use a data store that hasn't been loaded yet - because we've defined our constants here.
+			// See: https://github.com/woocommerce/woocommerce-admin/issues/3869.
+			add_action( 'plugins_loaded', array( $this, 'on_plugins_loaded' ), 9 );
 		}
 		add_filter( 'action_scheduler_store_class', array( $this, 'replace_actionscheduler_store_class' ) );
 	}
@@ -148,7 +152,7 @@ class FeaturePlugin {
 		$this->define( 'WC_ADMIN_PLUGIN_FILE', WC_ADMIN_ABSPATH . 'woocommerce-admin.php' );
 		// WARNING: Do not directly edit this version number constant.
 		// It is updated as part of the prebuild process from the package.json value.
-		$this->define( 'WC_ADMIN_VERSION_NUMBER', '0.26.1' );
+		$this->define( 'WC_ADMIN_VERSION_NUMBER', '1.0.2' );
 	}
 
 	/**
@@ -254,7 +258,7 @@ class FeaturePlugin {
 	 *
 	 * @return bool
 	 */
-	protected function has_satisfied_dependencies() {
+	public function has_satisfied_dependencies() {
 		$dependency_errors = $this->get_dependency_errors();
 		return 0 === count( $dependency_errors );
 	}

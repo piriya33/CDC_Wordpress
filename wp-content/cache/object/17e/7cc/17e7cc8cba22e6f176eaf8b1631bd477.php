@@ -1,1 +1,0 @@
-?¿a^<?php exit; ?>a:1:{s:7:"content";s:60:"https://dev.chaloke.com/wp-includes/images/media/default.png";}
