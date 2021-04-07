@@ -1,0 +1,48 @@
+2021-04-07T11:50:33+00:00 CRITICAL Uncaught Error: Call to undefined method Automattic\WooCommerce\Admin\Loader::is_dev() in /var/www/production/wp-content/plugins/woocommerce-admin/src/FeaturePlugin.php:319
+Stack trace:
+#0 /var/www/production/wp-includes/class-wp-hook.php(292): Automattic\WooCommerce\Admin\FeaturePlugin->register_devdocs_page('')
+#1 /var/www/production/wp-includes/class-wp-hook.php(316): WP_Hook->apply_filters('tribe_events_pa...', Array)
+#2 /var/www/production/wp-includes/plugin.php(484): WP_Hook->do_action(Array)
+#3 /var/www/production/wp-admin/includes/menu.php(155): do_action('admin_menu', '')
+#4 /var/www/production/wp-admin/menu.php(327): require_once('/var/www/produc...')
+#5 /var/www/production/wp-admin/admin.php(158): require('/var/www/produc...')
+#6 /var/www/production/wp-admin/plugins.php(10): require_once('/var/www/produc...')
+#7 {main}
+  thrown in /var/www/production/wp-content/plugins/woocommerce-admin/src/FeaturePlugin.php on line 319
+
+2021-04-07T11:50:51+00:00 CRITICAL Uncaught Error: Call to undefined method Automattic\WooCommerce\Admin\Loader::is_dev() in /var/www/production/wp-content/plugins/woocommerce-admin/src/FeaturePlugin.php:319
+Stack trace:
+#0 /var/www/production/wp-includes/class-wp-hook.php(292): Automattic\WooCommerce\Admin\FeaturePlugin->register_devdocs_page('')
+#1 /var/www/production/wp-includes/class-wp-hook.php(316): WP_Hook->apply_filters('tribe_events_pa...', Array)
+#2 /var/www/production/wp-includes/plugin.php(484): WP_Hook->do_action(Array)
+#3 /var/www/production/wp-admin/includes/menu.php(155): do_action('admin_menu', '')
+#4 /var/www/production/wp-admin/menu.php(327): require_once('/var/www/produc...')
+#5 /var/www/production/wp-admin/admin.php(158): require('/var/www/produc...')
+#6 /var/www/production/wp-admin/update-core.php(10): require_once('/var/www/produc...')
+#7 {main}
+  thrown in /var/www/production/wp-content/plugins/woocommerce-admin/src/FeaturePlugin.php on line 319
+
+2021-04-07T11:51:01+00:00 CRITICAL Uncaught Error: Call to undefined method Automattic\WooCommerce\Admin\Loader::is_dev() in /var/www/production/wp-content/plugins/woocommerce-admin/src/FeaturePlugin.php:319
+Stack trace:
+#0 /var/www/production/wp-includes/class-wp-hook.php(292): Automattic\WooCommerce\Admin\FeaturePlugin->register_devdocs_page('')
+#1 /var/www/production/wp-includes/class-wp-hook.php(316): WP_Hook->apply_filters('tribe_events_pa...', Array)
+#2 /var/www/production/wp-includes/plugin.php(484): WP_Hook->do_action(Array)
+#3 /var/www/production/wp-admin/includes/menu.php(155): do_action('admin_menu', '')
+#4 /var/www/production/wp-admin/menu.php(327): require_once('/var/www/produc...')
+#5 /var/www/production/wp-admin/admin.php(158): require('/var/www/produc...')
+#6 /var/www/production/wp-admin/index.php(10): require_once('/var/www/produc...')
+#7 {main}
+  thrown in /var/www/production/wp-content/plugins/woocommerce-admin/src/FeaturePlugin.php on line 319
+
+2021-04-07T11:51:56+00:00 CRITICAL Uncaught Error: Call to undefined method Automattic\WooCommerce\Admin\Loader::is_dev() in /var/www/production/wp-content/plugins/woocommerce-admin/src/FeaturePlugin.php:319
+Stack trace:
+#0 /var/www/production/wp-includes/class-wp-hook.php(292): Automattic\WooCommerce\Admin\FeaturePlugin->register_devdocs_page('')
+#1 /var/www/production/wp-includes/class-wp-hook.php(316): WP_Hook->apply_filters('tribe_events_pa...', Array)
+#2 /var/www/production/wp-includes/plugin.php(484): WP_Hook->do_action(Array)
+#3 /var/www/production/wp-admin/includes/menu.php(155): do_action('admin_menu', '')
+#4 /var/www/production/wp-admin/menu.php(327): require_once('/var/www/produc...')
+#5 /var/www/production/wp-admin/admin.php(158): require('/var/www/produc...')
+#6 /var/www/production/wp-admin/plugins.php(10): require_once('/var/www/produc...')
+#7 {main}
+  thrown in /var/www/production/wp-content/plugins/woocommerce-admin/src/FeaturePlugin.php on line 319
+

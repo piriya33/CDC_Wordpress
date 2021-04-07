@@ -5,7 +5,8 @@ import { useRef, useEffect } from 'react';
 
 /**
  * Use Previous based on https://usehooks.com/usePrevious/.
- * @param {mixed}    value
+ *
+ * @param {*}    value
  * @param {Function} [validation] Function that needs to validate for the value
  *                                to be updated.
  */
@@ -19,7 +20,7 @@ export const usePrevious = ( value, validation ) => {
 		) {
 			ref.current = value;
 		}
-	}, [ value, ref.current ] );
+	}, [ value, validation ] );
 
 	return ref.current;
 };

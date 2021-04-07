@@ -2,7 +2,7 @@
 /**
  * WooCommerce Product Settings
  *
- * @package WooCommerce/Admin
+ * @package WooCommerce\Admin
  * @version 2.4.0
  */
 
@@ -272,7 +272,7 @@ class WC_Settings_Products extends WC_Settings_Page {
 						'default' => 'yes',
 						'desc_tip' => sprintf(
 							// translators: Link to WooCommerce Docs.
-							__( "Not required if you download directory is protected. <a href='%s'>See this guide</a> for more details. Files already uploaded will not be affected.", 'woocommerce' ),
+							__( "Not required if your download directory is protected. <a href='%s'>See this guide</a> for more details. Files already uploaded will not be affected.", 'woocommerce' ),
 							'https://docs.woocommerce.com/document/digital-downloadable-product-handling#unique-string'
 						),
 					),
@@ -304,6 +304,7 @@ class WC_Settings_Products extends WC_Settings_Page {
 							'id'       => 'woocommerce_shop_page_id',
 							'type'     => 'single_select_page',
 							'default'  => '',
+							'args'     => array( 'post_status' => 'publish,private' ),
 							'class'    => 'wc-enhanced-select-nostd',
 							'css'      => 'min-width:300px;',
 							'desc_tip' => __( 'This sets the base page of your shop - this is where your product archive will be.', 'woocommerce' ),
