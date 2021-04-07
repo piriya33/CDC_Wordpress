@@ -6,7 +6,7 @@
  * @since 1.0.0
  */
 
-if ( !defined( 'ABSPATH' ) ) {
+if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 ?>
@@ -18,6 +18,7 @@ if ( !defined( 'ABSPATH' ) ) {
 		.wprps-notice{padding: 10px; color: #3c763d; background-color: #dff0d8; border:1px solid #d6e9c6; margin: 0 0 20px 0;}
 		.wpos-plugin-pricing-table thead th h2{font-weight: 400; font-size: 2.4em; line-height:normal; margin:0px; color: #2ECC71;}
 		.wpos-plugin-pricing-table thead th h2 + p{font-size: 1.25em; line-height: 1.4; color: #999; margin:5px 0 5px 0;}
+		.wpos-new-feature{ font-size: 10px; margin-left:3px; color: #fff; font-weight: bold; background-color: #03aa29; padding:1px 4px; font-style: normal; margin-left: 3px;}
 
 		table.wpos-plugin-pricing-table{width:90%; text-align: left; border-spacing: 0; border-collapse: collapse; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;}
 
@@ -52,83 +53,78 @@ if ( !defined( 'ABSPATH' ) ) {
 		/* Table Footer */
 		.wpos-plugin-pricing-table tfoot th, .wpos-plugin-pricing-table tfoot td{text-align: center; border-top: 1px solid #ccc;}
 		.wpos-plugin-pricing-table tfoot a{font-weight: 600; color: #fff; text-decoration: none; text-transform: uppercase; display: inline-block; padding: 1em 2em; background: #ca4a1f; border-radius: .2em;}
-		
-		.essential-plugin-bundle{clear:both; margin-bottom:15px;}
-		.essential-plugin-bundle img{max-width:100%;}
+
 	</style>
-	<div class="essential-plugin-bundle">
-		<a href="https://www.wponlinesupport.com/pricing/?ref=WposPratik&utm_source=WP&utm_medium=WP-Plugins&utm_campaign=Essential-Plugin-Banner" target="_blank"><img src="https://www.wponlinesupport.com/plugin-data-api/images/plugin-bundle-banner.png?time=<?php echo current_time('timestamp'); ?>" alt="essential-plugin-bundle" /></a>
-	</div>
 
 	<table class="wpos-plugin-pricing-table">
 		<colgroup></colgroup>
 		<colgroup></colgroup>
 		<colgroup></colgroup>	
-	    <thead>
-	    	<tr>
-	    		<th></th>
-	    		<th>
-	    			<h2>Free</h2>
-	    			<p>$0 USD</p>
-	    		</th>
-	    		<th>
-	    			<h2>Premium</h2>
-	    			<p>Gain access to <strong>Video Gallery and Player</strong> included in <br /><strong>Essential Plugin Bundle</p>
-	    			<p class="promo">Our most valuable package!</p>
-	    		</th>	    		
-	    	</tr>
-	    </thead>
-
-	    <tfoot>
-	    	<tr>
-	    		<th></th>
-	    		<td></td>
-	    		<td><p>Gain access to <strong>Video Gallery and Player</strong> included in <br /><strong>Essential Plugin Bundle</p>
-				<a href="https://www.wponlinesupport.com/pricing/?ref=WposPratik&utm_source=WP&utm_medium=WP-Plugins&utm_campaign=Upgrade-PRO" target="_blank">View Buying Options</a></td>
-	    	</tr>
-	    </tfoot>
-
-	     <tbody>
-	    	<tr>
-	    		<th>Designs <span>Designs that make your website better</span></th>
-	    		<td>1</td>
-	    		<td>20+</td>
-	    	</tr>
-	    	<tr>
-		    	<th>Shortcodes <span>Shortcode provide output to the front-end side</span></th>
-		    	<td>1 (Grid)</td>
-	    		<td>2 (Grid,  Slider )</td>
-	    	</tr>
+		<thead>
 			<tr>
-	    		<th>Shortcode Parameters <span>Add extra power to the shortcode</span></th>
-	    		<td>5</td>
-	    		<td>22+</td>
-	    	</tr>
+				<th></th>
+				<th>
+					<h2>Free</h2>
+					<p>$0 USD</p>
+				</th>
+				<th>
+					<h2>Premium</h2>
+					<p>Gain access to <strong>Video Gallery and Player</strong> included in <br /><strong>Essential Plugin Bundle</p>
+					<p class="promo">Our most valuable package!</p>
+				</th>	    		
+			</tr>
+		</thead>
+
+		<tfoot>
 			<tr>
-	    		<th>Center Mode <span>You can Display slider with center mode.</span></th>
-	    		<td><i class="dashicons dashicons-no-alt"></i></td>
-	    		<td><i class="dashicons dashicons-yes"></i></td>
-	    	</tr>
-	    	<tr>
-	    		<th>Shortcode Generator <span>Play with all shortcode parameters with preview panel. No documentation required!!</span></th>
-	    		<td><i class="dashicons dashicons-no-alt"></i></td>
-	    		<td><i class="dashicons dashicons-yes"></i></td>
-	    	</tr>
+				<th></th>
+				<td></td>
+				<td><p>Gain access to <strong>Video Gallery and Player</strong> included in <br /><strong>Essential Plugin Bundle</p>
+				<a href="https://www.wponlinesupport.com/pricing/?ref=WposPratik&utm_source=WP&utm_medium=Video&utm_campaign=Upgrade-PRO" target="_blank">View Buying Options</a></td>
+			</tr>
+		</tfoot>
+
+		 <tbody>
+			<tr>
+				<th>Designs <span>Designs that make your website better</span></th>
+				<td>1</td>
+				<td>20+</td>
+			</tr>
+			<tr>
+				<th>Shortcodes <span>Shortcode provide output to the front-end side</span></th>
+				<td>1 (Grid)</td>
+				<td>2 (Grid,  Slider )</td>
+			</tr>
+			<tr>
+				<th>Shortcode Parameters <span>Add extra power to the shortcode</span></th>
+				<td>5</td>
+				<td>22+</td>
+			</tr>
+			<tr>
+				<th>Center Mode <span>You can Display slider with center mode.</span></th>
+				<td><i class="dashicons dashicons-no-alt"></i></td>
+				<td><i class="dashicons dashicons-yes"></i></td>
+			</tr>
+			<tr>
+				<th>Shortcode Generator <span>Play with all shortcode parameters with preview panel. No documentation required!!</span></th>
+				<td><i class="dashicons dashicons-no-alt"></i></td>
+				<td><i class="dashicons dashicons-yes"></i></td>
+			</tr>
 			<tr>
 				<th>Title Hide/Show <span>Option to display video title or not</span></th>
 				<td><i class="dashicons dashicons-no-alt"></i></td>
 				<td><i class="dashicons dashicons-yes"></i></td>
 			</tr> 
 			<tr>
-	    		<th>Content Hide/Show  <span>Option to display or not video short content.</span></th>
-	    		<td><i class="dashicons dashicons-no-alt"></i></td>
-	    		<td><i class="dashicons dashicons-yes"></i></td>
-	    	</tr>
-	    	<tr>
-	    		<th>Drag & Drop Slide Order Change <span>Arrange your desired slides with your desired order and display</span></th>
-	    		<td><i class="dashicons dashicons-no-alt"></i></td>
-	    		<td><i class="dashicons dashicons-yes"></i></td>
-	    	</tr>
+				<th>Content Hide/Show  <span>Option to display or not video short content.</span></th>
+				<td><i class="dashicons dashicons-no-alt"></i></td>
+				<td><i class="dashicons dashicons-yes"></i></td>
+			</tr>
+			<tr>
+				<th>Drag & Drop Slide Order Change <span>Arrange your desired slides with your desired order and display</span></th>
+				<td><i class="dashicons dashicons-no-alt"></i></td>
+				<td><i class="dashicons dashicons-yes"></i></td>
+			</tr>
 			<tr>
 				<th>Pagination Support  <span>Pagination support for grid shortcode</span></th>
 				<td><i class="dashicons dashicons-no-alt"></i></td>
@@ -138,7 +134,7 @@ if ( !defined( 'ABSPATH' ) ) {
 			<tr>
 				<th>Loop Control for slider  <span>Infinite scroll control </span></th>
 				<td><i class="dashicons dashicons-no-alt"></i></td>
-	    		<td><i class="dashicons dashicons-yes"></i></td>
+				<td><i class="dashicons dashicons-yes"></i></td>
 			</tr>
 			<tr>
 				<th>WP Templating Features <span class="subtext">You can modify plugin html/designs in your current theme.</span></th>
@@ -146,22 +142,42 @@ if ( !defined( 'ABSPATH' ) ) {
 				<td><i class="dashicons dashicons-yes"> </i></td>
 			</tr>
 			<tr>
-	    		<th>Gutenberg Block Supports <span>Use this plugin with Gutenberg easily</span></th>
-	    		<td><i class="dashicons dashicons-no-alt"></i></td>
-	    		<td><i class="dashicons dashicons-yes"></i></td>
-	    	</tr>	
+				<th>Gutenberg Block Supports <span>Use this plugin with Gutenberg easily</span></th>
+				<td><i class="dashicons dashicons-yes"></i></td>
+				<td><i class="dashicons dashicons-yes"></i></td>
+			</tr>
 			<tr>
-			<th>Visual Composer/WPBakery Page Builder Supports <span class="subtext">Use this plugin with Visual Composer/WPBakery page builder easily</span></th>
-			<td><i class="dashicons dashicons-no-alt"> </i></td>
-			<td><i class="dashicons dashicons-yes"> </i></td>
+				<th>Elementor Page Builder Support <em class="wpos-new-feature">New</em> <span>Use this plugin with Elementor easily</span></th>
+				<td><i class="dashicons dashicons-no-alt"></i></td>
+				<td><i class="dashicons dashicons-yes"></i></td>
+			</tr>
+			<tr>
+				<th>Beaver Builder Support <em class="wpos-new-feature">New</em> <span>Use this plugin with Beaver Builder easily</span></th>
+				<td><i class="dashicons dashicons-no-alt"></i></td>
+				<td><i class="dashicons dashicons-yes"></i></td>
+			</tr>
+			<tr>
+				<th>SiteOrigin Page Builder Support <em class="wpos-new-feature">New</em> <span>Use this plugin with SiteOrigin easily</span></th>
+				<td><i class="dashicons dashicons-no-alt"></i></td>
+				<td><i class="dashicons dashicons-yes"></i></td>
+			</tr>
+			<tr>
+				<th>Divi Page Builder Native Support <em class="wpos-new-feature">New</em> <span>Use this plugin with Divi Builder easily</span></th>
+				<td><i class="dashicons dashicons-no-alt"></i></td>
+				<td><i class="dashicons dashicons-yes"></i></td>
+			</tr>
+			<tr>
+				<th>WPBakery Page Builder Support <span>Use this plugin with Visual Composer easily</span></th>
+				<td><i class="dashicons dashicons-no-alt"></i></td>
+				<td><i class="dashicons dashicons-yes"></i></td>
 			</tr>	
-	    	
+			
 			<tr>
-	    		<th>Display Videos for Particular Categories <span>Display only video with particular category</span></th>
-	    			<td><i class="dashicons dashicons-yes"></i></td>
-	    		<td><i class="dashicons dashicons-yes"></i></td>
-	    	</tr>
-	    	<tr>
+				<th>Display Videos for Particular Categories <span>Display only video with particular category</span></th>
+					<td><i class="dashicons dashicons-yes"></i></td>
+				<td><i class="dashicons dashicons-yes"></i></td>
+			</tr>
+			<tr>
 				<th>Exclude Videos <span>Do not display the videos you want</span></th>
 				<td><i class="dashicons dashicons-no-alt"></i></td>
 				<td><i class="dashicons dashicons-yes"></i></td>
@@ -177,25 +193,25 @@ if ( !defined( 'ABSPATH' ) ) {
 				<td><i class="dashicons dashicons-yes"></i></td>
 			</tr>
 			<tr>
-	    		<th>Multiple Slider Parameters <span>Slider parameters like autoplay, number of slide, sider dots and etc.</span></th>
-	    		<td><i class="dashicons dashicons-no-alt"></i></td>
-	    		<td><i class="dashicons dashicons-yes"></i></td>
-	    	</tr>
+				<th>Multiple Slider Parameters <span>Slider parameters like autoplay, number of slide, sider dots and etc.</span></th>
+				<td><i class="dashicons dashicons-no-alt"></i></td>
+				<td><i class="dashicons dashicons-yes"></i></td>
+			</tr>
 			<tr>
-	    		<th>Slider RTL Support <span>Slider supports for RTL website</span></th>
-	    		<td><i class="dashicons dashicons-no-alt"></i></td>
-	    		<td><i class="dashicons dashicons-yes"></i></td>
-	    	</tr>
+				<th>Slider RTL Support <span>Slider supports for RTL website</span></th>
+				<td><i class="dashicons dashicons-no-alt"></i></td>
+				<td><i class="dashicons dashicons-yes"></i></td>
+			</tr>
 			<tr>
-	    		<th>Automatic Update <span>Get automatic  plugin updates </span></th>
-	    		<td>Lifetime</td>
-	    		<td>Lifetime</td>
-	    	</tr>
-	    	<tr>
-	    		<th>Support <span>Get support for plugin</span></th>
-	    		<td>Limited</td>
-	    		<td>1 Year</td>
-	    	</tr>    	
-	    </tbody>
+				<th>Automatic Update <span>Get automatic  plugin updates </span></th>
+				<td>Lifetime</td>
+				<td>Lifetime</td>
+			</tr>
+			<tr>
+				<th>Support <span>Get support for plugin</span></th>
+				<td>Limited</td>
+				<td>1 Year</td>
+			</tr>    	
+		</tbody>
 	</table>
 </div>

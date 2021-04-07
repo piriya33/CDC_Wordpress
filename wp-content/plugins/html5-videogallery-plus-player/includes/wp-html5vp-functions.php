@@ -6,8 +6,9 @@
  * @since 2.0.0
  */
 
-// Exit if accessed directly
-if ( !defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly
+}
 
 /**
  * Function to get unique number

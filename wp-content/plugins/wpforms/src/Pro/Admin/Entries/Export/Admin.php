@@ -44,7 +44,7 @@ class Admin {
 	}
 
 	/**
-	 * Outputs HTML of the Entries export form.
+	 * Output HTML of the Entries export form.
 	 *
 	 * @since 1.5.5
 	 */
@@ -53,7 +53,7 @@ class Admin {
 		?>
 		<div class="wpforms-setting-row tools">
 
-			<h3><?php esc_html_e( 'Export Entries', 'wpforms' ); ?></h3>
+			<h4><?php esc_html_e( 'Export Entries', 'wpforms' ); ?></h4>
 
 			<p><?php esc_html_e( 'Select a form to export entries, then select the fields you would like to include. You can also define search and date filters to further personalize the list of entries you want to retrieve. WPForms will generate a downloadable CSV of your entries.', 'wpforms' ); ?></p>
 
@@ -78,6 +78,8 @@ class Admin {
 						<h5><?php esc_html_e( 'Additional Information', 'wpforms' ); ?></h5>
 						<?php $this->display_additional_info_block(); ?>
 					</section>
+
+					<?php $this->display_export_options_block(); ?>
 
 					<section class="wp-clearfix" id="wpforms-tools-entries-export-options-date">
 						<h5><?php esc_html_e( 'Custom Date Range', 'wpforms' ); ?></h5>
@@ -128,7 +130,7 @@ class Admin {
 		if ( ! empty( $forms ) ) {
 			?>
 			<span class="choicesjs-select-wrap">
-				<select id="wpforms-tools-entries-export-selectform" class="choicesjs-select" name="form">';
+				<select id="wpforms-tools-entries-export-selectform" class="choicesjs-select" name="form">
 					<option value="" placeholder><?php esc_attr_e( 'Select a Form', 'wpforms' ); ?></option>
 					<?php
 					foreach ( $forms as $form ) {
@@ -195,22 +197,56 @@ class Admin {
 		$additional_info_fields = $this->export->additional_info_fields;
 
 		$i = 0;
+
 		foreach ( $additional_info_fields as $slug => $label ) {
-			if ( 'geodata' === $slug && ! class_exists( 'WPForms_Geolocation' ) ) {
+
+			if ( $slug === 'pginfo' && ! ( class_exists( 'WPForms_Paypal_Standard' ) || class_exists( '\WPFormsStripe\Loader' ) || class_exists( '\WPFormsAuthorizeNet\Loader' ) ) ) {
 				continue;
 			}
-			if ( 'pginfo' === $slug && ! ( class_exists( 'WPForms_Paypal_Standard' ) || function_exists( 'wpforms_stripe' ) ) ) {
-				continue;
-			}
+
 			printf(
 				'<label><input type="checkbox" name="additional_info[%d]" value="%s"%s> %s</label>',
-				$i,
+				(int) $i,
 				esc_attr( $slug ),
 				esc_attr( $this->get_checked_property( $slug, $additional_info, '' ) ),
 				esc_html( $label )
 			);
+
 			$i ++;
 		}
+	}
+
+	/**
+	 * Export options block.
+	 *
+	 * @since 1.6.5
+	 */
+	private function display_export_options_block() {
+
+		$export_option  = $this->export->data['get_args']['export_options'];
+		$export_options = $this->export->export_options_fields;
+
+		if ( empty( $export_options ) ) {
+			return;
+		}
+
+		echo '<section class="wp-clearfix" id="wpforms-tools-entries-export-options-type-info">';
+		echo '<h5>' . esc_html__( 'Export Options', 'wpforms' ) . '</h5>';
+
+		$i = 0;
+
+		foreach ( $export_options as $slug => $label ) {
+			printf(
+				'<label><input type="checkbox" name="export_options[%d]" value="%s"%s> %s</label>',
+				(int) $i,
+				esc_attr( $slug ),
+				esc_attr( $this->get_checked_property( $slug, $export_option, '' ) ),
+				esc_html( $label )
+			);
+			$i ++;
+		}
+
+		echo '</section>';
 	}
 
 	/**
@@ -276,7 +312,7 @@ class Admin {
 			'wpforms-flatpickr',
 			WPFORMS_PLUGIN_URL . 'assets/css/flatpickr.min.css',
 			array(),
-			'4.5.5'
+			'4.6.3'
 		);
 
 		/*
@@ -287,7 +323,7 @@ class Admin {
 			'wpforms-flatpickr',
 			WPFORMS_PLUGIN_URL . 'assets/js/flatpickr.min.js',
 			array( 'jquery' ),
-			'4.5.5',
+			'4.6.3',
 			true
 		);
 

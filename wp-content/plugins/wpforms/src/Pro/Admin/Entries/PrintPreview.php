@@ -106,7 +106,7 @@ class PrintPreview {
 	}
 
 	/**
-	 * Outputs HTML markup for the print preview page.
+	 * Output HTML markup for the print preview page.
 	 *
 	 * @since 1.5.1
 	 */
@@ -130,10 +130,11 @@ class PrintPreview {
 			<meta name="robots" content="noindex,nofollow,noarchive">
 			<link rel="stylesheet" href="<?php echo \esc_url( \includes_url( 'css/buttons.min.css' ) ); ?>" type="text/css">
 			<link rel="stylesheet" href="<?php echo \WPFORMS_PLUGIN_URL; ?>assets/css/entry-print<?php echo $min; ?>.css" type="text/css">
+			<script type="text/javascript" src="<?php echo \esc_url( \includes_url( 'js/utils.js' ) ); // phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedScript ?>"></script>
 			<script type="text/javascript" src="<?php echo \esc_url( \includes_url( 'js/jquery/jquery.js' ) ); ?>"></script>
 			<script type="text/javascript">
 				jQuery( function( $ ){
-					var showEmpty   = false,
+					var showEmpty   = wpCookies.get( 'wpforms_entry_hide_empty' ) !== 'true',
 						showNotes   = false,
 						showCompact = false;
 					// Print page.
@@ -146,13 +147,20 @@ class PrintPreview {
 						event.preventDefault();
 						window.close();
 					} );
+					// Init empty fields.
+					if ( ! showEmpty ) {
+						$( '.field.empty' ).hide();
+						$( '.toggle-empty' ).text( '<?php \esc_html_e( 'Show empty fields', 'wpforms' ); ?>' );
+					}
 					// Toggle empty fields.
 					$( document ).on( 'click', '.toggle-empty', function( event ) {
 						event.preventDefault();
-						if ( ! showEmpty ) {
-							$( this ).text( '<?php \esc_html_e( 'Hide empty fields', 'wpforms-lite' ); ?>' );
+						if ( showEmpty ) {
+							wpCookies.set( 'wpforms_entry_hide_empty', 'true', 2592000 );
+							$( this ).text( '<?php \esc_html_e( 'Show empty fields', 'wpforms' ); ?>' );
 						} else {
-							$( this ).text( '<?php \esc_html_e( 'Show empty fields', 'wpforms-lite' ); ?>' );
+							wpCookies.remove( 'wpforms_entry_hide_empty' );
+							$( this ).text( '<?php \esc_html_e( 'Hide empty fields', 'wpforms' ); ?>' );
 						}
 						$( '.field.empty' ).toggle();
 						showEmpty = !showEmpty;
@@ -161,9 +169,9 @@ class PrintPreview {
 					$( document ).on( 'click', '.toggle-notes', function( event ) {
 						event.preventDefault();
 						if ( ! showNotes ) {
-							$( this ).text( '<?php \esc_html_e( 'Hide notes', 'wpforms-lite' ); ?>' );
+							$( this ).text( '<?php \esc_html_e( 'Hide notes', 'wpforms' ); ?>' );
 						} else {
-							$( this ).text( '<?php \esc_html_e( 'Show notes', 'wpforms-lite' ); ?>' );
+							$( this ).text( '<?php \esc_html_e( 'Show notes', 'wpforms' ); ?>' );
 						}
 						$( '.notes, .notes-head' ).toggle();
 						showNotes = !showNotes;
@@ -172,9 +180,9 @@ class PrintPreview {
 					$( document ).on( 'click', '.toggle-view', function( event ) {
 						event.preventDefault();
 						if ( ! showCompact ) {
-							$( this ).text( '<?php \esc_html_e( 'Normal view', 'wpforms-lite' ); ?>' );
+							$( this ).text( '<?php \esc_html_e( 'Normal view', 'wpforms' ); ?>' );
 						} else {
-							$( this ).text( '<?php \esc_html_e( 'Compact view', 'wpforms-lite' ); ?>' );
+							$( this ).text( '<?php \esc_html_e( 'Compact view', 'wpforms' ); ?>' );
 						}
 						$( '#print' ).toggleClass( 'compact' );
 						showCompact = !showCompact;
@@ -188,16 +196,16 @@ class PrintPreview {
 				<?php \do_action( 'wpforms_pro_admin_entries_printpreview_print_html_header_before', $this->entry, $this->form_data ); ?>
 				<h1>
 					<?php /* translators: %d - entry ID. */ ?>
-					<?php echo \esc_html( \sanitize_text_field( $this->form_data['settings']['form_title'] ) ); ?> <span> - <?php printf( \esc_html__( 'Entry #%d', 'wpforms-lite' ), \absint( $this->entry->entry_id ) ); ?></span>
+					<?php echo \esc_html( \sanitize_text_field( $this->form_data['settings']['form_title'] ) ); ?> <span> - <?php printf( \esc_html__( 'Entry #%d', 'wpforms' ), \absint( $this->entry->entry_id ) ); ?></span>
 					<div class="buttons">
-						<a href="" class="button button-secondary close-window"><?php \esc_html_e( 'Close', 'wpforms-lite' ); ?></a>
-						<a href="" class="button button-primary print"><?php \esc_html_e( 'Print', 'wpforms-lite' ); ?></a>
+						<a href="" class="button button-secondary close-window"><?php \esc_html_e( 'Close', 'wpforms' ); ?></a>
+						<a href="" class="button button-primary print"><?php \esc_html_e( 'Print', 'wpforms' ); ?></a>
 					</div>
 				</h1>
 				<div class="actions">
-					<a href="#" class="toggle-empty"><?php \esc_html_e( 'Show empty fields', 'wpforms-lite' ); ?></a> &bull;
-					<?php echo ! empty( $this->entry->entry_notes ) ? '<a href="#" class="toggle-notes">' . \esc_html__( 'Show notes', 'wpforms-lite' ) . '</a> &bull;' : ''; ?>
-					<a href="#" class="toggle-view"><?php \esc_html_e( 'Compact view', 'wpforms-lite' ); ?></a>
+					<a href="#" class="toggle-empty"><?php \esc_html_e( 'Hide empty fields', 'wpforms' ); ?></a> &bull;
+					<?php echo ! empty( $this->entry->entry_notes ) ? '<a href="#" class="toggle-notes">' . \esc_html__( 'Show notes', 'wpforms' ) . '</a> &bull;' : ''; ?>
+					<a href="#" class="toggle-view"><?php \esc_html_e( 'Compact view', 'wpforms' ); ?></a>
 				</div>
 				<?php
 				\do_action_deprecated(
@@ -212,7 +220,7 @@ class PrintPreview {
 				if ( empty( $fields ) ) {
 
 					// Whoops, no fields! This shouldn't happen under normal use cases.
-					echo '<p class="no-fields">' . \esc_html__( 'This entry does not have any fields', 'wpforms-lite' ) . '</p>';
+					echo '<p class="no-fields">' . \esc_html__( 'This entry does not have any fields', 'wpforms' ) . '</p>';
 
 				} else {
 
@@ -221,16 +229,20 @@ class PrintPreview {
 					// Display the fields and their values.
 					foreach ( $fields as $key => $field ) {
 
+						if ( ! isset( $field['id'] ) ) {
+							continue;
+						}
+
 						$field_value  = \apply_filters( 'wpforms_html_field_value', \wp_strip_all_tags( $field['value'] ), $field, $this->form_data, 'entry-single' );
 						$field_class  = \sanitize_html_class( 'wpforms-field-' . $field['type'] );
 						$field_class .= empty( $field_value ) ? ' empty' : '';
 						echo '<div class="field ' . \esc_attr( $field_class ) . '">';
 							echo '<p class="field-name">';
 								/* translators: %d - field ID. */
-								echo ! empty( $field['name'] ) ? \esc_html( \wp_strip_all_tags( $field['name'] ) ) : sprintf( \esc_html__( 'Field ID #%d', 'wpforms-lite' ), \absint( $field['id'] ) );
+								echo ! empty( $field['name'] ) ? \esc_html( \wp_strip_all_tags( $field['name'] ) ) : sprintf( \esc_html__( 'Field ID #%d', 'wpforms' ), \absint( $field['id'] ) );
 							echo '</p>';
 							echo '<p class="field-value">';
-								echo ! empty( $field_value ) ? nl2br( \make_clickable( $field_value ) ) : \esc_html__( 'Empty', 'wpforms-lite' ); //phpcs:ignore
+								echo ! empty( $field_value ) ? nl2br( \make_clickable( $field_value ) ) : \esc_html__( 'Empty', 'wpforms' ); //phpcs:ignore
 							echo '</p>';
 						echo '</div>';
 					}
@@ -247,20 +259,22 @@ class PrintPreview {
 
 				if ( ! empty( $this->entry->entry_notes ) ) {
 
-					echo '<h2 class="notes-head">' . \esc_html__( 'Notes', 'wpforms-lite' ) . '</h2>';
+					echo '<h2 class="notes-head">' . \esc_html__( 'Notes', 'wpforms' ) . '</h2>';
 					echo '<div class="notes">';
 
 					foreach ( $this->entry->entry_notes as $note ) {
 
-						$user        = \get_userdata( $note->user_id );
-						$user_name   = \esc_html( ! empty( $user->display_name ) ? $user->display_name : $user->user_login );
-						$date_format = sprintf( '%s %s', \get_option( 'date_format' ), \get_option( 'time_format' ) );
-						$date        = \date_i18n( $date_format, strtotime( $note->date ) + ( \get_option( 'gmt_offset' ) * 3600 ) );
+						$user      = \get_userdata( $note->user_id );
+						$user_name = ! empty( $user->display_name ) ? $user->display_name : $user->user_login;
+						$date      = wpforms_datetime_format( $note->date, '', true );
 
 						echo '<div class="note">';
 							echo '<div class="note-byline">';
-								/* translators: %1$s - user name; %2$s - date */
-								printf( \esc_html__( 'Added by %1$s on %2$s', 'wpforms-lite' ), $user_name, $date );
+								printf( /* translators: %1$s - user name; %2$s - date */
+									esc_html__( 'Added by %1$s on %2$s', 'wpforms' ),
+									esc_html( $user_name ),
+									esc_html( $date )
+								);
 							echo '</div>';
 							echo '<div class="note-text">' . \wp_kses_post( $note->data ) . '</div>';
 						echo '</div>';

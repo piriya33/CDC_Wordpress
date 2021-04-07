@@ -2,13 +2,13 @@
 
 /*
 Name:    d4pLib - Features - Animated Popup
-Version: v2.7.6
+Version: v2.8.13
 Author:  Milan Petrovic
 Email:   support@dev4press.com
 Website: https://www.dev4press.com/
 
 == Copyright ==
-Copyright 2008 - 2019 Milan Petrovic (email: support@dev4press.com)
+Copyright 2008 - 2020 Milan Petrovic (email: support@dev4press.com)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-if (!defined( 'ABSPATH')) { exit; }
+if (!defined('ABSPATH')) { exit; }
 
 if (!class_exists('d4p_object_animated_popup')) {
     class d4p_object_animated_popup {
@@ -38,8 +38,8 @@ if (!class_exists('d4p_object_animated_popup')) {
         public function enqueue_files() {
             wp_enqueue_script('jquery');
 
-            wp_enqueue_style('d4p-animated-popup', $this->url.'animated-popup/popup.css', array(), D4P_VERSION);
-            wp_enqueue_script('d4p-animated-popup', $this->url.'animated-popup/popup.js', array('jquery'), D4P_VERSION);
+            wp_enqueue_style('d4p-animated-popup', $this->url.'animated-popup/popup.min.css', array(), D4P_VERSION);
+            wp_enqueue_script('d4p-animated-popup', $this->url.'animated-popup/popup.min.js', array('jquery'), D4P_VERSION);
         }
 
         public function effects() {

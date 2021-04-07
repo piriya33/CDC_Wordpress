@@ -5,8 +5,10 @@ class QLWCDC_Controller_Suggestions {
   protected static $_instance;
 
   public function __construct() {
+    add_action('qlwcdc_sections_header', array($this, 'add_header'));
     add_action('admin_menu', array($this, 'add_menu'));
     add_action('admin_init', array($this, 'add_redirect'));
+    add_action('admin_head', array($this, 'remove_menu'));
     add_filter('network_admin_url', array($this, 'network_admin_url'), 10, 2);
   }
 
@@ -17,16 +19,16 @@ class QLWCDC_Controller_Suggestions {
     return self::$_instance;
   }
 
-  // Admin    
+  // Admin
   // -------------------------------------------------------------------------
 
   public function add_page() {
-    include_once( QLWCDC_PLUGIN_DIR . 'includes/suggestions-list-table.php' );
+    include_once( QLWCDC_PLUGIN_DIR . 'includes/suggestions.php' );
     include_once( QLWCDC_PLUGIN_DIR . 'includes/view/backend/pages/suggestions.php' );
   }
 
   public function add_menu() {
-    add_submenu_page(QLWCDC_PREFIX, __('Suggestions', 'woocommerce-direct-checkout'), __('Suggestions', 'woocommerce-direct-checkout'), 'manage_woocommerce', QLWCDC_PREFIX . '_suggestions', array($this, 'add_page'));
+    add_submenu_page(QLWCDC_PREFIX, esc_html__('Suggestions', 'woocommerce-direct-checkout'), esc_html__('Suggestions', 'woocommerce-direct-checkout'), 'manage_woocommerce', QLWCDC_PREFIX . '_suggestions', array($this, 'add_page'));
   }
 
   // fix for activateUrl on install now button
@@ -50,6 +52,24 @@ class QLWCDC_Controller_Suggestions {
         wp_redirect(admin_url('admin.php?page=' . QLWCDC_PREFIX . '_suggestions'));
       }
     }
+  }
+  function add_header() {
+    ?>
+    <li><a href="<?php echo admin_url('admin.php?page=qlwcdc_suggestions'); ?>"><?php echo esc_html__('Suggestions', 'woocommerce-direct-checkout'); ?></a></li> | 
+    <?php
+  }
+
+
+  public function remove_menu() {
+    ?>
+    <style>
+
+      li.toplevel_page_<?php echo QLWCDC_PREFIX; ?> {
+        display:none;
+      }
+
+    </style>
+    <?php
   }
 
 }

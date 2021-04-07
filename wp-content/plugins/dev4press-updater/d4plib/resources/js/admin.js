@@ -117,12 +117,20 @@ var d4plib_admin;
                 d4plib_admin.handlers.expendable_text_remove(this, e);
             });
 
+            $(document).on("click", ".d4p-setting-expandable_regex .button-secondary", function(e){
+                d4plib_admin.handlers.expendable_text_remove(this, e);
+            });
+
             $(".d4p-setting-expandable_text a.button-primary").click(function(e) {
                 d4plib_admin.handlers.expendable_text_add(this, e, ".d4p-setting-expandable_text");
             });
 
             $(".d4p-setting-expandable_raw a.button-primary").click(function(e) {
                 d4plib_admin.handlers.expendable_text_add(this, e, ".d4p-setting-expandable_raw");
+            });
+
+            $(".d4p-setting-expandable_regex a.button-primary").click(function(e) {
+                d4plib_admin.handlers.expendable_text_add(this, e, ".d4p-setting-expandable_regex");
             });
         },
         scroller: function() {

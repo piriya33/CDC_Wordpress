@@ -2,13 +2,13 @@
 
 /*
 Name:    d4pLib - Functions - Transient Cache - Database Query
-Version: v2.7.6
+Version: v2.8.13
 Author:  Milan Petrovic
 Email:   support@dev4press.com
 Website: https://www.dev4press.com/
 
 == Copyright ==
-Copyright 2008 - 2019 Milan Petrovic (email: support@dev4press.com)
+Copyright 2008 - 2020 Milan Petrovic (email: support@dev4press.com)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-if (!defined( 'ABSPATH')) { exit; }
+if (!defined('ABSPATH')) { exit; }
 
 if (!function_exists('d4p_transient_sql_query')) {
     function d4p_transient_sql_query($query, $key, $method, $output = OBJECT, $x = 0, $y = 0, $ttl = 86400) {

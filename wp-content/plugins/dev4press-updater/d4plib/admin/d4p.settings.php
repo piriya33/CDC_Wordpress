@@ -2,13 +2,13 @@
 
 /*
 Name:    d4pLib_Admin_Settings
-Version: v2.7.6
+Version: v2.8.13
 Author:  Milan Petrovic
 Email:   support@dev4press.com
 Website: https://www.dev4press.com/
 
 == Copyright ==
-Copyright 2008 - 2019 Milan Petrovic (email: support@dev4press.com)
+Copyright 2008 - 2020 Milan Petrovic (email: support@dev4press.com)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-if (!defined( 'ABSPATH')) { exit; }
+if (!defined('ABSPATH')) { exit; }
 
 if (!class_exists('d4pSettingType')) {
     class d4pSettingType {
@@ -37,6 +37,7 @@ if (!class_exists('d4pSettingType')) {
         const IMAGES = 'images';
         const BOOLEAN = 'bool';
         const TEXT = 'text';
+        const REGEX = 'regex';
         const TEXTAREA = 'textarea';
         const SLUG = 'slug';
         const SLUG_EXT = 'slug_ext';
@@ -68,6 +69,7 @@ if (!class_exists('d4pSettingType')) {
 
         const EXPANDABLE_PAIRS = 'expandable_pairs';
         const EXPANDABLE_TEXT = 'expandable_text';
+        const EXPANDABLE_REGEX = 'expandable_regex';
         const EXPANDABLE_RAW = 'expandable_raw';
 
         public static $_values = array(
@@ -79,6 +81,7 @@ if (!class_exists('d4pSettingType')) {
             'images' => self::IMAGES,
             'bool' => self::BOOLEAN,
             'text' => self::TEXT,
+            'regex' => self::REGEX,
             'textarea' => self::TEXTAREA,
             'slug' => self::SLUG,
             'slug_ext' => self::SLUG_EXT,
@@ -109,7 +112,9 @@ if (!class_exists('d4pSettingType')) {
             'x_by_y' => self::X_BY_Y,
 
             'expandable_pairs' => self::EXPANDABLE_PAIRS,
-            'expandable_text' => self::EXPANDABLE_TEXT
+            'expandable_text' => self::EXPANDABLE_TEXT,
+            'expandable_regex' => self::EXPANDABLE_REGEX,
+            'expandable_raw' => self::EXPANDABLE_RAW
         );
 
         public static function to_string($value) {
@@ -168,7 +173,15 @@ if (!class_exists('d4pSettingsRender')) {
         public function render() {
             foreach ($this->groups as $group => $obj) {
                 if (isset($obj['type']) && $obj['type'] == 'separator') {
-                    echo '<div class="d4p-group-separator">';
+                    $args = isset($obj['args']) ? $obj['args'] : array();
+
+                    $classes = array('d4p-group-separator', 'd4p-group-'.$group);
+
+                    if (isset($args['hidden']) && $args['hidden']) {
+                        $classes[] = 'd4p-hidden-group';
+                    }
+
+                    echo '<div class="'.join(' ', $classes).'" id="d4p-group-separator-'.$group.'">';
                         echo '<h3><span>'.$obj['label'].'</span></h3>';
                     echo '</div>';
                 } else {
@@ -373,9 +386,10 @@ if (!class_exists('d4pSettingsRender')) {
             $selected = $value == 1 || $value === true ? ' checked="checked"' : '';
             $readonly = isset($element->args['readonly']) && $element->args['readonly'] ? ' readonly="readonly" disabled="disabled"' : '';
             $label = isset($element->args['label']) && $element->args['label'] != '' ? $element->args['label'] : __("Enabled", "d4plib");
+            $value = isset($element->args['value']) && $element->args['value'] != '' ? $element->args['value'] : 'on';
 
-            echo sprintf('<label for="%s"><input%s type="checkbox" name="%s" id="%s"%s class="widefat" /><span class="d4p-accessibility-show-for-sr">%s: </span>%s</label>',
-                    esc_attr($id_base), $readonly, esc_attr($name_base), esc_attr($id_base), $selected, $element->title, $label);
+            echo sprintf('<label for="%s"><input%s type="checkbox" name="%s" id="%s"%s class="widefat" value="%s" /><span class="d4p-accessibility-show-for-sr">%s: </span>%s</label>',
+                    esc_attr($id_base), $readonly, esc_attr($name_base), esc_attr($id_base), $selected, $value, $element->title, $label);
         }
 
         private function draw_html($element, $value, $name_base, $id_base) {
@@ -455,6 +469,10 @@ if (!class_exists('d4pSettingsRender')) {
             $this->draw_text($element, $value, $name_base, $id_base);
         }
 
+        private function draw_regex($element, $value, $name_base, $id_base) {
+            $this->draw_text($element, $value, $name_base, $id_base);
+        }
+
         private function draw_text($element, $value, $name_base, $id_base, $type = 'text') {
             $readonly = isset($element->args['readonly']) && $element->args['readonly'] ? ' readonly' : '';
             $placeholder = isset($element->args['placeholder']) && !empty($element->args['placeholder']) ? ' placeholder="'.$element->args['placeholder'].'"' : '';
@@ -501,12 +519,12 @@ if (!class_exists('d4pSettingsRender')) {
         private function draw_number($element, $value, $name_base, $id_base) {
             $readonly = isset($element->args['readonly']) && $element->args['readonly'] ? ' readonly' : '';
 
-            $min = isset($element->args['min']) ? ' min="'.floatval($element->args['min']).'"' : '';
-            $max = isset($element->args['max']) ? ' max="'.floatval($element->args['max']).'"' : '';
-            $step = isset($element->args['step']) ? ' step="'.floatval($element->args['step']).'"' : '';
+            $min = isset($element->args['min']) ? ' min="'.esc_attr(floatval($element->args['min'])).'"' : '';
+            $max = isset($element->args['max']) ? ' max="'.esc_attr(floatval($element->args['max'])).'"' : '';
+            $step = isset($element->args['step']) ? ' step="'.esc_attr(floatval($element->args['step'])).'"' : '';
 
             echo sprintf('<label for="%s"><span class="d4p-accessibility-show-for-sr">%s: </span></label><input%s type="number" name="%s" id="%s" value="%s" class="widefat"%s%s%s />',
-                    $id_base, $element->title, $readonly, esc_attr($name_base), esc_attr($id_base), esc_attr($value), esc_attr($min), esc_attr($max), esc_attr($step));
+                    $id_base, $element->title, $readonly, esc_attr($name_base), esc_attr($id_base), esc_attr($value), $min, $max, $step);
 
             if (isset($element->args['label_unit'])) {
                 echo '<span class="d4p-field-unit">'.$element->args['label_unit'].'</span>';
@@ -654,8 +672,21 @@ if (!class_exists('d4pSettingsRender')) {
             echo '<input type="hidden" value="'.esc_attr($i).'" class="d4p-next-id" />';
         }
 
-        private function _text_element($name, $id, $i, $value, $element, $hide = false) {
-            echo '<li class="exp-text-element exp-text-element-'.$i.'" style="display: '.($hide ? 'none' : 'list-item').'">';
+        private function _text_element($name, $id, $i, $value, $element, $hide = false, $is_regex = false) {
+            $classes = array(
+                'exp-text-element',
+                'exp-text-element-'.$i
+            );
+
+            if ($is_regex && !empty($value)) {
+                $valid = d4p_is_regex_valid($value);
+
+                if ($valid !== true) {
+                    $classes[] = 'd4p-regex-is-invalid';
+                }
+            }
+
+            echo '<li class="'.join(' ', $classes).'" style="display: '.($hide ? 'none' : 'list-item').'">';
 
             $button = isset($element->args['label_buttom_remove']) && $element->args['label_buttom_remove'] != '';
             $button_width = isset($element->args['width_button_remove']) ? intval($element->args['width_button_remove']) : 100;
@@ -663,6 +694,7 @@ if (!class_exists('d4pSettingsRender')) {
 
             $style_input = '';
             $style_button = '';
+
             if ($button) {
                 $style_input = ' style="width: calc(100% - '.($button_width + 10).'px);"';
                 $style_button = ' style="width: '.$button_width.'px;"';
@@ -681,7 +713,13 @@ if (!class_exists('d4pSettingsRender')) {
             $this->draw_expandable_text($element, $value, $name_base, $id_base);
         }
 
-        private function draw_expandable_text($element, $value, $name_base, $id_base = '') {
+        private function draw_expandable_regex($element, $value, $name_base, $id_base = '') {
+            $this->draw_expandable_text($element, $value, $name_base, $id_base, 'expandable_regex');
+        }
+
+        private function draw_expandable_text($element, $value, $name_base, $id_base = '', $type = 'expandable_text') {
+            $is_regex = $type == 'expandable_regex';
+
             echo '<ol>';
 
             $this->_text_element($name_base.'[0]', $id_base.'_0', 0, '', $element, true);
@@ -689,8 +727,8 @@ if (!class_exists('d4pSettingsRender')) {
             $i = 1;
 
             if (array($value) && !empty($value)) {
-	            foreach ( $value as $val ) {
-		            $this->_text_element( $name_base . '[' . $i . ']', $id_base . '_' . $i, $i, $val, $element );
+	            foreach ($value as $val) {
+		            $this->_text_element($name_base.'['.$i.']', $id_base.'_'.$i, $i, $val, $element, false, $is_regex);
 		            $i ++;
 	            }
             }
@@ -744,6 +782,7 @@ if (!class_exists('d4pSettingsProcess')) {
         public function process_single($setting, $post) {
             $input = $setting->input;
             $key = $setting->name;
+            $args = $setting->args;
             $value = null;
 
             switch ($input) {
@@ -766,6 +805,19 @@ if (!class_exists('d4pSettingsProcess')) {
                         }
                     }
                     break;
+                case 'expandable_regex':
+                    $value = array();
+
+                    foreach ($post[$key] as $id => $data) {
+                        if ($id > 0) {
+                            $_val = htmlentities(stripslashes($data['value']), ENT_QUOTES, 'UTF-8');
+
+                            if ($_val != '') {
+                                $value[] = $_val;
+                            }
+                        }
+                    }
+                    break;
                 case 'expandable_text':
                     $value = array();
 
@@ -773,7 +825,7 @@ if (!class_exists('d4pSettingsProcess')) {
                         if ($id > 0) {
                             $_val = d4p_sanitize_basic($data['value']);
 
-                            if ($_val != '') {
+                            if (!empty($_val)) {
                                 $value[] = $_val;
                             }
                         }
@@ -787,7 +839,7 @@ if (!class_exists('d4pSettingsProcess')) {
                             $_key = d4p_sanitize_basic($data['key']);
                             $_val = d4p_sanitize_basic($data['value']);
 
-                            if ($_key != '' && $_val != '') {
+                            if (!empty($_key) && !empty($_val)) {
                                 $value[$_key] = $_val;
                             }
                         }
@@ -800,7 +852,9 @@ if (!class_exists('d4pSettingsProcess')) {
                 case 'code':
                 case 'text_html':
                 case 'text_rich':
-                    $value = d4p_sanitize_html($post[$key]);
+                    $tags = isset($args['allowed_html']) ? $args['allowed_html'] : null;
+
+                    $value = d4p_sanitize_html($post[$key], $tags);
                     break;
                 case 'bool':
                     $value = isset($post[$key]) ? $this->bool_values[0] : $this->bool_values[1];
@@ -811,6 +865,7 @@ if (!class_exists('d4pSettingsProcess')) {
                 case 'integer':
                     $value = intval($post[$key]);
                     break;
+                case 'image':
                 case 'absint':
                     $value = absint($post[$key]);
                     break;
@@ -822,9 +877,6 @@ if (!class_exists('d4pSettingsProcess')) {
                         $value = array_map('intval', $value);
                         $value = array_filter($value);
                     }
-                    break;
-                case 'image':
-                    $value = absint($post[$key]);
                     break;
                 case 'listing':
                     $value = d4p_split_textarea_to_list(stripslashes($post[$key]));
@@ -855,9 +907,6 @@ if (!class_exists('d4pSettingsProcess')) {
                 case 'slug_slash':
                     $value = $this->slug_slashes($post[$key]);
                     break;
-                case 'link':
-                    $value = d4p_sanitize_basic($post[$key]);
-                    break;
                 case 'email':
                     $value = sanitize_email($post[$key]);
                     break;
@@ -870,8 +919,9 @@ if (!class_exists('d4pSettingsProcess')) {
                 case 'hidden':
                 case 'select':
                 case 'radios':
-                case 'radios_hierarchy':
                 case 'group':
+                case 'radios_hierarchy':
+                case 'link':
                     $value = d4p_sanitize_basic($post[$key]);
                     break;
             }

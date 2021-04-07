@@ -1,20 +1,35 @@
-=== Direct Checkout for WooCommerce ===
+﻿=== Direct Checkout for WooCommerce ===
 Contributors: quadlayers
 Donate link: https://quadlayers.com/portfolio/woocommerce-direct-checkout/
 Tags: woocommerce, woocommerce ajax, woocommerce ajax cart, add to cart, woocommerce direct checkout, woocommerce quick buy, woocommerce remove checkout fields, woocommerce ajax single products, woocommerce one page checkout
 Requires at least: 4.6
-Tested up to: 5.3.2
-Stable tag: 2.3.2
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Tested up to: 5.7
+Stable tag: 2.4.5
+WC requires at least: 3.1.0
+WC tested up to: 5.1.0
+License: GPLv3
+License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
 Formerly "WooCommerce Direct Checkout". This plugin simplifies the entire WooCommerce checkout process to improve your sales rate.
 
-== Description ==
+== Presentation ==
 
 [Premium](https://quadlayers.com/portfolio/woocommerce-direct-checkout/) | [Demo](https://quadlayers.com/woocommerce-direct/) | [Documentation](https://quadlayers.com/documentation/woocommerce-direct-checkout/) | [Community](https://www.facebook.com/groups/quadlayers/)
 
-WooCommerce Direct Checkout allows you to simplifies the checkout process by skipping the shopping cart page. The “Add to cart” button is added in each product to redirect customers to the checkout page. This can encourage buyers to shop more and quickly process the transaction, which can lead to a possible increase in sales.
+WooCommerce direct checkout is a helpful tool to simplify the checkout process. Direct checkout converts into one-click process, customer dicesion to sale.
+
+== Description ==
+
+WooCommerce Direct Checkout  is a plugin to allow the steps reduction inside Woocommerce checkout process. You are able to simplify the checkout process by skipping the shopping cart page. The “Add to cart” button is added in each product to redirect customers to the checkout page. This can encourage buyers to shop more and quickly. You will increase your sales reducing cart abandonment.
+
+= Highlights =
+* Simplify check out process.
+* Reduce cart abandonment
+* Skip add to cart.
+* Avoid reload checkout page.
+* Remove checkout fields.
+* Quick purchase functionality.
+* Simplify Woocommerce.
 
 == Formerly WooCommerce Direct Checkout ==
 
@@ -22,7 +37,7 @@ This plugin was formerly known as "WooCommerce Direct Checkout". WordPress force
 
 == Ajax add to cart ==
 
-The Ajax add to cart option allows you to include single products, variable, grouped and virtual products in the cart without the need to reload the entire site each time.
+The Ajax add to cart option allows you to include single products, variable, grouped and virtual products in the cart without required to reload the entire site each time.
 
 == Speed checkout process ==
 
@@ -49,12 +64,41 @@ The premium version of WooCommerce Direct Checkot allows to include a quick purc
 
 == Changelog ==
 
-[https://quadlayers.com/documentation/woocommerce-direct-checkout/changelog/](https://quadlayers.com/documentation/woocommerce-direct-checkout/changelog/)
+= 2.4.5 =
+* Fix: WooCommerce compatibility
 
-== Changelog ==
+= 2.4.4 =
+* Fix: change tab alert
+
+= 2.4.3 =
+* Fix: php error
+
+= 2.4.2 =
+* Fix: translation strings
+
+= 2.4.1 =
+* Fix: WooCommerce Checkout Country
+
+= 2.4.0 =
+* Fix: WordPress 5.5 compatibility
+
+= 2.3.8 =
+* Fix: Fixed override cart url
+
+= 2.3.7 =
+* Fix: Experimental override cart url
+
+= 2.3.5 =
+* Fix: WooCommerce Direct Checkout Pro compatibility
+
+= 2.3.4 =
+* Fix: WooCommerce Direct Checkout suggestions
+
+= 2.3.3 =
+* Fix: WooCommerce Direct Checkout Pro compatibility
 
 = 2.3.2 =
-* Fix: WooCommerce Direct Checkout
+* Fix: WooCommerce Direct Checkout Pro compatibility
 
 = 2.3.1 =
 * Fix: WooCommerce Direct Checkout products ajax add to cart

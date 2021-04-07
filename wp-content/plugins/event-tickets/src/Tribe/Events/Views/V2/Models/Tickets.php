@@ -111,7 +111,7 @@ class Tickets implements \ArrayAccess, \Serializable {
 		}
 
 		$num_ticket_types_available = 0;
-		foreach( $this->all_tickets as $ticket ) {
+		foreach ( $this->all_tickets as $ticket ) {
 			if ( ! tribe_events_ticket_is_on_sale( $ticket ) ) {
 				continue;
 			}
@@ -134,6 +134,7 @@ class Tickets implements \ArrayAccess, \Serializable {
 		$html        = [];
 		$parts       = [];
 		$stock_html  = '';
+		$sold_out    = '';
 		$link_label  = '';
 		$link_anchor = '';
 
@@ -145,11 +146,16 @@ class Tickets implements \ArrayAccess, \Serializable {
 			}
 
 			if ( ! $data['available'] ) {
-				$parts[ $type . '_stock' ] = esc_html_x( 'Sold out', 'list view stock sold out', 'event-tickets' );
+				if ( 'rsvp' === $type ) {
+					$parts[ $type . '_stock' ] = esc_html_x( 'Currently full', 'events rsvp full (v2)', 'event-tickets' );
+				} else {
+					$parts[ $type . '_stock' ] = esc_html_x( 'Sold Out', 'events stock sold out (v2)', 'event-tickets' );
+				}
 
-				// Only re-apply if we don't have a stock yet
+				// Only re-apply if we don't have a stock yet.
 				if ( empty( $html['stock'] ) ) {
 					$html['stock'] = $parts[ $type . '_stock' ];
+					$sold_out      = $parts[ $type . '_stock' ];
 				}
 			} else {
 				$stock = $data['stock'];
@@ -173,28 +179,35 @@ class Tickets implements \ArrayAccess, \Serializable {
 					 *
 					 * @since 4.10.1
 					 */
-					$threshold = absint( apply_filters( 'tribe_display_tickets_left_threshold', $threshold, $data, $this->post_id  ) );
+					$threshold = absint( apply_filters( 'tribe_display_tickets_left_threshold', $threshold, $data, $this->post_id ) );
 
 					if ( ! $threshold || $stock <= $threshold ) {
 
 						$number = number_format_i18n( $stock );
 
+						$ticket_label_singular = tribe_get_ticket_label_singular_lowercase( 'event-tickets' );
+						$ticket_label_plural   = tribe_get_ticket_label_plural_lowercase( 'event-tickets' );
+
 						if ( 'rsvp' === $type ) {
-							$text = _n( '%s spot left', '%s spots left', $stock, 'event-tickets' );
+							/* translators: %1$s: Number of stock */
+							$text = _n( '%1$s spot left', '%1$s spots left', $stock, 'event-tickets' );
 						} else {
-							$text = _n( '%s ticket left', '%s tickets left', $stock, 'event-tickets' );
+							/* translators: %1$s: Number of stock, %2$s: Ticket label, %3$s: Tickets label */
+							$text = _n( '%1$s %2$s left', '%1$s %3$s left', $stock, 'event-tickets' );
 						}
 
-						$stock_html = esc_html( sprintf( $text, $number ) );
+						$stock_html = esc_html( sprintf( $text, $number, $ticket_label_singular, $ticket_label_plural ) );
 					}
 				}
 
 				$parts[ $type . '_stock' ] = $html['stock'] = $stock_html;
 
 				if ( 'rsvp' === $type ) {
+					/* Translators: RSVP singular label. */
 					$link_label  = esc_html( sprintf( _x( '%s Now', 'list view rsvp now ticket button', 'event-tickets' ), tribe_get_rsvp_label_singular( 'list_view_rsvp_now_button' ) ) );
 					$link_anchor = '#rsvp-now';
 				} else {
+					/* Translators: Tickets plural label. */
 					$link_label  = esc_html( sprintf( _x( 'Get %s', 'list view buy now ticket button', 'event-tickets' ), tribe_get_ticket_label_plural( 'list_view_buy_now_button' ) ) );
 					$link_anchor = '#tribe-tickets';
 				}
@@ -208,6 +221,7 @@ class Tickets implements \ArrayAccess, \Serializable {
 
 		$this->data['stock'] = (object) [
 			'available' => $stock_html,
+			'sold_out'  => $sold_out,
 		];
 
 		return $this->data;
@@ -256,7 +270,6 @@ class Tickets implements \ArrayAccess, \Serializable {
 	 *
 	 * @since 4.10.9
 	 *
-	 *
 	 * @return array An array representation of the event tickets data.
 	 */
 	public function to_array() {
@@ -302,5 +315,33 @@ class Tickets implements \ArrayAccess, \Serializable {
 		$this->exists = ! empty( $this->all_tickets );
 
 		return $this->exists;
+	}
+
+	/**
+	 * Returns whether an event has tickets in date range.
+	 *
+	 * @since 4.12.0
+	 *
+	 * @return bool Whether an event has tickets in date range
+	 */
+	public function in_date_range() {
+		if ( ! $this->post_id ) {
+			return false;
+		}
+
+		return tribe_tickets_is_current_time_in_date_window( $this->post_id );
+	}
+
+	/**
+	 * Returns whether an event has its tickets sold out.
+	 *
+	 * @since 4.12.0
+	 *
+	 * @return bool Whether an event has its tickets sold out.
+	 */
+	public function sold_out() {
+		$data = $this->fetch_data();
+
+		return ! empty( $data['stock']->sold_out );
 	}
 }

@@ -1,26 +1,25 @@
 === Custom Login Page Customizer ===
-Stable tag: trunk
 Requires at least: 4.0
-Tested up to: 4.9
-Contributors: hardeepasrani,marius_codeinwp
-Author URI: https://themeisle.com
+Tested up to: 5.6
+Contributors: hardeepasrani, hiddenpearls
+Author URI: https://loginpress.pro/?utm_source=login-customizer-lite&utm_medium=author-url-link
 Tags: login, customizer, logo, login logo, login customizer, login page,admin, branding, customization, custom login, error, login error, custom login pro
+Stable tag: 2.1.2
 License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 Custom Login Customizer allows you to easily customize your admin login page, straight from your WordPress Customizer!
 
 == Description ==
 
-<a href="https://themeisle.com/plugins/login-customizer/" target="_blank" rel="nofollow">Custom Login Page Customizer</a> plugin allows you to easily customize your login page straight from your WordPress Customizer! You can preview your custom login changes before you save them! Awesome, right?
+<a href="https://loginpress.pro/?utm_source=login-customizer-lite-readme&?&utm_medium=link&utm_campaign=pro-loginpress" target="_blank" rel="nofollow">Custom Login Page Customizer</a> plugin allows you to easily customize your login page straight from your WordPress Customizer! You can preview your custom login changes before you save them! Awesome, right?
 
-https://www.youtube.com/watch?v=rtXJ44BsSWM
+https://www.youtube.com/watch?v=mOmgmN1iRac
 
 In your WordPress Dashboard, navigate to Appearance > Custom Login Page Customizer to get started.
 
 You can customize almost anything and make it look the way you want.
 
-If you are looking for the best WordPress themes that works with Login Customizer check this out : <a href="http://www.codeinwp.com/blog/best-free-wordpress-themes/" target="_blank" rel="nofollow">http://www.codeinwp.com/blog/best-free-wordpress-themes/</a>
 == Installation ==
 
 1. Upload the plugin to your 'wp-content/plugins' directory, or download and install automatically through your admin panel.
@@ -34,14 +33,46 @@ In your WordPress Dashboard, navigate to Appearance > Custom Login Customizer to
 
 = How to donate or contribute? =
 
-Please visit <a target="_blank" rel="nofollow" href="http://themeisle.com">this link</a> for more info.
+Please visit <a target="_blank" rel="nofollow" href="https://loginpress.pro/?utm_source=login-customizer-lite-readme&?&utm_medium=link&utm_campaign=pro-loginpress">this link</a> for more info.
 
 == Screenshots ==
 
-1. Example Custom Login Page
-2. Another Great Custom Login Page Example
+1. Custom Login - Before and After customized login page demo after setting up Login Customizer
+2. Custom Login - Select Login Page Templates from settings
+3. Custom Login - Login Form settings
+4. Custom Login - Select login page background images
+5. Custom Login - Customize login form button
+6. Custom Login - Add logo of your own choice from settings
+
+== Upgrade Notice ==
+
+= 2.1.2 =
+* Update immediately - compatible with 5.6 and bugfix release. Introducing New features and settings panel.
 
 == Changelog ==
+
+= 2.1.2 - 2021-02-20 =
+
+* New Feature: Introducing new control for customizing privacy policy link on login page.
+
+= 2.1.1 - 2021-01-27 =
+* New Feature: Introducing new Login Customizer settings page.
+* New Feature: Introducing "Remember Me" option already checked on login form.
+* New Feature: Introducing "Custom Register Password Fields" which creates custom password field so you don't have to reset the password for the first time through a link in order to login (settings will be shown only if you enable register users for your site).
+* New Feature: Introducing "Login Order", Enable users to login using their username or email address or both.
+* New Feature: Introducing "Log Data Page" with System Info for troubleshooting.
+* Enhancement: Code optimization and plugin speed improvements.
+* Enhancement: Introducing Login Customizer dashicon.
+* Compatibility: Compatibile with WordPress 5.6.
+
+= 2.1.0 - 2021-01-12  = 
+
+* Bugfix: Fixed live preview issues.
+* Bugfix: Fixed WordPress function deprecation error.
+* Bugfix: Fixed customizer settings irregularities.
+* Enhancement: Optimized Code.
+* Compatibility: Compatibile with WordPress 5.6.
+
 = 2.0.0 - 2018-08-06  = 
 
 * Added Template Feature

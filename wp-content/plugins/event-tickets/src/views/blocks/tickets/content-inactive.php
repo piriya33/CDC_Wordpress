@@ -8,14 +8,15 @@
  *
  * See more documentation about our Blocks Editor templating system.
  *
- * @link {INSERT_ARTICLE_LINK_HERE}
+ * @link https://evnt.is/1amp Help article for RSVP & Ticket template files.
  *
- * @since 4.9
- * @version 4.11.0
+ * @since 4.12.1 Updated message to use tribe_get_ticket_label_plural() for "Tickets" string
+ * @version 4.12.1
  *
  */
 
-$message = $this->get( 'is_sale_past' ) ? __( 'Tickets are no longer available', 'event-tickets' ) : __( 'Tickets are not yet available', 'event-tickets' );
+/* translators: %s: Tickets label */
+$message = $this->get( 'is_sale_past' ) ? sprintf( __( '%s are no longer available', 'event-tickets' ), tribe_get_ticket_label_plural( 'event-tickets' ) ) : sprintf( __( '%s are not yet available', 'event-tickets' ), tribe_get_ticket_label_plural( 'event-tickets' ) );
 ?>
 <div
 	class="tribe-tickets__item__content tribe-tickets__item__content--inactive"

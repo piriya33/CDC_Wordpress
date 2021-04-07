@@ -2,13 +2,13 @@
 
 /*
 Name:    d4pLib - Class - Settings Core
-Version: v2.7.6
+Version: v2.8.13
 Author:  Milan Petrovic
 Email:   support@dev4press.com
 Website: https://www.dev4press.com/
 
 == Copyright ==
-Copyright 2008 - 2019 Milan Petrovic (email: support@dev4press.com)
+Copyright 2008 - 2020 Milan Petrovic (email: support@dev4press.com)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -25,19 +25,24 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-if (!defined( 'ABSPATH')) { exit; }
+if (!defined('ABSPATH')) { exit; }
 
-if (!class_exists('d4p_settings_core')) {
-    abstract class d4p_settings_core {
+if (!class_exists('d4p_plugin_settings_corex')) {
+    abstract class d4p_plugin_settings_corex {
         public $base = 'd4p';
 
         public $info;
         public $scope = 'blog';
+
         public $current = array();
         public $settings = array();
-        public $skip_update = array();
 
-        public function __construct() { }
+        public $skip_update = array();
+        public $skip_delete_on_update = array();
+
+        public function __construct() {
+            $this->constructor();
+        }
 
         public function __get($name) {
             $get = explode('_', $name, 2);
@@ -83,95 +88,6 @@ if (!class_exists('d4p_settings_core')) {
             do_action($this->base.'_'.$this->scope.'_settings_loaded');
 
             do_action($this->base.'_settings_loaded');
-        }
-
-        protected function _db() { }
-
-        protected function _name($name) {
-            return 'd4p_'.$this->scope.'_'.$this->info->code.'_'.$name;
-        }
-
-        protected function _install() {
-            $this->current = $this->_merge();
-            $this->current['info'] = $this->info->to_array();
-            $this->current['info']['install'] = true;
-            $this->current['info']['update'] = false;
-
-            foreach ($this->current as $key => $data) {
-                $this->_settings_update($key, $data);
-            }
-
-            $this->_db();
-        }
-
-        protected function _update() {
-            $old_build = $this->current['info']['build'];
-
-            $this->current['info'] = $this->info->to_array();
-            $this->current['info']['install'] = false;
-            $this->current['info']['update'] = true;
-            $this->current['info']['previous'] = $old_build;
-
-            $this->_settings_update('info', $this->current['info']);
-
-            $settings = $this->_merge();
-
-            foreach ($settings as $key => $data) {
-                $now = $this->_settings_get($key);
-
-                if (!is_array($now)) {
-                    $now = $data;
-                } else if (!in_array($key, $this->skip_update)) {
-                    $now = $this->_upgrade($now, $data);
-                }
-
-                $this->current[$key] = $now;
-
-                $this->_settings_update($key, $now);
-            }
-
-            $this->_db();
-        }
-
-        protected function _upgrade($old, $new) {
-            foreach ($new as $key => $value) {
-                if (!array_key_exists($key, $old)) {
-                    $old[$key] = $value;
-                }
-            }
-
-            $unset = array();
-            foreach ($old as $key => $value) {
-                if (!array_key_exists($key, $new)) {
-                    $unset[] = $key;
-                }
-            }
-
-            if (!empty($unset)) {
-                foreach ($unset as $key) {
-                    unset($old[$key]);
-                }
-            }
-
-            return $old;
-        }
-
-        protected function _groups() {
-            return array_keys($this->settings);
-        }
-
-        protected function _merge() {
-            $merged = array();
-
-            foreach ($this->settings as $key => $data) {
-                $merged[$key] = array();
-
-                foreach ($data as $name => $value) {
-                    $merged[$key][$name] = $value;
-                }
-            }
-
-            return $merged;
         }
 
         public function group($group) {
@@ -290,6 +206,8 @@ if (!class_exists('d4p_settings_core')) {
                 $list = $this->_groups();
             }
 
+            $import = (array)$import;
+
             foreach ($import as $key => $data) {
                 if (in_array($key, $list)) {
                     $this->current[$key] = (array)$data;
@@ -299,19 +217,114 @@ if (!class_exists('d4p_settings_core')) {
             }
         }
 
-        public function serialized_export($list = array()) {
-            if (empty($list)) {
-                $list = $this->_groups();
+        public function export_to_json($list = array()) {
+            return json_encode($this->_settings_to_array($list));
+        }
+
+        public function export_to_serialized_php($list = array()) {
+            return serialize($this->_settings_to_array($list));
+        }
+
+        public function file_version() {
+            return $this->info_version.'.'.$this->info_build;
+        }
+
+        public function plugin_version() {
+            return 'v'.$this->info_version.'_b'.$this->info_build;
+        }
+
+        protected function _db() { }
+
+        protected function _name($name) {
+            return 'd4p_'.$this->scope.'_'.$this->info->code.'_'.$name;
+        }
+
+        protected function _install() {
+            $this->current = $this->_merge();
+
+            $this->current['info'] = $this->info->to_array();
+            $this->current['info']['install'] = true;
+            $this->current['info']['update'] = false;
+
+            foreach ($this->current as $key => $data) {
+                $this->_settings_update($key, $data);
             }
 
-            $data = new stdClass();
-            $data->info = $this->current['info'];
+            $this->_db();
+        }
 
-            foreach ($list as $name) {
-                $data->$name = $this->current[$name];
+        protected function _update() {
+            $old_build = $this->current['info']['build'];
+
+            $this->current['info'] = $this->info->to_array();
+            $this->current['info']['install'] = false;
+            $this->current['info']['update'] = true;
+            $this->current['info']['previous'] = $old_build;
+
+            $this->_settings_update('info', $this->current['info']);
+
+            $settings = $this->_merge();
+
+            foreach ($settings as $key => $data) {
+                $now = $this->_settings_get($key);
+
+                if (!is_array($now)) {
+                    $now = $data;
+                } else if (!in_array($key, $this->skip_update)) {
+                    $_skip = in_array($key, $this->skip_delete_on_update);
+
+                    $now = $this->_upgrade($now, $data, $_skip);
+                }
+
+                $this->current[$key] = $now;
+
+                $this->_settings_update($key, $now);
             }
 
-            return serialize($data);
+            $this->_db();
+        }
+
+        protected function _upgrade($old, $new, $skip_delete = false) {
+            foreach ($new as $key => $value) {
+                if (!array_key_exists($key, $old)) {
+                    $old[$key] = $value;
+                }
+            }
+
+            if ($skip_delete === false) {
+                $unset = array();
+                foreach ($old as $key => $value) {
+                    if (!array_key_exists($key, $new)) {
+                        $unset[] = $key;
+                    }
+                }
+
+                if (!empty($unset)) {
+                    foreach ($unset as $key) {
+                        unset($old[$key]);
+                    }
+                }
+            }
+
+            return $old;
+        }
+
+        protected function _groups() {
+            return array_keys($this->settings);
+        }
+
+        protected function _merge() {
+            $merged = array();
+
+            foreach ($this->settings as $key => $data) {
+                $merged[$key] = array();
+
+                foreach ($data as $name => $value) {
+                    $merged[$key][$name] = $value;
+                }
+            }
+
+            return $merged;
         }
 
         protected function _settings_get($name) {
@@ -337,5 +350,23 @@ if (!class_exists('d4p_settings_core')) {
                 update_option($this->_name($name), $data);
             }
         }
+
+        protected function _settings_to_array($list = array()) {
+            if (empty($list)) {
+                $list = $this->_groups();
+            }
+
+            $data = array(
+                'info' => $this->current['info']
+            );
+
+            foreach ($list as $name) {
+                $data[$name] = $this->current[$name];
+            }
+
+            return $data;
+        }
+
+        abstract protected function constructor();
     }
 }

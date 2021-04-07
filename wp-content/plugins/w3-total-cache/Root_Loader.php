@@ -32,7 +32,7 @@ class Root_Loader {
 		if ( $c->get_boolean( 'cdnfsd.enabled' ) )
 			$plugins[] = new Cdnfsd_Plugin();
 		if ( $c->get_boolean( 'lazyload.enabled' ) )
-			$plugins[] = new LazyLoad_Plugin();
+			$plugins[] = new UserExperience_LazyLoad_Plugin();
 		if ( $c->get_boolean( 'browsercache.enabled' ) )
 			$plugins[] = new BrowserCache_Plugin();
 		if ( $c->get_boolean( 'minify.enabled' ) )
@@ -46,7 +46,7 @@ class Root_Loader {
 			$plugins[] = new Generic_Plugin_Admin();
 			$plugins[] = new BrowserCache_Plugin_Admin();
 			$plugins[] = new DbCache_Plugin_Admin();
-			$plugins[] = new LazyLoad_Plugin_Admin();
+			$plugins[] = new UserExperience_Plugin_Admin();
 			$plugins[] = new ObjectCache_Plugin_Admin();
 			$plugins[] = new PgCache_Plugin_Admin();
 			$plugins[] = new Minify_Plugin_Admin();
@@ -75,6 +75,12 @@ class Root_Loader {
 			$plugins[] = new Extensions_Plugin_Admin();
 			$plugins[] = new Generic_Plugin_AdminNotifications();
 			$plugins[] = new UsageStatistics_Plugin_Admin();
+			$plugins[] = new SetupGuide_Plugin_Admin();
+			$plugins[] = new FeatureShowcase_Plugin_Admin();
+		} else {
+			if ( $c->get_boolean( 'jquerymigrate.disabled' ) ) {
+				$plugins[] = new UserExperience_Plugin_Jquery();
+			}
 		}
 
 		$this->_loaded_plugins = $plugins;

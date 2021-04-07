@@ -6,24 +6,26 @@
  * Domain Path: /languages/
  * Description: Easy to add and display your HTML5, YouTube, Vimeo vedio gallery with Magnific Popup to your website. Also work with Gutenberg shortcode block.
  * Author: WP OnlineSupport
- * Version: 2.3.4
+ * Version: 2.4
  * Author URI: https://www.wponlinesupport.com/
  *
  * @package WordPress
  * @author WP OnlineSupport
  */
-if ( ! defined( 'ABSPATH' ) ) exit;
-
-if( !defined( 'WP_HTML5VP_VERSION' ) ) {
-	define( 'WP_HTML5VP_VERSION', '2.3.4' ); // Version of plugin
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
 }
-if( !defined( 'WP_HTML5VP_DIR' ) ) {
+
+if( ! defined( 'WP_HTML5VP_VERSION' ) ) {
+	define( 'WP_HTML5VP_VERSION', '2.4' ); // Version of plugin
+}
+if( ! defined( 'WP_HTML5VP_DIR' ) ) {
 	define( 'WP_HTML5VP_DIR', dirname( __FILE__ ) ); // Plugin dir
 }
-if( !defined( 'WP_HTML5VP_URL' ) ) {
+if( ! defined( 'WP_HTML5VP_URL' ) ) {
 	define( 'WP_HTML5VP_URL', plugin_dir_url( __FILE__ ) ); // Plugin url
 }
-if( !defined( 'WP_HTML5VP_POST_TYPE' ) ) {
+if( ! defined( 'WP_HTML5VP_POST_TYPE' ) ) {
 	define( 'WP_HTML5VP_POST_TYPE', 'sp_html5video' ); // Plugin post type name
 }
 
@@ -44,9 +46,7 @@ function wp_html5video_load_textdomain() {
  * 
  * @package HTML5 Video gallery and Player
  * @since 1.1
- */ 
-
-
+ */
 add_action( 'wp_enqueue_scripts','wp_html5video_style_css' );
 
 function wp_html5video_style_css() {		
@@ -55,7 +55,7 @@ function wp_html5video_style_css() {
 	wp_enqueue_style( 'wp_html5video_colcss',  plugin_dir_url( __FILE__ ). 'assets/css/video-style.css', array(), WP_HTML5VP_VERSION );		
 
 	// Registring and enqueing wpos-magnific-popup-style css
-	if( !wp_style_is( 'wpos-magnific-popup-style', 'registered' ) ) {
+	if( ! wp_style_is( 'wpos-magnific-popup-style', 'registered' ) ) {
 			wp_enqueue_style( 'wpos-magnific-popup-style',  plugin_dir_url( __FILE__ ). 'assets/css/magnific-popup.css', array(), WP_HTML5VP_VERSION );
 			wp_enqueue_style( 'wpos-magnific-popup-style' );
 	}			
@@ -63,12 +63,30 @@ function wp_html5video_style_css() {
 	wp_register_script( 'wp-html5video-js', WP_HTML5VP_URL.'assets/js/video.js', array('jquery'), WP_HTML5VP_VERSION, true );
 	wp_enqueue_script( 'wp-html5video-js' );
 	
-	if( !wp_script_is( 'wpos-magnific-popup-jquery', 'registered' ) ) {
+	if( ! wp_script_is( 'wpos-magnific-popup-jquery', 'registered' ) ) {
 			wp_register_script( 'wpos-magnific-popup-jquery', WP_HTML5VP_URL.'assets/js/jquery.magnific-popup.min.js', array('jquery'), WP_HTML5VP_VERSION, true );
 		}	
 
 	wp_register_script( 'wp-html5video-public-js', WP_HTML5VP_URL.'assets/js/wp-html5vp-public.js', array('jquery'), WP_HTML5VP_VERSION, true );
-   
+}
+
+// Action to add style at admin side
+add_action( 'admin_enqueue_scripts', 'wp_html5vp_admin_script' );
+
+/**
+ * Function to add script at admin side
+ * 
+ * @package HTML5 Video gallery and Player
+ * @since 2.4
+ */
+function wp_html5vp_admin_script( $hook ) {
+
+	if( $hook == WP_HTML5VP_POST_TYPE.'_page_vgap-designs' ) {
+
+		// Registring admin script
+		wp_register_script( 'wp-html5vp-admin-script', WP_HTML5VP_URL.'assets/js/wp-html5vp-admin.js', array('jquery'), WP_HTML5VP_VERSION, true );
+		wp_enqueue_script( 'wp-html5vp-admin-script' );
+	}
 }
  
 /**
@@ -236,10 +254,17 @@ require_once( WP_HTML5VP_DIR . '/includes/class_admin_metabox.php' );
 // Admin File
 require_once( WP_HTML5VP_DIR . '/includes/admin/class-html5vp-admin.php' );
 
-// Load admin files
-if ( is_admin() || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
-	include_once( WP_HTML5VP_DIR . '/includes/admin/wp-html5vp-how-it-work.php' );	
+/* Recommended Plugins Starts */
+if ( is_admin() ) {
+	require_once( WP_HTML5VP_DIR . '/wpos-plugins/wpos-recommendation.php' );
+
+	wpos_espbw_init_module( array(
+							'prefix'	=> 'wp-html5vp',
+							'menu'		=> 'edit.php?post_type='.WP_HTML5VP_POST_TYPE,
+							'position'	=> 3,
+						));
 }
+/* Recommended Plugins Ends */
 
 /* Plugin Wpos Analytics Data Starts */
 function wpos_analytics_anl37_load() {
@@ -253,21 +278,7 @@ function wpos_analytics_anl37_load() {
 							'slug'          => 'video-gallery-and-player',
 							'type'          => 'plugin',
 							'menu'          => 'edit.php?post_type=sp_html5video',
-							'text_domain'   => 'html5-videogallery-plus-player',
-							'promotion'     => array(
-													'bundle' => array(
-															'name'  => 'Download FREE 50+ Plugins, 10+ Themes and Dashboard Plugin',
-															'desc'  => 'Download FREE 50+ Plugins, 10+ Themes and Dashboard Plugin',
-															'file'  => 'https://www.wponlinesupport.com/latest/wpos-free-50-plugins-plus-12-themes.zip'
-														)
-													),
-							'offers'        => array(
-													'trial_premium' => array(
-														'image' => 'http://analytics.wponlinesupport.com/?anylc_img=37',
-														'link'  => 'http://analytics.wponlinesupport.com/?anylc_redirect=37',
-														'desc'  => 'Or start using the plugin from admin menu',
-													)
-												),
+							'text_domain'   => 'html5-videogallery-plus-player',							
 						));
 
 	return $wpos_analytics;

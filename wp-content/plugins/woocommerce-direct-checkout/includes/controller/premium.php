@@ -5,8 +5,8 @@ class QLWCDC_Controller_Premium {
   protected static $_instance;
 
   public function __construct() {
+    add_action('qlwcdc_sections_header', array($this, 'add_header'));
     add_action('admin_menu', array($this, 'add_menu'));
-    add_action('admin_head', array($this, 'remove_menu'));
   }
 
   public static function instance() {
@@ -16,17 +16,10 @@ class QLWCDC_Controller_Premium {
     return self::$_instance;
   }
 
-  function remove_menu() {
+  function add_header() {
     ?>
-    <style>
-
-      li.toplevel_page_qlwcdc {
-        display:none;
-      }
-
-    </style>
+    <li><a href="<?php echo admin_url('admin.php?page=' . QLWCDC_PREFIX); ?>"><?php echo esc_html__('Premium', 'woocommerce-direct-checkout'); ?></a></li> | 
     <?php
-
   }
 
   // Admin    

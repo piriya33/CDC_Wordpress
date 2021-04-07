@@ -8,7 +8,7 @@
 class WPForms_Entries_List {
 
 	/**
-	 * Holds admin alerts.
+	 * Store admin alerts.
 	 *
 	 * @since 1.1.6
 	 *
@@ -83,9 +83,13 @@ class WPForms_Entries_List {
 		// Setup screen options - this needs to run early.
 		add_action( 'load-wpforms_page_wpforms-entries', array( $this, 'screen_options' ) );
 		add_filter( 'set-screen-option', array( $this, 'screen_options_set' ), 10, 3 );
+		add_filter( 'set_screen_option_wpforms_entries_per_page', [ $this, 'screen_options_set' ], 10, 3 );
 
 		// Heartbeat doesn't pass $_GET parameters checked by $this->init() condition.
 		add_filter( 'heartbeat_received', array( $this, 'heartbeat_new_entries_check' ), 10, 3 );
+
+		// AJAX-callbacks.
+		add_action( 'wp_ajax_wpforms_entry_list_process_delete_all', array( $this, 'process_delete' ) );
 	}
 
 	/**
@@ -104,7 +108,7 @@ class WPForms_Entries_List {
 			return;
 		}
 
-		$form_id = ! empty( $_GET['form_id'] ) ? absint( wp_unslash( $_GET['form_id'] ) ) : 0; // phpcs:ignore WordPress.Security.NonceVerification
+		$form_id = $this->get_filtered_form_id();
 
 		// Init default entries screen.
 		if ( empty( $form_id ) || ! wpforms_current_user_can( 'view_entries_form_single', $form_id ) ) {
@@ -113,13 +117,13 @@ class WPForms_Entries_List {
 
 		// Load the classes that builds the entries table.
 		$this->load_entries_list_table();
+		$this->remove_get_parameters();
 
 		// Processing and setup.
 		add_action( 'wpforms_entries_init', array( $this, 'process_filter_dates' ), 7, 1 );
 		add_action( 'wpforms_entries_init', array( $this, 'process_filter_search' ), 7, 1 );
 		add_action( 'wpforms_entries_init', array( $this, 'process_read' ), 8, 1 );
 		add_action( 'wpforms_entries_init', array( $this, 'process_columns' ), 8, 1 );
-		add_action( 'wpforms_entries_init', array( $this, 'process_delete' ), 8, 1 );
 		add_action( 'wpforms_entries_init', array( $this, 'setup' ), 10, 1 );
 
 		do_action( 'wpforms_entries_init', 'list' );
@@ -131,6 +135,17 @@ class WPForms_Entries_List {
 
 		// Enqueues.
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueues' ) );
+		add_filter( 'wpforms_admin_strings', array( $this, 'js_strings' ) );
+	}
+
+	/**
+	 * Remove unnecessary $_GET parameters for shorter URL.
+	 *
+	 * @since 1.6.2
+	 */
+	private function remove_get_parameters() {
+
+		$_SERVER['REQUEST_URI'] = remove_query_arg( '_wp_http_referer', $_SERVER['REQUEST_URI'] ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
 	}
 
 	/**
@@ -182,7 +197,7 @@ class WPForms_Entries_List {
 			array(
 				'label'   => esc_html__( 'Number of entries per page:', 'wpforms' ),
 				'option'  => 'wpforms_entries_per_page',
-				'default' => apply_filters( 'wpforms_entries_per_page', 30 ),
+				'default' => wpforms()->entry->get_count_per_page(),
 			)
 		);
 	}
@@ -219,7 +234,7 @@ class WPForms_Entries_List {
 			'wpforms-flatpickr',
 			WPFORMS_PLUGIN_URL . 'assets/js/flatpickr.min.js',
 			array( 'jquery' ),
-			'4.5.5'
+			'4.6.3'
 		);
 
 		// CSS.
@@ -227,7 +242,17 @@ class WPForms_Entries_List {
 			'wpforms-flatpickr',
 			WPFORMS_PLUGIN_URL . 'assets/css/flatpickr.min.css',
 			array(),
-			'4.5.5'
+			'4.6.3'
+		);
+
+		$min = wpforms_get_min_suffix();
+
+		wp_enqueue_script(
+			'wpforms-admin-entries',
+			WPFORMS_PLUGIN_URL . "pro/assets/js/admin/entries{$min}.js",
+			[ 'jquery', 'wpforms-flatpickr' ],
+			WPFORMS_VERSION,
+			true
 		);
 
 		// Hook for addons.
@@ -235,14 +260,15 @@ class WPForms_Entries_List {
 	}
 
 	/**
-	 * Watches for and runs complete form exports.
+	 * Watch for and run complete form exports.
 	 *
 	 * @since 1.1.6
 	 */
 	public function process_export() {
 
+		$form_id = $this->get_filtered_form_id();
 		// Check for run switch.
-		if ( empty( $_GET['export'] ) || empty( $_GET['form_id'] ) || 'all' !== $_GET['export'] ) {
+		if ( empty( $_GET['export'] ) || ! $form_id || 'all' !== $_GET['export'] ) {
 			return;
 		}
 
@@ -255,19 +281,20 @@ class WPForms_Entries_List {
 		require_once WPFORMS_PLUGIN_DIR . 'pro/includes/admin/entries/class-entries-export.php';
 		$export             = new WPForms_Entries_Export();
 		$export->entry_type = 'all';
-		$export->form_id    = absint( $_GET['form_id'] );
+		$export->form_id    = $form_id;
 		$export->export();
 	}
 
 	/**
-	 * Watches for and runs complete marking all entries as read.
+	 * Watch for and run complete marking all entries as read.
 	 *
 	 * @since 1.1.6
 	 */
 	public function process_read() {
 
+		$form_id = $this->get_filtered_form_id();
 		// Check for run switch.
-		if ( empty( $_GET['action'] ) || empty( $_GET['form_id'] ) || 'markread' !== $_GET['action'] ) {
+		if ( empty( $_GET['action'] ) || ! $form_id || 'markread' !== $_GET['action'] ) {
 			return;
 		}
 
@@ -276,7 +303,7 @@ class WPForms_Entries_List {
 			return;
 		}
 
-		wpforms()->entry->mark_all_read( $_GET['form_id'] );
+		wpforms()->entry->mark_all_read( $form_id );
 
 		$this->alerts[] = array(
 			'type'    => 'success',
@@ -286,14 +313,14 @@ class WPForms_Entries_List {
 	}
 
 	/**
-	 * Watches for and updates list column settings.
+	 * Watch for and update list column settings.
 	 *
 	 * @since 1.4.0
 	 */
 	public function process_columns() {
 
 		// Check for run switch and data.
-		if ( empty( $_POST['action'] ) || empty( $_POST['form_id'] ) || 'list-columns' !== $_POST['action'] ) {
+		if ( empty( $_POST['action'] ) || empty( $_POST['form_id'] ) || $_POST['action'] !== 'list-columns' ) {
 			return;
 		}
 
@@ -304,108 +331,283 @@ class WPForms_Entries_List {
 
 		$post_id = absint( $_POST['form_id'] );
 
+		// Remove KSES filters before updating meta for forms and their fields which contain HTML.
+		// If we don't do this, forms for users who don't have 'unfiltered_html' capabilities can get corrupt due to conflicts with wp_kses().
+		kses_remove_filters();
+
 		// Update or delete.
 		if ( empty( $_POST['fields'] ) ) {
 
-			wpforms()->form->delete_meta( $post_id, 'entry_columns', array( 'cap' => 'view_entries_form_single' ) );
+			wpforms()->form->delete_meta( $post_id, 'entry_columns', [ 'cap' => 'view_entries_form_single' ] );
 
 		} else {
 
 			$fields = array_map( 'intval', $_POST['fields'] );
 
-			wpforms()->form->update_meta( $post_id, 'entry_columns', $fields, array( 'cap' => 'view_entries_form_single' ) );
+			wpforms()->form->update_meta( $post_id, 'entry_columns', $fields, [ 'cap' => 'view_entries_form_single' ] );
+
+		}
+
+		// Re-initialize KSES filters for users who don't have 'unfiltered_html' capabilities.
+		if ( ! current_user_can( 'unfiltered_html' ) ) {
+			kses_init_filters();
 		}
 	}
 
 	/**
-	 * Watches for mass entry deletion and triggers if needed.
+	 * Entry deletion and trigger if needed.
 	 *
 	 * @since 1.4.0
+	 * @since 1.6.4 Updated for using like an AJAX-callback.
 	 */
 	public function process_delete() {
 
-		// Check for run switch.
-		if ( empty( $_GET['action'] ) || empty( $_GET['form_id'] ) || 'deleteall' !== $_GET['action'] ) {
-			return;
-		}
-
 		// Security check.
-		if ( empty( $_GET['_wpnonce'] ) || ! wp_verify_nonce( $_GET['_wpnonce'], 'wpforms_entry_list_deleteall' ) ) {
-			return;
+		if ( ! check_ajax_referer( 'wpforms-admin', 'nonce', false ) ) {
+			wp_send_json_error( esc_html__( 'Your session expired. Please reload the builder.', 'wpforms' ) );
 		}
 
-		wpforms()->entry->delete_by( 'form_id', absint( $_GET['form_id'] ) );
-		wpforms()->entry_meta->delete_by( 'form_id', absint( $_GET['form_id'] ) );
-		wpforms()->entry_fields->delete_by( 'form_id', absint( $_GET['form_id'] ) );
+		$form_id = $this->get_filtered_form_id();
+
+		// Check for run switch.
+		if ( ! $form_id ) {
+			wp_send_json_error( esc_html__( 'Something went wrong while performing this action.', 'wpforms' ) );
+		}
+
+		// Permission check.
+		if ( ! wpforms_current_user_can( 'delete_entries_form_single', $form_id ) ) {
+			wp_send_json_error( esc_html__( 'You do not have permission to perform this action.', 'wpforms' ) );
+		}
+
+		if ( $this->is_list_filtered() ) {
+			$this->process_filter_dates();
+			$this->process_filter_search();
+		}
+
+		// Check if entries filtered.
+		if ( ! empty( $this->filter['entry_id'] ) ) {
+			array_map( [ WPForms_Field_File_Upload::class, 'delete_uploaded_files_from_entry' ], $this->filter['entry_id'] );
+			$deleted = wpforms()->entry->delete_where_in( 'entry_id', $this->filter['entry_id'] );
+			wpforms()->entry_meta->delete_where_in( 'entry_id', $this->filter['entry_id'] );
+			wpforms()->entry_fields->delete_where_in( 'entry_id', $this->filter['entry_id'] );
+
+		} else {
+			$entries = wpforms()->entry->get_entries(
+				[
+					'select'  => 'entry_ids',
+					'form_id' => $form_id,
+				]
+			);
+
+			array_map( [ WPForms_Field_File_Upload::class, 'delete_uploaded_files_from_entry' ], array_column( $entries, 'entry_id' ) );
+			$deleted = wpforms()->entry->delete_by( 'form_id', $form_id );
+			wpforms()->entry_meta->delete_by( 'form_id', $form_id );
+			wpforms()->entry_fields->delete_by( 'form_id', $form_id );
+			$deleted = $deleted ? - 1 : 0;
+		}
+
+		$redirect_url = ! empty( $_GET['url'] ) ? add_query_arg( 'deleted', $deleted, esc_url_raw( wp_unslash( $_GET['url'] ) ) ) : '';
 
 		WPForms\Pro\Admin\DashboardWidget::clear_widget_cache();
 		WPForms\Pro\Admin\Entries\DefaultScreen::clear_widget_cache();
 
-		$this->alerts[] = array(
-			'type'    => 'success',
-			'message' => esc_html__( 'All entries for the currently selected form were successfully deleted.', 'wpforms' ),
-			'dismiss' => true,
-		);
+		wp_send_json_success( $redirect_url );
 	}
 
 	/**
-	 * Watches for filtering requests from a dates range selection.
+	 * Return validated information about search or FALSE.
+	 *
+	 * @since 1.6.3
+	 *
+	 * @return bool|array
+	 */
+	protected function get_filter_search_parts() {
+
+		if ( empty( $_GET['search'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			return false;
+		}
+
+		$expected = [ 'field', 'comparison', 'term' ];
+		$valid    = true;
+		foreach ( $expected as $field ) {
+			if ( ! isset( $_GET['search'][ $field ] ) || '' === $_GET['search'][ $field ] ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+				$valid = false;
+				break;
+			}
+		}
+
+		if ( ! $valid ) {
+			return false;
+		}
+
+		return array_map( 'sanitize_text_field', $_GET['search'] ); // phpcs:ignore
+	}
+
+	/**
+	 * Return HTML with information about the search filter.
+	 *
+	 * @since 1.6.3
+	 *
+	 * @return string
+	 */
+	protected function get_filter_search_html() {
+
+		$form_id = $this->get_filtered_form_id();
+		$data    = $this->get_filter_search_parts();
+
+		if ( $data ) {
+			$comparisons = [
+				'contains'     => __( 'contains', 'wpforms' ),
+				'contains_not' => __( 'does not contain', 'wpforms' ),
+				'is'           => __( 'is', 'wpforms' ),
+				'is_not'       => __( 'is not', 'wpforms' ),
+			];
+			$comparison  = isset( $comparisons[ $data['comparison'] ] ) ? $comparisons[ $data['comparison'] ] : $comparisons['contains'];
+			$field       = sanitize_text_field( $data['field'] );
+			$term        = sanitize_text_field( $data['term'] );
+
+			if ( is_numeric( $field ) && $form_id ) {
+				$meta = wpforms()->form->get_field( $form_id, $field );
+				if ( isset( $meta['label'] ) ) {
+					$field = $meta['label'];
+				}
+			} else {
+				$field = __( 'any form field', 'wpforms' );
+			}
+
+			$html = sprintf( /* translators: 1:  field name 2: operation 3: term */
+				__( 'where %1$s %2$s "%3$s"', 'wpforms' ),
+				'<em>' . $field . '</em>',
+				$comparison,
+				'<em>' . $term . '</em>'
+			);
+
+			return $html;
+		}
+
+		return '';
+	}
+
+	/**
+	 * Get filtered form ID.
+	 *
+	 * @since 1.6.3
+	 *
+	 * @return int
+	 */
+	private function get_filtered_form_id() {
+
+		return ! empty( $_GET['form_id'] ) ? absint( $_GET['form_id'] ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	}
+
+	/**
+	 * Get filtered date range.
+	 *
+	 * @since 1.6.3
+	 *
+	 * @return array
+	 */
+	private function get_filtered_dates() {
+
+		if ( empty( $_GET['date'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			return [];
+		}
+		$dates = (array) explode( ' - ', sanitize_text_field( wp_unslash( $_GET['date'] ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
+		return array_map( 'sanitize_text_field', $dates );
+	}
+
+	/**
+	 * Return an array with information (HTML and id) for each filter for this current view
+	 *
+	 * @since 1.6.3
+	 *
+	 * @return array
+	 */
+	public function get_filters_html() {
+
+		$filters = [
+			'.search-box' => $this->get_filter_search_html(),
+		];
+
+		$dates = $this->get_filtered_dates();
+
+		if ( $dates ) {
+			$dates = array_map(
+				function ( $date ) {
+
+					return date_i18n( 'M j, Y', strtotime( $date ) );
+				},
+				$dates
+			);
+
+			$html = '';
+
+			switch ( count( $dates ) ) {
+				case 1:
+					$html = sprintf( /* translators: %s: Date */
+						esc_html__( 'on %s', 'wpforms' ),
+						'<em>' . $dates[0] . '</em>'
+					);
+					break;
+				case 2:
+					$html = sprintf( /* translators: 1: Date 2: Date */
+						esc_html__( 'between %1$s and %2$s', 'wpforms' ),
+						'<em>' . $dates[0] . '</em>',
+						'<em>' . $dates[1] . '</em>'
+					);
+					break;
+			}
+
+			$filters['.wpforms-filter-date'] = $html;
+		}
+
+		return array_filter( $filters );
+	}
+
+	/**
+	 * Watch for filtering requests from a dates range selection.
 	 *
 	 * @since 1.4.4
 	 */
 	public function process_filter_dates() {
 
-		// Check for run switch. Security is handled on general form submission level (same as pagination).
-		if (
-			empty( $_GET['action'] ) ||
-			empty( $_GET['form_id'] ) ||
-			empty( $_GET['date'] )
-		) {
+		$form_id = $this->get_filtered_form_id();
+
+		if ( empty( $form_id ) ) {
 			return;
 		}
 
-		$dates = explode( ' - ', $_GET['date'] ); // phpcs:ignore
+		$dates = $this->get_filtered_dates();
 
 		if ( empty( $dates ) ) {
 			return;
 		}
 
-		// Prepare the params for the entries retrieval.
-		$args = array(
-			'select'  => 'entry_ids',
-			'number'  => 0,
-			'form_id' => (int) $_GET['form_id'] // phpcs:ignore
-		);
-
-		switch ( count( $dates ) ) {
-			case 1:
-				$args['date'] = sanitize_text_field( $_GET['date'] ); // phpcs:ignore
-				break;
-
-			case 2:
-				$args['date'] = array_map( 'sanitize_text_field', $dates );
-				break;
-
-			default:
-				return;
-		}
-
 		$this->prepare_entry_ids_for_get_entries_args(
-			wpforms()->entry->get_entries( $args )
+			wpforms()->entry->get_entries(
+				[
+					'select'  => 'entry_ids',
+					'number'  => 0,
+					'form_id' => $form_id,
+					'date'    => 1 === count( $dates ) ? $dates[0] : $dates,
+				]
+			)
 		);
 	}
 
 	/**
-	 * Watches for filtering requests from a search field.
+	 * Watch for filtering requests from a search field.
 	 *
 	 * @since 1.4.4
 	 */
 	public function process_filter_search() {
 
+		//phpcs:disable WordPress.Security.NonceVerification.Recommended
+		$form_id = $this->get_filtered_form_id();
 		// Check for run switch and that all data is present.
 		if (
-			empty( $_GET['action'] ) ||
-			empty( $_GET['form_id'] ) ||
+			! $form_id ||
 			! isset( $_GET['search'] ) ||
 			(
 				! isset( $_GET['search']['term'] ) ||
@@ -417,9 +619,9 @@ class WPForms_Entries_List {
 		}
 
 		// Prepare the data.
-		$term       = sanitize_text_field( $_GET['search']['term'] );
-		$field      = is_numeric( $_GET['search']['field'] ) ? (int) $_GET['search']['field'] : sanitize_text_field( $_GET['search']['field'] );
-		$comparison = in_array( $_GET['search']['comparison'], array( 'contains', 'contains_not', 'is', 'is_not' ), true ) ? sanitize_text_field( $_GET['search']['comparison'] ) : 'contains';
+		$term       = sanitize_text_field( wp_unslash( $_GET['search']['term'] ) );
+		$field      = sanitize_text_field( wp_unslash( $_GET['search']['field'] ) ); // We must use as a string for the work field with id equal 0.
+		$comparison = in_array( $_GET['search']['comparison'], array( 'contains', 'contains_not', 'is', 'is_not' ), true ) ? sanitize_text_field( wp_unslash( $_GET['search']['comparison'] ) ) : 'contains';
 		$args       = array();
 
 		/*
@@ -433,7 +635,7 @@ class WPForms_Entries_List {
 
 			$args['select']        = 'entry_ids';
 			$args['number']        = -1;
-			$args['form_id']       = (int) $_GET['form_id'];
+			$args['form_id']       = $form_id;
 			$args['value']         = $term;
 			$args['value_compare'] = $comparison;
 
@@ -449,6 +651,7 @@ class WPForms_Entries_List {
 		$this->prepare_entry_ids_for_get_entries_args(
 			wpforms()->entry_fields->get_fields( $args )
 		);
+		//phpcs:enable WordPress.Security.NonceVerification.Recommended
 	}
 
 	/**
@@ -470,7 +673,7 @@ class WPForms_Entries_List {
 
 		$entry_ids = array_unique( $entry_ids );
 
-		if ( empty( $this->filter['entry_id'] ) ) {
+		if ( ! isset( $this->filter['entry_id'] ) ) {
 			$this->filter = array(
 				'entry_id' => $entry_ids,
 			);
@@ -538,7 +741,8 @@ class WPForms_Entries_List {
 			);
 
 		} else {
-			$this->form_id = ! empty( $_GET['form_id'] ) ? absint( $_GET['form_id'] ) : apply_filters( 'wpforms_entry_list_default_form_id', absint( $this->forms[0]->ID ) );
+			$form_id       = $this->get_filtered_form_id();
+			$this->form_id = $form_id ? $form_id : apply_filters( 'wpforms_entry_list_default_form_id', absint( $this->forms[0]->ID ) );
 			$this->form    = wpforms()->form->get( $this->form_id, array( 'cap' => 'view_entries_form_single' ) );
 		}
 	}
@@ -596,15 +800,57 @@ class WPForms_Entries_List {
 
 			<div class="wpforms-admin-content">
 
-				<?php do_action( 'wpforms_entry_list_title', $form_data, $this ); ?>
+			<?php
 
-				<form id="wpforms-entries-table" method="get"
-				      action="<?php echo esc_url( admin_url( 'admin.php?page=wpforms-entries' ) ); ?>"
-				      <?php echo ( ! $this->is_list_filtered() && isset( $last_entry->entry_id ) ) ? 'data-last-entry-id="' . absint( $last_entry->entry_id ) . '"' : ''; ?>>
+			if ( empty( $this->entries->items ) && ! isset( $_GET['search'] ) && ! isset( $_GET['date'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
-					<input type="hidden" name="page" value="wpforms-entries"/>
-					<input type="hidden" name="view" value="list"/>
-					<input type="hidden" name="form_id" value="<?php echo esc_attr( $this->form_id ); ?>"/>
+				// Output no entries screen.
+				echo wpforms_render( 'admin/empty-states/no-entries' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+
+			} else {
+
+				do_action( 'wpforms_entry_list_title', $form_data, $this );
+			?>
+
+				<form id="wpforms-entries-table" method="GET"
+					action="<?php echo esc_url( admin_url( 'admin.php?page=wpforms-entries' ) ); ?>"
+					<?php echo ( ! $this->is_list_filtered() && isset( $last_entry->entry_id ) ) ? 'data-last-entry-id="' . absint( $last_entry->entry_id ) . '"' : ''; ?> <?php printf( 'data-filtered-count="%d"', absint( $this->entries->counts['total'] ) ); ?>>
+
+					<?php if ( $this->get_filters_html() ) : ?>
+
+						<div id="wpforms-reset-filter">
+							<?php
+							echo wp_kses(
+								sprintf( /* translators: %s - number of entries found. */
+									_n(
+										'Found <strong>%s entry</strong>',
+										'Found <strong>%s entries</strong>',
+										absint( count( $this->entries->items ) ),
+										'wpforms'
+									),
+									absint( $this->entries->counts['total'] )
+								),
+								[
+									'strong' => [],
+								]
+							);
+							?>
+
+							<?php foreach ( $this->get_filters_html() as $id => $html ) : ?>
+								<?php
+								echo wp_kses(
+									$html,
+									[ 'em' => [] ]
+								);
+								?>
+								<i class="reset fa fa-times-circle" data-scope="<?php echo esc_attr( $id ); ?>"></i>
+							<?php endforeach; ?>
+						</div>
+					<?php endif ?>
+
+					<input type="hidden" name="page" value="wpforms-entries" />
+					<input type="hidden" name="view" value="list" />
+					<input type="hidden" name="form_id" value="<?php echo absint( $this->form_id ); ?>" />
 
 					<?php $this->entries->views(); ?>
 
@@ -613,6 +859,8 @@ class WPForms_Entries_List {
 					<?php $this->entries->display(); ?>
 
 				</form>
+
+			<?php } ?>
 
 			</div>
 
@@ -651,6 +899,7 @@ class WPForms_Entries_List {
 					?>
 				</p>
 				<select name="fields[]" multiple>
+					<option value="" placeholder><?php esc_html_e( 'Select columns&hellip;', 'wpforms' ); ?></option>
 					<?php
 					/*
 					 * Display first those that were already saved.
@@ -671,7 +920,7 @@ class WPForms_Entries_List {
 									if ( empty( $form_data['fields'][ $id ] ) ) {
 										continue 2;
 									}
-									$name = ! empty( $form_data['fields'][ $id ]['label'] ) ? wp_strip_all_tags( $form_data['fields'][ $id ]['label'] ) : esc_html__( 'Field', 'wpforms' );
+									$name = isset( $form_data['fields'][ $id ]['label'] ) && ! wpforms_is_empty_string( trim( $form_data['fields'][ $id ]['label'] ) ) ? wp_strip_all_tags( $form_data['fields'][ $id ]['label'] ) : sprintf( /* translators: %d - field ID. */ __( 'Field #%d', 'wpforms' ), absint( $id ) );
 							}
 
 							printf( '<option value="%d" selected>%s</option>', absint( $id ), esc_html( $name ) );
@@ -707,7 +956,7 @@ class WPForms_Entries_List {
 							}
 
 							if ( ! in_array( $field['type'], WPForms_Entries_Table::get_columns_form_disallowed_fields(), true ) ) {
-								$name = ! empty( $field['label'] ) ? wp_strip_all_tags( $field['label'] ) : esc_html__( 'Field', 'wpforms' );
+								$name = isset( $field['label'] ) && ! wpforms_is_empty_string( trim( $field['label'] ) ) ? wp_strip_all_tags( $field['label'] ) : sprintf( /* translators: %d - field ID. */ __( 'Field #%d', 'wpforms' ), absint( $id ) );
 								printf( '<option value="%d">%s</option>', (int) $id, esc_html( $name ) );
 							}
 						}
@@ -775,15 +1024,7 @@ class WPForms_Entries_List {
 		);
 
 		// Delete all entries.
-		$delete_url = wp_nonce_url(
-			add_query_arg(
-				array(
-					'action' => 'deleteall',
-				),
-				$base
-			),
-			'wpforms_entry_list_deleteall'
-		);
+		$delete_url = wp_nonce_url( $base, 'bulk-entries' );
 		?>
 
 		<div class="form-details wpforms-clear">
@@ -825,7 +1066,7 @@ class WPForms_Entries_List {
 
 				<a href="<?php echo esc_url( $export_url ); ?>" class="form-details-actions-export">
 					<span class="dashicons dashicons-migrate"></span>
-					<?php echo $this->is_list_filtered() ? esc_html__( 'Export Filtered (CSV)', 'wpforms' ) : esc_html__( 'Export All (CSV)', 'wpforms' ); ?>
+					<?php echo $this->is_list_filtered() ? esc_html__( 'Export Filtered', 'wpforms' ) : esc_html__( 'Export All', 'wpforms' ); ?>
 				</a>
 
 				<a href="<?php echo esc_url( $read_url ); ?>" class="form-details-actions-read">
@@ -963,6 +1204,30 @@ class WPForms_Entries_List {
 		$response['wpforms_new_entries_notification'] = esc_html( sprintf( _n( 'See %d new entry', 'See %d new entries', $entries_count, 'wpforms' ), $entries_count ) );
 
 		return $response;
+	}
+
+	/**
+	 * Localize needed strings.
+	 *
+	 * @since 1.6.3
+	 *
+	 * @param array $strings JS strings.
+	 *
+	 * @return mixed
+	 */
+	public function js_strings( $strings ) {
+
+		$strings['lang_code']    = sanitize_key( wpforms_get_language_code() );
+		$strings['default_date'] = [];
+		$dates                   = $this->get_filtered_dates();
+		if ( $dates ) {
+			if ( count( $dates ) === 1 ) {
+				$dates[1] = $dates[0];
+			}
+			$strings['default_date'] = [ sanitize_text_field( $dates[0] ), sanitize_text_field( $dates[1] ) ];
+		}
+
+		return $strings;
 	}
 }
 

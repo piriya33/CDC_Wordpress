@@ -1,53 +1,51 @@
 <?php
 /**
- *  Plugin loader
+* Plugin Name: 			Custom Login Page Customizer
+* Plugin URI: 			https://loginpress.pro/?utm_source=login-customizer-lite&utm_medium=plugin-url-link
+* Description: 			Custom Login Customizer plugin allows you to easily customize your login page straight from your WordPress Customizer! Awesome, right?
+* Version: 				2.1.2
+* Requires at least: 	5.0
+* Requires PHP:      	5.6
+* Author: 				Hardeep Asrani
+* Author URI: 			https://loginpress.pro/?utm_source=login-customizer-lite&utm_medium=author-url-link
+* WordPress Available:  yes
+* Requires License:     no
+* License: 				GPLv2+
+* Text Domain: 			login-customizer
+* Domain Path: 			/resources/languages
+*
+* @package 			LoginCustomizer
+* @author 			WPBrigade
+* @copyright 		Copyright (c) 2021, WPBrigade
+* @link 			https://loginpress.pro/
+* @license			https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+*/
+
+namespace LoginCustomizer;
+
+defined( 'ABSPATH' ) || exit;
+
+include_once 'autoload.php';
+
+use LoginCustomizer\Plugin;
+
+/**
+ * Wrapper for the plugin instance.
  *
- * @package LOGINCUST
- * @author HardeepAsrani
- * @since 1.0.0
+ * @since  2.2.0
+ * @access public
+ * @return void
  */
+function plugin() {
+	
+	static $instance = null;
 
-/**
- * Plugin Name: Custom Login Page Customizer
- * Plugin URI: http://wordpress.org/plugins/login-customizer/
- * Description: Custom Login Customizer plugin allows you to easily customize your login page straight from your WordPress Customizer! Awesome, right?
- * Author: Hardeep Asrani
- * Author URI:  http://www.hardeepasrani.com/
- * Version: 2.0.1
- * WordPress Available:  yes
- * Requires License:    no
- */
+	if ( is_null( $instance ) ) {
+		$instance = new Plugin( __DIR__, plugin_dir_url( __FILE__ ) );
+	}
 
-define( 'LOGINCUST_VERSION', '2.0.1' );
-define( 'LOGINCUST_FREE_PATH', plugin_dir_path( __FILE__ ) );
-define( 'LOGINCUST_FREE_URL', plugin_dir_url( __FILE__ ) );
-
-require_once( LOGINCUST_FREE_PATH . 'setup.php' );
-require_once( LOGINCUST_FREE_PATH . 'inc/include-page-template.php' );
-require_once( LOGINCUST_FREE_PATH . 'inc/customizer/customizer.php' );
-
-/**
- * Add link to Login Customizer in Appearances menu
- */
-function logincust_admin_link() {
-
-	// Get global submenu
-	global $submenu;
-
-	// Generate the redirect url.
-	$options = get_option( 'login_customizer_settings', array() );
-
-	$url = add_query_arg(
-		array(
-			'autofocus[panel]' => 'logincust_panel',
-			'url' => rawurlencode( get_permalink( $options['page'] ) ),
-		),
-		admin_url( 'customize.php' )
-	);
-
-	// Add Login Customizer as a menu item
-	$submenu['themes.php'][] = array( 'Login Customizer', 'manage_options', $url, 'login-customizer' );
-
+	return $instance;
 }
 
-add_action( 'admin_menu', 'logincust_admin_link' );
+# Boot the plugin.
+plugin();

@@ -91,11 +91,24 @@ var tribe = typeof tribe === "object" ? tribe : {}; tribe["tickets"] = tribe["ti
 
 "use strict";
 
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, "g", function() { return /* reexport */ io["i" /* take */]; });
+__webpack_require__.d(__webpack_exports__, "e", function() { return /* reexport */ io["g" /* put */]; });
+__webpack_require__.d(__webpack_exports__, "a", function() { return /* reexport */ io["b" /* all */]; });
+__webpack_require__.d(__webpack_exports__, "b", function() { return /* reexport */ io["d" /* call */]; });
+__webpack_require__.d(__webpack_exports__, "d", function() { return /* reexport */ io["f" /* fork */]; });
+__webpack_require__.d(__webpack_exports__, "c", function() { return /* reexport */ io["e" /* cancel */]; });
+__webpack_require__.d(__webpack_exports__, "f", function() { return /* reexport */ io["h" /* select */]; });
+__webpack_require__.d(__webpack_exports__, "h", function() { return /* reexport */ takeEvery; });
+__webpack_require__.d(__webpack_exports__, "i", function() { return /* reexport */ takeLatest; });
+
+// UNUSED EXPORTS: takem, race, apply, cps, spawn, join, actionChannel, cancelled, flush, getContext, setContext, throttle
+
 // EXTERNAL MODULE: ./node_modules/redux-saga/es/internal/io.js
 var io = __webpack_require__(17);
 
 // EXTERNAL MODULE: ./node_modules/redux-saga/es/internal/sagaHelpers/index.js + 4 modules
-var sagaHelpers = __webpack_require__(58);
+var sagaHelpers = __webpack_require__(59);
 
 // CONCATENATED MODULE: ./node_modules/redux-saga/es/internal/io-helpers.js
 
@@ -125,27 +138,6 @@ function throttle(ms, pattern, worker) {
   return io["f" /* fork */].apply(undefined, [sagaHelpers["c" /* throttleHelper */], ms, pattern, worker].concat(args));
 }
 // CONCATENATED MODULE: ./node_modules/redux-saga/es/effects.js
-/* concated harmony reexport take */__webpack_require__.d(__webpack_exports__, "g", function() { return io["i" /* take */]; });
-/* unused concated harmony import takem */
-/* concated harmony reexport put */__webpack_require__.d(__webpack_exports__, "e", function() { return io["g" /* put */]; });
-/* concated harmony reexport all */__webpack_require__.d(__webpack_exports__, "a", function() { return io["b" /* all */]; });
-/* unused concated harmony import race */
-/* concated harmony reexport call */__webpack_require__.d(__webpack_exports__, "b", function() { return io["d" /* call */]; });
-/* unused concated harmony import apply */
-/* unused concated harmony import cps */
-/* concated harmony reexport fork */__webpack_require__.d(__webpack_exports__, "d", function() { return io["f" /* fork */]; });
-/* unused concated harmony import spawn */
-/* unused concated harmony import join */
-/* concated harmony reexport cancel */__webpack_require__.d(__webpack_exports__, "c", function() { return io["e" /* cancel */]; });
-/* concated harmony reexport select */__webpack_require__.d(__webpack_exports__, "f", function() { return io["h" /* select */]; });
-/* unused concated harmony import actionChannel */
-/* unused concated harmony import cancelled */
-/* unused concated harmony import flush */
-/* unused concated harmony import getContext */
-/* unused concated harmony import setContext */
-/* concated harmony reexport takeEvery */__webpack_require__.d(__webpack_exports__, "h", function() { return takeEvery; });
-/* concated harmony reexport takeLatest */__webpack_require__.d(__webpack_exports__, "i", function() { return takeLatest; });
-/* unused concated harmony import throttle */
 
 
 
@@ -176,6 +168,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SET_TICKET_DESCRIPTION", function() { return SET_TICKET_DESCRIPTION; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SET_TICKET_PRICE", function() { return SET_TICKET_PRICE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SET_TICKET_SKU", function() { return SET_TICKET_SKU; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SET_TICKET_IAC_SETTING", function() { return SET_TICKET_IAC_SETTING; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SET_TICKET_START_DATE", function() { return SET_TICKET_START_DATE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SET_TICKET_START_DATE_INPUT", function() { return SET_TICKET_START_DATE_INPUT; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SET_TICKET_START_DATE_MOMENT", function() { return SET_TICKET_START_DATE_MOMENT; });
@@ -192,6 +185,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SET_TICKET_TEMP_DESCRIPTION", function() { return SET_TICKET_TEMP_DESCRIPTION; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SET_TICKET_TEMP_PRICE", function() { return SET_TICKET_TEMP_PRICE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SET_TICKET_TEMP_SKU", function() { return SET_TICKET_TEMP_SKU; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SET_TICKET_TEMP_IAC_SETTING", function() { return SET_TICKET_TEMP_IAC_SETTING; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SET_TICKET_TEMP_START_DATE", function() { return SET_TICKET_TEMP_START_DATE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SET_TICKET_TEMP_START_DATE_INPUT", function() { return SET_TICKET_TEMP_START_DATE_INPUT; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SET_TICKET_TEMP_START_DATE_MOMENT", function() { return SET_TICKET_TEMP_START_DATE_MOMENT; });
@@ -269,6 +263,7 @@ var SET_TICKET_TITLE = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_
 var SET_TICKET_DESCRIPTION = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_DESCRIPTION';
 var SET_TICKET_PRICE = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_PRICE';
 var SET_TICKET_SKU = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_SKU';
+var SET_TICKET_IAC_SETTING = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_IAC_SETTING';
 var SET_TICKET_START_DATE = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_START_DATE';
 var SET_TICKET_START_DATE_INPUT = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_START_DATE_INPUT';
 var SET_TICKET_START_DATE_MOMENT = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_START_DATE_MOMENT';
@@ -286,6 +281,7 @@ var SET_TICKET_TEMP_TITLE = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MO
 var SET_TICKET_TEMP_DESCRIPTION = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_TEMP_DESCRIPTION';
 var SET_TICKET_TEMP_PRICE = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_TEMP_PRICE';
 var SET_TICKET_TEMP_SKU = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_TEMP_SKU';
+var SET_TICKET_TEMP_IAC_SETTING = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_TEMP_IAC_SETTING';
 var SET_TICKET_TEMP_START_DATE = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_TEMP_START_DATE';
 var SET_TICKET_TEMP_START_DATE_INPUT = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_TEMP_START_DATE_INPUT';
 var SET_TICKET_TEMP_START_DATE_MOMENT = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_TEMP_START_DATE_MOMENT';
@@ -340,6 +336,3753 @@ module.exports = tribe.common.utils;
 
 /***/ }),
 /* 4 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, "b", function() { return /* reexport */ constants; });
+__webpack_require__.d(__webpack_exports__, "d", function() { return /* reexport */ options_namespaceObject; });
+__webpack_require__.d(__webpack_exports__, "g", function() { return /* reexport */ types; });
+__webpack_require__.d(__webpack_exports__, "a", function() { return /* reexport */ actions; });
+__webpack_require__.d(__webpack_exports__, "f", function() { return /* reexport */ selectors_namespaceObject; });
+__webpack_require__.d(__webpack_exports__, "e", function() { return /* reexport */ watchers; });
+
+// UNUSED EXPORTS: utils
+
+// NAMESPACE OBJECT: ./src/modules/data/blocks/ticket/options.js
+var options_namespaceObject = {};
+__webpack_require__.r(options_namespaceObject);
+__webpack_require__.d(options_namespaceObject, "CAPACITY_TYPE_OPTIONS", function() { return CAPACITY_TYPE_OPTIONS; });
+
+// NAMESPACE OBJECT: ./src/modules/data/blocks/ticket/selectors.js
+var selectors_namespaceObject = {};
+__webpack_require__.r(selectors_namespaceObject);
+__webpack_require__.d(selectors_namespaceObject, "getState", function() { return getState; });
+__webpack_require__.d(selectors_namespaceObject, "getBlock", function() { return getBlock; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketsIsSelected", function() { return getTicketsIsSelected; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketsIsSettingsOpen", function() { return getTicketsIsSettingsOpen; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketsIsSettingsLoading", function() { return getTicketsIsSettingsLoading; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketsProvider", function() { return getTicketsProvider; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketsSharedCapacity", function() { return getTicketsSharedCapacity; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketsSharedCapacityInt", function() { return getTicketsSharedCapacityInt; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketsTempSharedCapacity", function() { return getTicketsTempSharedCapacity; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketsTempSharedCapacityInt", function() { return getTicketsTempSharedCapacityInt; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketsHeaderImage", function() { return getTicketsHeaderImage; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketsHeaderImageId", function() { return getTicketsHeaderImageId; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketsHeaderImageSrc", function() { return getTicketsHeaderImageSrc; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketsHeaderImageAlt", function() { return getTicketsHeaderImageAlt; });
+__webpack_require__.d(selectors_namespaceObject, "getTickets", function() { return getTickets; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketsAllClientIds", function() { return getTicketsAllClientIds; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketsByClientId", function() { return getTicketsByClientId; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketsArray", function() { return getTicketsArray; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketsCount", function() { return getTicketsCount; });
+__webpack_require__.d(selectors_namespaceObject, "hasTickets", function() { return hasTickets; });
+__webpack_require__.d(selectors_namespaceObject, "hasCreatedTickets", function() { return selectors_hasCreatedTickets; });
+__webpack_require__.d(selectors_namespaceObject, "getIndependentTickets", function() { return getIndependentTickets; });
+__webpack_require__.d(selectors_namespaceObject, "getSharedTickets", function() { return getSharedTickets; });
+__webpack_require__.d(selectors_namespaceObject, "getSharedTicketsCount", function() { return getSharedTicketsCount; });
+__webpack_require__.d(selectors_namespaceObject, "getUnlimitedTickets", function() { return getUnlimitedTickets; });
+__webpack_require__.d(selectors_namespaceObject, "hasATicketSelected", function() { return hasATicketSelected; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketsIdsInBlocks", function() { return getTicketsIdsInBlocks; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketClientId", function() { return getTicketClientId; });
+__webpack_require__.d(selectors_namespaceObject, "getTicket", function() { return getTicket; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketSold", function() { return getTicketSold; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketAvailable", function() { return getTicketAvailable; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketId", function() { return getTicketId; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketCurrencySymbol", function() { return getTicketCurrencySymbol; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketCurrencyPosition", function() { return getTicketCurrencyPosition; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketProvider", function() { return getTicketProvider; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketHasAttendeeInfoFields", function() { return getTicketHasAttendeeInfoFields; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketIsLoading", function() { return getTicketIsLoading; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketIsModalOpen", function() { return getTicketIsModalOpen; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketHasBeenCreated", function() { return getTicketHasBeenCreated; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketHasChanges", function() { return getTicketHasChanges; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketHasDurationError", function() { return getTicketHasDurationError; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketIsSelected", function() { return getTicketIsSelected; });
+__webpack_require__.d(selectors_namespaceObject, "isTicketDisabled", function() { return isTicketDisabled; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketDetails", function() { return getTicketDetails; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketTitle", function() { return getTicketTitle; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketDescription", function() { return getTicketDescription; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketPrice", function() { return getTicketPrice; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketSku", function() { return getTicketSku; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketIACSetting", function() { return getTicketIACSetting; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketStartDate", function() { return getTicketStartDate; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketStartDateInput", function() { return getTicketStartDateInput; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketStartDateMoment", function() { return getTicketStartDateMoment; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketEndDate", function() { return getTicketEndDate; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketEndDateInput", function() { return getTicketEndDateInput; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketEndDateMoment", function() { return getTicketEndDateMoment; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketStartTime", function() { return getTicketStartTime; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketStartTimeNoSeconds", function() { return getTicketStartTimeNoSeconds; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketEndTime", function() { return getTicketEndTime; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketEndTimeNoSeconds", function() { return getTicketEndTimeNoSeconds; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketStartTimeInput", function() { return getTicketStartTimeInput; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketEndTimeInput", function() { return getTicketEndTimeInput; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketCapacityType", function() { return getTicketCapacityType; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketCapacity", function() { return getTicketCapacity; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketCapacityInt", function() { return getTicketCapacityInt; });
+__webpack_require__.d(selectors_namespaceObject, "isUnlimitedTicket", function() { return isUnlimitedTicket; });
+__webpack_require__.d(selectors_namespaceObject, "isSharedTicket", function() { return isSharedTicket; });
+__webpack_require__.d(selectors_namespaceObject, "isIndependentTicket", function() { return isIndependentTicket; });
+__webpack_require__.d(selectors_namespaceObject, "isTicketPast", function() { return isTicketPast; });
+__webpack_require__.d(selectors_namespaceObject, "isTicketFuture", function() { return isTicketFuture; });
+__webpack_require__.d(selectors_namespaceObject, "isTicketOnSale", function() { return isTicketOnSale; });
+__webpack_require__.d(selectors_namespaceObject, "hasTicketOnSale", function() { return hasTicketOnSale; });
+__webpack_require__.d(selectors_namespaceObject, "allTicketsPast", function() { return allTicketsPast; });
+__webpack_require__.d(selectors_namespaceObject, "allTicketsFuture", function() { return allTicketsFuture; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketTempDetails", function() { return getTicketTempDetails; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketTempTitle", function() { return getTicketTempTitle; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketTempDescription", function() { return getTicketTempDescription; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketTempPrice", function() { return getTicketTempPrice; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketTempSku", function() { return getTicketTempSku; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketTempIACSetting", function() { return getTicketTempIACSetting; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketTempStartDate", function() { return getTicketTempStartDate; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketTempStartDateInput", function() { return getTicketTempStartDateInput; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketTempStartDateMoment", function() { return getTicketTempStartDateMoment; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketTempEndDate", function() { return getTicketTempEndDate; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketTempEndDateInput", function() { return getTicketTempEndDateInput; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketTempEndDateMoment", function() { return getTicketTempEndDateMoment; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketTempStartTime", function() { return getTicketTempStartTime; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketTempStartTimeNoSeconds", function() { return getTicketTempStartTimeNoSeconds; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketTempEndTime", function() { return getTicketTempEndTime; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketTempEndTimeNoSeconds", function() { return getTicketTempEndTimeNoSeconds; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketTempStartTimeInput", function() { return getTicketTempStartTimeInput; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketTempEndTimeInput", function() { return getTicketTempEndTimeInput; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketTempCapacityType", function() { return getTicketTempCapacityType; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketTempCapacity", function() { return getTicketTempCapacity; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketTempCapacityInt", function() { return getTicketTempCapacityInt; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketTempCapacityTypeOption", function() { return getTicketTempCapacityTypeOption; });
+__webpack_require__.d(selectors_namespaceObject, "isTempTitleValid", function() { return isTempTitleValid; });
+__webpack_require__.d(selectors_namespaceObject, "isTempCapacityValid", function() { return isTempCapacityValid; });
+__webpack_require__.d(selectors_namespaceObject, "isTempSharedCapacityValid", function() { return isTempSharedCapacityValid; });
+__webpack_require__.d(selectors_namespaceObject, "isZeroPriceValid", function() { return isZeroPriceValid; });
+__webpack_require__.d(selectors_namespaceObject, "isTicketValid", function() { return isTicketValid; });
+__webpack_require__.d(selectors_namespaceObject, "_getTotalCapacity", function() { return _getTotalCapacity; });
+__webpack_require__.d(selectors_namespaceObject, "_getTotalTempCapacity", function() { return _getTotalTempCapacity; });
+__webpack_require__.d(selectors_namespaceObject, "_getTotalSold", function() { return _getTotalSold; });
+__webpack_require__.d(selectors_namespaceObject, "_getTotalAvailable", function() { return _getTotalAvailable; });
+__webpack_require__.d(selectors_namespaceObject, "getIndependentTicketsCapacity", function() { return getIndependentTicketsCapacity; });
+__webpack_require__.d(selectors_namespaceObject, "getIndependentTicketsTempCapacity", function() { return getIndependentTicketsTempCapacity; });
+__webpack_require__.d(selectors_namespaceObject, "getIndependentTicketsSold", function() { return getIndependentTicketsSold; });
+__webpack_require__.d(selectors_namespaceObject, "getIndependentTicketsAvailable", function() { return getIndependentTicketsAvailable; });
+__webpack_require__.d(selectors_namespaceObject, "getSharedTicketsSold", function() { return getSharedTicketsSold; });
+__webpack_require__.d(selectors_namespaceObject, "getSharedTicketsAvailable", function() { return getSharedTicketsAvailable; });
+__webpack_require__.d(selectors_namespaceObject, "getIndependentAndSharedTicketsCapacity", function() { return getIndependentAndSharedTicketsCapacity; });
+__webpack_require__.d(selectors_namespaceObject, "getIndependentAndSharedTicketsTempCapacity", function() { return getIndependentAndSharedTicketsTempCapacity; });
+__webpack_require__.d(selectors_namespaceObject, "getIndependentAndSharedTicketsSold", function() { return getIndependentAndSharedTicketsSold; });
+__webpack_require__.d(selectors_namespaceObject, "getIndependentAndSharedTicketsAvailable", function() { return getIndependentAndSharedTicketsAvailable; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketProviders", function() { return getTicketProviders; });
+__webpack_require__.d(selectors_namespaceObject, "getDefaultTicketProvider", function() { return getDefaultTicketProvider; });
+__webpack_require__.d(selectors_namespaceObject, "hasValidTicketProvider", function() { return selectors_hasValidTicketProvider; });
+__webpack_require__.d(selectors_namespaceObject, "hasMultipleTicketProviders", function() { return hasMultipleTicketProviders; });
+__webpack_require__.d(selectors_namespaceObject, "hasTicketProviders", function() { return hasTicketProviders; });
+__webpack_require__.d(selectors_namespaceObject, "canCreateTickets", function() { return canCreateTickets; });
+
+// EXTERNAL MODULE: ./node_modules/babel-runtime/helpers/extends.js
+var helpers_extends = __webpack_require__(9);
+var extends_default = /*#__PURE__*/__webpack_require__.n(helpers_extends);
+
+// EXTERNAL MODULE: ./node_modules/babel-runtime/helpers/toConsumableArray.js
+var toConsumableArray = __webpack_require__(263);
+var toConsumableArray_default = /*#__PURE__*/__webpack_require__.n(toConsumableArray);
+
+// EXTERNAL MODULE: ./node_modules/babel-runtime/helpers/defineProperty.js
+var defineProperty = __webpack_require__(25);
+var defineProperty_default = /*#__PURE__*/__webpack_require__.n(defineProperty);
+
+// EXTERNAL MODULE: ./node_modules/redux/es/redux.js
+var redux = __webpack_require__(16);
+
+// EXTERNAL MODULE: ./node_modules/lodash/omit.js
+var omit = __webpack_require__(321);
+var omit_default = /*#__PURE__*/__webpack_require__.n(omit);
+
+// EXTERNAL MODULE: ./src/modules/data/blocks/ticket/types.js
+var types = __webpack_require__(2);
+
+// EXTERNAL MODULE: ./node_modules/babel-runtime/helpers/slicedToArray.js
+var slicedToArray = __webpack_require__(45);
+var slicedToArray_default = /*#__PURE__*/__webpack_require__.n(slicedToArray);
+
+// EXTERNAL MODULE: external "tribe.common.utils"
+var external_tribe_common_utils_ = __webpack_require__(3);
+
+// EXTERNAL MODULE: ./node_modules/lodash/trim.js
+var trim = __webpack_require__(88);
+var trim_default = /*#__PURE__*/__webpack_require__.n(trim);
+
+// EXTERNAL MODULE: ./node_modules/lodash/find.js
+var find = __webpack_require__(86);
+var find_default = /*#__PURE__*/__webpack_require__.n(find);
+
+// EXTERNAL MODULE: ./node_modules/reselect/lib/index.js
+var lib = __webpack_require__(6);
+
+// EXTERNAL MODULE: ./node_modules/moment/moment.js
+var moment = __webpack_require__(5);
+var moment_default = /*#__PURE__*/__webpack_require__.n(moment);
+
+// EXTERNAL MODULE: ./src/modules/data/blocks/ticket/constants.js
+var constants = __webpack_require__(23);
+
+// EXTERNAL MODULE: external {"var":"wp.i18n","root":["wp","i18n"]}
+var external_var_wp_i18n_root_wp_i18n_ = __webpack_require__(15);
+
+// CONCATENATED MODULE: ./src/modules/data/blocks/ticket/options.js
+/**
+ * External dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
+var CAPACITY_TYPE_OPTIONS = [{
+	label: Object(external_var_wp_i18n_root_wp_i18n_["__"])('Share capacity with other tickets', 'event-tickets'),
+	value: constants["TICKET_TYPES"][constants["SHARED"]]
+}, {
+	label: Object(external_var_wp_i18n_root_wp_i18n_["__"])('Set capacity for this ticket only', 'event-tickets'),
+	value: constants["TICKET_TYPES"][constants["INDEPENDENT"]]
+}, {
+	label: Object(external_var_wp_i18n_root_wp_i18n_["__"])('Unlimited', 'event-tickets'),
+	value: constants["TICKET_TYPES"][constants["UNLIMITED"]]
+}];
+// CONCATENATED MODULE: ./src/modules/data/blocks/ticket/selectors.js
+
+
+/**
+ * External dependencies
+ */
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+var UNLIMITED = constants["UNLIMITED"],
+    INDEPENDENT = constants["INDEPENDENT"],
+    SHARED = constants["SHARED"],
+    TICKET_TYPES = constants["TICKET_TYPES"];
+var ticketsConfig = external_tribe_common_utils_["globals"].tickets;
+
+
+var getState = function getState(state) {
+	return state;
+};
+var getBlock = function getBlock(state) {
+	return state.tickets.blocks.ticket;
+};
+
+//
+// ─── BLOCK SELECTORS ────────────────────────────────────────────────────────────
+//
+
+var getTicketsIsSelected = Object(lib["createSelector"])([getBlock], function (block) {
+	return block.isSelected;
+});
+
+var getTicketsIsSettingsOpen = Object(lib["createSelector"])([getBlock], function (block) {
+	return block.isSettingsOpen;
+});
+
+var getTicketsIsSettingsLoading = Object(lib["createSelector"])([getBlock], function (block) {
+	return block.isSettingsLoading;
+});
+
+var getTicketsProvider = Object(lib["createSelector"])([getBlock], function (block) {
+	return block.provider;
+});
+
+var getTicketsSharedCapacity = Object(lib["createSelector"])([getBlock], function (block) {
+	return block.sharedCapacity;
+});
+
+var getTicketsSharedCapacityInt = Object(lib["createSelector"])([getTicketsSharedCapacity], function (capacity) {
+	return parseInt(capacity, 10) || 0;
+});
+
+var getTicketsTempSharedCapacity = Object(lib["createSelector"])([getBlock], function (block) {
+	return block.tempSharedCapacity;
+});
+
+var getTicketsTempSharedCapacityInt = Object(lib["createSelector"])([getTicketsTempSharedCapacity], function (capacity) {
+	return parseInt(capacity, 10) || 0;
+});
+
+//
+// ─── HEADER IMAGE SELECTORS ─────────────────────────────────────────────────────
+//
+
+var getTicketsHeaderImage = Object(lib["createSelector"])([getBlock], function (block) {
+	return block.headerImage;
+});
+
+var getTicketsHeaderImageId = Object(lib["createSelector"])([getTicketsHeaderImage], function (headerImage) {
+	return headerImage.id;
+});
+
+var getTicketsHeaderImageSrc = Object(lib["createSelector"])([getTicketsHeaderImage], function (headerImage) {
+	return headerImage.src;
+});
+
+var getTicketsHeaderImageAlt = Object(lib["createSelector"])([getTicketsHeaderImage], function (headerImage) {
+	return headerImage.alt;
+});
+
+//
+// ─── TICKETS SELECTORS ──────────────────────────────────────────────────────────
+//
+
+var getTickets = Object(lib["createSelector"])([getBlock], function (block) {
+	return block.tickets;
+});
+
+var getTicketsAllClientIds = Object(lib["createSelector"])([getTickets], function (tickets) {
+	return tickets.allClientIds;
+});
+
+var getTicketsByClientId = Object(lib["createSelector"])([getTickets], function (tickets) {
+	return tickets.byClientId;
+});
+
+var getTicketsArray = Object(lib["createSelector"])([getTicketsAllClientIds, getTicketsByClientId], function (ids, tickets) {
+	return ids.map(function (id) {
+		return tickets[id];
+	});
+});
+
+var getTicketsCount = Object(lib["createSelector"])([getTicketsAllClientIds], function (allClientIds) {
+	return allClientIds.length;
+});
+
+var hasTickets = Object(lib["createSelector"])([getTicketsCount], function (count) {
+	return count > 0;
+});
+
+var selectors_hasCreatedTickets = Object(lib["createSelector"])([getTicketsArray], function (tickets) {
+	return tickets.reduce(function (hasCreated, ticket) {
+		return hasCreated || ticket.hasBeenCreated;
+	}, false);
+});
+
+var getIndependentTickets = Object(lib["createSelector"])([getTicketsArray], function (tickets) {
+	return tickets.filter(function (ticket) {
+		return ticket.details.capacityType === TICKET_TYPES[INDEPENDENT];
+	});
+});
+
+var getSharedTickets = Object(lib["createSelector"])([getTicketsArray], function (tickets) {
+	return tickets.filter(function (ticket) {
+		return ticket.details.capacityType === TICKET_TYPES[SHARED];
+	});
+});
+
+var getSharedTicketsCount = Object(lib["createSelector"])([getSharedTickets], function (tickets) {
+	return tickets.length;
+});
+
+var getUnlimitedTickets = Object(lib["createSelector"])([getTicketsArray], function (tickets) {
+	return tickets.filter(function (ticket) {
+		return ticket.details.capacityType === TICKET_TYPES[UNLIMITED];
+	});
+});
+
+var hasATicketSelected = Object(lib["createSelector"])([getTicketsArray], function (tickets) {
+	return tickets.reduce(function (selected, ticket) {
+		return selected || ticket.isSelected;
+	}, false);
+});
+
+var getTicketsIdsInBlocks = Object(lib["createSelector"])([getTicketsArray], function (tickets) {
+	return tickets.reduce(function (accumulator, ticket) {
+		if (ticket.ticketId !== 0) {
+			accumulator.push(ticket.ticketId);
+		}
+		return accumulator;
+	}, []);
+});
+
+//
+// ─── TICKET SELECTORS ───────────────────────────────────────────────────────────
+//
+
+var getTicketClientId = function getTicketClientId(state, ownProps) {
+	return ownProps.clientId;
+};
+
+var getTicket = Object(lib["createSelector"])([getTicketsByClientId, getTicketClientId], function (tickets, clientId) {
+	return tickets[clientId] || {};
+});
+
+var getTicketSold = Object(lib["createSelector"])([getTicket], function (ticket) {
+	return ticket.sold;
+});
+
+var getTicketAvailable = Object(lib["createSelector"])([getTicket], function (ticket) {
+	return ticket.available;
+});
+
+var getTicketId = Object(lib["createSelector"])([getTicket], function (ticket) {
+	return ticket.ticketId;
+});
+
+var getTicketCurrencySymbol = Object(lib["createSelector"])([getTicket], function (ticket) {
+	return ticket.currencySymbol;
+});
+
+var getTicketCurrencyPosition = Object(lib["createSelector"])([getTicket], function (ticket) {
+	return ticket.currencyPosition;
+});
+
+var getTicketProvider = Object(lib["createSelector"])([getTicket], function (ticket) {
+	return ticket.provider;
+});
+
+var getTicketHasAttendeeInfoFields = Object(lib["createSelector"])([getTicket], function (ticket) {
+	return ticket.hasAttendeeInfoFields;
+});
+
+var getTicketIsLoading = Object(lib["createSelector"])([getTicket], function (ticket) {
+	return ticket.isLoading;
+});
+
+var getTicketIsModalOpen = Object(lib["createSelector"])([getTicket], function (ticket) {
+	return ticket.isModalOpen;
+});
+
+var getTicketHasBeenCreated = Object(lib["createSelector"])([getTicket], function (ticket) {
+	return ticket.hasBeenCreated;
+});
+
+var getTicketHasChanges = Object(lib["createSelector"])([getTicket], function (ticket) {
+	return ticket.hasChanges;
+});
+
+var getTicketHasDurationError = Object(lib["createSelector"])([getTicket], function (ticket) {
+	return ticket.hasDurationError;
+});
+
+var getTicketIsSelected = Object(lib["createSelector"])([getTicket], function (ticket) {
+	return ticket.isSelected;
+});
+
+var isTicketDisabled = Object(lib["createSelector"])([hasATicketSelected, getTicketIsSelected, getTicketIsLoading, getTicketsIsSettingsOpen], function (hasSelected, isSelected, isLoading, isSettingsOpen) {
+	return hasSelected && !isSelected || isLoading || isSettingsOpen;
+});
+
+//
+// ─── TICKET DETAILS SELECTORS ───────────────────────────────────────────────────
+//
+
+var getTicketDetails = Object(lib["createSelector"])([getTicket], function (ticket) {
+	return ticket.details || {};
+});
+
+var getTicketTitle = Object(lib["createSelector"])([getTicketDetails], function (details) {
+	return details.title;
+});
+
+var getTicketDescription = Object(lib["createSelector"])([getTicketDetails], function (details) {
+	return details.description;
+});
+
+var getTicketPrice = Object(lib["createSelector"])([getTicketDetails], function (details) {
+	return details.price;
+});
+
+var getTicketSku = Object(lib["createSelector"])([getTicketDetails], function (details) {
+	return details.sku;
+});
+
+var getTicketIACSetting = Object(lib["createSelector"])([getTicketDetails], function (details) {
+	return details.iac;
+});
+
+var getTicketStartDate = Object(lib["createSelector"])([getTicketDetails], function (details) {
+	return details.startDate;
+});
+
+var getTicketStartDateInput = Object(lib["createSelector"])([getTicketDetails], function (details) {
+	return details.startDateInput;
+});
+
+var getTicketStartDateMoment = Object(lib["createSelector"])([getTicketDetails], function (details) {
+	return details.startDateMoment;
+});
+
+var getTicketEndDate = Object(lib["createSelector"])([getTicketDetails], function (details) {
+	return details.endDate;
+});
+
+var getTicketEndDateInput = Object(lib["createSelector"])([getTicketDetails], function (details) {
+	return details.endDateInput;
+});
+
+var getTicketEndDateMoment = Object(lib["createSelector"])([getTicketDetails], function (details) {
+	return details.endDateMoment;
+});
+
+var getTicketStartTime = Object(lib["createSelector"])([getTicketDetails], function (details) {
+	return details.startTime || '';
+});
+
+var getTicketStartTimeNoSeconds = Object(lib["createSelector"])([getTicketStartTime], function (startTime) {
+	return startTime.slice(0, -3);
+});
+
+var getTicketEndTime = Object(lib["createSelector"])([getTicketDetails], function (details) {
+	return details.endTime || '';
+});
+
+var getTicketEndTimeNoSeconds = Object(lib["createSelector"])([getTicketEndTime], function (endTime) {
+	return endTime.slice(0, -3);
+});
+
+var getTicketStartTimeInput = Object(lib["createSelector"])([getTicketDetails], function (details) {
+	return details.startTimeInput;
+});
+
+var getTicketEndTimeInput = Object(lib["createSelector"])([getTicketDetails], function (details) {
+	return details.endTimeInput;
+});
+
+var getTicketCapacityType = Object(lib["createSelector"])([getTicketDetails], function (details) {
+	return details.capacityType;
+});
+
+var getTicketCapacity = Object(lib["createSelector"])([getTicketDetails], function (details) {
+	return details.capacity;
+});
+
+var getTicketCapacityInt = Object(lib["createSelector"])([getTicketCapacity], function (capacity) {
+	return parseInt(capacity, 10) || 0;
+});
+
+var isUnlimitedTicket = Object(lib["createSelector"])([getTicketDetails], function (details) {
+	return details.capacityType === TICKET_TYPES[UNLIMITED];
+});
+
+var isSharedTicket = Object(lib["createSelector"])([getTicketDetails], function (details) {
+	return details.capacityType === TICKET_TYPES[SHARED];
+});
+
+var isIndependentTicket = Object(lib["createSelector"])([getTicketDetails], function (details) {
+	return details.capacityType === TICKET_TYPES[INDEPENDENT];
+});
+
+var isTicketPast = Object(lib["createSelector"])([getTicketEndDateMoment], function (endDate) {
+	return moment_default()().isAfter(endDate);
+});
+
+var isTicketFuture = Object(lib["createSelector"])([getTicketStartDateMoment], function (startDate) {
+	return moment_default()().isBefore(startDate);
+});
+
+var isTicketOnSale = Object(lib["createSelector"])([getTicketHasBeenCreated, isTicketPast, isTicketFuture], function (hasBeenCreated, isPast, isFuture) {
+	return hasBeenCreated && !isPast && !isFuture;
+});
+
+var hasTicketOnSale = Object(lib["createSelector"])([getTicketsAllClientIds, getState], function (allClientIds, state) {
+	return allClientIds.reduce(function (onSale, clientId) {
+		return onSale || isTicketOnSale(state, { clientId: clientId });
+	}, false);
+});
+
+var allTicketsPast = Object(lib["createSelector"])([getTicketsAllClientIds, getState], function (allClientIds, state) {
+	return allClientIds.reduce(function (isPast, clientId) {
+		var props = { clientId: clientId };
+		return getTicketHasBeenCreated(state, props) ? isPast && isTicketPast(state, props) : isPast;
+	}, true);
+});
+
+var allTicketsFuture = Object(lib["createSelector"])([getTicketsAllClientIds, getState], function (allClientIds, state) {
+	return allClientIds.reduce(function (isFuture, clientId) {
+		var props = { clientId: clientId };
+		return getTicketHasBeenCreated(state, props) ? isFuture && isTicketFuture(state, props) : isFuture;
+	}, true);
+});
+
+//
+// ─── TICKET TEMP DETAILS SELECTORS ──────────────────────────────────────────────
+//
+
+var getTicketTempDetails = Object(lib["createSelector"])([getTicket], function (ticket) {
+	return ticket.tempDetails || {};
+});
+
+var getTicketTempTitle = Object(lib["createSelector"])([getTicketTempDetails], function (tempDetails) {
+	return tempDetails.title;
+});
+
+var getTicketTempDescription = Object(lib["createSelector"])([getTicketTempDetails], function (tempDetails) {
+	return tempDetails.description;
+});
+
+var getTicketTempPrice = Object(lib["createSelector"])([getTicketTempDetails], function (tempDetails) {
+	return tempDetails.price;
+});
+
+var getTicketTempSku = Object(lib["createSelector"])([getTicketTempDetails], function (tempDetails) {
+	return tempDetails.sku;
+});
+
+var getTicketTempIACSetting = Object(lib["createSelector"])([getTicketTempDetails], function (tempDetails) {
+	return tempDetails.iac;
+});
+
+var getTicketTempStartDate = Object(lib["createSelector"])([getTicketTempDetails], function (tempDetails) {
+	return tempDetails.startDate;
+});
+
+var getTicketTempStartDateInput = Object(lib["createSelector"])([getTicketTempDetails], function (tempDetails) {
+	return tempDetails.startDateInput;
+});
+
+var getTicketTempStartDateMoment = Object(lib["createSelector"])([getTicketTempDetails], function (tempDetails) {
+	return tempDetails.startDateMoment;
+});
+
+var getTicketTempEndDate = Object(lib["createSelector"])([getTicketTempDetails], function (tempDetails) {
+	return tempDetails.endDate;
+});
+
+var getTicketTempEndDateInput = Object(lib["createSelector"])([getTicketTempDetails], function (tempDetails) {
+	return tempDetails.endDateInput;
+});
+
+var getTicketTempEndDateMoment = Object(lib["createSelector"])([getTicketTempDetails], function (tempDetails) {
+	return tempDetails.endDateMoment;
+});
+
+var getTicketTempStartTime = Object(lib["createSelector"])([getTicketTempDetails], function (tempDetails) {
+	return tempDetails.startTime || '';
+});
+
+var getTicketTempStartTimeNoSeconds = Object(lib["createSelector"])([getTicketTempStartTime], function (startTime) {
+	return startTime.slice(0, -3);
+});
+
+var getTicketTempEndTime = Object(lib["createSelector"])([getTicketTempDetails], function (tempDetails) {
+	return tempDetails.endTime || '';
+});
+
+var getTicketTempEndTimeNoSeconds = Object(lib["createSelector"])([getTicketTempEndTime], function (endTime) {
+	return endTime.slice(0, -3);
+});
+
+var getTicketTempStartTimeInput = Object(lib["createSelector"])([getTicketTempDetails], function (tempDetails) {
+	return tempDetails.startTimeInput;
+});
+
+var getTicketTempEndTimeInput = Object(lib["createSelector"])([getTicketTempDetails], function (tempDetails) {
+	return tempDetails.endTimeInput;
+});
+
+var getTicketTempCapacityType = Object(lib["createSelector"])([getTicketTempDetails], function (tempDetails) {
+	return tempDetails.capacityType;
+});
+
+var getTicketTempCapacity = Object(lib["createSelector"])([getTicketTempDetails], function (tempDetails) {
+	return tempDetails.capacity;
+});
+
+var getTicketTempCapacityInt = Object(lib["createSelector"])([getTicketTempCapacity], function (capacity) {
+	return parseInt(capacity, 10) || 0;
+});
+
+var getTicketTempCapacityTypeOption = Object(lib["createSelector"])([getTicketTempCapacityType], function (capacityType) {
+	return find_default()(CAPACITY_TYPE_OPTIONS, { value: capacityType }) || {};
+});
+
+var isTempTitleValid = Object(lib["createSelector"])([getTicketTempTitle], function (title) {
+	return trim_default()(title) !== '';
+});
+
+var isTempCapacityValid = Object(lib["createSelector"])([getTicketTempCapacity], function (capacity) {
+	return trim_default()(capacity) !== '' && !isNaN(capacity);
+});
+
+var isTempSharedCapacityValid = Object(lib["createSelector"])([getTicketsTempSharedCapacity], function (capacity) {
+	return trim_default()(capacity) !== '' && !isNaN(capacity);
+});
+
+var isZeroPriceValid = Object(lib["createSelector"])([getTicketTempPrice, getTicketsProvider], function (price, provider) {
+	return 0 < parseInt(price, 10) || provider !== constants["TC_CLASS"];
+});
+
+var isTicketValid = Object(lib["createSelector"])([getTicketTempCapacityType, isTempTitleValid, isTempCapacityValid, isTempSharedCapacityValid, isZeroPriceValid], function (capacityType, titleValid, capacityValid, sharedCapacityValid, zeroPriceValid) {
+	if (capacityType === TICKET_TYPES[UNLIMITED]) {
+		return titleValid && zeroPriceValid;
+	} else if (capacityType === TICKET_TYPES[SHARED]) {
+		return titleValid && sharedCapacityValid && zeroPriceValid;
+	}
+	return titleValid && capacityValid && zeroPriceValid;
+});
+
+//
+// ─── AMOUNT REDUCERS ────────────────────────────────────────────────────────────
+//
+
+var _getTotalCapacity = function _getTotalCapacity(tickets) {
+	return tickets.reduce(function (total, ticket) {
+		var capacity = parseInt(ticket.details.capacity, 10) || 0;
+		return total + capacity;
+	}, 0);
+};
+
+var _getTotalTempCapacity = function _getTotalTempCapacity(tickets) {
+	return tickets.reduce(function (total, ticket) {
+		var tempCapacity = parseInt(ticket.tempDetails.capacity, 10) || 0;
+		return total + tempCapacity;
+	}, 0);
+};
+
+var _getTotalSold = function _getTotalSold(tickets) {
+	return tickets.reduce(function (total, ticket) {
+		var sold = parseInt(ticket.sold, 10) || 0;
+		return total + sold;
+	}, 0);
+};
+
+var _getTotalAvailable = function _getTotalAvailable(tickets) {
+	return tickets.reduce(function (total, ticket) {
+		var available = parseInt(ticket.available, 10) || 0;
+		return total + available;
+	}, 0);
+};
+
+var getIndependentTicketsCapacity = Object(lib["createSelector"])(getIndependentTickets, _getTotalCapacity);
+var getIndependentTicketsTempCapacity = Object(lib["createSelector"])(getIndependentTickets, _getTotalTempCapacity);
+var getIndependentTicketsSold = Object(lib["createSelector"])(getIndependentTickets, _getTotalSold);
+var getIndependentTicketsAvailable = Object(lib["createSelector"])(getIndependentTickets, _getTotalAvailable);
+
+var getSharedTicketsSold = Object(lib["createSelector"])(getSharedTickets, _getTotalSold);
+var getSharedTicketsAvailable = Object(lib["createSelector"])([getTicketsSharedCapacityInt, getSharedTicketsSold], function (sharedCapacity, sharedSold) {
+	return Math.max(sharedCapacity - sharedSold, 0);
+});
+
+var getIndependentAndSharedTicketsCapacity = Object(lib["createSelector"])([getIndependentTicketsCapacity, getTicketsSharedCapacityInt], function (independentCapacity, sharedCapacity) {
+	return independentCapacity + sharedCapacity;
+});
+var getIndependentAndSharedTicketsTempCapacity = Object(lib["createSelector"])([getIndependentTicketsTempCapacity, getTicketsTempSharedCapacityInt], function (independentTempCapacity, tempSharedCapacity) {
+	return independentTempCapacity + tempSharedCapacity;
+});
+var getIndependentAndSharedTicketsSold = Object(lib["createSelector"])([getIndependentTicketsSold, getSharedTicketsSold], function (independentSold, sharedSold) {
+	return independentSold + sharedSold;
+});
+var getIndependentAndSharedTicketsAvailable = Object(lib["createSelector"])([getIndependentTicketsAvailable, getSharedTicketsAvailable], function (independentAvailable, sharedAvailable) {
+	return independentAvailable + sharedAvailable;
+});
+
+//
+// ─── MISC SELECTORS ─────────────────────────────────────────────────────────────
+//
+
+var getTicketProviders = function getTicketProviders() {
+	var tickets = ticketsConfig();
+	return tickets.providers || [];
+};
+
+var getDefaultTicketProvider = function getDefaultTicketProvider() {
+	var tickets = ticketsConfig();
+	return tickets.default_provider || '';
+};
+
+var selectors_hasValidTicketProvider = function hasValidTicketProvider() {
+	var provider = getDefaultTicketProvider();
+	return provider !== '' && provider !== constants["RSVP_CLASS"];
+};
+
+var hasMultipleTicketProviders = Object(lib["createSelector"])([getTicketProviders], function (providers) {
+	return providers.length > 1;
+});
+
+var hasTicketProviders = Object(lib["createSelector"])([getTicketProviders], function (providers) {
+	return providers.length > 0;
+});
+
+var canCreateTickets = Object(lib["createSelector"])([hasTicketProviders, selectors_hasValidTicketProvider], function (providers, validDefaultProvider) {
+	return providers && validDefaultProvider;
+});
+// CONCATENATED MODULE: ./src/modules/data/blocks/ticket/utils.js
+
+/**
+ * External dependencies
+ */
+
+
+var settings = external_tribe_common_utils_["globals"].settings,
+    priceSettings = external_tribe_common_utils_["globals"].priceSettings,
+    utils_ticketsConfig = external_tribe_common_utils_["globals"].tickets;
+/**
+ * Internal dependencies
+ */
+
+
+
+/**
+ * Get currency symbol by provider
+ */
+var utils_getProviderCurrency = function getProviderCurrency(provider) {
+	var tickets = utils_ticketsConfig();
+	var providers = getTicketProviders();
+
+	// if we don't get the provider, return the default one
+	if ('' === provider) {
+		return tickets.default_currency;
+	}
+
+	var _providers$filter = providers.filter(function (el) {
+		return el.class === provider;
+	}),
+	    _providers$filter2 = slicedToArray_default()(_providers$filter, 1),
+	    result = _providers$filter2[0];
+
+	return result ? result.currency : tickets.default_currency;
+};
+
+/**
+ * Get the default provider's currency symbol
+ */
+var utils_getDefaultProviderCurrency = function getDefaultProviderCurrency() {
+	return utils_getProviderCurrency(getDefaultTicketProvider());
+};
+
+/**
+ * Get currency position
+ */
+var utils_getDefaultCurrencyPosition = function getDefaultCurrencyPosition() {
+	var position = external_tribe_common_utils_["string"].isTruthy(settings() && settings().reverseCurrencyPosition) ? 'suffix' : 'prefix';
+
+	return priceSettings() && priceSettings().defaultCurrencyPosition ? priceSettings().defaultCurrencyPosition : position;
+};
+// CONCATENATED MODULE: ./src/modules/data/blocks/ticket/reducers/tickets/ticket/details.js
+
+/**
+ * External dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+var details_datePickerFormat = external_tribe_common_utils_["globals"].tecDateSettings().datepickerFormat;
+var currentMoment = moment_default()();
+var bufferDuration = external_tribe_common_utils_["globals"].tickets().end_sale_buffer_duration ? external_tribe_common_utils_["globals"].tickets().end_sale_buffer_duration : 2;
+var bufferYears = external_tribe_common_utils_["globals"].tickets().end_sale_buffer_years ? external_tribe_common_utils_["globals"].tickets().end_sale_buffer_years : 1;
+var details_endMoment = currentMoment.clone().add(bufferDuration, 'hours').add(bufferYears, 'years');
+
+var details_startDateInput = details_datePickerFormat ? currentMoment.format(external_tribe_common_utils_["moment"].toFormat(details_datePickerFormat)) : external_tribe_common_utils_["moment"].toDate(currentMoment);
+var details_endDateInput = details_datePickerFormat ? details_endMoment.format(external_tribe_common_utils_["moment"].toFormat(details_datePickerFormat)) : external_tribe_common_utils_["moment"].toDate(details_endMoment);
+var details_iac = external_tribe_common_utils_["globals"].iacVars().iacDefault ? external_tribe_common_utils_["globals"].iacVars().iacDefault : 'none';
+
+var DEFAULT_STATE = {
+	title: '',
+	description: '',
+	price: '',
+	sku: '',
+	iac: details_iac,
+	startDate: external_tribe_common_utils_["moment"].toDatabaseDate(currentMoment),
+	startDateInput: details_startDateInput,
+	startDateMoment: currentMoment,
+	endDate: external_tribe_common_utils_["moment"].toDatabaseDate(details_endMoment),
+	endDateInput: details_endDateInput,
+	endDateMoment: details_endMoment,
+	startTime: external_tribe_common_utils_["moment"].toDatabaseTime(currentMoment),
+	endTime: external_tribe_common_utils_["moment"].toDatabaseTime(details_endMoment),
+	startTimeInput: external_tribe_common_utils_["moment"].toTime(currentMoment),
+	endTimeInput: external_tribe_common_utils_["moment"].toTime(details_endMoment),
+	capacityType: constants["TICKET_TYPES"][constants["UNLIMITED"]],
+	capacity: ''
+};
+
+/* harmony default export */ var ticket_details = (function () {
+	var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_STATE;
+	var action = arguments[1];
+
+	switch (action.type) {
+		case types["SET_TICKET_TITLE"]:
+			return extends_default()({}, state, {
+				title: action.payload.title
+			});
+		case types["SET_TICKET_DESCRIPTION"]:
+			return extends_default()({}, state, {
+				description: action.payload.description
+			});
+		case types["SET_TICKET_PRICE"]:
+			return extends_default()({}, state, {
+				price: action.payload.price
+			});
+		case types["SET_TICKET_SKU"]:
+			return extends_default()({}, state, {
+				sku: action.payload.sku
+			});
+		case types["SET_TICKET_IAC_SETTING"]:
+			return extends_default()({}, state, {
+				iac: action.payload.iac
+			});
+		case types["SET_TICKET_START_DATE"]:
+			return extends_default()({}, state, {
+				startDate: action.payload.startDate
+			});
+		case types["SET_TICKET_START_DATE_INPUT"]:
+			return extends_default()({}, state, {
+				startDateInput: action.payload.startDateInput
+			});
+		case types["SET_TICKET_START_DATE_MOMENT"]:
+			return extends_default()({}, state, {
+				startDateMoment: action.payload.startDateMoment
+			});
+		case types["SET_TICKET_END_DATE"]:
+			return extends_default()({}, state, {
+				endDate: action.payload.endDate
+			});
+		case types["SET_TICKET_END_DATE_INPUT"]:
+			return extends_default()({}, state, {
+				endDateInput: action.payload.endDateInput
+			});
+		case types["SET_TICKET_END_DATE_MOMENT"]:
+			return extends_default()({}, state, {
+				endDateMoment: action.payload.endDateMoment
+			});
+		case types["SET_TICKET_START_TIME"]:
+			return extends_default()({}, state, {
+				startTime: action.payload.startTime
+			});
+		case types["SET_TICKET_END_TIME"]:
+			return extends_default()({}, state, {
+				endTime: action.payload.endTime
+			});
+		case types["SET_TICKET_START_TIME_INPUT"]:
+			return extends_default()({}, state, {
+				startTimeInput: action.payload.startTimeInput
+			});
+		case types["SET_TICKET_END_TIME_INPUT"]:
+			return extends_default()({}, state, {
+				endTimeInput: action.payload.endTimeInput
+			});
+		case types["SET_TICKET_CAPACITY_TYPE"]:
+			return extends_default()({}, state, {
+				capacityType: action.payload.capacityType
+			});
+		case types["SET_TICKET_CAPACITY"]:
+			return extends_default()({}, state, {
+				capacity: action.payload.capacity
+			});
+		default:
+			return state;
+	}
+});
+// CONCATENATED MODULE: ./src/modules/data/blocks/ticket/reducers/tickets/ticket/temp-details.js
+
+/**
+ * External dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+var temp_details_datePickerFormat = external_tribe_common_utils_["globals"].tecDateSettings().datepickerFormat;
+var temp_details_currentMoment = moment_default()();
+var temp_details_bufferDuration = external_tribe_common_utils_["globals"].tickets().end_sale_buffer_duration ? external_tribe_common_utils_["globals"].tickets().end_sale_buffer_duration : 2;
+var temp_details_bufferYears = external_tribe_common_utils_["globals"].tickets().end_sale_buffer_years ? external_tribe_common_utils_["globals"].tickets().end_sale_buffer_years : 1;
+var temp_details_endMoment = temp_details_currentMoment.clone().add(temp_details_bufferDuration, 'hours').add(temp_details_bufferYears, 'years');
+
+var temp_details_startDateInput = temp_details_datePickerFormat ? temp_details_currentMoment.format(external_tribe_common_utils_["moment"].toFormat(temp_details_datePickerFormat)) : external_tribe_common_utils_["moment"].toDate(temp_details_currentMoment);
+var temp_details_endDateInput = temp_details_datePickerFormat ? temp_details_endMoment.format(external_tribe_common_utils_["moment"].toFormat(temp_details_datePickerFormat)) : external_tribe_common_utils_["moment"].toDate(temp_details_endMoment);
+var temp_details_iac = external_tribe_common_utils_["globals"].iacVars().iacDefault ? external_tribe_common_utils_["globals"].iacVars().iacDefault : 'none';
+
+var temp_details_DEFAULT_STATE = {
+	title: '',
+	description: '',
+	price: '',
+	sku: '',
+	iac: temp_details_iac,
+	startDate: external_tribe_common_utils_["moment"].toDatabaseDate(temp_details_currentMoment),
+	startDateInput: temp_details_startDateInput,
+	startDateMoment: temp_details_currentMoment,
+	endDate: external_tribe_common_utils_["moment"].toDatabaseDate(temp_details_endMoment),
+	endDateInput: temp_details_endDateInput,
+	endDateMoment: temp_details_endMoment,
+	startTime: external_tribe_common_utils_["moment"].toDatabaseTime(temp_details_currentMoment),
+	endTime: external_tribe_common_utils_["moment"].toDatabaseTime(temp_details_endMoment),
+	startTimeInput: external_tribe_common_utils_["moment"].toTime(temp_details_currentMoment),
+	endTimeInput: external_tribe_common_utils_["moment"].toTime(temp_details_endMoment),
+	capacityType: constants["TICKET_TYPES"][constants["UNLIMITED"]],
+	capacity: ''
+};
+
+/* harmony default export */ var temp_details = (function () {
+	var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : temp_details_DEFAULT_STATE;
+	var action = arguments[1];
+
+	switch (action.type) {
+		case types["SET_TICKET_TEMP_TITLE"]:
+			return extends_default()({}, state, {
+				title: action.payload.title
+			});
+		case types["SET_TICKET_TEMP_DESCRIPTION"]:
+			return extends_default()({}, state, {
+				description: action.payload.description
+			});
+		case types["SET_TICKET_TEMP_PRICE"]:
+			return extends_default()({}, state, {
+				price: action.payload.price
+			});
+		case types["SET_TICKET_TEMP_SKU"]:
+			return extends_default()({}, state, {
+				sku: action.payload.sku
+			});
+		case types["SET_TICKET_TEMP_IAC_SETTING"]:
+			return extends_default()({}, state, {
+				iac: action.payload.iac
+			});
+		case types["SET_TICKET_TEMP_START_DATE"]:
+			return extends_default()({}, state, {
+				startDate: action.payload.startDate
+			});
+		case types["SET_TICKET_TEMP_START_DATE_INPUT"]:
+			return extends_default()({}, state, {
+				startDateInput: action.payload.startDateInput
+			});
+		case types["SET_TICKET_TEMP_START_DATE_MOMENT"]:
+			return extends_default()({}, state, {
+				startDateMoment: action.payload.startDateMoment
+			});
+		case types["SET_TICKET_TEMP_END_DATE"]:
+			return extends_default()({}, state, {
+				endDate: action.payload.endDate
+			});
+		case types["SET_TICKET_TEMP_END_DATE_INPUT"]:
+			return extends_default()({}, state, {
+				endDateInput: action.payload.endDateInput
+			});
+		case types["SET_TICKET_TEMP_END_DATE_MOMENT"]:
+			return extends_default()({}, state, {
+				endDateMoment: action.payload.endDateMoment
+			});
+		case types["SET_TICKET_TEMP_START_TIME"]:
+			return extends_default()({}, state, {
+				startTime: action.payload.startTime
+			});
+		case types["SET_TICKET_TEMP_END_TIME"]:
+			return extends_default()({}, state, {
+				endTime: action.payload.endTime
+			});
+		case types["SET_TICKET_TEMP_START_TIME_INPUT"]:
+			return extends_default()({}, state, {
+				startTimeInput: action.payload.startTimeInput
+			});
+		case types["SET_TICKET_TEMP_END_TIME_INPUT"]:
+			return extends_default()({}, state, {
+				endTimeInput: action.payload.endTimeInput
+			});
+		case types["SET_TICKET_TEMP_CAPACITY_TYPE"]:
+			return extends_default()({}, state, {
+				capacityType: action.payload.capacityType
+			});
+		case types["SET_TICKET_TEMP_CAPACITY"]:
+			return extends_default()({}, state, {
+				capacity: action.payload.capacity
+			});
+		default:
+			return state;
+	}
+});
+// CONCATENATED MODULE: ./src/modules/data/blocks/ticket/reducers/tickets/ticket.js
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+
+var ticket_DEFAULT_STATE = {
+	details: DEFAULT_STATE,
+	tempDetails: temp_details_DEFAULT_STATE,
+	sold: 0,
+	available: 0,
+	ticketId: 0,
+	currencySymbol: utils_getDefaultProviderCurrency(),
+	currencyPosition: utils_getDefaultCurrencyPosition(),
+	provider: '',
+	hasAttendeeInfoFields: false,
+	isLoading: false,
+	isModalOpen: false,
+	hasBeenCreated: false,
+	hasChanges: false,
+	hasDurationError: false,
+	isSelected: false
+};
+
+/* harmony default export */ var tickets_ticket = (function () {
+	var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ticket_DEFAULT_STATE;
+	var action = arguments[1];
+
+	switch (action.type) {
+		case types["SET_TICKET_TITLE"]:
+		case types["SET_TICKET_DESCRIPTION"]:
+		case types["SET_TICKET_PRICE"]:
+		case types["SET_TICKET_SKU"]:
+		case types["SET_TICKET_IAC_SETTING"]:
+		case types["SET_TICKET_START_DATE"]:
+		case types["SET_TICKET_START_DATE_INPUT"]:
+		case types["SET_TICKET_START_DATE_MOMENT"]:
+		case types["SET_TICKET_END_DATE"]:
+		case types["SET_TICKET_END_DATE_INPUT"]:
+		case types["SET_TICKET_END_DATE_MOMENT"]:
+		case types["SET_TICKET_START_TIME"]:
+		case types["SET_TICKET_END_TIME"]:
+		case types["SET_TICKET_START_TIME_INPUT"]:
+		case types["SET_TICKET_END_TIME_INPUT"]:
+		case types["SET_TICKET_CAPACITY_TYPE"]:
+		case types["SET_TICKET_CAPACITY"]:
+			return extends_default()({}, state, {
+				details: ticket_details(state.details, action)
+			});
+		case types["SET_TICKET_TEMP_TITLE"]:
+		case types["SET_TICKET_TEMP_DESCRIPTION"]:
+		case types["SET_TICKET_TEMP_PRICE"]:
+		case types["SET_TICKET_TEMP_SKU"]:
+		case types["SET_TICKET_TEMP_IAC_SETTING"]:
+		case types["SET_TICKET_TEMP_START_DATE"]:
+		case types["SET_TICKET_TEMP_START_DATE_INPUT"]:
+		case types["SET_TICKET_TEMP_START_DATE_MOMENT"]:
+		case types["SET_TICKET_TEMP_END_DATE"]:
+		case types["SET_TICKET_TEMP_END_DATE_INPUT"]:
+		case types["SET_TICKET_TEMP_END_DATE_MOMENT"]:
+		case types["SET_TICKET_TEMP_START_TIME"]:
+		case types["SET_TICKET_TEMP_END_TIME"]:
+		case types["SET_TICKET_TEMP_START_TIME_INPUT"]:
+		case types["SET_TICKET_TEMP_END_TIME_INPUT"]:
+		case types["SET_TICKET_TEMP_CAPACITY_TYPE"]:
+		case types["SET_TICKET_TEMP_CAPACITY"]:
+			return extends_default()({}, state, {
+				tempDetails: temp_details(state.tempDetails, action)
+			});
+		case types["SET_TICKET_SOLD"]:
+			return extends_default()({}, state, {
+				sold: action.payload.sold
+			});
+		case types["SET_TICKET_AVAILABLE"]:
+			return extends_default()({}, state, {
+				available: action.payload.available
+			});
+		case types["SET_TICKET_ID"]:
+			return extends_default()({}, state, {
+				ticketId: action.payload.ticketId
+			});
+		case types["SET_TICKET_CURRENCY_SYMBOL"]:
+			return extends_default()({}, state, {
+				currencySymbol: action.payload.currencySymbol
+			});
+		case types["SET_TICKET_CURRENCY_POSITION"]:
+			return extends_default()({}, state, {
+				currencyPosition: action.payload.currencyPosition
+			});
+		case types["SET_TICKET_PROVIDER"]:
+			return extends_default()({}, state, {
+				provider: action.payload.provider
+			});
+		case types["SET_TICKET_HAS_ATTENDEE_INFO_FIELDS"]:
+			return extends_default()({}, state, {
+				hasAttendeeInfoFields: action.payload.hasAttendeeInfoFields
+			});
+		case types["SET_TICKET_IS_LOADING"]:
+			return extends_default()({}, state, {
+				isLoading: action.payload.isLoading
+			});
+		case types["SET_TICKET_IS_MODAL_OPEN"]:
+			return extends_default()({}, state, {
+				isModalOpen: action.payload.isModalOpen
+			});
+		case types["SET_TICKET_HAS_BEEN_CREATED"]:
+			return extends_default()({}, state, {
+				hasBeenCreated: action.payload.hasBeenCreated
+			});
+		case types["SET_TICKET_HAS_CHANGES"]:
+			return extends_default()({}, state, {
+				hasChanges: action.payload.hasChanges
+			});
+		case types["SET_TICKET_HAS_DURATION_ERROR"]:
+			return extends_default()({}, state, {
+				hasDurationError: action.payload.hasDurationError
+			});
+		case types["SET_TICKET_IS_SELECTED"]:
+			return extends_default()({}, state, {
+				isSelected: action.payload.isSelected
+			});
+		default:
+			return state;
+	}
+});
+// CONCATENATED MODULE: ./src/modules/data/blocks/ticket/reducers/tickets.js
+
+
+
+/**
+ * External dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+var tickets_byClientId = function byClientId() {
+	var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+	var action = arguments[1];
+
+	switch (action.type) {
+		case types["SET_TICKET_TITLE"]:
+		case types["SET_TICKET_DESCRIPTION"]:
+		case types["SET_TICKET_PRICE"]:
+		case types["SET_TICKET_SKU"]:
+		case types["SET_TICKET_IAC_SETTING"]:
+		case types["SET_TICKET_START_DATE"]:
+		case types["SET_TICKET_START_DATE_INPUT"]:
+		case types["SET_TICKET_START_DATE_MOMENT"]:
+		case types["SET_TICKET_END_DATE"]:
+		case types["SET_TICKET_END_DATE_INPUT"]:
+		case types["SET_TICKET_END_DATE_MOMENT"]:
+		case types["SET_TICKET_START_TIME"]:
+		case types["SET_TICKET_END_TIME"]:
+		case types["SET_TICKET_START_TIME_INPUT"]:
+		case types["SET_TICKET_END_TIME_INPUT"]:
+		case types["SET_TICKET_CAPACITY_TYPE"]:
+		case types["SET_TICKET_CAPACITY"]:
+		case types["SET_TICKET_TEMP_TITLE"]:
+		case types["SET_TICKET_TEMP_DESCRIPTION"]:
+		case types["SET_TICKET_TEMP_PRICE"]:
+		case types["SET_TICKET_TEMP_SKU"]:
+		case types["SET_TICKET_TEMP_IAC_SETTING"]:
+		case types["SET_TICKET_TEMP_START_DATE"]:
+		case types["SET_TICKET_TEMP_START_DATE_INPUT"]:
+		case types["SET_TICKET_TEMP_START_DATE_MOMENT"]:
+		case types["SET_TICKET_TEMP_END_DATE"]:
+		case types["SET_TICKET_TEMP_END_DATE_INPUT"]:
+		case types["SET_TICKET_TEMP_END_DATE_MOMENT"]:
+		case types["SET_TICKET_TEMP_START_TIME"]:
+		case types["SET_TICKET_TEMP_END_TIME"]:
+		case types["SET_TICKET_TEMP_START_TIME_INPUT"]:
+		case types["SET_TICKET_TEMP_END_TIME_INPUT"]:
+		case types["SET_TICKET_TEMP_CAPACITY_TYPE"]:
+		case types["SET_TICKET_TEMP_CAPACITY"]:
+		case types["SET_TICKET_SOLD"]:
+		case types["SET_TICKET_AVAILABLE"]:
+		case types["SET_TICKET_ID"]:
+		case types["SET_TICKET_CURRENCY_SYMBOL"]:
+		case types["SET_TICKET_CURRENCY_POSITION"]:
+		case types["SET_TICKET_PROVIDER"]:
+		case types["SET_TICKET_HAS_ATTENDEE_INFO_FIELDS"]:
+		case types["SET_TICKET_IS_LOADING"]:
+		case types["SET_TICKET_IS_MODAL_OPEN"]:
+		case types["SET_TICKET_HAS_BEEN_CREATED"]:
+		case types["SET_TICKET_HAS_CHANGES"]:
+		case types["SET_TICKET_HAS_DURATION_ERROR"]:
+		case types["SET_TICKET_IS_SELECTED"]:
+		case types["REGISTER_TICKET_BLOCK"]:
+			return extends_default()({}, state, defineProperty_default()({}, action.payload.clientId, tickets_ticket(state[action.payload.clientId], action)));
+		case types["REMOVE_TICKET_BLOCK"]:
+			return omit_default()(state, [action.payload.clientId]);
+		case types["REMOVE_TICKET_BLOCKS"]:
+			return {};
+		default:
+			return state;
+	}
+};
+
+var tickets_allClientIds = function allClientIds() {
+	var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+	var action = arguments[1];
+
+	switch (action.type) {
+		case types["REGISTER_TICKET_BLOCK"]:
+			return [].concat(toConsumableArray_default()(state), [action.payload.clientId]);
+		case types["REMOVE_TICKET_BLOCK"]:
+			return state.filter(function (clientId) {
+				return action.payload.clientId !== clientId;
+			});
+		case types["REMOVE_TICKET_BLOCKS"]:
+			return [];
+		default:
+			return state;
+	}
+};
+
+/* harmony default export */ var reducers_tickets = (Object(redux["b" /* combineReducers */])({
+	byClientId: tickets_byClientId,
+	allClientIds: tickets_allClientIds
+}));
+// EXTERNAL MODULE: ./src/modules/data/blocks/ticket/reducers/header-image.js
+var header_image = __webpack_require__(62);
+
+// CONCATENATED MODULE: ./src/modules/data/blocks/ticket/reducer.js
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+var reducer_DEFAULT_STATE = {
+	headerImage: header_image["a" /* DEFAULT_STATE */],
+	isSelected: false,
+	isSettingsOpen: false,
+	isSettingsLoading: false,
+	provider: '',
+	sharedCapacity: '',
+	tempSharedCapacity: '',
+	tickets: reducers_tickets(undefined, {})
+};
+
+/* harmony default export */ var reducer = (function () {
+	var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : reducer_DEFAULT_STATE;
+	var action = arguments[1];
+
+	switch (action.type) {
+		case types["SET_TICKETS_HEADER_IMAGE"]:
+			return extends_default()({}, state, {
+				headerImage: Object(header_image["b" /* default */])(state.headerImage, action)
+			});
+		case types["SET_TICKETS_IS_SELECTED"]:
+			return extends_default()({}, state, {
+				isSelected: action.payload.isSelected
+			});
+		case types["SET_TICKETS_IS_SETTINGS_OPEN"]:
+			return extends_default()({}, state, {
+				isSettingsOpen: action.payload.isSettingsOpen
+			});
+		case types["SET_TICKETS_IS_SETTINGS_LOADING"]:
+			return extends_default()({}, state, {
+				isSettingsLoading: action.payload.isSettingsLoading
+			});
+		case types["SET_TICKETS_PROVIDER"]:
+			return extends_default()({}, state, {
+				provider: action.payload.provider
+			});
+		case types["SET_TICKETS_SHARED_CAPACITY"]:
+			return extends_default()({}, state, {
+				sharedCapacity: action.payload.sharedCapacity
+			});
+		case types["SET_TICKETS_TEMP_SHARED_CAPACITY"]:
+			return extends_default()({}, state, {
+				tempSharedCapacity: action.payload.tempSharedCapacity
+			});
+		case types["SET_TICKET_TITLE"]:
+		case types["SET_TICKET_DESCRIPTION"]:
+		case types["SET_TICKET_PRICE"]:
+		case types["SET_TICKET_SKU"]:
+		case types["SET_TICKET_IAC_SETTING"]:
+		case types["SET_TICKET_START_DATE"]:
+		case types["SET_TICKET_START_DATE_INPUT"]:
+		case types["SET_TICKET_START_DATE_MOMENT"]:
+		case types["SET_TICKET_END_DATE"]:
+		case types["SET_TICKET_END_DATE_INPUT"]:
+		case types["SET_TICKET_END_DATE_MOMENT"]:
+		case types["SET_TICKET_START_TIME"]:
+		case types["SET_TICKET_END_TIME"]:
+		case types["SET_TICKET_START_TIME_INPUT"]:
+		case types["SET_TICKET_END_TIME_INPUT"]:
+		case types["SET_TICKET_CAPACITY_TYPE"]:
+		case types["SET_TICKET_CAPACITY"]:
+		case types["SET_TICKET_TEMP_TITLE"]:
+		case types["SET_TICKET_TEMP_DESCRIPTION"]:
+		case types["SET_TICKET_TEMP_PRICE"]:
+		case types["SET_TICKET_TEMP_SKU"]:
+		case types["SET_TICKET_TEMP_IAC_SETTING"]:
+		case types["SET_TICKET_TEMP_START_DATE"]:
+		case types["SET_TICKET_TEMP_START_DATE_INPUT"]:
+		case types["SET_TICKET_TEMP_START_DATE_MOMENT"]:
+		case types["SET_TICKET_TEMP_END_DATE"]:
+		case types["SET_TICKET_TEMP_END_DATE_INPUT"]:
+		case types["SET_TICKET_TEMP_END_DATE_MOMENT"]:
+		case types["SET_TICKET_TEMP_START_TIME"]:
+		case types["SET_TICKET_TEMP_END_TIME"]:
+		case types["SET_TICKET_TEMP_START_TIME_INPUT"]:
+		case types["SET_TICKET_TEMP_END_TIME_INPUT"]:
+		case types["SET_TICKET_TEMP_CAPACITY_TYPE"]:
+		case types["SET_TICKET_TEMP_CAPACITY"]:
+		case types["SET_TICKET_SOLD"]:
+		case types["SET_TICKET_AVAILABLE"]:
+		case types["SET_TICKET_ID"]:
+		case types["SET_TICKET_CURRENCY_SYMBOL"]:
+		case types["SET_TICKET_CURRENCY_POSITION"]:
+		case types["SET_TICKET_PROVIDER"]:
+		case types["SET_TICKET_HAS_ATTENDEE_INFO_FIELDS"]:
+		case types["SET_TICKET_IS_LOADING"]:
+		case types["SET_TICKET_IS_MODAL_OPEN"]:
+		case types["SET_TICKET_HAS_BEEN_CREATED"]:
+		case types["SET_TICKET_HAS_CHANGES"]:
+		case types["SET_TICKET_HAS_DURATION_ERROR"]:
+		case types["SET_TICKET_IS_SELECTED"]:
+		case types["REGISTER_TICKET_BLOCK"]:
+		case types["REMOVE_TICKET_BLOCK"]:
+		case types["REMOVE_TICKET_BLOCKS"]:
+			return extends_default()({}, state, {
+				tickets: reducers_tickets(state.tickets, action)
+			});
+		default:
+			return state;
+	}
+});
+// EXTERNAL MODULE: ./src/modules/data/blocks/ticket/actions.js
+var actions = __webpack_require__(10);
+
+// EXTERNAL MODULE: ./node_modules/babel-runtime/regenerator/index.js
+var regenerator = __webpack_require__(11);
+var regenerator_default = /*#__PURE__*/__webpack_require__.n(regenerator);
+
+// EXTERNAL MODULE: ./node_modules/lodash/includes.js
+var includes = __webpack_require__(112);
+var includes_default = /*#__PURE__*/__webpack_require__.n(includes);
+
+// EXTERNAL MODULE: ./node_modules/redux-saga/es/effects.js + 1 modules
+var effects = __webpack_require__(0);
+
+// EXTERNAL MODULE: external {"var":"wp.data","root":["wp","data"]}
+var external_var_wp_data_root_wp_data_ = __webpack_require__(18);
+
+// EXTERNAL MODULE: external {"var":"wp.blocks","root":["wp","blocks"]}
+var external_var_wp_blocks_root_wp_blocks_ = __webpack_require__(111);
+
+// EXTERNAL MODULE: ./src/modules/data/blocks/rsvp/actions.js
+var rsvp_actions = __webpack_require__(14);
+
+// EXTERNAL MODULE: ./src/modules/data/blocks/rsvp/reducers/header-image.js
+var reducers_header_image = __webpack_require__(60);
+
+// EXTERNAL MODULE: ./src/modules/data/utils.js
+var utils = __webpack_require__(8);
+
+// EXTERNAL MODULE: external "tribe.common.data"
+var external_tribe_common_data_ = __webpack_require__(35);
+
+// EXTERNAL MODULE: ./src/modules/data/shared/move/types.js
+var move_types = __webpack_require__(19);
+
+// EXTERNAL MODULE: ./src/modules/data/shared/move/selectors.js
+var selectors = __webpack_require__(29);
+
+// EXTERNAL MODULE: ./src/modules/data/shared/sagas.js
+var sagas = __webpack_require__(27);
+
+// CONCATENATED MODULE: ./src/modules/data/blocks/ticket/sagas.js
+
+
+
+
+
+
+var _marked = /*#__PURE__*/regenerator_default.a.mark(createMissingTicketBlocks),
+    _marked2 = /*#__PURE__*/regenerator_default.a.mark(setTicketsInitialState),
+    _marked3 = /*#__PURE__*/regenerator_default.a.mark(resetTicketsBlock),
+    _marked4 = /*#__PURE__*/regenerator_default.a.mark(setTicketInitialState),
+    _marked5 = /*#__PURE__*/regenerator_default.a.mark(setBodyDetails),
+    _marked6 = /*#__PURE__*/regenerator_default.a.mark(removeTicketBlock),
+    _marked7 = /*#__PURE__*/regenerator_default.a.mark(fetchTicket),
+    _marked8 = /*#__PURE__*/regenerator_default.a.mark(createNewTicket),
+    _marked9 = /*#__PURE__*/regenerator_default.a.mark(updateTicket),
+    _marked10 = /*#__PURE__*/regenerator_default.a.mark(deleteTicket),
+    _marked11 = /*#__PURE__*/regenerator_default.a.mark(fetchTicketsHeaderImage),
+    _marked12 = /*#__PURE__*/regenerator_default.a.mark(updateTicketsHeaderImage),
+    _marked13 = /*#__PURE__*/regenerator_default.a.mark(deleteTicketsHeaderImage),
+    _marked14 = /*#__PURE__*/regenerator_default.a.mark(setTicketDetails),
+    _marked15 = /*#__PURE__*/regenerator_default.a.mark(setTicketTempDetails),
+    _marked16 = /*#__PURE__*/regenerator_default.a.mark(saveTicketWithPostSave),
+    _marked17 = /*#__PURE__*/regenerator_default.a.mark(syncTicketsSaleEndWithEventStart),
+    _marked18 = /*#__PURE__*/regenerator_default.a.mark(syncTicketSaleEndWithEventStart),
+    _marked19 = /*#__PURE__*/regenerator_default.a.mark(handleEventStartDateChanges),
+    _marked20 = /*#__PURE__*/regenerator_default.a.mark(handleTicketDurationError),
+    _marked21 = /*#__PURE__*/regenerator_default.a.mark(handleTicketStartDate),
+    _marked22 = /*#__PURE__*/regenerator_default.a.mark(handleTicketEndDate),
+    _marked23 = /*#__PURE__*/regenerator_default.a.mark(handleTicketStartTime),
+    _marked24 = /*#__PURE__*/regenerator_default.a.mark(handleTicketStartTimeInput),
+    _marked25 = /*#__PURE__*/regenerator_default.a.mark(handleTicketEndTime),
+    _marked26 = /*#__PURE__*/regenerator_default.a.mark(handleTicketEndTimeInput),
+    _marked27 = /*#__PURE__*/regenerator_default.a.mark(handleTicketMove),
+    _marked28 = /*#__PURE__*/regenerator_default.a.mark(handler),
+    _marked29 = /*#__PURE__*/regenerator_default.a.mark(watchers);
+
+/**
+ * External Dependencies
+ */
+
+
+
+/**
+ * Wordpress dependencies
+ */
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var sagas_UNLIMITED = constants["UNLIMITED"],
+    sagas_SHARED = constants["SHARED"],
+    sagas_TICKET_TYPES = constants["TICKET_TYPES"],
+    PROVIDER_CLASS_TO_PROVIDER_MAPPING = constants["PROVIDER_CLASS_TO_PROVIDER_MAPPING"];
+var sagas_ticketsConfig = external_tribe_common_utils_["globals"].tickets,
+    restNonce = external_tribe_common_utils_["globals"].restNonce,
+    tecDateSettings = external_tribe_common_utils_["globals"].tecDateSettings;
+var wpREST = external_tribe_common_utils_["api"].wpREST;
+
+
+function createMissingTicketBlocks(tickets) {
+	var _ref, insertBlock, _ref2, getBlockCount, getBlocks, ticketsBlocks;
+
+	return regenerator_default.a.wrap(function createMissingTicketBlocks$(_context) {
+		while (1) {
+			switch (_context.prev = _context.next) {
+				case 0:
+					_context.next = 2;
+					return Object(effects["b" /* call */])(external_var_wp_data_root_wp_data_["dispatch"], 'core/editor');
+
+				case 2:
+					_ref = _context.sent;
+					insertBlock = _ref.insertBlock;
+					_context.next = 6;
+					return Object(effects["b" /* call */])(external_var_wp_data_root_wp_data_["select"], 'core/editor');
+
+				case 6:
+					_ref2 = _context.sent;
+					getBlockCount = _ref2.getBlockCount;
+					getBlocks = _ref2.getBlocks;
+					_context.next = 11;
+					return Object(effects["b" /* call */])([getBlocks(), 'filter'], function (block) {
+						return block.name === 'tribe/tickets';
+					});
+
+				case 11:
+					ticketsBlocks = _context.sent;
+
+
+					ticketsBlocks.forEach(function (_ref3) {
+						var clientId = _ref3.clientId;
+
+						tickets.forEach(function (ticketId) {
+							var attributes = {
+								hasBeenCreated: true,
+								ticketId: ticketId
+							};
+							var nextChildPosition = getBlockCount(clientId);
+							var block = Object(external_var_wp_blocks_root_wp_blocks_["createBlock"])('tribe/tickets-item', attributes);
+							insertBlock(block, nextChildPosition, clientId, false);
+						});
+					});
+
+				case 13:
+				case 'end':
+					return _context.stop();
+			}
+		}
+	}, _marked, this);
+}
+
+function setTicketsInitialState(action) {
+	var get, header, sharedCapacity, ticketsList, ticketsInBlock, ticketsDiff, provider, defaultProvider;
+	return regenerator_default.a.wrap(function setTicketsInitialState$(_context2) {
+		while (1) {
+			switch (_context2.prev = _context2.next) {
+				case 0:
+					get = action.payload.get;
+					header = parseInt(get('header', header_image["a" /* DEFAULT_STATE */].id), 10);
+					sharedCapacity = get('sharedCapacity');
+					ticketsList = get('tickets', []);
+					_context2.next = 6;
+					return Object(effects["f" /* select */])(getTicketsIdsInBlocks);
+
+				case 6:
+					ticketsInBlock = _context2.sent;
+
+					// Get only the IDs of the tickets that are not in the block list already
+					ticketsDiff = ticketsList.filter(function (item) {
+						return !includes_default()(ticketsInBlock, item);
+					});
+
+					if (!(ticketsDiff.length >= 1)) {
+						_context2.next = 11;
+						break;
+					}
+
+					_context2.next = 11;
+					return Object(effects["b" /* call */])(createMissingTicketBlocks, ticketsDiff);
+
+				case 11:
+					if (!(sharedCapacity !== '0')) {
+						_context2.next = 14;
+						break;
+					}
+
+					_context2.next = 14;
+					return Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setTicketsSharedCapacity"](sharedCapacity)), Object(effects["e" /* put */])(actions["setTicketsTempSharedCapacity"](sharedCapacity))]);
+
+				case 14:
+					if (!(!isNaN(header) && header !== 0)) {
+						_context2.next = 17;
+						break;
+					}
+
+					_context2.next = 17;
+					return Object(effects["e" /* put */])(actions["fetchTicketsHeaderImage"](header));
+
+				case 17:
+					provider = get('provider', reducer_DEFAULT_STATE.provider);
+
+					if (!(provider === constants["RSVP_CLASS"] || !provider)) {
+						_context2.next = 23;
+						break;
+					}
+
+					_context2.next = 21;
+					return Object(effects["f" /* select */])(getDefaultTicketProvider);
+
+				case 21:
+					defaultProvider = _context2.sent;
+
+					provider = defaultProvider === constants["RSVP_CLASS"] ? '' : defaultProvider;
+
+				case 23:
+					_context2.next = 25;
+					return Object(effects["e" /* put */])(actions["setTicketsProvider"](provider));
+
+				case 25:
+				case 'end':
+					return _context2.stop();
+			}
+		}
+	}, _marked2, this);
+}
+
+function resetTicketsBlock() {
+	var hasCreatedTickets, currentMeta, newMeta;
+	return regenerator_default.a.wrap(function resetTicketsBlock$(_context3) {
+		while (1) {
+			switch (_context3.prev = _context3.next) {
+				case 0:
+					_context3.next = 2;
+					return Object(effects["f" /* select */])(selectors_hasCreatedTickets);
+
+				case 2:
+					hasCreatedTickets = _context3.sent;
+					_context3.next = 5;
+					return Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["removeTicketBlocks"]()), Object(effects["e" /* put */])(actions["setTicketsIsSettingsOpen"](false))]);
+
+				case 5:
+					if (hasCreatedTickets) {
+						_context3.next = 14;
+						break;
+					}
+
+					_context3.next = 8;
+					return Object(effects["b" /* call */])([Object(external_var_wp_data_root_wp_data_["select"])('core/editor'), 'getCurrentPostAttribute'], 'meta');
+
+				case 8:
+					currentMeta = _context3.sent;
+					newMeta = extends_default()({}, currentMeta, defineProperty_default()({}, utils["d" /* KEY_TICKET_CAPACITY */], ''));
+					_context3.next = 12;
+					return Object(effects["b" /* call */])([Object(external_var_wp_data_root_wp_data_["dispatch"])('core/editor'), 'editPost'], { meta: newMeta });
+
+				case 12:
+					_context3.next = 14;
+					return Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setTicketsSharedCapacity"]('')), Object(effects["e" /* put */])(actions["setTicketsTempSharedCapacity"](''))]);
+
+				case 14:
+				case 'end':
+					return _context3.stop();
+			}
+		}
+	}, _marked3, this);
+}
+
+function setTicketInitialState(action) {
+	var _action$payload, clientId, get, ticketId, hasBeenCreated, datePickerFormat, publishDate, startMoment, startDate, startDateInput, startTime, startTimeInput, isEvent, eventStart, endMoment, endDate, endDateInput, endTime, endTimeInput, hasTicketsPlus, sharedCapacity;
+
+	return regenerator_default.a.wrap(function setTicketInitialState$(_context4) {
+		while (1) {
+			switch (_context4.prev = _context4.next) {
+				case 0:
+					_action$payload = action.payload, clientId = _action$payload.clientId, get = _action$payload.get;
+					ticketId = get('ticketId', ticket_DEFAULT_STATE.ticketId);
+					hasBeenCreated = get('hasBeenCreated', ticket_DEFAULT_STATE.hasBeenCreated);
+					datePickerFormat = tecDateSettings().datepickerFormat;
+					_context4.next = 6;
+					return Object(effects["b" /* call */])([Object(external_var_wp_data_root_wp_data_["select"])('core/editor'), 'getEditedPostAttribute'], 'date');
+
+				case 6:
+					publishDate = _context4.sent;
+					_context4.next = 9;
+					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toMoment, publishDate);
+
+				case 9:
+					startMoment = _context4.sent;
+					_context4.next = 12;
+					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDatabaseDate, startMoment);
+
+				case 12:
+					startDate = _context4.sent;
+					_context4.next = 15;
+					return datePickerFormat ? Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDate, startMoment, datePickerFormat) : Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDate, startMoment);
+
+				case 15:
+					startDateInput = _context4.sent;
+					_context4.next = 18;
+					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDatabaseTime, startMoment);
+
+				case 18:
+					startTime = _context4.sent;
+					_context4.next = 21;
+					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toTime, startMoment);
+
+				case 21:
+					startTimeInput = _context4.sent;
+					_context4.next = 24;
+					return Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setTicketStartDate"](clientId, startDate)), Object(effects["e" /* put */])(actions["setTicketStartDateInput"](clientId, startDateInput)), Object(effects["e" /* put */])(actions["setTicketStartDateMoment"](clientId, startMoment)), Object(effects["e" /* put */])(actions["setTicketStartTime"](clientId, startTime)), Object(effects["e" /* put */])(actions["setTicketStartTimeInput"](clientId, startTimeInput)), Object(effects["e" /* put */])(actions["setTicketTempStartDate"](clientId, startDate)), Object(effects["e" /* put */])(actions["setTicketTempStartDateInput"](clientId, startDateInput)), Object(effects["e" /* put */])(actions["setTicketTempStartDateMoment"](clientId, startMoment)), Object(effects["e" /* put */])(actions["setTicketTempStartTime"](clientId, startTime)), Object(effects["e" /* put */])(actions["setTicketTempStartTimeInput"](clientId, startTimeInput)), Object(effects["e" /* put */])(actions["setTicketHasBeenCreated"](clientId, hasBeenCreated))]);
+
+				case 24:
+					_context4.next = 26;
+					return Object(effects["b" /* call */])(sagas["e" /* isTribeEventPostType */]);
+
+				case 26:
+					isEvent = _context4.sent;
+
+					if (!(isEvent && window.tribe.events)) {
+						_context4.next = 54;
+						break;
+					}
+
+					_context4.prev = 28;
+					_context4.next = 31;
+					return Object(effects["f" /* select */])(tribe.events.data.blocks.datetime.selectors.getStart);
+
+				case 31:
+					eventStart = _context4.sent;
+					_context4.next = 34;
+					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toMoment, eventStart);
+
+				case 34:
+					endMoment = _context4.sent;
+					_context4.next = 37;
+					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDatabaseDate, endMoment);
+
+				case 37:
+					endDate = _context4.sent;
+					_context4.next = 40;
+					return datePickerFormat ? Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDate, endMoment, datePickerFormat) : Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDate, endMoment);
+
+				case 40:
+					endDateInput = _context4.sent;
+					_context4.next = 43;
+					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDatabaseTime, endMoment);
+
+				case 43:
+					endTime = _context4.sent;
+					_context4.next = 46;
+					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toTime, endMoment);
+
+				case 46:
+					endTimeInput = _context4.sent;
+					_context4.next = 49;
+					return Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setTicketEndDate"](clientId, endDate)), Object(effects["e" /* put */])(actions["setTicketEndDateInput"](clientId, endDateInput)), Object(effects["e" /* put */])(actions["setTicketEndDateMoment"](clientId, endMoment)), Object(effects["e" /* put */])(actions["setTicketEndTime"](clientId, endTime)), Object(effects["e" /* put */])(actions["setTicketEndTimeInput"](clientId, endTimeInput)), Object(effects["e" /* put */])(actions["setTicketTempEndDate"](clientId, endDate)), Object(effects["e" /* put */])(actions["setTicketTempEndDateInput"](clientId, endDateInput)), Object(effects["e" /* put */])(actions["setTicketTempEndDateMoment"](clientId, endMoment)), Object(effects["e" /* put */])(actions["setTicketTempEndTime"](clientId, endTime)), Object(effects["e" /* put */])(actions["setTicketTempEndTimeInput"](clientId, endTimeInput))]);
+
+				case 49:
+					_context4.next = 54;
+					break;
+
+				case 51:
+					_context4.prev = 51;
+					_context4.t0 = _context4['catch'](28);
+
+					console.error(_context4.t0);
+					// ¯\_(ツ)_/¯
+
+				case 54:
+					_context4.next = 56;
+					return Object(effects["f" /* select */])(external_tribe_common_data_["plugins"].selectors.hasPlugin, external_tribe_common_data_["plugins"].constants.TICKETS_PLUS);
+
+				case 56:
+					hasTicketsPlus = _context4.sent;
+
+					if (!hasTicketsPlus) {
+						_context4.next = 60;
+						break;
+					}
+
+					_context4.next = 60;
+					return Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setTicketCapacityType"](clientId, constants["TICKET_TYPES"][constants["SHARED"]])), Object(effects["e" /* put */])(actions["setTicketTempCapacityType"](clientId, constants["TICKET_TYPES"][constants["SHARED"]]))]);
+
+				case 60:
+					_context4.next = 62;
+					return Object(effects["f" /* select */])(getTicketsSharedCapacity);
+
+				case 62:
+					sharedCapacity = _context4.sent;
+
+					if (!sharedCapacity) {
+						_context4.next = 66;
+						break;
+					}
+
+					_context4.next = 66;
+					return Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setTicketCapacity"](clientId, sharedCapacity)), Object(effects["e" /* put */])(actions["setTicketTempCapacity"](clientId, sharedCapacity))]);
+
+				case 66:
+					if (!(ticketId !== 0)) {
+						_context4.next = 69;
+						break;
+					}
+
+					_context4.next = 69;
+					return Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setTicketId"](clientId, ticketId)), Object(effects["b" /* call */])(fetchTicket, { payload: { clientId: clientId, ticketId: ticketId } })]);
+
+				case 69:
+					_context4.next = 71;
+					return Object(effects["b" /* call */])(handleTicketDurationError, clientId);
+
+				case 71:
+					_context4.next = 73;
+					return Object(effects["d" /* fork */])(saveTicketWithPostSave, clientId);
+
+				case 73:
+				case 'end':
+					return _context4.stop();
+			}
+		}
+	}, _marked4, this, [[28, 51]]);
+}
+
+function setBodyDetails(clientId) {
+	var body, props, rootClientId, ticketProvider, ticketsProvider, capacityType, capacity, isUnlimited;
+	return regenerator_default.a.wrap(function setBodyDetails$(_context5) {
+		while (1) {
+			switch (_context5.prev = _context5.next) {
+				case 0:
+					body = new FormData();
+					props = { clientId: clientId };
+					_context5.next = 4;
+					return Object(effects["b" /* call */])([Object(external_var_wp_data_root_wp_data_["select"])('core/editor'), 'getBlockRootClientId'], clientId);
+
+				case 4:
+					rootClientId = _context5.sent;
+					_context5.next = 7;
+					return Object(effects["f" /* select */])(getTicketProvider, props);
+
+				case 7:
+					ticketProvider = _context5.sent;
+					_context5.next = 10;
+					return Object(effects["f" /* select */])(getTicketsProvider);
+
+				case 10:
+					ticketsProvider = _context5.sent;
+					_context5.t0 = body;
+					_context5.next = 14;
+					return Object(effects["b" /* call */])([Object(external_var_wp_data_root_wp_data_["select"])('core/editor'), 'getCurrentPostId']);
+
+				case 14:
+					_context5.t1 = _context5.sent;
+
+					_context5.t0.append.call(_context5.t0, 'post_id', _context5.t1);
+
+					body.append('provider', ticketProvider || ticketsProvider);
+					_context5.t2 = body;
+					_context5.next = 20;
+					return Object(effects["f" /* select */])(getTicketTempTitle, props);
+
+				case 20:
+					_context5.t3 = _context5.sent;
+
+					_context5.t2.append.call(_context5.t2, 'name', _context5.t3);
+
+					_context5.t4 = body;
+					_context5.next = 25;
+					return Object(effects["f" /* select */])(getTicketTempDescription, props);
+
+				case 25:
+					_context5.t5 = _context5.sent;
+
+					_context5.t4.append.call(_context5.t4, 'description', _context5.t5);
+
+					_context5.t6 = body;
+					_context5.next = 30;
+					return Object(effects["f" /* select */])(getTicketTempPrice, props);
+
+				case 30:
+					_context5.t7 = _context5.sent;
+
+					_context5.t6.append.call(_context5.t6, 'price', _context5.t7);
+
+					_context5.t8 = body;
+					_context5.next = 35;
+					return Object(effects["f" /* select */])(getTicketTempStartDate, props);
+
+				case 35:
+					_context5.t9 = _context5.sent;
+
+					_context5.t8.append.call(_context5.t8, 'start_date', _context5.t9);
+
+					_context5.t10 = body;
+					_context5.next = 40;
+					return Object(effects["f" /* select */])(getTicketTempStartTime, props);
+
+				case 40:
+					_context5.t11 = _context5.sent;
+
+					_context5.t10.append.call(_context5.t10, 'start_time', _context5.t11);
+
+					_context5.t12 = body;
+					_context5.next = 45;
+					return Object(effects["f" /* select */])(getTicketTempEndDate, props);
+
+				case 45:
+					_context5.t13 = _context5.sent;
+
+					_context5.t12.append.call(_context5.t12, 'end_date', _context5.t13);
+
+					_context5.t14 = body;
+					_context5.next = 50;
+					return Object(effects["f" /* select */])(getTicketTempEndTime, props);
+
+				case 50:
+					_context5.t15 = _context5.sent;
+
+					_context5.t14.append.call(_context5.t14, 'end_time', _context5.t15);
+
+					_context5.t16 = body;
+					_context5.next = 55;
+					return Object(effects["f" /* select */])(getTicketTempSku, props);
+
+				case 55:
+					_context5.t17 = _context5.sent;
+
+					_context5.t16.append.call(_context5.t16, 'sku', _context5.t17);
+
+					_context5.t18 = body;
+					_context5.next = 60;
+					return Object(effects["f" /* select */])(getTicketTempIACSetting, props);
+
+				case 60:
+					_context5.t19 = _context5.sent;
+
+					_context5.t18.append.call(_context5.t18, 'iac', _context5.t19);
+
+					_context5.t20 = body;
+					_context5.next = 65;
+					return Object(effects["b" /* call */])([Object(external_var_wp_data_root_wp_data_["select"])('core/editor'), 'getBlockIndex'], clientId, rootClientId);
+
+				case 65:
+					_context5.t21 = _context5.sent;
+
+					_context5.t20.append.call(_context5.t20, 'menu_order', _context5.t21);
+
+					_context5.next = 69;
+					return Object(effects["f" /* select */])(getTicketTempCapacityType, props);
+
+				case 69:
+					capacityType = _context5.sent;
+					_context5.next = 72;
+					return Object(effects["f" /* select */])(getTicketTempCapacity, props);
+
+				case 72:
+					capacity = _context5.sent;
+					isUnlimited = capacityType === sagas_TICKET_TYPES[sagas_UNLIMITED];
+
+					body.append('ticket[mode]', isUnlimited ? '' : capacityType);
+					body.append('ticket[capacity]', isUnlimited ? '' : capacity);
+
+					if (!(capacityType === sagas_TICKET_TYPES[sagas_SHARED])) {
+						_context5.next = 82;
+						break;
+					}
+
+					_context5.t22 = body;
+					_context5.next = 80;
+					return Object(effects["f" /* select */])(getTicketsTempSharedCapacity);
+
+				case 80:
+					_context5.t23 = _context5.sent;
+
+					_context5.t22.append.call(_context5.t22, 'ticket[event_capacity]', _context5.t23);
+
+				case 82:
+					return _context5.abrupt('return', body);
+
+				case 83:
+				case 'end':
+					return _context5.stop();
+			}
+		}
+	}, _marked5, this);
+}
+
+function removeTicketBlock(clientId) {
+	var _wpDispatch, removeBlock;
+
+	return regenerator_default.a.wrap(function removeTicketBlock$(_context6) {
+		while (1) {
+			switch (_context6.prev = _context6.next) {
+				case 0:
+					_wpDispatch = Object(external_var_wp_data_root_wp_data_["dispatch"])('core/editor'), removeBlock = _wpDispatch.removeBlock;
+					_context6.next = 3;
+					return Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["removeTicketBlock"](clientId)), Object(effects["b" /* call */])(removeBlock, clientId)]);
+
+				case 3:
+				case 'end':
+					return _context6.stop();
+			}
+		}
+	}, _marked6, this);
+}
+
+function fetchTicket(action) {
+	var _action$payload2, ticketId, clientId, _ref4, response, ticket, _ticket$status, status, provider, _ticket$totals, totals, available_from, available_until, cost_details, title, description, sku, iac, capacity_type, capacity, supports_attendee_information, datePickerFormat, startMoment, startDate, startDateInput, startTime, startTimeInput, endMoment, endDate, endDateInput, endTime, endTimeInput, details;
+
+	return regenerator_default.a.wrap(function fetchTicket$(_context7) {
+		while (1) {
+			switch (_context7.prev = _context7.next) {
+				case 0:
+					_action$payload2 = action.payload, ticketId = _action$payload2.ticketId, clientId = _action$payload2.clientId;
+
+					if (!(ticketId === 0)) {
+						_context7.next = 3;
+						break;
+					}
+
+					return _context7.abrupt('return');
+
+				case 3:
+					_context7.next = 5;
+					return Object(effects["e" /* put */])(actions["setTicketIsLoading"](clientId, true));
+
+				case 5:
+					_context7.prev = 5;
+					_context7.next = 8;
+					return Object(effects["b" /* call */])(wpREST, {
+						path: 'tickets/' + ticketId,
+						namespace: 'tribe/tickets/v1'
+					});
+
+				case 8:
+					_ref4 = _context7.sent;
+					response = _ref4.response;
+					ticket = _ref4.data;
+					_ticket$status = ticket.status, status = _ticket$status === undefined ? '' : _ticket$status, provider = ticket.provider;
+
+					if (!(response.status === 404 || status === 'trash' || provider === constants["RSVP"])) {
+						_context7.next = 16;
+						break;
+					}
+
+					_context7.next = 15;
+					return Object(effects["b" /* call */])(removeTicketBlock, clientId);
+
+				case 15:
+					return _context7.abrupt('return');
+
+				case 16:
+					if (!response.ok) {
+						_context7.next = 60;
+						break;
+					}
+
+					_ticket$totals = ticket.totals, totals = _ticket$totals === undefined ? {} : _ticket$totals, available_from = ticket.available_from, available_until = ticket.available_until, cost_details = ticket.cost_details, title = ticket.title, description = ticket.description, sku = ticket.sku, iac = ticket.iac, capacity_type = ticket.capacity_type, capacity = ticket.capacity, supports_attendee_information = ticket.supports_attendee_information;
+					datePickerFormat = tecDateSettings().datepickerFormat;
+					_context7.next = 21;
+					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toMoment, available_from);
+
+				case 21:
+					startMoment = _context7.sent;
+					_context7.next = 24;
+					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDatabaseDate, startMoment);
+
+				case 24:
+					startDate = _context7.sent;
+					_context7.next = 27;
+					return datePickerFormat ? Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDate, startMoment, datePickerFormat) : Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDate, startMoment);
+
+				case 27:
+					startDateInput = _context7.sent;
+					_context7.next = 30;
+					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDatabaseTime, startMoment);
+
+				case 30:
+					startTime = _context7.sent;
+					_context7.next = 33;
+					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toTime, startMoment);
+
+				case 33:
+					startTimeInput = _context7.sent;
+					_context7.next = 36;
+					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toMoment, '');
+
+				case 36:
+					endMoment = _context7.sent;
+					endDate = '';
+					endDateInput = '';
+					endTime = '';
+					endTimeInput = '';
+
+					if (!available_until) {
+						_context7.next = 57;
+						break;
+					}
+
+					_context7.next = 44;
+					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toMoment, available_until);
+
+				case 44:
+					endMoment = _context7.sent;
+					_context7.next = 47;
+					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDatabaseDate, endMoment);
+
+				case 47:
+					endDate = _context7.sent;
+					_context7.next = 50;
+					return datePickerFormat ? Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDate, endMoment, datePickerFormat) : Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDate, endMoment);
+
+				case 50:
+					endDateInput = _context7.sent;
+					_context7.next = 53;
+					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDatabaseTime, endMoment);
+
+				case 53:
+					endTime = _context7.sent;
+					_context7.next = 56;
+					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toTime, endMoment);
+
+				case 56:
+					endTimeInput = _context7.sent;
+
+				case 57:
+					details = {
+						title: title,
+						description: description,
+						price: cost_details.values[0],
+						sku: sku,
+						iac: iac,
+						startDate: startDate,
+						startDateInput: startDateInput,
+						startDateMoment: startMoment,
+						endDate: endDate,
+						endDateInput: endDateInput,
+						endDateMoment: endMoment,
+						startTime: startTime,
+						endTime: endTime,
+						startTimeInput: startTimeInput,
+						endTimeInput: endTimeInput,
+						capacityType: capacity_type,
+						capacity: capacity
+					};
+					_context7.next = 60;
+					return Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setTicketDetails"](clientId, details)), Object(effects["e" /* put */])(actions["setTicketTempDetails"](clientId, details)), Object(effects["e" /* put */])(actions["setTicketSold"](clientId, totals.sold)), Object(effects["e" /* put */])(actions["setTicketAvailable"](clientId, totals.stock)), Object(effects["e" /* put */])(actions["setTicketCurrencySymbol"](clientId, cost_details.currency_symbol)), Object(effects["e" /* put */])(actions["setTicketCurrencyPosition"](clientId, cost_details.currency_position)), Object(effects["e" /* put */])(actions["setTicketProvider"](clientId, provider)), Object(effects["e" /* put */])(actions["setTicketHasAttendeeInfoFields"](clientId, supports_attendee_information)), Object(effects["e" /* put */])(actions["setTicketHasBeenCreated"](clientId, true))]);
+
+				case 60:
+					_context7.next = 65;
+					break;
+
+				case 62:
+					_context7.prev = 62;
+					_context7.t0 = _context7['catch'](5);
+
+					console.error(_context7.t0);
+					/**
+      * @todo handle error scenario
+      */
+
+				case 65:
+					_context7.next = 67;
+					return Object(effects["e" /* put */])(actions["setTicketIsLoading"](clientId, false));
+
+				case 67:
+				case 'end':
+					return _context7.stop();
+			}
+		}
+	}, _marked7, this, [[5, 62]]);
+}
+
+function createNewTicket(action) {
+	var clientId, props, _restNonce, _restNonce$add_ticket, add_ticket_nonce, body, _ref5, response, ticket, sharedCapacity, tempSharedCapacity, available, _ref6, _ref7, title, description, price, sku, iac, startDate, startDateInput, startDateMoment, endDate, endDateInput, endDateMoment, startTime, endTime, startTimeInput, endTimeInput, capacityType, capacity;
+
+	return regenerator_default.a.wrap(function createNewTicket$(_context8) {
+		while (1) {
+			switch (_context8.prev = _context8.next) {
+				case 0:
+					clientId = action.payload.clientId;
+					props = { clientId: clientId };
+					_restNonce = restNonce(), _restNonce$add_ticket = _restNonce.add_ticket_nonce, add_ticket_nonce = _restNonce$add_ticket === undefined ? '' : _restNonce$add_ticket;
+					_context8.next = 5;
+					return Object(effects["b" /* call */])(setBodyDetails, clientId);
+
+				case 5:
+					body = _context8.sent;
+
+					body.append('add_ticket_nonce', add_ticket_nonce);
+
+					_context8.prev = 7;
+					_context8.next = 10;
+					return Object(effects["e" /* put */])(actions["setTicketIsLoading"](clientId, true));
+
+				case 10:
+					_context8.next = 12;
+					return Object(effects["b" /* call */])(wpREST, {
+						path: 'tickets/',
+						namespace: 'tribe/tickets/v1',
+						initParams: {
+							method: 'POST',
+							body: body
+						}
+					});
+
+				case 12:
+					_ref5 = _context8.sent;
+					response = _ref5.response;
+					ticket = _ref5.data;
+
+					if (!response.ok) {
+						_context8.next = 51;
+						break;
+					}
+
+					_context8.next = 18;
+					return Object(effects["f" /* select */])(getTicketsSharedCapacity);
+
+				case 18:
+					sharedCapacity = _context8.sent;
+					_context8.next = 21;
+					return Object(effects["f" /* select */])(getTicketsTempSharedCapacity);
+
+				case 21:
+					tempSharedCapacity = _context8.sent;
+
+					if (!(sharedCapacity === '' && !isNaN(tempSharedCapacity) && tempSharedCapacity > 0)) {
+						_context8.next = 25;
+						break;
+					}
+
+					_context8.next = 25;
+					return Object(effects["e" /* put */])(actions["setTicketsSharedCapacity"](tempSharedCapacity));
+
+				case 25:
+					available = ticket.capacity_details.available === -1 ? 0 : ticket.capacity_details.available;
+					_context8.next = 28;
+					return Object(effects["a" /* all */])([Object(effects["f" /* select */])(getTicketTempTitle, props), Object(effects["f" /* select */])(getTicketTempDescription, props), Object(effects["f" /* select */])(getTicketTempPrice, props), Object(effects["f" /* select */])(getTicketTempSku, props), Object(effects["f" /* select */])(getTicketTempIACSetting, props), Object(effects["f" /* select */])(getTicketTempStartDate, props), Object(effects["f" /* select */])(getTicketTempStartDateInput, props), Object(effects["f" /* select */])(getTicketTempStartDateMoment, props), Object(effects["f" /* select */])(getTicketTempEndDate, props), Object(effects["f" /* select */])(getTicketTempEndDateInput, props), Object(effects["f" /* select */])(getTicketTempEndDateMoment, props), Object(effects["f" /* select */])(getTicketTempStartTime, props), Object(effects["f" /* select */])(getTicketTempEndTime, props), Object(effects["f" /* select */])(getTicketTempStartTimeInput, props), Object(effects["f" /* select */])(getTicketTempEndTimeInput, props), Object(effects["f" /* select */])(getTicketTempCapacityType, props), Object(effects["f" /* select */])(getTicketTempCapacity, props)]);
+
+				case 28:
+					_ref6 = _context8.sent;
+					_ref7 = slicedToArray_default()(_ref6, 17);
+					title = _ref7[0];
+					description = _ref7[1];
+					price = _ref7[2];
+					sku = _ref7[3];
+					iac = _ref7[4];
+					startDate = _ref7[5];
+					startDateInput = _ref7[6];
+					startDateMoment = _ref7[7];
+					endDate = _ref7[8];
+					endDateInput = _ref7[9];
+					endDateMoment = _ref7[10];
+					startTime = _ref7[11];
+					endTime = _ref7[12];
+					startTimeInput = _ref7[13];
+					endTimeInput = _ref7[14];
+					capacityType = _ref7[15];
+					capacity = _ref7[16];
+					_context8.next = 49;
+					return Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setTicketDetails"](clientId, {
+						title: title,
+						description: description,
+						price: price,
+						sku: sku,
+						iac: iac,
+						startDate: startDate,
+						startDateInput: startDateInput,
+						startDateMoment: startDateMoment,
+						endDate: endDate,
+						endDateInput: endDateInput,
+						endDateMoment: endDateMoment,
+						startTime: startTime,
+						endTime: endTime,
+						startTimeInput: startTimeInput,
+						endTimeInput: endTimeInput,
+						capacityType: capacityType,
+						capacity: capacity
+					})), Object(effects["e" /* put */])(actions["setTicketId"](clientId, ticket.id)), Object(effects["e" /* put */])(actions["setTicketHasBeenCreated"](clientId, true)), Object(effects["e" /* put */])(actions["setTicketAvailable"](clientId, available)), Object(effects["e" /* put */])(actions["setTicketProvider"](clientId, PROVIDER_CLASS_TO_PROVIDER_MAPPING[ticket.provider_class])), Object(effects["e" /* put */])(actions["setTicketHasChanges"](clientId, false))]);
+
+				case 49:
+					_context8.next = 51;
+					return Object(effects["d" /* fork */])(saveTicketWithPostSave, clientId);
+
+				case 51:
+					_context8.next = 56;
+					break;
+
+				case 53:
+					_context8.prev = 53;
+					_context8.t0 = _context8['catch'](7);
+
+					console.error(_context8.t0);
+					/**
+      * @todo: handle error scenario
+      */
+
+				case 56:
+					_context8.prev = 56;
+					_context8.next = 59;
+					return Object(effects["e" /* put */])(actions["setTicketIsLoading"](clientId, false));
+
+				case 59:
+					return _context8.finish(56);
+
+				case 60:
+				case 'end':
+					return _context8.stop();
+			}
+		}
+	}, _marked8, this, [[7, 53, 56, 60]]);
+}
+
+function updateTicket(action) {
+	var clientId, props, _restNonce2, _restNonce2$edit_tick, edit_ticket_nonce, body, ticketId, data, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, _ref8, _ref9, key, value, _ref10, response, ticket, capacity_details, available, _ref11, _ref12, title, description, price, sku, iac, startDate, startDateInput, startDateMoment, endDate, endDateInput, endDateMoment, startTime, endTime, startTimeInput, endTimeInput, capacityType, capacity;
+
+	return regenerator_default.a.wrap(function updateTicket$(_context9) {
+		while (1) {
+			switch (_context9.prev = _context9.next) {
+				case 0:
+					clientId = action.payload.clientId;
+					props = { clientId: clientId };
+					_restNonce2 = restNonce(), _restNonce2$edit_tick = _restNonce2.edit_ticket_nonce, edit_ticket_nonce = _restNonce2$edit_tick === undefined ? '' : _restNonce2$edit_tick;
+					_context9.next = 5;
+					return Object(effects["b" /* call */])(setBodyDetails, clientId);
+
+				case 5:
+					body = _context9.sent;
+
+					body.append('edit_ticket_nonce', edit_ticket_nonce);
+
+					_context9.next = 9;
+					return Object(effects["f" /* select */])(getTicketId, props);
+
+				case 9:
+					ticketId = _context9.sent;
+					_context9.prev = 10;
+					data = [];
+					_iteratorNormalCompletion = true;
+					_didIteratorError = false;
+					_iteratorError = undefined;
+					_context9.prev = 15;
+
+					for (_iterator = body.entries()[Symbol.iterator](); !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+						_ref8 = _step.value;
+						_ref9 = slicedToArray_default()(_ref8, 2);
+						key = _ref9[0];
+						value = _ref9[1];
+
+						data.push(encodeURIComponent(key) + '=' + encodeURIComponent(value));
+					}
+
+					_context9.next = 23;
+					break;
+
+				case 19:
+					_context9.prev = 19;
+					_context9.t0 = _context9['catch'](15);
+					_didIteratorError = true;
+					_iteratorError = _context9.t0;
+
+				case 23:
+					_context9.prev = 23;
+					_context9.prev = 24;
+
+					if (!_iteratorNormalCompletion && _iterator.return) {
+						_iterator.return();
+					}
+
+				case 26:
+					_context9.prev = 26;
+
+					if (!_didIteratorError) {
+						_context9.next = 29;
+						break;
+					}
+
+					throw _iteratorError;
+
+				case 29:
+					return _context9.finish(26);
+
+				case 30:
+					return _context9.finish(23);
+
+				case 31:
+					_context9.next = 33;
+					return Object(effects["e" /* put */])(actions["setTicketIsLoading"](clientId, true));
+
+				case 33:
+					_context9.next = 35;
+					return Object(effects["b" /* call */])(wpREST, {
+						path: 'tickets/' + ticketId,
+						namespace: 'tribe/tickets/v1',
+						headers: {
+							'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+						},
+						initParams: {
+							method: 'PUT',
+							body: data.join('&')
+						}
+					});
+
+				case 35:
+					_ref10 = _context9.sent;
+					response = _ref10.response;
+					ticket = _ref10.data;
+
+					if (!response.ok) {
+						_context9.next = 64;
+						break;
+					}
+
+					capacity_details = ticket.capacity_details;
+					available = capacity_details.available === -1 ? 0 : capacity_details.available;
+					_context9.next = 43;
+					return Object(effects["a" /* all */])([Object(effects["f" /* select */])(getTicketTempTitle, props), Object(effects["f" /* select */])(getTicketTempDescription, props), Object(effects["f" /* select */])(getTicketTempPrice, props), Object(effects["f" /* select */])(getTicketTempSku, props), Object(effects["f" /* select */])(getTicketTempIACSetting, props), Object(effects["f" /* select */])(getTicketTempStartDate, props), Object(effects["f" /* select */])(getTicketTempStartDateInput, props), Object(effects["f" /* select */])(getTicketTempStartDateMoment, props), Object(effects["f" /* select */])(getTicketTempEndDate, props), Object(effects["f" /* select */])(getTicketTempEndDateInput, props), Object(effects["f" /* select */])(getTicketTempEndDateMoment, props), Object(effects["f" /* select */])(getTicketTempStartTime, props), Object(effects["f" /* select */])(getTicketTempEndTime, props), Object(effects["f" /* select */])(getTicketTempStartTimeInput, props), Object(effects["f" /* select */])(getTicketTempEndTimeInput, props), Object(effects["f" /* select */])(getTicketTempCapacityType, props), Object(effects["f" /* select */])(getTicketTempCapacity, props)]);
+
+				case 43:
+					_ref11 = _context9.sent;
+					_ref12 = slicedToArray_default()(_ref11, 17);
+					title = _ref12[0];
+					description = _ref12[1];
+					price = _ref12[2];
+					sku = _ref12[3];
+					iac = _ref12[4];
+					startDate = _ref12[5];
+					startDateInput = _ref12[6];
+					startDateMoment = _ref12[7];
+					endDate = _ref12[8];
+					endDateInput = _ref12[9];
+					endDateMoment = _ref12[10];
+					startTime = _ref12[11];
+					endTime = _ref12[12];
+					startTimeInput = _ref12[13];
+					endTimeInput = _ref12[14];
+					capacityType = _ref12[15];
+					capacity = _ref12[16];
+					_context9.next = 64;
+					return Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setTicketDetails"](clientId, {
+						title: title,
+						description: description,
+						price: price,
+						sku: sku,
+						iac: iac,
+						startDate: startDate,
+						startDateInput: startDateInput,
+						startDateMoment: startDateMoment,
+						endDate: endDate,
+						endDateInput: endDateInput,
+						endDateMoment: endDateMoment,
+						startTime: startTime,
+						endTime: endTime,
+						startTimeInput: startTimeInput,
+						endTimeInput: endTimeInput,
+						capacityType: capacityType,
+						capacity: capacity
+					})), Object(effects["e" /* put */])(actions["setTicketSold"](clientId, capacity_details.sold)), Object(effects["e" /* put */])(actions["setTicketAvailable"](clientId, available)), Object(effects["e" /* put */])(actions["setTicketHasChanges"](clientId, false))]);
+
+				case 64:
+					_context9.next = 69;
+					break;
+
+				case 66:
+					_context9.prev = 66;
+					_context9.t1 = _context9['catch'](10);
+
+					console.error(_context9.t1);
+					/**
+      * @todo: handle error scenario
+      */
+
+				case 69:
+					_context9.prev = 69;
+					_context9.next = 72;
+					return Object(effects["e" /* put */])(actions["setTicketIsLoading"](clientId, false));
+
+				case 72:
+					return _context9.finish(69);
+
+				case 73:
+				case 'end':
+					return _context9.stop();
+			}
+		}
+	}, _marked9, this, [[10, 66, 69, 73], [15, 19, 23, 31], [24,, 26, 30]]);
+}
+
+function deleteTicket(action) {
+	var clientId, props, shouldDelete, ticketId, hasBeenCreated, _restNonce3, _restNonce3$remove_ti, remove_ticket_nonce, postId, body;
+
+	return regenerator_default.a.wrap(function deleteTicket$(_context10) {
+		while (1) {
+			switch (_context10.prev = _context10.next) {
+				case 0:
+					clientId = action.payload.clientId;
+					props = { clientId: clientId };
+					_context10.next = 4;
+					return Object(effects["b" /* call */])([window, 'confirm'], Object(external_var_wp_i18n_root_wp_i18n_["__"])('Are you sure you want to delete this ticket? It cannot be undone.'));
+
+				case 4:
+					shouldDelete = _context10.sent;
+
+					if (!shouldDelete) {
+						_context10.next = 33;
+						break;
+					}
+
+					_context10.next = 8;
+					return Object(effects["f" /* select */])(getTicketId, props);
+
+				case 8:
+					ticketId = _context10.sent;
+					_context10.next = 11;
+					return Object(effects["f" /* select */])(getTicketHasBeenCreated, props);
+
+				case 11:
+					hasBeenCreated = _context10.sent;
+					_context10.next = 14;
+					return Object(effects["e" /* put */])(actions["setTicketIsSelected"](clientId, false));
+
+				case 14:
+					_context10.next = 16;
+					return Object(effects["e" /* put */])(actions["removeTicketBlock"](clientId));
+
+				case 16:
+					_context10.next = 18;
+					return Object(effects["b" /* call */])([Object(external_var_wp_data_root_wp_data_["dispatch"])('core/editor'), 'clearSelectedBlock']);
+
+				case 18:
+					_context10.next = 20;
+					return Object(effects["b" /* call */])([Object(external_var_wp_data_root_wp_data_["dispatch"])('core/editor'), 'removeBlocks'], [clientId]);
+
+				case 20:
+					if (!hasBeenCreated) {
+						_context10.next = 33;
+						break;
+					}
+
+					_restNonce3 = restNonce(), _restNonce3$remove_ti = _restNonce3.remove_ticket_nonce, remove_ticket_nonce = _restNonce3$remove_ti === undefined ? '' : _restNonce3$remove_ti;
+					_context10.next = 24;
+					return Object(effects["b" /* call */])([Object(external_var_wp_data_root_wp_data_["select"])('core/editor'), 'getCurrentPostId']);
+
+				case 24:
+					postId = _context10.sent;
+
+
+					/**
+      * Encode params to be passed into the DELETE request as PHP doesn’t transform the request body
+      * of a DELETE request into a super global.
+      */
+					body = [encodeURIComponent('post_id') + '=' + encodeURIComponent(postId), encodeURIComponent('remove_ticket_nonce') + '=' + encodeURIComponent(remove_ticket_nonce)];
+					_context10.prev = 26;
+					_context10.next = 29;
+					return Object(effects["b" /* call */])(wpREST, {
+						path: 'tickets/' + ticketId,
+						namespace: 'tribe/tickets/v1',
+						headers: {
+							'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+						},
+						initParams: {
+							method: 'DELETE',
+							body: body.join('&')
+						}
+					});
+
+				case 29:
+					_context10.next = 33;
+					break;
+
+				case 31:
+					_context10.prev = 31;
+					_context10.t0 = _context10['catch'](26);
+
+				case 33:
+				case 'end':
+					return _context10.stop();
+			}
+		}
+	}, _marked10, this, [[26, 31]]);
+}
+
+function fetchTicketsHeaderImage(action) {
+	var id, _ref13, response, media, headerImage;
+
+	return regenerator_default.a.wrap(function fetchTicketsHeaderImage$(_context11) {
+		while (1) {
+			switch (_context11.prev = _context11.next) {
+				case 0:
+					id = action.payload.id;
+					_context11.next = 3;
+					return Object(effects["e" /* put */])(actions["setTicketsIsSettingsLoading"](true));
+
+				case 3:
+					_context11.prev = 3;
+					_context11.next = 6;
+					return Object(effects["b" /* call */])(wpREST, { path: 'media/' + id });
+
+				case 6:
+					_ref13 = _context11.sent;
+					response = _ref13.response;
+					media = _ref13.data;
+
+					if (!response.ok) {
+						_context11.next = 13;
+						break;
+					}
+
+					headerImage = {
+						id: media.id,
+						alt: media.alt_text,
+						src: media.media_details.sizes.medium.source_url
+					};
+					_context11.next = 13;
+					return Object(effects["e" /* put */])(actions["setTicketsHeaderImage"](headerImage));
+
+				case 13:
+					_context11.next = 18;
+					break;
+
+				case 15:
+					_context11.prev = 15;
+					_context11.t0 = _context11['catch'](3);
+
+					console.error(_context11.t0);
+					/**
+      * @todo: handle error scenario
+      */
+
+				case 18:
+					_context11.prev = 18;
+					_context11.next = 21;
+					return Object(effects["e" /* put */])(actions["setTicketsIsSettingsLoading"](false));
+
+				case 21:
+					return _context11.finish(18);
+
+				case 22:
+				case 'end':
+					return _context11.stop();
+			}
+		}
+	}, _marked11, this, [[3, 15, 18, 22]]);
+}
+
+function updateTicketsHeaderImage(action) {
+	var image, postId, body, slug, postType, restBase, _ref14, response, headerImage;
+
+	return regenerator_default.a.wrap(function updateTicketsHeaderImage$(_context12) {
+		while (1) {
+			switch (_context12.prev = _context12.next) {
+				case 0:
+					image = action.payload.image;
+					_context12.next = 3;
+					return Object(effects["b" /* call */])([Object(external_var_wp_data_root_wp_data_["select"])('core/editor'), 'getCurrentPostId']);
+
+				case 3:
+					postId = _context12.sent;
+					body = {
+						meta: defineProperty_default()({}, utils["i" /* KEY_TICKET_HEADER */], '' + image.id)
+					};
+					_context12.prev = 5;
+					_context12.next = 8;
+					return Object(effects["e" /* put */])(actions["setTicketsIsSettingsLoading"](true));
+
+				case 8:
+					_context12.next = 10;
+					return Object(effects["e" /* put */])(rsvp_actions["setRSVPIsSettingsLoading"](true));
+
+				case 10:
+					slug = Object(external_var_wp_data_root_wp_data_["select"])('core/editor').getCurrentPostType();
+					postType = Object(external_var_wp_data_root_wp_data_["select"])('core').getPostType(slug);
+					restBase = postType.rest_base;
+					_context12.next = 15;
+					return Object(effects["b" /* call */])(wpREST, {
+						path: restBase + '/' + postId,
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						initParams: {
+							method: 'PUT',
+							body: JSON.stringify(body)
+						}
+					});
+
+				case 15:
+					_ref14 = _context12.sent;
+					response = _ref14.response;
+
+					if (!response.ok) {
+						_context12.next = 23;
+						break;
+					}
+
+					headerImage = {
+						id: image.id,
+						alt: image.alt,
+						src: image.sizes.medium.url
+					};
+					/**
+      * @todo: until rsvp and tickets header image can be separated, they need to be linked
+      */
+
+					_context12.next = 21;
+					return Object(effects["e" /* put */])(actions["setTicketsHeaderImage"](headerImage));
+
+				case 21:
+					_context12.next = 23;
+					return Object(effects["e" /* put */])(rsvp_actions["setRSVPHeaderImage"](headerImage));
+
+				case 23:
+					_context12.next = 27;
+					break;
+
+				case 25:
+					_context12.prev = 25;
+					_context12.t0 = _context12['catch'](5);
+
+				case 27:
+					_context12.prev = 27;
+					_context12.next = 30;
+					return Object(effects["e" /* put */])(actions["setTicketsIsSettingsLoading"](false));
+
+				case 30:
+					_context12.next = 32;
+					return Object(effects["e" /* put */])(rsvp_actions["setRSVPIsSettingsLoading"](false));
+
+				case 32:
+					return _context12.finish(27);
+
+				case 33:
+				case 'end':
+					return _context12.stop();
+			}
+		}
+	}, _marked12, this, [[5, 25, 27, 33]]);
+}
+
+function deleteTicketsHeaderImage() {
+	var postId, body, slug, postType, restBase, _ref15, response;
+
+	return regenerator_default.a.wrap(function deleteTicketsHeaderImage$(_context13) {
+		while (1) {
+			switch (_context13.prev = _context13.next) {
+				case 0:
+					_context13.next = 2;
+					return Object(effects["b" /* call */])([Object(external_var_wp_data_root_wp_data_["select"])('core/editor'), 'getCurrentPostId']);
+
+				case 2:
+					postId = _context13.sent;
+					body = {
+						meta: defineProperty_default()({}, utils["i" /* KEY_TICKET_HEADER */], null)
+					};
+					_context13.prev = 4;
+					_context13.next = 7;
+					return Object(effects["e" /* put */])(actions["setTicketsIsSettingsLoading"](true));
+
+				case 7:
+					_context13.next = 9;
+					return Object(effects["e" /* put */])(rsvp_actions["setRSVPIsSettingsLoading"](true));
+
+				case 9:
+					slug = Object(external_var_wp_data_root_wp_data_["select"])('core/editor').getCurrentPostType();
+					postType = Object(external_var_wp_data_root_wp_data_["select"])('core').getPostType(slug);
+					restBase = postType.rest_base;
+					_context13.next = 14;
+					return Object(effects["b" /* call */])(external_tribe_common_utils_["api"].wpREST, {
+						path: restBase + '/' + postId,
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						initParams: {
+							method: 'PUT',
+							body: JSON.stringify(body)
+						}
+					});
+
+				case 14:
+					_ref15 = _context13.sent;
+					response = _ref15.response;
+
+					if (!response.ok) {
+						_context13.next = 21;
+						break;
+					}
+
+					_context13.next = 19;
+					return Object(effects["e" /* put */])(actions["setTicketsHeaderImage"](header_image["a" /* DEFAULT_STATE */]));
+
+				case 19:
+					_context13.next = 21;
+					return Object(effects["e" /* put */])(rsvp_actions["setRSVPHeaderImage"](reducers_header_image["a" /* DEFAULT_STATE */]));
+
+				case 21:
+					_context13.next = 25;
+					break;
+
+				case 23:
+					_context13.prev = 23;
+					_context13.t0 = _context13['catch'](4);
+
+				case 25:
+					_context13.prev = 25;
+					_context13.next = 28;
+					return Object(effects["e" /* put */])(actions["setTicketsIsSettingsLoading"](false));
+
+				case 28:
+					_context13.next = 30;
+					return Object(effects["e" /* put */])(rsvp_actions["setRSVPIsSettingsLoading"](false));
+
+				case 30:
+					return _context13.finish(25);
+
+				case 31:
+				case 'end':
+					return _context13.stop();
+			}
+		}
+	}, _marked13, this, [[4, 23, 25, 31]]);
+}
+
+function setTicketDetails(action) {
+	var _action$payload3, clientId, details, title, description, price, sku, iac, startDate, startDateInput, startDateMoment, endDate, endDateInput, endDateMoment, startTime, endTime, startTimeInput, endTimeInput, capacityType, capacity;
+
+	return regenerator_default.a.wrap(function setTicketDetails$(_context14) {
+		while (1) {
+			switch (_context14.prev = _context14.next) {
+				case 0:
+					_action$payload3 = action.payload, clientId = _action$payload3.clientId, details = _action$payload3.details;
+					title = details.title, description = details.description, price = details.price, sku = details.sku, iac = details.iac, startDate = details.startDate, startDateInput = details.startDateInput, startDateMoment = details.startDateMoment, endDate = details.endDate, endDateInput = details.endDateInput, endDateMoment = details.endDateMoment, startTime = details.startTime, endTime = details.endTime, startTimeInput = details.startTimeInput, endTimeInput = details.endTimeInput, capacityType = details.capacityType, capacity = details.capacity;
+					_context14.next = 4;
+					return Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setTicketTitle"](clientId, title)), Object(effects["e" /* put */])(actions["setTicketDescription"](clientId, description)), Object(effects["e" /* put */])(actions["setTicketPrice"](clientId, price)), Object(effects["e" /* put */])(actions["setTicketSku"](clientId, sku)), Object(effects["e" /* put */])(actions["setTicketIACSetting"](clientId, iac)), Object(effects["e" /* put */])(actions["setTicketStartDate"](clientId, startDate)), Object(effects["e" /* put */])(actions["setTicketStartDateInput"](clientId, startDateInput)), Object(effects["e" /* put */])(actions["setTicketStartDateMoment"](clientId, startDateMoment)), Object(effects["e" /* put */])(actions["setTicketEndDate"](clientId, endDate)), Object(effects["e" /* put */])(actions["setTicketEndDateInput"](clientId, endDateInput)), Object(effects["e" /* put */])(actions["setTicketEndDateMoment"](clientId, endDateMoment)), Object(effects["e" /* put */])(actions["setTicketStartTime"](clientId, startTime)), Object(effects["e" /* put */])(actions["setTicketEndTime"](clientId, endTime)), Object(effects["e" /* put */])(actions["setTicketStartTimeInput"](clientId, startTimeInput)), Object(effects["e" /* put */])(actions["setTicketEndTimeInput"](clientId, endTimeInput)), Object(effects["e" /* put */])(actions["setTicketCapacityType"](clientId, capacityType)), Object(effects["e" /* put */])(actions["setTicketCapacity"](clientId, capacity))]);
+
+				case 4:
+				case 'end':
+					return _context14.stop();
+			}
+		}
+	}, _marked14, this);
+}
+
+function setTicketTempDetails(action) {
+	var _action$payload4, clientId, tempDetails, title, description, price, sku, iac, startDate, startDateInput, startDateMoment, endDate, endDateInput, endDateMoment, startTime, endTime, startTimeInput, endTimeInput, capacityType, capacity;
+
+	return regenerator_default.a.wrap(function setTicketTempDetails$(_context15) {
+		while (1) {
+			switch (_context15.prev = _context15.next) {
+				case 0:
+					_action$payload4 = action.payload, clientId = _action$payload4.clientId, tempDetails = _action$payload4.tempDetails;
+					title = tempDetails.title, description = tempDetails.description, price = tempDetails.price, sku = tempDetails.sku, iac = tempDetails.iac, startDate = tempDetails.startDate, startDateInput = tempDetails.startDateInput, startDateMoment = tempDetails.startDateMoment, endDate = tempDetails.endDate, endDateInput = tempDetails.endDateInput, endDateMoment = tempDetails.endDateMoment, startTime = tempDetails.startTime, endTime = tempDetails.endTime, startTimeInput = tempDetails.startTimeInput, endTimeInput = tempDetails.endTimeInput, capacityType = tempDetails.capacityType, capacity = tempDetails.capacity;
+					_context15.next = 4;
+					return Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setTicketTempTitle"](clientId, title)), Object(effects["e" /* put */])(actions["setTicketTempDescription"](clientId, description)), Object(effects["e" /* put */])(actions["setTicketTempPrice"](clientId, price)), Object(effects["e" /* put */])(actions["setTicketTempSku"](clientId, sku)), Object(effects["e" /* put */])(actions["setTicketTempIACSetting"](clientId, iac)), Object(effects["e" /* put */])(actions["setTicketTempStartDate"](clientId, startDate)), Object(effects["e" /* put */])(actions["setTicketTempStartDateInput"](clientId, startDateInput)), Object(effects["e" /* put */])(actions["setTicketTempStartDateMoment"](clientId, startDateMoment)), Object(effects["e" /* put */])(actions["setTicketTempEndDate"](clientId, endDate)), Object(effects["e" /* put */])(actions["setTicketTempEndDateInput"](clientId, endDateInput)), Object(effects["e" /* put */])(actions["setTicketTempEndDateMoment"](clientId, endDateMoment)), Object(effects["e" /* put */])(actions["setTicketTempStartTime"](clientId, startTime)), Object(effects["e" /* put */])(actions["setTicketTempEndTime"](clientId, endTime)), Object(effects["e" /* put */])(actions["setTicketTempStartTimeInput"](clientId, startTimeInput)), Object(effects["e" /* put */])(actions["setTicketTempEndTimeInput"](clientId, endTimeInput)), Object(effects["e" /* put */])(actions["setTicketTempCapacityType"](clientId, capacityType)), Object(effects["e" /* put */])(actions["setTicketTempCapacity"](clientId, capacity))]);
+
+				case 4:
+				case 'end':
+					return _context15.stop();
+			}
+		}
+	}, _marked15, this);
+}
+
+/**
+ * Allows the Ticket to be saved at the same time a post is being saved.
+ * Avoids the user having to open up the Ticket block, and then click update again there, when changing the event start date.
+ *
+ * @export
+ */
+function saveTicketWithPostSave(clientId) {
+	var savingChannel, notSavingChannel;
+	return regenerator_default.a.wrap(function saveTicketWithPostSave$(_context16) {
+		while (1) {
+			switch (_context16.prev = _context16.next) {
+				case 0:
+					savingChannel = void 0, notSavingChannel = void 0;
+					_context16.prev = 1;
+					_context16.next = 4;
+					return Object(effects["f" /* select */])(getTicketHasBeenCreated, { clientId: clientId });
+
+				case 4:
+					if (!_context16.sent) {
+						_context16.next = 20;
+						break;
+					}
+
+					_context16.next = 7;
+					return Object(effects["b" /* call */])(sagas["c" /* createWPEditorSavingChannel */]);
+
+				case 7:
+					savingChannel = _context16.sent;
+					_context16.next = 10;
+					return Object(effects["b" /* call */])(sagas["b" /* createWPEditorNotSavingChannel */]);
+
+				case 10:
+					notSavingChannel = _context16.sent;
+
+				case 11:
+					if (false) {}
+
+					_context16.next = 14;
+					return Object(effects["g" /* take */])(savingChannel);
+
+				case 14:
+					_context16.next = 16;
+					return Object(effects["b" /* call */])(updateTicket, { payload: { clientId: clientId } });
+
+				case 16:
+					_context16.next = 18;
+					return Object(effects["g" /* take */])(notSavingChannel);
+
+				case 18:
+					_context16.next = 11;
+					break;
+
+				case 20:
+					_context16.next = 25;
+					break;
+
+				case 22:
+					_context16.prev = 22;
+					_context16.t0 = _context16['catch'](1);
+
+					console.error(_context16.t0);
+
+				case 25:
+					_context16.prev = 25;
+
+					if (!savingChannel) {
+						_context16.next = 29;
+						break;
+					}
+
+					_context16.next = 29;
+					return Object(effects["b" /* call */])([savingChannel, 'close']);
+
+				case 29:
+					if (!notSavingChannel) {
+						_context16.next = 32;
+						break;
+					}
+
+					_context16.next = 32;
+					return Object(effects["b" /* call */])([notSavingChannel, 'close']);
+
+				case 32:
+					return _context16.finish(25);
+
+				case 33:
+				case 'end':
+					return _context16.stop();
+			}
+		}
+	}, _marked16, this, [[1, 22, 25, 33]]);
+}
+
+/**
+ * Will sync all tickets
+ * @param {String} prevStartDate Previous start date before latest set date time changes
+ * @export
+ */
+function syncTicketsSaleEndWithEventStart(prevStartDate) {
+	var ticketIds, index, clientId;
+	return regenerator_default.a.wrap(function syncTicketsSaleEndWithEventStart$(_context17) {
+		while (1) {
+			switch (_context17.prev = _context17.next) {
+				case 0:
+					_context17.next = 2;
+					return Object(effects["f" /* select */])(getTicketsAllClientIds);
+
+				case 2:
+					ticketIds = _context17.sent;
+					index = 0;
+
+				case 4:
+					if (!(index < ticketIds.length)) {
+						_context17.next = 11;
+						break;
+					}
+
+					clientId = ticketIds[index];
+					_context17.next = 8;
+					return Object(effects["b" /* call */])(syncTicketSaleEndWithEventStart, prevStartDate, clientId);
+
+				case 8:
+					index++;
+					_context17.next = 4;
+					break;
+
+				case 11:
+				case 'end':
+					return _context17.stop();
+			}
+		}
+	}, _marked17, this);
+}
+
+/**
+ * Will sync Tickets sale end to be the same as event start date and time, if field has not been manually edited
+ * @borrows TEC - Functionality requires TEC to be enabled
+ * @param {String} prevStartDate Previous start date before latest set date time changes
+ * @export
+ */
+function syncTicketSaleEndWithEventStart(prevStartDate, clientId) {
+	var tempEndMoment, endMoment, _ref16, prevEventStartMoment, isNotManuallyEdited, isSyncedToEventStart, isEvent, eventStart, _ref17, endDateMoment, endDate, endDateInput, endTime, endTimeInput;
+
+	return regenerator_default.a.wrap(function syncTicketSaleEndWithEventStart$(_context18) {
+		while (1) {
+			switch (_context18.prev = _context18.next) {
+				case 0:
+					_context18.prev = 0;
+					_context18.next = 3;
+					return Object(effects["f" /* select */])(getTicketTempEndDateMoment, { clientId: clientId });
+
+				case 3:
+					tempEndMoment = _context18.sent;
+					_context18.next = 6;
+					return Object(effects["f" /* select */])(getTicketEndDateMoment, { clientId: clientId });
+
+				case 6:
+					endMoment = _context18.sent;
+					_context18.next = 9;
+					return Object(effects["b" /* call */])(sagas["a" /* createDates */], prevStartDate);
+
+				case 9:
+					_ref16 = _context18.sent;
+					prevEventStartMoment = _ref16.moment;
+					_context18.next = 13;
+					return Object(effects["a" /* all */])([Object(effects["b" /* call */])([tempEndMoment, 'local']), Object(effects["b" /* call */])([endMoment, 'local']), Object(effects["b" /* call */])([prevEventStartMoment, 'local'])]);
+
+				case 13:
+					_context18.next = 15;
+					return Object(effects["b" /* call */])([tempEndMoment, 'isSame'], endMoment, 'minute');
+
+				case 15:
+					isNotManuallyEdited = _context18.sent;
+					_context18.next = 18;
+					return Object(effects["b" /* call */])([tempEndMoment, 'isSame'], prevEventStartMoment, 'minute');
+
+				case 18:
+					isSyncedToEventStart = _context18.sent;
+					_context18.next = 21;
+					return Object(effects["b" /* call */])(sagas["e" /* isTribeEventPostType */]);
+
+				case 21:
+					isEvent = _context18.sent;
+
+					if (!(isEvent && window.tribe.events && isNotManuallyEdited && isSyncedToEventStart)) {
+						_context18.next = 36;
+						break;
+					}
+
+					_context18.next = 25;
+					return Object(effects["f" /* select */])(window.tribe.events.data.blocks.datetime.selectors.getStart);
+
+				case 25:
+					eventStart = _context18.sent;
+					_context18.next = 28;
+					return Object(effects["b" /* call */])(sagas["a" /* createDates */], eventStart);
+
+				case 28:
+					_ref17 = _context18.sent;
+					endDateMoment = _ref17.moment;
+					endDate = _ref17.date;
+					endDateInput = _ref17.dateInput;
+					endTime = _ref17.time;
+					endTimeInput = _ref17.timeInput;
+					_context18.next = 36;
+					return Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setTicketTempEndDate"](clientId, endDate)), Object(effects["e" /* put */])(actions["setTicketTempEndDateInput"](clientId, endDateInput)), Object(effects["e" /* put */])(actions["setTicketTempEndDateMoment"](clientId, endDateMoment)), Object(effects["e" /* put */])(actions["setTicketTempEndTime"](clientId, endTime)), Object(effects["e" /* put */])(actions["setTicketTempEndTimeInput"](clientId, endTimeInput)),
+
+					// Sync Ticket end items as well so as not to make state 'manually edited'
+					Object(effects["e" /* put */])(actions["setTicketEndDate"](clientId, endDate)), Object(effects["e" /* put */])(actions["setTicketEndDateInput"](clientId, endDateInput)), Object(effects["e" /* put */])(actions["setTicketEndDateMoment"](clientId, endDateMoment)), Object(effects["e" /* put */])(actions["setTicketEndTime"](clientId, endTime)), Object(effects["e" /* put */])(actions["setTicketEndTimeInput"](clientId, endTimeInput)),
+
+					// Trigger UI button
+					Object(effects["e" /* put */])(actions["setTicketHasChanges"](clientId, true)),
+
+					// Handle ticket duration error
+					Object(effects["b" /* call */])(handleTicketDurationError, clientId)]);
+
+				case 36:
+					_context18.next = 41;
+					break;
+
+				case 38:
+					_context18.prev = 38;
+					_context18.t0 = _context18['catch'](0);
+
+					// ¯\_(ツ)_/¯
+					console.error(_context18.t0);
+
+				case 41:
+				case 'end':
+					return _context18.stop();
+			}
+		}
+	}, _marked18, this, [[0, 38]]);
+}
+
+/**
+ * Listens for event start date and time changes after RSVP block is loaded.
+ * @borrows TEC - Functionality requires TEC to be enabled and post type to be event
+ * @export
+ */
+function handleEventStartDateChanges() {
+	var postTypeChannel, isEvent, _window$tribe$events$, SET_START_DATE_TIME, SET_START_TIME, syncTask, eventStart;
+
+	return regenerator_default.a.wrap(function handleEventStartDateChanges$(_context19) {
+		while (1) {
+			switch (_context19.prev = _context19.next) {
+				case 0:
+					_context19.prev = 0;
+					_context19.next = 3;
+					return Object(effects["b" /* call */])(sagas["d" /* hasPostTypeChannel */]);
+
+				case 3:
+					postTypeChannel = _context19.sent;
+					_context19.next = 6;
+					return Object(effects["g" /* take */])(postTypeChannel);
+
+				case 6:
+					_context19.next = 8;
+					return Object(effects["b" /* call */])([postTypeChannel, 'close']);
+
+				case 8:
+					_context19.next = 10;
+					return Object(effects["b" /* call */])(sagas["e" /* isTribeEventPostType */]);
+
+				case 10:
+					isEvent = _context19.sent;
+
+					if (!(isEvent && window.tribe.events)) {
+						_context19.next = 28;
+						break;
+					}
+
+					_window$tribe$events$ = window.tribe.events.data.blocks.datetime.types, SET_START_DATE_TIME = _window$tribe$events$.SET_START_DATE_TIME, SET_START_TIME = _window$tribe$events$.SET_START_TIME;
+					syncTask = void 0;
+
+				case 14:
+					if (false) {}
+
+					_context19.next = 17;
+					return Object(effects["f" /* select */])(window.tribe.events.data.blocks.datetime.selectors.getStart);
+
+				case 17:
+					eventStart = _context19.sent;
+					_context19.next = 20;
+					return Object(effects["g" /* take */])([SET_START_DATE_TIME, SET_START_TIME]);
+
+				case 20:
+					if (!syncTask) {
+						_context19.next = 23;
+						break;
+					}
+
+					_context19.next = 23;
+					return Object(effects["c" /* cancel */])(syncTask);
+
+				case 23:
+					_context19.next = 25;
+					return Object(effects["d" /* fork */])(syncTicketsSaleEndWithEventStart, eventStart);
+
+				case 25:
+					syncTask = _context19.sent;
+					_context19.next = 14;
+					break;
+
+				case 28:
+					_context19.next = 33;
+					break;
+
+				case 30:
+					_context19.prev = 30;
+					_context19.t0 = _context19['catch'](0);
+
+					// ¯\_(ツ)_/¯
+					console.error(_context19.t0);
+
+				case 33:
+				case 'end':
+					return _context19.stop();
+			}
+		}
+	}, _marked19, this, [[0, 30]]);
+}
+
+function handleTicketDurationError(clientId) {
+	var hasDurationError, startDateMoment, endDateMoment, startTime, endTime, startTimeSeconds, endTimeSeconds, startDateTimeMoment, endDateTimeMoment, durationHasError;
+	return regenerator_default.a.wrap(function handleTicketDurationError$(_context20) {
+		while (1) {
+			switch (_context20.prev = _context20.next) {
+				case 0:
+					hasDurationError = false;
+					_context20.next = 3;
+					return Object(effects["f" /* select */])(getTicketTempStartDateMoment, { clientId: clientId });
+
+				case 3:
+					startDateMoment = _context20.sent;
+					_context20.next = 6;
+					return Object(effects["f" /* select */])(getTicketTempEndDateMoment, { clientId: clientId });
+
+				case 6:
+					endDateMoment = _context20.sent;
+
+					if (!(!startDateMoment || !endDateMoment)) {
+						_context20.next = 11;
+						break;
+					}
+
+					hasDurationError = true;
+					_context20.next = 33;
+					break;
+
+				case 11:
+					_context20.next = 13;
+					return Object(effects["f" /* select */])(getTicketTempStartTime, { clientId: clientId });
+
+				case 13:
+					startTime = _context20.sent;
+					_context20.next = 16;
+					return Object(effects["f" /* select */])(getTicketTempEndTime, { clientId: clientId });
+
+				case 16:
+					endTime = _context20.sent;
+					_context20.next = 19;
+					return Object(effects["b" /* call */])(external_tribe_common_utils_["time"].toSeconds, startTime, external_tribe_common_utils_["time"].TIME_FORMAT_HH_MM_SS);
+
+				case 19:
+					startTimeSeconds = _context20.sent;
+					_context20.next = 22;
+					return Object(effects["b" /* call */])(external_tribe_common_utils_["time"].toSeconds, endTime, external_tribe_common_utils_["time"].TIME_FORMAT_HH_MM_SS);
+
+				case 22:
+					endTimeSeconds = _context20.sent;
+					_context20.next = 25;
+					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].setTimeInSeconds, startDateMoment.clone(), startTimeSeconds);
+
+				case 25:
+					startDateTimeMoment = _context20.sent;
+					_context20.next = 28;
+					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].setTimeInSeconds, endDateMoment.clone(), endTimeSeconds);
+
+				case 28:
+					endDateTimeMoment = _context20.sent;
+					_context20.next = 31;
+					return Object(effects["b" /* call */])([startDateTimeMoment, 'isSameOrAfter'], endDateTimeMoment);
+
+				case 31:
+					durationHasError = _context20.sent;
+
+
+					if (durationHasError) {
+						hasDurationError = true;
+					}
+
+				case 33:
+					_context20.next = 35;
+					return Object(effects["e" /* put */])(actions["setTicketHasDurationError"](clientId, hasDurationError));
+
+				case 35:
+				case 'end':
+					return _context20.stop();
+			}
+		}
+	}, _marked20, this);
+}
+
+function handleTicketStartDate(action) {
+	var _action$payload5, clientId, date, dayPickerInput, startDateMoment, startDate;
+
+	return regenerator_default.a.wrap(function handleTicketStartDate$(_context21) {
+		while (1) {
+			switch (_context21.prev = _context21.next) {
+				case 0:
+					_action$payload5 = action.payload, clientId = _action$payload5.clientId, date = _action$payload5.date, dayPickerInput = _action$payload5.dayPickerInput;
+					_context21.next = 3;
+					return date ? Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toMoment, date) : undefined;
+
+				case 3:
+					startDateMoment = _context21.sent;
+					_context21.next = 6;
+					return date ? Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDatabaseDate, startDateMoment) : '';
+
+				case 6:
+					startDate = _context21.sent;
+					_context21.next = 9;
+					return Object(effects["e" /* put */])(actions["setTicketTempStartDate"](clientId, startDate));
+
+				case 9:
+					_context21.next = 11;
+					return Object(effects["e" /* put */])(actions["setTicketTempStartDateInput"](clientId, dayPickerInput.state.value));
+
+				case 11:
+					_context21.next = 13;
+					return Object(effects["e" /* put */])(actions["setTicketTempStartDateMoment"](clientId, startDateMoment));
+
+				case 13:
+				case 'end':
+					return _context21.stop();
+			}
+		}
+	}, _marked21, this);
+}
+
+function handleTicketEndDate(action) {
+	var _action$payload6, clientId, date, dayPickerInput, endDateMoment, endDate;
+
+	return regenerator_default.a.wrap(function handleTicketEndDate$(_context22) {
+		while (1) {
+			switch (_context22.prev = _context22.next) {
+				case 0:
+					_action$payload6 = action.payload, clientId = _action$payload6.clientId, date = _action$payload6.date, dayPickerInput = _action$payload6.dayPickerInput;
+					_context22.next = 3;
+					return date ? Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toMoment, date) : undefined;
+
+				case 3:
+					endDateMoment = _context22.sent;
+					_context22.next = 6;
+					return date ? Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDatabaseDate, endDateMoment) : '';
+
+				case 6:
+					endDate = _context22.sent;
+					_context22.next = 9;
+					return Object(effects["e" /* put */])(actions["setTicketTempEndDate"](clientId, endDate));
+
+				case 9:
+					_context22.next = 11;
+					return Object(effects["e" /* put */])(actions["setTicketTempEndDateInput"](clientId, dayPickerInput.state.value));
+
+				case 11:
+					_context22.next = 13;
+					return Object(effects["e" /* put */])(actions["setTicketTempEndDateMoment"](clientId, endDateMoment));
+
+				case 13:
+				case 'end':
+					return _context22.stop();
+			}
+		}
+	}, _marked22, this);
+}
+
+function handleTicketStartTime(action) {
+	var _action$payload7, clientId, seconds, startTime;
+
+	return regenerator_default.a.wrap(function handleTicketStartTime$(_context23) {
+		while (1) {
+			switch (_context23.prev = _context23.next) {
+				case 0:
+					_action$payload7 = action.payload, clientId = _action$payload7.clientId, seconds = _action$payload7.seconds;
+					_context23.next = 3;
+					return Object(effects["b" /* call */])(external_tribe_common_utils_["time"].fromSeconds, seconds, external_tribe_common_utils_["time"].TIME_FORMAT_HH_MM);
+
+				case 3:
+					startTime = _context23.sent;
+					_context23.next = 6;
+					return Object(effects["e" /* put */])(actions["setTicketTempStartTime"](clientId, startTime + ':00'));
+
+				case 6:
+				case 'end':
+					return _context23.stop();
+			}
+		}
+	}, _marked23, this);
+}
+
+function handleTicketStartTimeInput(action) {
+	var _action$payload8, clientId, seconds, startTime, startTimeMoment, startTimeInput;
+
+	return regenerator_default.a.wrap(function handleTicketStartTimeInput$(_context24) {
+		while (1) {
+			switch (_context24.prev = _context24.next) {
+				case 0:
+					_action$payload8 = action.payload, clientId = _action$payload8.clientId, seconds = _action$payload8.seconds;
+					_context24.next = 3;
+					return Object(effects["b" /* call */])(external_tribe_common_utils_["time"].fromSeconds, seconds, external_tribe_common_utils_["time"].TIME_FORMAT_HH_MM);
+
+				case 3:
+					startTime = _context24.sent;
+					_context24.next = 6;
+					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toMoment, startTime, external_tribe_common_utils_["moment"].TIME_FORMAT, false);
+
+				case 6:
+					startTimeMoment = _context24.sent;
+					_context24.next = 9;
+					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toTime, startTimeMoment);
+
+				case 9:
+					startTimeInput = _context24.sent;
+					_context24.next = 12;
+					return Object(effects["e" /* put */])(actions["setTicketTempStartTimeInput"](clientId, startTimeInput));
+
+				case 12:
+				case 'end':
+					return _context24.stop();
+			}
+		}
+	}, _marked24, this);
+}
+
+function handleTicketEndTime(action) {
+	var _action$payload9, clientId, seconds, endTime;
+
+	return regenerator_default.a.wrap(function handleTicketEndTime$(_context25) {
+		while (1) {
+			switch (_context25.prev = _context25.next) {
+				case 0:
+					_action$payload9 = action.payload, clientId = _action$payload9.clientId, seconds = _action$payload9.seconds;
+					_context25.next = 3;
+					return Object(effects["b" /* call */])(external_tribe_common_utils_["time"].fromSeconds, seconds, external_tribe_common_utils_["time"].TIME_FORMAT_HH_MM);
+
+				case 3:
+					endTime = _context25.sent;
+					_context25.next = 6;
+					return Object(effects["e" /* put */])(actions["setTicketTempEndTime"](clientId, endTime + ':00'));
+
+				case 6:
+				case 'end':
+					return _context25.stop();
+			}
+		}
+	}, _marked25, this);
+}
+
+function handleTicketEndTimeInput(action) {
+	var _action$payload10, clientId, seconds, endTime, endTimeMoment, endTimeInput;
+
+	return regenerator_default.a.wrap(function handleTicketEndTimeInput$(_context26) {
+		while (1) {
+			switch (_context26.prev = _context26.next) {
+				case 0:
+					_action$payload10 = action.payload, clientId = _action$payload10.clientId, seconds = _action$payload10.seconds;
+					_context26.next = 3;
+					return Object(effects["b" /* call */])(external_tribe_common_utils_["time"].fromSeconds, seconds, external_tribe_common_utils_["time"].TIME_FORMAT_HH_MM);
+
+				case 3:
+					endTime = _context26.sent;
+					_context26.next = 6;
+					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toMoment, endTime, external_tribe_common_utils_["moment"].TIME_FORMAT, false);
+
+				case 6:
+					endTimeMoment = _context26.sent;
+					_context26.next = 9;
+					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toTime, endTimeMoment);
+
+				case 9:
+					endTimeInput = _context26.sent;
+					_context26.next = 12;
+					return Object(effects["e" /* put */])(actions["setTicketTempEndTimeInput"](clientId, endTimeInput));
+
+				case 12:
+				case 'end':
+					return _context26.stop();
+			}
+		}
+	}, _marked26, this);
+}
+
+function handleTicketMove() {
+	var ticketClientIds, modalClientId;
+	return regenerator_default.a.wrap(function handleTicketMove$(_context27) {
+		while (1) {
+			switch (_context27.prev = _context27.next) {
+				case 0:
+					_context27.next = 2;
+					return Object(effects["f" /* select */])(getTicketsAllClientIds);
+
+				case 2:
+					ticketClientIds = _context27.sent;
+					_context27.next = 5;
+					return Object(effects["f" /* select */])(selectors["a" /* getModalClientId */]);
+
+				case 5:
+					modalClientId = _context27.sent;
+
+					if (!ticketClientIds.includes(modalClientId)) {
+						_context27.next = 13;
+						break;
+					}
+
+					_context27.next = 9;
+					return Object(effects["e" /* put */])(actions["setTicketIsSelected"](modalClientId, false));
+
+				case 9:
+					_context27.next = 11;
+					return Object(effects["e" /* put */])(actions["removeTicketBlock"](modalClientId));
+
+				case 11:
+					_context27.next = 13;
+					return Object(effects["b" /* call */])([Object(external_var_wp_data_root_wp_data_["dispatch"])('core/editor'), 'removeBlocks'], [modalClientId]);
+
+				case 13:
+				case 'end':
+					return _context27.stop();
+			}
+		}
+	}, _marked27, this);
+}
+
+function handler(action) {
+	return regenerator_default.a.wrap(function handler$(_context28) {
+		while (1) {
+			switch (_context28.prev = _context28.next) {
+				case 0:
+					_context28.t0 = action.type;
+					_context28.next = _context28.t0 === types["SET_TICKETS_INITIAL_STATE"] ? 3 : _context28.t0 === types["RESET_TICKETS_BLOCK"] ? 6 : _context28.t0 === types["SET_TICKET_INITIAL_STATE"] ? 9 : _context28.t0 === types["FETCH_TICKET"] ? 12 : _context28.t0 === types["CREATE_NEW_TICKET"] ? 15 : _context28.t0 === types["UPDATE_TICKET"] ? 18 : _context28.t0 === types["DELETE_TICKET"] ? 21 : _context28.t0 === types["FETCH_TICKETS_HEADER_IMAGE"] ? 24 : _context28.t0 === types["UPDATE_TICKETS_HEADER_IMAGE"] ? 27 : _context28.t0 === types["DELETE_TICKETS_HEADER_IMAGE"] ? 30 : _context28.t0 === types["SET_TICKET_DETAILS"] ? 33 : _context28.t0 === types["SET_TICKET_TEMP_DETAILS"] ? 36 : _context28.t0 === types["HANDLE_TICKET_START_DATE"] ? 39 : _context28.t0 === types["HANDLE_TICKET_END_DATE"] ? 46 : _context28.t0 === types["HANDLE_TICKET_START_TIME"] ? 53 : _context28.t0 === types["HANDLE_TICKET_END_TIME"] ? 62 : _context28.t0 === move_types["k" /* MOVE_TICKET_SUCCESS */] ? 71 : 74;
+					break;
+
+				case 3:
+					_context28.next = 5;
+					return Object(effects["b" /* call */])(setTicketsInitialState, action);
+
+				case 5:
+					return _context28.abrupt('break', 75);
+
+				case 6:
+					_context28.next = 8;
+					return Object(effects["b" /* call */])(resetTicketsBlock);
+
+				case 8:
+					return _context28.abrupt('break', 75);
+
+				case 9:
+					_context28.next = 11;
+					return Object(effects["b" /* call */])(setTicketInitialState, action);
+
+				case 11:
+					return _context28.abrupt('break', 75);
+
+				case 12:
+					_context28.next = 14;
+					return Object(effects["b" /* call */])(fetchTicket, action);
+
+				case 14:
+					return _context28.abrupt('break', 75);
+
+				case 15:
+					_context28.next = 17;
+					return Object(effects["b" /* call */])(createNewTicket, action);
+
+				case 17:
+					return _context28.abrupt('break', 75);
+
+				case 18:
+					_context28.next = 20;
+					return Object(effects["b" /* call */])(updateTicket, action);
+
+				case 20:
+					return _context28.abrupt('break', 75);
+
+				case 21:
+					_context28.next = 23;
+					return Object(effects["b" /* call */])(deleteTicket, action);
+
+				case 23:
+					return _context28.abrupt('break', 75);
+
+				case 24:
+					_context28.next = 26;
+					return Object(effects["b" /* call */])(fetchTicketsHeaderImage, action);
+
+				case 26:
+					return _context28.abrupt('break', 75);
+
+				case 27:
+					_context28.next = 29;
+					return Object(effects["b" /* call */])(updateTicketsHeaderImage, action);
+
+				case 29:
+					return _context28.abrupt('break', 75);
+
+				case 30:
+					_context28.next = 32;
+					return Object(effects["b" /* call */])(deleteTicketsHeaderImage);
+
+				case 32:
+					return _context28.abrupt('break', 75);
+
+				case 33:
+					_context28.next = 35;
+					return Object(effects["b" /* call */])(setTicketDetails, action);
+
+				case 35:
+					return _context28.abrupt('break', 75);
+
+				case 36:
+					_context28.next = 38;
+					return Object(effects["b" /* call */])(setTicketTempDetails, action);
+
+				case 38:
+					return _context28.abrupt('break', 75);
+
+				case 39:
+					_context28.next = 41;
+					return Object(effects["b" /* call */])(handleTicketStartDate, action);
+
+				case 41:
+					_context28.next = 43;
+					return Object(effects["b" /* call */])(handleTicketDurationError, action.payload.clientId);
+
+				case 43:
+					_context28.next = 45;
+					return Object(effects["e" /* put */])(actions["setTicketHasChanges"](action.payload.clientId, true));
+
+				case 45:
+					return _context28.abrupt('break', 75);
+
+				case 46:
+					_context28.next = 48;
+					return Object(effects["b" /* call */])(handleTicketEndDate, action);
+
+				case 48:
+					_context28.next = 50;
+					return Object(effects["b" /* call */])(handleTicketDurationError, action.payload.clientId);
+
+				case 50:
+					_context28.next = 52;
+					return Object(effects["e" /* put */])(actions["setTicketHasChanges"](action.payload.clientId, true));
+
+				case 52:
+					return _context28.abrupt('break', 75);
+
+				case 53:
+					_context28.next = 55;
+					return Object(effects["b" /* call */])(handleTicketStartTime, action);
+
+				case 55:
+					_context28.next = 57;
+					return Object(effects["b" /* call */])(handleTicketStartTimeInput, action);
+
+				case 57:
+					_context28.next = 59;
+					return Object(effects["b" /* call */])(handleTicketDurationError, action.payload.clientId);
+
+				case 59:
+					_context28.next = 61;
+					return Object(effects["e" /* put */])(actions["setTicketHasChanges"](action.payload.clientId, true));
+
+				case 61:
+					return _context28.abrupt('break', 75);
+
+				case 62:
+					_context28.next = 64;
+					return Object(effects["b" /* call */])(handleTicketEndTime, action);
+
+				case 64:
+					_context28.next = 66;
+					return Object(effects["b" /* call */])(handleTicketEndTimeInput, action);
+
+				case 66:
+					_context28.next = 68;
+					return Object(effects["b" /* call */])(handleTicketDurationError, action.payload.clientId);
+
+				case 68:
+					_context28.next = 70;
+					return Object(effects["e" /* put */])(actions["setTicketHasChanges"](action.payload.clientId, true));
+
+				case 70:
+					return _context28.abrupt('break', 75);
+
+				case 71:
+					_context28.next = 73;
+					return Object(effects["b" /* call */])(handleTicketMove);
+
+				case 73:
+					return _context28.abrupt('break', 75);
+
+				case 74:
+					return _context28.abrupt('break', 75);
+
+				case 75:
+				case 'end':
+					return _context28.stop();
+			}
+		}
+	}, _marked28, this);
+}
+
+function watchers() {
+	return regenerator_default.a.wrap(function watchers$(_context29) {
+		while (1) {
+			switch (_context29.prev = _context29.next) {
+				case 0:
+					_context29.next = 2;
+					return Object(effects["h" /* takeEvery */])([types["SET_TICKETS_INITIAL_STATE"], types["RESET_TICKETS_BLOCK"], types["SET_TICKET_INITIAL_STATE"], types["FETCH_TICKET"], types["CREATE_NEW_TICKET"], types["UPDATE_TICKET"], types["DELETE_TICKET"], types["FETCH_TICKETS_HEADER_IMAGE"], types["UPDATE_TICKETS_HEADER_IMAGE"], types["DELETE_TICKETS_HEADER_IMAGE"], types["SET_TICKET_DETAILS"], types["SET_TICKET_TEMP_DETAILS"], types["HANDLE_TICKET_START_DATE"], types["HANDLE_TICKET_END_DATE"], types["HANDLE_TICKET_START_TIME"], types["HANDLE_TICKET_END_TIME"], move_types["k" /* MOVE_TICKET_SUCCESS */]], handler);
+
+				case 2:
+					_context29.next = 4;
+					return Object(effects["d" /* fork */])(handleEventStartDateChanges);
+
+				case 4:
+				case 'end':
+					return _context29.stop();
+			}
+		}
+	}, _marked29, this);
+}
+// CONCATENATED MODULE: ./src/modules/data/blocks/ticket/index.js
+/**
+ * Internal dependencies
+ */
+
+
+
+
+
+
+
+
+
+
+/* harmony default export */ var blocks_ticket = __webpack_exports__["c"] = (reducer);
+
+
+
+/***/ }),
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module) {var require;//! moment.js
@@ -2185,7 +5928,7 @@ function loadLocale(name) {
         try {
             oldLocale = globalLocale._abbr;
             var aliasedRequire = require;
-            __webpack_require__(275)("./" + name);
+            __webpack_require__(277)("./" + name);
             getSetGlobalLocale(oldLocale);
         } catch (e) {}
     }
@@ -4857,10 +8600,10 @@ return hooks;
 
 })));
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(82)(module)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(83)(module)))
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4989,3684 +8732,6 @@ function createStructuredSelector(selectors) {
     }, {});
   });
 }
-
-/***/ }),
-/* 6 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-var options_namespaceObject = {};
-__webpack_require__.r(options_namespaceObject);
-__webpack_require__.d(options_namespaceObject, "CAPACITY_TYPE_OPTIONS", function() { return CAPACITY_TYPE_OPTIONS; });
-var selectors_namespaceObject = {};
-__webpack_require__.r(selectors_namespaceObject);
-__webpack_require__.d(selectors_namespaceObject, "getState", function() { return getState; });
-__webpack_require__.d(selectors_namespaceObject, "getBlock", function() { return getBlock; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketsIsSelected", function() { return getTicketsIsSelected; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketsIsSettingsOpen", function() { return getTicketsIsSettingsOpen; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketsIsSettingsLoading", function() { return getTicketsIsSettingsLoading; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketsProvider", function() { return getTicketsProvider; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketsSharedCapacity", function() { return getTicketsSharedCapacity; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketsSharedCapacityInt", function() { return getTicketsSharedCapacityInt; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketsTempSharedCapacity", function() { return getTicketsTempSharedCapacity; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketsTempSharedCapacityInt", function() { return getTicketsTempSharedCapacityInt; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketsHeaderImage", function() { return getTicketsHeaderImage; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketsHeaderImageId", function() { return getTicketsHeaderImageId; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketsHeaderImageSrc", function() { return getTicketsHeaderImageSrc; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketsHeaderImageAlt", function() { return getTicketsHeaderImageAlt; });
-__webpack_require__.d(selectors_namespaceObject, "getTickets", function() { return getTickets; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketsAllClientIds", function() { return getTicketsAllClientIds; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketsByClientId", function() { return getTicketsByClientId; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketsArray", function() { return getTicketsArray; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketsCount", function() { return getTicketsCount; });
-__webpack_require__.d(selectors_namespaceObject, "hasTickets", function() { return hasTickets; });
-__webpack_require__.d(selectors_namespaceObject, "hasCreatedTickets", function() { return selectors_hasCreatedTickets; });
-__webpack_require__.d(selectors_namespaceObject, "getIndependentTickets", function() { return getIndependentTickets; });
-__webpack_require__.d(selectors_namespaceObject, "getSharedTickets", function() { return getSharedTickets; });
-__webpack_require__.d(selectors_namespaceObject, "getSharedTicketsCount", function() { return getSharedTicketsCount; });
-__webpack_require__.d(selectors_namespaceObject, "getUnlimitedTickets", function() { return getUnlimitedTickets; });
-__webpack_require__.d(selectors_namespaceObject, "hasATicketSelected", function() { return hasATicketSelected; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketsIdsInBlocks", function() { return getTicketsIdsInBlocks; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketClientId", function() { return getTicketClientId; });
-__webpack_require__.d(selectors_namespaceObject, "getTicket", function() { return getTicket; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketSold", function() { return getTicketSold; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketAvailable", function() { return getTicketAvailable; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketId", function() { return getTicketId; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketCurrencySymbol", function() { return getTicketCurrencySymbol; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketCurrencyPosition", function() { return getTicketCurrencyPosition; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketProvider", function() { return getTicketProvider; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketHasAttendeeInfoFields", function() { return getTicketHasAttendeeInfoFields; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketIsLoading", function() { return getTicketIsLoading; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketIsModalOpen", function() { return getTicketIsModalOpen; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketHasBeenCreated", function() { return getTicketHasBeenCreated; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketHasChanges", function() { return getTicketHasChanges; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketHasDurationError", function() { return getTicketHasDurationError; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketIsSelected", function() { return getTicketIsSelected; });
-__webpack_require__.d(selectors_namespaceObject, "isTicketDisabled", function() { return isTicketDisabled; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketDetails", function() { return getTicketDetails; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketTitle", function() { return getTicketTitle; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketDescription", function() { return getTicketDescription; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketPrice", function() { return getTicketPrice; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketSku", function() { return getTicketSku; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketStartDate", function() { return getTicketStartDate; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketStartDateInput", function() { return getTicketStartDateInput; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketStartDateMoment", function() { return getTicketStartDateMoment; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketEndDate", function() { return getTicketEndDate; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketEndDateInput", function() { return getTicketEndDateInput; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketEndDateMoment", function() { return getTicketEndDateMoment; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketStartTime", function() { return getTicketStartTime; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketStartTimeNoSeconds", function() { return getTicketStartTimeNoSeconds; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketEndTime", function() { return getTicketEndTime; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketEndTimeNoSeconds", function() { return getTicketEndTimeNoSeconds; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketStartTimeInput", function() { return getTicketStartTimeInput; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketEndTimeInput", function() { return getTicketEndTimeInput; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketCapacityType", function() { return getTicketCapacityType; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketCapacity", function() { return getTicketCapacity; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketCapacityInt", function() { return getTicketCapacityInt; });
-__webpack_require__.d(selectors_namespaceObject, "isUnlimitedTicket", function() { return isUnlimitedTicket; });
-__webpack_require__.d(selectors_namespaceObject, "isSharedTicket", function() { return isSharedTicket; });
-__webpack_require__.d(selectors_namespaceObject, "isIndependentTicket", function() { return isIndependentTicket; });
-__webpack_require__.d(selectors_namespaceObject, "isTicketPast", function() { return isTicketPast; });
-__webpack_require__.d(selectors_namespaceObject, "isTicketFuture", function() { return isTicketFuture; });
-__webpack_require__.d(selectors_namespaceObject, "isTicketOnSale", function() { return isTicketOnSale; });
-__webpack_require__.d(selectors_namespaceObject, "hasTicketOnSale", function() { return hasTicketOnSale; });
-__webpack_require__.d(selectors_namespaceObject, "allTicketsPast", function() { return allTicketsPast; });
-__webpack_require__.d(selectors_namespaceObject, "allTicketsFuture", function() { return allTicketsFuture; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketTempDetails", function() { return getTicketTempDetails; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketTempTitle", function() { return getTicketTempTitle; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketTempDescription", function() { return getTicketTempDescription; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketTempPrice", function() { return getTicketTempPrice; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketTempSku", function() { return getTicketTempSku; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketTempStartDate", function() { return getTicketTempStartDate; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketTempStartDateInput", function() { return getTicketTempStartDateInput; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketTempStartDateMoment", function() { return getTicketTempStartDateMoment; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketTempEndDate", function() { return getTicketTempEndDate; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketTempEndDateInput", function() { return getTicketTempEndDateInput; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketTempEndDateMoment", function() { return getTicketTempEndDateMoment; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketTempStartTime", function() { return getTicketTempStartTime; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketTempStartTimeNoSeconds", function() { return getTicketTempStartTimeNoSeconds; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketTempEndTime", function() { return getTicketTempEndTime; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketTempEndTimeNoSeconds", function() { return getTicketTempEndTimeNoSeconds; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketTempStartTimeInput", function() { return getTicketTempStartTimeInput; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketTempEndTimeInput", function() { return getTicketTempEndTimeInput; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketTempCapacityType", function() { return getTicketTempCapacityType; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketTempCapacity", function() { return getTicketTempCapacity; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketTempCapacityInt", function() { return getTicketTempCapacityInt; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketTempCapacityTypeOption", function() { return getTicketTempCapacityTypeOption; });
-__webpack_require__.d(selectors_namespaceObject, "isTempTitleValid", function() { return isTempTitleValid; });
-__webpack_require__.d(selectors_namespaceObject, "isTempCapacityValid", function() { return isTempCapacityValid; });
-__webpack_require__.d(selectors_namespaceObject, "isTempSharedCapacityValid", function() { return isTempSharedCapacityValid; });
-__webpack_require__.d(selectors_namespaceObject, "isZeroPriceValid", function() { return isZeroPriceValid; });
-__webpack_require__.d(selectors_namespaceObject, "isTicketValid", function() { return isTicketValid; });
-__webpack_require__.d(selectors_namespaceObject, "_getTotalCapacity", function() { return _getTotalCapacity; });
-__webpack_require__.d(selectors_namespaceObject, "_getTotalTempCapacity", function() { return _getTotalTempCapacity; });
-__webpack_require__.d(selectors_namespaceObject, "_getTotalSold", function() { return _getTotalSold; });
-__webpack_require__.d(selectors_namespaceObject, "_getTotalAvailable", function() { return _getTotalAvailable; });
-__webpack_require__.d(selectors_namespaceObject, "getIndependentTicketsCapacity", function() { return getIndependentTicketsCapacity; });
-__webpack_require__.d(selectors_namespaceObject, "getIndependentTicketsTempCapacity", function() { return getIndependentTicketsTempCapacity; });
-__webpack_require__.d(selectors_namespaceObject, "getIndependentTicketsSold", function() { return getIndependentTicketsSold; });
-__webpack_require__.d(selectors_namespaceObject, "getIndependentTicketsAvailable", function() { return getIndependentTicketsAvailable; });
-__webpack_require__.d(selectors_namespaceObject, "getSharedTicketsSold", function() { return getSharedTicketsSold; });
-__webpack_require__.d(selectors_namespaceObject, "getSharedTicketsAvailable", function() { return getSharedTicketsAvailable; });
-__webpack_require__.d(selectors_namespaceObject, "getIndependentAndSharedTicketsCapacity", function() { return getIndependentAndSharedTicketsCapacity; });
-__webpack_require__.d(selectors_namespaceObject, "getIndependentAndSharedTicketsTempCapacity", function() { return getIndependentAndSharedTicketsTempCapacity; });
-__webpack_require__.d(selectors_namespaceObject, "getIndependentAndSharedTicketsSold", function() { return getIndependentAndSharedTicketsSold; });
-__webpack_require__.d(selectors_namespaceObject, "getIndependentAndSharedTicketsAvailable", function() { return getIndependentAndSharedTicketsAvailable; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketProviders", function() { return getTicketProviders; });
-__webpack_require__.d(selectors_namespaceObject, "getDefaultTicketProvider", function() { return getDefaultTicketProvider; });
-__webpack_require__.d(selectors_namespaceObject, "hasValidTicketProvider", function() { return selectors_hasValidTicketProvider; });
-__webpack_require__.d(selectors_namespaceObject, "hasMultipleTicketProviders", function() { return hasMultipleTicketProviders; });
-__webpack_require__.d(selectors_namespaceObject, "hasTicketProviders", function() { return hasTicketProviders; });
-__webpack_require__.d(selectors_namespaceObject, "canCreateTickets", function() { return canCreateTickets; });
-
-// EXTERNAL MODULE: ./node_modules/babel-runtime/helpers/extends.js
-var helpers_extends = __webpack_require__(9);
-var extends_default = /*#__PURE__*/__webpack_require__.n(helpers_extends);
-
-// EXTERNAL MODULE: ./node_modules/babel-runtime/helpers/toConsumableArray.js
-var toConsumableArray = __webpack_require__(262);
-var toConsumableArray_default = /*#__PURE__*/__webpack_require__.n(toConsumableArray);
-
-// EXTERNAL MODULE: ./node_modules/babel-runtime/helpers/defineProperty.js
-var defineProperty = __webpack_require__(25);
-var defineProperty_default = /*#__PURE__*/__webpack_require__.n(defineProperty);
-
-// EXTERNAL MODULE: ./node_modules/redux/es/redux.js
-var redux = __webpack_require__(16);
-
-// EXTERNAL MODULE: ./node_modules/lodash/omit.js
-var omit = __webpack_require__(322);
-var omit_default = /*#__PURE__*/__webpack_require__.n(omit);
-
-// EXTERNAL MODULE: ./src/modules/data/blocks/ticket/types.js
-var types = __webpack_require__(2);
-
-// EXTERNAL MODULE: ./node_modules/babel-runtime/helpers/slicedToArray.js
-var slicedToArray = __webpack_require__(43);
-var slicedToArray_default = /*#__PURE__*/__webpack_require__.n(slicedToArray);
-
-// EXTERNAL MODULE: external "tribe.common.utils"
-var external_tribe_common_utils_ = __webpack_require__(3);
-
-// EXTERNAL MODULE: ./node_modules/lodash/trim.js
-var trim = __webpack_require__(87);
-var trim_default = /*#__PURE__*/__webpack_require__.n(trim);
-
-// EXTERNAL MODULE: ./node_modules/lodash/find.js
-var find = __webpack_require__(85);
-var find_default = /*#__PURE__*/__webpack_require__.n(find);
-
-// EXTERNAL MODULE: ./node_modules/reselect/lib/index.js
-var lib = __webpack_require__(5);
-
-// EXTERNAL MODULE: ./node_modules/moment/moment.js
-var moment = __webpack_require__(4);
-var moment_default = /*#__PURE__*/__webpack_require__.n(moment);
-
-// EXTERNAL MODULE: ./src/modules/data/blocks/ticket/constants.js
-var constants = __webpack_require__(23);
-
-// EXTERNAL MODULE: external {"var":"wp.i18n","root":["wp","i18n"]}
-var external_var_wp_i18n_root_wp_i18n_ = __webpack_require__(15);
-
-// CONCATENATED MODULE: ./src/modules/data/blocks/ticket/options.js
-/**
- * External dependencies
- */
-
-
-/**
- * Internal dependencies
- */
-
-
-var CAPACITY_TYPE_OPTIONS = [{
-	label: Object(external_var_wp_i18n_root_wp_i18n_["__"])('Share capacity with other tickets', 'event-tickets'),
-	value: constants["TICKET_TYPES"][constants["SHARED"]]
-}, {
-	label: Object(external_var_wp_i18n_root_wp_i18n_["__"])('Set capacity for this ticket only', 'event-tickets'),
-	value: constants["TICKET_TYPES"][constants["INDEPENDENT"]]
-}, {
-	label: Object(external_var_wp_i18n_root_wp_i18n_["__"])('Unlimited', 'event-tickets'),
-	value: constants["TICKET_TYPES"][constants["UNLIMITED"]]
-}];
-// CONCATENATED MODULE: ./src/modules/data/blocks/ticket/selectors.js
-
-
-/**
- * External dependencies
- */
-
-
-
-
-/**
- * Internal dependencies
- */
-
-
-
-
-var UNLIMITED = constants["UNLIMITED"],
-    INDEPENDENT = constants["INDEPENDENT"],
-    SHARED = constants["SHARED"],
-    TICKET_TYPES = constants["TICKET_TYPES"];
-var ticketsConfig = external_tribe_common_utils_["globals"].tickets;
-
-
-var getState = function getState(state) {
-	return state;
-};
-var getBlock = function getBlock(state) {
-	return state.tickets.blocks.ticket;
-};
-
-//
-// ─── BLOCK SELECTORS ────────────────────────────────────────────────────────────
-//
-
-var getTicketsIsSelected = Object(lib["createSelector"])([getBlock], function (block) {
-	return block.isSelected;
-});
-
-var getTicketsIsSettingsOpen = Object(lib["createSelector"])([getBlock], function (block) {
-	return block.isSettingsOpen;
-});
-
-var getTicketsIsSettingsLoading = Object(lib["createSelector"])([getBlock], function (block) {
-	return block.isSettingsLoading;
-});
-
-var getTicketsProvider = Object(lib["createSelector"])([getBlock], function (block) {
-	return block.provider;
-});
-
-var getTicketsSharedCapacity = Object(lib["createSelector"])([getBlock], function (block) {
-	return block.sharedCapacity;
-});
-
-var getTicketsSharedCapacityInt = Object(lib["createSelector"])([getTicketsSharedCapacity], function (capacity) {
-	return parseInt(capacity, 10) || 0;
-});
-
-var getTicketsTempSharedCapacity = Object(lib["createSelector"])([getBlock], function (block) {
-	return block.tempSharedCapacity;
-});
-
-var getTicketsTempSharedCapacityInt = Object(lib["createSelector"])([getTicketsTempSharedCapacity], function (capacity) {
-	return parseInt(capacity, 10) || 0;
-});
-
-//
-// ─── HEADER IMAGE SELECTORS ─────────────────────────────────────────────────────
-//
-
-var getTicketsHeaderImage = Object(lib["createSelector"])([getBlock], function (block) {
-	return block.headerImage;
-});
-
-var getTicketsHeaderImageId = Object(lib["createSelector"])([getTicketsHeaderImage], function (headerImage) {
-	return headerImage.id;
-});
-
-var getTicketsHeaderImageSrc = Object(lib["createSelector"])([getTicketsHeaderImage], function (headerImage) {
-	return headerImage.src;
-});
-
-var getTicketsHeaderImageAlt = Object(lib["createSelector"])([getTicketsHeaderImage], function (headerImage) {
-	return headerImage.alt;
-});
-
-//
-// ─── TICKETS SELECTORS ──────────────────────────────────────────────────────────
-//
-
-var getTickets = Object(lib["createSelector"])([getBlock], function (block) {
-	return block.tickets;
-});
-
-var getTicketsAllClientIds = Object(lib["createSelector"])([getTickets], function (tickets) {
-	return tickets.allClientIds;
-});
-
-var getTicketsByClientId = Object(lib["createSelector"])([getTickets], function (tickets) {
-	return tickets.byClientId;
-});
-
-var getTicketsArray = Object(lib["createSelector"])([getTicketsAllClientIds, getTicketsByClientId], function (ids, tickets) {
-	return ids.map(function (id) {
-		return tickets[id];
-	});
-});
-
-var getTicketsCount = Object(lib["createSelector"])([getTicketsAllClientIds], function (allClientIds) {
-	return allClientIds.length;
-});
-
-var hasTickets = Object(lib["createSelector"])([getTicketsCount], function (count) {
-	return count > 0;
-});
-
-var selectors_hasCreatedTickets = Object(lib["createSelector"])([getTicketsArray], function (tickets) {
-	return tickets.reduce(function (hasCreated, ticket) {
-		return hasCreated || ticket.hasBeenCreated;
-	}, false);
-});
-
-var getIndependentTickets = Object(lib["createSelector"])([getTicketsArray], function (tickets) {
-	return tickets.filter(function (ticket) {
-		return ticket.details.capacityType === TICKET_TYPES[INDEPENDENT];
-	});
-});
-
-var getSharedTickets = Object(lib["createSelector"])([getTicketsArray], function (tickets) {
-	return tickets.filter(function (ticket) {
-		return ticket.details.capacityType === TICKET_TYPES[SHARED];
-	});
-});
-
-var getSharedTicketsCount = Object(lib["createSelector"])([getSharedTickets], function (tickets) {
-	return tickets.length;
-});
-
-var getUnlimitedTickets = Object(lib["createSelector"])([getTicketsArray], function (tickets) {
-	return tickets.filter(function (ticket) {
-		return ticket.details.capacityType === TICKET_TYPES[UNLIMITED];
-	});
-});
-
-var hasATicketSelected = Object(lib["createSelector"])([getTicketsArray], function (tickets) {
-	return tickets.reduce(function (selected, ticket) {
-		return selected || ticket.isSelected;
-	}, false);
-});
-
-var getTicketsIdsInBlocks = Object(lib["createSelector"])([getTicketsArray], function (tickets) {
-	return tickets.reduce(function (accumulator, ticket) {
-		if (ticket.ticketId !== 0) {
-			accumulator.push(ticket.ticketId);
-		}
-		return accumulator;
-	}, []);
-});
-
-//
-// ─── TICKET SELECTORS ───────────────────────────────────────────────────────────
-//
-
-var getTicketClientId = function getTicketClientId(state, ownProps) {
-	return ownProps.clientId;
-};
-
-var getTicket = Object(lib["createSelector"])([getTicketsByClientId, getTicketClientId], function (tickets, clientId) {
-	return tickets[clientId] || {};
-});
-
-var getTicketSold = Object(lib["createSelector"])([getTicket], function (ticket) {
-	return ticket.sold;
-});
-
-var getTicketAvailable = Object(lib["createSelector"])([getTicket], function (ticket) {
-	return ticket.available;
-});
-
-var getTicketId = Object(lib["createSelector"])([getTicket], function (ticket) {
-	return ticket.ticketId;
-});
-
-var getTicketCurrencySymbol = Object(lib["createSelector"])([getTicket], function (ticket) {
-	return ticket.currencySymbol;
-});
-
-var getTicketCurrencyPosition = Object(lib["createSelector"])([getTicket], function (ticket) {
-	return ticket.currencyPosition;
-});
-
-var getTicketProvider = Object(lib["createSelector"])([getTicket], function (ticket) {
-	return ticket.provider;
-});
-
-var getTicketHasAttendeeInfoFields = Object(lib["createSelector"])([getTicket], function (ticket) {
-	return ticket.hasAttendeeInfoFields;
-});
-
-var getTicketIsLoading = Object(lib["createSelector"])([getTicket], function (ticket) {
-	return ticket.isLoading;
-});
-
-var getTicketIsModalOpen = Object(lib["createSelector"])([getTicket], function (ticket) {
-	return ticket.isModalOpen;
-});
-
-var getTicketHasBeenCreated = Object(lib["createSelector"])([getTicket], function (ticket) {
-	return ticket.hasBeenCreated;
-});
-
-var getTicketHasChanges = Object(lib["createSelector"])([getTicket], function (ticket) {
-	return ticket.hasChanges;
-});
-
-var getTicketHasDurationError = Object(lib["createSelector"])([getTicket], function (ticket) {
-	return ticket.hasDurationError;
-});
-
-var getTicketIsSelected = Object(lib["createSelector"])([getTicket], function (ticket) {
-	return ticket.isSelected;
-});
-
-var isTicketDisabled = Object(lib["createSelector"])([hasATicketSelected, getTicketIsSelected, getTicketIsLoading, getTicketsIsSettingsOpen], function (hasSelected, isSelected, isLoading, isSettingsOpen) {
-	return hasSelected && !isSelected || isLoading || isSettingsOpen;
-});
-
-//
-// ─── TICKET DETAILS SELECTORS ───────────────────────────────────────────────────
-//
-
-var getTicketDetails = Object(lib["createSelector"])([getTicket], function (ticket) {
-	return ticket.details || {};
-});
-
-var getTicketTitle = Object(lib["createSelector"])([getTicketDetails], function (details) {
-	return details.title;
-});
-
-var getTicketDescription = Object(lib["createSelector"])([getTicketDetails], function (details) {
-	return details.description;
-});
-
-var getTicketPrice = Object(lib["createSelector"])([getTicketDetails], function (details) {
-	return details.price;
-});
-
-var getTicketSku = Object(lib["createSelector"])([getTicketDetails], function (details) {
-	return details.sku;
-});
-
-var getTicketStartDate = Object(lib["createSelector"])([getTicketDetails], function (details) {
-	return details.startDate;
-});
-
-var getTicketStartDateInput = Object(lib["createSelector"])([getTicketDetails], function (details) {
-	return details.startDateInput;
-});
-
-var getTicketStartDateMoment = Object(lib["createSelector"])([getTicketDetails], function (details) {
-	return details.startDateMoment;
-});
-
-var getTicketEndDate = Object(lib["createSelector"])([getTicketDetails], function (details) {
-	return details.endDate;
-});
-
-var getTicketEndDateInput = Object(lib["createSelector"])([getTicketDetails], function (details) {
-	return details.endDateInput;
-});
-
-var getTicketEndDateMoment = Object(lib["createSelector"])([getTicketDetails], function (details) {
-	return details.endDateMoment;
-});
-
-var getTicketStartTime = Object(lib["createSelector"])([getTicketDetails], function (details) {
-	return details.startTime || '';
-});
-
-var getTicketStartTimeNoSeconds = Object(lib["createSelector"])([getTicketStartTime], function (startTime) {
-	return startTime.slice(0, -3);
-});
-
-var getTicketEndTime = Object(lib["createSelector"])([getTicketDetails], function (details) {
-	return details.endTime || '';
-});
-
-var getTicketEndTimeNoSeconds = Object(lib["createSelector"])([getTicketEndTime], function (endTime) {
-	return endTime.slice(0, -3);
-});
-
-var getTicketStartTimeInput = Object(lib["createSelector"])([getTicketDetails], function (details) {
-	return details.startTimeInput;
-});
-
-var getTicketEndTimeInput = Object(lib["createSelector"])([getTicketDetails], function (details) {
-	return details.endTimeInput;
-});
-
-var getTicketCapacityType = Object(lib["createSelector"])([getTicketDetails], function (details) {
-	return details.capacityType;
-});
-
-var getTicketCapacity = Object(lib["createSelector"])([getTicketDetails], function (details) {
-	return details.capacity;
-});
-
-var getTicketCapacityInt = Object(lib["createSelector"])([getTicketCapacity], function (capacity) {
-	return parseInt(capacity, 10) || 0;
-});
-
-var isUnlimitedTicket = Object(lib["createSelector"])([getTicketDetails], function (details) {
-	return details.capacityType === TICKET_TYPES[UNLIMITED];
-});
-
-var isSharedTicket = Object(lib["createSelector"])([getTicketDetails], function (details) {
-	return details.capacityType === TICKET_TYPES[SHARED];
-});
-
-var isIndependentTicket = Object(lib["createSelector"])([getTicketDetails], function (details) {
-	return details.capacityType === TICKET_TYPES[INDEPENDENT];
-});
-
-var isTicketPast = Object(lib["createSelector"])([getTicketEndDateMoment], function (endDate) {
-	return moment_default()().isAfter(endDate);
-});
-
-var isTicketFuture = Object(lib["createSelector"])([getTicketStartDateMoment], function (startDate) {
-	return moment_default()().isBefore(startDate);
-});
-
-var isTicketOnSale = Object(lib["createSelector"])([getTicketHasBeenCreated, isTicketPast, isTicketFuture], function (hasBeenCreated, isPast, isFuture) {
-	return hasBeenCreated && !isPast && !isFuture;
-});
-
-var hasTicketOnSale = Object(lib["createSelector"])([getTicketsAllClientIds, getState], function (allClientIds, state) {
-	return allClientIds.reduce(function (onSale, clientId) {
-		return onSale || isTicketOnSale(state, { clientId: clientId });
-	}, false);
-});
-
-var allTicketsPast = Object(lib["createSelector"])([getTicketsAllClientIds, getState], function (allClientIds, state) {
-	return allClientIds.reduce(function (isPast, clientId) {
-		var props = { clientId: clientId };
-		return getTicketHasBeenCreated(state, props) ? isPast && isTicketPast(state, props) : isPast;
-	}, true);
-});
-
-var allTicketsFuture = Object(lib["createSelector"])([getTicketsAllClientIds, getState], function (allClientIds, state) {
-	return allClientIds.reduce(function (isFuture, clientId) {
-		var props = { clientId: clientId };
-		return getTicketHasBeenCreated(state, props) ? isFuture && isTicketFuture(state, props) : isFuture;
-	}, true);
-});
-
-//
-// ─── TICKET TEMP DETAILS SELECTORS ──────────────────────────────────────────────
-//
-
-var getTicketTempDetails = Object(lib["createSelector"])([getTicket], function (ticket) {
-	return ticket.tempDetails || {};
-});
-
-var getTicketTempTitle = Object(lib["createSelector"])([getTicketTempDetails], function (tempDetails) {
-	return tempDetails.title;
-});
-
-var getTicketTempDescription = Object(lib["createSelector"])([getTicketTempDetails], function (tempDetails) {
-	return tempDetails.description;
-});
-
-var getTicketTempPrice = Object(lib["createSelector"])([getTicketTempDetails], function (tempDetails) {
-	return tempDetails.price;
-});
-
-var getTicketTempSku = Object(lib["createSelector"])([getTicketTempDetails], function (tempDetails) {
-	return tempDetails.sku;
-});
-
-var getTicketTempStartDate = Object(lib["createSelector"])([getTicketTempDetails], function (tempDetails) {
-	return tempDetails.startDate;
-});
-
-var getTicketTempStartDateInput = Object(lib["createSelector"])([getTicketTempDetails], function (tempDetails) {
-	return tempDetails.startDateInput;
-});
-
-var getTicketTempStartDateMoment = Object(lib["createSelector"])([getTicketTempDetails], function (tempDetails) {
-	return tempDetails.startDateMoment;
-});
-
-var getTicketTempEndDate = Object(lib["createSelector"])([getTicketTempDetails], function (tempDetails) {
-	return tempDetails.endDate;
-});
-
-var getTicketTempEndDateInput = Object(lib["createSelector"])([getTicketTempDetails], function (tempDetails) {
-	return tempDetails.endDateInput;
-});
-
-var getTicketTempEndDateMoment = Object(lib["createSelector"])([getTicketTempDetails], function (tempDetails) {
-	return tempDetails.endDateMoment;
-});
-
-var getTicketTempStartTime = Object(lib["createSelector"])([getTicketTempDetails], function (tempDetails) {
-	return tempDetails.startTime || '';
-});
-
-var getTicketTempStartTimeNoSeconds = Object(lib["createSelector"])([getTicketTempStartTime], function (startTime) {
-	return startTime.slice(0, -3);
-});
-
-var getTicketTempEndTime = Object(lib["createSelector"])([getTicketTempDetails], function (tempDetails) {
-	return tempDetails.endTime || '';
-});
-
-var getTicketTempEndTimeNoSeconds = Object(lib["createSelector"])([getTicketTempEndTime], function (endTime) {
-	return endTime.slice(0, -3);
-});
-
-var getTicketTempStartTimeInput = Object(lib["createSelector"])([getTicketTempDetails], function (tempDetails) {
-	return tempDetails.startTimeInput;
-});
-
-var getTicketTempEndTimeInput = Object(lib["createSelector"])([getTicketTempDetails], function (tempDetails) {
-	return tempDetails.endTimeInput;
-});
-
-var getTicketTempCapacityType = Object(lib["createSelector"])([getTicketTempDetails], function (tempDetails) {
-	return tempDetails.capacityType;
-});
-
-var getTicketTempCapacity = Object(lib["createSelector"])([getTicketTempDetails], function (tempDetails) {
-	return tempDetails.capacity;
-});
-
-var getTicketTempCapacityInt = Object(lib["createSelector"])([getTicketTempCapacity], function (capacity) {
-	return parseInt(capacity, 10) || 0;
-});
-
-var getTicketTempCapacityTypeOption = Object(lib["createSelector"])([getTicketTempCapacityType], function (capacityType) {
-	return find_default()(CAPACITY_TYPE_OPTIONS, { value: capacityType }) || {};
-});
-
-var isTempTitleValid = Object(lib["createSelector"])([getTicketTempTitle], function (title) {
-	return trim_default()(title) !== '';
-});
-
-var isTempCapacityValid = Object(lib["createSelector"])([getTicketTempCapacity], function (capacity) {
-	return trim_default()(capacity) !== '' && !isNaN(capacity);
-});
-
-var isTempSharedCapacityValid = Object(lib["createSelector"])([getTicketsTempSharedCapacity], function (capacity) {
-	return trim_default()(capacity) !== '' && !isNaN(capacity);
-});
-
-var isZeroPriceValid = Object(lib["createSelector"])([getTicketTempPrice, getTicketsProvider], function (price, provider) {
-	return 0 < parseInt(price, 10) || provider !== constants["TC_CLASS"];
-});
-
-var isTicketValid = Object(lib["createSelector"])([getTicketTempCapacityType, isTempTitleValid, isTempCapacityValid, isTempSharedCapacityValid, isZeroPriceValid], function (capacityType, titleValid, capacityValid, sharedCapacityValid, zeroPriceValid) {
-	if (capacityType === TICKET_TYPES[UNLIMITED]) {
-		return titleValid && zeroPriceValid;
-	} else if (capacityType === TICKET_TYPES[SHARED]) {
-		return titleValid && sharedCapacityValid && zeroPriceValid;
-	}
-	return titleValid && capacityValid && zeroPriceValid;
-});
-
-//
-// ─── AMOUNT REDUCERS ────────────────────────────────────────────────────────────
-//
-
-var _getTotalCapacity = function _getTotalCapacity(tickets) {
-	return tickets.reduce(function (total, ticket) {
-		var capacity = parseInt(ticket.details.capacity, 10) || 0;
-		return total + capacity;
-	}, 0);
-};
-
-var _getTotalTempCapacity = function _getTotalTempCapacity(tickets) {
-	return tickets.reduce(function (total, ticket) {
-		var tempCapacity = parseInt(ticket.tempDetails.capacity, 10) || 0;
-		return total + tempCapacity;
-	}, 0);
-};
-
-var _getTotalSold = function _getTotalSold(tickets) {
-	return tickets.reduce(function (total, ticket) {
-		var sold = parseInt(ticket.sold, 10) || 0;
-		return total + sold;
-	}, 0);
-};
-
-var _getTotalAvailable = function _getTotalAvailable(tickets) {
-	return tickets.reduce(function (total, ticket) {
-		var available = parseInt(ticket.available, 10) || 0;
-		return total + available;
-	}, 0);
-};
-
-var getIndependentTicketsCapacity = Object(lib["createSelector"])(getIndependentTickets, _getTotalCapacity);
-var getIndependentTicketsTempCapacity = Object(lib["createSelector"])(getIndependentTickets, _getTotalTempCapacity);
-var getIndependentTicketsSold = Object(lib["createSelector"])(getIndependentTickets, _getTotalSold);
-var getIndependentTicketsAvailable = Object(lib["createSelector"])(getIndependentTickets, _getTotalAvailable);
-
-var getSharedTicketsSold = Object(lib["createSelector"])(getSharedTickets, _getTotalSold);
-var getSharedTicketsAvailable = Object(lib["createSelector"])([getTicketsSharedCapacityInt, getSharedTicketsSold], function (sharedCapacity, sharedSold) {
-	return Math.max(sharedCapacity - sharedSold, 0);
-});
-
-var getIndependentAndSharedTicketsCapacity = Object(lib["createSelector"])([getIndependentTicketsCapacity, getTicketsSharedCapacityInt], function (independentCapacity, sharedCapacity) {
-	return independentCapacity + sharedCapacity;
-});
-var getIndependentAndSharedTicketsTempCapacity = Object(lib["createSelector"])([getIndependentTicketsTempCapacity, getTicketsTempSharedCapacityInt], function (independentTempCapacity, tempSharedCapacity) {
-	return independentTempCapacity + tempSharedCapacity;
-});
-var getIndependentAndSharedTicketsSold = Object(lib["createSelector"])([getIndependentTicketsSold, getSharedTicketsSold], function (independentSold, sharedSold) {
-	return independentSold + sharedSold;
-});
-var getIndependentAndSharedTicketsAvailable = Object(lib["createSelector"])([getIndependentTicketsAvailable, getSharedTicketsAvailable], function (independentAvailable, sharedAvailable) {
-	return independentAvailable + sharedAvailable;
-});
-
-//
-// ─── MISC SELECTORS ─────────────────────────────────────────────────────────────
-//
-
-var getTicketProviders = function getTicketProviders() {
-	var tickets = ticketsConfig();
-	return tickets.providers || [];
-};
-
-var getDefaultTicketProvider = function getDefaultTicketProvider() {
-	var tickets = ticketsConfig();
-	return tickets.default_provider || '';
-};
-
-var selectors_hasValidTicketProvider = function hasValidTicketProvider() {
-	var provider = getDefaultTicketProvider();
-	return provider !== '' && provider !== constants["RSVP_CLASS"];
-};
-
-var hasMultipleTicketProviders = Object(lib["createSelector"])([getTicketProviders], function (providers) {
-	return providers.length > 1;
-});
-
-var hasTicketProviders = Object(lib["createSelector"])([getTicketProviders], function (providers) {
-	return providers.length > 0;
-});
-
-var canCreateTickets = Object(lib["createSelector"])([hasTicketProviders, selectors_hasValidTicketProvider], function (providers, validDefaultProvider) {
-	return providers && validDefaultProvider;
-});
-// CONCATENATED MODULE: ./src/modules/data/blocks/ticket/utils.js
-
-/**
- * External dependencies
- */
-
-
-var settings = external_tribe_common_utils_["globals"].settings,
-    priceSettings = external_tribe_common_utils_["globals"].priceSettings,
-    utils_ticketsConfig = external_tribe_common_utils_["globals"].tickets;
-/**
- * Internal dependencies
- */
-
-
-
-/**
- * Get currency symbol by provider
- */
-var utils_getProviderCurrency = function getProviderCurrency(provider) {
-	var tickets = utils_ticketsConfig();
-	var providers = getTicketProviders();
-
-	// if we don't get the provider, return the default one
-	if ('' === provider) {
-		return tickets.default_currency;
-	}
-
-	var _providers$filter = providers.filter(function (el) {
-		return el.class === provider;
-	}),
-	    _providers$filter2 = slicedToArray_default()(_providers$filter, 1),
-	    result = _providers$filter2[0];
-
-	return result ? result.currency : tickets.default_currency;
-};
-
-/**
- * Get the default provider's currency symbol
- */
-var utils_getDefaultProviderCurrency = function getDefaultProviderCurrency() {
-	return utils_getProviderCurrency(getDefaultTicketProvider());
-};
-
-/**
- * Get currency position
- */
-var utils_getDefaultCurrencyPosition = function getDefaultCurrencyPosition() {
-	var position = external_tribe_common_utils_["string"].isTruthy(settings() && settings().reverseCurrencyPosition) ? 'suffix' : 'prefix';
-
-	return priceSettings() && priceSettings().defaultCurrencyPosition ? priceSettings().defaultCurrencyPosition : position;
-};
-// CONCATENATED MODULE: ./src/modules/data/blocks/ticket/reducers/tickets/ticket/details.js
-
-/**
- * External dependencies
- */
-
-
-/**
- * Internal dependencies
- */
-
-
-
-
-var details_datePickerFormat = external_tribe_common_utils_["globals"].tecDateSettings().datepickerFormat;
-var currentMoment = moment_default()();
-var details_endMoment = currentMoment.clone().add(100, 'years');
-
-var details_startDateInput = details_datePickerFormat ? currentMoment.format(external_tribe_common_utils_["moment"].toFormat(details_datePickerFormat)) : external_tribe_common_utils_["moment"].toDate(currentMoment);
-var details_endDateInput = details_datePickerFormat ? details_endMoment.format(external_tribe_common_utils_["moment"].toFormat(details_datePickerFormat)) : external_tribe_common_utils_["moment"].toDate(details_endMoment);
-
-var DEFAULT_STATE = {
-	title: '',
-	description: '',
-	price: '',
-	sku: '',
-	startDate: external_tribe_common_utils_["moment"].toDatabaseDate(currentMoment),
-	startDateInput: details_startDateInput,
-	startDateMoment: currentMoment,
-	endDate: external_tribe_common_utils_["moment"].toDatabaseDate(details_endMoment),
-	endDateInput: details_endDateInput,
-	endDateMoment: details_endMoment,
-	startTime: external_tribe_common_utils_["moment"].toDatabaseTime(currentMoment),
-	endTime: external_tribe_common_utils_["moment"].toDatabaseTime(details_endMoment),
-	startTimeInput: external_tribe_common_utils_["moment"].toTime(currentMoment),
-	endTimeInput: external_tribe_common_utils_["moment"].toTime(details_endMoment),
-	capacityType: constants["TICKET_TYPES"][constants["UNLIMITED"]],
-	capacity: ''
-};
-
-/* harmony default export */ var ticket_details = (function () {
-	var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_STATE;
-	var action = arguments[1];
-
-	switch (action.type) {
-		case types["SET_TICKET_TITLE"]:
-			return extends_default()({}, state, {
-				title: action.payload.title
-			});
-		case types["SET_TICKET_DESCRIPTION"]:
-			return extends_default()({}, state, {
-				description: action.payload.description
-			});
-		case types["SET_TICKET_PRICE"]:
-			return extends_default()({}, state, {
-				price: action.payload.price
-			});
-		case types["SET_TICKET_SKU"]:
-			return extends_default()({}, state, {
-				sku: action.payload.sku
-			});
-		case types["SET_TICKET_START_DATE"]:
-			return extends_default()({}, state, {
-				startDate: action.payload.startDate
-			});
-		case types["SET_TICKET_START_DATE_INPUT"]:
-			return extends_default()({}, state, {
-				startDateInput: action.payload.startDateInput
-			});
-		case types["SET_TICKET_START_DATE_MOMENT"]:
-			return extends_default()({}, state, {
-				startDateMoment: action.payload.startDateMoment
-			});
-		case types["SET_TICKET_END_DATE"]:
-			return extends_default()({}, state, {
-				endDate: action.payload.endDate
-			});
-		case types["SET_TICKET_END_DATE_INPUT"]:
-			return extends_default()({}, state, {
-				endDateInput: action.payload.endDateInput
-			});
-		case types["SET_TICKET_END_DATE_MOMENT"]:
-			return extends_default()({}, state, {
-				endDateMoment: action.payload.endDateMoment
-			});
-		case types["SET_TICKET_START_TIME"]:
-			return extends_default()({}, state, {
-				startTime: action.payload.startTime
-			});
-		case types["SET_TICKET_END_TIME"]:
-			return extends_default()({}, state, {
-				endTime: action.payload.endTime
-			});
-		case types["SET_TICKET_START_TIME_INPUT"]:
-			return extends_default()({}, state, {
-				startTimeInput: action.payload.startTimeInput
-			});
-		case types["SET_TICKET_END_TIME_INPUT"]:
-			return extends_default()({}, state, {
-				endTimeInput: action.payload.endTimeInput
-			});
-		case types["SET_TICKET_CAPACITY_TYPE"]:
-			return extends_default()({}, state, {
-				capacityType: action.payload.capacityType
-			});
-		case types["SET_TICKET_CAPACITY"]:
-			return extends_default()({}, state, {
-				capacity: action.payload.capacity
-			});
-		default:
-			return state;
-	}
-});
-// CONCATENATED MODULE: ./src/modules/data/blocks/ticket/reducers/tickets/ticket/temp-details.js
-
-/**
- * External dependencies
- */
-
-
-/**
- * Internal dependencies
- */
-
-
-
-
-var temp_details_datePickerFormat = external_tribe_common_utils_["globals"].tecDateSettings().datepickerFormat;
-var temp_details_currentMoment = moment_default()();
-var temp_details_endMoment = temp_details_currentMoment.clone().add(100, 'years');
-
-var temp_details_startDateInput = temp_details_datePickerFormat ? temp_details_currentMoment.format(external_tribe_common_utils_["moment"].toFormat(temp_details_datePickerFormat)) : external_tribe_common_utils_["moment"].toDate(temp_details_currentMoment);
-var temp_details_endDateInput = temp_details_datePickerFormat ? temp_details_endMoment.format(external_tribe_common_utils_["moment"].toFormat(temp_details_datePickerFormat)) : external_tribe_common_utils_["moment"].toDate(temp_details_endMoment);
-
-var temp_details_DEFAULT_STATE = {
-	title: '',
-	description: '',
-	price: '',
-	sku: '',
-	startDate: external_tribe_common_utils_["moment"].toDatabaseDate(temp_details_currentMoment),
-	startDateInput: temp_details_startDateInput,
-	startDateMoment: temp_details_currentMoment,
-	endDate: external_tribe_common_utils_["moment"].toDatabaseDate(temp_details_endMoment),
-	endDateInput: temp_details_endDateInput,
-	endDateMoment: temp_details_endMoment,
-	startTime: external_tribe_common_utils_["moment"].toDatabaseTime(temp_details_currentMoment),
-	endTime: external_tribe_common_utils_["moment"].toDatabaseTime(temp_details_endMoment),
-	startTimeInput: external_tribe_common_utils_["moment"].toTime(temp_details_currentMoment),
-	endTimeInput: external_tribe_common_utils_["moment"].toTime(temp_details_endMoment),
-	capacityType: constants["TICKET_TYPES"][constants["UNLIMITED"]],
-	capacity: ''
-};
-
-/* harmony default export */ var temp_details = (function () {
-	var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : temp_details_DEFAULT_STATE;
-	var action = arguments[1];
-
-	switch (action.type) {
-		case types["SET_TICKET_TEMP_TITLE"]:
-			return extends_default()({}, state, {
-				title: action.payload.title
-			});
-		case types["SET_TICKET_TEMP_DESCRIPTION"]:
-			return extends_default()({}, state, {
-				description: action.payload.description
-			});
-		case types["SET_TICKET_TEMP_PRICE"]:
-			return extends_default()({}, state, {
-				price: action.payload.price
-			});
-		case types["SET_TICKET_TEMP_SKU"]:
-			return extends_default()({}, state, {
-				sku: action.payload.sku
-			});
-		case types["SET_TICKET_TEMP_START_DATE"]:
-			return extends_default()({}, state, {
-				startDate: action.payload.startDate
-			});
-		case types["SET_TICKET_TEMP_START_DATE_INPUT"]:
-			return extends_default()({}, state, {
-				startDateInput: action.payload.startDateInput
-			});
-		case types["SET_TICKET_TEMP_START_DATE_MOMENT"]:
-			return extends_default()({}, state, {
-				startDateMoment: action.payload.startDateMoment
-			});
-		case types["SET_TICKET_TEMP_END_DATE"]:
-			return extends_default()({}, state, {
-				endDate: action.payload.endDate
-			});
-		case types["SET_TICKET_TEMP_END_DATE_INPUT"]:
-			return extends_default()({}, state, {
-				endDateInput: action.payload.endDateInput
-			});
-		case types["SET_TICKET_TEMP_END_DATE_MOMENT"]:
-			return extends_default()({}, state, {
-				endDateMoment: action.payload.endDateMoment
-			});
-		case types["SET_TICKET_TEMP_START_TIME"]:
-			return extends_default()({}, state, {
-				startTime: action.payload.startTime
-			});
-		case types["SET_TICKET_TEMP_END_TIME"]:
-			return extends_default()({}, state, {
-				endTime: action.payload.endTime
-			});
-		case types["SET_TICKET_TEMP_START_TIME_INPUT"]:
-			return extends_default()({}, state, {
-				startTimeInput: action.payload.startTimeInput
-			});
-		case types["SET_TICKET_TEMP_END_TIME_INPUT"]:
-			return extends_default()({}, state, {
-				endTimeInput: action.payload.endTimeInput
-			});
-		case types["SET_TICKET_TEMP_CAPACITY_TYPE"]:
-			return extends_default()({}, state, {
-				capacityType: action.payload.capacityType
-			});
-		case types["SET_TICKET_TEMP_CAPACITY"]:
-			return extends_default()({}, state, {
-				capacity: action.payload.capacity
-			});
-		default:
-			return state;
-	}
-});
-// CONCATENATED MODULE: ./src/modules/data/blocks/ticket/reducers/tickets/ticket.js
-
-/**
- * Internal dependencies
- */
-
-
-
-
-
-var ticket_DEFAULT_STATE = {
-	details: DEFAULT_STATE,
-	tempDetails: temp_details_DEFAULT_STATE,
-	sold: 0,
-	available: 0,
-	ticketId: 0,
-	currencySymbol: utils_getDefaultProviderCurrency(),
-	currencyPosition: utils_getDefaultCurrencyPosition(),
-	provider: '',
-	hasAttendeeInfoFields: false,
-	isLoading: false,
-	isModalOpen: false,
-	hasBeenCreated: false,
-	hasChanges: false,
-	hasDurationError: false,
-	isSelected: false
-};
-
-/* harmony default export */ var tickets_ticket = (function () {
-	var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ticket_DEFAULT_STATE;
-	var action = arguments[1];
-
-	switch (action.type) {
-		case types["SET_TICKET_TITLE"]:
-		case types["SET_TICKET_DESCRIPTION"]:
-		case types["SET_TICKET_PRICE"]:
-		case types["SET_TICKET_SKU"]:
-		case types["SET_TICKET_START_DATE"]:
-		case types["SET_TICKET_START_DATE_INPUT"]:
-		case types["SET_TICKET_START_DATE_MOMENT"]:
-		case types["SET_TICKET_END_DATE"]:
-		case types["SET_TICKET_END_DATE_INPUT"]:
-		case types["SET_TICKET_END_DATE_MOMENT"]:
-		case types["SET_TICKET_START_TIME"]:
-		case types["SET_TICKET_END_TIME"]:
-		case types["SET_TICKET_START_TIME_INPUT"]:
-		case types["SET_TICKET_END_TIME_INPUT"]:
-		case types["SET_TICKET_CAPACITY_TYPE"]:
-		case types["SET_TICKET_CAPACITY"]:
-			return extends_default()({}, state, {
-				details: ticket_details(state.details, action)
-			});
-		case types["SET_TICKET_TEMP_TITLE"]:
-		case types["SET_TICKET_TEMP_DESCRIPTION"]:
-		case types["SET_TICKET_TEMP_PRICE"]:
-		case types["SET_TICKET_TEMP_SKU"]:
-		case types["SET_TICKET_TEMP_START_DATE"]:
-		case types["SET_TICKET_TEMP_START_DATE_INPUT"]:
-		case types["SET_TICKET_TEMP_START_DATE_MOMENT"]:
-		case types["SET_TICKET_TEMP_END_DATE"]:
-		case types["SET_TICKET_TEMP_END_DATE_INPUT"]:
-		case types["SET_TICKET_TEMP_END_DATE_MOMENT"]:
-		case types["SET_TICKET_TEMP_START_TIME"]:
-		case types["SET_TICKET_TEMP_END_TIME"]:
-		case types["SET_TICKET_TEMP_START_TIME_INPUT"]:
-		case types["SET_TICKET_TEMP_END_TIME_INPUT"]:
-		case types["SET_TICKET_TEMP_CAPACITY_TYPE"]:
-		case types["SET_TICKET_TEMP_CAPACITY"]:
-			return extends_default()({}, state, {
-				tempDetails: temp_details(state.tempDetails, action)
-			});
-		case types["SET_TICKET_SOLD"]:
-			return extends_default()({}, state, {
-				sold: action.payload.sold
-			});
-		case types["SET_TICKET_AVAILABLE"]:
-			return extends_default()({}, state, {
-				available: action.payload.available
-			});
-		case types["SET_TICKET_ID"]:
-			return extends_default()({}, state, {
-				ticketId: action.payload.ticketId
-			});
-		case types["SET_TICKET_CURRENCY_SYMBOL"]:
-			return extends_default()({}, state, {
-				currencySymbol: action.payload.currencySymbol
-			});
-		case types["SET_TICKET_CURRENCY_POSITION"]:
-			return extends_default()({}, state, {
-				currencyPosition: action.payload.currencyPosition
-			});
-		case types["SET_TICKET_PROVIDER"]:
-			return extends_default()({}, state, {
-				provider: action.payload.provider
-			});
-		case types["SET_TICKET_HAS_ATTENDEE_INFO_FIELDS"]:
-			return extends_default()({}, state, {
-				hasAttendeeInfoFields: action.payload.hasAttendeeInfoFields
-			});
-		case types["SET_TICKET_IS_LOADING"]:
-			return extends_default()({}, state, {
-				isLoading: action.payload.isLoading
-			});
-		case types["SET_TICKET_IS_MODAL_OPEN"]:
-			return extends_default()({}, state, {
-				isModalOpen: action.payload.isModalOpen
-			});
-		case types["SET_TICKET_HAS_BEEN_CREATED"]:
-			return extends_default()({}, state, {
-				hasBeenCreated: action.payload.hasBeenCreated
-			});
-		case types["SET_TICKET_HAS_CHANGES"]:
-			return extends_default()({}, state, {
-				hasChanges: action.payload.hasChanges
-			});
-		case types["SET_TICKET_HAS_DURATION_ERROR"]:
-			return extends_default()({}, state, {
-				hasDurationError: action.payload.hasDurationError
-			});
-		case types["SET_TICKET_IS_SELECTED"]:
-			return extends_default()({}, state, {
-				isSelected: action.payload.isSelected
-			});
-		default:
-			return state;
-	}
-});
-// CONCATENATED MODULE: ./src/modules/data/blocks/ticket/reducers/tickets.js
-
-
-
-/**
- * External dependencies
- */
-
-
-
-/**
- * Internal dependencies
- */
-
-
-
-var tickets_byClientId = function byClientId() {
-	var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-	var action = arguments[1];
-
-	switch (action.type) {
-		case types["SET_TICKET_TITLE"]:
-		case types["SET_TICKET_DESCRIPTION"]:
-		case types["SET_TICKET_PRICE"]:
-		case types["SET_TICKET_SKU"]:
-		case types["SET_TICKET_START_DATE"]:
-		case types["SET_TICKET_START_DATE_INPUT"]:
-		case types["SET_TICKET_START_DATE_MOMENT"]:
-		case types["SET_TICKET_END_DATE"]:
-		case types["SET_TICKET_END_DATE_INPUT"]:
-		case types["SET_TICKET_END_DATE_MOMENT"]:
-		case types["SET_TICKET_START_TIME"]:
-		case types["SET_TICKET_END_TIME"]:
-		case types["SET_TICKET_START_TIME_INPUT"]:
-		case types["SET_TICKET_END_TIME_INPUT"]:
-		case types["SET_TICKET_CAPACITY_TYPE"]:
-		case types["SET_TICKET_CAPACITY"]:
-		case types["SET_TICKET_TEMP_TITLE"]:
-		case types["SET_TICKET_TEMP_DESCRIPTION"]:
-		case types["SET_TICKET_TEMP_PRICE"]:
-		case types["SET_TICKET_TEMP_SKU"]:
-		case types["SET_TICKET_TEMP_START_DATE"]:
-		case types["SET_TICKET_TEMP_START_DATE_INPUT"]:
-		case types["SET_TICKET_TEMP_START_DATE_MOMENT"]:
-		case types["SET_TICKET_TEMP_END_DATE"]:
-		case types["SET_TICKET_TEMP_END_DATE_INPUT"]:
-		case types["SET_TICKET_TEMP_END_DATE_MOMENT"]:
-		case types["SET_TICKET_TEMP_START_TIME"]:
-		case types["SET_TICKET_TEMP_END_TIME"]:
-		case types["SET_TICKET_TEMP_START_TIME_INPUT"]:
-		case types["SET_TICKET_TEMP_END_TIME_INPUT"]:
-		case types["SET_TICKET_TEMP_CAPACITY_TYPE"]:
-		case types["SET_TICKET_TEMP_CAPACITY"]:
-		case types["SET_TICKET_SOLD"]:
-		case types["SET_TICKET_AVAILABLE"]:
-		case types["SET_TICKET_ID"]:
-		case types["SET_TICKET_CURRENCY_SYMBOL"]:
-		case types["SET_TICKET_CURRENCY_POSITION"]:
-		case types["SET_TICKET_PROVIDER"]:
-		case types["SET_TICKET_HAS_ATTENDEE_INFO_FIELDS"]:
-		case types["SET_TICKET_IS_LOADING"]:
-		case types["SET_TICKET_IS_MODAL_OPEN"]:
-		case types["SET_TICKET_HAS_BEEN_CREATED"]:
-		case types["SET_TICKET_HAS_CHANGES"]:
-		case types["SET_TICKET_HAS_DURATION_ERROR"]:
-		case types["SET_TICKET_IS_SELECTED"]:
-		case types["REGISTER_TICKET_BLOCK"]:
-			return extends_default()({}, state, defineProperty_default()({}, action.payload.clientId, tickets_ticket(state[action.payload.clientId], action)));
-		case types["REMOVE_TICKET_BLOCK"]:
-			return omit_default()(state, [action.payload.clientId]);
-		case types["REMOVE_TICKET_BLOCKS"]:
-			return {};
-		default:
-			return state;
-	}
-};
-
-var tickets_allClientIds = function allClientIds() {
-	var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-	var action = arguments[1];
-
-	switch (action.type) {
-		case types["REGISTER_TICKET_BLOCK"]:
-			return [].concat(toConsumableArray_default()(state), [action.payload.clientId]);
-		case types["REMOVE_TICKET_BLOCK"]:
-			return state.filter(function (clientId) {
-				return action.payload.clientId !== clientId;
-			});
-		case types["REMOVE_TICKET_BLOCKS"]:
-			return [];
-		default:
-			return state;
-	}
-};
-
-/* harmony default export */ var reducers_tickets = (Object(redux["b" /* combineReducers */])({
-	byClientId: tickets_byClientId,
-	allClientIds: tickets_allClientIds
-}));
-// EXTERNAL MODULE: ./src/modules/data/blocks/ticket/reducers/header-image.js
-var header_image = __webpack_require__(61);
-
-// CONCATENATED MODULE: ./src/modules/data/blocks/ticket/reducer.js
-
-/**
- * Internal dependencies
- */
-
-
-
-
-var reducer_DEFAULT_STATE = {
-	headerImage: header_image["a" /* DEFAULT_STATE */],
-	isSelected: false,
-	isSettingsOpen: false,
-	isSettingsLoading: false,
-	provider: '',
-	sharedCapacity: '',
-	tempSharedCapacity: '',
-	tickets: reducers_tickets(undefined, {})
-};
-
-/* harmony default export */ var reducer = (function () {
-	var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : reducer_DEFAULT_STATE;
-	var action = arguments[1];
-
-	switch (action.type) {
-		case types["SET_TICKETS_HEADER_IMAGE"]:
-			return extends_default()({}, state, {
-				headerImage: Object(header_image["b" /* default */])(state.headerImage, action)
-			});
-		case types["SET_TICKETS_IS_SELECTED"]:
-			return extends_default()({}, state, {
-				isSelected: action.payload.isSelected
-			});
-		case types["SET_TICKETS_IS_SETTINGS_OPEN"]:
-			return extends_default()({}, state, {
-				isSettingsOpen: action.payload.isSettingsOpen
-			});
-		case types["SET_TICKETS_IS_SETTINGS_LOADING"]:
-			return extends_default()({}, state, {
-				isSettingsLoading: action.payload.isSettingsLoading
-			});
-		case types["SET_TICKETS_PROVIDER"]:
-			return extends_default()({}, state, {
-				provider: action.payload.provider
-			});
-		case types["SET_TICKETS_SHARED_CAPACITY"]:
-			return extends_default()({}, state, {
-				sharedCapacity: action.payload.sharedCapacity
-			});
-		case types["SET_TICKETS_TEMP_SHARED_CAPACITY"]:
-			return extends_default()({}, state, {
-				tempSharedCapacity: action.payload.tempSharedCapacity
-			});
-		case types["SET_TICKET_TITLE"]:
-		case types["SET_TICKET_DESCRIPTION"]:
-		case types["SET_TICKET_PRICE"]:
-		case types["SET_TICKET_SKU"]:
-		case types["SET_TICKET_START_DATE"]:
-		case types["SET_TICKET_START_DATE_INPUT"]:
-		case types["SET_TICKET_START_DATE_MOMENT"]:
-		case types["SET_TICKET_END_DATE"]:
-		case types["SET_TICKET_END_DATE_INPUT"]:
-		case types["SET_TICKET_END_DATE_MOMENT"]:
-		case types["SET_TICKET_START_TIME"]:
-		case types["SET_TICKET_END_TIME"]:
-		case types["SET_TICKET_START_TIME_INPUT"]:
-		case types["SET_TICKET_END_TIME_INPUT"]:
-		case types["SET_TICKET_CAPACITY_TYPE"]:
-		case types["SET_TICKET_CAPACITY"]:
-		case types["SET_TICKET_TEMP_TITLE"]:
-		case types["SET_TICKET_TEMP_DESCRIPTION"]:
-		case types["SET_TICKET_TEMP_PRICE"]:
-		case types["SET_TICKET_TEMP_SKU"]:
-		case types["SET_TICKET_TEMP_START_DATE"]:
-		case types["SET_TICKET_TEMP_START_DATE_INPUT"]:
-		case types["SET_TICKET_TEMP_START_DATE_MOMENT"]:
-		case types["SET_TICKET_TEMP_END_DATE"]:
-		case types["SET_TICKET_TEMP_END_DATE_INPUT"]:
-		case types["SET_TICKET_TEMP_END_DATE_MOMENT"]:
-		case types["SET_TICKET_TEMP_START_TIME"]:
-		case types["SET_TICKET_TEMP_END_TIME"]:
-		case types["SET_TICKET_TEMP_START_TIME_INPUT"]:
-		case types["SET_TICKET_TEMP_END_TIME_INPUT"]:
-		case types["SET_TICKET_TEMP_CAPACITY_TYPE"]:
-		case types["SET_TICKET_TEMP_CAPACITY"]:
-		case types["SET_TICKET_SOLD"]:
-		case types["SET_TICKET_AVAILABLE"]:
-		case types["SET_TICKET_ID"]:
-		case types["SET_TICKET_CURRENCY_SYMBOL"]:
-		case types["SET_TICKET_CURRENCY_POSITION"]:
-		case types["SET_TICKET_PROVIDER"]:
-		case types["SET_TICKET_HAS_ATTENDEE_INFO_FIELDS"]:
-		case types["SET_TICKET_IS_LOADING"]:
-		case types["SET_TICKET_IS_MODAL_OPEN"]:
-		case types["SET_TICKET_HAS_BEEN_CREATED"]:
-		case types["SET_TICKET_HAS_CHANGES"]:
-		case types["SET_TICKET_HAS_DURATION_ERROR"]:
-		case types["SET_TICKET_IS_SELECTED"]:
-		case types["REGISTER_TICKET_BLOCK"]:
-		case types["REMOVE_TICKET_BLOCK"]:
-		case types["REMOVE_TICKET_BLOCKS"]:
-			return extends_default()({}, state, {
-				tickets: reducers_tickets(state.tickets, action)
-			});
-		default:
-			return state;
-	}
-});
-// EXTERNAL MODULE: ./src/modules/data/blocks/ticket/actions.js
-var actions = __webpack_require__(10);
-
-// EXTERNAL MODULE: ./node_modules/babel-runtime/regenerator/index.js
-var regenerator = __webpack_require__(11);
-var regenerator_default = /*#__PURE__*/__webpack_require__.n(regenerator);
-
-// EXTERNAL MODULE: ./node_modules/lodash/includes.js
-var includes = __webpack_require__(112);
-var includes_default = /*#__PURE__*/__webpack_require__.n(includes);
-
-// EXTERNAL MODULE: ./node_modules/redux-saga/es/effects.js + 1 modules
-var effects = __webpack_require__(0);
-
-// EXTERNAL MODULE: external {"var":"wp.data","root":["wp","data"]}
-var external_var_wp_data_root_wp_data_ = __webpack_require__(18);
-
-// EXTERNAL MODULE: external {"var":"wp.blocks","root":["wp","blocks"]}
-var external_var_wp_blocks_root_wp_blocks_ = __webpack_require__(111);
-
-// EXTERNAL MODULE: ./src/modules/data/blocks/rsvp/actions.js
-var rsvp_actions = __webpack_require__(14);
-
-// EXTERNAL MODULE: ./src/modules/data/blocks/rsvp/reducers/header-image.js
-var reducers_header_image = __webpack_require__(59);
-
-// EXTERNAL MODULE: ./src/modules/data/utils.js
-var utils = __webpack_require__(8);
-
-// EXTERNAL MODULE: external "tribe.common.data"
-var external_tribe_common_data_ = __webpack_require__(31);
-
-// EXTERNAL MODULE: ./src/modules/data/shared/move/types.js
-var move_types = __webpack_require__(20);
-
-// EXTERNAL MODULE: ./src/modules/data/shared/move/selectors.js
-var selectors = __webpack_require__(28);
-
-// EXTERNAL MODULE: ./src/modules/data/shared/sagas.js
-var sagas = __webpack_require__(29);
-
-// CONCATENATED MODULE: ./src/modules/data/blocks/ticket/sagas.js
-
-
-
-
-
-
-var _marked = /*#__PURE__*/regenerator_default.a.mark(createMissingTicketBlocks),
-    _marked2 = /*#__PURE__*/regenerator_default.a.mark(setTicketsInitialState),
-    _marked3 = /*#__PURE__*/regenerator_default.a.mark(resetTicketsBlock),
-    _marked4 = /*#__PURE__*/regenerator_default.a.mark(setTicketInitialState),
-    _marked5 = /*#__PURE__*/regenerator_default.a.mark(setBodyDetails),
-    _marked6 = /*#__PURE__*/regenerator_default.a.mark(removeTicketBlock),
-    _marked7 = /*#__PURE__*/regenerator_default.a.mark(fetchTicket),
-    _marked8 = /*#__PURE__*/regenerator_default.a.mark(createNewTicket),
-    _marked9 = /*#__PURE__*/regenerator_default.a.mark(updateTicket),
-    _marked10 = /*#__PURE__*/regenerator_default.a.mark(deleteTicket),
-    _marked11 = /*#__PURE__*/regenerator_default.a.mark(fetchTicketsHeaderImage),
-    _marked12 = /*#__PURE__*/regenerator_default.a.mark(updateTicketsHeaderImage),
-    _marked13 = /*#__PURE__*/regenerator_default.a.mark(deleteTicketsHeaderImage),
-    _marked14 = /*#__PURE__*/regenerator_default.a.mark(setTicketDetails),
-    _marked15 = /*#__PURE__*/regenerator_default.a.mark(setTicketTempDetails),
-    _marked16 = /*#__PURE__*/regenerator_default.a.mark(saveTicketWithPostSave),
-    _marked17 = /*#__PURE__*/regenerator_default.a.mark(syncTicketsSaleEndWithEventStart),
-    _marked18 = /*#__PURE__*/regenerator_default.a.mark(syncTicketSaleEndWithEventStart),
-    _marked19 = /*#__PURE__*/regenerator_default.a.mark(handleEventStartDateChanges),
-    _marked20 = /*#__PURE__*/regenerator_default.a.mark(handleTicketDurationError),
-    _marked21 = /*#__PURE__*/regenerator_default.a.mark(handleTicketStartDate),
-    _marked22 = /*#__PURE__*/regenerator_default.a.mark(handleTicketEndDate),
-    _marked23 = /*#__PURE__*/regenerator_default.a.mark(handleTicketStartTime),
-    _marked24 = /*#__PURE__*/regenerator_default.a.mark(handleTicketStartTimeInput),
-    _marked25 = /*#__PURE__*/regenerator_default.a.mark(handleTicketEndTime),
-    _marked26 = /*#__PURE__*/regenerator_default.a.mark(handleTicketEndTimeInput),
-    _marked27 = /*#__PURE__*/regenerator_default.a.mark(handleTicketMove),
-    _marked28 = /*#__PURE__*/regenerator_default.a.mark(handler),
-    _marked29 = /*#__PURE__*/regenerator_default.a.mark(watchers);
-
-/**
- * External Dependencies
- */
-
-
-
-/**
- * Wordpress dependencies
- */
-
-
-
-
-/**
- * Internal dependencies
- */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-var sagas_UNLIMITED = constants["UNLIMITED"],
-    sagas_SHARED = constants["SHARED"],
-    sagas_TICKET_TYPES = constants["TICKET_TYPES"],
-    PROVIDER_CLASS_TO_PROVIDER_MAPPING = constants["PROVIDER_CLASS_TO_PROVIDER_MAPPING"];
-var sagas_ticketsConfig = external_tribe_common_utils_["globals"].tickets,
-    restNonce = external_tribe_common_utils_["globals"].restNonce,
-    tecDateSettings = external_tribe_common_utils_["globals"].tecDateSettings;
-var wpREST = external_tribe_common_utils_["api"].wpREST;
-
-
-function createMissingTicketBlocks(tickets) {
-	var _ref, insertBlock, _ref2, getBlockCount, getBlocks, ticketsBlocks;
-
-	return regenerator_default.a.wrap(function createMissingTicketBlocks$(_context) {
-		while (1) {
-			switch (_context.prev = _context.next) {
-				case 0:
-					_context.next = 2;
-					return Object(effects["b" /* call */])(external_var_wp_data_root_wp_data_["dispatch"], 'core/editor');
-
-				case 2:
-					_ref = _context.sent;
-					insertBlock = _ref.insertBlock;
-					_context.next = 6;
-					return Object(effects["b" /* call */])(external_var_wp_data_root_wp_data_["select"], 'core/editor');
-
-				case 6:
-					_ref2 = _context.sent;
-					getBlockCount = _ref2.getBlockCount;
-					getBlocks = _ref2.getBlocks;
-					_context.next = 11;
-					return Object(effects["b" /* call */])([getBlocks(), 'filter'], function (block) {
-						return block.name === 'tribe/tickets';
-					});
-
-				case 11:
-					ticketsBlocks = _context.sent;
-
-
-					ticketsBlocks.forEach(function (_ref3) {
-						var clientId = _ref3.clientId;
-
-						tickets.forEach(function (ticketId) {
-							var attributes = {
-								hasBeenCreated: true,
-								ticketId: ticketId
-							};
-							var nextChildPosition = getBlockCount(clientId);
-							var block = Object(external_var_wp_blocks_root_wp_blocks_["createBlock"])('tribe/tickets-item', attributes);
-							insertBlock(block, nextChildPosition, clientId, false);
-						});
-					});
-
-				case 13:
-				case 'end':
-					return _context.stop();
-			}
-		}
-	}, _marked, this);
-}
-
-function setTicketsInitialState(action) {
-	var get, header, sharedCapacity, ticketsList, ticketsInBlock, ticketsDiff, provider, defaultProvider;
-	return regenerator_default.a.wrap(function setTicketsInitialState$(_context2) {
-		while (1) {
-			switch (_context2.prev = _context2.next) {
-				case 0:
-					get = action.payload.get;
-					header = parseInt(get('header', header_image["a" /* DEFAULT_STATE */].id), 10);
-					sharedCapacity = get('sharedCapacity');
-					ticketsList = get('tickets', []);
-					_context2.next = 6;
-					return Object(effects["f" /* select */])(getTicketsIdsInBlocks);
-
-				case 6:
-					ticketsInBlock = _context2.sent;
-
-					// Get only the IDs of the tickets that are not in the block list already
-					ticketsDiff = ticketsList.filter(function (item) {
-						return !includes_default()(ticketsInBlock, item);
-					});
-
-					if (!(ticketsDiff.length >= 1)) {
-						_context2.next = 11;
-						break;
-					}
-
-					_context2.next = 11;
-					return Object(effects["b" /* call */])(createMissingTicketBlocks, ticketsDiff);
-
-				case 11:
-					if (!(sharedCapacity !== '0')) {
-						_context2.next = 14;
-						break;
-					}
-
-					_context2.next = 14;
-					return Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setTicketsSharedCapacity"](sharedCapacity)), Object(effects["e" /* put */])(actions["setTicketsTempSharedCapacity"](sharedCapacity))]);
-
-				case 14:
-					if (!(!isNaN(header) && header !== 0)) {
-						_context2.next = 17;
-						break;
-					}
-
-					_context2.next = 17;
-					return Object(effects["e" /* put */])(actions["fetchTicketsHeaderImage"](header));
-
-				case 17:
-					provider = get('provider', reducer_DEFAULT_STATE.provider);
-
-					if (!(provider === constants["RSVP_CLASS"] || !provider)) {
-						_context2.next = 23;
-						break;
-					}
-
-					_context2.next = 21;
-					return Object(effects["f" /* select */])(getDefaultTicketProvider);
-
-				case 21:
-					defaultProvider = _context2.sent;
-
-					provider = defaultProvider === constants["RSVP_CLASS"] ? '' : defaultProvider;
-
-				case 23:
-					_context2.next = 25;
-					return Object(effects["e" /* put */])(actions["setTicketsProvider"](provider));
-
-				case 25:
-				case 'end':
-					return _context2.stop();
-			}
-		}
-	}, _marked2, this);
-}
-
-function resetTicketsBlock() {
-	var hasCreatedTickets, currentMeta, newMeta;
-	return regenerator_default.a.wrap(function resetTicketsBlock$(_context3) {
-		while (1) {
-			switch (_context3.prev = _context3.next) {
-				case 0:
-					_context3.next = 2;
-					return Object(effects["f" /* select */])(selectors_hasCreatedTickets);
-
-				case 2:
-					hasCreatedTickets = _context3.sent;
-					_context3.next = 5;
-					return Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["removeTicketBlocks"]()), Object(effects["e" /* put */])(actions["setTicketsIsSettingsOpen"](false))]);
-
-				case 5:
-					if (hasCreatedTickets) {
-						_context3.next = 14;
-						break;
-					}
-
-					_context3.next = 8;
-					return Object(effects["b" /* call */])([Object(external_var_wp_data_root_wp_data_["select"])('core/editor'), 'getCurrentPostAttribute'], 'meta');
-
-				case 8:
-					currentMeta = _context3.sent;
-					newMeta = extends_default()({}, currentMeta, defineProperty_default()({}, utils["d" /* KEY_TICKET_CAPACITY */], ''));
-					_context3.next = 12;
-					return Object(effects["b" /* call */])([Object(external_var_wp_data_root_wp_data_["dispatch"])('core/editor'), 'editPost'], { meta: newMeta });
-
-				case 12:
-					_context3.next = 14;
-					return Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setTicketsSharedCapacity"]('')), Object(effects["e" /* put */])(actions["setTicketsTempSharedCapacity"](''))]);
-
-				case 14:
-				case 'end':
-					return _context3.stop();
-			}
-		}
-	}, _marked3, this);
-}
-
-function setTicketInitialState(action) {
-	var _action$payload, clientId, get, ticketId, hasBeenCreated, datePickerFormat, publishDate, startMoment, startDate, startDateInput, startTime, startTimeInput, eventStart, endMoment, endDate, endDateInput, endTime, endTimeInput, hasTicketsPlus, sharedCapacity;
-
-	return regenerator_default.a.wrap(function setTicketInitialState$(_context4) {
-		while (1) {
-			switch (_context4.prev = _context4.next) {
-				case 0:
-					_action$payload = action.payload, clientId = _action$payload.clientId, get = _action$payload.get;
-					ticketId = get('ticketId', ticket_DEFAULT_STATE.ticketId);
-					hasBeenCreated = get('hasBeenCreated', ticket_DEFAULT_STATE.hasBeenCreated);
-					datePickerFormat = tecDateSettings().datepickerFormat;
-					_context4.next = 6;
-					return Object(effects["b" /* call */])([Object(external_var_wp_data_root_wp_data_["select"])('core/editor'), 'getEditedPostAttribute'], 'date');
-
-				case 6:
-					publishDate = _context4.sent;
-					_context4.next = 9;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toMoment, publishDate);
-
-				case 9:
-					startMoment = _context4.sent;
-					_context4.next = 12;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDatabaseDate, startMoment);
-
-				case 12:
-					startDate = _context4.sent;
-					_context4.next = 15;
-					return datePickerFormat ? Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDate, startMoment, datePickerFormat) : Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDate, startMoment);
-
-				case 15:
-					startDateInput = _context4.sent;
-					_context4.next = 18;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDatabaseTime, startMoment);
-
-				case 18:
-					startTime = _context4.sent;
-					_context4.next = 21;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toTime, startMoment);
-
-				case 21:
-					startTimeInput = _context4.sent;
-					_context4.next = 24;
-					return Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setTicketStartDate"](clientId, startDate)), Object(effects["e" /* put */])(actions["setTicketStartDateInput"](clientId, startDateInput)), Object(effects["e" /* put */])(actions["setTicketStartDateMoment"](clientId, startMoment)), Object(effects["e" /* put */])(actions["setTicketStartTime"](clientId, startTime)), Object(effects["e" /* put */])(actions["setTicketStartTimeInput"](clientId, startTimeInput)), Object(effects["e" /* put */])(actions["setTicketTempStartDate"](clientId, startDate)), Object(effects["e" /* put */])(actions["setTicketTempStartDateInput"](clientId, startDateInput)), Object(effects["e" /* put */])(actions["setTicketTempStartDateMoment"](clientId, startMoment)), Object(effects["e" /* put */])(actions["setTicketTempStartTime"](clientId, startTime)), Object(effects["e" /* put */])(actions["setTicketTempStartTimeInput"](clientId, startTimeInput)), Object(effects["e" /* put */])(actions["setTicketHasBeenCreated"](clientId, hasBeenCreated))]);
-
-				case 24:
-					_context4.prev = 24;
-					_context4.next = 27;
-					return Object(effects["f" /* select */])(tribe.events.data.blocks.datetime.selectors.getStart);
-
-				case 27:
-					eventStart = _context4.sent;
-					_context4.next = 30;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toMoment, eventStart);
-
-				case 30:
-					endMoment = _context4.sent;
-					_context4.next = 33;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDatabaseDate, endMoment);
-
-				case 33:
-					endDate = _context4.sent;
-					_context4.next = 36;
-					return datePickerFormat ? Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDate, endMoment, datePickerFormat) : Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDate, endMoment);
-
-				case 36:
-					endDateInput = _context4.sent;
-					_context4.next = 39;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDatabaseTime, endMoment);
-
-				case 39:
-					endTime = _context4.sent;
-					_context4.next = 42;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toTime, endMoment);
-
-				case 42:
-					endTimeInput = _context4.sent;
-					_context4.next = 45;
-					return Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setTicketEndDate"](clientId, endDate)), Object(effects["e" /* put */])(actions["setTicketEndDateInput"](clientId, endDateInput)), Object(effects["e" /* put */])(actions["setTicketEndDateMoment"](clientId, endMoment)), Object(effects["e" /* put */])(actions["setTicketEndTime"](clientId, endTime)), Object(effects["e" /* put */])(actions["setTicketEndTimeInput"](clientId, endTimeInput)), Object(effects["e" /* put */])(actions["setTicketTempEndDate"](clientId, endDate)), Object(effects["e" /* put */])(actions["setTicketTempEndDateInput"](clientId, endDateInput)), Object(effects["e" /* put */])(actions["setTicketTempEndDateMoment"](clientId, endMoment)), Object(effects["e" /* put */])(actions["setTicketTempEndTime"](clientId, endTime)), Object(effects["e" /* put */])(actions["setTicketTempEndTimeInput"](clientId, endTimeInput))]);
-
-				case 45:
-					_context4.next = 50;
-					break;
-
-				case 47:
-					_context4.prev = 47;
-					_context4.t0 = _context4['catch'](24);
-
-					console.error(_context4.t0);
-					// ¯\_(ツ)_/¯
-
-				case 50:
-					_context4.next = 52;
-					return Object(effects["f" /* select */])(external_tribe_common_data_["plugins"].selectors.hasPlugin, external_tribe_common_data_["plugins"].constants.TICKETS_PLUS);
-
-				case 52:
-					hasTicketsPlus = _context4.sent;
-
-					if (!hasTicketsPlus) {
-						_context4.next = 56;
-						break;
-					}
-
-					_context4.next = 56;
-					return Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setTicketCapacityType"](clientId, constants["TICKET_TYPES"][constants["SHARED"]])), Object(effects["e" /* put */])(actions["setTicketTempCapacityType"](clientId, constants["TICKET_TYPES"][constants["SHARED"]]))]);
-
-				case 56:
-					_context4.next = 58;
-					return Object(effects["f" /* select */])(getTicketsSharedCapacity);
-
-				case 58:
-					sharedCapacity = _context4.sent;
-
-					if (!sharedCapacity) {
-						_context4.next = 62;
-						break;
-					}
-
-					_context4.next = 62;
-					return Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setTicketCapacity"](clientId, sharedCapacity)), Object(effects["e" /* put */])(actions["setTicketTempCapacity"](clientId, sharedCapacity))]);
-
-				case 62:
-					if (!(ticketId !== 0)) {
-						_context4.next = 65;
-						break;
-					}
-
-					_context4.next = 65;
-					return Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setTicketId"](clientId, ticketId)), Object(effects["b" /* call */])(fetchTicket, { payload: { clientId: clientId, ticketId: ticketId } })]);
-
-				case 65:
-					_context4.next = 67;
-					return Object(effects["b" /* call */])(handleTicketDurationError, clientId);
-
-				case 67:
-					_context4.next = 69;
-					return Object(effects["d" /* fork */])(saveTicketWithPostSave, clientId);
-
-				case 69:
-				case 'end':
-					return _context4.stop();
-			}
-		}
-	}, _marked4, this, [[24, 47]]);
-}
-
-function setBodyDetails(clientId) {
-	var body, props, rootClientId, ticketProvider, ticketsProvider, capacityType, capacity, isUnlimited;
-	return regenerator_default.a.wrap(function setBodyDetails$(_context5) {
-		while (1) {
-			switch (_context5.prev = _context5.next) {
-				case 0:
-					body = new FormData();
-					props = { clientId: clientId };
-					_context5.next = 4;
-					return Object(effects["b" /* call */])([Object(external_var_wp_data_root_wp_data_["select"])('core/editor'), 'getBlockRootClientId'], clientId);
-
-				case 4:
-					rootClientId = _context5.sent;
-					_context5.next = 7;
-					return Object(effects["f" /* select */])(getTicketProvider, props);
-
-				case 7:
-					ticketProvider = _context5.sent;
-					_context5.next = 10;
-					return Object(effects["f" /* select */])(getTicketsProvider);
-
-				case 10:
-					ticketsProvider = _context5.sent;
-					_context5.t0 = body;
-					_context5.next = 14;
-					return Object(effects["b" /* call */])([Object(external_var_wp_data_root_wp_data_["select"])('core/editor'), 'getCurrentPostId']);
-
-				case 14:
-					_context5.t1 = _context5.sent;
-
-					_context5.t0.append.call(_context5.t0, 'post_id', _context5.t1);
-
-					body.append('provider', ticketProvider || ticketsProvider);
-					_context5.t2 = body;
-					_context5.next = 20;
-					return Object(effects["f" /* select */])(getTicketTempTitle, props);
-
-				case 20:
-					_context5.t3 = _context5.sent;
-
-					_context5.t2.append.call(_context5.t2, 'name', _context5.t3);
-
-					_context5.t4 = body;
-					_context5.next = 25;
-					return Object(effects["f" /* select */])(getTicketTempDescription, props);
-
-				case 25:
-					_context5.t5 = _context5.sent;
-
-					_context5.t4.append.call(_context5.t4, 'description', _context5.t5);
-
-					_context5.t6 = body;
-					_context5.next = 30;
-					return Object(effects["f" /* select */])(getTicketTempPrice, props);
-
-				case 30:
-					_context5.t7 = _context5.sent;
-
-					_context5.t6.append.call(_context5.t6, 'price', _context5.t7);
-
-					_context5.t8 = body;
-					_context5.next = 35;
-					return Object(effects["f" /* select */])(getTicketTempStartDate, props);
-
-				case 35:
-					_context5.t9 = _context5.sent;
-
-					_context5.t8.append.call(_context5.t8, 'start_date', _context5.t9);
-
-					_context5.t10 = body;
-					_context5.next = 40;
-					return Object(effects["f" /* select */])(getTicketTempStartTime, props);
-
-				case 40:
-					_context5.t11 = _context5.sent;
-
-					_context5.t10.append.call(_context5.t10, 'start_time', _context5.t11);
-
-					_context5.t12 = body;
-					_context5.next = 45;
-					return Object(effects["f" /* select */])(getTicketTempEndDate, props);
-
-				case 45:
-					_context5.t13 = _context5.sent;
-
-					_context5.t12.append.call(_context5.t12, 'end_date', _context5.t13);
-
-					_context5.t14 = body;
-					_context5.next = 50;
-					return Object(effects["f" /* select */])(getTicketTempEndTime, props);
-
-				case 50:
-					_context5.t15 = _context5.sent;
-
-					_context5.t14.append.call(_context5.t14, 'end_time', _context5.t15);
-
-					_context5.t16 = body;
-					_context5.next = 55;
-					return Object(effects["f" /* select */])(getTicketTempSku, props);
-
-				case 55:
-					_context5.t17 = _context5.sent;
-
-					_context5.t16.append.call(_context5.t16, 'sku', _context5.t17);
-
-					_context5.t18 = body;
-					_context5.next = 60;
-					return Object(effects["b" /* call */])([Object(external_var_wp_data_root_wp_data_["select"])('core/editor'), 'getBlockIndex'], clientId, rootClientId);
-
-				case 60:
-					_context5.t19 = _context5.sent;
-
-					_context5.t18.append.call(_context5.t18, 'menu_order', _context5.t19);
-
-					_context5.next = 64;
-					return Object(effects["f" /* select */])(getTicketTempCapacityType, props);
-
-				case 64:
-					capacityType = _context5.sent;
-					_context5.next = 67;
-					return Object(effects["f" /* select */])(getTicketTempCapacity, props);
-
-				case 67:
-					capacity = _context5.sent;
-					isUnlimited = capacityType === sagas_TICKET_TYPES[sagas_UNLIMITED];
-
-					body.append('ticket[mode]', isUnlimited ? '' : capacityType);
-					body.append('ticket[capacity]', isUnlimited ? '' : capacity);
-
-					if (!(capacityType === sagas_TICKET_TYPES[sagas_SHARED])) {
-						_context5.next = 77;
-						break;
-					}
-
-					_context5.t20 = body;
-					_context5.next = 75;
-					return Object(effects["f" /* select */])(getTicketsTempSharedCapacity);
-
-				case 75:
-					_context5.t21 = _context5.sent;
-
-					_context5.t20.append.call(_context5.t20, 'ticket[event_capacity]', _context5.t21);
-
-				case 77:
-					return _context5.abrupt('return', body);
-
-				case 78:
-				case 'end':
-					return _context5.stop();
-			}
-		}
-	}, _marked5, this);
-}
-
-function removeTicketBlock(clientId) {
-	var _wpDispatch, removeBlock;
-
-	return regenerator_default.a.wrap(function removeTicketBlock$(_context6) {
-		while (1) {
-			switch (_context6.prev = _context6.next) {
-				case 0:
-					_wpDispatch = Object(external_var_wp_data_root_wp_data_["dispatch"])('core/editor'), removeBlock = _wpDispatch.removeBlock;
-					_context6.next = 3;
-					return Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["removeTicketBlock"](clientId)), Object(effects["b" /* call */])(removeBlock, clientId)]);
-
-				case 3:
-				case 'end':
-					return _context6.stop();
-			}
-		}
-	}, _marked6, this);
-}
-
-function fetchTicket(action) {
-	var _action$payload2, ticketId, clientId, _ref4, response, ticket, _ticket$status, status, provider, _ticket$totals, totals, available_from, available_until, cost_details, title, description, sku, capacity_type, capacity, supports_attendee_information, datePickerFormat, startMoment, startDate, startDateInput, startTime, startTimeInput, endMoment, endDate, endDateInput, endTime, endTimeInput, details;
-
-	return regenerator_default.a.wrap(function fetchTicket$(_context7) {
-		while (1) {
-			switch (_context7.prev = _context7.next) {
-				case 0:
-					_action$payload2 = action.payload, ticketId = _action$payload2.ticketId, clientId = _action$payload2.clientId;
-
-					if (!(ticketId === 0)) {
-						_context7.next = 3;
-						break;
-					}
-
-					return _context7.abrupt('return');
-
-				case 3:
-					_context7.next = 5;
-					return Object(effects["e" /* put */])(actions["setTicketIsLoading"](clientId, true));
-
-				case 5:
-					_context7.prev = 5;
-					_context7.next = 8;
-					return Object(effects["b" /* call */])(wpREST, {
-						path: 'tickets/' + ticketId,
-						namespace: 'tribe/tickets/v1'
-					});
-
-				case 8:
-					_ref4 = _context7.sent;
-					response = _ref4.response;
-					ticket = _ref4.data;
-					_ticket$status = ticket.status, status = _ticket$status === undefined ? '' : _ticket$status, provider = ticket.provider;
-
-					if (!(response.status === 404 || status === 'trash' || provider === constants["RSVP"])) {
-						_context7.next = 16;
-						break;
-					}
-
-					_context7.next = 15;
-					return Object(effects["b" /* call */])(removeTicketBlock, clientId);
-
-				case 15:
-					return _context7.abrupt('return');
-
-				case 16:
-					if (!response.ok) {
-						_context7.next = 60;
-						break;
-					}
-
-					_ticket$totals = ticket.totals, totals = _ticket$totals === undefined ? {} : _ticket$totals, available_from = ticket.available_from, available_until = ticket.available_until, cost_details = ticket.cost_details, title = ticket.title, description = ticket.description, sku = ticket.sku, capacity_type = ticket.capacity_type, capacity = ticket.capacity, supports_attendee_information = ticket.supports_attendee_information;
-					datePickerFormat = tecDateSettings().datepickerFormat;
-					_context7.next = 21;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toMoment, available_from);
-
-				case 21:
-					startMoment = _context7.sent;
-					_context7.next = 24;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDatabaseDate, startMoment);
-
-				case 24:
-					startDate = _context7.sent;
-					_context7.next = 27;
-					return datePickerFormat ? Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDate, startMoment, datePickerFormat) : Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDate, startMoment);
-
-				case 27:
-					startDateInput = _context7.sent;
-					_context7.next = 30;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDatabaseTime, startMoment);
-
-				case 30:
-					startTime = _context7.sent;
-					_context7.next = 33;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toTime, startMoment);
-
-				case 33:
-					startTimeInput = _context7.sent;
-					_context7.next = 36;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toMoment, '');
-
-				case 36:
-					endMoment = _context7.sent;
-					endDate = '';
-					endDateInput = '';
-					endTime = '';
-					endTimeInput = '';
-
-					if (!available_until) {
-						_context7.next = 57;
-						break;
-					}
-
-					_context7.next = 44;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toMoment, available_until);
-
-				case 44:
-					endMoment = _context7.sent;
-					_context7.next = 47;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDatabaseDate, endMoment);
-
-				case 47:
-					endDate = _context7.sent;
-					_context7.next = 50;
-					return datePickerFormat ? Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDate, endMoment, datePickerFormat) : Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDate, endMoment);
-
-				case 50:
-					endDateInput = _context7.sent;
-					_context7.next = 53;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDatabaseTime, endMoment);
-
-				case 53:
-					endTime = _context7.sent;
-					_context7.next = 56;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toTime, endMoment);
-
-				case 56:
-					endTimeInput = _context7.sent;
-
-				case 57:
-					details = {
-						title: title,
-						description: description,
-						price: cost_details.values[0],
-						sku: sku,
-						startDate: startDate,
-						startDateInput: startDateInput,
-						startDateMoment: startMoment,
-						endDate: endDate,
-						endDateInput: endDateInput,
-						endDateMoment: endMoment,
-						startTime: startTime,
-						endTime: endTime,
-						startTimeInput: startTimeInput,
-						endTimeInput: endTimeInput,
-						capacityType: capacity_type,
-						capacity: capacity
-					};
-					_context7.next = 60;
-					return Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setTicketDetails"](clientId, details)), Object(effects["e" /* put */])(actions["setTicketTempDetails"](clientId, details)), Object(effects["e" /* put */])(actions["setTicketSold"](clientId, totals.sold)), Object(effects["e" /* put */])(actions["setTicketAvailable"](clientId, totals.stock)), Object(effects["e" /* put */])(actions["setTicketCurrencySymbol"](clientId, cost_details.currency_symbol)), Object(effects["e" /* put */])(actions["setTicketCurrencyPosition"](clientId, cost_details.currency_position)), Object(effects["e" /* put */])(actions["setTicketProvider"](clientId, provider)), Object(effects["e" /* put */])(actions["setTicketHasAttendeeInfoFields"](clientId, supports_attendee_information)), Object(effects["e" /* put */])(actions["setTicketHasBeenCreated"](clientId, true))]);
-
-				case 60:
-					_context7.next = 65;
-					break;
-
-				case 62:
-					_context7.prev = 62;
-					_context7.t0 = _context7['catch'](5);
-
-					console.error(_context7.t0);
-					/**
-      * @todo handle error scenario
-      */
-
-				case 65:
-					_context7.next = 67;
-					return Object(effects["e" /* put */])(actions["setTicketIsLoading"](clientId, false));
-
-				case 67:
-				case 'end':
-					return _context7.stop();
-			}
-		}
-	}, _marked7, this, [[5, 62]]);
-}
-
-function createNewTicket(action) {
-	var clientId, props, _restNonce, _restNonce$add_ticket, add_ticket_nonce, body, _ref5, response, ticket, sharedCapacity, tempSharedCapacity, available, _ref6, _ref7, title, description, price, sku, startDate, startDateInput, startDateMoment, endDate, endDateInput, endDateMoment, startTime, endTime, startTimeInput, endTimeInput, capacityType, capacity;
-
-	return regenerator_default.a.wrap(function createNewTicket$(_context8) {
-		while (1) {
-			switch (_context8.prev = _context8.next) {
-				case 0:
-					clientId = action.payload.clientId;
-					props = { clientId: clientId };
-					_restNonce = restNonce(), _restNonce$add_ticket = _restNonce.add_ticket_nonce, add_ticket_nonce = _restNonce$add_ticket === undefined ? '' : _restNonce$add_ticket;
-					_context8.next = 5;
-					return Object(effects["b" /* call */])(setBodyDetails, clientId);
-
-				case 5:
-					body = _context8.sent;
-
-					body.append('add_ticket_nonce', add_ticket_nonce);
-
-					_context8.prev = 7;
-					_context8.next = 10;
-					return Object(effects["e" /* put */])(actions["setTicketIsLoading"](clientId, true));
-
-				case 10:
-					_context8.next = 12;
-					return Object(effects["b" /* call */])(wpREST, {
-						path: 'tickets/',
-						namespace: 'tribe/tickets/v1',
-						initParams: {
-							method: 'POST',
-							body: body
-						}
-					});
-
-				case 12:
-					_ref5 = _context8.sent;
-					response = _ref5.response;
-					ticket = _ref5.data;
-
-					if (!response.ok) {
-						_context8.next = 50;
-						break;
-					}
-
-					_context8.next = 18;
-					return Object(effects["f" /* select */])(getTicketsSharedCapacity);
-
-				case 18:
-					sharedCapacity = _context8.sent;
-					_context8.next = 21;
-					return Object(effects["f" /* select */])(getTicketsTempSharedCapacity);
-
-				case 21:
-					tempSharedCapacity = _context8.sent;
-
-					if (!(sharedCapacity === '' && !isNaN(tempSharedCapacity) && tempSharedCapacity > 0)) {
-						_context8.next = 25;
-						break;
-					}
-
-					_context8.next = 25;
-					return Object(effects["e" /* put */])(actions["setTicketsSharedCapacity"](tempSharedCapacity));
-
-				case 25:
-					available = ticket.capacity_details.available === -1 ? 0 : ticket.capacity_details.available;
-					_context8.next = 28;
-					return Object(effects["a" /* all */])([Object(effects["f" /* select */])(getTicketTempTitle, props), Object(effects["f" /* select */])(getTicketTempDescription, props), Object(effects["f" /* select */])(getTicketTempPrice, props), Object(effects["f" /* select */])(getTicketTempSku, props), Object(effects["f" /* select */])(getTicketTempStartDate, props), Object(effects["f" /* select */])(getTicketTempStartDateInput, props), Object(effects["f" /* select */])(getTicketTempStartDateMoment, props), Object(effects["f" /* select */])(getTicketTempEndDate, props), Object(effects["f" /* select */])(getTicketTempEndDateInput, props), Object(effects["f" /* select */])(getTicketTempEndDateMoment, props), Object(effects["f" /* select */])(getTicketTempStartTime, props), Object(effects["f" /* select */])(getTicketTempEndTime, props), Object(effects["f" /* select */])(getTicketTempStartTimeInput, props), Object(effects["f" /* select */])(getTicketTempEndTimeInput, props), Object(effects["f" /* select */])(getTicketTempCapacityType, props), Object(effects["f" /* select */])(getTicketTempCapacity, props)]);
-
-				case 28:
-					_ref6 = _context8.sent;
-					_ref7 = slicedToArray_default()(_ref6, 16);
-					title = _ref7[0];
-					description = _ref7[1];
-					price = _ref7[2];
-					sku = _ref7[3];
-					startDate = _ref7[4];
-					startDateInput = _ref7[5];
-					startDateMoment = _ref7[6];
-					endDate = _ref7[7];
-					endDateInput = _ref7[8];
-					endDateMoment = _ref7[9];
-					startTime = _ref7[10];
-					endTime = _ref7[11];
-					startTimeInput = _ref7[12];
-					endTimeInput = _ref7[13];
-					capacityType = _ref7[14];
-					capacity = _ref7[15];
-					_context8.next = 48;
-					return Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setTicketDetails"](clientId, {
-						title: title,
-						description: description,
-						price: price,
-						sku: sku,
-						startDate: startDate,
-						startDateInput: startDateInput,
-						startDateMoment: startDateMoment,
-						endDate: endDate,
-						endDateInput: endDateInput,
-						endDateMoment: endDateMoment,
-						startTime: startTime,
-						endTime: endTime,
-						startTimeInput: startTimeInput,
-						endTimeInput: endTimeInput,
-						capacityType: capacityType,
-						capacity: capacity
-					})), Object(effects["e" /* put */])(actions["setTicketId"](clientId, ticket.id)), Object(effects["e" /* put */])(actions["setTicketHasBeenCreated"](clientId, true)), Object(effects["e" /* put */])(actions["setTicketAvailable"](clientId, available)), Object(effects["e" /* put */])(actions["setTicketProvider"](clientId, PROVIDER_CLASS_TO_PROVIDER_MAPPING[ticket.provider_class])), Object(effects["e" /* put */])(actions["setTicketHasChanges"](clientId, false))]);
-
-				case 48:
-					_context8.next = 50;
-					return Object(effects["d" /* fork */])(saveTicketWithPostSave, clientId);
-
-				case 50:
-					_context8.next = 55;
-					break;
-
-				case 52:
-					_context8.prev = 52;
-					_context8.t0 = _context8['catch'](7);
-
-					console.error(_context8.t0);
-					/**
-      * @todo: handle error scenario
-      */
-
-				case 55:
-					_context8.prev = 55;
-					_context8.next = 58;
-					return Object(effects["e" /* put */])(actions["setTicketIsLoading"](clientId, false));
-
-				case 58:
-					return _context8.finish(55);
-
-				case 59:
-				case 'end':
-					return _context8.stop();
-			}
-		}
-	}, _marked8, this, [[7, 52, 55, 59]]);
-}
-
-function updateTicket(action) {
-	var clientId, props, _restNonce2, _restNonce2$edit_tick, edit_ticket_nonce, body, ticketId, data, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, _ref8, _ref9, key, value, _ref10, response, ticket, capacity_details, available, _ref11, _ref12, title, description, price, sku, startDate, startDateInput, startDateMoment, endDate, endDateInput, endDateMoment, startTime, endTime, startTimeInput, endTimeInput, capacityType, capacity;
-
-	return regenerator_default.a.wrap(function updateTicket$(_context9) {
-		while (1) {
-			switch (_context9.prev = _context9.next) {
-				case 0:
-					clientId = action.payload.clientId;
-					props = { clientId: clientId };
-					_restNonce2 = restNonce(), _restNonce2$edit_tick = _restNonce2.edit_ticket_nonce, edit_ticket_nonce = _restNonce2$edit_tick === undefined ? '' : _restNonce2$edit_tick;
-					_context9.next = 5;
-					return Object(effects["b" /* call */])(setBodyDetails, clientId);
-
-				case 5:
-					body = _context9.sent;
-
-					body.append('edit_ticket_nonce', edit_ticket_nonce);
-
-					_context9.next = 9;
-					return Object(effects["f" /* select */])(getTicketId, props);
-
-				case 9:
-					ticketId = _context9.sent;
-					_context9.prev = 10;
-					data = [];
-					_iteratorNormalCompletion = true;
-					_didIteratorError = false;
-					_iteratorError = undefined;
-					_context9.prev = 15;
-
-					for (_iterator = body.entries()[Symbol.iterator](); !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-						_ref8 = _step.value;
-						_ref9 = slicedToArray_default()(_ref8, 2);
-						key = _ref9[0];
-						value = _ref9[1];
-
-						data.push(encodeURIComponent(key) + '=' + encodeURIComponent(value));
-					}
-
-					_context9.next = 23;
-					break;
-
-				case 19:
-					_context9.prev = 19;
-					_context9.t0 = _context9['catch'](15);
-					_didIteratorError = true;
-					_iteratorError = _context9.t0;
-
-				case 23:
-					_context9.prev = 23;
-					_context9.prev = 24;
-
-					if (!_iteratorNormalCompletion && _iterator.return) {
-						_iterator.return();
-					}
-
-				case 26:
-					_context9.prev = 26;
-
-					if (!_didIteratorError) {
-						_context9.next = 29;
-						break;
-					}
-
-					throw _iteratorError;
-
-				case 29:
-					return _context9.finish(26);
-
-				case 30:
-					return _context9.finish(23);
-
-				case 31:
-					_context9.next = 33;
-					return Object(effects["e" /* put */])(actions["setTicketIsLoading"](clientId, true));
-
-				case 33:
-					_context9.next = 35;
-					return Object(effects["b" /* call */])(wpREST, {
-						path: 'tickets/' + ticketId,
-						namespace: 'tribe/tickets/v1',
-						headers: {
-							'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-						},
-						initParams: {
-							method: 'PUT',
-							body: data.join('&')
-						}
-					});
-
-				case 35:
-					_ref10 = _context9.sent;
-					response = _ref10.response;
-					ticket = _ref10.data;
-
-					if (!response.ok) {
-						_context9.next = 63;
-						break;
-					}
-
-					capacity_details = ticket.capacity_details;
-					available = capacity_details.available === -1 ? 0 : capacity_details.available;
-					_context9.next = 43;
-					return Object(effects["a" /* all */])([Object(effects["f" /* select */])(getTicketTempTitle, props), Object(effects["f" /* select */])(getTicketTempDescription, props), Object(effects["f" /* select */])(getTicketTempPrice, props), Object(effects["f" /* select */])(getTicketTempSku, props), Object(effects["f" /* select */])(getTicketTempStartDate, props), Object(effects["f" /* select */])(getTicketTempStartDateInput, props), Object(effects["f" /* select */])(getTicketTempStartDateMoment, props), Object(effects["f" /* select */])(getTicketTempEndDate, props), Object(effects["f" /* select */])(getTicketTempEndDateInput, props), Object(effects["f" /* select */])(getTicketTempEndDateMoment, props), Object(effects["f" /* select */])(getTicketTempStartTime, props), Object(effects["f" /* select */])(getTicketTempEndTime, props), Object(effects["f" /* select */])(getTicketTempStartTimeInput, props), Object(effects["f" /* select */])(getTicketTempEndTimeInput, props), Object(effects["f" /* select */])(getTicketTempCapacityType, props), Object(effects["f" /* select */])(getTicketTempCapacity, props)]);
-
-				case 43:
-					_ref11 = _context9.sent;
-					_ref12 = slicedToArray_default()(_ref11, 16);
-					title = _ref12[0];
-					description = _ref12[1];
-					price = _ref12[2];
-					sku = _ref12[3];
-					startDate = _ref12[4];
-					startDateInput = _ref12[5];
-					startDateMoment = _ref12[6];
-					endDate = _ref12[7];
-					endDateInput = _ref12[8];
-					endDateMoment = _ref12[9];
-					startTime = _ref12[10];
-					endTime = _ref12[11];
-					startTimeInput = _ref12[12];
-					endTimeInput = _ref12[13];
-					capacityType = _ref12[14];
-					capacity = _ref12[15];
-					_context9.next = 63;
-					return Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setTicketDetails"](clientId, {
-						title: title,
-						description: description,
-						price: price,
-						sku: sku,
-						startDate: startDate,
-						startDateInput: startDateInput,
-						startDateMoment: startDateMoment,
-						endDate: endDate,
-						endDateInput: endDateInput,
-						endDateMoment: endDateMoment,
-						startTime: startTime,
-						endTime: endTime,
-						startTimeInput: startTimeInput,
-						endTimeInput: endTimeInput,
-						capacityType: capacityType,
-						capacity: capacity
-					})), Object(effects["e" /* put */])(actions["setTicketSold"](clientId, capacity_details.sold)), Object(effects["e" /* put */])(actions["setTicketAvailable"](clientId, available)), Object(effects["e" /* put */])(actions["setTicketHasChanges"](clientId, false))]);
-
-				case 63:
-					_context9.next = 68;
-					break;
-
-				case 65:
-					_context9.prev = 65;
-					_context9.t1 = _context9['catch'](10);
-
-					console.error(_context9.t1);
-					/**
-      * @todo: handle error scenario
-      */
-
-				case 68:
-					_context9.prev = 68;
-					_context9.next = 71;
-					return Object(effects["e" /* put */])(actions["setTicketIsLoading"](clientId, false));
-
-				case 71:
-					return _context9.finish(68);
-
-				case 72:
-				case 'end':
-					return _context9.stop();
-			}
-		}
-	}, _marked9, this, [[10, 65, 68, 72], [15, 19, 23, 31], [24,, 26, 30]]);
-}
-
-function deleteTicket(action) {
-	var clientId, props, shouldDelete, ticketId, hasBeenCreated, _restNonce3, _restNonce3$remove_ti, remove_ticket_nonce, postId, body;
-
-	return regenerator_default.a.wrap(function deleteTicket$(_context10) {
-		while (1) {
-			switch (_context10.prev = _context10.next) {
-				case 0:
-					clientId = action.payload.clientId;
-					props = { clientId: clientId };
-					_context10.next = 4;
-					return Object(effects["b" /* call */])([window, 'confirm'], Object(external_var_wp_i18n_root_wp_i18n_["__"])('Are you sure you want to delete this ticket? It cannot be undone.'));
-
-				case 4:
-					shouldDelete = _context10.sent;
-
-					if (!shouldDelete) {
-						_context10.next = 33;
-						break;
-					}
-
-					_context10.next = 8;
-					return Object(effects["f" /* select */])(getTicketId, props);
-
-				case 8:
-					ticketId = _context10.sent;
-					_context10.next = 11;
-					return Object(effects["f" /* select */])(getTicketHasBeenCreated, props);
-
-				case 11:
-					hasBeenCreated = _context10.sent;
-					_context10.next = 14;
-					return Object(effects["e" /* put */])(actions["setTicketIsSelected"](clientId, false));
-
-				case 14:
-					_context10.next = 16;
-					return Object(effects["e" /* put */])(actions["removeTicketBlock"](clientId));
-
-				case 16:
-					_context10.next = 18;
-					return Object(effects["b" /* call */])([Object(external_var_wp_data_root_wp_data_["dispatch"])('core/editor'), 'clearSelectedBlock']);
-
-				case 18:
-					_context10.next = 20;
-					return Object(effects["b" /* call */])([Object(external_var_wp_data_root_wp_data_["dispatch"])('core/editor'), 'removeBlocks'], [clientId]);
-
-				case 20:
-					if (!hasBeenCreated) {
-						_context10.next = 33;
-						break;
-					}
-
-					_restNonce3 = restNonce(), _restNonce3$remove_ti = _restNonce3.remove_ticket_nonce, remove_ticket_nonce = _restNonce3$remove_ti === undefined ? '' : _restNonce3$remove_ti;
-					_context10.next = 24;
-					return Object(effects["b" /* call */])([Object(external_var_wp_data_root_wp_data_["select"])('core/editor'), 'getCurrentPostId']);
-
-				case 24:
-					postId = _context10.sent;
-
-
-					/**
-      * Encode params to be passed into the DELETE request as PHP doesn’t transform the request body
-      * of a DELETE request into a super global.
-      */
-					body = [encodeURIComponent('post_id') + '=' + encodeURIComponent(postId), encodeURIComponent('remove_ticket_nonce') + '=' + encodeURIComponent(remove_ticket_nonce)];
-					_context10.prev = 26;
-					_context10.next = 29;
-					return Object(effects["b" /* call */])(wpREST, {
-						path: 'tickets/' + ticketId,
-						namespace: 'tribe/tickets/v1',
-						headers: {
-							'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-						},
-						initParams: {
-							method: 'DELETE',
-							body: body.join('&')
-						}
-					});
-
-				case 29:
-					_context10.next = 33;
-					break;
-
-				case 31:
-					_context10.prev = 31;
-					_context10.t0 = _context10['catch'](26);
-
-				case 33:
-				case 'end':
-					return _context10.stop();
-			}
-		}
-	}, _marked10, this, [[26, 31]]);
-}
-
-function fetchTicketsHeaderImage(action) {
-	var id, _ref13, response, media, headerImage;
-
-	return regenerator_default.a.wrap(function fetchTicketsHeaderImage$(_context11) {
-		while (1) {
-			switch (_context11.prev = _context11.next) {
-				case 0:
-					id = action.payload.id;
-					_context11.next = 3;
-					return Object(effects["e" /* put */])(actions["setTicketsIsSettingsLoading"](true));
-
-				case 3:
-					_context11.prev = 3;
-					_context11.next = 6;
-					return Object(effects["b" /* call */])(wpREST, { path: 'media/' + id });
-
-				case 6:
-					_ref13 = _context11.sent;
-					response = _ref13.response;
-					media = _ref13.data;
-
-					if (!response.ok) {
-						_context11.next = 13;
-						break;
-					}
-
-					headerImage = {
-						id: media.id,
-						alt: media.alt_text,
-						src: media.media_details.sizes.medium.source_url
-					};
-					_context11.next = 13;
-					return Object(effects["e" /* put */])(actions["setTicketsHeaderImage"](headerImage));
-
-				case 13:
-					_context11.next = 18;
-					break;
-
-				case 15:
-					_context11.prev = 15;
-					_context11.t0 = _context11['catch'](3);
-
-					console.error(_context11.t0);
-					/**
-      * @todo: handle error scenario
-      */
-
-				case 18:
-					_context11.prev = 18;
-					_context11.next = 21;
-					return Object(effects["e" /* put */])(actions["setTicketsIsSettingsLoading"](false));
-
-				case 21:
-					return _context11.finish(18);
-
-				case 22:
-				case 'end':
-					return _context11.stop();
-			}
-		}
-	}, _marked11, this, [[3, 15, 18, 22]]);
-}
-
-function updateTicketsHeaderImage(action) {
-	var image, postId, body, slug, postType, restBase, _ref14, response, headerImage;
-
-	return regenerator_default.a.wrap(function updateTicketsHeaderImage$(_context12) {
-		while (1) {
-			switch (_context12.prev = _context12.next) {
-				case 0:
-					image = action.payload.image;
-					_context12.next = 3;
-					return Object(effects["b" /* call */])([Object(external_var_wp_data_root_wp_data_["select"])('core/editor'), 'getCurrentPostId']);
-
-				case 3:
-					postId = _context12.sent;
-					body = {
-						meta: defineProperty_default()({}, utils["i" /* KEY_TICKET_HEADER */], '' + image.id)
-					};
-					_context12.prev = 5;
-					_context12.next = 8;
-					return Object(effects["e" /* put */])(actions["setTicketsIsSettingsLoading"](true));
-
-				case 8:
-					_context12.next = 10;
-					return Object(effects["e" /* put */])(rsvp_actions["setRSVPIsSettingsLoading"](true));
-
-				case 10:
-					slug = Object(external_var_wp_data_root_wp_data_["select"])('core/editor').getCurrentPostType();
-					postType = Object(external_var_wp_data_root_wp_data_["select"])('core').getPostType(slug);
-					restBase = postType.rest_base;
-					_context12.next = 15;
-					return Object(effects["b" /* call */])(wpREST, {
-						path: restBase + '/' + postId,
-						headers: {
-							'Content-Type': 'application/json'
-						},
-						initParams: {
-							method: 'PUT',
-							body: JSON.stringify(body)
-						}
-					});
-
-				case 15:
-					_ref14 = _context12.sent;
-					response = _ref14.response;
-
-					if (!response.ok) {
-						_context12.next = 23;
-						break;
-					}
-
-					headerImage = {
-						id: image.id,
-						alt: image.alt,
-						src: image.sizes.medium.url
-					};
-					/**
-      * @todo: until rsvp and tickets header image can be separated, they need to be linked
-      */
-
-					_context12.next = 21;
-					return Object(effects["e" /* put */])(actions["setTicketsHeaderImage"](headerImage));
-
-				case 21:
-					_context12.next = 23;
-					return Object(effects["e" /* put */])(rsvp_actions["setRSVPHeaderImage"](headerImage));
-
-				case 23:
-					_context12.next = 27;
-					break;
-
-				case 25:
-					_context12.prev = 25;
-					_context12.t0 = _context12['catch'](5);
-
-				case 27:
-					_context12.prev = 27;
-					_context12.next = 30;
-					return Object(effects["e" /* put */])(actions["setTicketsIsSettingsLoading"](false));
-
-				case 30:
-					_context12.next = 32;
-					return Object(effects["e" /* put */])(rsvp_actions["setRSVPIsSettingsLoading"](false));
-
-				case 32:
-					return _context12.finish(27);
-
-				case 33:
-				case 'end':
-					return _context12.stop();
-			}
-		}
-	}, _marked12, this, [[5, 25, 27, 33]]);
-}
-
-function deleteTicketsHeaderImage() {
-	var postId, body, slug, postType, restBase, _ref15, response;
-
-	return regenerator_default.a.wrap(function deleteTicketsHeaderImage$(_context13) {
-		while (1) {
-			switch (_context13.prev = _context13.next) {
-				case 0:
-					_context13.next = 2;
-					return Object(effects["b" /* call */])([Object(external_var_wp_data_root_wp_data_["select"])('core/editor'), 'getCurrentPostId']);
-
-				case 2:
-					postId = _context13.sent;
-					body = {
-						meta: defineProperty_default()({}, utils["i" /* KEY_TICKET_HEADER */], null)
-					};
-					_context13.prev = 4;
-					_context13.next = 7;
-					return Object(effects["e" /* put */])(actions["setTicketsIsSettingsLoading"](true));
-
-				case 7:
-					_context13.next = 9;
-					return Object(effects["e" /* put */])(rsvp_actions["setRSVPIsSettingsLoading"](true));
-
-				case 9:
-					slug = Object(external_var_wp_data_root_wp_data_["select"])('core/editor').getCurrentPostType();
-					postType = Object(external_var_wp_data_root_wp_data_["select"])('core').getPostType(slug);
-					restBase = postType.rest_base;
-					_context13.next = 14;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["api"].wpREST, {
-						path: restBase + '/' + postId,
-						headers: {
-							'Content-Type': 'application/json'
-						},
-						initParams: {
-							method: 'PUT',
-							body: JSON.stringify(body)
-						}
-					});
-
-				case 14:
-					_ref15 = _context13.sent;
-					response = _ref15.response;
-
-					if (!response.ok) {
-						_context13.next = 21;
-						break;
-					}
-
-					_context13.next = 19;
-					return Object(effects["e" /* put */])(actions["setTicketsHeaderImage"](header_image["a" /* DEFAULT_STATE */]));
-
-				case 19:
-					_context13.next = 21;
-					return Object(effects["e" /* put */])(rsvp_actions["setRSVPHeaderImage"](reducers_header_image["a" /* DEFAULT_STATE */]));
-
-				case 21:
-					_context13.next = 25;
-					break;
-
-				case 23:
-					_context13.prev = 23;
-					_context13.t0 = _context13['catch'](4);
-
-				case 25:
-					_context13.prev = 25;
-					_context13.next = 28;
-					return Object(effects["e" /* put */])(actions["setTicketsIsSettingsLoading"](false));
-
-				case 28:
-					_context13.next = 30;
-					return Object(effects["e" /* put */])(rsvp_actions["setRSVPIsSettingsLoading"](false));
-
-				case 30:
-					return _context13.finish(25);
-
-				case 31:
-				case 'end':
-					return _context13.stop();
-			}
-		}
-	}, _marked13, this, [[4, 23, 25, 31]]);
-}
-
-function setTicketDetails(action) {
-	var _action$payload3, clientId, details, title, description, price, sku, startDate, startDateInput, startDateMoment, endDate, endDateInput, endDateMoment, startTime, endTime, startTimeInput, endTimeInput, capacityType, capacity;
-
-	return regenerator_default.a.wrap(function setTicketDetails$(_context14) {
-		while (1) {
-			switch (_context14.prev = _context14.next) {
-				case 0:
-					_action$payload3 = action.payload, clientId = _action$payload3.clientId, details = _action$payload3.details;
-					title = details.title, description = details.description, price = details.price, sku = details.sku, startDate = details.startDate, startDateInput = details.startDateInput, startDateMoment = details.startDateMoment, endDate = details.endDate, endDateInput = details.endDateInput, endDateMoment = details.endDateMoment, startTime = details.startTime, endTime = details.endTime, startTimeInput = details.startTimeInput, endTimeInput = details.endTimeInput, capacityType = details.capacityType, capacity = details.capacity;
-					_context14.next = 4;
-					return Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setTicketTitle"](clientId, title)), Object(effects["e" /* put */])(actions["setTicketDescription"](clientId, description)), Object(effects["e" /* put */])(actions["setTicketPrice"](clientId, price)), Object(effects["e" /* put */])(actions["setTicketSku"](clientId, sku)), Object(effects["e" /* put */])(actions["setTicketStartDate"](clientId, startDate)), Object(effects["e" /* put */])(actions["setTicketStartDateInput"](clientId, startDateInput)), Object(effects["e" /* put */])(actions["setTicketStartDateMoment"](clientId, startDateMoment)), Object(effects["e" /* put */])(actions["setTicketEndDate"](clientId, endDate)), Object(effects["e" /* put */])(actions["setTicketEndDateInput"](clientId, endDateInput)), Object(effects["e" /* put */])(actions["setTicketEndDateMoment"](clientId, endDateMoment)), Object(effects["e" /* put */])(actions["setTicketStartTime"](clientId, startTime)), Object(effects["e" /* put */])(actions["setTicketEndTime"](clientId, endTime)), Object(effects["e" /* put */])(actions["setTicketStartTimeInput"](clientId, startTimeInput)), Object(effects["e" /* put */])(actions["setTicketEndTimeInput"](clientId, endTimeInput)), Object(effects["e" /* put */])(actions["setTicketCapacityType"](clientId, capacityType)), Object(effects["e" /* put */])(actions["setTicketCapacity"](clientId, capacity))]);
-
-				case 4:
-				case 'end':
-					return _context14.stop();
-			}
-		}
-	}, _marked14, this);
-}
-
-function setTicketTempDetails(action) {
-	var _action$payload4, clientId, tempDetails, title, description, price, sku, startDate, startDateInput, startDateMoment, endDate, endDateInput, endDateMoment, startTime, endTime, startTimeInput, endTimeInput, capacityType, capacity;
-
-	return regenerator_default.a.wrap(function setTicketTempDetails$(_context15) {
-		while (1) {
-			switch (_context15.prev = _context15.next) {
-				case 0:
-					_action$payload4 = action.payload, clientId = _action$payload4.clientId, tempDetails = _action$payload4.tempDetails;
-					title = tempDetails.title, description = tempDetails.description, price = tempDetails.price, sku = tempDetails.sku, startDate = tempDetails.startDate, startDateInput = tempDetails.startDateInput, startDateMoment = tempDetails.startDateMoment, endDate = tempDetails.endDate, endDateInput = tempDetails.endDateInput, endDateMoment = tempDetails.endDateMoment, startTime = tempDetails.startTime, endTime = tempDetails.endTime, startTimeInput = tempDetails.startTimeInput, endTimeInput = tempDetails.endTimeInput, capacityType = tempDetails.capacityType, capacity = tempDetails.capacity;
-					_context15.next = 4;
-					return Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setTicketTempTitle"](clientId, title)), Object(effects["e" /* put */])(actions["setTicketTempDescription"](clientId, description)), Object(effects["e" /* put */])(actions["setTicketTempPrice"](clientId, price)), Object(effects["e" /* put */])(actions["setTicketTempSku"](clientId, sku)), Object(effects["e" /* put */])(actions["setTicketTempStartDate"](clientId, startDate)), Object(effects["e" /* put */])(actions["setTicketTempStartDateInput"](clientId, startDateInput)), Object(effects["e" /* put */])(actions["setTicketTempStartDateMoment"](clientId, startDateMoment)), Object(effects["e" /* put */])(actions["setTicketTempEndDate"](clientId, endDate)), Object(effects["e" /* put */])(actions["setTicketTempEndDateInput"](clientId, endDateInput)), Object(effects["e" /* put */])(actions["setTicketTempEndDateMoment"](clientId, endDateMoment)), Object(effects["e" /* put */])(actions["setTicketTempStartTime"](clientId, startTime)), Object(effects["e" /* put */])(actions["setTicketTempEndTime"](clientId, endTime)), Object(effects["e" /* put */])(actions["setTicketTempStartTimeInput"](clientId, startTimeInput)), Object(effects["e" /* put */])(actions["setTicketTempEndTimeInput"](clientId, endTimeInput)), Object(effects["e" /* put */])(actions["setTicketTempCapacityType"](clientId, capacityType)), Object(effects["e" /* put */])(actions["setTicketTempCapacity"](clientId, capacity))]);
-
-				case 4:
-				case 'end':
-					return _context15.stop();
-			}
-		}
-	}, _marked15, this);
-}
-
-/**
- * Allows the Ticket to be saved at the same time a post is being saved.
- * Avoids the user having to open up the Ticket block, and then click update again there, when changing the event start date.
- *
- * @export
- */
-function saveTicketWithPostSave(clientId) {
-	var savingChannel, notSavingChannel;
-	return regenerator_default.a.wrap(function saveTicketWithPostSave$(_context16) {
-		while (1) {
-			switch (_context16.prev = _context16.next) {
-				case 0:
-					savingChannel = void 0, notSavingChannel = void 0;
-					_context16.prev = 1;
-					_context16.next = 4;
-					return Object(effects["f" /* select */])(getTicketHasBeenCreated, { clientId: clientId });
-
-				case 4:
-					if (!_context16.sent) {
-						_context16.next = 20;
-						break;
-					}
-
-					_context16.next = 7;
-					return Object(effects["b" /* call */])(sagas["c" /* createWPEditorSavingChannel */]);
-
-				case 7:
-					savingChannel = _context16.sent;
-					_context16.next = 10;
-					return Object(effects["b" /* call */])(sagas["b" /* createWPEditorNotSavingChannel */]);
-
-				case 10:
-					notSavingChannel = _context16.sent;
-
-				case 11:
-					if (false) {}
-
-					_context16.next = 14;
-					return Object(effects["g" /* take */])(savingChannel);
-
-				case 14:
-					_context16.next = 16;
-					return Object(effects["b" /* call */])(updateTicket, { payload: { clientId: clientId } });
-
-				case 16:
-					_context16.next = 18;
-					return Object(effects["g" /* take */])(notSavingChannel);
-
-				case 18:
-					_context16.next = 11;
-					break;
-
-				case 20:
-					_context16.next = 25;
-					break;
-
-				case 22:
-					_context16.prev = 22;
-					_context16.t0 = _context16['catch'](1);
-
-					console.error(_context16.t0);
-
-				case 25:
-					_context16.prev = 25;
-
-					if (!savingChannel) {
-						_context16.next = 29;
-						break;
-					}
-
-					_context16.next = 29;
-					return Object(effects["b" /* call */])([savingChannel, 'close']);
-
-				case 29:
-					if (!notSavingChannel) {
-						_context16.next = 32;
-						break;
-					}
-
-					_context16.next = 32;
-					return Object(effects["b" /* call */])([notSavingChannel, 'close']);
-
-				case 32:
-					return _context16.finish(25);
-
-				case 33:
-				case 'end':
-					return _context16.stop();
-			}
-		}
-	}, _marked16, this, [[1, 22, 25, 33]]);
-}
-
-/**
- * Will sync all tickets
- * @param {String} prevStartDate Previous start date before latest set date time changes
- * @export
- */
-function syncTicketsSaleEndWithEventStart(prevStartDate) {
-	var ticketIds, index, clientId;
-	return regenerator_default.a.wrap(function syncTicketsSaleEndWithEventStart$(_context17) {
-		while (1) {
-			switch (_context17.prev = _context17.next) {
-				case 0:
-					_context17.next = 2;
-					return Object(effects["f" /* select */])(getTicketsAllClientIds);
-
-				case 2:
-					ticketIds = _context17.sent;
-					index = 0;
-
-				case 4:
-					if (!(index < ticketIds.length)) {
-						_context17.next = 11;
-						break;
-					}
-
-					clientId = ticketIds[index];
-					_context17.next = 8;
-					return Object(effects["b" /* call */])(syncTicketSaleEndWithEventStart, prevStartDate, clientId);
-
-				case 8:
-					index++;
-					_context17.next = 4;
-					break;
-
-				case 11:
-				case 'end':
-					return _context17.stop();
-			}
-		}
-	}, _marked17, this);
-}
-
-/**
- * Will sync Tickets sale end to be the same as event start date and time, if field has not been manually edited
- * @borrows TEC - Functionality requires TEC to be enabled
- * @param {String} prevStartDate Previous start date before latest set date time changes
- * @export
- */
-function syncTicketSaleEndWithEventStart(prevStartDate, clientId) {
-	var tempEndMoment, endMoment, _ref16, prevEventStartMoment, isNotManuallyEdited, isSyncedToEventStart, eventStart, _ref17, endDateMoment, endDate, endDateInput, endTime, endTimeInput;
-
-	return regenerator_default.a.wrap(function syncTicketSaleEndWithEventStart$(_context18) {
-		while (1) {
-			switch (_context18.prev = _context18.next) {
-				case 0:
-					_context18.prev = 0;
-					_context18.next = 3;
-					return Object(effects["f" /* select */])(getTicketTempEndDateMoment, { clientId: clientId });
-
-				case 3:
-					tempEndMoment = _context18.sent;
-					_context18.next = 6;
-					return Object(effects["f" /* select */])(getTicketEndDateMoment, { clientId: clientId });
-
-				case 6:
-					endMoment = _context18.sent;
-					_context18.next = 9;
-					return Object(effects["b" /* call */])(sagas["a" /* createDates */], prevStartDate);
-
-				case 9:
-					_ref16 = _context18.sent;
-					prevEventStartMoment = _ref16.moment;
-					_context18.next = 13;
-					return Object(effects["a" /* all */])([Object(effects["b" /* call */])([tempEndMoment, 'local']), Object(effects["b" /* call */])([endMoment, 'local']), Object(effects["b" /* call */])([prevEventStartMoment, 'local'])]);
-
-				case 13:
-					_context18.next = 15;
-					return Object(effects["b" /* call */])([tempEndMoment, 'isSame'], endMoment, 'minute');
-
-				case 15:
-					isNotManuallyEdited = _context18.sent;
-					_context18.next = 18;
-					return Object(effects["b" /* call */])([tempEndMoment, 'isSame'], prevEventStartMoment, 'minute');
-
-				case 18:
-					isSyncedToEventStart = _context18.sent;
-
-					if (!(isNotManuallyEdited && isSyncedToEventStart)) {
-						_context18.next = 33;
-						break;
-					}
-
-					_context18.next = 22;
-					return Object(effects["f" /* select */])(window.tribe.events.data.blocks.datetime.selectors.getStart);
-
-				case 22:
-					eventStart = _context18.sent;
-					_context18.next = 25;
-					return Object(effects["b" /* call */])(sagas["a" /* createDates */], eventStart);
-
-				case 25:
-					_ref17 = _context18.sent;
-					endDateMoment = _ref17.moment;
-					endDate = _ref17.date;
-					endDateInput = _ref17.dateInput;
-					endTime = _ref17.time;
-					endTimeInput = _ref17.timeInput;
-					_context18.next = 33;
-					return Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setTicketTempEndDate"](clientId, endDate)), Object(effects["e" /* put */])(actions["setTicketTempEndDateInput"](clientId, endDateInput)), Object(effects["e" /* put */])(actions["setTicketTempEndDateMoment"](clientId, endDateMoment)), Object(effects["e" /* put */])(actions["setTicketTempEndTime"](clientId, endTime)), Object(effects["e" /* put */])(actions["setTicketTempEndTimeInput"](clientId, endTimeInput)),
-
-					// Sync Ticket end items as well so as not to make state 'manually edited'
-					Object(effects["e" /* put */])(actions["setTicketEndDate"](clientId, endDate)), Object(effects["e" /* put */])(actions["setTicketEndDateInput"](clientId, endDateInput)), Object(effects["e" /* put */])(actions["setTicketEndDateMoment"](clientId, endDateMoment)), Object(effects["e" /* put */])(actions["setTicketEndTime"](clientId, endTime)), Object(effects["e" /* put */])(actions["setTicketEndTimeInput"](clientId, endTimeInput)),
-
-					// Trigger UI button
-					Object(effects["e" /* put */])(actions["setTicketHasChanges"](clientId, true)),
-
-					// Handle ticket duration error
-					Object(effects["b" /* call */])(handleTicketDurationError, clientId)]);
-
-				case 33:
-					_context18.next = 38;
-					break;
-
-				case 35:
-					_context18.prev = 35;
-					_context18.t0 = _context18['catch'](0);
-
-					// ¯\_(ツ)_/¯
-					console.error(_context18.t0);
-
-				case 38:
-				case 'end':
-					return _context18.stop();
-			}
-		}
-	}, _marked18, this, [[0, 35]]);
-}
-
-/**
- * Listens for event start date and time changes after RSVP block is loaded.
- * @borrows TEC - Functionality requires TEC to be enabled and post type to be event
- * @export
- */
-function handleEventStartDateChanges() {
-	var postTypeChannel, isEvent, _window$tribe$events$, SET_START_DATE_TIME, SET_START_TIME, syncTask, eventStart;
-
-	return regenerator_default.a.wrap(function handleEventStartDateChanges$(_context19) {
-		while (1) {
-			switch (_context19.prev = _context19.next) {
-				case 0:
-					_context19.prev = 0;
-					_context19.next = 3;
-					return Object(effects["b" /* call */])(sagas["d" /* hasPostTypeChannel */]);
-
-				case 3:
-					postTypeChannel = _context19.sent;
-					_context19.next = 6;
-					return Object(effects["g" /* take */])(postTypeChannel);
-
-				case 6:
-					_context19.next = 8;
-					return Object(effects["b" /* call */])([postTypeChannel, 'close']);
-
-				case 8:
-					_context19.next = 10;
-					return Object(effects["b" /* call */])(sagas["e" /* isTribeEventPostType */]);
-
-				case 10:
-					isEvent = _context19.sent;
-
-					if (!(isEvent && window.tribe.events)) {
-						_context19.next = 28;
-						break;
-					}
-
-					_window$tribe$events$ = window.tribe.events.data.blocks.datetime.types, SET_START_DATE_TIME = _window$tribe$events$.SET_START_DATE_TIME, SET_START_TIME = _window$tribe$events$.SET_START_TIME;
-					syncTask = void 0;
-
-				case 14:
-					if (false) {}
-
-					_context19.next = 17;
-					return Object(effects["f" /* select */])(window.tribe.events.data.blocks.datetime.selectors.getStart);
-
-				case 17:
-					eventStart = _context19.sent;
-					_context19.next = 20;
-					return Object(effects["g" /* take */])([SET_START_DATE_TIME, SET_START_TIME]);
-
-				case 20:
-					if (!syncTask) {
-						_context19.next = 23;
-						break;
-					}
-
-					_context19.next = 23;
-					return Object(effects["c" /* cancel */])(syncTask);
-
-				case 23:
-					_context19.next = 25;
-					return Object(effects["d" /* fork */])(syncTicketsSaleEndWithEventStart, eventStart);
-
-				case 25:
-					syncTask = _context19.sent;
-					_context19.next = 14;
-					break;
-
-				case 28:
-					_context19.next = 33;
-					break;
-
-				case 30:
-					_context19.prev = 30;
-					_context19.t0 = _context19['catch'](0);
-
-					// ¯\_(ツ)_/¯
-					console.error(_context19.t0);
-
-				case 33:
-				case 'end':
-					return _context19.stop();
-			}
-		}
-	}, _marked19, this, [[0, 30]]);
-}
-
-function handleTicketDurationError(clientId) {
-	var hasDurationError, startDateMoment, endDateMoment, startTime, endTime, startTimeSeconds, endTimeSeconds, startDateTimeMoment, endDateTimeMoment, durationHasError;
-	return regenerator_default.a.wrap(function handleTicketDurationError$(_context20) {
-		while (1) {
-			switch (_context20.prev = _context20.next) {
-				case 0:
-					hasDurationError = false;
-					_context20.next = 3;
-					return Object(effects["f" /* select */])(getTicketTempStartDateMoment, { clientId: clientId });
-
-				case 3:
-					startDateMoment = _context20.sent;
-					_context20.next = 6;
-					return Object(effects["f" /* select */])(getTicketTempEndDateMoment, { clientId: clientId });
-
-				case 6:
-					endDateMoment = _context20.sent;
-
-					if (!(!startDateMoment || !endDateMoment)) {
-						_context20.next = 11;
-						break;
-					}
-
-					hasDurationError = true;
-					_context20.next = 33;
-					break;
-
-				case 11:
-					_context20.next = 13;
-					return Object(effects["f" /* select */])(getTicketTempStartTime, { clientId: clientId });
-
-				case 13:
-					startTime = _context20.sent;
-					_context20.next = 16;
-					return Object(effects["f" /* select */])(getTicketTempEndTime, { clientId: clientId });
-
-				case 16:
-					endTime = _context20.sent;
-					_context20.next = 19;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["time"].toSeconds, startTime, external_tribe_common_utils_["time"].TIME_FORMAT_HH_MM_SS);
-
-				case 19:
-					startTimeSeconds = _context20.sent;
-					_context20.next = 22;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["time"].toSeconds, endTime, external_tribe_common_utils_["time"].TIME_FORMAT_HH_MM_SS);
-
-				case 22:
-					endTimeSeconds = _context20.sent;
-					_context20.next = 25;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].setTimeInSeconds, startDateMoment.clone(), startTimeSeconds);
-
-				case 25:
-					startDateTimeMoment = _context20.sent;
-					_context20.next = 28;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].setTimeInSeconds, endDateMoment.clone(), endTimeSeconds);
-
-				case 28:
-					endDateTimeMoment = _context20.sent;
-					_context20.next = 31;
-					return Object(effects["b" /* call */])([startDateTimeMoment, 'isSameOrAfter'], endDateTimeMoment);
-
-				case 31:
-					durationHasError = _context20.sent;
-
-
-					if (durationHasError) {
-						hasDurationError = true;
-					}
-
-				case 33:
-					_context20.next = 35;
-					return Object(effects["e" /* put */])(actions["setTicketHasDurationError"](clientId, hasDurationError));
-
-				case 35:
-				case 'end':
-					return _context20.stop();
-			}
-		}
-	}, _marked20, this);
-}
-
-function handleTicketStartDate(action) {
-	var _action$payload5, clientId, date, dayPickerInput, startDateMoment, startDate;
-
-	return regenerator_default.a.wrap(function handleTicketStartDate$(_context21) {
-		while (1) {
-			switch (_context21.prev = _context21.next) {
-				case 0:
-					_action$payload5 = action.payload, clientId = _action$payload5.clientId, date = _action$payload5.date, dayPickerInput = _action$payload5.dayPickerInput;
-					_context21.next = 3;
-					return date ? Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toMoment, date) : undefined;
-
-				case 3:
-					startDateMoment = _context21.sent;
-					_context21.next = 6;
-					return date ? Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDatabaseDate, startDateMoment) : '';
-
-				case 6:
-					startDate = _context21.sent;
-					_context21.next = 9;
-					return Object(effects["e" /* put */])(actions["setTicketTempStartDate"](clientId, startDate));
-
-				case 9:
-					_context21.next = 11;
-					return Object(effects["e" /* put */])(actions["setTicketTempStartDateInput"](clientId, dayPickerInput.state.value));
-
-				case 11:
-					_context21.next = 13;
-					return Object(effects["e" /* put */])(actions["setTicketTempStartDateMoment"](clientId, startDateMoment));
-
-				case 13:
-				case 'end':
-					return _context21.stop();
-			}
-		}
-	}, _marked21, this);
-}
-
-function handleTicketEndDate(action) {
-	var _action$payload6, clientId, date, dayPickerInput, endDateMoment, endDate;
-
-	return regenerator_default.a.wrap(function handleTicketEndDate$(_context22) {
-		while (1) {
-			switch (_context22.prev = _context22.next) {
-				case 0:
-					_action$payload6 = action.payload, clientId = _action$payload6.clientId, date = _action$payload6.date, dayPickerInput = _action$payload6.dayPickerInput;
-					_context22.next = 3;
-					return date ? Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toMoment, date) : undefined;
-
-				case 3:
-					endDateMoment = _context22.sent;
-					_context22.next = 6;
-					return date ? Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDatabaseDate, endDateMoment) : '';
-
-				case 6:
-					endDate = _context22.sent;
-					_context22.next = 9;
-					return Object(effects["e" /* put */])(actions["setTicketTempEndDate"](clientId, endDate));
-
-				case 9:
-					_context22.next = 11;
-					return Object(effects["e" /* put */])(actions["setTicketTempEndDateInput"](clientId, dayPickerInput.state.value));
-
-				case 11:
-					_context22.next = 13;
-					return Object(effects["e" /* put */])(actions["setTicketTempEndDateMoment"](clientId, endDateMoment));
-
-				case 13:
-				case 'end':
-					return _context22.stop();
-			}
-		}
-	}, _marked22, this);
-}
-
-function handleTicketStartTime(action) {
-	var _action$payload7, clientId, seconds, startTime;
-
-	return regenerator_default.a.wrap(function handleTicketStartTime$(_context23) {
-		while (1) {
-			switch (_context23.prev = _context23.next) {
-				case 0:
-					_action$payload7 = action.payload, clientId = _action$payload7.clientId, seconds = _action$payload7.seconds;
-					_context23.next = 3;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["time"].fromSeconds, seconds, external_tribe_common_utils_["time"].TIME_FORMAT_HH_MM);
-
-				case 3:
-					startTime = _context23.sent;
-					_context23.next = 6;
-					return Object(effects["e" /* put */])(actions["setTicketTempStartTime"](clientId, startTime + ':00'));
-
-				case 6:
-				case 'end':
-					return _context23.stop();
-			}
-		}
-	}, _marked23, this);
-}
-
-function handleTicketStartTimeInput(action) {
-	var _action$payload8, clientId, seconds, startTime, startTimeMoment, startTimeInput;
-
-	return regenerator_default.a.wrap(function handleTicketStartTimeInput$(_context24) {
-		while (1) {
-			switch (_context24.prev = _context24.next) {
-				case 0:
-					_action$payload8 = action.payload, clientId = _action$payload8.clientId, seconds = _action$payload8.seconds;
-					_context24.next = 3;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["time"].fromSeconds, seconds, external_tribe_common_utils_["time"].TIME_FORMAT_HH_MM);
-
-				case 3:
-					startTime = _context24.sent;
-					_context24.next = 6;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toMoment, startTime, external_tribe_common_utils_["moment"].TIME_FORMAT, false);
-
-				case 6:
-					startTimeMoment = _context24.sent;
-					_context24.next = 9;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toTime, startTimeMoment);
-
-				case 9:
-					startTimeInput = _context24.sent;
-					_context24.next = 12;
-					return Object(effects["e" /* put */])(actions["setTicketTempStartTimeInput"](clientId, startTimeInput));
-
-				case 12:
-				case 'end':
-					return _context24.stop();
-			}
-		}
-	}, _marked24, this);
-}
-
-function handleTicketEndTime(action) {
-	var _action$payload9, clientId, seconds, endTime;
-
-	return regenerator_default.a.wrap(function handleTicketEndTime$(_context25) {
-		while (1) {
-			switch (_context25.prev = _context25.next) {
-				case 0:
-					_action$payload9 = action.payload, clientId = _action$payload9.clientId, seconds = _action$payload9.seconds;
-					_context25.next = 3;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["time"].fromSeconds, seconds, external_tribe_common_utils_["time"].TIME_FORMAT_HH_MM);
-
-				case 3:
-					endTime = _context25.sent;
-					_context25.next = 6;
-					return Object(effects["e" /* put */])(actions["setTicketTempEndTime"](clientId, endTime + ':00'));
-
-				case 6:
-				case 'end':
-					return _context25.stop();
-			}
-		}
-	}, _marked25, this);
-}
-
-function handleTicketEndTimeInput(action) {
-	var _action$payload10, clientId, seconds, endTime, endTimeMoment, endTimeInput;
-
-	return regenerator_default.a.wrap(function handleTicketEndTimeInput$(_context26) {
-		while (1) {
-			switch (_context26.prev = _context26.next) {
-				case 0:
-					_action$payload10 = action.payload, clientId = _action$payload10.clientId, seconds = _action$payload10.seconds;
-					_context26.next = 3;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["time"].fromSeconds, seconds, external_tribe_common_utils_["time"].TIME_FORMAT_HH_MM);
-
-				case 3:
-					endTime = _context26.sent;
-					_context26.next = 6;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toMoment, endTime, external_tribe_common_utils_["moment"].TIME_FORMAT, false);
-
-				case 6:
-					endTimeMoment = _context26.sent;
-					_context26.next = 9;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toTime, endTimeMoment);
-
-				case 9:
-					endTimeInput = _context26.sent;
-					_context26.next = 12;
-					return Object(effects["e" /* put */])(actions["setTicketTempEndTimeInput"](clientId, endTimeInput));
-
-				case 12:
-				case 'end':
-					return _context26.stop();
-			}
-		}
-	}, _marked26, this);
-}
-
-function handleTicketMove() {
-	var ticketClientIds, modalClientId;
-	return regenerator_default.a.wrap(function handleTicketMove$(_context27) {
-		while (1) {
-			switch (_context27.prev = _context27.next) {
-				case 0:
-					_context27.next = 2;
-					return Object(effects["f" /* select */])(getTicketsAllClientIds);
-
-				case 2:
-					ticketClientIds = _context27.sent;
-					_context27.next = 5;
-					return Object(effects["f" /* select */])(selectors["a" /* getModalClientId */]);
-
-				case 5:
-					modalClientId = _context27.sent;
-
-					if (!ticketClientIds.includes(modalClientId)) {
-						_context27.next = 13;
-						break;
-					}
-
-					_context27.next = 9;
-					return Object(effects["e" /* put */])(actions["setTicketIsSelected"](modalClientId, false));
-
-				case 9:
-					_context27.next = 11;
-					return Object(effects["e" /* put */])(actions["removeTicketBlock"](modalClientId));
-
-				case 11:
-					_context27.next = 13;
-					return Object(effects["b" /* call */])([Object(external_var_wp_data_root_wp_data_["dispatch"])('core/editor'), 'removeBlocks'], [modalClientId]);
-
-				case 13:
-				case 'end':
-					return _context27.stop();
-			}
-		}
-	}, _marked27, this);
-}
-
-function handler(action) {
-	return regenerator_default.a.wrap(function handler$(_context28) {
-		while (1) {
-			switch (_context28.prev = _context28.next) {
-				case 0:
-					_context28.t0 = action.type;
-					_context28.next = _context28.t0 === types["SET_TICKETS_INITIAL_STATE"] ? 3 : _context28.t0 === types["RESET_TICKETS_BLOCK"] ? 6 : _context28.t0 === types["SET_TICKET_INITIAL_STATE"] ? 9 : _context28.t0 === types["FETCH_TICKET"] ? 12 : _context28.t0 === types["CREATE_NEW_TICKET"] ? 15 : _context28.t0 === types["UPDATE_TICKET"] ? 18 : _context28.t0 === types["DELETE_TICKET"] ? 21 : _context28.t0 === types["FETCH_TICKETS_HEADER_IMAGE"] ? 24 : _context28.t0 === types["UPDATE_TICKETS_HEADER_IMAGE"] ? 27 : _context28.t0 === types["DELETE_TICKETS_HEADER_IMAGE"] ? 30 : _context28.t0 === types["SET_TICKET_DETAILS"] ? 33 : _context28.t0 === types["SET_TICKET_TEMP_DETAILS"] ? 36 : _context28.t0 === types["HANDLE_TICKET_START_DATE"] ? 39 : _context28.t0 === types["HANDLE_TICKET_END_DATE"] ? 46 : _context28.t0 === types["HANDLE_TICKET_START_TIME"] ? 53 : _context28.t0 === types["HANDLE_TICKET_END_TIME"] ? 62 : _context28.t0 === move_types["k" /* MOVE_TICKET_SUCCESS */] ? 71 : 74;
-					break;
-
-				case 3:
-					_context28.next = 5;
-					return Object(effects["b" /* call */])(setTicketsInitialState, action);
-
-				case 5:
-					return _context28.abrupt('break', 75);
-
-				case 6:
-					_context28.next = 8;
-					return Object(effects["b" /* call */])(resetTicketsBlock);
-
-				case 8:
-					return _context28.abrupt('break', 75);
-
-				case 9:
-					_context28.next = 11;
-					return Object(effects["b" /* call */])(setTicketInitialState, action);
-
-				case 11:
-					return _context28.abrupt('break', 75);
-
-				case 12:
-					_context28.next = 14;
-					return Object(effects["b" /* call */])(fetchTicket, action);
-
-				case 14:
-					return _context28.abrupt('break', 75);
-
-				case 15:
-					_context28.next = 17;
-					return Object(effects["b" /* call */])(createNewTicket, action);
-
-				case 17:
-					return _context28.abrupt('break', 75);
-
-				case 18:
-					_context28.next = 20;
-					return Object(effects["b" /* call */])(updateTicket, action);
-
-				case 20:
-					return _context28.abrupt('break', 75);
-
-				case 21:
-					_context28.next = 23;
-					return Object(effects["b" /* call */])(deleteTicket, action);
-
-				case 23:
-					return _context28.abrupt('break', 75);
-
-				case 24:
-					_context28.next = 26;
-					return Object(effects["b" /* call */])(fetchTicketsHeaderImage, action);
-
-				case 26:
-					return _context28.abrupt('break', 75);
-
-				case 27:
-					_context28.next = 29;
-					return Object(effects["b" /* call */])(updateTicketsHeaderImage, action);
-
-				case 29:
-					return _context28.abrupt('break', 75);
-
-				case 30:
-					_context28.next = 32;
-					return Object(effects["b" /* call */])(deleteTicketsHeaderImage);
-
-				case 32:
-					return _context28.abrupt('break', 75);
-
-				case 33:
-					_context28.next = 35;
-					return Object(effects["b" /* call */])(setTicketDetails, action);
-
-				case 35:
-					return _context28.abrupt('break', 75);
-
-				case 36:
-					_context28.next = 38;
-					return Object(effects["b" /* call */])(setTicketTempDetails, action);
-
-				case 38:
-					return _context28.abrupt('break', 75);
-
-				case 39:
-					_context28.next = 41;
-					return Object(effects["b" /* call */])(handleTicketStartDate, action);
-
-				case 41:
-					_context28.next = 43;
-					return Object(effects["b" /* call */])(handleTicketDurationError, action.payload.clientId);
-
-				case 43:
-					_context28.next = 45;
-					return Object(effects["e" /* put */])(actions["setTicketHasChanges"](action.payload.clientId, true));
-
-				case 45:
-					return _context28.abrupt('break', 75);
-
-				case 46:
-					_context28.next = 48;
-					return Object(effects["b" /* call */])(handleTicketEndDate, action);
-
-				case 48:
-					_context28.next = 50;
-					return Object(effects["b" /* call */])(handleTicketDurationError, action.payload.clientId);
-
-				case 50:
-					_context28.next = 52;
-					return Object(effects["e" /* put */])(actions["setTicketHasChanges"](action.payload.clientId, true));
-
-				case 52:
-					return _context28.abrupt('break', 75);
-
-				case 53:
-					_context28.next = 55;
-					return Object(effects["b" /* call */])(handleTicketStartTime, action);
-
-				case 55:
-					_context28.next = 57;
-					return Object(effects["b" /* call */])(handleTicketStartTimeInput, action);
-
-				case 57:
-					_context28.next = 59;
-					return Object(effects["b" /* call */])(handleTicketDurationError, action.payload.clientId);
-
-				case 59:
-					_context28.next = 61;
-					return Object(effects["e" /* put */])(actions["setTicketHasChanges"](action.payload.clientId, true));
-
-				case 61:
-					return _context28.abrupt('break', 75);
-
-				case 62:
-					_context28.next = 64;
-					return Object(effects["b" /* call */])(handleTicketEndTime, action);
-
-				case 64:
-					_context28.next = 66;
-					return Object(effects["b" /* call */])(handleTicketEndTimeInput, action);
-
-				case 66:
-					_context28.next = 68;
-					return Object(effects["b" /* call */])(handleTicketDurationError, action.payload.clientId);
-
-				case 68:
-					_context28.next = 70;
-					return Object(effects["e" /* put */])(actions["setTicketHasChanges"](action.payload.clientId, true));
-
-				case 70:
-					return _context28.abrupt('break', 75);
-
-				case 71:
-					_context28.next = 73;
-					return Object(effects["b" /* call */])(handleTicketMove);
-
-				case 73:
-					return _context28.abrupt('break', 75);
-
-				case 74:
-					return _context28.abrupt('break', 75);
-
-				case 75:
-				case 'end':
-					return _context28.stop();
-			}
-		}
-	}, _marked28, this);
-}
-
-function watchers() {
-	return regenerator_default.a.wrap(function watchers$(_context29) {
-		while (1) {
-			switch (_context29.prev = _context29.next) {
-				case 0:
-					_context29.next = 2;
-					return Object(effects["h" /* takeEvery */])([types["SET_TICKETS_INITIAL_STATE"], types["RESET_TICKETS_BLOCK"], types["SET_TICKET_INITIAL_STATE"], types["FETCH_TICKET"], types["CREATE_NEW_TICKET"], types["UPDATE_TICKET"], types["DELETE_TICKET"], types["FETCH_TICKETS_HEADER_IMAGE"], types["UPDATE_TICKETS_HEADER_IMAGE"], types["DELETE_TICKETS_HEADER_IMAGE"], types["SET_TICKET_DETAILS"], types["SET_TICKET_TEMP_DETAILS"], types["HANDLE_TICKET_START_DATE"], types["HANDLE_TICKET_END_DATE"], types["HANDLE_TICKET_START_TIME"], types["HANDLE_TICKET_END_TIME"], move_types["k" /* MOVE_TICKET_SUCCESS */]], handler);
-
-				case 2:
-					_context29.next = 4;
-					return Object(effects["d" /* fork */])(handleEventStartDateChanges);
-
-				case 4:
-				case 'end':
-					return _context29.stop();
-			}
-		}
-	}, _marked29, this);
-}
-// CONCATENATED MODULE: ./src/modules/data/blocks/ticket/index.js
-/* concated harmony reexport constants */__webpack_require__.d(__webpack_exports__, "b", function() { return constants; });
-/* concated harmony reexport options */__webpack_require__.d(__webpack_exports__, "d", function() { return options_namespaceObject; });
-/* unused concated harmony import utils */
-/* concated harmony reexport types */__webpack_require__.d(__webpack_exports__, "g", function() { return types; });
-/* concated harmony reexport actions */__webpack_require__.d(__webpack_exports__, "a", function() { return actions; });
-/* concated harmony reexport selectors */__webpack_require__.d(__webpack_exports__, "f", function() { return selectors_namespaceObject; });
-/* concated harmony reexport sagas */__webpack_require__.d(__webpack_exports__, "e", function() { return watchers; });
-/**
- * Internal dependencies
- */
-
-
-
-
-
-
-
-
-
-
-/* harmony default export */ var blocks_ticket = __webpack_exports__["c"] = (reducer);
-
-
 
 /***/ }),
 /* 7 */
@@ -9039,7 +9104,7 @@ var KEY_TICKET_HAS_ATTENDEE_INFO_FIELDS = '_tribe_ticket_has_attendee_info_field
 
 exports.__esModule = true;
 
-var _assign = __webpack_require__(269);
+var _assign = __webpack_require__(271);
 
 var _assign2 = _interopRequireDefault(_assign);
 
@@ -9083,6 +9148,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setTicketDescription", function() { return setTicketDescription; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setTicketPrice", function() { return setTicketPrice; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setTicketSku", function() { return setTicketSku; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setTicketIACSetting", function() { return setTicketIACSetting; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setTicketStartDate", function() { return setTicketStartDate; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setTicketStartDateInput", function() { return setTicketStartDateInput; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setTicketStartDateMoment", function() { return setTicketStartDateMoment; });
@@ -9099,6 +9165,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setTicketTempDescription", function() { return setTicketTempDescription; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setTicketTempPrice", function() { return setTicketTempPrice; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setTicketTempSku", function() { return setTicketTempSku; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setTicketTempIACSetting", function() { return setTicketTempIACSetting; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setTicketTempStartDate", function() { return setTicketTempStartDate; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setTicketTempStartDateInput", function() { return setTicketTempStartDateInput; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setTicketTempStartDateMoment", function() { return setTicketTempStartDateMoment; });
@@ -9138,7 +9205,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateTicket", function() { return updateTicket; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteTicket", function() { return deleteTicket; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setTicketInitialState", function() { return setTicketInitialState; });
-/* harmony import */ var _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4);
 /**
  * Internal dependencies
  */
@@ -9297,6 +9364,16 @@ var setTicketSku = function setTicketSku(clientId, sku) {
 		payload: {
 			clientId: clientId,
 			sku: sku
+		}
+	};
+};
+
+var setTicketIACSetting = function setTicketIACSetting(clientId, iac) {
+	return {
+		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_IAC_SETTING,
+		payload: {
+			clientId: clientId,
+			iac: iac
 		}
 	};
 };
@@ -9461,6 +9538,16 @@ var setTicketTempSku = function setTicketTempSku(clientId, sku) {
 		payload: {
 			clientId: clientId,
 			sku: sku
+		}
+	};
+};
+
+var setTicketTempIACSetting = function setTicketTempIACSetting(clientId, iac) {
+	return {
+		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_TEMP_IAC_SETTING,
+		payload: {
+			clientId: clientId,
+			iac: iac
 		}
 	};
 };
@@ -9857,14 +9944,24 @@ var setTicketInitialState = function setTicketInitialState(props) {
 /* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(326);
+module.exports = __webpack_require__(327);
 
 
 /***/ }),
-/* 12 */
+/* 12 */,
+/* 13 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, "f", function() { return /* reexport */ types_namespaceObject; });
+__webpack_require__.d(__webpack_exports__, "a", function() { return /* reexport */ actions; });
+__webpack_require__.d(__webpack_exports__, "c", function() { return /* reexport */ watchers; });
+__webpack_require__.d(__webpack_exports__, "d", function() { return /* reexport */ selectors_namespaceObject; });
+__webpack_require__.d(__webpack_exports__, "e", function() { return /* reexport */ thunks_namespaceObject; });
+
+// NAMESPACE OBJECT: ./src/modules/data/blocks/rsvp/types.js
 var types_namespaceObject = {};
 __webpack_require__.r(types_namespaceObject);
 __webpack_require__.d(types_namespaceObject, "SET_RSVP_ID", function() { return SET_RSVP_ID; });
@@ -9918,6 +10015,8 @@ __webpack_require__.d(types_namespaceObject, "HANDLE_RSVP_END_TIME", function() 
 __webpack_require__.d(types_namespaceObject, "FETCH_RSVP_HEADER_IMAGE", function() { return FETCH_RSVP_HEADER_IMAGE; });
 __webpack_require__.d(types_namespaceObject, "UPDATE_RSVP_HEADER_IMAGE", function() { return UPDATE_RSVP_HEADER_IMAGE; });
 __webpack_require__.d(types_namespaceObject, "DELETE_RSVP_HEADER_IMAGE", function() { return DELETE_RSVP_HEADER_IMAGE; });
+
+// NAMESPACE OBJECT: ./src/modules/data/blocks/rsvp/selectors.js
 var selectors_namespaceObject = {};
 __webpack_require__.r(selectors_namespaceObject);
 __webpack_require__.d(selectors_namespaceObject, "getRSVPBlock", function() { return getRSVPBlock; });
@@ -9971,6 +10070,8 @@ __webpack_require__.d(selectors_namespaceObject, "getRSVPHeaderImage", function(
 __webpack_require__.d(selectors_namespaceObject, "getRSVPHeaderImageId", function() { return getRSVPHeaderImageId; });
 __webpack_require__.d(selectors_namespaceObject, "getRSVPHeaderImageSrc", function() { return getRSVPHeaderImageSrc; });
 __webpack_require__.d(selectors_namespaceObject, "getRSVPHeaderImageAlt", function() { return getRSVPHeaderImageAlt; });
+
+// NAMESPACE OBJECT: ./src/modules/data/blocks/rsvp/thunks.js
 var thunks_namespaceObject = {};
 __webpack_require__.r(thunks_namespaceObject);
 __webpack_require__.d(thunks_namespaceObject, "createRSVP", function() { return createRSVP; });
@@ -10064,7 +10165,7 @@ var DELETE_RSVP_HEADER_IMAGE = utils["n" /* PREFIX_TICKETS_STORE */] + '/DELETE_
 var actions = __webpack_require__(14);
 
 // EXTERNAL MODULE: ./node_modules/reselect/lib/index.js
-var lib = __webpack_require__(5);
+var lib = __webpack_require__(6);
 
 // CONCATENATED MODULE: ./src/modules/data/blocks/rsvp/selectors.js
 /**
@@ -10311,10 +10412,10 @@ var defineProperty = __webpack_require__(25);
 var defineProperty_default = /*#__PURE__*/__webpack_require__.n(defineProperty);
 
 // EXTERNAL MODULE: ./src/modules/data/blocks/rsvp/reducers/header-image.js
-var header_image = __webpack_require__(59);
+var header_image = __webpack_require__(60);
 
 // EXTERNAL MODULE: external "tribe.common.store"
-var external_tribe_common_store_ = __webpack_require__(60);
+var external_tribe_common_store_ = __webpack_require__(61);
 
 // EXTERNAL MODULE: external "tribe.common.utils"
 var external_tribe_common_utils_ = __webpack_require__(3);
@@ -10534,7 +10635,7 @@ var helpers_extends = __webpack_require__(9);
 var extends_default = /*#__PURE__*/__webpack_require__.n(helpers_extends);
 
 // EXTERNAL MODULE: ./node_modules/moment/moment.js
-var moment_moment = __webpack_require__(4);
+var moment_moment = __webpack_require__(5);
 var moment_default = /*#__PURE__*/__webpack_require__.n(moment_moment);
 
 // CONCATENATED MODULE: ./src/modules/data/blocks/rsvp/reducers/details.js
@@ -10552,7 +10653,9 @@ var moment_default = /*#__PURE__*/__webpack_require__.n(moment_moment);
 
 var details_datePickerFormat = external_tribe_common_utils_["globals"].tecDateSettings().datepickerFormat;
 var currentMoment = moment_default()();
-var details_endMoment = currentMoment.clone();
+var bufferDuration = external_tribe_common_utils_["globals"].tickets().end_sale_buffer_duration ? external_tribe_common_utils_["globals"].tickets().end_sale_buffer_duration : 2;
+var bufferYears = external_tribe_common_utils_["globals"].tickets().end_sale_buffer_years ? external_tribe_common_utils_["globals"].tickets().end_sale_buffer_years : 1;
+var details_endMoment = currentMoment.clone().add(bufferDuration, 'hours').add(bufferYears, 'years');
 
 var details_startDateInput = details_datePickerFormat ? currentMoment.format(external_tribe_common_utils_["moment"].toFormat(details_datePickerFormat)) : external_tribe_common_utils_["moment"].toDate(currentMoment);
 var details_endDateInput = details_datePickerFormat ? details_endMoment.format(external_tribe_common_utils_["moment"].toFormat(details_datePickerFormat)) : external_tribe_common_utils_["moment"].toDate(details_endMoment);
@@ -10845,16 +10948,16 @@ var effects = __webpack_require__(0);
 var ticket_actions = __webpack_require__(10);
 
 // EXTERNAL MODULE: ./src/modules/data/blocks/ticket/reducers/header-image.js
-var reducers_header_image = __webpack_require__(61);
+var reducers_header_image = __webpack_require__(62);
 
 // EXTERNAL MODULE: ./src/modules/data/shared/move/types.js
-var types = __webpack_require__(20);
+var types = __webpack_require__(19);
 
 // EXTERNAL MODULE: ./src/modules/data/shared/move/selectors.js
-var selectors = __webpack_require__(28);
+var selectors = __webpack_require__(29);
 
 // EXTERNAL MODULE: ./src/modules/data/shared/sagas.js
-var sagas = __webpack_require__(29);
+var sagas = __webpack_require__(27);
 
 // CONCATENATED MODULE: ./src/modules/data/blocks/rsvp/sagas.js
 
@@ -12048,22 +12151,18 @@ function setNonEventPostTypeEndDate() {
 				case 11:
 					endMoment = _context19.sent;
 					_context19.next = 14;
-					return Object(effects["b" /* call */])([endMoment, 'add'], 100, 'years');
-
-				case 14:
-					_context19.next = 16;
 					return Object(effects["b" /* call */])(sagas["a" /* createDates */], endMoment.toDate());
 
-				case 16:
+				case 14:
 					_ref8 = _context19.sent;
 					date = _ref8.date;
 					dateInput = _ref8.dateInput;
 					moment = _ref8.moment;
 					time = _ref8.time;
-					_context19.next = 23;
+					_context19.next = 21;
 					return Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setRSVPTempEndDate"](date)), Object(effects["e" /* put */])(actions["setRSVPTempEndDateInput"](dateInput)), Object(effects["e" /* put */])(actions["setRSVPTempEndDateMoment"](moment)), Object(effects["e" /* put */])(actions["setRSVPTempEndTime"](time)), Object(effects["e" /* put */])(actions["setRSVPEndDate"](date)), Object(effects["e" /* put */])(actions["setRSVPEndDateInput"](dateInput)), Object(effects["e" /* put */])(actions["setRSVPEndDateMoment"](moment)), Object(effects["e" /* put */])(actions["setRSVPEndTime"](time))]);
 
-				case 23:
+				case 21:
 				case 'end':
 					return _context19.stop();
 			}
@@ -12099,11 +12198,6 @@ function watchers() {
 	}, _marked20, this);
 }
 // CONCATENATED MODULE: ./src/modules/data/blocks/rsvp/index.js
-/* concated harmony reexport types */__webpack_require__.d(__webpack_exports__, "f", function() { return types_namespaceObject; });
-/* concated harmony reexport actions */__webpack_require__.d(__webpack_exports__, "a", function() { return actions; });
-/* concated harmony reexport sagas */__webpack_require__.d(__webpack_exports__, "c", function() { return watchers; });
-/* concated harmony reexport selectors */__webpack_require__.d(__webpack_exports__, "d", function() { return selectors_namespaceObject; });
-/* concated harmony reexport thunks */__webpack_require__.d(__webpack_exports__, "e", function() { return thunks_namespaceObject; });
 /**
  * Internal dependencies
  */
@@ -12118,7 +12212,6 @@ function watchers() {
 
 
 /***/ }),
-/* 13 */,
 /* 14 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -12175,7 +12268,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchRSVPHeaderImage", function() { return fetchRSVPHeaderImage; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateRSVPHeaderImage", function() { return updateRSVPHeaderImage; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteRSVPHeaderImage", function() { return deleteRSVPHeaderImage; });
-/* harmony import */ var _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(12);
+/* harmony import */ var _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(13);
 /**
  * Internal dependencies
  */
@@ -12645,13 +12738,13 @@ module.exports = wp.i18n;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* unused harmony export createStore */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return combineReducers; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return bindActionCreators; });
-/* unused harmony export applyMiddleware */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return compose; });
 /* unused harmony export __DO_NOT_USE__ActionTypes */
-/* harmony import */ var symbol_observable__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(263);
+/* unused harmony export applyMiddleware */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return bindActionCreators; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return combineReducers; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return compose; });
+/* unused harmony export createStore */
+/* harmony import */ var symbol_observable__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(264);
 
 
 /**
@@ -12717,7 +12810,7 @@ function createStore(reducer, preloadedState, enhancer) {
   var _ref2;
 
   if (typeof preloadedState === 'function' && typeof enhancer === 'function' || typeof enhancer === 'function' && typeof arguments[3] === 'function') {
-    throw new Error('It looks like you are passing several store enhancers to ' + 'createStore(). This is not supported. Instead, compose them ' + 'together to a single function');
+    throw new Error('It looks like you are passing several store enhancers to ' + 'createStore(). This is not supported. Instead, compose them ' + 'together to a single function.');
   }
 
   if (typeof preloadedState === 'function' && typeof enhancer === 'undefined') {
@@ -12742,6 +12835,13 @@ function createStore(reducer, preloadedState, enhancer) {
   var currentListeners = [];
   var nextListeners = currentListeners;
   var isDispatching = false;
+  /**
+   * This makes a shallow copy of currentListeners so we can use
+   * nextListeners as a temporary list while dispatching.
+   *
+   * This prevents any bugs around consumers calling
+   * subscribe/unsubscribe in the middle of a dispatch.
+   */
 
   function ensureCanMutateNextListeners() {
     if (nextListeners === currentListeners) {
@@ -12793,7 +12893,7 @@ function createStore(reducer, preloadedState, enhancer) {
     }
 
     if (isDispatching) {
-      throw new Error('You may not call store.subscribe() while the reducer is executing. ' + 'If you would like to be notified after the store has been updated, subscribe from a ' + 'component and invoke store.getState() in the callback to access the latest state. ' + 'See https://redux.js.org/api-reference/store#subscribe(listener) for more details.');
+      throw new Error('You may not call store.subscribe() while the reducer is executing. ' + 'If you would like to be notified after the store has been updated, subscribe from a ' + 'component and invoke store.getState() in the callback to access the latest state. ' + 'See https://redux.js.org/api-reference/store#subscribelistener for more details.');
     }
 
     var isSubscribed = true;
@@ -12805,13 +12905,14 @@ function createStore(reducer, preloadedState, enhancer) {
       }
 
       if (isDispatching) {
-        throw new Error('You may not unsubscribe from a store listener while the reducer is executing. ' + 'See https://redux.js.org/api-reference/store#subscribe(listener) for more details.');
+        throw new Error('You may not unsubscribe from a store listener while the reducer is executing. ' + 'See https://redux.js.org/api-reference/store#subscribelistener for more details.');
       }
 
       isSubscribed = false;
       ensureCanMutateNextListeners();
       var index = nextListeners.indexOf(listener);
       nextListeners.splice(index, 1);
+      currentListeners = null;
     };
   }
   /**
@@ -12887,7 +12988,11 @@ function createStore(reducer, preloadedState, enhancer) {
       throw new Error('Expected the nextReducer to be a function.');
     }
 
-    currentReducer = nextReducer;
+    currentReducer = nextReducer; // This action has a similiar effect to ActionTypes.INIT.
+    // Any reducers that existed in both the new and old rootReducer
+    // will receive the previous state. This effectively populates
+    // the new state tree with any relevant data from the old one.
+
     dispatch({
       type: ActionTypes.REPLACE
     });
@@ -13053,7 +13158,9 @@ function combineReducers(reducers) {
     }
   }
 
-  var finalReducerKeys = Object.keys(finalReducers);
+  var finalReducerKeys = Object.keys(finalReducers); // This is used to make sure we don't warn about the same
+  // keys multiple times.
+
   var unexpectedKeyCache;
 
   if (false) {}
@@ -13095,6 +13202,7 @@ function combineReducers(reducers) {
       hasChanged = hasChanged || nextStateForKey !== previousStateForKey;
     }
 
+    hasChanged = hasChanged || finalReducerKeys.length !== Object.keys(state).length;
     return hasChanged ? nextState : state;
   };
 }
@@ -13110,8 +13218,8 @@ function bindActionCreator(actionCreator, dispatch) {
  * may be invoked directly. This is just a convenience method, as you can call
  * `store.dispatch(MyActionCreators.doSomething())` yourself just fine.
  *
- * For convenience, you can also pass a single function as the first argument,
- * and get a function in return.
+ * For convenience, you can also pass an action creator as the first argument,
+ * and get a dispatch wrapped function in return.
  *
  * @param {Function|Object} actionCreators An object whose values are action
  * creator functions. One handy way to obtain it is to use ES6 `import * as`
@@ -13136,11 +13244,9 @@ function bindActionCreators(actionCreators, dispatch) {
     throw new Error("bindActionCreators expected an object or a function, instead received " + (actionCreators === null ? 'null' : typeof actionCreators) + ". " + "Did you write \"import ActionCreators from\" instead of \"import * as ActionCreators from\"?");
   }
 
-  var keys = Object.keys(actionCreators);
   var boundActionCreators = {};
 
-  for (var i = 0; i < keys.length; i++) {
-    var key = keys[i];
+  for (var key in actionCreators) {
     var actionCreator = actionCreators[key];
 
     if (typeof actionCreator === 'function') {
@@ -13166,20 +13272,34 @@ function _defineProperty(obj, key, value) {
   return obj;
 }
 
-function _objectSpread(target) {
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    keys.push.apply(keys, Object.getOwnPropertySymbols(object));
+  }
+
+  if (enumerableOnly) keys = keys.filter(function (sym) {
+    return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+  });
+  return keys;
+}
+
+function _objectSpread2(target) {
   for (var i = 1; i < arguments.length; i++) {
     var source = arguments[i] != null ? arguments[i] : {};
-    var ownKeys = Object.keys(source);
 
-    if (typeof Object.getOwnPropertySymbols === 'function') {
-      ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {
-        return Object.getOwnPropertyDescriptor(source, sym).enumerable;
-      }));
+    if (i % 2) {
+      ownKeys(source, true).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(source).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
     }
-
-    ownKeys.forEach(function (key) {
-      _defineProperty(target, key, source[key]);
-    });
   }
 
   return target;
@@ -13244,7 +13364,7 @@ function applyMiddleware() {
       var store = createStore.apply(void 0, arguments);
 
       var _dispatch = function dispatch() {
-        throw new Error("Dispatching while constructing your middleware is not allowed. " + "Other middleware would not be applied to this dispatch.");
+        throw new Error('Dispatching while constructing your middleware is not allowed. ' + 'Other middleware would not be applied to this dispatch.');
       };
 
       var middlewareAPI = {
@@ -13257,7 +13377,7 @@ function applyMiddleware() {
         return middleware(middlewareAPI);
       });
       _dispatch = compose.apply(void 0, chain)(store.dispatch);
-      return _objectSpread({}, store, {
+      return _objectSpread2({}, store, {
         dispatch: _dispatch
       });
     };
@@ -13556,8 +13676,7 @@ var asEffect = {
 module.exports = wp.data;
 
 /***/ }),
-/* 19 */,
-/* 20 */
+/* 19 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -13615,6 +13734,7 @@ var MOVE_TICKET_SUCCESS = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODU
 var MOVE_TICKET_ERROR = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/MOVE_TICKET_ERROR';
 
 /***/ }),
+/* 20 */,
 /* 21 */,
 /* 22 */,
 /* 23 */
@@ -13697,7 +13817,7 @@ var PRICE_POSITIONS = [PREFIX, SUFFIX];
 
 exports.__esModule = true;
 
-var _defineProperty = __webpack_require__(265);
+var _defineProperty = __webpack_require__(266);
 
 var _defineProperty2 = _interopRequireDefault(_defineProperty);
 
@@ -13724,6 +13844,213 @@ exports.default = function (obj, key, value) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return isTribeEventPostType; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return hasPostTypeChannel; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return createWPEditorSavingChannel; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return createWPEditorNotSavingChannel; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return createDates; });
+/* harmony import */ var babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(11);
+/* harmony import */ var babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var lodash_some__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(113);
+/* harmony import */ var lodash_some__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash_some__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(18);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var redux_saga_effects__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(0);
+/* harmony import */ var redux_saga__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(73);
+/* harmony import */ var _moderntribe_common_data__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(35);
+/* harmony import */ var _moderntribe_common_data__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_moderntribe_common_data__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _moderntribe_common_utils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(3);
+/* harmony import */ var _moderntribe_common_utils__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_moderntribe_common_utils__WEBPACK_IMPORTED_MODULE_6__);
+
+
+
+var _marked = /*#__PURE__*/babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(isTribeEventPostType),
+    _marked2 = /*#__PURE__*/babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(createDates);
+
+/* eslint-disable max-len */
+
+/**
+ * External Dependencies
+ */
+
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+/*
+ * Determines if current post is a tribe event
+ * @export
+ * @returns {Boolean} bool
+ */
+function isTribeEventPostType() {
+	var postType;
+	return babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function isTribeEventPostType$(_context) {
+		while (1) {
+			switch (_context.prev = _context.next) {
+				case 0:
+					_context.next = 2;
+					return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_3__[/* call */ "b"])([Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_2__["select"])('core/editor'), 'getEditedPostAttribute'], 'type');
+
+				case 2:
+					postType = _context.sent;
+					return _context.abrupt('return', postType === _moderntribe_common_data__WEBPACK_IMPORTED_MODULE_5__["editor"].EVENT);
+
+				case 4:
+				case 'end':
+					return _context.stop();
+			}
+		}
+	}, _marked, this);
+}
+
+/**
+ * Creates event channel subscribing to WP editor state when post type is loaded.
+ * Used as post type is not available upon load in some cases, so some false negatives
+ *
+ * @returns {Function} Channel
+ */
+function hasPostTypeChannel() {
+	return Object(redux_saga__WEBPACK_IMPORTED_MODULE_4__[/* eventChannel */ "b"])(function (emit) {
+		var wpEditor = Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_2__["select"])('core/editor');
+
+		var predicates = [function () {
+			return !!wpEditor.getEditedPostAttribute('type');
+		}];
+
+		// Returns unsubscribe function
+		return Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_2__["subscribe"])(function () {
+			// Only emit when truthy
+			if (lodash_some__WEBPACK_IMPORTED_MODULE_1___default()(predicates, function (fn) {
+				return fn();
+			})) {
+				emit(true); // Emitted value is insignificant here, but cannot be left undefined
+			}
+		});
+	});
+}
+
+/**
+ * Creates event channel subscribing to WP editor state when saving post
+ *
+ * @returns {Function} Channel
+ */
+function createWPEditorSavingChannel() {
+	return Object(redux_saga__WEBPACK_IMPORTED_MODULE_4__[/* eventChannel */ "b"])(function (emit) {
+		var wpEditor = Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_2__["select"])('core/editor');
+
+		var predicates = [function () {
+			return wpEditor.isSavingPost() && !wpEditor.isAutosavingPost();
+		}];
+
+		// Returns unsubscribe function
+		return Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_2__["subscribe"])(function () {
+			// Only emit when truthy
+			if (lodash_some__WEBPACK_IMPORTED_MODULE_1___default()(predicates, function (fn) {
+				return fn();
+			})) {
+				emit(true); // Emitted value is insignificant here, but cannot be left undefined
+			}
+		});
+	});
+}
+
+/**
+ * Creates event channel subscribing to WP editor state when not saving post
+ *
+ * @returns {Function} Channel
+ */
+function createWPEditorNotSavingChannel() {
+	return Object(redux_saga__WEBPACK_IMPORTED_MODULE_4__[/* eventChannel */ "b"])(function (emit) {
+		var wpEditor = Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_2__["select"])('core/editor');
+
+		var predicates = [function () {
+			return !(wpEditor.isSavingPost() && !wpEditor.isAutosavingPost());
+		}];
+
+		// Returns unsubscribe function
+		return Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_2__["subscribe"])(function () {
+			// Only emit when truthy
+			if (lodash_some__WEBPACK_IMPORTED_MODULE_1___default()(predicates, function (fn) {
+				return fn();
+			})) {
+				emit(true); // Emitted value is insignificant here, but cannot be left undefined
+			}
+		});
+	});
+}
+
+/**
+ * Create date objects used throughout sagas
+ *
+ * @export
+ * @param {String} date datetime string
+ * @returns {Object} Object of dates/moments
+ */
+function createDates(date) {
+	var _ref, datepickerFormat, moment, currentDate, dateInput, time, timeInput;
+
+	return babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function createDates$(_context2) {
+		while (1) {
+			switch (_context2.prev = _context2.next) {
+				case 0:
+					_context2.next = 2;
+					return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_3__[/* call */ "b"])([_moderntribe_common_utils__WEBPACK_IMPORTED_MODULE_6__["globals"], 'tecDateSettings']);
+
+				case 2:
+					_ref = _context2.sent;
+					datepickerFormat = _ref.datepickerFormat;
+					_context2.next = 6;
+					return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_3__[/* call */ "b"])(_moderntribe_common_utils__WEBPACK_IMPORTED_MODULE_6__["moment"].toMoment, date);
+
+				case 6:
+					moment = _context2.sent;
+					_context2.next = 9;
+					return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_3__[/* call */ "b"])(_moderntribe_common_utils__WEBPACK_IMPORTED_MODULE_6__["moment"].toDatabaseDate, moment);
+
+				case 9:
+					currentDate = _context2.sent;
+					_context2.next = 12;
+					return datepickerFormat ? Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_3__[/* call */ "b"])(_moderntribe_common_utils__WEBPACK_IMPORTED_MODULE_6__["moment"].toDate, moment, datepickerFormat) : Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_3__[/* call */ "b"])(_moderntribe_common_utils__WEBPACK_IMPORTED_MODULE_6__["moment"].toDate, moment);
+
+				case 12:
+					dateInput = _context2.sent;
+					_context2.next = 15;
+					return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_3__[/* call */ "b"])(_moderntribe_common_utils__WEBPACK_IMPORTED_MODULE_6__["moment"].toDatabaseTime, moment);
+
+				case 15:
+					time = _context2.sent;
+					_context2.next = 18;
+					return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_3__[/* call */ "b"])(_moderntribe_common_utils__WEBPACK_IMPORTED_MODULE_6__["moment"].toTime, moment);
+
+				case 18:
+					timeInput = _context2.sent;
+					return _context2.abrupt('return', {
+						moment: moment,
+						date: currentDate,
+						dateInput: dateInput,
+						time: time,
+						timeInput: timeInput
+					});
+
+				case 20:
+				case 'end':
+					return _context2.stop();
+			}
+		}
+	}, _marked2, this);
+}
+
+/***/ }),
+/* 28 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return END; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return isEnd; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return emitter; });
@@ -13733,8 +14060,8 @@ exports.default = function (obj, key, value) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return eventChannel; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return stdChannel; });
 /* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
-/* harmony import */ var _buffers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(52);
-/* harmony import */ var _scheduler__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(71);
+/* harmony import */ var _buffers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(54);
+/* harmony import */ var _scheduler__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(72);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 
@@ -13935,7 +14262,7 @@ function stdChannel(subscribe) {
 }
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -13959,9 +14286,9 @@ function stdChannel(subscribe) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "m", function() { return isModalSubmitting; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return getPostTypeOptionValue; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return hasSelectedPost; });
-/* harmony import */ var lodash_find__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(85);
+/* harmony import */ var lodash_find__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(86);
 /* harmony import */ var lodash_find__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash_find__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var reselect__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5);
+/* harmony import */ var reselect__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6);
 /* harmony import */ var reselect__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(reselect__WEBPACK_IMPORTED_MODULE_1__);
 
 /**
@@ -14048,233 +14375,29 @@ var hasSelectedPost = Object(reselect__WEBPACK_IMPORTED_MODULE_1__["createSelect
 });
 
 /***/ }),
-/* 29 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return isTribeEventPostType; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return hasPostTypeChannel; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return createWPEditorSavingChannel; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return createWPEditorNotSavingChannel; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return createDates; });
-/* harmony import */ var babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(11);
-/* harmony import */ var babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var lodash_some__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(113);
-/* harmony import */ var lodash_some__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash_some__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(18);
-/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var redux_saga_effects__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(0);
-/* harmony import */ var redux_saga__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(73);
-/* harmony import */ var _moderntribe_common_data__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(31);
-/* harmony import */ var _moderntribe_common_data__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_moderntribe_common_data__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _moderntribe_common_utils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(3);
-/* harmony import */ var _moderntribe_common_utils__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_moderntribe_common_utils__WEBPACK_IMPORTED_MODULE_6__);
-
-
-
-var _marked = /*#__PURE__*/babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(isTribeEventPostType),
-    _marked2 = /*#__PURE__*/babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(createDates);
-
-/* eslint-disable max-len */
-
-/**
- * External Dependencies
- */
-
-
-
-
-
-/**
- * Internal dependencies
- */
-
-
-
-/*
- * Determines if current post is a tribe event
- * @export
- * @returns {Boolean} bool
- */
-function isTribeEventPostType() {
-	var postType;
-	return babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function isTribeEventPostType$(_context) {
-		while (1) {
-			switch (_context.prev = _context.next) {
-				case 0:
-					_context.next = 2;
-					return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_3__[/* call */ "b"])([Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_2__["select"])('core/editor'), 'getEditedPostAttribute'], 'type');
-
-				case 2:
-					postType = _context.sent;
-					return _context.abrupt('return', postType === _moderntribe_common_data__WEBPACK_IMPORTED_MODULE_5__["editor"].EVENT);
-
-				case 4:
-				case 'end':
-					return _context.stop();
-			}
-		}
-	}, _marked, this);
-}
-
-/**
- * Creates event channel subscribing to WP editor state when post type is loaded.
- * Used as post type is not available upon load in some cases, so some false negatives
- *
- * @returns {Function} Channel
- */
-function hasPostTypeChannel() {
-	return Object(redux_saga__WEBPACK_IMPORTED_MODULE_4__[/* eventChannel */ "b"])(function (emit) {
-		var wpEditor = Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_2__["select"])('core/editor');
-
-		var predicates = [function () {
-			return !!wpEditor.getEditedPostAttribute('type');
-		}];
-
-		// Returns unsubscribe function
-		return Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_2__["subscribe"])(function () {
-			// Only emit when truthy
-			if (lodash_some__WEBPACK_IMPORTED_MODULE_1___default()(predicates, function (fn) {
-				return fn();
-			})) {
-				emit(true); // Emitted value is insignificant here, but cannot be left undefined
-			}
-		});
-	});
-}
-
-/**
- * Creates event channel subscribing to WP editor state when saving post
- *
- * @returns {Function} Channel
- */
-function createWPEditorSavingChannel() {
-	return Object(redux_saga__WEBPACK_IMPORTED_MODULE_4__[/* eventChannel */ "b"])(function (emit) {
-		var wpEditor = Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_2__["select"])('core/editor');
-
-		var predicates = [function () {
-			return wpEditor.isSavingPost() && !wpEditor.isAutosavingPost();
-		}];
-
-		// Returns unsubscribe function
-		return Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_2__["subscribe"])(function () {
-			// Only emit when truthy
-			if (lodash_some__WEBPACK_IMPORTED_MODULE_1___default()(predicates, function (fn) {
-				return fn();
-			})) {
-				emit(true); // Emitted value is insignificant here, but cannot be left undefined
-			}
-		});
-	});
-}
-
-/**
- * Creates event channel subscribing to WP editor state when not saving post
- *
- * @returns {Function} Channel
- */
-function createWPEditorNotSavingChannel() {
-	return Object(redux_saga__WEBPACK_IMPORTED_MODULE_4__[/* eventChannel */ "b"])(function (emit) {
-		var wpEditor = Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_2__["select"])('core/editor');
-
-		var predicates = [function () {
-			return !(wpEditor.isSavingPost() && !wpEditor.isAutosavingPost());
-		}];
-
-		// Returns unsubscribe function
-		return Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_2__["subscribe"])(function () {
-			// Only emit when truthy
-			if (lodash_some__WEBPACK_IMPORTED_MODULE_1___default()(predicates, function (fn) {
-				return fn();
-			})) {
-				emit(true); // Emitted value is insignificant here, but cannot be left undefined
-			}
-		});
-	});
-}
-
-/**
- * Create date objects used throughout sagas
- *
- * @export
- * @param {String} date datetime string
- * @returns {Object} Object of dates/moments
- */
-function createDates(date) {
-	var _ref, datepickerFormat, moment, currentDate, dateInput, time, timeInput;
-
-	return babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function createDates$(_context2) {
-		while (1) {
-			switch (_context2.prev = _context2.next) {
-				case 0:
-					_context2.next = 2;
-					return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_3__[/* call */ "b"])([_moderntribe_common_utils__WEBPACK_IMPORTED_MODULE_6__["globals"], 'tecDateSettings']);
-
-				case 2:
-					_ref = _context2.sent;
-					datepickerFormat = _ref.datepickerFormat;
-					_context2.next = 6;
-					return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_3__[/* call */ "b"])(_moderntribe_common_utils__WEBPACK_IMPORTED_MODULE_6__["moment"].toMoment, date);
-
-				case 6:
-					moment = _context2.sent;
-					_context2.next = 9;
-					return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_3__[/* call */ "b"])(_moderntribe_common_utils__WEBPACK_IMPORTED_MODULE_6__["moment"].toDatabaseDate, moment);
-
-				case 9:
-					currentDate = _context2.sent;
-					_context2.next = 12;
-					return datepickerFormat ? Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_3__[/* call */ "b"])(_moderntribe_common_utils__WEBPACK_IMPORTED_MODULE_6__["moment"].toDate, moment, datepickerFormat) : Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_3__[/* call */ "b"])(_moderntribe_common_utils__WEBPACK_IMPORTED_MODULE_6__["moment"].toDate, moment);
-
-				case 12:
-					dateInput = _context2.sent;
-					_context2.next = 15;
-					return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_3__[/* call */ "b"])(_moderntribe_common_utils__WEBPACK_IMPORTED_MODULE_6__["moment"].toDatabaseTime, moment);
-
-				case 15:
-					time = _context2.sent;
-					_context2.next = 18;
-					return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_3__[/* call */ "b"])(_moderntribe_common_utils__WEBPACK_IMPORTED_MODULE_6__["moment"].toTime, moment);
-
-				case 18:
-					timeInput = _context2.sent;
-					return _context2.abrupt('return', {
-						moment: moment,
-						date: currentDate,
-						dateInput: dateInput,
-						time: time,
-						timeInput: timeInput
-					});
-
-				case 20:
-				case 'end':
-					return _context2.stop();
-			}
-		}
-	}, _marked2, this);
-}
-
-/***/ }),
 /* 30 */,
-/* 31 */
+/* 31 */,
+/* 32 */,
+/* 33 */,
+/* 34 */,
+/* 35 */
 /***/ (function(module, exports) {
 
 module.exports = tribe.common.data;
 
 /***/ }),
-/* 32 */
+/* 36 */
 /***/ (function(module, exports) {
 
-var core = module.exports = { version: '2.6.5' };
+var core = module.exports = { version: '2.6.12' };
 if (typeof __e == 'number') __e = core; // eslint-disable-line no-undef
 
 
 /***/ }),
-/* 33 */,
-/* 34 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var store = __webpack_require__(90)('wks');
+var store = __webpack_require__(91)('wks');
 var uid = __webpack_require__(76);
 var Symbol = __webpack_require__(41).Symbol;
 var USE_SYMBOL = typeof Symbol == 'function';
@@ -14288,34 +14411,8 @@ $exports.store = store;
 
 
 /***/ }),
-/* 35 */,
-/* 36 */,
-/* 37 */,
 /* 38 */,
 /* 39 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return SET_ATTENDEES_INITIAL_STATE; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return SET_ATTENDEES_TITLE; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return SET_ATTENDEES_DISPLAY_TITLE; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SET_ATTENDEES_DISPLAY_SUBTITLE; });
-/* harmony import */ var _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8);
-/**
- * Internal dependencies
- */
-
-
-var SET_ATTENDEES_INITIAL_STATE = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_ATTENDEES_INITIAL_STATE';
-
-var SET_ATTENDEES_TITLE = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_ATTENDEES_TITLE';
-
-var SET_ATTENDEES_DISPLAY_TITLE = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_ATTENDEES_DISPLAY_TITLE';
-
-var SET_ATTENDEES_DISPLAY_SUBTITLE = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_ATTENDEES_DISPLAY_SUBTITLE';
-
-/***/ }),
-/* 40 */
 /***/ (function(module, exports) {
 
 /**
@@ -14347,6 +14444,29 @@ module.exports = isArray;
 
 
 /***/ }),
+/* 40 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return SET_ATTENDEES_INITIAL_STATE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return SET_ATTENDEES_TITLE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return SET_ATTENDEES_DISPLAY_TITLE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SET_ATTENDEES_DISPLAY_SUBTITLE; });
+/* harmony import */ var _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8);
+/**
+ * Internal dependencies
+ */
+
+
+var SET_ATTENDEES_INITIAL_STATE = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_ATTENDEES_INITIAL_STATE';
+
+var SET_ATTENDEES_TITLE = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_ATTENDEES_TITLE';
+
+var SET_ATTENDEES_DISPLAY_TITLE = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_ATTENDEES_DISPLAY_TITLE';
+
+var SET_ATTENDEES_DISPLAY_SUBTITLE = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_ATTENDEES_DISPLAY_SUBTITLE';
+
+/***/ }),
 /* 41 */
 /***/ (function(module, exports) {
 
@@ -14362,12 +14482,23 @@ if (typeof __g == 'number') __g = global; // eslint-disable-line no-undef
 /* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var anObject = __webpack_require__(46);
-var IE8_DOM_DEFINE = __webpack_require__(236);
-var toPrimitive = __webpack_require__(98);
+// Thank's IE8 for his funny defineProperty
+module.exports = !__webpack_require__(64)(function () {
+  return Object.defineProperty({}, 'a', { get: function () { return 7; } }).a != 7;
+});
+
+
+/***/ }),
+/* 43 */,
+/* 44 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var anObject = __webpack_require__(47);
+var IE8_DOM_DEFINE = __webpack_require__(239);
+var toPrimitive = __webpack_require__(99);
 var dP = Object.defineProperty;
 
-exports.f = __webpack_require__(44) ? Object.defineProperty : function defineProperty(O, P, Attributes) {
+exports.f = __webpack_require__(42) ? Object.defineProperty : function defineProperty(O, P, Attributes) {
   anObject(O);
   P = toPrimitive(P, true);
   anObject(Attributes);
@@ -14381,7 +14512,7 @@ exports.f = __webpack_require__(44) ? Object.defineProperty : function definePro
 
 
 /***/ }),
-/* 43 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14438,20 +14569,10 @@ exports.default = function () {
 }();
 
 /***/ }),
-/* 44 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
-// Thank's IE8 for his funny defineProperty
-module.exports = !__webpack_require__(63)(function () {
-  return Object.defineProperty({}, 'a', { get: function () { return 7; } }).a != 7;
-});
-
-
-/***/ }),
-/* 45 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var freeGlobal = __webpack_require__(282);
+var freeGlobal = __webpack_require__(284);
 
 /** Detect free variable `self`. */
 var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
@@ -14463,10 +14584,10 @@ module.exports = root;
 
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(55);
+var isObject = __webpack_require__(56);
 module.exports = function (it) {
   if (!isObject(it)) throw TypeError(it + ' is not an object!');
   return it;
@@ -14474,7 +14595,7 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, exports) {
 
 var hasOwnProperty = {}.hasOwnProperty;
@@ -14484,14 +14605,14 @@ module.exports = function (it, key) {
 
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var global = __webpack_require__(41);
-var core = __webpack_require__(32);
-var ctx = __webpack_require__(97);
-var hide = __webpack_require__(49);
-var has = __webpack_require__(47);
+var core = __webpack_require__(36);
+var ctx = __webpack_require__(98);
+var hide = __webpack_require__(50);
+var has = __webpack_require__(48);
 var PROTOTYPE = 'prototype';
 
 var $export = function (type, name, source) {
@@ -14552,12 +14673,12 @@ module.exports = $export;
 
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var dP = __webpack_require__(42);
-var createDesc = __webpack_require__(67);
-module.exports = __webpack_require__(44) ? function (object, key, value) {
+var dP = __webpack_require__(44);
+var createDesc = __webpack_require__(68);
+module.exports = __webpack_require__(42) ? function (object, key, value) {
   return dP.f(object, key, createDesc(1, value));
 } : function (object, key, value) {
   object[key] = value;
@@ -14566,14 +14687,14 @@ module.exports = __webpack_require__(44) ? function (object, key, value) {
 
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, exports) {
 
 module.exports = {};
 
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (function(module, exports) {
 
 /**
@@ -14608,7 +14729,44 @@ module.exports = isObjectLike;
 
 
 /***/ }),
-/* 52 */
+/* 53 */
+/***/ (function(module, exports) {
+
+/**
+ * Checks if `value` is the
+ * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
+ * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an object, else `false`.
+ * @example
+ *
+ * _.isObject({});
+ * // => true
+ *
+ * _.isObject([1, 2, 3]);
+ * // => true
+ *
+ * _.isObject(_.noop);
+ * // => true
+ *
+ * _.isObject(null);
+ * // => false
+ */
+function isObject(value) {
+  var type = typeof value;
+  return value != null && (type == 'object' || type == 'function');
+}
+
+module.exports = isObject;
+
+
+/***/ }),
+/* 54 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14719,8 +14877,7 @@ var buffers = {
 };
 
 /***/ }),
-/* 53 */,
-/* 54 */
+/* 55 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14728,7 +14885,7 @@ var buffers = {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return setDisplayTitle; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return setDisplaySubtitle; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return setInitialState; });
-/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(39);
+/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(40);
 /**
  * Internal dependencies
  */
@@ -14769,7 +14926,7 @@ var setInitialState = function setInitialState(payload) {
 };
 
 /***/ }),
-/* 55 */
+/* 56 */
 /***/ (function(module, exports) {
 
 module.exports = function (it) {
@@ -14778,59 +14935,72 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 56 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // to indexed object, toObject with fallback for non-array-like ES3 strings
 var IObject = __webpack_require__(115);
-var defined = __webpack_require__(78);
+var defined = __webpack_require__(79);
 module.exports = function (it) {
   return IObject(defined(it));
 };
 
 
 /***/ }),
-/* 57 */
-/***/ (function(module, exports) {
+/* 58 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var arrayLikeKeys = __webpack_require__(290),
+    baseKeys = __webpack_require__(323),
+    isArrayLike = __webpack_require__(69);
 
 /**
- * Checks if `value` is the
- * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
- * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+ * Creates an array of the own enumerable property names of `object`.
+ *
+ * **Note:** Non-object values are coerced to objects. See the
+ * [ES spec](http://ecma-international.org/ecma-262/7.0/#sec-object.keys)
+ * for more details.
  *
  * @static
- * @memberOf _
  * @since 0.1.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is an object, else `false`.
+ * @memberOf _
+ * @category Object
+ * @param {Object} object The object to query.
+ * @returns {Array} Returns the array of property names.
  * @example
  *
- * _.isObject({});
- * // => true
+ * function Foo() {
+ *   this.a = 1;
+ *   this.b = 2;
+ * }
  *
- * _.isObject([1, 2, 3]);
- * // => true
+ * Foo.prototype.c = 3;
  *
- * _.isObject(_.noop);
- * // => true
+ * _.keys(new Foo);
+ * // => ['a', 'b'] (iteration order is not guaranteed)
  *
- * _.isObject(null);
- * // => false
+ * _.keys('hi');
+ * // => ['0', '1']
  */
-function isObject(value) {
-  var type = typeof value;
-  return value != null && (type == 'object' || type == 'function');
+function keys(object) {
+  return isArrayLike(object) ? arrayLikeKeys(object) : baseKeys(object);
 }
 
-module.exports = isObject;
+module.exports = keys;
 
 
 /***/ }),
-/* 58 */
+/* 59 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, "a", function() { return /* reexport */ takeEvery; });
+__webpack_require__.d(__webpack_exports__, "b", function() { return /* reexport */ takeLatest; });
+__webpack_require__.d(__webpack_exports__, "c", function() { return /* reexport */ throttle; });
+
+// UNUSED EXPORTS: takeEvery, takeLatest, throttle
 
 // EXTERNAL MODULE: ./node_modules/redux-saga/es/internal/utils.js
 var utils = __webpack_require__(7);
@@ -14889,7 +15059,7 @@ function fsmIterator(fsm, q0) {
 var io = __webpack_require__(17);
 
 // EXTERNAL MODULE: ./node_modules/redux-saga/es/internal/channel.js
-var internal_channel = __webpack_require__(27);
+var internal_channel = __webpack_require__(28);
 
 // CONCATENATED MODULE: ./node_modules/redux-saga/es/internal/sagaHelpers/takeEvery.js
 
@@ -14960,7 +15130,7 @@ function takeLatest(patternOrChannel, worker) {
   }, 'q1', 'takeLatest(' + safeName(patternOrChannel) + ', ' + worker.name + ')');
 }
 // EXTERNAL MODULE: ./node_modules/redux-saga/es/internal/buffers.js
-var buffers = __webpack_require__(52);
+var buffers = __webpack_require__(54);
 
 // CONCATENATED MODULE: ./node_modules/redux-saga/es/internal/sagaHelpers/throttle.js
 
@@ -15009,12 +15179,6 @@ function throttle(delayLength, pattern, worker) {
   }, 'q1', 'throttle(' + safeName(pattern) + ', ' + worker.name + ')');
 }
 // CONCATENATED MODULE: ./node_modules/redux-saga/es/internal/sagaHelpers/index.js
-/* unused harmony export takeEvery */
-/* unused harmony export takeLatest */
-/* unused harmony export throttle */
-/* concated harmony reexport takeEveryHelper */__webpack_require__.d(__webpack_exports__, "a", function() { return takeEvery; });
-/* concated harmony reexport takeLatestHelper */__webpack_require__.d(__webpack_exports__, "b", function() { return takeLatest; });
-/* concated harmony reexport throttleHelper */__webpack_require__.d(__webpack_exports__, "c", function() { return throttle; });
 
 
 
@@ -15032,12 +15196,12 @@ var sagaHelpers_throttle = /*#__PURE__*/Object(utils["k" /* deprecate */])(throt
 
 
 /***/ }),
-/* 59 */
+/* 60 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DEFAULT_STATE; });
-/* harmony import */ var _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(12);
+/* harmony import */ var _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(13);
 /**
  * Internal dependencies
  */
@@ -15070,13 +15234,13 @@ var DEFAULT_STATE = {
 });
 
 /***/ }),
-/* 60 */
+/* 61 */
 /***/ (function(module, exports) {
 
 module.exports = tribe.common.store;
 
 /***/ }),
-/* 61 */
+/* 62 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15114,8 +15278,8 @@ var DEFAULT_STATE = {
 });
 
 /***/ }),
-/* 62 */,
-/* 63 */
+/* 63 */,
+/* 64 */
 /***/ (function(module, exports) {
 
 module.exports = function (exec) {
@@ -15128,11 +15292,11 @@ module.exports = function (exec) {
 
 
 /***/ }),
-/* 64 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseIsNative = __webpack_require__(346),
-    getValue = __webpack_require__(351);
+var baseIsNative = __webpack_require__(347),
+    getValue = __webpack_require__(352);
 
 /**
  * Gets the native function at `key` of `object`.
@@ -15151,12 +15315,12 @@ module.exports = getNative;
 
 
 /***/ }),
-/* 65 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Symbol = __webpack_require__(69),
-    getRawTag = __webpack_require__(347),
-    objectToString = __webpack_require__(348);
+var Symbol = __webpack_require__(71),
+    getRawTag = __webpack_require__(348),
+    objectToString = __webpack_require__(349);
 
 /** `Object#toString` result references. */
 var nullTag = '[object Null]',
@@ -15185,50 +15349,8 @@ module.exports = baseGetTag;
 
 
 /***/ }),
-/* 66 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var arrayLikeKeys = __webpack_require__(288),
-    baseKeys = __webpack_require__(370),
-    isArrayLike = __webpack_require__(70);
-
-/**
- * Creates an array of the own enumerable property names of `object`.
- *
- * **Note:** Non-object values are coerced to objects. See the
- * [ES spec](http://ecma-international.org/ecma-262/7.0/#sec-object.keys)
- * for more details.
- *
- * @static
- * @since 0.1.0
- * @memberOf _
- * @category Object
- * @param {Object} object The object to query.
- * @returns {Array} Returns the array of property names.
- * @example
- *
- * function Foo() {
- *   this.a = 1;
- *   this.b = 2;
- * }
- *
- * Foo.prototype.c = 3;
- *
- * _.keys(new Foo);
- * // => ['a', 'b'] (iteration order is not guaranteed)
- *
- * _.keys('hi');
- * // => ['0', '1']
- */
-function keys(object) {
-  return isArrayLike(object) ? arrayLikeKeys(object) : baseKeys(object);
-}
-
-module.exports = keys;
-
-
-/***/ }),
-/* 67 */
+/* 67 */,
+/* 68 */
 /***/ (function(module, exports) {
 
 module.exports = function (bitmap, value) {
@@ -15242,58 +15364,11 @@ module.exports = function (bitmap, value) {
 
 
 /***/ }),
-/* 68 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return showModal; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return hideModal; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return setModalData; });
-/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(20);
-/* eslint-disable camelcase */
-/**
- * Internal Dependencies
- */
-
-
-var showModal = function showModal(ticketId, clientId) {
-	return {
-		type: _types__WEBPACK_IMPORTED_MODULE_0__[/* SHOW_MODAL */ "n"],
-		payload: { ticketId: ticketId, clientId: clientId }
-	};
-};
-
-var hideModal = function hideModal() {
-	return {
-		type: _types__WEBPACK_IMPORTED_MODULE_0__[/* HIDE_MODAL */ "g"]
-	};
-};
-
-var setModalData = function setModalData(payload) {
-	return {
-		type: _types__WEBPACK_IMPORTED_MODULE_0__[/* SET_MODAL_DATA */ "m"],
-		payload: payload
-	};
-};
-
-/***/ }),
 /* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var root = __webpack_require__(45);
-
-/** Built-in value references. */
-var Symbol = root.Symbol;
-
-module.exports = Symbol;
-
-
-/***/ }),
-/* 70 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var isFunction = __webpack_require__(281),
-    isLength = __webpack_require__(248);
+var isFunction = __webpack_require__(283),
+    isLength = __webpack_require__(249);
 
 /**
  * Checks if `value` is array-like. A value is considered array-like if it's
@@ -15328,7 +15403,54 @@ module.exports = isArrayLike;
 
 
 /***/ }),
+/* 70 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return showModal; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return hideModal; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return setModalData; });
+/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(19);
+/* eslint-disable camelcase */
+/**
+ * Internal Dependencies
+ */
+
+
+var showModal = function showModal(ticketId, clientId) {
+	return {
+		type: _types__WEBPACK_IMPORTED_MODULE_0__[/* SHOW_MODAL */ "n"],
+		payload: { ticketId: ticketId, clientId: clientId }
+	};
+};
+
+var hideModal = function hideModal() {
+	return {
+		type: _types__WEBPACK_IMPORTED_MODULE_0__[/* HIDE_MODAL */ "g"]
+	};
+};
+
+var setModalData = function setModalData(payload) {
+	return {
+		type: _types__WEBPACK_IMPORTED_MODULE_0__[/* SET_MODAL_DATA */ "m"],
+		payload: payload
+	};
+};
+
+/***/ }),
 /* 71 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var root = __webpack_require__(46);
+
+/** Built-in value references. */
+var Symbol = root.Symbol;
+
+module.exports = Symbol;
+
+
+/***/ }),
+/* 72 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15399,26 +15521,31 @@ function flush() {
 }
 
 /***/ }),
-/* 72 */,
 /* 73 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, "b", function() { return /* reexport */ internal_channel["c" /* eventChannel */]; });
+__webpack_require__.d(__webpack_exports__, "a", function() { return /* reexport */ utils["j" /* delay */]; });
+
+// UNUSED EXPORTS: runSaga, END, channel, buffers, takeEvery, takeLatest, throttle, CANCEL, detach, effects, utils
+
 // EXTERNAL MODULE: ./node_modules/redux-saga/es/internal/utils.js
 var utils = __webpack_require__(7);
 
 // EXTERNAL MODULE: ./node_modules/redux-saga/es/internal/channel.js
-var internal_channel = __webpack_require__(27);
+var internal_channel = __webpack_require__(28);
 
 // EXTERNAL MODULE: ./node_modules/redux-saga/es/internal/scheduler.js
-var scheduler = __webpack_require__(71);
+var scheduler = __webpack_require__(72);
 
 // EXTERNAL MODULE: ./node_modules/redux-saga/es/internal/io.js
 var io = __webpack_require__(17);
 
 // EXTERNAL MODULE: ./node_modules/redux-saga/es/internal/buffers.js
-var buffers = __webpack_require__(52);
+var buffers = __webpack_require__(54);
 
 // CONCATENATED MODULE: ./node_modules/redux-saga/es/internal/proc.js
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -16318,7 +16445,7 @@ function sagaMiddlewareFactory() {
   return sagaMiddleware;
 }
 // EXTERNAL MODULE: ./node_modules/redux-saga/es/internal/sagaHelpers/index.js + 4 modules
-var sagaHelpers = __webpack_require__(58);
+var sagaHelpers = __webpack_require__(59);
 
 // EXTERNAL MODULE: ./node_modules/redux-saga/es/effects.js + 1 modules
 var es_effects = __webpack_require__(0);
@@ -16328,19 +16455,6 @@ var es_effects = __webpack_require__(0);
 
 
 // CONCATENATED MODULE: ./node_modules/redux-saga/es/index.js
-/* unused concated harmony import runSaga */
-/* unused concated harmony import END */
-/* concated harmony reexport eventChannel */__webpack_require__.d(__webpack_exports__, "b", function() { return internal_channel["c" /* eventChannel */]; });
-/* unused concated harmony import channel */
-/* unused concated harmony import buffers */
-/* unused concated harmony import takeEvery */
-/* unused concated harmony import takeLatest */
-/* unused concated harmony import throttle */
-/* concated harmony reexport delay */__webpack_require__.d(__webpack_exports__, "a", function() { return utils["j" /* delay */]; });
-/* unused concated harmony import CANCEL */
-/* unused concated harmony import detach */
-/* unused concated harmony import effects */
-/* unused concated harmony import utils */
 
 /* harmony default export */ var es = (sagaMiddlewareFactory);
 
@@ -16361,8 +16475,8 @@ var es_effects = __webpack_require__(0);
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.14 / 15.2.3.14 Object.keys(O)
-var $keys = __webpack_require__(237);
-var enumBugKeys = __webpack_require__(91);
+var $keys = __webpack_require__(240);
+var enumBugKeys = __webpack_require__(92);
 
 module.exports = Object.keys || function keys(O) {
   return $keys(O, enumBugKeys);
@@ -16391,9 +16505,20 @@ module.exports = function (key) {
 /* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
+// 7.1.13 ToObject(argument)
+var defined = __webpack_require__(79);
+module.exports = function (it) {
+  return Object(defined(it));
+};
+
+
+/***/ }),
+/* 78 */
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 
-var $at = __webpack_require__(276)(true);
+var $at = __webpack_require__(278)(true);
 
 // 21.1.3.27 String.prototype[@@iterator]()
 __webpack_require__(234)(String, 'String', function (iterated) {
@@ -16412,7 +16537,7 @@ __webpack_require__(234)(String, 'String', function (iterated) {
 
 
 /***/ }),
-/* 78 */
+/* 79 */
 /***/ (function(module, exports) {
 
 // 7.2.1 RequireObjectCoercible(argument)
@@ -16423,7 +16548,7 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 79 */
+/* 80 */
 /***/ (function(module, exports) {
 
 // 7.1.4 ToInteger
@@ -16435,10 +16560,10 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 80 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var shared = __webpack_require__(90)('keys');
+var shared = __webpack_require__(91)('keys');
 var uid = __webpack_require__(76);
 module.exports = function (key) {
   return shared[key] || (shared[key] = uid(key));
@@ -16446,14 +16571,14 @@ module.exports = function (key) {
 
 
 /***/ }),
-/* 81 */
+/* 82 */
 /***/ (function(module, exports) {
 
 exports.f = {}.propertyIsEnumerable;
 
 
 /***/ }),
-/* 82 */
+/* 83 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -16481,11 +16606,11 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 83 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var assignValue = __webpack_require__(285),
-    baseAssignValue = __webpack_require__(286);
+var assignValue = __webpack_require__(287),
+    baseAssignValue = __webpack_require__(288);
 
 /**
  * Copies properties of `source` to `object`.
@@ -16527,7 +16652,7 @@ module.exports = copyObject;
 
 
 /***/ }),
-/* 84 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var isSymbol = __webpack_require__(108);
@@ -16554,7 +16679,7 @@ module.exports = toKey;
 
 
 /***/ }),
-/* 85 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var createFind = __webpack_require__(423),
@@ -16602,8 +16727,8 @@ module.exports = find;
 
 
 /***/ }),
-/* 86 */,
-/* 87 */
+/* 87 */,
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseToString = __webpack_require__(299),
@@ -16658,8 +16783,8 @@ module.exports = trim;
 
 
 /***/ }),
-/* 88 */,
-/* 89 */
+/* 89 */,
+/* 90 */
 /***/ (function(module, exports) {
 
 var toString = {}.toString;
@@ -16670,10 +16795,10 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 90 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var core = __webpack_require__(32);
+var core = __webpack_require__(36);
 var global = __webpack_require__(41);
 var SHARED = '__core-js_shared__';
 var store = global[SHARED] || (global[SHARED] = {});
@@ -16683,12 +16808,12 @@ var store = global[SHARED] || (global[SHARED] = {});
 })('versions', []).push({
   version: core.version,
   mode: __webpack_require__(75) ? 'pure' : 'global',
-  copyright: '© 2019 Denis Pushkarev (zloirock.ru)'
+  copyright: '© 2020 Denis Pushkarev (zloirock.ru)'
 });
 
 
 /***/ }),
-/* 91 */
+/* 92 */
 /***/ (function(module, exports) {
 
 // IE 8- don't enum bug keys
@@ -16698,23 +16823,12 @@ module.exports = (
 
 
 /***/ }),
-/* 92 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 7.1.13 ToObject(argument)
-var defined = __webpack_require__(78);
-module.exports = function (it) {
-  return Object(defined(it));
-};
-
-
-/***/ }),
 /* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var def = __webpack_require__(42).f;
-var has = __webpack_require__(47);
-var TAG = __webpack_require__(34)('toStringTag');
+var def = __webpack_require__(44).f;
+var has = __webpack_require__(48);
+var TAG = __webpack_require__(37)('toStringTag');
 
 module.exports = function (it, tag, stat) {
   if (it && !has(it = stat ? it : it.prototype, TAG)) def(it, TAG, { configurable: true, value: tag });
@@ -16725,282 +16839,13 @@ module.exports = function (it, tag, stat) {
 /* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(304);
-var global = __webpack_require__(41);
-var hide = __webpack_require__(49);
-var Iterators = __webpack_require__(50);
-var TO_STRING_TAG = __webpack_require__(34)('toStringTag');
-
-var DOMIterables = ('CSSRuleList,CSSStyleDeclaration,CSSValueList,ClientRectList,DOMRectList,DOMStringList,' +
-  'DOMTokenList,DataTransferItemList,FileList,HTMLAllCollection,HTMLCollection,HTMLFormElement,HTMLSelectElement,' +
-  'MediaList,MimeTypeArray,NamedNodeMap,NodeList,PaintRequestList,Plugin,PluginArray,SVGLengthList,SVGNumberList,' +
-  'SVGPathSegList,SVGPointList,SVGStringList,SVGTransformList,SourceBufferList,StyleSheetList,TextTrackCueList,' +
-  'TextTrackList,TouchList').split(',');
-
-for (var i = 0; i < DOMIterables.length; i++) {
-  var NAME = DOMIterables[i];
-  var Collection = global[NAME];
-  var proto = Collection && Collection.prototype;
-  if (proto && !proto[TO_STRING_TAG]) hide(proto, TO_STRING_TAG, NAME);
-  Iterators[NAME] = Iterators.Array;
-}
-
-
-/***/ }),
-/* 95 */,
-/* 96 */,
-/* 97 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// optional / simple context binding
-var aFunction = __webpack_require__(268);
-module.exports = function (fn, that, length) {
-  aFunction(fn);
-  if (that === undefined) return fn;
-  switch (length) {
-    case 1: return function (a) {
-      return fn.call(that, a);
-    };
-    case 2: return function (a, b) {
-      return fn.call(that, a, b);
-    };
-    case 3: return function (a, b, c) {
-      return fn.call(that, a, b, c);
-    };
-  }
-  return function (/* ...args */) {
-    return fn.apply(that, arguments);
-  };
-};
-
-
-/***/ }),
-/* 98 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 7.1.1 ToPrimitive(input [, PreferredType])
-var isObject = __webpack_require__(55);
-// instead of the ES6 spec version, we didn't implement @@toPrimitive case
-// and the second argument - flag - preferred type is a string
-module.exports = function (it, S) {
-  if (!isObject(it)) return it;
-  var fn, val;
-  if (S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it))) return val;
-  if (typeof (fn = it.valueOf) == 'function' && !isObject(val = fn.call(it))) return val;
-  if (!S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it))) return val;
-  throw TypeError("Can't convert object to primitive value");
-};
-
-
-/***/ }),
-/* 99 */
-/***/ (function(module, exports) {
-
-exports.f = Object.getOwnPropertySymbols;
-
-
-/***/ }),
-/* 100 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
-var anObject = __webpack_require__(46);
-var dPs = __webpack_require__(278);
-var enumBugKeys = __webpack_require__(91);
-var IE_PROTO = __webpack_require__(80)('IE_PROTO');
-var Empty = function () { /* empty */ };
-var PROTOTYPE = 'prototype';
-
-// Create object with fake `null` prototype: use iframe Object with cleared prototype
-var createDict = function () {
-  // Thrash, waste and sodomy: IE GC bug
-  var iframe = __webpack_require__(114)('iframe');
-  var i = enumBugKeys.length;
-  var lt = '<';
-  var gt = '>';
-  var iframeDocument;
-  iframe.style.display = 'none';
-  __webpack_require__(279).appendChild(iframe);
-  iframe.src = 'javascript:'; // eslint-disable-line no-script-url
-  // createDict = iframe.contentWindow.Object;
-  // html.removeChild(iframe);
-  iframeDocument = iframe.contentWindow.document;
-  iframeDocument.open();
-  iframeDocument.write(lt + 'script' + gt + 'document.F=Object' + lt + '/script' + gt);
-  iframeDocument.close();
-  createDict = iframeDocument.F;
-  while (i--) delete createDict[PROTOTYPE][enumBugKeys[i]];
-  return createDict();
-};
-
-module.exports = Object.create || function create(O, Properties) {
-  var result;
-  if (O !== null) {
-    Empty[PROTOTYPE] = anObject(O);
-    result = new Empty();
-    Empty[PROTOTYPE] = null;
-    // add "__proto__" for Object.getPrototypeOf polyfill
-    result[IE_PROTO] = O;
-  } else result = createDict();
-  return Properties === undefined ? result : dPs(result, Properties);
-};
-
-
-/***/ }),
-/* 101 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var listCacheClear = __webpack_require__(336),
-    listCacheDelete = __webpack_require__(337),
-    listCacheGet = __webpack_require__(338),
-    listCacheHas = __webpack_require__(339),
-    listCacheSet = __webpack_require__(340);
-
-/**
- * Creates an list cache object.
- *
- * @private
- * @constructor
- * @param {Array} [entries] The key-value pairs to cache.
- */
-function ListCache(entries) {
-  var index = -1,
-      length = entries == null ? 0 : entries.length;
-
-  this.clear();
-  while (++index < length) {
-    var entry = entries[index];
-    this.set(entry[0], entry[1]);
-  }
-}
-
-// Add methods to `ListCache`.
-ListCache.prototype.clear = listCacheClear;
-ListCache.prototype['delete'] = listCacheDelete;
-ListCache.prototype.get = listCacheGet;
-ListCache.prototype.has = listCacheHas;
-ListCache.prototype.set = listCacheSet;
-
-module.exports = ListCache;
-
-
-/***/ }),
-/* 102 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var eq = __webpack_require__(103);
-
-/**
- * Gets the index at which the `key` is found in `array` of key-value pairs.
- *
- * @private
- * @param {Array} array The array to inspect.
- * @param {*} key The key to search for.
- * @returns {number} Returns the index of the matched value, else `-1`.
- */
-function assocIndexOf(array, key) {
-  var length = array.length;
-  while (length--) {
-    if (eq(array[length][0], key)) {
-      return length;
-    }
-  }
-  return -1;
-}
-
-module.exports = assocIndexOf;
-
-
-/***/ }),
-/* 103 */
-/***/ (function(module, exports) {
-
-/**
- * Performs a
- * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
- * comparison between two values to determine if they are equivalent.
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to compare.
- * @param {*} other The other value to compare.
- * @returns {boolean} Returns `true` if the values are equivalent, else `false`.
- * @example
- *
- * var object = { 'a': 1 };
- * var other = { 'a': 1 };
- *
- * _.eq(object, object);
- * // => true
- *
- * _.eq(object, other);
- * // => false
- *
- * _.eq('a', 'a');
- * // => true
- *
- * _.eq('a', Object('a'));
- * // => false
- *
- * _.eq(NaN, NaN);
- * // => true
- */
-function eq(value, other) {
-  return value === other || (value !== value && other !== other);
-}
-
-module.exports = eq;
-
-
-/***/ }),
-/* 104 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var getNative = __webpack_require__(64);
-
-/* Built-in method references that are verified to be native. */
-var nativeCreate = getNative(Object, 'create');
-
-module.exports = nativeCreate;
-
-
-/***/ }),
-/* 105 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var isKeyable = __webpack_require__(360);
-
-/**
- * Gets the data for `map`.
- *
- * @private
- * @param {Object} map The map to query.
- * @param {string} key The reference key.
- * @returns {*} Returns the map data.
- */
-function getMapData(map, key) {
-  var data = map.__data__;
-  return isKeyable(key)
-    ? data[typeof key == 'string' ? 'string' : 'hash']
-    : data.map;
-}
-
-module.exports = getMapData;
-
-
-/***/ }),
-/* 106 */
-/***/ (function(module, exports, __webpack_require__) {
-
 var DataView = __webpack_require__(380),
-    Map = __webpack_require__(243),
+    Map = __webpack_require__(246),
     Promise = __webpack_require__(381),
     Set = __webpack_require__(382),
     WeakMap = __webpack_require__(383),
-    baseGetTag = __webpack_require__(65),
-    toSource = __webpack_require__(284);
+    baseGetTag = __webpack_require__(66),
+    toSource = __webpack_require__(286);
 
 /** `Object#toString` result references. */
 var mapTag = '[object Map]',
@@ -17055,11 +16900,280 @@ module.exports = getTag;
 
 
 /***/ }),
+/* 95 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(304);
+var global = __webpack_require__(41);
+var hide = __webpack_require__(50);
+var Iterators = __webpack_require__(51);
+var TO_STRING_TAG = __webpack_require__(37)('toStringTag');
+
+var DOMIterables = ('CSSRuleList,CSSStyleDeclaration,CSSValueList,ClientRectList,DOMRectList,DOMStringList,' +
+  'DOMTokenList,DataTransferItemList,FileList,HTMLAllCollection,HTMLCollection,HTMLFormElement,HTMLSelectElement,' +
+  'MediaList,MimeTypeArray,NamedNodeMap,NodeList,PaintRequestList,Plugin,PluginArray,SVGLengthList,SVGNumberList,' +
+  'SVGPathSegList,SVGPointList,SVGStringList,SVGTransformList,SourceBufferList,StyleSheetList,TextTrackCueList,' +
+  'TextTrackList,TouchList').split(',');
+
+for (var i = 0; i < DOMIterables.length; i++) {
+  var NAME = DOMIterables[i];
+  var Collection = global[NAME];
+  var proto = Collection && Collection.prototype;
+  if (proto && !proto[TO_STRING_TAG]) hide(proto, TO_STRING_TAG, NAME);
+  Iterators[NAME] = Iterators.Array;
+}
+
+
+/***/ }),
+/* 96 */,
+/* 97 */,
+/* 98 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// optional / simple context binding
+var aFunction = __webpack_require__(270);
+module.exports = function (fn, that, length) {
+  aFunction(fn);
+  if (that === undefined) return fn;
+  switch (length) {
+    case 1: return function (a) {
+      return fn.call(that, a);
+    };
+    case 2: return function (a, b) {
+      return fn.call(that, a, b);
+    };
+    case 3: return function (a, b, c) {
+      return fn.call(that, a, b, c);
+    };
+  }
+  return function (/* ...args */) {
+    return fn.apply(that, arguments);
+  };
+};
+
+
+/***/ }),
+/* 99 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 7.1.1 ToPrimitive(input [, PreferredType])
+var isObject = __webpack_require__(56);
+// instead of the ES6 spec version, we didn't implement @@toPrimitive case
+// and the second argument - flag - preferred type is a string
+module.exports = function (it, S) {
+  if (!isObject(it)) return it;
+  var fn, val;
+  if (S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it))) return val;
+  if (typeof (fn = it.valueOf) == 'function' && !isObject(val = fn.call(it))) return val;
+  if (!S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it))) return val;
+  throw TypeError("Can't convert object to primitive value");
+};
+
+
+/***/ }),
+/* 100 */
+/***/ (function(module, exports) {
+
+exports.f = Object.getOwnPropertySymbols;
+
+
+/***/ }),
+/* 101 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
+var anObject = __webpack_require__(47);
+var dPs = __webpack_require__(280);
+var enumBugKeys = __webpack_require__(92);
+var IE_PROTO = __webpack_require__(81)('IE_PROTO');
+var Empty = function () { /* empty */ };
+var PROTOTYPE = 'prototype';
+
+// Create object with fake `null` prototype: use iframe Object with cleared prototype
+var createDict = function () {
+  // Thrash, waste and sodomy: IE GC bug
+  var iframe = __webpack_require__(114)('iframe');
+  var i = enumBugKeys.length;
+  var lt = '<';
+  var gt = '>';
+  var iframeDocument;
+  iframe.style.display = 'none';
+  __webpack_require__(281).appendChild(iframe);
+  iframe.src = 'javascript:'; // eslint-disable-line no-script-url
+  // createDict = iframe.contentWindow.Object;
+  // html.removeChild(iframe);
+  iframeDocument = iframe.contentWindow.document;
+  iframeDocument.open();
+  iframeDocument.write(lt + 'script' + gt + 'document.F=Object' + lt + '/script' + gt);
+  iframeDocument.close();
+  createDict = iframeDocument.F;
+  while (i--) delete createDict[PROTOTYPE][enumBugKeys[i]];
+  return createDict();
+};
+
+module.exports = Object.create || function create(O, Properties) {
+  var result;
+  if (O !== null) {
+    Empty[PROTOTYPE] = anObject(O);
+    result = new Empty();
+    Empty[PROTOTYPE] = null;
+    // add "__proto__" for Object.getPrototypeOf polyfill
+    result[IE_PROTO] = O;
+  } else result = createDict();
+  return Properties === undefined ? result : dPs(result, Properties);
+};
+
+
+/***/ }),
+/* 102 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var listCacheClear = __webpack_require__(337),
+    listCacheDelete = __webpack_require__(338),
+    listCacheGet = __webpack_require__(339),
+    listCacheHas = __webpack_require__(340),
+    listCacheSet = __webpack_require__(341);
+
+/**
+ * Creates an list cache object.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [entries] The key-value pairs to cache.
+ */
+function ListCache(entries) {
+  var index = -1,
+      length = entries == null ? 0 : entries.length;
+
+  this.clear();
+  while (++index < length) {
+    var entry = entries[index];
+    this.set(entry[0], entry[1]);
+  }
+}
+
+// Add methods to `ListCache`.
+ListCache.prototype.clear = listCacheClear;
+ListCache.prototype['delete'] = listCacheDelete;
+ListCache.prototype.get = listCacheGet;
+ListCache.prototype.has = listCacheHas;
+ListCache.prototype.set = listCacheSet;
+
+module.exports = ListCache;
+
+
+/***/ }),
+/* 103 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var eq = __webpack_require__(104);
+
+/**
+ * Gets the index at which the `key` is found in `array` of key-value pairs.
+ *
+ * @private
+ * @param {Array} array The array to inspect.
+ * @param {*} key The key to search for.
+ * @returns {number} Returns the index of the matched value, else `-1`.
+ */
+function assocIndexOf(array, key) {
+  var length = array.length;
+  while (length--) {
+    if (eq(array[length][0], key)) {
+      return length;
+    }
+  }
+  return -1;
+}
+
+module.exports = assocIndexOf;
+
+
+/***/ }),
+/* 104 */
+/***/ (function(module, exports) {
+
+/**
+ * Performs a
+ * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
+ * comparison between two values to determine if they are equivalent.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to compare.
+ * @param {*} other The other value to compare.
+ * @returns {boolean} Returns `true` if the values are equivalent, else `false`.
+ * @example
+ *
+ * var object = { 'a': 1 };
+ * var other = { 'a': 1 };
+ *
+ * _.eq(object, object);
+ * // => true
+ *
+ * _.eq(object, other);
+ * // => false
+ *
+ * _.eq('a', 'a');
+ * // => true
+ *
+ * _.eq('a', Object('a'));
+ * // => false
+ *
+ * _.eq(NaN, NaN);
+ * // => true
+ */
+function eq(value, other) {
+  return value === other || (value !== value && other !== other);
+}
+
+module.exports = eq;
+
+
+/***/ }),
+/* 105 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var getNative = __webpack_require__(65);
+
+/* Built-in method references that are verified to be native. */
+var nativeCreate = getNative(Object, 'create');
+
+module.exports = nativeCreate;
+
+
+/***/ }),
+/* 106 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var isKeyable = __webpack_require__(361);
+
+/**
+ * Gets the data for `map`.
+ *
+ * @private
+ * @param {Object} map The map to query.
+ * @param {string} key The reference key.
+ * @returns {*} Returns the map data.
+ */
+function getMapData(map, key) {
+  var data = map.__data__;
+  return isKeyable(key)
+    ? data[typeof key == 'string' ? 'string' : 'hash']
+    : data.map;
+}
+
+module.exports = getMapData;
+
+
+/***/ }),
 /* 107 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isArray = __webpack_require__(40),
-    isKey = __webpack_require__(256),
+var isArray = __webpack_require__(39),
+    isKey = __webpack_require__(257),
     stringToPath = __webpack_require__(397),
     toString = __webpack_require__(298);
 
@@ -17085,8 +17199,8 @@ module.exports = castPath;
 /* 108 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseGetTag = __webpack_require__(65),
-    isObjectLike = __webpack_require__(51);
+var baseGetTag = __webpack_require__(66),
+    isObjectLike = __webpack_require__(52);
 
 /** `Object#toString` result references. */
 var symbolTag = '[object Symbol]';
@@ -17126,7 +17240,7 @@ module.exports = isSymbol;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return getTitle; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return getDisplayTitle; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return getDisplaySubtitle; });
-/* harmony import */ var reselect__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5);
+/* harmony import */ var reselect__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
 /* harmony import */ var reselect__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(reselect__WEBPACK_IMPORTED_MODULE_0__);
 /**
  * External dependencies
@@ -17159,8 +17273,8 @@ module.exports = wp.blocks;
 /* 112 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseIndexOf = __webpack_require__(258),
-    isArrayLike = __webpack_require__(70),
+var baseIndexOf = __webpack_require__(259),
+    isArrayLike = __webpack_require__(69),
     isString = __webpack_require__(448),
     toInteger = __webpack_require__(317),
     values = __webpack_require__(449);
@@ -17219,9 +17333,9 @@ module.exports = includes;
 /***/ (function(module, exports, __webpack_require__) {
 
 var arraySome = __webpack_require__(314),
-    baseIteratee = __webpack_require__(259),
+    baseIteratee = __webpack_require__(260),
     baseSome = __webpack_require__(451),
-    isArray = __webpack_require__(40),
+    isArray = __webpack_require__(39),
     isIterateeCall = __webpack_require__(457);
 
 /**
@@ -17275,7 +17389,7 @@ module.exports = some;
 /* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(55);
+var isObject = __webpack_require__(56);
 var document = __webpack_require__(41).document;
 // typeof document.createElement is 'object' in old IE
 var is = isObject(document) && isObject(document.createElement);
@@ -17289,7 +17403,7 @@ module.exports = function (it) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // fallback for non-array-like ES3 and non-enumerable old V8 strings
-var cof = __webpack_require__(89);
+var cof = __webpack_require__(90);
 // eslint-disable-next-line no-prototype-builtins
 module.exports = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
   return cof(it) == 'String' ? it.split('') : Object(it);
@@ -17305,7 +17419,7 @@ module.exports = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
 //! author : Werner Mollentze : https://github.com/wernerm
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -17384,7 +17498,7 @@ return af;
 //! author : forabi https://github.com/forabi
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -17528,7 +17642,7 @@ return ar;
 //! author : Noureddine LOUAHEDJ : https://github.com/noureddineme
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -17591,7 +17705,7 @@ return arDz;
 //! author : Nusret Parlak: https://github.com/nusretparlak
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -17654,7 +17768,7 @@ return arKw;
 //! author : Ali Hmer: https://github.com/kikoanis
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -17785,7 +17899,7 @@ return arLy;
 //! author : Abdel Said : https://github.com/abdelsaid
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -17848,7 +17962,7 @@ return arMa;
 //! author : Suhail Alkowaileet : https://github.com/xsoh
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -17957,7 +18071,7 @@ return arSa;
 //! author : Nader Toukabri : https://github.com/naderio
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -18020,7 +18134,7 @@ return arTn;
 //! author : topchiyev : https://github.com/topchiyev
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -18131,7 +18245,7 @@ return az;
 //! Author : Menelion Elensúle : https://github.com/Oire
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -18267,7 +18381,7 @@ return be;
 //! author : Krasen Borisov : https://github.com/kraz
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -18361,7 +18475,7 @@ return bg;
 //! author : Estelle Comment : https://github.com/estellecomment
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -18424,7 +18538,7 @@ return bm;
 //! author : Kaushik Gandhi : https://github.com/kaushikgandhi
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -18547,7 +18661,7 @@ return bn;
 //! author : Thupten N. Chakrishar : https://github.com/vajradog
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -18670,7 +18784,7 @@ return bo;
 //! author : Jean-Baptiste Le Duigou : https://github.com/jbleduigou
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -18783,7 +18897,7 @@ return br;
 //! based on (hr) translation by Bojan Marković
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -18929,7 +19043,7 @@ return bs;
 //! author : Juan G. Hurtado : https://github.com/juanghurtado
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -19021,7 +19135,7 @@ return ca;
 //! author : petrbela : https://github.com/petrbela
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -19197,7 +19311,7 @@ return cs;
 //! author : Anatoly Mironov : https://github.com/mirontoli
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -19265,7 +19379,7 @@ return cv;
 //! author : https://github.com/ryangreaves
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -19349,7 +19463,7 @@ return cy;
 //! author : Ulrik Nielsen : https://github.com/mrbase
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -19415,7 +19529,7 @@ return da;
 //! author : Mikolaj Dadela : https://github.com/mik01aj
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -19498,7 +19612,7 @@ return de;
 //! author : Mikolaj Dadela : https://github.com/mik01aj
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -19578,7 +19692,7 @@ return deAt;
 //! author : sschueller : https://github.com/sschueller
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -19660,7 +19774,7 @@ return deCh;
 //! author : Jawish Hameed : https://github.com/jawish
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -19764,7 +19878,7 @@ return dv;
 //! author : Aggelos Karalias : https://github.com/mehiel
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -19868,7 +19982,7 @@ return el;
 //! author : Jared Morse : https://github.com/jarcoal
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -19939,7 +20053,7 @@ return enAu;
 //! author : Jonathan Abourbih : https://github.com/jonbca
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -20006,7 +20120,7 @@ return enCa;
 //! author : Chris Gedrim : https://github.com/chrisgedrim
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -20077,7 +20191,7 @@ return enGb;
 //! author : Chris Cartlidge : https://github.com/chriscartlidge
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -20148,7 +20262,7 @@ return enIe;
 //! author : Luke McGregor : https://github.com/lukemcgregor
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -20221,7 +20335,7 @@ return enNz;
 //! comment : miestasmia corrected the translation by colindean
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -20296,7 +20410,7 @@ return eo;
 //! author : Julio Napurí : https://github.com/julionc
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -20391,7 +20505,7 @@ return es;
 //! locale : Spanish (Dominican Republic) [es-do]
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -20487,7 +20601,7 @@ return esDo;
 //! author : bustta : https://github.com/bustta
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -20575,7 +20689,7 @@ return esUs;
 //! improvements : Illimar Tambek : https://github.com/ragulka
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -20658,7 +20772,7 @@ return et;
 //! author : Eneko Illarramendi : https://github.com/eillarra
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -20728,7 +20842,7 @@ return eu;
 //! author : Ebrahim Byagowi : https://github.com/ebraminio
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -20839,7 +20953,7 @@ return fa;
 //! author : Tarmo Aidantausta : https://github.com/bleadof
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -20950,7 +21064,7 @@ return fi;
 //! author : Ragnar Johannesen : https://github.com/ragnar123
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -21014,7 +21128,7 @@ return fo;
 //! author : John Fischer : https://github.com/jfroffice
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -21101,7 +21215,7 @@ return fr;
 //! author : Jonathan Abourbih : https://github.com/jonbca
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -21179,7 +21293,7 @@ return frCa;
 //! author : Gaspard Bucher : https://github.com/gaspard
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -21261,7 +21375,7 @@ return frCh;
 //! author : Robin van der Vliet : https://github.com/robin0van0der0v
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -21340,7 +21454,7 @@ return fy;
 //! author : Jon Ashdown : https://github.com/jonashdown
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -21420,7 +21534,7 @@ return gd;
 //! author : Juan G. Hurtado : https://github.com/juanghurtado
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -21501,7 +21615,7 @@ return gl;
 //! author : The Discoverer : https://github.com/WikiDiscoverer
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -21627,7 +21741,7 @@ return gomLatn;
 //! author : Kaushik Thanki : https://github.com/Kaushik1987
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -21757,7 +21871,7 @@ return gu;
 //! author : Tal Ater : https://github.com/TalAter
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -21858,7 +21972,7 @@ return he;
 //! author : Mayank Singhal : https://github.com/mayanksinghal
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -21986,7 +22100,7 @@ return hi;
 //! author : Bojan Marković : https://github.com/bmarkovic
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -22135,7 +22249,7 @@ return hr;
 //! author : Adam Brunner : https://github.com/adambrunner
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -22247,7 +22361,7 @@ return hu;
 //! author : Armendarabyan : https://github.com/armendarabyan
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -22347,7 +22461,7 @@ return hyAm;
 //! reference: http://id.wikisource.org/wiki/Pedoman_Umum_Ejaan_Bahasa_Indonesia_yang_Disempurnakan
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -22433,7 +22547,7 @@ return id;
 //! author : Hinrik Örn Sigurðsson : https://github.com/hinrik
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -22565,7 +22679,7 @@ return is;
 //! author: Mattia Larentis: https://github.com/nostalgiaz
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -22638,7 +22752,7 @@ return it;
 //! author : LI Long : https://github.com/baryon
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -22723,7 +22837,7 @@ return ja;
 //! reference: http://jv.wikipedia.org/wiki/Basa_Jawa
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -22809,7 +22923,7 @@ return jv;
 //! author : Irakli Janiashvili : https://github.com/irakli-janiashvili
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -22902,7 +23016,7 @@ return ka;
 //! authors : Nurlan Rakhimzhanov : https://github.com/nurlan
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -22993,7 +23107,7 @@ return kk;
 //! author : Kruy Vanna : https://github.com/kruyvanna
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -23055,7 +23169,7 @@ return km;
 //! author : Rajeev Naik : https://github.com/rajeevnaikte
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -23186,7 +23300,7 @@ return kn;
 //! author : Jeeeyul Lee <jeeeyul@gmail.com>
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -23272,7 +23386,7 @@ return ko;
 //! author : Chyngyz Arystan uulu : https://github.com/chyngyz
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -23365,7 +23479,7 @@ return ky;
 //! author : David Raison : https://github.com/kwisatz
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -23505,7 +23619,7 @@ return lb;
 //! author : Ryan Hart : https://github.com/ryanhart2
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -23579,7 +23693,7 @@ return lo;
 //! author : Mindaugas Mozūras : https://github.com/mmozuras
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -23701,7 +23815,7 @@ return lt;
 //! author : Jānis Elmeris : https://github.com/JanisE
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -23801,7 +23915,7 @@ return lv;
 //! author : Miodrag Nikač <miodrag@restartit.me> : https://github.com/miodragnikac
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -23916,7 +24030,7 @@ return me;
 //! author : John Corrigan <robbiecloset@gmail.com> : https://github.com/johnideal
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -23984,7 +24098,7 @@ return mi;
 //! author : Borislav Mickov : https://github.com/B0k0
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -24078,7 +24192,7 @@ return mk;
 //! author : Floyd Pink : https://github.com/floydpink
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -24164,7 +24278,7 @@ return ml;
 //! author : Vivek Athalye : https://github.com/vnathalye
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -24326,7 +24440,7 @@ return mr;
 //! author : Weldan Jamili : https://github.com/weldan
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -24413,7 +24527,7 @@ return ms;
 //! author : Weldan Jamili : https://github.com/weldan
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -24501,7 +24615,7 @@ return msMy;
 //! author : Tin Aung Lin : https://github.com/thanyawzinmin
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -24600,7 +24714,7 @@ return my;
 //!           Sigurd Gartmann : https://github.com/sigurdga
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -24666,7 +24780,7 @@ return nb;
 //! author : suvash : https://github.com/suvash
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -24794,7 +24908,7 @@ return ne;
 //! author : Jacob Middag : https://github.com/middagj
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -24886,7 +25000,7 @@ return nl;
 //! author : Jacob Middag : https://github.com/middagj
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -24977,7 +25091,7 @@ return nlBe;
 //! author : https://github.com/mechuwind
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -25041,7 +25155,7 @@ return nn;
 //! author : Harpreet Singh : https://github.com/harpreetkhalsagtbit
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -25169,7 +25283,7 @@ return paIn;
 //! author : Rafal Hirsz : https://github.com/evoL
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -25297,7 +25411,7 @@ return pl;
 //! author : Jefferson : https://github.com/jalex79
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -25366,7 +25480,7 @@ return pt;
 //! author : Caio Ribeiro Pereira : https://github.com/caio-ribeiro-pereira
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -25433,7 +25547,7 @@ return ptBr;
 //! author : Valentin Agachi : https://github.com/avaly
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -25513,7 +25627,7 @@ return ro;
 //! author : Коренберг Марк : https://github.com/socketpair
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -25698,7 +25812,7 @@ return ru;
 //! author : Narain Sagar : https://github.com/narainsagar
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -25800,7 +25914,7 @@ return sd;
 //! authors : Bård Rolstad Henriksen : https://github.com/karamell
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -25865,7 +25979,7 @@ return se;
 //! author : Sampath Sitinamaluwa : https://github.com/sampathsris
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -25941,7 +26055,7 @@ return si;
 //! based on work of petrbela : https://github.com/petrbela
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -26094,7 +26208,7 @@ return sk;
 //! author : Robert Sedovšek : https://github.com/sedovsek
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -26262,7 +26376,7 @@ return sl;
 //! author : Oerd Cukalla : https://github.com/oerd
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -26334,7 +26448,7 @@ return sq;
 //! author : Milan Janačković<milanjanackovic@gmail.com> : https://github.com/milan-j
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -26448,7 +26562,7 @@ return sr;
 //! author : Milan Janačković<milanjanackovic@gmail.com> : https://github.com/milan-j
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -26562,7 +26676,7 @@ return srCyrl;
 //! author : Nicolai Davies<mail@nicolai.io> : https://github.com/nicolaidavies
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -26655,7 +26769,7 @@ return ss;
 //! author : Jens Alm : https://github.com/ulmus
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -26728,7 +26842,7 @@ return sv;
 //! author : Fahad Kassim : https://github.com/fadsel
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -26791,7 +26905,7 @@ return sw;
 //! author : Arjunkumar Krishnamoorthy : https://github.com/tk120404
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -26925,7 +27039,7 @@ return ta;
 //! author : Krishna Chaitanya Thota : https://github.com/kcthota
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -27019,7 +27133,7 @@ return te;
 //! author : Onorio De J. Afonso : https://github.com/marobo
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -27090,7 +27204,7 @@ return tet;
 //! author : Kridsada Thanabulpong : https://github.com/sirn
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -27161,7 +27275,7 @@ return th;
 //! author : Dan Hagman : https://github.com/hagmandan
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -27227,7 +27341,7 @@ return tlPh;
 //! author : Dominika Kruk : https://github.com/amaranthrose
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -27352,7 +27466,7 @@ return tlh;
 //!           Burak Yiğit Kaya: https://github.com/BYK
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -27446,7 +27560,7 @@ return tr;
 //! author : Iustì Canun
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -27540,7 +27654,7 @@ return tzl;
 //! author : Abdel Said : https://github.com/abdelsaid
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -27602,7 +27716,7 @@ return tzm;
 //! author : Abdel Said : https://github.com/abdelsaid
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -27665,7 +27779,7 @@ return tzmLatn;
 //! Author : Menelion Elensúle : https://github.com/Oire
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -27820,7 +27934,7 @@ return uk;
 //! author : Zack : https://github.com/ZackVision
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -27922,7 +28036,7 @@ return ur;
 //! author : Sardor Muminov : https://github.com/muminoff
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -27984,7 +28098,7 @@ return uz;
 //! author : Rasulbek Mirzayev : github.com/Rasulbeeek
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -28046,7 +28160,7 @@ return uzLatn;
 //! author : Bang Nguyen : https://github.com/bangnk
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -28129,7 +28243,7 @@ return vi;
 //! author : Andrew Hood : https://github.com/andrewhood125
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -28201,7 +28315,7 @@ return xPseudo;
 //! author : Atolagbe Abisoye : https://github.com/andela-batolagbe
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -28266,7 +28380,7 @@ return yo;
 //! author : Zeno Zeng : https://github.com/zenozeng
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -28382,7 +28496,7 @@ return zhCn;
 //! author : Konstantin : https://github.com/skfd
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -28490,7 +28604,7 @@ return zhHk;
 //! author : Chris Lam : https://github.com/hehachris
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(4)) :
+    true ? factory(__webpack_require__(5)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -28595,14 +28709,14 @@ return zhTw;
 "use strict";
 
 var LIBRARY = __webpack_require__(75);
-var $export = __webpack_require__(48);
-var redefine = __webpack_require__(239);
-var hide = __webpack_require__(49);
-var Iterators = __webpack_require__(50);
-var $iterCreate = __webpack_require__(277);
+var $export = __webpack_require__(49);
+var redefine = __webpack_require__(242);
+var hide = __webpack_require__(50);
+var Iterators = __webpack_require__(51);
+var $iterCreate = __webpack_require__(279);
 var setToStringTag = __webpack_require__(93);
-var getPrototypeOf = __webpack_require__(280);
-var ITERATOR = __webpack_require__(34)('iterator');
+var getPrototypeOf = __webpack_require__(282);
+var ITERATOR = __webpack_require__(37)('iterator');
 var BUGGY = !([].keys && 'next' in [].keys()); // Safari has buggy iterators w/o `next`
 var FF_ITERATOR = '@@iterator';
 var KEYS = 'keys';
@@ -28669,8 +28783,8 @@ module.exports = function (Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCE
 /***/ (function(module, exports, __webpack_require__) {
 
 // getting tag from 19.1.3.6 Object.prototype.toString()
-var cof = __webpack_require__(89);
-var TAG = __webpack_require__(34)('toStringTag');
+var cof = __webpack_require__(90);
+var TAG = __webpack_require__(37)('toStringTag');
 // ES3 wrong here
 var ARG = cof(function () { return arguments; }()) == 'Arguments';
 
@@ -28697,184 +28811,8 @@ module.exports = function (it) {
 /* 236 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = !__webpack_require__(44) && !__webpack_require__(63)(function () {
-  return Object.defineProperty(__webpack_require__(114)('div'), 'a', { get: function () { return 7; } }).a != 7;
-});
-
-
-/***/ }),
-/* 237 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var has = __webpack_require__(47);
-var toIObject = __webpack_require__(56);
-var arrayIndexOf = __webpack_require__(273)(false);
-var IE_PROTO = __webpack_require__(80)('IE_PROTO');
-
-module.exports = function (object, names) {
-  var O = toIObject(object);
-  var i = 0;
-  var result = [];
-  var key;
-  for (key in O) if (key != IE_PROTO) has(O, key) && result.push(key);
-  // Don't enum bug & hidden keys
-  while (names.length > i) if (has(O, key = names[i++])) {
-    ~arrayIndexOf(result, key) || result.push(key);
-  }
-  return result;
-};
-
-
-/***/ }),
-/* 238 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 7.1.15 ToLength
-var toInteger = __webpack_require__(79);
-var min = Math.min;
-module.exports = function (it) {
-  return it > 0 ? min(toInteger(it), 0x1fffffffffffff) : 0; // pow(2, 53) - 1 == 9007199254740991
-};
-
-
-/***/ }),
-/* 239 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(49);
-
-
-/***/ }),
-/* 240 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var classof = __webpack_require__(235);
-var ITERATOR = __webpack_require__(34)('iterator');
-var Iterators = __webpack_require__(50);
-module.exports = __webpack_require__(32).getIteratorMethod = function (it) {
-  if (it != undefined) return it[ITERATOR]
-    || it['@@iterator']
-    || Iterators[classof(it)];
-};
-
-
-/***/ }),
-/* 241 */
-/***/ (function(module, exports) {
-
-/**
- * A specialized version of `_.map` for arrays without support for iteratee
- * shorthands.
- *
- * @private
- * @param {Array} [array] The array to iterate over.
- * @param {Function} iteratee The function invoked per iteration.
- * @returns {Array} Returns the new mapped array.
- */
-function arrayMap(array, iteratee) {
-  var index = -1,
-      length = array == null ? 0 : array.length,
-      result = Array(length);
-
-  while (++index < length) {
-    result[index] = iteratee(array[index], index, array);
-  }
-  return result;
-}
-
-module.exports = arrayMap;
-
-
-/***/ }),
-/* 242 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var ListCache = __webpack_require__(101),
-    stackClear = __webpack_require__(341),
-    stackDelete = __webpack_require__(342),
-    stackGet = __webpack_require__(343),
-    stackHas = __webpack_require__(344),
-    stackSet = __webpack_require__(345);
-
-/**
- * Creates a stack cache object to store key-value pairs.
- *
- * @private
- * @constructor
- * @param {Array} [entries] The key-value pairs to cache.
- */
-function Stack(entries) {
-  var data = this.__data__ = new ListCache(entries);
-  this.size = data.size;
-}
-
-// Add methods to `Stack`.
-Stack.prototype.clear = stackClear;
-Stack.prototype['delete'] = stackDelete;
-Stack.prototype.get = stackGet;
-Stack.prototype.has = stackHas;
-Stack.prototype.set = stackSet;
-
-module.exports = Stack;
-
-
-/***/ }),
-/* 243 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var getNative = __webpack_require__(64),
-    root = __webpack_require__(45);
-
-/* Built-in method references that are verified to be native. */
-var Map = getNative(root, 'Map');
-
-module.exports = Map;
-
-
-/***/ }),
-/* 244 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var mapCacheClear = __webpack_require__(352),
-    mapCacheDelete = __webpack_require__(359),
-    mapCacheGet = __webpack_require__(361),
-    mapCacheHas = __webpack_require__(362),
-    mapCacheSet = __webpack_require__(363);
-
-/**
- * Creates a map cache object to store key-value pairs.
- *
- * @private
- * @constructor
- * @param {Array} [entries] The key-value pairs to cache.
- */
-function MapCache(entries) {
-  var index = -1,
-      length = entries == null ? 0 : entries.length;
-
-  this.clear();
-  while (++index < length) {
-    var entry = entries[index];
-    this.set(entry[0], entry[1]);
-  }
-}
-
-// Add methods to `MapCache`.
-MapCache.prototype.clear = mapCacheClear;
-MapCache.prototype['delete'] = mapCacheDelete;
-MapCache.prototype.get = mapCacheGet;
-MapCache.prototype.has = mapCacheHas;
-MapCache.prototype.set = mapCacheSet;
-
-module.exports = MapCache;
-
-
-/***/ }),
-/* 245 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var baseIsArguments = __webpack_require__(367),
-    isObjectLike = __webpack_require__(51);
+var baseIsArguments = __webpack_require__(368),
+    isObjectLike = __webpack_require__(52);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -28912,11 +28850,11 @@ module.exports = isArguments;
 
 
 /***/ }),
-/* 246 */
+/* 237 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(module) {var root = __webpack_require__(45),
-    stubFalse = __webpack_require__(368);
+/* WEBPACK VAR INJECTION */(function(module) {var root = __webpack_require__(46),
+    stubFalse = __webpack_require__(369);
 
 /** Detect free variable `exports`. */
 var freeExports =  true && exports && !exports.nodeType && exports;
@@ -28954,10 +28892,210 @@ var isBuffer = nativeIsBuffer || stubFalse;
 
 module.exports = isBuffer;
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(82)(module)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(83)(module)))
+
+/***/ }),
+/* 238 */
+/***/ (function(module, exports) {
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+
+/**
+ * Checks if `value` is likely a prototype object.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a prototype, else `false`.
+ */
+function isPrototype(value) {
+  var Ctor = value && value.constructor,
+      proto = (typeof Ctor == 'function' && Ctor.prototype) || objectProto;
+
+  return value === proto;
+}
+
+module.exports = isPrototype;
+
+
+/***/ }),
+/* 239 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = !__webpack_require__(42) && !__webpack_require__(64)(function () {
+  return Object.defineProperty(__webpack_require__(114)('div'), 'a', { get: function () { return 7; } }).a != 7;
+});
+
+
+/***/ }),
+/* 240 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var has = __webpack_require__(48);
+var toIObject = __webpack_require__(57);
+var arrayIndexOf = __webpack_require__(275)(false);
+var IE_PROTO = __webpack_require__(81)('IE_PROTO');
+
+module.exports = function (object, names) {
+  var O = toIObject(object);
+  var i = 0;
+  var result = [];
+  var key;
+  for (key in O) if (key != IE_PROTO) has(O, key) && result.push(key);
+  // Don't enum bug & hidden keys
+  while (names.length > i) if (has(O, key = names[i++])) {
+    ~arrayIndexOf(result, key) || result.push(key);
+  }
+  return result;
+};
+
+
+/***/ }),
+/* 241 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 7.1.15 ToLength
+var toInteger = __webpack_require__(80);
+var min = Math.min;
+module.exports = function (it) {
+  return it > 0 ? min(toInteger(it), 0x1fffffffffffff) : 0; // pow(2, 53) - 1 == 9007199254740991
+};
+
+
+/***/ }),
+/* 242 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(50);
+
+
+/***/ }),
+/* 243 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var classof = __webpack_require__(235);
+var ITERATOR = __webpack_require__(37)('iterator');
+var Iterators = __webpack_require__(51);
+module.exports = __webpack_require__(36).getIteratorMethod = function (it) {
+  if (it != undefined) return it[ITERATOR]
+    || it['@@iterator']
+    || Iterators[classof(it)];
+};
+
+
+/***/ }),
+/* 244 */
+/***/ (function(module, exports) {
+
+/**
+ * A specialized version of `_.map` for arrays without support for iteratee
+ * shorthands.
+ *
+ * @private
+ * @param {Array} [array] The array to iterate over.
+ * @param {Function} iteratee The function invoked per iteration.
+ * @returns {Array} Returns the new mapped array.
+ */
+function arrayMap(array, iteratee) {
+  var index = -1,
+      length = array == null ? 0 : array.length,
+      result = Array(length);
+
+  while (++index < length) {
+    result[index] = iteratee(array[index], index, array);
+  }
+  return result;
+}
+
+module.exports = arrayMap;
+
+
+/***/ }),
+/* 245 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var ListCache = __webpack_require__(102),
+    stackClear = __webpack_require__(342),
+    stackDelete = __webpack_require__(343),
+    stackGet = __webpack_require__(344),
+    stackHas = __webpack_require__(345),
+    stackSet = __webpack_require__(346);
+
+/**
+ * Creates a stack cache object to store key-value pairs.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [entries] The key-value pairs to cache.
+ */
+function Stack(entries) {
+  var data = this.__data__ = new ListCache(entries);
+  this.size = data.size;
+}
+
+// Add methods to `Stack`.
+Stack.prototype.clear = stackClear;
+Stack.prototype['delete'] = stackDelete;
+Stack.prototype.get = stackGet;
+Stack.prototype.has = stackHas;
+Stack.prototype.set = stackSet;
+
+module.exports = Stack;
+
+
+/***/ }),
+/* 246 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var getNative = __webpack_require__(65),
+    root = __webpack_require__(46);
+
+/* Built-in method references that are verified to be native. */
+var Map = getNative(root, 'Map');
+
+module.exports = Map;
+
 
 /***/ }),
 /* 247 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var mapCacheClear = __webpack_require__(353),
+    mapCacheDelete = __webpack_require__(360),
+    mapCacheGet = __webpack_require__(362),
+    mapCacheHas = __webpack_require__(363),
+    mapCacheSet = __webpack_require__(364);
+
+/**
+ * Creates a map cache object to store key-value pairs.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [entries] The key-value pairs to cache.
+ */
+function MapCache(entries) {
+  var index = -1,
+      length = entries == null ? 0 : entries.length;
+
+  this.clear();
+  while (++index < length) {
+    var entry = entries[index];
+    this.set(entry[0], entry[1]);
+  }
+}
+
+// Add methods to `MapCache`.
+MapCache.prototype.clear = mapCacheClear;
+MapCache.prototype['delete'] = mapCacheDelete;
+MapCache.prototype.get = mapCacheGet;
+MapCache.prototype.has = mapCacheHas;
+MapCache.prototype.set = mapCacheSet;
+
+module.exports = MapCache;
+
+
+/***/ }),
+/* 248 */
 /***/ (function(module, exports) {
 
 /** Used as references for various `Number` constants. */
@@ -28988,7 +29126,7 @@ module.exports = isIndex;
 
 
 /***/ }),
-/* 248 */
+/* 249 */
 /***/ (function(module, exports) {
 
 /** Used as references for various `Number` constants. */
@@ -29029,7 +29167,7 @@ module.exports = isLength;
 
 
 /***/ }),
-/* 249 */
+/* 250 */
 /***/ (function(module, exports) {
 
 /**
@@ -29049,10 +29187,10 @@ module.exports = baseUnary;
 
 
 /***/ }),
-/* 250 */
+/* 251 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(module) {var freeGlobal = __webpack_require__(282);
+/* WEBPACK VAR INJECTION */(function(module) {var freeGlobal = __webpack_require__(284);
 
 /** Detect free variable `exports`. */
 var freeExports =  true && exports && !exports.nodeType && exports;
@@ -29083,34 +29221,48 @@ var nodeUtil = (function() {
 
 module.exports = nodeUtil;
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(82)(module)))
-
-/***/ }),
-/* 251 */
-/***/ (function(module, exports) {
-
-/** Used for built-in method references. */
-var objectProto = Object.prototype;
-
-/**
- * Checks if `value` is likely a prototype object.
- *
- * @private
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a prototype, else `false`.
- */
-function isPrototype(value) {
-  var Ctor = value && value.constructor,
-      proto = (typeof Ctor == 'function' && Ctor.prototype) || objectProto;
-
-  return value === proto;
-}
-
-module.exports = isPrototype;
-
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(83)(module)))
 
 /***/ }),
 /* 252 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var arrayLikeKeys = __webpack_require__(290),
+    baseKeysIn = __webpack_require__(373),
+    isArrayLike = __webpack_require__(69);
+
+/**
+ * Creates an array of the own and inherited enumerable property names of `object`.
+ *
+ * **Note:** Non-object values are coerced to objects.
+ *
+ * @static
+ * @memberOf _
+ * @since 3.0.0
+ * @category Object
+ * @param {Object} object The object to query.
+ * @returns {Array} Returns the array of property names.
+ * @example
+ *
+ * function Foo() {
+ *   this.a = 1;
+ *   this.b = 2;
+ * }
+ *
+ * Foo.prototype.c = 3;
+ *
+ * _.keysIn(new Foo);
+ * // => ['a', 'b', 'c'] (iteration order is not guaranteed)
+ */
+function keysIn(object) {
+  return isArrayLike(object) ? arrayLikeKeys(object, true) : baseKeysIn(object);
+}
+
+module.exports = keysIn;
+
+
+/***/ }),
+/* 253 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var arrayFilter = __webpack_require__(378),
@@ -29146,7 +29298,7 @@ module.exports = getSymbols;
 
 
 /***/ }),
-/* 253 */
+/* 254 */
 /***/ (function(module, exports) {
 
 /**
@@ -29172,10 +29324,10 @@ module.exports = arrayPush;
 
 
 /***/ }),
-/* 254 */
+/* 255 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var overArg = __webpack_require__(290);
+var overArg = __webpack_require__(291);
 
 /** Built-in value references. */
 var getPrototype = overArg(Object.getPrototypeOf, Object);
@@ -29184,7 +29336,7 @@ module.exports = getPrototype;
 
 
 /***/ }),
-/* 255 */
+/* 256 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Uint8Array = __webpack_require__(297);
@@ -29206,10 +29358,10 @@ module.exports = cloneArrayBuffer;
 
 
 /***/ }),
-/* 256 */
+/* 257 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isArray = __webpack_require__(40),
+var isArray = __webpack_require__(39),
     isSymbol = __webpack_require__(108);
 
 /** Used to match property names within property paths. */
@@ -29241,11 +29393,11 @@ module.exports = isKey;
 
 
 /***/ }),
-/* 257 */
+/* 258 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var castPath = __webpack_require__(107),
-    toKey = __webpack_require__(84);
+    toKey = __webpack_require__(85);
 
 /**
  * The base implementation of `_.get` without support for default values.
@@ -29271,7 +29423,7 @@ module.exports = baseGet;
 
 
 /***/ }),
-/* 258 */
+/* 259 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseFindIndex = __webpack_require__(311),
@@ -29297,13 +29449,13 @@ module.exports = baseIndexOf;
 
 
 /***/ }),
-/* 259 */
+/* 260 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseMatches = __webpack_require__(424),
     baseMatchesProperty = __webpack_require__(436),
     identity = __webpack_require__(301),
-    isArray = __webpack_require__(40),
+    isArray = __webpack_require__(39),
     property = __webpack_require__(441);
 
 /**
@@ -29334,9 +29486,9 @@ module.exports = baseIteratee;
 
 
 /***/ }),
-/* 260 */,
 /* 261 */,
-/* 262 */
+/* 262 */,
+/* 263 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29344,7 +29496,7 @@ module.exports = baseIteratee;
 
 exports.__esModule = true;
 
-var _from = __webpack_require__(328);
+var _from = __webpack_require__(329);
 
 var _from2 = _interopRequireDefault(_from);
 
@@ -29363,11 +29515,11 @@ exports.default = function (arr) {
 };
 
 /***/ }),
-/* 263 */
+/* 264 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(global, module) {/* harmony import */ var _ponyfill_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(323);
+/* WEBPACK VAR INJECTION */(function(global, module) {/* harmony import */ var _ponyfill_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(322);
 /* global window */
 
 
@@ -29386,42 +29538,75 @@ if (typeof self !== 'undefined') {
 var result = Object(_ponyfill_js__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"])(root);
 /* harmony default export */ __webpack_exports__["a"] = (result);
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(283), __webpack_require__(447)(module)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(285), __webpack_require__(447)(module)))
 
 /***/ }),
-/* 264 */
+/* 265 */
 /***/ (function(module, exports) {
 
 module.exports = tribe.common.data.plugins;
 
 /***/ }),
-/* 265 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = { "default": __webpack_require__(266), __esModule: true };
-
-/***/ }),
 /* 266 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(267);
-var $Object = __webpack_require__(32).Object;
+module.exports = { "default": __webpack_require__(268), __esModule: true };
+
+/***/ }),
+/* 267 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var baseIsTypedArray = __webpack_require__(370),
+    baseUnary = __webpack_require__(250),
+    nodeUtil = __webpack_require__(251);
+
+/* Node.js helper references. */
+var nodeIsTypedArray = nodeUtil && nodeUtil.isTypedArray;
+
+/**
+ * Checks if `value` is classified as a typed array.
+ *
+ * @static
+ * @memberOf _
+ * @since 3.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a typed array, else `false`.
+ * @example
+ *
+ * _.isTypedArray(new Uint8Array);
+ * // => true
+ *
+ * _.isTypedArray([]);
+ * // => false
+ */
+var isTypedArray = nodeIsTypedArray ? baseUnary(nodeIsTypedArray) : baseIsTypedArray;
+
+module.exports = isTypedArray;
+
+
+/***/ }),
+/* 268 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(269);
+var $Object = __webpack_require__(36).Object;
 module.exports = function defineProperty(it, key, desc) {
   return $Object.defineProperty(it, key, desc);
 };
 
 
 /***/ }),
-/* 267 */
+/* 269 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $export = __webpack_require__(48);
+var $export = __webpack_require__(49);
 // 19.1.2.4 / 15.2.3.6 Object.defineProperty(O, P, Attributes)
-$export($export.S + $export.F * !__webpack_require__(44), 'Object', { defineProperty: __webpack_require__(42).f });
+$export($export.S + $export.F * !__webpack_require__(42), 'Object', { defineProperty: __webpack_require__(44).f });
 
 
 /***/ }),
-/* 268 */
+/* 270 */
 /***/ (function(module, exports) {
 
 module.exports = function (it) {
@@ -29431,45 +29616,46 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 269 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = { "default": __webpack_require__(270), __esModule: true };
-
-/***/ }),
-/* 270 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(271);
-module.exports = __webpack_require__(32).Object.assign;
-
-
-/***/ }),
 /* 271 */
 /***/ (function(module, exports, __webpack_require__) {
 
-// 19.1.3.1 Object.assign(target, source)
-var $export = __webpack_require__(48);
-
-$export($export.S + $export.F, 'Object', { assign: __webpack_require__(272) });
-
+module.exports = { "default": __webpack_require__(272), __esModule: true };
 
 /***/ }),
 /* 272 */
 /***/ (function(module, exports, __webpack_require__) {
 
+__webpack_require__(273);
+module.exports = __webpack_require__(36).Object.assign;
+
+
+/***/ }),
+/* 273 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 19.1.3.1 Object.assign(target, source)
+var $export = __webpack_require__(49);
+
+$export($export.S + $export.F, 'Object', { assign: __webpack_require__(274) });
+
+
+/***/ }),
+/* 274 */
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 
 // 19.1.2.1 Object.assign(target, source, ...)
+var DESCRIPTORS = __webpack_require__(42);
 var getKeys = __webpack_require__(74);
-var gOPS = __webpack_require__(99);
-var pIE = __webpack_require__(81);
-var toObject = __webpack_require__(92);
+var gOPS = __webpack_require__(100);
+var pIE = __webpack_require__(82);
+var toObject = __webpack_require__(77);
 var IObject = __webpack_require__(115);
 var $assign = Object.assign;
 
 // should work with symbols and should have deterministic property order (V8 bug)
-module.exports = !$assign || __webpack_require__(63)(function () {
+module.exports = !$assign || __webpack_require__(64)(function () {
   var A = {};
   var B = {};
   // eslint-disable-next-line no-undef
@@ -29490,20 +29676,23 @@ module.exports = !$assign || __webpack_require__(63)(function () {
     var length = keys.length;
     var j = 0;
     var key;
-    while (length > j) if (isEnum.call(S, key = keys[j++])) T[key] = S[key];
+    while (length > j) {
+      key = keys[j++];
+      if (!DESCRIPTORS || isEnum.call(S, key)) T[key] = S[key];
+    }
   } return T;
 } : $assign;
 
 
 /***/ }),
-/* 273 */
+/* 275 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // false -> Array#indexOf
 // true  -> Array#includes
-var toIObject = __webpack_require__(56);
-var toLength = __webpack_require__(238);
-var toAbsoluteIndex = __webpack_require__(274);
+var toIObject = __webpack_require__(57);
+var toLength = __webpack_require__(241);
+var toAbsoluteIndex = __webpack_require__(276);
 module.exports = function (IS_INCLUDES) {
   return function ($this, el, fromIndex) {
     var O = toIObject($this);
@@ -29525,10 +29714,10 @@ module.exports = function (IS_INCLUDES) {
 
 
 /***/ }),
-/* 274 */
+/* 276 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var toInteger = __webpack_require__(79);
+var toInteger = __webpack_require__(80);
 var max = Math.max;
 var min = Math.min;
 module.exports = function (index, length) {
@@ -29538,7 +29727,7 @@ module.exports = function (index, length) {
 
 
 /***/ }),
-/* 275 */
+/* 277 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
@@ -29798,14 +29987,14 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 275;
+webpackContext.id = 277;
 
 /***/ }),
-/* 276 */
+/* 278 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var toInteger = __webpack_require__(79);
-var defined = __webpack_require__(78);
+var toInteger = __webpack_require__(80);
+var defined = __webpack_require__(79);
 // true  -> String#at
 // false -> String#codePointAt
 module.exports = function (TO_STRING) {
@@ -29824,18 +30013,18 @@ module.exports = function (TO_STRING) {
 
 
 /***/ }),
-/* 277 */
+/* 279 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var create = __webpack_require__(100);
-var descriptor = __webpack_require__(67);
+var create = __webpack_require__(101);
+var descriptor = __webpack_require__(68);
 var setToStringTag = __webpack_require__(93);
 var IteratorPrototype = {};
 
 // 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
-__webpack_require__(49)(IteratorPrototype, __webpack_require__(34)('iterator'), function () { return this; });
+__webpack_require__(50)(IteratorPrototype, __webpack_require__(37)('iterator'), function () { return this; });
 
 module.exports = function (Constructor, NAME, next) {
   Constructor.prototype = create(IteratorPrototype, { next: descriptor(1, next) });
@@ -29844,14 +30033,14 @@ module.exports = function (Constructor, NAME, next) {
 
 
 /***/ }),
-/* 278 */
+/* 280 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var dP = __webpack_require__(42);
-var anObject = __webpack_require__(46);
+var dP = __webpack_require__(44);
+var anObject = __webpack_require__(47);
 var getKeys = __webpack_require__(74);
 
-module.exports = __webpack_require__(44) ? Object.defineProperties : function defineProperties(O, Properties) {
+module.exports = __webpack_require__(42) ? Object.defineProperties : function defineProperties(O, Properties) {
   anObject(O);
   var keys = getKeys(Properties);
   var length = keys.length;
@@ -29863,7 +30052,7 @@ module.exports = __webpack_require__(44) ? Object.defineProperties : function de
 
 
 /***/ }),
-/* 279 */
+/* 281 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var document = __webpack_require__(41).document;
@@ -29871,13 +30060,13 @@ module.exports = document && document.documentElement;
 
 
 /***/ }),
-/* 280 */
+/* 282 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
-var has = __webpack_require__(47);
-var toObject = __webpack_require__(92);
-var IE_PROTO = __webpack_require__(80)('IE_PROTO');
+var has = __webpack_require__(48);
+var toObject = __webpack_require__(77);
+var IE_PROTO = __webpack_require__(81)('IE_PROTO');
 var ObjectProto = Object.prototype;
 
 module.exports = Object.getPrototypeOf || function (O) {
@@ -29890,11 +30079,11 @@ module.exports = Object.getPrototypeOf || function (O) {
 
 
 /***/ }),
-/* 281 */
+/* 283 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseGetTag = __webpack_require__(65),
-    isObject = __webpack_require__(57);
+var baseGetTag = __webpack_require__(66),
+    isObject = __webpack_require__(53);
 
 /** `Object#toString` result references. */
 var asyncTag = '[object AsyncFunction]',
@@ -29933,7 +30122,7 @@ module.exports = isFunction;
 
 
 /***/ }),
-/* 282 */
+/* 284 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/** Detect free variable `global` from Node.js. */
@@ -29941,10 +30130,10 @@ var freeGlobal = typeof global == 'object' && global && global.Object === Object
 
 module.exports = freeGlobal;
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(283)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(285)))
 
 /***/ }),
-/* 283 */
+/* 285 */
 /***/ (function(module, exports) {
 
 var g;
@@ -29970,7 +30159,7 @@ module.exports = g;
 
 
 /***/ }),
-/* 284 */
+/* 286 */
 /***/ (function(module, exports) {
 
 /** Used for built-in method references. */
@@ -30002,11 +30191,11 @@ module.exports = toSource;
 
 
 /***/ }),
-/* 285 */
+/* 287 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseAssignValue = __webpack_require__(286),
-    eq = __webpack_require__(103);
+var baseAssignValue = __webpack_require__(288),
+    eq = __webpack_require__(104);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -30036,10 +30225,10 @@ module.exports = assignValue;
 
 
 /***/ }),
-/* 286 */
+/* 288 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var defineProperty = __webpack_require__(287);
+var defineProperty = __webpack_require__(289);
 
 /**
  * The base implementation of `assignValue` and `assignMergeValue` without
@@ -30067,10 +30256,10 @@ module.exports = baseAssignValue;
 
 
 /***/ }),
-/* 287 */
+/* 289 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var getNative = __webpack_require__(64);
+var getNative = __webpack_require__(65);
 
 var defineProperty = (function() {
   try {
@@ -30084,15 +30273,15 @@ module.exports = defineProperty;
 
 
 /***/ }),
-/* 288 */
+/* 290 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseTimes = __webpack_require__(366),
-    isArguments = __webpack_require__(245),
-    isArray = __webpack_require__(40),
-    isBuffer = __webpack_require__(246),
-    isIndex = __webpack_require__(247),
-    isTypedArray = __webpack_require__(289);
+var baseTimes = __webpack_require__(367),
+    isArguments = __webpack_require__(236),
+    isArray = __webpack_require__(39),
+    isBuffer = __webpack_require__(237),
+    isIndex = __webpack_require__(248),
+    isTypedArray = __webpack_require__(267);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -30139,40 +30328,7 @@ module.exports = arrayLikeKeys;
 
 
 /***/ }),
-/* 289 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var baseIsTypedArray = __webpack_require__(369),
-    baseUnary = __webpack_require__(249),
-    nodeUtil = __webpack_require__(250);
-
-/* Node.js helper references. */
-var nodeIsTypedArray = nodeUtil && nodeUtil.isTypedArray;
-
-/**
- * Checks if `value` is classified as a typed array.
- *
- * @static
- * @memberOf _
- * @since 3.0.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a typed array, else `false`.
- * @example
- *
- * _.isTypedArray(new Uint8Array);
- * // => true
- *
- * _.isTypedArray([]);
- * // => false
- */
-var isTypedArray = nodeIsTypedArray ? baseUnary(nodeIsTypedArray) : baseIsTypedArray;
-
-module.exports = isTypedArray;
-
-
-/***/ }),
-/* 290 */
+/* 291 */
 /***/ (function(module, exports) {
 
 /**
@@ -30190,44 +30346,6 @@ function overArg(func, transform) {
 }
 
 module.exports = overArg;
-
-
-/***/ }),
-/* 291 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var arrayLikeKeys = __webpack_require__(288),
-    baseKeysIn = __webpack_require__(373),
-    isArrayLike = __webpack_require__(70);
-
-/**
- * Creates an array of the own and inherited enumerable property names of `object`.
- *
- * **Note:** Non-object values are coerced to objects.
- *
- * @static
- * @memberOf _
- * @since 3.0.0
- * @category Object
- * @param {Object} object The object to query.
- * @returns {Array} Returns the array of property names.
- * @example
- *
- * function Foo() {
- *   this.a = 1;
- *   this.b = 2;
- * }
- *
- * Foo.prototype.c = 3;
- *
- * _.keysIn(new Foo);
- * // => ['a', 'b', 'c'] (iteration order is not guaranteed)
- */
-function keysIn(object) {
-  return isArrayLike(object) ? arrayLikeKeys(object, true) : baseKeysIn(object);
-}
-
-module.exports = keysIn;
 
 
 /***/ }),
@@ -30263,9 +30381,9 @@ module.exports = stubArray;
 /* 293 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayPush = __webpack_require__(253),
-    getPrototype = __webpack_require__(254),
-    getSymbols = __webpack_require__(252),
+var arrayPush = __webpack_require__(254),
+    getPrototype = __webpack_require__(255),
+    getSymbols = __webpack_require__(253),
     stubArray = __webpack_require__(292);
 
 /* Built-in method references for those with the same name as other `lodash` methods. */
@@ -30295,8 +30413,8 @@ module.exports = getSymbolsIn;
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseGetAllKeys = __webpack_require__(295),
-    getSymbols = __webpack_require__(252),
-    keys = __webpack_require__(66);
+    getSymbols = __webpack_require__(253),
+    keys = __webpack_require__(58);
 
 /**
  * Creates an array of own enumerable property names and symbols of `object`.
@@ -30316,8 +30434,8 @@ module.exports = getAllKeys;
 /* 295 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayPush = __webpack_require__(253),
-    isArray = __webpack_require__(40);
+var arrayPush = __webpack_require__(254),
+    isArray = __webpack_require__(39);
 
 /**
  * The base implementation of `getAllKeys` and `getAllKeysIn` which uses
@@ -30344,7 +30462,7 @@ module.exports = baseGetAllKeys;
 
 var baseGetAllKeys = __webpack_require__(295),
     getSymbolsIn = __webpack_require__(293),
-    keysIn = __webpack_require__(291);
+    keysIn = __webpack_require__(252);
 
 /**
  * Creates an array of own and inherited enumerable property names and
@@ -30365,7 +30483,7 @@ module.exports = getAllKeysIn;
 /* 297 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var root = __webpack_require__(45);
+var root = __webpack_require__(46);
 
 /** Built-in value references. */
 var Uint8Array = root.Uint8Array;
@@ -30411,9 +30529,9 @@ module.exports = toString;
 /* 299 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Symbol = __webpack_require__(69),
-    arrayMap = __webpack_require__(241),
-    isArray = __webpack_require__(40),
+var Symbol = __webpack_require__(71),
+    arrayMap = __webpack_require__(244),
+    isArray = __webpack_require__(39),
     isSymbol = __webpack_require__(108);
 
 /** Used as references for various `Number` constants. */
@@ -30524,8 +30642,8 @@ module.exports = { "default": __webpack_require__(303), __esModule: true };
 /* 303 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(94);
-__webpack_require__(77);
+__webpack_require__(95);
+__webpack_require__(78);
 module.exports = __webpack_require__(307);
 
 
@@ -30537,8 +30655,8 @@ module.exports = __webpack_require__(307);
 
 var addToUnscopables = __webpack_require__(305);
 var step = __webpack_require__(306);
-var Iterators = __webpack_require__(50);
-var toIObject = __webpack_require__(56);
+var Iterators = __webpack_require__(51);
+var toIObject = __webpack_require__(57);
 
 // 22.1.3.4 Array.prototype.entries()
 // 22.1.3.13 Array.prototype.keys()
@@ -30591,9 +30709,9 @@ module.exports = function (done, value) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var classof = __webpack_require__(235);
-var ITERATOR = __webpack_require__(34)('iterator');
-var Iterators = __webpack_require__(50);
-module.exports = __webpack_require__(32).isIterable = function (it) {
+var ITERATOR = __webpack_require__(37)('iterator');
+var Iterators = __webpack_require__(51);
+module.exports = __webpack_require__(36).isIterable = function (it) {
   var O = Object(it);
   return O[ITERATOR] !== undefined
     || '@@iterator' in O
@@ -30612,8 +30730,8 @@ module.exports = { "default": __webpack_require__(309), __esModule: true };
 /* 309 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(94);
-__webpack_require__(77);
+__webpack_require__(95);
+__webpack_require__(78);
 module.exports = __webpack_require__(310);
 
 
@@ -30621,9 +30739,9 @@ module.exports = __webpack_require__(310);
 /* 310 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var anObject = __webpack_require__(46);
-var get = __webpack_require__(240);
-module.exports = __webpack_require__(32).getIterator = function (it) {
+var anObject = __webpack_require__(47);
+var get = __webpack_require__(243);
+module.exports = __webpack_require__(36).getIterator = function (it) {
   var iterFn = get(it);
   if (typeof iterFn != 'function') throw TypeError(it + ' is not iterable!');
   return anObject(iterFn.call(it));
@@ -30665,7 +30783,7 @@ module.exports = baseFindIndex;
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseIsEqualDeep = __webpack_require__(426),
-    isObjectLike = __webpack_require__(51);
+    isObjectLike = __webpack_require__(52);
 
 /**
  * The base implementation of `_.isEqual` which supports partial comparisons
@@ -30727,10 +30845,11 @@ function equalArrays(array, other, bitmask, customizer, equalFunc, stack) {
   if (arrLength != othLength && !(isPartial && othLength > arrLength)) {
     return false;
   }
-  // Assume cyclic values are equal.
-  var stacked = stack.get(array);
-  if (stacked && stack.get(other)) {
-    return stacked == other;
+  // Check that cyclic values are equal.
+  var arrStacked = stack.get(array);
+  var othStacked = stack.get(other);
+  if (arrStacked && othStacked) {
+    return arrStacked == other && othStacked == array;
   }
   var index = -1,
       result = true,
@@ -30816,7 +30935,7 @@ module.exports = arraySome;
 /* 315 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(57);
+var isObject = __webpack_require__(53);
 
 /**
  * Checks if `value` is suitable for strict equality comparisons, i.e. `===`.
@@ -30905,15 +31024,14 @@ module.exports = toInteger;
 /* 318 */,
 /* 319 */,
 /* 320 */,
-/* 321 */,
-/* 322 */
+/* 321 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayMap = __webpack_require__(241),
-    baseClone = __webpack_require__(335),
+var arrayMap = __webpack_require__(244),
+    baseClone = __webpack_require__(336),
     baseUnset = __webpack_require__(396),
     castPath = __webpack_require__(107),
-    copyObject = __webpack_require__(83),
+    copyObject = __webpack_require__(84),
     customOmitClone = __webpack_require__(402),
     flatRest = __webpack_require__(404),
     getAllKeysIn = __webpack_require__(296);
@@ -30969,7 +31087,7 @@ module.exports = omit;
 
 
 /***/ }),
-/* 323 */
+/* 322 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -30994,27 +31112,68 @@ function symbolObservablePonyfill(root) {
 
 
 /***/ }),
+/* 323 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var isPrototype = __webpack_require__(238),
+    nativeKeys = __webpack_require__(371);
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+/**
+ * The base implementation of `_.keys` which doesn't treat sparse arrays as dense.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @returns {Array} Returns the array of property names.
+ */
+function baseKeys(object) {
+  if (!isPrototype(object)) {
+    return nativeKeys(object);
+  }
+  var result = [];
+  for (var key in Object(object)) {
+    if (hasOwnProperty.call(object, key) && key != 'constructor') {
+      result.push(key);
+    }
+  }
+  return result;
+}
+
+module.exports = baseKeys;
+
+
+/***/ }),
 /* 324 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+// ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, "initStore", function() { return /* binding */ data_initStore; });
+__webpack_require__.d(__webpack_exports__, "getStore", function() { return /* binding */ data_getStore; });
 
 // EXTERNAL MODULE: ./node_modules/redux/es/redux.js
 var redux = __webpack_require__(16);
 
 // EXTERNAL MODULE: ./src/modules/data/blocks/rsvp/index.js + 7 modules
-var rsvp = __webpack_require__(12);
+var rsvp = __webpack_require__(13);
 
 // EXTERNAL MODULE: ./src/modules/data/blocks/ticket/index.js + 9 modules
-var ticket = __webpack_require__(6);
+var ticket = __webpack_require__(4);
 
 // EXTERNAL MODULE: ./node_modules/babel-runtime/helpers/extends.js
 var helpers_extends = __webpack_require__(9);
 var extends_default = /*#__PURE__*/__webpack_require__.n(helpers_extends);
 
 // EXTERNAL MODULE: ./src/modules/data/blocks/attendees/types.js
-var types = __webpack_require__(39);
+var types = __webpack_require__(40);
 
 // CONCATENATED MODULE: ./src/modules/data/blocks/attendees/reducer.js
 
@@ -31054,7 +31213,7 @@ var DEFAULT_STATE = {
 var selectors = __webpack_require__(110);
 
 // EXTERNAL MODULE: ./src/modules/data/blocks/attendees/actions.js
-var actions = __webpack_require__(54);
+var actions = __webpack_require__(55);
 
 // EXTERNAL MODULE: ./node_modules/babel-runtime/regenerator/index.js
 var regenerator = __webpack_require__(11);
@@ -31150,7 +31309,7 @@ function watchers() {
 
 /* harmony default export */ var blocks = (blocks_reducer);
 // EXTERNAL MODULE: ./src/modules/data/shared/move/types.js
-var move_types = __webpack_require__(20);
+var move_types = __webpack_require__(19);
 
 // CONCATENATED MODULE: ./src/modules/data/shared/move/reducers/posts.js
 
@@ -31325,13 +31484,13 @@ function modal() {
   move: reducers
 }));
 // EXTERNAL MODULE: external "tribe.common.data.plugins"
-var external_tribe_common_data_plugins_ = __webpack_require__(264);
+var external_tribe_common_data_plugins_ = __webpack_require__(265);
 
 // EXTERNAL MODULE: external "tribe.common.store"
-var external_tribe_common_store_ = __webpack_require__(60);
+var external_tribe_common_store_ = __webpack_require__(61);
 
 // EXTERNAL MODULE: ./node_modules/babel-runtime/helpers/slicedToArray.js
-var slicedToArray = __webpack_require__(43);
+var slicedToArray = __webpack_require__(45);
 var slicedToArray_default = /*#__PURE__*/__webpack_require__.n(slicedToArray);
 
 // EXTERNAL MODULE: ./node_modules/redux-saga/es/index.js + 4 modules
@@ -31344,10 +31503,10 @@ var external_var_wp_data_root_wp_data_ = __webpack_require__(18);
 var external_tribe_common_utils_ = __webpack_require__(3);
 
 // EXTERNAL MODULE: ./src/modules/data/shared/move/selectors.js
-var move_selectors = __webpack_require__(28);
+var move_selectors = __webpack_require__(29);
 
 // EXTERNAL MODULE: ./src/modules/data/shared/move/actions.js
-var move_actions = __webpack_require__(68);
+var move_actions = __webpack_require__(70);
 
 // CONCATENATED MODULE: ./src/modules/data/shared/move/sagas.js
 
@@ -31834,8 +31993,6 @@ function sagas_watchers() {
 	});
 });
 // CONCATENATED MODULE: ./src/modules/data/index.js
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "initStore", function() { return data_initStore; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getStore", function() { return data_getStore; });
 /**
  * External dependencies
  */
@@ -31861,7 +32018,8 @@ var data_getStore = function getStore() {
 
 /***/ }),
 /* 325 */,
-/* 326 */
+/* 326 */,
+/* 327 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -31886,7 +32044,7 @@ var oldRuntime = hadRuntime && g.regeneratorRuntime;
 // Force reevalutation of runtime.js.
 g.regeneratorRuntime = undefined;
 
-module.exports = __webpack_require__(327);
+module.exports = __webpack_require__(328);
 
 if (hadRuntime) {
   // Restore the original runtime.
@@ -31902,7 +32060,7 @@ if (hadRuntime) {
 
 
 /***/ }),
-/* 327 */
+/* 328 */
 /***/ (function(module, exports) {
 
 /**
@@ -32635,36 +32793,36 @@ if (hadRuntime) {
 
 
 /***/ }),
-/* 328 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = { "default": __webpack_require__(329), __esModule: true };
-
-/***/ }),
 /* 329 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(77);
-__webpack_require__(330);
-module.exports = __webpack_require__(32).Array.from;
-
+module.exports = { "default": __webpack_require__(330), __esModule: true };
 
 /***/ }),
 /* 330 */
 /***/ (function(module, exports, __webpack_require__) {
 
+__webpack_require__(78);
+__webpack_require__(331);
+module.exports = __webpack_require__(36).Array.from;
+
+
+/***/ }),
+/* 331 */
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 
-var ctx = __webpack_require__(97);
-var $export = __webpack_require__(48);
-var toObject = __webpack_require__(92);
-var call = __webpack_require__(331);
-var isArrayIter = __webpack_require__(332);
-var toLength = __webpack_require__(238);
-var createProperty = __webpack_require__(333);
-var getIterFn = __webpack_require__(240);
+var ctx = __webpack_require__(98);
+var $export = __webpack_require__(49);
+var toObject = __webpack_require__(77);
+var call = __webpack_require__(332);
+var isArrayIter = __webpack_require__(333);
+var toLength = __webpack_require__(241);
+var createProperty = __webpack_require__(334);
+var getIterFn = __webpack_require__(243);
 
-$export($export.S + $export.F * !__webpack_require__(334)(function (iter) { Array.from(iter); }), 'Array', {
+$export($export.S + $export.F * !__webpack_require__(335)(function (iter) { Array.from(iter); }), 'Array', {
   // 22.1.2.1 Array.from(arrayLike, mapfn = undefined, thisArg = undefined)
   from: function from(arrayLike /* , mapfn = undefined, thisArg = undefined */) {
     var O = toObject(arrayLike);
@@ -32694,11 +32852,11 @@ $export($export.S + $export.F * !__webpack_require__(334)(function (iter) { Arra
 
 
 /***/ }),
-/* 331 */
+/* 332 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // call something on iterator step with safe closing on error
-var anObject = __webpack_require__(46);
+var anObject = __webpack_require__(47);
 module.exports = function (iterator, fn, value, entries) {
   try {
     return entries ? fn(anObject(value)[0], value[1]) : fn(value);
@@ -32712,12 +32870,12 @@ module.exports = function (iterator, fn, value, entries) {
 
 
 /***/ }),
-/* 332 */
+/* 333 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // check on default Array iterator
-var Iterators = __webpack_require__(50);
-var ITERATOR = __webpack_require__(34)('iterator');
+var Iterators = __webpack_require__(51);
+var ITERATOR = __webpack_require__(37)('iterator');
 var ArrayProto = Array.prototype;
 
 module.exports = function (it) {
@@ -32726,13 +32884,13 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 333 */
+/* 334 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var $defineProperty = __webpack_require__(42);
-var createDesc = __webpack_require__(67);
+var $defineProperty = __webpack_require__(44);
+var createDesc = __webpack_require__(68);
 
 module.exports = function (object, index, value) {
   if (index in object) $defineProperty.f(object, index, createDesc(0, value));
@@ -32741,10 +32899,10 @@ module.exports = function (object, index, value) {
 
 
 /***/ }),
-/* 334 */
+/* 335 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var ITERATOR = __webpack_require__(34)('iterator');
+var ITERATOR = __webpack_require__(37)('iterator');
 var SAFE_CLOSING = false;
 
 try {
@@ -32769,13 +32927,13 @@ module.exports = function (exec, skipClosing) {
 
 
 /***/ }),
-/* 335 */
+/* 336 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Stack = __webpack_require__(242),
-    arrayEach = __webpack_require__(364),
-    assignValue = __webpack_require__(285),
-    baseAssign = __webpack_require__(365),
+var Stack = __webpack_require__(245),
+    arrayEach = __webpack_require__(365),
+    assignValue = __webpack_require__(287),
+    baseAssign = __webpack_require__(366),
     baseAssignIn = __webpack_require__(372),
     cloneBuffer = __webpack_require__(375),
     copyArray = __webpack_require__(376),
@@ -32783,16 +32941,17 @@ var Stack = __webpack_require__(242),
     copySymbolsIn = __webpack_require__(379),
     getAllKeys = __webpack_require__(294),
     getAllKeysIn = __webpack_require__(296),
-    getTag = __webpack_require__(106),
+    getTag = __webpack_require__(94),
     initCloneArray = __webpack_require__(384),
     initCloneByTag = __webpack_require__(385),
     initCloneObject = __webpack_require__(390),
-    isArray = __webpack_require__(40),
-    isBuffer = __webpack_require__(246),
+    isArray = __webpack_require__(39),
+    isBuffer = __webpack_require__(237),
     isMap = __webpack_require__(392),
-    isObject = __webpack_require__(57),
+    isObject = __webpack_require__(53),
     isSet = __webpack_require__(394),
-    keys = __webpack_require__(66);
+    keys = __webpack_require__(58),
+    keysIn = __webpack_require__(252);
 
 /** Used to compose bitmasks for cloning. */
 var CLONE_DEEP_FLAG = 1,
@@ -32940,7 +33099,7 @@ module.exports = baseClone;
 
 
 /***/ }),
-/* 336 */
+/* 337 */
 /***/ (function(module, exports) {
 
 /**
@@ -32959,10 +33118,10 @@ module.exports = listCacheClear;
 
 
 /***/ }),
-/* 337 */
+/* 338 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var assocIndexOf = __webpack_require__(102);
+var assocIndexOf = __webpack_require__(103);
 
 /** Used for built-in method references. */
 var arrayProto = Array.prototype;
@@ -33000,10 +33159,10 @@ module.exports = listCacheDelete;
 
 
 /***/ }),
-/* 338 */
+/* 339 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var assocIndexOf = __webpack_require__(102);
+var assocIndexOf = __webpack_require__(103);
 
 /**
  * Gets the list cache value for `key`.
@@ -33025,10 +33184,10 @@ module.exports = listCacheGet;
 
 
 /***/ }),
-/* 339 */
+/* 340 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var assocIndexOf = __webpack_require__(102);
+var assocIndexOf = __webpack_require__(103);
 
 /**
  * Checks if a list cache value for `key` exists.
@@ -33047,10 +33206,10 @@ module.exports = listCacheHas;
 
 
 /***/ }),
-/* 340 */
+/* 341 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var assocIndexOf = __webpack_require__(102);
+var assocIndexOf = __webpack_require__(103);
 
 /**
  * Sets the list cache `key` to `value`.
@@ -33079,10 +33238,10 @@ module.exports = listCacheSet;
 
 
 /***/ }),
-/* 341 */
+/* 342 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var ListCache = __webpack_require__(101);
+var ListCache = __webpack_require__(102);
 
 /**
  * Removes all key-value entries from the stack.
@@ -33100,7 +33259,7 @@ module.exports = stackClear;
 
 
 /***/ }),
-/* 342 */
+/* 343 */
 /***/ (function(module, exports) {
 
 /**
@@ -33124,7 +33283,7 @@ module.exports = stackDelete;
 
 
 /***/ }),
-/* 343 */
+/* 344 */
 /***/ (function(module, exports) {
 
 /**
@@ -33144,7 +33303,7 @@ module.exports = stackGet;
 
 
 /***/ }),
-/* 344 */
+/* 345 */
 /***/ (function(module, exports) {
 
 /**
@@ -33164,12 +33323,12 @@ module.exports = stackHas;
 
 
 /***/ }),
-/* 345 */
+/* 346 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var ListCache = __webpack_require__(101),
-    Map = __webpack_require__(243),
-    MapCache = __webpack_require__(244);
+var ListCache = __webpack_require__(102),
+    Map = __webpack_require__(246),
+    MapCache = __webpack_require__(247);
 
 /** Used as the size to enable large array optimizations. */
 var LARGE_ARRAY_SIZE = 200;
@@ -33204,13 +33363,13 @@ module.exports = stackSet;
 
 
 /***/ }),
-/* 346 */
+/* 347 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isFunction = __webpack_require__(281),
-    isMasked = __webpack_require__(349),
-    isObject = __webpack_require__(57),
-    toSource = __webpack_require__(284);
+var isFunction = __webpack_require__(283),
+    isMasked = __webpack_require__(350),
+    isObject = __webpack_require__(53),
+    toSource = __webpack_require__(286);
 
 /**
  * Used to match `RegExp`
@@ -33257,10 +33416,10 @@ module.exports = baseIsNative;
 
 
 /***/ }),
-/* 347 */
+/* 348 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Symbol = __webpack_require__(69);
+var Symbol = __webpack_require__(71);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -33309,7 +33468,7 @@ module.exports = getRawTag;
 
 
 /***/ }),
-/* 348 */
+/* 349 */
 /***/ (function(module, exports) {
 
 /** Used for built-in method references. */
@@ -33337,10 +33496,10 @@ module.exports = objectToString;
 
 
 /***/ }),
-/* 349 */
+/* 350 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var coreJsData = __webpack_require__(350);
+var coreJsData = __webpack_require__(351);
 
 /** Used to detect methods masquerading as native. */
 var maskSrcKey = (function() {
@@ -33363,10 +33522,10 @@ module.exports = isMasked;
 
 
 /***/ }),
-/* 350 */
+/* 351 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var root = __webpack_require__(45);
+var root = __webpack_require__(46);
 
 /** Used to detect overreaching core-js shims. */
 var coreJsData = root['__core-js_shared__'];
@@ -33375,7 +33534,7 @@ module.exports = coreJsData;
 
 
 /***/ }),
-/* 351 */
+/* 352 */
 /***/ (function(module, exports) {
 
 /**
@@ -33394,12 +33553,12 @@ module.exports = getValue;
 
 
 /***/ }),
-/* 352 */
+/* 353 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Hash = __webpack_require__(353),
-    ListCache = __webpack_require__(101),
-    Map = __webpack_require__(243);
+var Hash = __webpack_require__(354),
+    ListCache = __webpack_require__(102),
+    Map = __webpack_require__(246);
 
 /**
  * Removes all key-value entries from the map.
@@ -33421,14 +33580,14 @@ module.exports = mapCacheClear;
 
 
 /***/ }),
-/* 353 */
+/* 354 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var hashClear = __webpack_require__(354),
-    hashDelete = __webpack_require__(355),
-    hashGet = __webpack_require__(356),
-    hashHas = __webpack_require__(357),
-    hashSet = __webpack_require__(358);
+var hashClear = __webpack_require__(355),
+    hashDelete = __webpack_require__(356),
+    hashGet = __webpack_require__(357),
+    hashHas = __webpack_require__(358),
+    hashSet = __webpack_require__(359);
 
 /**
  * Creates a hash object.
@@ -33459,10 +33618,10 @@ module.exports = Hash;
 
 
 /***/ }),
-/* 354 */
+/* 355 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var nativeCreate = __webpack_require__(104);
+var nativeCreate = __webpack_require__(105);
 
 /**
  * Removes all key-value entries from the hash.
@@ -33480,7 +33639,7 @@ module.exports = hashClear;
 
 
 /***/ }),
-/* 355 */
+/* 356 */
 /***/ (function(module, exports) {
 
 /**
@@ -33503,10 +33662,10 @@ module.exports = hashDelete;
 
 
 /***/ }),
-/* 356 */
+/* 357 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var nativeCreate = __webpack_require__(104);
+var nativeCreate = __webpack_require__(105);
 
 /** Used to stand-in for `undefined` hash values. */
 var HASH_UNDEFINED = '__lodash_hash_undefined__';
@@ -33539,10 +33698,10 @@ module.exports = hashGet;
 
 
 /***/ }),
-/* 357 */
+/* 358 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var nativeCreate = __webpack_require__(104);
+var nativeCreate = __webpack_require__(105);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -33568,10 +33727,10 @@ module.exports = hashHas;
 
 
 /***/ }),
-/* 358 */
+/* 359 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var nativeCreate = __webpack_require__(104);
+var nativeCreate = __webpack_require__(105);
 
 /** Used to stand-in for `undefined` hash values. */
 var HASH_UNDEFINED = '__lodash_hash_undefined__';
@@ -33597,10 +33756,10 @@ module.exports = hashSet;
 
 
 /***/ }),
-/* 359 */
+/* 360 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var getMapData = __webpack_require__(105);
+var getMapData = __webpack_require__(106);
 
 /**
  * Removes `key` and its value from the map.
@@ -33621,7 +33780,7 @@ module.exports = mapCacheDelete;
 
 
 /***/ }),
-/* 360 */
+/* 361 */
 /***/ (function(module, exports) {
 
 /**
@@ -33642,10 +33801,10 @@ module.exports = isKeyable;
 
 
 /***/ }),
-/* 361 */
+/* 362 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var getMapData = __webpack_require__(105);
+var getMapData = __webpack_require__(106);
 
 /**
  * Gets the map value for `key`.
@@ -33664,10 +33823,10 @@ module.exports = mapCacheGet;
 
 
 /***/ }),
-/* 362 */
+/* 363 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var getMapData = __webpack_require__(105);
+var getMapData = __webpack_require__(106);
 
 /**
  * Checks if a map value for `key` exists.
@@ -33686,10 +33845,10 @@ module.exports = mapCacheHas;
 
 
 /***/ }),
-/* 363 */
+/* 364 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var getMapData = __webpack_require__(105);
+var getMapData = __webpack_require__(106);
 
 /**
  * Sets the map `key` to `value`.
@@ -33714,7 +33873,7 @@ module.exports = mapCacheSet;
 
 
 /***/ }),
-/* 364 */
+/* 365 */
 /***/ (function(module, exports) {
 
 /**
@@ -33742,11 +33901,11 @@ module.exports = arrayEach;
 
 
 /***/ }),
-/* 365 */
+/* 366 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var copyObject = __webpack_require__(83),
-    keys = __webpack_require__(66);
+var copyObject = __webpack_require__(84),
+    keys = __webpack_require__(58);
 
 /**
  * The base implementation of `_.assign` without support for multiple sources
@@ -33765,7 +33924,7 @@ module.exports = baseAssign;
 
 
 /***/ }),
-/* 366 */
+/* 367 */
 /***/ (function(module, exports) {
 
 /**
@@ -33791,11 +33950,11 @@ module.exports = baseTimes;
 
 
 /***/ }),
-/* 367 */
+/* 368 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseGetTag = __webpack_require__(65),
-    isObjectLike = __webpack_require__(51);
+var baseGetTag = __webpack_require__(66),
+    isObjectLike = __webpack_require__(52);
 
 /** `Object#toString` result references. */
 var argsTag = '[object Arguments]';
@@ -33815,7 +33974,7 @@ module.exports = baseIsArguments;
 
 
 /***/ }),
-/* 368 */
+/* 369 */
 /***/ (function(module, exports) {
 
 /**
@@ -33839,12 +33998,12 @@ module.exports = stubFalse;
 
 
 /***/ }),
-/* 369 */
+/* 370 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseGetTag = __webpack_require__(65),
-    isLength = __webpack_require__(248),
-    isObjectLike = __webpack_require__(51);
+var baseGetTag = __webpack_require__(66),
+    isLength = __webpack_require__(249),
+    isObjectLike = __webpack_require__(52);
 
 /** `Object#toString` result references. */
 var argsTag = '[object Arguments]',
@@ -33905,46 +34064,10 @@ module.exports = baseIsTypedArray;
 
 
 /***/ }),
-/* 370 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var isPrototype = __webpack_require__(251),
-    nativeKeys = __webpack_require__(371);
-
-/** Used for built-in method references. */
-var objectProto = Object.prototype;
-
-/** Used to check objects for own properties. */
-var hasOwnProperty = objectProto.hasOwnProperty;
-
-/**
- * The base implementation of `_.keys` which doesn't treat sparse arrays as dense.
- *
- * @private
- * @param {Object} object The object to query.
- * @returns {Array} Returns the array of property names.
- */
-function baseKeys(object) {
-  if (!isPrototype(object)) {
-    return nativeKeys(object);
-  }
-  var result = [];
-  for (var key in Object(object)) {
-    if (hasOwnProperty.call(object, key) && key != 'constructor') {
-      result.push(key);
-    }
-  }
-  return result;
-}
-
-module.exports = baseKeys;
-
-
-/***/ }),
 /* 371 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var overArg = __webpack_require__(290);
+var overArg = __webpack_require__(291);
 
 /* Built-in method references for those with the same name as other `lodash` methods. */
 var nativeKeys = overArg(Object.keys, Object);
@@ -33956,8 +34079,8 @@ module.exports = nativeKeys;
 /* 372 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var copyObject = __webpack_require__(83),
-    keysIn = __webpack_require__(291);
+var copyObject = __webpack_require__(84),
+    keysIn = __webpack_require__(252);
 
 /**
  * The base implementation of `_.assignIn` without support for multiple sources
@@ -33979,8 +34102,8 @@ module.exports = baseAssignIn;
 /* 373 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(57),
-    isPrototype = __webpack_require__(251),
+var isObject = __webpack_require__(53),
+    isPrototype = __webpack_require__(238),
     nativeKeysIn = __webpack_require__(374);
 
 /** Used for built-in method references. */
@@ -34044,7 +34167,7 @@ module.exports = nativeKeysIn;
 /* 375 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(module) {var root = __webpack_require__(45);
+/* WEBPACK VAR INJECTION */(function(module) {var root = __webpack_require__(46);
 
 /** Detect free variable `exports`. */
 var freeExports =  true && exports && !exports.nodeType && exports;
@@ -34080,7 +34203,7 @@ function cloneBuffer(buffer, isDeep) {
 
 module.exports = cloneBuffer;
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(82)(module)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(83)(module)))
 
 /***/ }),
 /* 376 */
@@ -34112,8 +34235,8 @@ module.exports = copyArray;
 /* 377 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var copyObject = __webpack_require__(83),
-    getSymbols = __webpack_require__(252);
+var copyObject = __webpack_require__(84),
+    getSymbols = __webpack_require__(253);
 
 /**
  * Copies own symbols of `source` to `object`.
@@ -34165,7 +34288,7 @@ module.exports = arrayFilter;
 /* 379 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var copyObject = __webpack_require__(83),
+var copyObject = __webpack_require__(84),
     getSymbolsIn = __webpack_require__(293);
 
 /**
@@ -34187,8 +34310,8 @@ module.exports = copySymbolsIn;
 /* 380 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var getNative = __webpack_require__(64),
-    root = __webpack_require__(45);
+var getNative = __webpack_require__(65),
+    root = __webpack_require__(46);
 
 /* Built-in method references that are verified to be native. */
 var DataView = getNative(root, 'DataView');
@@ -34200,8 +34323,8 @@ module.exports = DataView;
 /* 381 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var getNative = __webpack_require__(64),
-    root = __webpack_require__(45);
+var getNative = __webpack_require__(65),
+    root = __webpack_require__(46);
 
 /* Built-in method references that are verified to be native. */
 var Promise = getNative(root, 'Promise');
@@ -34213,8 +34336,8 @@ module.exports = Promise;
 /* 382 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var getNative = __webpack_require__(64),
-    root = __webpack_require__(45);
+var getNative = __webpack_require__(65),
+    root = __webpack_require__(46);
 
 /* Built-in method references that are verified to be native. */
 var Set = getNative(root, 'Set');
@@ -34226,8 +34349,8 @@ module.exports = Set;
 /* 383 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var getNative = __webpack_require__(64),
-    root = __webpack_require__(45);
+var getNative = __webpack_require__(65),
+    root = __webpack_require__(46);
 
 /* Built-in method references that are verified to be native. */
 var WeakMap = getNative(root, 'WeakMap');
@@ -34271,7 +34394,7 @@ module.exports = initCloneArray;
 /* 385 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var cloneArrayBuffer = __webpack_require__(255),
+var cloneArrayBuffer = __webpack_require__(256),
     cloneDataView = __webpack_require__(386),
     cloneRegExp = __webpack_require__(387),
     cloneSymbol = __webpack_require__(388),
@@ -34354,7 +34477,7 @@ module.exports = initCloneByTag;
 /* 386 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var cloneArrayBuffer = __webpack_require__(255);
+var cloneArrayBuffer = __webpack_require__(256);
 
 /**
  * Creates a clone of `dataView`.
@@ -34399,7 +34522,7 @@ module.exports = cloneRegExp;
 /* 388 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Symbol = __webpack_require__(69);
+var Symbol = __webpack_require__(71);
 
 /** Used to convert symbols to primitives and strings. */
 var symbolProto = Symbol ? Symbol.prototype : undefined,
@@ -34423,7 +34546,7 @@ module.exports = cloneSymbol;
 /* 389 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var cloneArrayBuffer = __webpack_require__(255);
+var cloneArrayBuffer = __webpack_require__(256);
 
 /**
  * Creates a clone of `typedArray`.
@@ -34446,8 +34569,8 @@ module.exports = cloneTypedArray;
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseCreate = __webpack_require__(391),
-    getPrototype = __webpack_require__(254),
-    isPrototype = __webpack_require__(251);
+    getPrototype = __webpack_require__(255),
+    isPrototype = __webpack_require__(238);
 
 /**
  * Initializes an object clone.
@@ -34469,7 +34592,7 @@ module.exports = initCloneObject;
 /* 391 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(57);
+var isObject = __webpack_require__(53);
 
 /** Built-in value references. */
 var objectCreate = Object.create;
@@ -34506,8 +34629,8 @@ module.exports = baseCreate;
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseIsMap = __webpack_require__(393),
-    baseUnary = __webpack_require__(249),
-    nodeUtil = __webpack_require__(250);
+    baseUnary = __webpack_require__(250),
+    nodeUtil = __webpack_require__(251);
 
 /* Node.js helper references. */
 var nodeIsMap = nodeUtil && nodeUtil.isMap;
@@ -34538,8 +34661,8 @@ module.exports = isMap;
 /* 393 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var getTag = __webpack_require__(106),
-    isObjectLike = __webpack_require__(51);
+var getTag = __webpack_require__(94),
+    isObjectLike = __webpack_require__(52);
 
 /** `Object#toString` result references. */
 var mapTag = '[object Map]';
@@ -34563,8 +34686,8 @@ module.exports = baseIsMap;
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseIsSet = __webpack_require__(395),
-    baseUnary = __webpack_require__(249),
-    nodeUtil = __webpack_require__(250);
+    baseUnary = __webpack_require__(250),
+    nodeUtil = __webpack_require__(251);
 
 /* Node.js helper references. */
 var nodeIsSet = nodeUtil && nodeUtil.isSet;
@@ -34595,8 +34718,8 @@ module.exports = isSet;
 /* 395 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var getTag = __webpack_require__(106),
-    isObjectLike = __webpack_require__(51);
+var getTag = __webpack_require__(94),
+    isObjectLike = __webpack_require__(52);
 
 /** `Object#toString` result references. */
 var setTag = '[object Set]';
@@ -34622,7 +34745,7 @@ module.exports = baseIsSet;
 var castPath = __webpack_require__(107),
     last = __webpack_require__(400),
     parent = __webpack_require__(401),
-    toKey = __webpack_require__(84);
+    toKey = __webpack_require__(85);
 
 /**
  * The base implementation of `_.unset`.
@@ -34710,7 +34833,7 @@ module.exports = memoizeCapped;
 /* 399 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var MapCache = __webpack_require__(244);
+var MapCache = __webpack_require__(247);
 
 /** Error message constants. */
 var FUNC_ERROR_TEXT = 'Expected a function';
@@ -34815,7 +34938,7 @@ module.exports = last;
 /* 401 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseGet = __webpack_require__(257),
+var baseGet = __webpack_require__(258),
     baseSlice = __webpack_require__(300);
 
 /**
@@ -34859,9 +34982,9 @@ module.exports = customOmitClone;
 /* 403 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseGetTag = __webpack_require__(65),
-    getPrototype = __webpack_require__(254),
-    isObjectLike = __webpack_require__(51);
+var baseGetTag = __webpack_require__(66),
+    getPrototype = __webpack_require__(255),
+    isObjectLike = __webpack_require__(52);
 
 /** `Object#toString` result references. */
 var objectTag = '[object Object]';
@@ -34977,7 +35100,7 @@ module.exports = flatten;
 /* 406 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayPush = __webpack_require__(253),
+var arrayPush = __webpack_require__(254),
     isFlattenable = __webpack_require__(407);
 
 /**
@@ -35021,9 +35144,9 @@ module.exports = baseFlatten;
 /* 407 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Symbol = __webpack_require__(69),
-    isArguments = __webpack_require__(245),
-    isArray = __webpack_require__(40);
+var Symbol = __webpack_require__(71),
+    isArguments = __webpack_require__(236),
+    isArray = __webpack_require__(39);
 
 /** Built-in value references. */
 var spreadableSymbol = Symbol ? Symbol.isConcatSpreadable : undefined;
@@ -35137,7 +35260,7 @@ module.exports = setToString;
 /***/ (function(module, exports, __webpack_require__) {
 
 var constant = __webpack_require__(412),
-    defineProperty = __webpack_require__(287),
+    defineProperty = __webpack_require__(289),
     identity = __webpack_require__(301);
 
 /**
@@ -35263,7 +35386,7 @@ module.exports = castSlice;
 /* 415 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseIndexOf = __webpack_require__(258);
+var baseIndexOf = __webpack_require__(259);
 
 /**
  * Used by `_.trim` and `_.trimEnd` to get the index of the last string symbol
@@ -35335,7 +35458,7 @@ module.exports = strictIndexOf;
 /* 418 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseIndexOf = __webpack_require__(258);
+var baseIndexOf = __webpack_require__(259);
 
 /**
  * Used by `_.trim` and `_.trimStart` to get the index of the first string symbol
@@ -35481,9 +35604,9 @@ module.exports = unicodeToArray;
 /* 423 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseIteratee = __webpack_require__(259),
-    isArrayLike = __webpack_require__(70),
-    keys = __webpack_require__(66);
+var baseIteratee = __webpack_require__(260),
+    isArrayLike = __webpack_require__(69),
+    keys = __webpack_require__(58);
 
 /**
  * Creates a `_.find` or `_.findLast` function.
@@ -35540,7 +35663,7 @@ module.exports = baseMatches;
 /* 425 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Stack = __webpack_require__(242),
+var Stack = __webpack_require__(245),
     baseIsEqual = __webpack_require__(312);
 
 /** Used to compose bitmasks for value comparisons. */
@@ -35608,14 +35731,14 @@ module.exports = baseIsMatch;
 /* 426 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Stack = __webpack_require__(242),
+var Stack = __webpack_require__(245),
     equalArrays = __webpack_require__(313),
     equalByTag = __webpack_require__(431),
     equalObjects = __webpack_require__(434),
-    getTag = __webpack_require__(106),
-    isArray = __webpack_require__(40),
-    isBuffer = __webpack_require__(246),
-    isTypedArray = __webpack_require__(289);
+    getTag = __webpack_require__(94),
+    isArray = __webpack_require__(39),
+    isBuffer = __webpack_require__(237),
+    isTypedArray = __webpack_require__(267);
 
 /** Used to compose bitmasks for value comparisons. */
 var COMPARE_PARTIAL_FLAG = 1;
@@ -35697,7 +35820,7 @@ module.exports = baseIsEqualDeep;
 /* 427 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var MapCache = __webpack_require__(244),
+var MapCache = __webpack_require__(247),
     setCacheAdd = __webpack_require__(428),
     setCacheHas = __webpack_require__(429);
 
@@ -35794,9 +35917,9 @@ module.exports = cacheHas;
 /* 431 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Symbol = __webpack_require__(69),
+var Symbol = __webpack_require__(71),
     Uint8Array = __webpack_require__(297),
-    eq = __webpack_require__(103),
+    eq = __webpack_require__(104),
     equalArrays = __webpack_require__(313),
     mapToArray = __webpack_require__(432),
     setToArray = __webpack_require__(433);
@@ -36001,10 +36124,11 @@ function equalObjects(object, other, bitmask, customizer, equalFunc, stack) {
       return false;
     }
   }
-  // Assume cyclic values are equal.
-  var stacked = stack.get(object);
-  if (stacked && stack.get(other)) {
-    return stacked == other;
+  // Check that cyclic values are equal.
+  var objStacked = stack.get(object);
+  var othStacked = stack.get(other);
+  if (objStacked && othStacked) {
+    return objStacked == other && othStacked == object;
   }
   var result = true;
   stack.set(object, other);
@@ -36056,7 +36180,7 @@ module.exports = equalObjects;
 /***/ (function(module, exports, __webpack_require__) {
 
 var isStrictComparable = __webpack_require__(315),
-    keys = __webpack_require__(66);
+    keys = __webpack_require__(58);
 
 /**
  * Gets the property names, values, and compare flags of `object`.
@@ -36088,10 +36212,10 @@ module.exports = getMatchData;
 var baseIsEqual = __webpack_require__(312),
     get = __webpack_require__(437),
     hasIn = __webpack_require__(438),
-    isKey = __webpack_require__(256),
+    isKey = __webpack_require__(257),
     isStrictComparable = __webpack_require__(315),
     matchesStrictComparable = __webpack_require__(316),
-    toKey = __webpack_require__(84);
+    toKey = __webpack_require__(85);
 
 /** Used to compose bitmasks for value comparisons. */
 var COMPARE_PARTIAL_FLAG = 1,
@@ -36124,7 +36248,7 @@ module.exports = baseMatchesProperty;
 /* 437 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseGet = __webpack_require__(257);
+var baseGet = __webpack_require__(258);
 
 /**
  * Gets the value at `path` of `object`. If the resolved value is
@@ -36223,11 +36347,11 @@ module.exports = baseHasIn;
 /***/ (function(module, exports, __webpack_require__) {
 
 var castPath = __webpack_require__(107),
-    isArguments = __webpack_require__(245),
-    isArray = __webpack_require__(40),
-    isIndex = __webpack_require__(247),
-    isLength = __webpack_require__(248),
-    toKey = __webpack_require__(84);
+    isArguments = __webpack_require__(236),
+    isArray = __webpack_require__(39),
+    isIndex = __webpack_require__(248),
+    isLength = __webpack_require__(249),
+    toKey = __webpack_require__(85);
 
 /**
  * Checks if `path` exists on `object`.
@@ -36269,8 +36393,8 @@ module.exports = hasPath;
 
 var baseProperty = __webpack_require__(442),
     basePropertyDeep = __webpack_require__(443),
-    isKey = __webpack_require__(256),
-    toKey = __webpack_require__(84);
+    isKey = __webpack_require__(257),
+    toKey = __webpack_require__(85);
 
 /**
  * Creates a function that returns the value at `path` of a given object.
@@ -36325,7 +36449,7 @@ module.exports = baseProperty;
 /* 443 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseGet = __webpack_require__(257);
+var baseGet = __webpack_require__(258);
 
 /**
  * A specialized version of `baseProperty` which supports deep paths.
@@ -36348,7 +36472,7 @@ module.exports = basePropertyDeep;
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseFindIndex = __webpack_require__(311),
-    baseIteratee = __webpack_require__(259),
+    baseIteratee = __webpack_require__(260),
     toInteger = __webpack_require__(317);
 
 /* Built-in method references for those with the same name as other `lodash` methods. */
@@ -36456,7 +36580,7 @@ module.exports = toFinite;
 /* 446 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(57),
+var isObject = __webpack_require__(53),
     isSymbol = __webpack_require__(108);
 
 /** Used as references for various `Number` constants. */
@@ -36558,9 +36682,9 @@ module.exports = function(originalModule) {
 /* 448 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseGetTag = __webpack_require__(65),
-    isArray = __webpack_require__(40),
-    isObjectLike = __webpack_require__(51);
+var baseGetTag = __webpack_require__(66),
+    isArray = __webpack_require__(39),
+    isObjectLike = __webpack_require__(52);
 
 /** `Object#toString` result references. */
 var stringTag = '[object String]';
@@ -36595,7 +36719,7 @@ module.exports = isString;
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseValues = __webpack_require__(450),
-    keys = __webpack_require__(66);
+    keys = __webpack_require__(58);
 
 /**
  * Creates an array of the own enumerable string keyed property values of `object`.
@@ -36634,7 +36758,7 @@ module.exports = values;
 /* 450 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayMap = __webpack_require__(241);
+var arrayMap = __webpack_require__(244);
 
 /**
  * The base implementation of `_.values` and `_.valuesIn` which creates an
@@ -36708,7 +36832,7 @@ module.exports = baseEach;
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseFor = __webpack_require__(454),
-    keys = __webpack_require__(66);
+    keys = __webpack_require__(58);
 
 /**
  * The base implementation of `_.forOwn` without support for iteratee shorthands.
@@ -36782,7 +36906,7 @@ module.exports = createBaseFor;
 /* 456 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isArrayLike = __webpack_require__(70);
+var isArrayLike = __webpack_require__(69);
 
 /**
  * Creates a `baseEach` or `baseEachRight` function.
@@ -36820,10 +36944,10 @@ module.exports = createBaseEach;
 /* 457 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var eq = __webpack_require__(103),
-    isArrayLike = __webpack_require__(70),
-    isIndex = __webpack_require__(247),
-    isObject = __webpack_require__(57);
+var eq = __webpack_require__(104),
+    isArrayLike = __webpack_require__(69),
+    isIndex = __webpack_require__(248),
+    isObject = __webpack_require__(53);
 
 /**
  * Checks if the given arguments are from an iteratee call.

@@ -1,6 +1,8 @@
 <?php
 
-if (!defined('ABSPATH')) exit;
+if (!defined('ABSPATH')) {
+    exit;
+}
 
 function d4pupd_prepare_host() {
     $ip = preg_replace('/[^0-9a-fA-F:., ]/', '', $_SERVER['SERVER_ADDR']);
@@ -37,7 +39,7 @@ function d4pupd_prepare_meta($string, $key) {
 
         $ordKey = ord(substr($key, $y, 1));
         $y++;
-        $hash.= strrev(base_convert(dechex($ordStr + $ordKey), 16, 36));
+        $hash .= strrev(base_convert(dechex($ordStr + $ordKey), 16, 36));
     }
 
     return $hash;
@@ -54,9 +56,9 @@ function dev4upd_debug_log($msg, $object) {
 
         $obj = print_r($object, true);
 
-        fwrite ($f, sprintf("[%s] : %s\r\n", date('Y-m-d h:i:s'), $msg));
-        fwrite ($f, "$obj");
-        fwrite ($f, "\r\n");
+        fwrite($f, sprintf("[%s] : %s\r\n", date('Y-m-d h:i:s'), $msg));
+        fwrite($f, "$obj");
+        fwrite($f, "\r\n");
 
         fclose($f);
     }

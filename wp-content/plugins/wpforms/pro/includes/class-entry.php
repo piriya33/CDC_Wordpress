@@ -73,7 +73,7 @@ class WPForms_Entry_Handler extends WPForms_DB {
 	}
 
 	/**
-	 * Retrieves an entry from the database based on a given entry ID.
+	 * Retrieve an entry from the database based on a given entry ID.
 	 *
 	 * @since 1.5.8
 	 *
@@ -143,6 +143,8 @@ class WPForms_Entry_Handler extends WPForms_DB {
 		if ( ! empty( $args['cap'] ) && ! wpforms_current_user_can( $args['cap'], $row_id ) ) {
 			return false;
 		}
+
+		\WPForms_Field_File_Upload::delete_uploaded_files_from_entry( $row_id );
 
 		$entry  = parent::delete( $row_id );
 		$meta   = wpforms()->entry_meta->delete_by( 'entry_id', $row_id );
@@ -346,7 +348,7 @@ class WPForms_Entry_Handler extends WPForms_DB {
 
 		$defaults = array(
 			'select'        => 'all',
-			'number'        => 30,
+			'number'        => $this->get_count_per_page(),
 			'offset'        => 0,
 			'form_id'       => 0,
 			'entry_id'      => 0,
@@ -473,8 +475,8 @@ class WPForms_Entry_Handler extends WPForms_DB {
 
 			// We can pass array and treat it as a range from:to.
 			if ( is_array( $args[ $key ] ) && count( $args[ $key ] ) === 2 ) {
-				$date_start = wpforms_get_day_period_date( 'start_of_day', strtotime( $args[ $key ][0] ) );
-				$date_end   = wpforms_get_day_period_date( 'end_of_day', strtotime( $args[ $key ][1] ) );
+				$date_start = wpforms_get_day_period_date( 'start_of_day', strtotime( $args[ $key ][0] ), 'Y-m-d H:i:s', true );
+				$date_end   = wpforms_get_day_period_date( 'end_of_day', strtotime( $args[ $key ][1] ), 'Y-m-d H:i:s', true );
 
 				if ( ! empty( $date_start ) && ! empty( $date_end ) ) {
 					$where[ 'arg_' . $key . '_start' ] = "{$this->table_name}.{$key} >= '{$date_start}'";
@@ -487,8 +489,8 @@ class WPForms_Entry_Handler extends WPForms_DB {
 				 * So we generate start and end MySQL dates for the specified day.
 				 */
 				$timestamp  = strtotime( $args[ $key ] );
-				$date_start = wpforms_get_day_period_date( 'start_of_day', $timestamp );
-				$date_end   = wpforms_get_day_period_date( 'end_of_day', $timestamp );
+				$date_start = wpforms_get_day_period_date( 'start_of_day', $timestamp, 'Y-m-d H:i:s', true );
+				$date_end   = wpforms_get_day_period_date( 'end_of_day', $timestamp, 'Y-m-d H:i:s', true );
 
 				if ( ! empty( $date_start ) && ! empty( $date_end ) ) {
 					$where[ 'arg_' . $key . '_start' ] = "{$this->table_name}.{$key} >= '{$date_start}'";
@@ -614,5 +616,17 @@ class WPForms_Entry_Handler extends WPForms_DB {
 		) {$charset_collate};";
 
 		dbDelta( $sql );
+	}
+
+	/**
+	 * Get entries count per page.
+	 *
+	 * @since 1.6.5
+	 *
+	 * @return int
+	 */
+	public function get_count_per_page() {
+
+		return (int) apply_filters( 'wpforms_entries_per_page', 30 );
 	}
 }

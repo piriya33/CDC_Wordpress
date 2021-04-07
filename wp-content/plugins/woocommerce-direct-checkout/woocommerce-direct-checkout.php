@@ -1,22 +1,25 @@
 <?php
 
 /**
- * Plugin Name: WooCommerce Direct Checkout
+ * Plugin Name: Direct Checkout for WooCommerce
+ * Plugin URI:  https://quadlayers.com/documentation/woocommerce-direct-checkout/
  * Description: Simplifies the checkout process to improve your sales rate.
- * Version:     2.3.2
+ * Version:     2.4.5
  * Author:      QuadLayers
- * Author URI:  https://www.quadlayers.com
- * Copyright:   2019 QuadLayers (https://www.quadlayers.com)
+ * Author URI:  https://quadlayers.com
+ * License: GPLv3
  * Text Domain: woocommerce-direct-checkout
+ * WC requires at least: 3.1.0
+ * WC tested up to: 5.1.0
  */
 if (!defined('ABSPATH')) {
   die('-1');
 }
 if (!defined('QLWCDC_PLUGIN_NAME')) {
-  define('QLWCDC_PLUGIN_NAME', 'WooCommerce Direct Checkout');
+  define('QLWCDC_PLUGIN_NAME', 'Direct Checkout for WooCommerce');
 }
 if (!defined('QLWCDC_PLUGIN_VERSION')) {
-  define('QLWCDC_PLUGIN_VERSION', '2.3.2');
+  define('QLWCDC_PLUGIN_VERSION', '2.4.5');
 }
 if (!defined('QLWCDC_PLUGIN_FILE')) {
   define('QLWCDC_PLUGIN_FILE', __FILE__);
@@ -34,7 +37,7 @@ if (!defined('QLWCDC_WORDPRESS_URL')) {
   define('QLWCDC_WORDPRESS_URL', 'https://wordpress.org/plugins/woocommerce-direct-checkout/');
 }
 if (!defined('QLWCDC_REVIEW_URL')) {
-  define('QLWCDC_REVIEW_URL', 'https://wordpress.org/support/plugin/woocommerce-checkout-manager/reviews/?filter=5#new-post');
+  define('QLWCDC_REVIEW_URL', 'https://wordpress.org/support/plugin/woocommerce-direct-checkout/reviews/?filter=5#new-post');
 }
 if (!defined('QLWCDC_DEMO_URL')) {
   define('QLWCDC_DEMO_URL', 'https://quadlayers.com/woocommerce-direct?utm_source=qlwcdc_admin');

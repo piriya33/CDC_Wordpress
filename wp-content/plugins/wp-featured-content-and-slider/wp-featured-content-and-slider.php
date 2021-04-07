@@ -6,7 +6,7 @@
  * Domain Path: /languages/
  * Description: Easy to add and display what features your company, product or service offers, using our shortcode OR template code. Also work with Gutenberg shortcode block.
  * Author: WP OnlineSupport
- * Version: 1.3.4
+ * Version: 1.4
  * Author URI: https://www.wponlinesupport.com/
  *
  * @package WordPress
@@ -17,26 +17,68 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if( !defined( 'WPFCAS_VERSION' ) ) {
-	define( 'WPFCAS_VERSION', '1.3.4' ); // Version of plugin
+if( ! defined( 'WPFCAS_VERSION' ) ) {
+	define( 'WPFCAS_VERSION', '1.4' ); // Version of plugin
 }
-if( !defined( 'WPFCAS_DIR' ) ) {
+if( ! defined( 'WPFCAS_DIR' ) ) {
 	define( 'WPFCAS_DIR', dirname( __FILE__ ) ); // Plugin dir
 }
-if( !defined( 'WPFCAS_URL' ) ) {
+if( ! defined( 'WPFCAS_URL' ) ) {
 	define( 'WPFCAS_URL', plugin_dir_url( __FILE__ ) ); // Plugin url
 }
-if( !defined( 'WPFCAS_POST_TYPE' ) ) {
+if( ! defined( 'WPFCAS_PLUGIN_BASENAME' ) ) {
+	define( 'WPFCAS_PLUGIN_BASENAME', plugin_basename( __FILE__ ) ); // Plugin base name
+}
+if( ! defined( 'WPFCAS_POST_TYPE' ) ) {
 	define( 'WPFCAS_POST_TYPE', 'featured_post' ); // Plugin post type
 }
-if( !defined( 'WPFCAS_CAT' ) ) {
+if( ! defined( 'WPFCAS_CAT' ) ) {
 	define( 'WPFCAS_CAT', 'wpfcas-category' ); // Plugin category
 }
 
-add_action('plugins_loaded', 'wp_wpfcas_load_textdomain');
-function wp_wpfcas_load_textdomain() {
-	load_plugin_textdomain( 'wp-featured-content-and-slider', false, dirname( plugin_basename(__FILE__) ) . '/languages/' );
+if(!defined( 'WPFCAS_PLUGIN_LINK' ) ) {
+	define('WPFCAS_PLUGIN_LINK','https://www.wponlinesupport.com/wp-plugin/wp-featured-content-and-slider/?utm_source=WP&utm_medium=featured_post&utm_campaign=Features-PRO'); // Plugin link
 }
+
+/**
+ * Activation Hook
+ * 
+ * Register plugin load text domain.
+ * 
+ * @package WP Featured Content and Slider
+ * @since 1.0.0
+ */
+function wpfcas_load_textdomain() {
+
+	global $wp_version;
+
+	// Set filter for plugin's languages directory
+	$wpfcas_pro_lang_dir = dirname( WPFCAS_PLUGIN_BASENAME ) . '/languages/';
+	$wpfcas_pro_lang_dir = apply_filters( 'wp_fcasp_languages_directory', $wpfcas_pro_lang_dir );
+
+	// Traditional WordPress plugin locale filter.
+	$get_locale = get_locale();
+
+	if ( $wp_version >= 4.7 ) {
+		$get_locale = get_user_locale();
+	}
+
+	// Traditional WordPress plugin locale filter
+	$locale = apply_filters( 'plugin_locale',  $get_locale, 'wp-featured-content-and-slider' );
+	$mofile = sprintf( '%1$s-%2$s.mo', 'wp-featured-content-and-slider', $locale );
+
+	// Setup paths to current locale file
+	$mofile_global = WP_LANG_DIR . '/plugins/' . basename( WPFCAS_DIR ) . '/' . $mofile;
+
+	if ( file_exists( $mofile_global ) ) { // Look in global /wp-content/languages/plugin-name folder
+		load_textdomain( 'wp-featured-content-and-slider', $mofile_global );
+	} else { // Load the default language files
+		load_plugin_textdomain( 'wp-featured-content-and-slider', false, $wpfcas_pro_lang_dir );
+	}
+
+}
+// Add action Plugin loaded
+add_action('plugins_loaded', 'wpfcas_load_textdomain');
 
 /**
  * Activation Hook
@@ -66,6 +108,11 @@ register_deactivation_hook( __FILE__, 'wpfcas_uninstall');
  * @since 1.0.0
  */
 function wpfcas_install() {
+
+	// Post type function
+	wpfcas_setup_post_types();
+
+    flush_rewrite_rules();
 
 	// Deactivate free version
 	if( is_plugin_active('wp-featured-content-and-slider-pro/wp-featured-content-and-slider.php') ) {
@@ -118,48 +165,36 @@ function wpfcas_admin_notice() {
 			</div>';      
 	}
 }
+
+// Action to admin notice
 add_action( 'admin_notices', 'wpfcas_admin_notice');
 
-/**
- * Function to get unique value number
- * 
- * @package WP Featured Content and Slider
- * @since 1.2.1
- */
-function wpfcas_get_unique() {
-	static $unique = 0;
-	$unique++;
 
-	return $unique;
+// Admin Class files
+require_once( WPFCAS_DIR . '/includes/admin/class-wpfcas-admin.php' );
+
+// Custom post type files
+require_once( WPFCAS_DIR . '/includes/wpfcas-post-types.php' );
+
+// Functions files
+require_once( WPFCAS_DIR . '/includes/wpfcas-functions.php' );
+
+// Scripts files
+require_once( WPFCAS_DIR . '/includes/class-wpfcas-scripts.php' );
+
+// Shortcode files
+require_once( WPFCAS_DIR . '/includes/shortcode/wpfcas-grid.php' );
+require_once( WPFCAS_DIR . '/includes/shortcode/wpfcas-slider.php' );
+
+// Gutenberg Block Initializer
+if ( function_exists( 'register_block_type' ) ) {
+	require_once( WPFCAS_DIR . '/includes/admin/supports/gutenberg-block.php' );
 }
-
-add_action( 'wp_enqueue_scripts','wpfcas_style_css' );
-function wpfcas_style_css() {
-	
-	wp_register_style( 'wpfcas-font-awesome', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css', array(), WPFCAS_VERSION );
-	wp_enqueue_style( 'wpfcas-font-awesome' );
-	
-	wp_enqueue_style( 'wpfcas_style',  WPFCAS_URL. 'assets/css/featured-content-style.css', array(), WPFCAS_VERSION );	
-	wp_enqueue_style( 'wpfcas_slick_style',  WPFCAS_URL. 'assets/css/slick.css', array(), WPFCAS_VERSION);
-	
-		// Registring slick slider script
-	if( !wp_script_is( 'wpos-slick-jquery', 'registered' ) ) {
-		wp_register_script( 'wpos-slick-jquery', WPFCAS_URL.'assets/js/slick.min.js', array('jquery'), WPFCAS_VERSION, true );		
-	}
-	
-}
-
-require_once( 'includes/featured-content-functions.php' );
-require_once( 'templates/featured-content-template.php' );
-require_once( 'templates/featured-content-slider-template.php' );
 
 // How it work file, Load admin files
 if ( is_admin() || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
-	require_once( WPFCAS_DIR . '/includes/admin/wpfcas-how-it-work.php' );
+	require_once( WPFCAS_DIR . '/includes/admin/settings/wpfcas-how-it-work.php' );
 }
-
-//Admin Class
-require_once( WPFCAS_DIR . '/includes/admin/class-wpfcas-admin.php' );
 
 /* Plugin Wpos Analytics Data Starts */
 function wpos_analytics_anl35_load() {
@@ -174,20 +209,6 @@ function wpos_analytics_anl35_load() {
 							'type'			=> 'plugin',
 							'menu'			=> 'edit.php?post_type=featured_post',
 							'text_domain'	=> 'wp-featured-content-and-slider',
-							'promotion'		=> array(
-													'bundle' => array(
-															'name'	=> 'Download FREE 50+ Plugins, 10+ Themes and Dashboard Plugin',
-															'desc'	=> 'Download FREE 50+ Plugins, 10+ Themes and Dashboard Plugin',
-															'file'	=> 'https://www.wponlinesupport.com/latest/wpos-free-50-plugins-plus-12-themes.zip'
-														)
-													),
-							'offers'		=> array(
-													'trial_premium' => array(
-														'image'	=> 'http://analytics.wponlinesupport.com/?anylc_img=35',
-														'link'	=> 'http://analytics.wponlinesupport.com/?anylc_redirect=35',
-														'desc'	=> 'Or start using the plugin from admin menu',
-													)
-												),
 						));
 
 	return $wpos_analytics;

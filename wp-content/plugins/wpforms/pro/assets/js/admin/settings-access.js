@@ -1,4 +1,4 @@
-/* globals wpforms_admin, wpforms_settings_access */
+/* global wpforms_admin, wpforms_settings_access */
 /**
  * WPForms Settings Access function.
  *
@@ -114,7 +114,7 @@ var WPFormsSettingsAccess = window.WPFormsSettingsAccess || ( function( document
 		 */
 		init: function() {
 
-			$( document ).ready( app.ready );
+			$( app.ready );
 		},
 
 		/**

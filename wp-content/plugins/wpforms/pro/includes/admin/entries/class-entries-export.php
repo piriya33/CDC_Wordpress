@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Exports entries to CSV.
+ * Export entries to CSV.
  *
  * Inspired by Easy Digital Download's EDD_Export class.
  *
@@ -127,7 +127,7 @@ class WPForms_Entries_Export {
 	 *
 	 * @since 1.1.5
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function is_single_entry() {
 
@@ -149,9 +149,7 @@ class WPForms_Entries_Export {
 
 		ignore_user_abort( true );
 
-		if ( ! in_array( 'set_time_limit', explode( ',', ini_get( 'disable_functions' ) ), true ) ) {
-			set_time_limit( 0 );
-		}
+		wpforms_set_time_limit();
 
 		if ( ! $this->is_single_entry() ) {
 			$file_name = 'wpforms-' . sanitize_file_name( get_the_title( $this->form_id ) ) . '-' . date( 'm-d-Y' ) . '.csv';
@@ -211,9 +209,9 @@ class WPForms_Entries_Export {
 		foreach ( $this->fields as $id => $field ) {
 			if ( in_array( $field['type'], $allowed, true ) ) {
 				if ( $this->is_single_entry() ) {
-					$cols[ $field['id'] ] = wpforms_decode_string( sanitize_text_field( $field['name'] ) );
+					$cols[ $field['id'] ] = wpforms_decode_string( $field['name'] );
 				} else {
-					$cols[ $field['id'] ] = wpforms_decode_string( sanitize_text_field( $field['label'] ) );
+					$cols[ $field['id'] ] = wpforms_decode_string( $field['label'] );
 				}
 			}
 		}
@@ -280,10 +278,12 @@ class WPForms_Entries_Export {
 				$fields = wpforms_decode( $entry->fields );
 
 				foreach ( $form_fields as $form_field ) {
-					if ( in_array( $form_field['type'], $allowed, true ) && array_key_exists( $form_field['id'], $fields ) ) {
-						$data[ $entry->entry_id ][ $form_field['id'] ] = wpforms_decode_string( $fields[ $form_field['id'] ]['value'] );
-					} elseif ( in_array( $form_field['type'], $allowed, true ) ) {
-						$data[ $entry->entry_id ][ $form_field['id'] ] = '';
+					if ( in_array( $form_field['type'], $allowed, true ) ) {
+						if ( array_key_exists( $form_field['id'], $fields ) ) {
+							$data[ $entry->entry_id ][ $form_field['id'] ] = wpforms_decode_string( $fields[ $form_field['id'] ]['value'] );
+						} else {
+							$data[ $entry->entry_id ][ $form_field['id'] ] = '';
+						}
 					}
 				}
 				$date_format                          = sprintf( '%s %s', get_option( 'date_format' ), get_option( 'time_format' ) );

@@ -1,5 +1,7 @@
 <?php
 
+use WPForms\Helpers\Transient;
+
 /**
  * License key fun.
  *
@@ -8,17 +10,19 @@
 class WPForms_License {
 
 	/**
-	 * Holds any license error messages.
+	 * Store any license error messages.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @var array
 	 */
 	public $errors = array();
 
 	/**
-	 * Holds any license success messages.
+	 * Store any license success messages.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @var array
 	 */
 	public $success = array();
@@ -42,17 +46,19 @@ class WPForms_License {
 	}
 
 	/**
-	 * Load the license key.
+	 * Retrieve the license key.
 	 *
 	 * @since 1.0.0
+	 *
+	 * @return string
 	 */
 	public function get() {
 
 		// Check for license key.
-		$key = wpforms_setting( 'key', false, 'wpforms_license' );
+		$key = wpforms_setting( 'key', '', 'wpforms_license' );
 
 		// Allow wp-config constant to pass key.
-		if ( ! $key && defined( 'WPFORMS_LICENSE_KEY' ) ) {
+		if ( empty( $key ) && defined( 'WPFORMS_LICENSE_KEY' ) ) {
 			$key = WPFORMS_LICENSE_KEY;
 		}
 
@@ -60,24 +66,42 @@ class WPForms_License {
 	}
 
 	/**
-	 * Load the license key level.
+	 * Check how license key is provided.
 	 *
-	 * @since 1.0.0
+	 * @since 1.6.3
+	 *
+	 * @return string
 	 */
-	public function type() {
+	public function get_key_location() {
 
-		$type = wpforms_setting( 'type', false, 'wpforms_license' );
+		if ( defined( 'WPFORMS_LICENSE_KEY' ) ) {
+			return 'constant';
+		}
 
-		return $type;
+		$key = wpforms_setting( 'key', '', 'wpforms_license' );
+
+		return ! empty( $key ) ? 'option' : 'missing';
 	}
 
 	/**
-	 * Verifies a license key entered by the user.
+	 * Load the license key level.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return string
+	 */
+	public function type() {
+
+		return wpforms_setting( 'type', '', 'wpforms_license' );
+	}
+
+	/**
+	 * Verify a license key entered by the user.
 	 *
 	 * @since 1.0.0
 	 *
 	 * @param string $key
-	 * @param bool $ajax
+	 * @param bool   $ajax
 	 *
 	 * @return bool
 	 */
@@ -124,7 +148,7 @@ class WPForms_License {
 		$option['is_invalid']  = false;
 		$this->success[]       = $success;
 		update_option( 'wpforms_license', $option );
-		delete_transient( '_wpforms_addons' );
+		Transient::delete( 'addons' );
 
 		wp_clean_plugins_cache( true );
 
@@ -176,11 +200,14 @@ class WPForms_License {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string $key
-	 * @param bool $forced Force to set contextual messages (false by default).
-	 * @param bool $ajax
+	 * @param string $key           Key.
+	 * @param bool   $forced        Force to set contextual messages (false by default).
+	 * @param bool   $ajax          AJAX.
+	 * @param bool   $return_status Option to return the license status.
+	 *
+	 * @return string|bool
 	 */
-	public function validate_key( $key = '', $forced = false, $ajax = false ) {
+	public function validate_key( $key = '', $forced = false, $ajax = false, $return_status = false ) { // phpcs:ignore Generic.Metrics.CyclomaticComplexity.MaxExceeded
 
 		$validate = $this->perform_remote_request( 'validate-key', array( 'tgm-updater-key' => $key ) );
 
@@ -196,12 +223,12 @@ class WPForms_License {
 				}
 			}
 
-			return;
+			return false;
 		}
 
+		$option = (array) get_option( 'wpforms_license' );
 		// If a key or author error is returned, the license no longer exists or the user has been deleted, so reset license.
 		if ( isset( $validate->key ) || isset( $validate->author ) ) {
-			$option                = get_option( 'wpforms_license' );
 			$option['is_expired']  = false;
 			$option['is_disabled'] = false;
 			$option['is_invalid']  = true;
@@ -210,12 +237,11 @@ class WPForms_License {
 				wp_send_json_error( esc_html__( 'Your license key for WPForms is invalid. The key no longer exists or the user associated with the key has been deleted. Please use a different key to continue receiving automatic updates.', 'wpforms' ) );
 			}
 
-			return;
+			return $return_status ? 'invalid' : false;
 		}
 
 		// If the license has expired, set the transient and expired flag and return.
 		if ( isset( $validate->expired ) ) {
-			$option                = get_option( 'wpforms_license' );
 			$option['is_expired']  = true;
 			$option['is_disabled'] = false;
 			$option['is_invalid']  = false;
@@ -224,12 +250,11 @@ class WPForms_License {
 				wp_send_json_error( esc_html__( 'Your license key for WPForms has expired. Please renew your license key on WPForms.com to continue receiving automatic updates.', 'wpforms' ) );
 			}
 
-			return;
+			return $return_status ? 'expired' : false;
 		}
 
 		// If the license is disabled, set the transient and disabled flag and return.
 		if ( isset( $validate->disabled ) ) {
-			$option                = get_option( 'wpforms_license' );
 			$option['is_expired']  = false;
 			$option['is_disabled'] = true;
 			$option['is_invalid']  = false;
@@ -238,11 +263,10 @@ class WPForms_License {
 				wp_send_json_error( esc_html__( 'Your license key for WPForms has been disabled. Please use a different key to continue receiving automatic updates.', 'wpforms' ) );
 			}
 
-			return;
+			return $return_status ? 'disabled' : false;
 		}
 
 		// Otherwise, our check has returned successfully. Set the transient and update our license type and flags.
-		$option                = get_option( 'wpforms_license' );
 		$option['type']        = isset( $validate->type ) ? $validate->type : $option['type'];
 		$option['is_expired']  = false;
 		$option['is_disabled'] = false;
@@ -262,10 +286,12 @@ class WPForms_License {
 				);
 			}
 		}
+
+		return $return_status ? 'valid' : true;
 	}
 
 	/**
-	 * Deactivates a license key entered by the user.
+	 * Deactivate a license key entered by the user.
 	 *
 	 * @since 1.0.0
 	 *
@@ -309,7 +335,7 @@ class WPForms_License {
 		$success         = isset( $deactivate->success ) ? $deactivate->success : esc_html__( 'You have deactivated the key from this site successfully.', 'wpforms' );
 		$this->success[] = $success;
 		update_option( 'wpforms_license', '' );
-		delete_transient( '_wpforms_addons' );
+		Transient::delete( 'addons' );
 
 		if ( $ajax ) {
 			wp_send_json_success( $success );
@@ -330,7 +356,7 @@ class WPForms_License {
 	}
 
 	/**
-	 * Outputs any notices generated by the class.
+	 * Output any notices generated by the class.
 	 *
 	 * @since 1.0.0
 	 *
@@ -442,11 +468,13 @@ class WPForms_License {
 	}
 
 	/**
-	 * Retrieves addons from the stored transient or remote server.
+	 * Retrieve addons from the stored transient or remote server.
 	 *
-	 * @param bool $force
+	 * @since 1.0.0
 	 *
-	 * @return array|bool|mixed 1.0.0
+	 * @param bool $force Whether to force the addons retrieval or re-use transient cache.
+	 *
+	 * @return array|bool
 	 */
 	public function addons( $force = false ) {
 
@@ -456,7 +484,7 @@ class WPForms_License {
 			return false;
 		}
 
-		$addons = get_transient( '_wpforms_addons' );
+		$addons = Transient::get( 'addons' );
 
 		if ( $force || false === $addons ) {
 			$addons = $this->get_addons();
@@ -479,35 +507,35 @@ class WPForms_License {
 
 		// If there was an API error, set transient for only 10 minutes.
 		if ( ! $addons ) {
-			set_transient( '_wpforms_addons', false, 10 * MINUTE_IN_SECONDS );
+			Transient::set( 'addons', false, 10 * MINUTE_IN_SECONDS );
 
 			return false;
 		}
 
 		// If there was an error retrieving the addons, set the error.
 		if ( isset( $addons->error ) ) {
-			set_transient( '_wpforms_addons', false, 10 * MINUTE_IN_SECONDS );
+			Transient::set( 'addons', false, 10 * MINUTE_IN_SECONDS );
 
 			return false;
 		}
 
 		// Otherwise, our request worked. Save the data and return it.
-		set_transient( '_wpforms_addons', $addons, DAY_IN_SECONDS );
+		Transient::set( 'addons', $addons, DAY_IN_SECONDS );
 
 		return $addons;
 	}
 
 	/**
-	 * Queries the remote URL via wp_remote_post and returns a json decoded response.
+	 * Request the remote URL via wp_remote_post and return a json decoded response.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string $action The name of the $_POST action var.
-	 * @param array $body The content to retrieve from the remote URL.
-	 * @param array $headers The headers to send to the remote URL.
+	 * @param string $action        The name of the $_POST action var.
+	 * @param array  $body          The content to retrieve from the remote URL.
+	 * @param array  $headers       The headers to send to the remote URL.
 	 * @param string $return_format The format for returning content from the remote URL.
 	 *
-	 * @return string|bool Json decoded response on success, false on failure.
+	 * @return mixed Json decoded response on success, false on failure.
 	 */
 	public function perform_remote_request( $action, $body = array(), $headers = array(), $return_format = 'json' ) {
 

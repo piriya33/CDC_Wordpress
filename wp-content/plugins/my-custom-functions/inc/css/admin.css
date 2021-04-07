@@ -4,7 +4,7 @@
  * @package     My Custom Functions
  * @author      Arthur Gareginyan
  * @link        https://www.spacexchimp.com
- * @copyright   Copyright (c) 2016-2020 Space X-Chimp. All Rights Reserved.
+ * @copyright   Copyright (c) 2016-2021 Space X-Chimp. All Rights Reserved.
  */
 
 
@@ -18,6 +18,9 @@ p {
 }
 .postbox a {
     text-decoration: none;
+}
+.postbox button.btn {
+    height: 34px;
 }
 
 /* Title and Description of page

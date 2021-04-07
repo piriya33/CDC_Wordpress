@@ -1,5 +1,376 @@
 # Changelog
-All notable changes to this project will be documented in this file, formatted via [this recommendation](https://keepachangelog.com/en/1.0.0/).
+All notable changes to this project will be documented in this file and formatted via [this recommendation](https://keepachangelog.com/en/1.0.0/).
+
+## [1.6.6] - 2021-03-30
+### Added
+- Ability to delete uploaded files when editing a form entry.
+- Delete all uploaded files to clean up space when the associated entry is deleted.
+- Support currencies with no decimals.
+- WordPress 5.7 new color scheme compatibility.
+
+### Changed
+- Hide the "Add New Notification" button, when the Notifications were turned off.
+- Allow using 0/false values in choices label for Checkboxes, Multiple Choice, Dropdown fields.
+- Better AJAX form submit error messages handling for the Email field.
+- Refactored Tools page with all of its subpages for easier long-term support.
+- Exclude Page Break, Custom Captcha, HTML, and Section Divider fields from a single entry export file.
+- Updated the WPForms > About Us page.
+- Updated Dropzone lib to 5.8.1 (fixes IE11 issue).
+- Updated DOMPurify lib to 2.2.7.
+- Replaced jQuery.ready() function usage with a recommended way since jQuery 3.0.
+
+### Fixed
+- Front-end slow loading of a form with Conditional Logic, when applied to fields with image choices.
+- Incorrect Edit Entry page layout where fields are rendered, when fields have custom CSS classes that modify the form structure (i.e. by adding columns).
+- HTML layout is broken on the Analytics page for some site languages.
+- Incorrect permission checks for different places in the dashboard and the Form Builder.
+- RTL support for Name, Email, Password, Address, and Date/Time fields.
+- Incorrect total form count value for different user's roles on the Forms Overview page (All Forms).
+- Speed up the Form Builder rendering by loading certain scripts only when the Embed functionality is triggered.
+- Validation for Rating Field is still required even though the selection is still showing.
+- The `iframe` HTML element was not rendered incorrectly in the Twenty Twenty theme.
+- The Checkboxes and Multiple Choice fields CSS issues in Twenty Twenty-One theme.
+- On WordPress 4.9.0-4.9.4 and certain FTP configurations there could be an error while trying to automatically download the translations.
+- Omit Dynamic Choices fields from conditional logic settings.
+- Allowlist/Denylist validation was broken for the Email field in a multi-page form.
+- Error message text was missing or incorrect when an addon installation failed on certain WordPress/server configurations.
+- Correctly format big amounts in the Single Item payment field.
+- Single Item payment field shows an "Amount mismatch" error on the form submit on PHP 8.0.
+- PHP notice generated while exporting a form with the Divider field, which has Conditional Logic.
+- PHP fatal error generated when using `{entry_date format="m/d/Y"}` smart tag in a Notification message of the plugin Lite version.
+- Display the Payment Gateway Information option on the Entries Export page only if any of the payment addons is active.
+- Incorrect WPForms custom capabilities display in the Members plugin.
+- Columns sorting on the Forms Overview page made by non-administrators (using the Access Control functionality) could break forms in certain cases.
+- WPForms Challenge was drunk in the Firefox browser.
+- reCAPTCHA doesn't render in a popup when the same form exists in another place.
+
+## [1.6.5.1] - 2021-02-23
+### Fixed
+- Incorrect validation in the Single Item field with 'user defined' type and 'required' status when paying in thousands.
+- PHP notice while exporting a form template with no form fields.
+- On certain WordPress/server configurations there could be an error while trying to automatically download the translations.
+
+## [1.6.5] - 2021-02-16
+### Added
+- Automatically download translation files for the core plugin and its addons.
+- Export all entries in the Microsoft Excel (.xslx) format, which should fix CSV-related compatibility issues.
+- Clone Notifications in the Form Builder to quickly recreate a lot of them.
+
+### Changed
+- Updated DOMPurify lib to 2.2.6.
+- Convert "Viewed" and "Starred" export entry values to "Yes"/"No".
+- Reload the Form Builder after Save and Embed option usage, and going back using the browser Back button.
+- Improved empty states for Single Entry view.
+- Disable From Name and From Email fields in Form Builder > Notifications when the WP Mail SMTP plugin forces those values.
+
+### Fixed
+- RTL support for the Smart Phone field.
+- Properly display entry time when the site has a timezone with fractional offset.
+- The Gutenberg block JavaScript issue in WordPress 5.0-5.1.1 versions.
+- The Gutenberg block CSS issues in Twenty Twenty-One theme.
+- AMP incompatible script for Lite version.
+- Address field should have US country pre-defined when US mode is active.
+- Multiple choice selected choice resets to default while editing the entry.
+- Logs records on WPForms > Tools > Logs may not be clickable under certain circumstances, preventing previewing the logged information.
+- Email Summaries ignoring timezone offset while generating reports.
+- CSS issue in WordPress 5.5+: the form title centered on single entry view if starred.
+- Email Suggestion feature when using two or more forms on a page.
+- Shorten the names of uploaded files to avoid broken links on a single Entry page and in emails.
+- Missing on-hover tooltips' after cloning/duplicating elements in the Form Builder (Notifications, fields, etc).
+- Minor styling issues on the WPForms > Tools > Logs page.
+- Issues while importing forms saved in UTF-8 with BOM.
+- Improve performance of the WPForms Challenge.
+- WPForms module icon compatibility with the latest Elementor version.
+- Incorrect CPT and taxonomy terms alphabetical sorting of the Dynamic Choice option values for fields that support this Advanced Option.
+- Properly clean up all orphaned CSV files after the export has been completed.
+- Compatibility with WordPress 4.9 on the WPForms > Analytics/SMTP pages.
+- Incorrect required File Upload field post-processing when upload failed.
+- AJAX form submissions and file uploading on some server configuration.
+- Improve Admin Menu Bar support since WordPress 5.2.
+- Do not allow submitting the form with required but empty (or equal to 0) user-defined Single Item payment field value.
+
+## [1.6.4.1] - 2020-12-28
+### Added
+- Frontend form warning indicating missing WPForms JS (visible to admin only).
+
+### Changed
+- Help hCaptcha process all requests in a more efficient way, so bot detection will work better. 
+
+### Fixed
+- Improve pagination on Tools > Logs page inside the plugin admin area.
+- Various JavaScript issues on create post/page/form pages in WordPress 5.6.
+- Edge cases when custom fields mapping for providers was broken.
+
+## [1.6.4] - 2020-12-16
+### Added
+- hCaptcha support, see WPForms > CAPTCHA settings.
+- Show confirmation modal when deleting entries using bulk actions method.
+- Character/word limit validation message control inside Settings > Validation page.
+
+### Changed
+- Display a notification to a user in the Form Builder that outlines all the consequences of disabling entry storage.
+- Dropdown and Dropdown Items fields using the Modern format will only show the search option if at least 8 choices are provided.
+- Updated jQuery inputmask library to v5.0.6-beta20
+- Improved Form Builder Help documentation caching.
+- Only create our Logs database table when specifically enabled in the Tools settings.
+- Updated WPForms install count and rating information.
+- Allowed WPForms plugin and addons auto-update control in WP 5.5+.
+- Added "Copy to Clipboard" button inside Form Embed modal.
+- Entries page: "Delete All" button deletes filtered entries only if any filtering is applied.
+
+### Fixed
+- PHP Warning caused by Email field changes.
+- Editing multiline text in Paragraph field breaks new lines in submitted text.
+- Javascript conflicts with IE11.
+- Possible errors if web host had `set_time_limit()` disabled.
+- Form builder Date/Time field date format resetting after refresh.
+- Email validation issue if form is in a page multiple times.
+- Conditional form confirmation processing issue if one of the confirmations was not correctly configured.
+- Footer links in the Summary email are now working properly.
+- Double-click issue for "Add New Account" buttons on the Settings > Integrations page.
+- Advanced Options for Date / Time field are not logically ordered for conditional logic.
+- Required Date dropdown field shows three validation messages instead of one.
+- Search/Filter displays incorrect number of results on Entries screen.
+- Gutenberg block ignores "Include Form Styling" setting and forces full CSS stylesheet.
+
+## [1.6.3.1] - 2020-10-21
+### Fixed
+- Entry timestamps could be off by several hours for certain timezones.
+- Form title display issue inside the form builder with smaller view ports.
+- Elementor widget display issue on frontend when no form has been created.
+- Addons page activation/deactivation failing.
+
+## [1.6.3] - 2020-10-15
+### Added
+- Native integration with Divi.
+- Email field Allowlist/Denylist restrictions, see Email field Advanced Options.
+- Date/Time field restrictions, see Date/Time field Advanced Options.
+- Form builder Help - contextual help, search docs, and more.
+- Breadcrumb navigation when searching/filtering entries.
+- Logging, which can be enabled for troubleshooting from WPForms > Tools > Logs.
+- Site Health check to detect if WPForms uploads directory is writable.
+- `{entry_date format="m/d/Y"}` smart tag.
+
+### Changed
+- Nicely notify users in the Form Builder when their WordPress session has expired, and they can't save the form anymore without a page reload.
+- Better AJAX form submit field error messages handling.
+- Updated IntlTel javascript library.
+
+### Fixed
+- Custom metabox heading styling due to WordPress core changes.
+- Page title smart tag not working in some use cases when using AJAX form submissions.
+- Smart phone field assets loading when US or International formats are selected.
+- Various admin area display issues when the field label is empty.
+- Logo Translate plugin integration issues.
+- Addons page grid display issues.
+- Elementor widget edge case issues.
+- Filtering entries by the date given incorrect results due to timezones.
+- Form submit button disabled state issues when using Modern file upload format.
+- Form settings could be visible before the form was created.
+- Form builder styling inconsistencies with Dropdown field styles.
+- Input mask issues with some mobile browsers, notably Chrome.
+- Database migration errors in some edge cases during plugin updates.
+- Always display the WPForms admin area in the user's language regardless of the site language.
+- Do not load certain JS variables twice on the front end.
+- Conditional logic for modern dropdown and payment dropdown fields should properly process ending space in field values.
+
+## [1.6.2.3] - 2020-09-08
+### Changed
+- Added shortcode access to a form embed modal and enhanced modal navigation.
+- Improved empty states for All Forms, Entries list, and Builder no fields preview panel.
+- Improved Email Summaries footer text.
+- Updated bundled Dropzone.js library to 5.7.2.
+
+### Fixed
+- Properly export 0 (zero) values in field values.
+- Properly handle required Lite files translations for the Pro version of the plugin.
+- Allow unmapping all custom fields in some marketing providers' settings.
+- Properly display seconds (instead of ms) in Modern File Upload field error message when a timeout is reached.
+- Custom validation messages for the fields appear correctly with Ajax form submission enabled.
+- Base style CSS introduces no additional scrollbars now.
+- Clicking the "Next" button won't submit a multi-page form until the page is ready.
+- Correct cursor for image choices validation messages.
+- Address field "Hide subfields" checkbox got a more unique visibility toggle class.
+- Getting the license details from DB works as expected regardless of a context.
+- Getting the list of WPForms addons for user license level works as expected regardless of a context.
+- Number Slider field increment is checked to be more than zero.
+- "Show/Hide Empty Fields" toggle behavior is now consistent on both Single Entry and Print Single Entry pages.
+- Modern Dropdown validation works as expected for AJAX forms.
+- Properly support drag-n-drop on tablets in the Forms Builder.
+
+## [1.6.2.2] - 2020-08-11
+### Changed
+- Disable for now auto-updates plugins feature (introduced in WordPress 5.5) for the WPForms core plugin and all of its addons.
+
+### Fixed
+- Do not allow Action Scheduler to generate errors during the plugin uninstallation procedure.
+- Front-end error gets displayed (instead of failing silently) when honeypot is triggered by external code.
+- Form embed wizard popup should be loaded only when it can actually be used.
+- Input mask validation produces a JS error on jQuery 3.x.
+
+## [1.6.2.1] - 2020-08-07
+### Changed
+- Rephrased anti-spam protection error to provide more context.
+
+### Fixed
+- Entries export displays an error while preparing an export file.
+- "Single Line Text" and "Paragraph Text" calculate empty field word count incorrectly.
+
+## [1.6.2] - 2020-08-05
+### Added
+- Caching friendly anti-spam protection (form tokens).
+- Upload files using chunks while using the Modern File Upload field.
+- Native integration with Elementor: add to the page and create new forms right inside its builder.
+- Add a preview to the WPForms Gutenberg block.
+- "Show price after item labels" option for Payments fields.
+- File upload original file name is stored and sanitized as a string (not as a file name).
+- Display entry submission time in a Date column in Entries table.
+
+### Changed
+- Greatly improve WPForms Challenge experience.
+- Improve word counting when the Limit Length field option is used with Single Line Text/Paragraph Text fields.
+- Improve Number field input restrictions with various browsers.
+- Form field validation will now fail if input mask is enabled and user input does not complete required input mask elements.
+- Icon for the Multiple Choice field is now more representative.
+- Hide Delete button for a "Default Notification" in the Form Builder.
+- Improve Lite migrations for WordPress Multisite installations.
+- Update Constant Contact, Stripe, Mailchimp, and GetResponse logos because of their rebranding.
+- Improve descriptions of various plugin options and add more context to them.
+
+### Fixed
+- Properly map fields in various addons when the first field is added in the Form Builder.
+- Issue when editing Checkbox field entry values when dynamic choices were enabled and multiple values were saved.
+- Date Time field is not always properly populated on the Edit Entry page.
+- Entries table is not created when upgrading from Lite to Pro using zip.
+- Pro install date is not logged correctly when upgrading from Lite to Pro using zip.
+- Improve the way conditional logic templates are rendered inside the Form Builder.
+- Refresh the list of form fields that are required to properly render marketing addons.
+- "Invalid Form" error for logged out users upon submitting an AJAX form on some server configurations.
+- Multiple Choice fields had issues in the builder with image choices with empty labels.
+- Improve error handling on the back-end while processing files that were uploaded using the Modern File Upload field and failed validations.
+- Make bulk actions at the bottom of the Forms Overview work.
+
+## [1.6.1.2] - 2020-07-08
+### Added
+- Data encryption/decryption tools to use within the WPForms ecosystem.
+- PHPMailer v6 compatibility that will come with WordPress 5.5.
+
+### Fixed
+- Entries export fails to finish when the number of entries is too large.
+
+## [1.6.1.1] - 2020-06-30
+### Fixed
+- Smart Phone field should correctly submit its default value.
+- Properly handle nested Conditional Logic for Dropdown fields (field depends on a field that depends on a field that depends on a field etc).
+
+## [1.6.1] - 2020-06-23
+### Added
+- Display a list of scheduled actions on WPForms > Tools > Scheduled Actions page.
+- Multiple select option for Dropdown field (off by default).
+- New Modern style option for Dropdown and Payment Dropdown fields (off by default).
+- Support Smart Tags in form descriptions.
+
+### Changed
+- Uploaded files to the WordPress Media library will now have a generated title and description based on field label and description.
+
+### Fixed
+- Properly handle multiple clicks on various accordion-like elements on Form Builder and Settings > Integrations pages.
+- Remove all the plugin-related information on uninstall from the DB when opted-in in plugin settings.
+- Avoid unnecessary DB queries when loading the Export Entries functionality.
+- Some plugins when generating own errors displayed the source of the issue in WPForms, not anymore. We simplified error handling.
+- Replace all new lines characters with spaces in notification email subjects (e.g., when an address field value is used in a subject via a smart tag).
+- Use a new filter `set_screen_option_{$option}` on the Forms and Entries pages for better compatibility with WP 5.4.2.
+- Make sure the plugin doesn't crash when `iconv` PHP extension is not installed on a server.
+- Improve the look of the Conditional Logic configuration area in the Form Builder on tablets.
+- Conditional logic should work correctly when it depends on a field with ID=0.
+- HTML Field Label should be carried over when the field is duplicated.
+- Properly handle fields with choices with new lines in their labels when connected to Conditional Logic.
+- Google Invisible v2 reCAPTCHA should show Submit Button Processing Text when the form is submitted.
+- A lot of searches on the Entries page could result in server failure.
+- Display inline validation for required Smart Phone field, when there are multiple such fields in a form.
+- Update the library used for Smart Phone field, which has fixed known mobile issues and duplicated IDs for the field.
+- Display the list of countries in the "Countries" preset and in the Address field in alphabetical order regardless of the current site language.
+- Entry editing not properly displaying all 0 (zero) field values.
+- Error if entry editing contained an empty required field.
+
+## [1.6.0.2] - 2020-05-19
+### Added
+- Helper functions to dequeue scripts/styles by URI.
+
+### Fixed
+- Phone field should not allow alphabet input but allow spaces.
+- Product education URL encoding issues.
+- Large forms with numerous conditional logic rules experience significant UI slowdowns in the Form Builder.
+- The default value 0 (zero) of the Paragraph Text field does not display on the front end.
+- Securely store WPForms anonymized cookie, so it cannot be sent along with cross-site requests (samesite).
+- Entries list page on mobile devices was unusable: columns were not shown properly, links for each entry in a table were unclickable.
+- Various PHP notices that may appear during wildly complicated forms submissions.
+- Improved escaping inside Form Builder live preview, props Fortinet Fortiguard Labs.
+- Date field format defaults to YYYY-MM-DD format no matter what format is selected.
+- Page break field should always behave correctly on front end even when its settings are broken.
+- Incorrect interval value was used when running a cleanup job after notifications sent.
+- Correctly display Smart phone field country selection on mobile.
+- Improved plugin custom capabilities handling inside the WordPress admin area.
+- Do not generate errors when editing entries for forms that don't have fields anymore.
+- Delete orphaned plugin translation files when cleanup option in plugin settings is checked and the plugin is deleted from the site.
+- Prevent entry duplicates creation by improving permissions check when allowing non-admins to edit entries.
+- Improved error handling when dealing with entries exporting weird errors.
+
+## [1.6.0.1] - 2020-04-16
+### Fixed
+- Compatibility issues with older versions of Surveys and Polls addon.
+
+## [1.6.0] - 2020-04-15
+### Added
+- Forms entry editing.
+- Admin bar menu item.
+- Conditional logic support for the Divider field.
+- Form Builder alert when using browser "Back" button if form contains unsaved changes.
+- Settings > Emails: "Optimize Email Sending" option which enables sending emails asynchronously.
+- Auto-download translations on plugin activation.
+
+### Changed
+- Async form notification emails are now off by default.
+- Date field can be cleared when using the Date Picker.
+- Number Slider field display improvements on small devices.
+- Do not cache entry counts on Entries Overview page.
+
+### Fixed
+- Error if there are some plugins or themes add `widget_title` filter.
+- Front-end compatibility with Rating field and jQuery 3.x.
+- Choice Images not displaying in form notifications if no label is set.
+- Email/Password field Advanced Options not always displaying correct options.
+- Page Break field "Disable Scroll Animation" option not working as expected.
+- Form Builder "drag zone" not available when all fields are deleted.
+- Uploaded file names are not truly unique in very rare cases.
+- Empty `div` appended to end of form display.
+- Block alignment issues (WordPress 5.4+).
+- Form Builder field option panel is not available if field is placed before the last form field.
+- Conditional confirmation error when '<' symbol is used as a field option.
+- Display placeholders for Date/Time field when dropdown date option is selected and Conditional Logic applied to the field.
+- Fallback population for fields with choices (checkbox, radio etc) when special characters are used.
+- Entries export support external storage for temporary CSV files.
+- Integrity of decoded data with additional sanitizing.
+- Compatibility issues with Elementor.
+
+## [1.5.9.4] - 2020-03-19
+### Changed
+- Improve async notification emails scheduling compatibility with certain caching plugins and site installs.
+
+## [1.5.9.3] - 2020-03-18
+### Fixed
+- Some smart tags are not rendered correctly in the email notifications if sent asynchronously.
+
+## [1.5.9.2] - 2020-03-09
+### Fixed
+- PHP error for those upgrading from < 1.5.4.2.
+
+## [1.5.9.1] - 2020-03-05
+### Fixed
+- Checkbox image click doesn't work well to select an option.
+- Do not allow empty connection names (spaces only) for providers.
+- File Upload field: properly handle `{field_value_id="#"}` smart tag.
+- Provide proper defaults to Date / Time field, only when Date or only Time format is selected.
 
 ## [1.5.9] - 2020-03-03
 ### IMPORTANT
@@ -32,11 +403,11 @@ All notable changes to this project will be documented in this file, formatted v
 - Improve compatibility with the "Lazy Loading Feature Plugin" for Ajax spinner image on front-end.
 - Invalid payment amount when empty Payment Checkbox field is used in conditional logic.
 - Modern File Upload field validation issue.
-- Entry information not fully deleted when using "Delete All" link from enties table view.
+- Entry information not fully deleted when using "Delete All" link from entries table view.
 - Validation issue with required Checkbox fields using Image Choices.
 - Form builder preview issue with a field using Dynamic Choices setting.
 - Australian mobile phone numbers not passing Smart Phone Field validation (updated intl-tel-put library).
-- Number Field values not allowing leading zeros. 
+- Number Field values not allowing leading zeros.
 - Form Builder: templates search bar shows icon over text.
 - Security hardening and improvements.
 
@@ -121,7 +492,7 @@ All notable changes to this project will be documented in this file, formatted v
 - WordPress 5.3 admin area styling issues.
 - Modern File Upload hidden input styling issues.
 - Number field incorrectly processing negative numbers.
-- `page_url` Smart Tag issues. 
+- `page_url` Smart Tag issues.
 
 ## [1.5.6.2] - 2019-11-07
 ### Added
@@ -130,7 +501,7 @@ All notable changes to this project will be documented in this file, formatted v
 ### Fixed
 - WordPress 5.3 compatibility.
 - Smart Phone countries squashed dropdown on screen-width <= 600px on themes with Base form styling selected.
-- Properly include Pro form templates on form creation screen in a template selection section. 
+- Properly include Pro form templates on form creation screen in a template selection section.
 - Classic file uploader: correctly handle uploaded files with the same name.
 - Field's Default value `0` disappears after saving and exiting the form builder.
 - Smart Email field did not recognize `.dev` top level domains as valid.
@@ -145,7 +516,7 @@ All notable changes to this project will be documented in this file, formatted v
 - Modern file uploader: when file is being uploaded do not change Submit button text.
 - Modern file uploader: correctly process WordPress Media library integration and conditional logic.
 - Modern file uploader: some servers don't have mime extension installed, so use WP function to determine mime type.
-- Compatibility with WordPress 5.3 and its changed \WP_Upgrader_Skin::feedback() method signature.
+- Compatibility with WordPress 5.3 and its changed `\WP_Upgrader_Skin::feedback()` method signature.
 
 ## [1.5.6] - 2019-10-23
 ### IMPORTANT
@@ -174,10 +545,10 @@ All notable changes to this project will be documented in this file, formatted v
 ## [1.5.5.1] - 2019-09-17
 ### Added
 - New filter to display additional fields to filter entries on Entries page.
-- New filters to add additional information into entries exported CSV file. 
+- New filters to add additional information into entries exported CSV file.
 
 ### Fixed
-- Broken reCAPTCHA checkbox in Builder > Settings > General if reCAPTCHA type does not set in WPForms > Settings. 
+- Broken reCAPTCHA checkbox in Builder > Settings > General if reCAPTCHA type does not set in WPForms > Settings.
 - CSV Download adding `.html` extension to initially a CSV file in Safari on MacOS.
 - Fields default values do not show if conditional logic is enabled.
 - Smart tag `{entry_id}` should not be available for fields, because it is available only after entry saving.
@@ -186,7 +557,7 @@ All notable changes to this project will be documented in this file, formatted v
 - Broken image choices selection and styling (layout) issue in IE 11.
 - Redirect to PayPal payment doesn't work when AJAX form submission is On.
 - Backward compatible filters for some fields when displaying them were missing.
- 
+
 ## [1.5.5] - 2019-08-28
 ### Added
 - New default screen for the Entries list page (WPForms > Entries).
@@ -215,7 +586,7 @@ All notable changes to this project will be documented in this file, formatted v
 ### Fixed
 - About Us page behaviour when WP Mail SMTP Pro is installed.
 - Elite licenses could not install addons from inside the form builder.
-- Rating field icon color not changing on frontend with some themes.
+- Rating field icon color not changing on front end with some themes.
 - reCAPTCHA settings could be saved without providing reCAPTCHA type.
 - Entry database tables not created for some users upgrading from WPForms Lite.
 
@@ -259,10 +630,10 @@ All notable changes to this project will be documented in this file, formatted v
 - Special characters aren't encoded when Smart Tags are processed in query string.
 - Fields with Image choices are not working with some Android and older desktop browsers.
 - Payment Total field value includes conditionally hidden Single item fields.
-- Frontend and notification emails incorrect payment amount for some currencies if the value is greater than 1000.
+- Front-end and notification emails incorrect payment amount for some currencies if the value is greater than 1000.
 - Conditional Logic: Payment Checkbox Items multiple selection issue.
 - Form Builder: Several alert modals are displayed in batch if multiple providers have configuration issues.
-- WP_Post object is returned from `wpforms()->form->get()` if form data is requested with a non-WPForms post ID.
+- `WP_Post` object is returned from `wpforms()->form->get()` if form data is requested with a non-WPForms post ID.
 - Inconsistent Enter key behaviour in multi-page forms.
 - Unable to get a specific entry with `wpforms()->entry->get_entries()` without giving the form id.
 
@@ -432,21 +803,21 @@ All notable changes to this project will be documented in this file, formatted v
 - Gutenberg block.
 - Conditional form confirmations - forms can now have multiple confirmations with conditional logic!
 - WP Mail SMTP detection and hints in the form builder notification settings.
-- Alt and title tags to image choices images on frontend display.
+- Alt and title tags to image choices images on front-end display.
 
 ### Changed
-- Improved Website URL field frontend validation - now automatically adds protocol if omitted.
+- Improved Website URL field front-end validation - now automatically adds protocol if omitted.
 - i18n improvements.
 
 ### Fixed
 - Compatibility issue with MySQL `Strict_Trans_Tables` mode.
 - Incorrect param used with `shortcode_atts`.
 - NPS and Rating fields not having access to all conditional logic comparisons.
-- Accessing `wpforms_setting` in frontend javascript before checking if it exists.
+- Accessing `wpforms_setting` in front-end javascript before checking if it exists.
 - Escaping method in HTML field mangling code on save.
 - PHP error toggling form builder notifications in some use cases.
 - GDPR field Agreement text not updating in real time.
-- Marketing provider connections containing an escaped apostrophe. 
+- Marketing provider connections containing an escaped apostrophe.
 - Pressing "Enter" in the form builder resulting in unexpected behavior.
 - Incorrect pagination when searching entries.
 - Security enhancements and other misc. bug fixes.
@@ -496,10 +867,10 @@ All notable changes to this project will be documented in this file, formatted v
 - GDPR Enhancement: Disable User Details (IP and User Agent) plugin setting.
 - GDPR Enhancement: Disable Storing User Details form setting.
 - GDPR Enhancement: User Agreement form field.
-- Page break, section divider, and HTML fields can now be enabled in email notifications with a filter [doc](https://developers.wpforms.com/docs/filter-reference-wpforms_email_display_other_fields).
+- Page break, section divider, and HTML fields can now be enabled in email notifications with a filter [doc](https://wpforms.com/developers/wpforms_email_display_other_fields/).
 
 ### Changed
-- Hide credit card field unless enabled by a payment addon or with a filter [doc](https://developers.wpforms.com/docs/enable-credit-card-field-without-stripe-addon/).
+- Hide credit card field unless enabled by a payment addon or with a filter [doc](https://wpforms.com/developers/how-to-enable-credit-card-field-without-stripe-addon/).
 - PHP warning that alerts users support for PHP 5.4 and below will be dropped this summer.
 - Spam logging, to improve performance.
 

@@ -344,6 +344,16 @@ Object {
 }
 `;
 
+exports[`Ticket actions Ticket details actions set ticket iac setting 1`] = `
+Object {
+  "payload": Object {
+    "clientId": "modern-tribe",
+    "iac": "allowed",
+  },
+  "type": "@@MT/TICKETS/SET_TICKET_IAC_SETTING",
+}
+`;
+
 exports[`Ticket actions Ticket details actions set ticket price 1`] = `
 Object {
   "payload": Object {
@@ -626,6 +636,16 @@ Object {
     "endTimeInput": "12:34",
   },
   "type": "@@MT/TICKETS/SET_TICKET_TEMP_END_TIME_INPUT",
+}
+`;
+
+exports[`Ticket actions Ticket temp details actions set ticket temp iac setting 1`] = `
+Object {
+  "payload": Object {
+    "clientId": "modern-tribe",
+    "iac": "allowed",
+  },
+  "type": "@@MT/TICKETS/SET_TICKET_TEMP_IAC_SETTING",
 }
 `;
 

@@ -1,6 +1,8 @@
 <?php
 
-if (!defined('ABSPATH')) exit;
+if (!defined('ABSPATH')) {
+    exit;
+}
 
 class d4pupd_admin_settings {
     private $settings;
@@ -60,15 +62,15 @@ class d4pupd_admin_settings {
 
     private function get_info_api_key() {
         $render = __("To get your API Key, log in to Dev4Press website, and visit your dashboard", "dev4press-updater");
-        $render.= ': <a href="https://www.dev4press.com/user/" target="_blank">'.__("Dev4Press Dashboard", "dev4press-updater").'</a>. ';
-        $render.= __("Make sure you keep your API Key safe, and don't share it with anyone else!", "dev4press-updater");
+        $render .= ': <a href="https://my.dev4press.com/api-key/" target="_blank">'.__("User Dashboard API Key", "dev4press-updater").'</a>. ';
+        $render .= __("Make sure you keep your API Key safe, and don't share it with anyone else!", "dev4press-updater");
 
         return $render;
     }
 
     private function get_info_debug() {
         $render = __("If you have problems with the updater, it is useful to enable debug mode and plugin will save information about requests sent to Dev4Press and responses received.", "dev4press-updater");
-        $render.= ' '.__("All data will be stored into text file 'dev4press.log' in your WordPress uploads folder.", "dev4press-updater");
+        $render .= ' '.__("All data will be stored into text file 'dev4press.log' in your WordPress uploads folder.", "dev4press-updater");
 
         return $render;
     }

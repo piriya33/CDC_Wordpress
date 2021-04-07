@@ -54,6 +54,7 @@ class QLWCDC_Backend {
           $('label[for=qlwcdc_add_product_quick_purchase]').closest('tr').addClass('qlwcdc-premium-field').css({'opacity': '0.5', 'pointer-events': 'none'});
           $('label[for=qlwcdc_add_product_quick_purchase_to]').closest('tr').addClass('qlwcdc-premium-field').css({'opacity': '0.5', 'pointer-events': 'none'});
           $('label[for=qlwcdc_add_product_quick_purchase_qty]').closest('tr').addClass('qlwcdc-premium-field').css({'opacity': '0.5', 'pointer-events': 'none'});
+          $('label[for=qlwcdc_add_product_quick_purchase_type]').closest('tr').addClass('qlwcdc-premium-field').css({'opacity': '0.5', 'pointer-events': 'none'});
           $('label[for=qlwcdc_add_product_quick_purchase_class]').closest('tr').addClass('qlwcdc-premium-field').css({'opacity': '0.5', 'pointer-events': 'none'});
           $('label[for=qlwcdc_add_product_quick_purchase_text]').closest('tr').addClass('qlwcdc-premium-field').css({'opacity': '0.5', 'pointer-events': 'none'});
           $('label[for=qlwcdc_add_product_default_attributes]').closest('tr').addClass('qlwcdc-premium-field').css({'opacity': '0.5', 'pointer-events': 'none'});

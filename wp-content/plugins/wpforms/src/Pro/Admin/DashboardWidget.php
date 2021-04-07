@@ -257,9 +257,13 @@ class DashboardWidget {
 			<img class="wpforms-dash-widget-block-sullie-logo" src="<?php echo \esc_url( WPFORMS_PLUGIN_URL . 'assets/images/sullie.png' ); ?>" alt="<?php \esc_attr_e( 'Sullie the WPForms mascot', 'wpforms' ); ?>">
 			<h2><?php \esc_html_e( 'Create Your First Form to Start Collecting Leads', 'wpforms' ); ?></h2>
 			<p><?php \esc_html_e( 'You can use WPForms to build contact forms, surveys, payment forms, and more with just a few clicks.', 'wpforms' ); ?></p>
-			<a href="<?php echo \esc_url( $create_form_url ); ?>" class="button button-primary">
-				<?php \esc_html_e( 'Create Your Form', 'wpforms' ); ?>
-			</a>
+
+			<?php if ( wpforms_current_user_can( 'create_forms' ) ) : ?>
+				<a href="<?php echo \esc_url( $create_form_url ); ?>" class="button button-primary">
+					<?php \esc_html_e( 'Create Your Form', 'wpforms' ); ?>
+				</a>
+			<?php endif; ?>
+
 			<a href="<?php echo \esc_url( $learn_more_url ); ?>" class="button" target="_blank" rel="noopener noreferrer">
 				<?php \esc_html_e( 'Learn More', 'wpforms' ); ?>
 			</a>
@@ -324,8 +328,7 @@ class DashboardWidget {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param array  $options Timespan options (in days).
-	 * @param string $meta    Widget meta name to get user saved timespan from.
+	 * @param array $options Timespan options (in days).
 	 */
 	public function timespan_options_html( $options ) {
 
@@ -364,6 +367,8 @@ class DashboardWidget {
 	 * @since 1.5.0
 	 *
 	 * @param int $days Timespan (in days) to fetch the data for.
+	 *
+	 * @throws \Exception When date is failing.
 	 */
 	public function forms_list_block( $days ) {
 
@@ -395,7 +400,7 @@ class DashboardWidget {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param array   $forms Forms to display in the list.
+	 * @param array $forms Forms to display in the list.
 	 */
 	public function forms_list_block_html( $forms ) {
 
@@ -472,7 +477,9 @@ class DashboardWidget {
 				<span class="recommended"><?php \esc_html_e( 'Recommended Plugin:', 'wpforms' ); ?></span>
 				<span>
 					<b><?php \esc_html_e( 'MonsterInsights', 'wpforms' ); ?></b> <span class="sep">-</span>
-					<a href="<?php echo \esc_url( $install_mi_url ); ?>"><?php \esc_html_e( 'Install', 'wpforms' ); ?></a> <span class="sep sep-vertical">&vert;</span>
+					<?php if ( wpforms_can_install( 'plugin' ) ) { ?>
+						<a href="<?php echo \esc_url( $install_mi_url ); ?>"><?php \esc_html_e( 'Install', 'wpforms' ); ?></a> <span class="sep sep-vertical">&vert;</span>
+					<?php } ?>
 					<a href="https://www.monsterinsights.com/?utm_source=wpformsplugin&utm_medium=link&utm_campaign=wpformsdashboardwidget"><?php \esc_html_e( 'Learn More', 'wpforms' ); ?></a>
 				</span>
 			</span>
@@ -508,9 +515,11 @@ class DashboardWidget {
 	 * Get timespan options for $element (in days).
 	 *
 	 * @since 1.5.0
+	 *
 	 * @deprecated 1.5.2
 	 *
-	 * @param string $element 'chart' or 'forms_list'.
+	 * @param string $element Possible value: 'chart' or 'forms_list'.
+	 *
 	 * @return array
 	 */
 	public function get_timespan_options_for( $element ) {
@@ -561,9 +570,11 @@ class DashboardWidget {
 	 * Get default timespan option for $element.
 	 *
 	 * @since 1.5.0
+	 *
 	 * @deprecated 1.5.2
 	 *
-	 * @param string $element 'chart' or 'forms_list'.
+	 * @param string $element Possible value: 'chart' or 'forms_list'.
+	 *
 	 * @return int|null
 	 */
 	public function get_timespan_default_for( $element ) {
@@ -597,9 +608,9 @@ class DashboardWidget {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param string $action  'get' or 'set'.
-	 * @param string $meta    Meta name.
-	 * @param int    $value   Value to set.
+	 * @param string $action Possible value: 'get' or 'set'.
+	 * @param string $meta   Meta name.
+	 * @param int    $value  Value to set.
 	 *
 	 * @return mixed
 	 */
@@ -696,11 +707,12 @@ class DashboardWidget {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param string $param   'date' or 'form'.
+	 * @param string $param   Possible value: 'date' or 'form'.
 	 * @param int    $days    Timespan (in days) to fetch the data for.
 	 * @param int    $form_id Form ID to fetch the data for.
 	 *
 	 * @return array
+	 * @throws \Exception When dates management fails.
 	 */
 	public function get_entries_count_by( $param, $days = 0, $form_id = 0 ) {
 
@@ -711,6 +723,7 @@ class DashboardWidget {
 		}
 
 		$dates = $this->get_days_interval( $days );
+		$cache = false;
 
 		// Allow results caching to reduce DB load.
 		$allow_caching = $this->settings['allow_data_caching'];
@@ -725,6 +738,7 @@ class DashboardWidget {
 
 		// is_array() detects cached empty searches.
 		if ( $allow_caching && \is_array( $cache ) ) {
+
 			return $cache;
 		}
 
@@ -760,6 +774,7 @@ class DashboardWidget {
 	 * @param \DateTime $date_end   End date for the search.
 	 *
 	 * @return array
+	 * @throws \Exception When dates are failing.
 	 */
 	public function get_entries_count_by_date_sql( $form_id = 0, $date_start = null, $date_end = null ) {
 
@@ -778,7 +793,7 @@ class DashboardWidget {
 				WHERE 1=1";
 
 		if ( ! empty( $form_id ) ) {
-			$sql .= ' AND form_id = %d';
+			$sql           .= ' AND form_id = %d';
 			$placeholders[] = $form_id;
 		} else {
 			$allowed_forms = \wpforms()->form->get( '', array( 'fields' => 'ids' ) );

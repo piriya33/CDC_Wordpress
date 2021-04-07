@@ -6,135 +6,13 @@
  * @since 1.0.0
  */
 
-// Exit if accessed directly
-if ( !defined( 'ABSPATH' ) ) exit;
-
-// Action to add menu
-add_action('admin_menu', 'vgap_register_design_page');
-
-/**
- * Register plugin design page in admin menu
- * 
- * @package Video gallery and Player
- * @since 1.0.0
- */
-function vgap_register_design_page() {
-	add_submenu_page( 'edit.php?post_type='.WP_HTML5VP_POST_TYPE, __('How it works, our plugins and offers', 'html5-videogallery-plus-player'), __('How It Works', 'html5-videogallery-plus-player'), 'manage_options', 'vgap-designs', 'vgap_designs_page' );
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
 }
-
-/**
- * Function to display plugin design HTML
- * 
- * @package Video gallery and Player
- * @since 1.0.0
- */
-function vgap_designs_page() {
-
-	$wpos_feed_tabs = vgap_help_tabs();
-	$active_tab 	= isset($_GET['tab']) ? $_GET['tab'] : 'how-it-work';
 ?>
 
-	<div class="wrap vgap-wrap">
-
-		<h2 class="nav-tab-wrapper">
-			<?php
-			foreach ($wpos_feed_tabs as $tab_key => $tab_val) {
-				$tab_name	= $tab_val['name'];
-				$active_cls = ($tab_key == $active_tab) ? 'nav-tab-active' : '';
-				$tab_link 	= add_query_arg( array( 'post_type' => WP_HTML5VP_POST_TYPE, 'page' => 'vgap-designs', 'tab' => $tab_key), admin_url('edit.php') );
-			?>
-
-			<a class="nav-tab <?php echo $active_cls; ?>" href="<?php echo $tab_link; ?>"><?php echo $tab_name; ?></a>
-
-			<?php } ?>
-		</h2>
-		
-		<div class="vgap-tab-cnt-wrp">
-		<?php
-			if( isset($active_tab) && $active_tab == 'how-it-work' ) {
-				vgap_howitwork_page();
-			}
-			else if( isset($active_tab) && $active_tab == 'plugins-feed' ) {
-				echo vgap_get_plugin_design( 'plugins-feed' );
-			} else {
-				echo vgap_get_plugin_design( 'offers-feed' );
-			}
-		?>
-		</div><!-- end .vgap-tab-cnt-wrp -->
-
-	</div><!-- end .vgap-wrap -->
-
-<?php
-}
-
-/**
- * Gets the plugin design part feed
- *
- * @package Video gallery and Player
- * @since 1.0.0
- */
-function vgap_get_plugin_design( $feed_type = '' ) {
-	
-	$active_tab = isset($_GET['tab']) ? $_GET['tab'] : '';
-	
-	// If tab is not set then return
-	if( empty($active_tab) ) {
-		return false;
-	}
-
-	// Taking some variables
-	$wpos_feed_tabs = vgap_help_tabs();
-	$transient_key 	= isset($wpos_feed_tabs[$active_tab]['transient_key']) 	? $wpos_feed_tabs[$active_tab]['transient_key'] 	: 'vgap_' . $active_tab;
-	$url 			= isset($wpos_feed_tabs[$active_tab]['url']) 			? $wpos_feed_tabs[$active_tab]['url'] 				: '';
-	$transient_time = isset($wpos_feed_tabs[$active_tab]['transient_time']) ? $wpos_feed_tabs[$active_tab]['transient_time'] 	: 172800;
-	$cache 			= get_transient( $transient_key );
-	
-	if ( false === $cache ) {
-		
-		$feed 			= wp_remote_get( esc_url_raw( $url ), array( 'timeout' => 120, 'sslverify' => false ) );
-		$response_code 	= wp_remote_retrieve_response_code( $feed );
-		
-		if ( ! is_wp_error( $feed ) && $response_code == 200 ) {
-			if ( isset( $feed['body'] ) && strlen( $feed['body'] ) > 0 ) {
-				$cache = wp_remote_retrieve_body( $feed );
-				set_transient( $transient_key, $cache, $transient_time );
-			}
-		} else {
-			$cache = '<div class="error"><p>' . __( 'There was an error retrieving the data from the server. Please try again later.', 'html5-videogallery-plus-player' ) . '</div>';
-		}
-	}
-	return $cache;	
-}
-
-/**
- * Function to get plugin feed tabs
- *
- * @package Video gallery and Player
- * @since 1.0.0
- */
-function vgap_help_tabs() {
-	$wpos_feed_tabs = array(
-						'how-it-work' 	=> array(
-													'name' => __('How It Works', 'html5-videogallery-plus-player'),
-												),
-						'plugins-feed' 	=> array(
-													'name' 				=> __('Our Plugins', 'html5-videogallery-plus-player'),
-													'url'				=> 'http://wponlinesupport.com/plugin-data-api/plugins-data.php',
-													'transient_key'		=> 'wpos_plugins_feed',
-													'transient_time'	=> 172800
-												)
-					);
-	return $wpos_feed_tabs;
-}
-
-/**
- * Function to get 'How It Works' HTML
- *
- * @package Video gallery and Player
- * @since 1.0.0
- */
-function vgap_howitwork_page() { ?>
-	
+<div class="wrap vgap-wrap">
+	<h2><?php _e( 'How It Works', 'html5-videogallery-plus-player' ); ?></h2>
 	<style type="text/css">
 		.wpos-pro-box .hndle{background-color:#0073AA; color:#fff;}
 		.wpos-pro-box .postbox{background:#dbf0fa none repeat scroll 0 0; border:1px solid #0073aa; color:#191e23;}
@@ -142,6 +20,8 @@ function vgap_howitwork_page() { ?>
 		.vgap-wrap .wpos-button-full{display:block; text-align:center; box-shadow:none; border-radius:0;}
 		.vgap-shortcode-preview{background-color: #e7e7e7; font-weight: bold; padding: 2px 5px; display: inline-block; margin:0 0 2px 0;}
 		.upgrade-to-pro{font-size:18px; text-align:center; margin-bottom:15px;}
+		.wpos-copy-clipboard{-webkit-touch-callout: all; -webkit-user-select: all; -khtml-user-select: all; -moz-user-select: all; -ms-user-select: all; user-select: all;}
+		.wpos-new-feature{ font-size: 10px; margin-left:3px;  color: #fff; font-weight: bold; background-color: #03aa29; padding:1px 4px; font-style: normal; margin-left: 3px;}
 	</style>
 
 	<div class="post-box-container">
@@ -153,11 +33,11 @@ function vgap_howitwork_page() { ?>
 					<div class="metabox-holder">
 						<div class="meta-box-sortables ui-sortable">
 							<div class="postbox">
-								
-								<h3 class="hndle">
-									<span><?php _e( 'How It Works - Display and shortcode', 'html5-videogallery-plus-player' ); ?></span>
-								</h3>
-								
+								<div class="postbox-header">
+									<h2 class="hndle">
+										<span><?php _e( 'How It Works - Display and shortcode', 'html5-videogallery-plus-player' ); ?></span>
+									</h2>
+								</div>
 								<div class="inside">
 									<table class="form-table">
 										<tbody>
@@ -171,7 +51,6 @@ function vgap_howitwork_page() { ?>
 														<li><?php _e('Step-2: Click on "Video Gallery --> Add new" ', 'html5-videogallery-plus-player'); ?></li>
 														<li><?php _e('Step-3: Add Video title, link, and video poster image as a featured image.', 'html5-videogallery-plus-player'); ?></li>
 														<li><?php _e('Step-4: You can also create the categories under "Video Gallery--> category". Asign the video under respective category and use category shortcode to display multiple video galleries. ', 'html5-videogallery-plus-player'); ?></li>
-														
 													</ul>
 												</td>
 											</tr>
@@ -193,24 +72,69 @@ function vgap_howitwork_page() { ?>
 													<label><?php _e('All Shortcodes', 'html5-videogallery-plus-player'); ?>:</label>
 												</th>
 												<td>
-													<span class="vgap-shortcode-preview">[sp_html5video]</span> – <?php _e('Display Album Gellery and Video Player in a page (list view and grid view)', 'html5-videogallery-plus-player'); ?> <br />
-													
-													
+													<span class="wpos-copy-clipboard vgap-shortcode-preview">[sp_html5video]</span> – <?php _e('Display Album Gellery and Video Player in a page (list view and grid view)', 'html5-videogallery-plus-player'); ?>
 												</td>
-											</tr>						
-												
+											</tr>
+										</tbody>
+									</table>
+								</div><!-- .inside -->
+							</div><!-- #general -->
+
+							<div class="postbox">
+								<div class="postbox-header">
+									<h2 class="hndle">
+										<span><?php _e( 'Gutenberg Support', 'html5-videogallery-plus-player' ); ?></span>
+									</h2>
+								</div>
+								<div class="inside">
+									<table class="form-table">
+										<tbody>
 											<tr>
 												<th>
-													<label><?php _e('Need Support?', 'html5-videogallery-plus-player'); ?></label>
+													<label><?php _e('How it Work', 'html5-videogallery-plus-player'); ?>:</label>
 												</th>
 												<td>
+													<ul>
+														<li><?php _e('Step-1. Go to the Gutenberg editor of your page.', 'html5-videogallery-plus-player'); ?></li>
+														<li><?php _e('Step-2. Search "Video Gallery" keyword in the Gutenberg block list.', 'html5-videogallery-plus-player'); ?></li>
+														<li><?php _e('Step-3. Add any block of Video Gallery and you will find its relative options on the right end side.', 'html5-videogallery-plus-player'); ?></li>
+													</ul>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div><!-- .inside -->
+							</div><!-- #general -->
+
+							<div class="postbox">
+								<div class="postbox-header">
+									<h2 class="hndle">
+										<span><?php _e( 'Need Support?', 'html5-videogallery-plus-player' ); ?></span>
+									</h2>
+								</div>
+								<div class="inside">
+									<table class="form-table">
+										<tbody>
+											<tr>
+												<td>
 													<p><?php _e('Check plugin document for shortcode parameters and demo for designs.', 'html5-videogallery-plus-player'); ?></p> <br/>
-													<a class="button button-primary" href="https://www.wponlinesupport.com/plugins-documentation/documentvideo-gallery-player/" target="_blank"><?php _e('Documentation', 'html5-videogallery-plus-player'); ?></a>									
+													<a class="button button-primary" href="https://docs.wponlinesupport.com/video-gallery-and-player/" target="_blank"><?php _e('Documentation', 'html5-videogallery-plus-player'); ?></a>
 													<a class="button button-primary" href="https://demo.wponlinesupport.com/video-gallery-and-player-demo/" target="_blank"><?php _e('Demo for Designs', 'html5-videogallery-plus-player'); ?></a>
 												</td>
 											</tr>
 										</tbody>
 									</table>
+								</div><!-- .inside -->
+							</div><!-- #general -->
+
+							<div class="postbox">
+								<div class="postbox-header">
+									<h2 class="hndle">
+										<span><?php _e( 'Help to improve this plugin!', 'html5-videogallery-plus-player' ); ?></span>
+									</h2>
+								</div>
+								<div class="inside">
+									<p>Enjoyed this plugin? You can help by rate this plugin <a href="https://wordpress.org/support/plugin/html5-videogallery-plus-player/reviews/" target="_blank">5 stars!</a></p>
 								</div><!-- .inside -->
 							</div><!-- #general -->
 						</div><!-- .meta-box-sortables ui-sortable -->
@@ -221,14 +145,13 @@ function vgap_howitwork_page() { ?>
 				<div id="postbox-container-1" class="postbox-container">
 					<div class="metabox-holder wpos-pro-box">
 						<div class="meta-box-sortables ui-sortable">
-							<div class="postbox" style="">
-									
+							<div class="postbox">
+
 								<h3 class="hndle">
 									<span><?php _e( 'Upgrate to Pro', 'html5-videogallery-plus-player' ); ?></span>
 								</h3>
-								<div class="inside">										
+								<div class="inside">
 									<ul class="wpos-list">
-									
 										<li>20+ Designs</li>
 										<li>Grid View <br /> <img style="width:100%;" src="<?php echo WP_HTML5VP_URL; ?>assets/images/video-gallery-grid.jpg"></li>
 										<li>Slider/Carousel View <br /> <img style="width:100%;" src="<?php echo WP_HTML5VP_URL; ?>assets/images/video-gallery-slider.jpg"></li>
@@ -236,36 +159,23 @@ function vgap_howitwork_page() { ?>
 										<li>Multiple display with category</li>
 										<li>WP Templating Features.</li>
 										<li>Gutenberg Block Supports.</li>
-										<li>Visual Composer/WPBakery Page Builder Supports.</li>
+										<li>WPBakery Page Builder Supports</li>
+										<li>Elementor, Beaver and SiteOrigin Page Builder Support. <span class="wpos-new-feature">New</span></li>
+										<li>Divi Page Builder Native Support. <span class="wpos-new-feature">New</span></li>
 										<li>Editor support</li>
 										<li>Drag and drop custom ordering</li>
 										<li>Responsive</li>
 										<li>Popup gallery slider</li>
 									</ul>
 									<div class="upgrade-to-pro">Gain access to <strong>Video Gallery and Player</strong> included in <br /><strong>Essential Plugin Bundle</div>
-									<a class="button button-primary wpos-button-full" href="https://www.wponlinesupport.com/wp-plugin/video-gallery-player/?ref=WposPratik&utm_source=WP&utm_medium=WP-Plugins&utm_campaign=Upgrade-PRO" target="_blank"><?php _e('Go Premium ', 'html5-videogallery-plus-player'); ?></a>	
+									<a class="button button-primary wpos-button-full" href="https://www.wponlinesupport.com/wp-plugin/video-gallery-player/?ref=WposPratik&utm_source=WP&utm_medium=Video&utm_campaign=Upgrade-PRO" target="_blank"><?php _e('Go Premium ', 'html5-videogallery-plus-player'); ?></a>	
 									<p><a class="button button-primary wpos-button-full" href="https://demo.wponlinesupport.com/prodemo/video-gallery-and-player-pro-demo/" target="_blank"><?php _e('View PRO Demo ', 'html5-videogallery-plus-player'); ?></a>			</p>								
 								</div><!-- .inside -->
 							</div><!-- #general -->
 						</div><!-- .meta-box-sortables ui-sortable -->
 					</div><!-- .metabox-holder -->
-
-					<!-- Help to improve this plugin! -->
-					<div class="metabox-holder">
-						<div class="meta-box-sortables ui-sortable">
-							<div class="postbox">
-									<h3 class="hndle">
-										<span><?php _e( 'Help to improve this plugin!', 'html5-videogallery-plus-player' ); ?></span>
-									</h3>									
-									<div class="inside">										
-										<p>Enjoyed this plugin? You can help by rate this plugin <a href="https://wordpress.org/support/plugin/html5-videogallery-plus-player/reviews/" target="_blank">5 stars!</a></p>
-									</div><!-- .inside -->
-							</div><!-- #general -->
-						</div><!-- .meta-box-sortables ui-sortable -->
-					</div><!-- .metabox-holder -->
 				</div><!-- #post-container-1 -->
-
 			</div><!-- #post-body -->
 		</div><!-- #poststuff -->
 	</div><!-- #post-box-container -->
-<?php }
+</div>

@@ -2,13 +2,13 @@
 
 /*
 Name:    d4pLib - Core - Object Cache
-Version: v2.7.6
+Version: v2.8.13
 Author:  Milan Petrovic
 Email:   support@dev4press.com
 Website: https://www.dev4press.com/
 
 == Copyright ==
-Copyright 2008 - 2019 Milan Petrovic (email: support@dev4press.com)
+Copyright 2008 - 2020 Milan Petrovic (email: support@dev4press.com)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-if (!defined( 'ABSPATH')) { exit; }
+if (!defined('ABSPATH')) { exit; }
 
 if (!function_exists('d4p_object_cache_init')) {
     function d4p_object_cache_init() {
@@ -93,6 +93,8 @@ if (!class_exists('d4p_core_object_cache')) {
         }
 
         public function add($key, $data, $group = 'default') {
+            $original_key = $key;
+
             $group = $this->_group($group);
             $key = $this->_key($key, $group);
 
@@ -100,14 +102,14 @@ if (!class_exists('d4p_core_object_cache')) {
                 return false;
             }
 
-            return $this->set($key, $data, $group);
+            return $this->set($original_key, $data, $group);
         }
 
         public function delete($key, $group = 'default') {
             $group = $this->_group($group);
             $key = $this->_key($key, $group);
 
-            if (!$this->_exists( $key, $group)) {
+            if (!$this->_exists($key, $group)) {
                 return false;
             }
 

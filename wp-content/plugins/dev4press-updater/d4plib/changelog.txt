@@ -1,6 +1,70 @@
 === Dev4Press Library ===
 == Changelog ==
 
+= Version 2.8.13 - 2020.09.10 =
+* Updated: improved d4p_print_r layout
+* Fixed: minor PHP 7.4 compatibility problem
+
+= Version 2.8.12 - 2020.07.20 =
+* New: Functions for regex validation
+* New: Settings fields for Regex
+* Updated: Function to format file size
+* Updated: Built-in cacert.pem 20200722
+
+= Version 2.8.11 - 2020.07.06 =
+* Fixed: Method visibility override for Grid class
+
+= Version 2.8.10 - 2020.06.08 =
+* New: Function for wide list of KSES allowed tags
+* Updated: Rendering of the plugin settings groups
+
+= Version 2.8.9 - 2020.05.26 =
+* Updated: Few minor changes
+
+= Version 2.8.8 - 2020.05.07 =
+* Updated: Various minor changes
+
+= Version 2.8.7 - 2020.04.18 =
+* Updated: Minor settings object changes
+
+= Version 2.8.6 - 2020.04.07 =
+* Fix: GEOIP issue with the invalid request result
+
+= Version 2.8.5 - 2020.02.20 =
+* Updated: New and updated product icons
+* Updated: Several styling changes
+* Updated: Few minor improvements
+
+= Version 2.8.4 - 2020.01.30 =
+* Updated: Few minor improvements
+
+= Version 2.8.3 - 2020.01.01 =
+* Updated: Built-in cacert.pem 20200101
+* Fix: In memory cache issue with the multisite setup
+* Fix: Small issue with PHP 7.4
+
+= Version 2.8.2 - 2019.11.21 =
+* Updated: Function for icon rendering
+* Updated: Minor settings object changes
+* Fix: Few issues with the numerical settings fields
+
+= Version 2.8.1 - 2019.10.21 =
+* Updated: Built-in cacert.pem 20191016
+
+= Version 2.8.0 - 2019.10.14 =
+* New: Plugin admin Basic class
+* New: Plugin admin Options class
+* New: Plugin settings class
+* Updated: New and updated product icons
+* Fix: Animated popup class enqueue
+
+= Version 2.7.8 - 2019.09.16 =
+* New: Additional jQuery libraries
+* Updated: Minor styling improvements
+
+= Version 2.7.7 - 2019.09.05 =
+* Updated: Built-in cacert.pem 20190828
+
 = Version 2.7.6 - 2019.08.05 =
 * New: Function to check if request is POST
 * New: Function to return data as JSON and die()

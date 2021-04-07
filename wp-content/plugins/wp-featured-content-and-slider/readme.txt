@@ -2,7 +2,7 @@
 Contributors: wponlinesupport, anoopranawat, pratik-jain
 Tags: content slider, slider, featured, features, services, custom post slider, custom post type display, featured content, featured services, featured content rotator, featured content slider, content gallery, content slideshow, featured content slideshow, featured posts, featured content slider, shortcode
 Requires at least: 4.0
-Tested up to: 5.3.2
+Tested up to: 5.6.1
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -41,7 +41,6 @@ Where you can display Featured Content in list view, in grid view and Featured C
 4. Slider (per row two)
 [featured-content-slider slides_column="2"]</code>
 
-
 = You can use Following parameters with shortcode =
 
 <code>[featured-content]</code>
@@ -68,6 +67,8 @@ Where you can display Featured Content in list view, in grid view and Featured C
 [featured-content content_words_limit="50"]  ( ie Limit the words limit in the content section.)
 * **show_content:**
 [featured-content show_content="true"]  ( ie show short content or not. By default value is "true". Values are "true" and "false")
+* **extra_class:**
+[featured-content extra_class=""]  ( You can add extra class here.)
 
 = You can use Following parameters with shortcode =
 
@@ -103,7 +104,8 @@ Where you can display Featured Content in list view, in grid view and Featured C
 [featured-content-slider content_words_limit="50"]  ( ie Limit the words limit in the content section.)
 * **show_content:**
 [featured-content-slider show_content="true"]  ( ie show short content or not. By default value is "true". Values are "true" and "false")
-
+* **extra_class:**
+[featured-content-slider extra_class=""]  ( You can add extra class here.)
 
 = Here is Template code =
 <code><?php echo do_shortcode('[featured-content]'); ?> and <?php echo do_shortcode('[featured-content-slider]'); ?> </code>
@@ -143,7 +145,19 @@ Where you can display Featured Content in list view, in grid view and Featured C
 3. Designs
 4. Category Shortcode
 
-== Changelog ==
+== Changelog == 
+
+= 1.4 (04, March 2021) =
+* [+] New - Added Gutenberg block support. Now use plugin easily with Gutenberg!
+* [+] New - Added native shortcode support for Elementor, SiteOrigin and Beaver builder.
+* [+] New - Added Divi page builder native support.
+* [+] New - Added Fusion page builder native support.
+* [*] Tweak - Code optimization and performance improvements.
+
+= 1.3.4 (14, July 2020) =
+* [*] Follow WordPress Detailed Plugin Guidelines for Offload Media and Analytics Code.
+* [*] Tested up to: 5.4.2
+* [+] Added wp-featured-content-and-slider.pot file in languages dir.
 
 = 1.3.3 (31, Dec 2019) =
 * [*] Fixed some css related issue.

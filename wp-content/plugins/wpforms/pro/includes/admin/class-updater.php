@@ -71,7 +71,7 @@ class WPForms_Updater {
 	public $key = false;
 
 	/**
-	 * Holds the update data returned from the API.
+	 * Store the update data returned from the API.
 	 *
 	 * @since 2.1.3
 	 *
@@ -80,7 +80,7 @@ class WPForms_Updater {
 	public $update = false;
 
 	/**
-	 * Holds the plugin info details for the update.
+	 * Store the plugin info details for the update.
 	 *
 	 * @since 2.1.3
 	 *
@@ -119,11 +119,8 @@ class WPForms_Updater {
 
 		// Load the updater hooks and filters.
 		add_filter( 'pre_set_site_transient_update_plugins', array( $this, 'update_plugins_filter' ) );
-		//add_filter( 'set_site_transient_update_plugins', array( $this, 'set_site_transient_update_plugins' ) );
-		//add_filter( 'transient_update_plugins', array( $this, 'transient_update_plugins' ) );
 		add_filter( 'http_request_args', array( $this, 'http_request_args' ), 10, 2 );
 		add_filter( 'plugins_api', array( $this, 'plugins_api' ), 10, 3 );
-
 	}
 
 	/**
@@ -145,8 +142,12 @@ class WPForms_Updater {
 		// Run update check by pinging the external API. If it fails, return the default update object.
 		if ( ! $this->update ) {
 			$this->update = $this->perform_remote_request( 'get-plugin-update', array( 'tgm-updater-plugin' => $this->plugin_slug ) );
+
+			// No update is available.
 			if ( ! $this->update || ! empty( $this->update->error ) ) {
 				$this->update = false;
+
+				$value->no_update[ $this->plugin_path ] = $this->get_no_update();
 
 				return $value;
 			}
@@ -154,8 +155,12 @@ class WPForms_Updater {
 
 		// Infuse the update object with our data if the version from the remote API is newer.
 		if ( isset( $this->update->new_version ) && version_compare( $this->version, $this->update->new_version, '<' ) ) {
-			// The $plugin_update object contains new_version, package, slug and last_update keys.
+			// The $this->update object contains new_version, package, slug and last_update keys.
+			$this->update->old_version             = $this->version;
+			$this->update->plugin                  = $this->plugin_path;
 			$value->response[ $this->plugin_path ] = $this->update;
+		} else {
+			$value->no_update[ $this->plugin_path ] = $this->get_no_update();
 		}
 
 		// Return the update object.
@@ -167,8 +172,8 @@ class WPForms_Updater {
 	 *
 	 * @since 2.0.0
 	 *
-	 * @param array $args Array of request args.
-	 * @param string $url The URL to be pinged.
+	 * @param array  $args Array of request args.
+	 * @param string $url  The URL to be pinged.
 	 *
 	 * @return array $args Amended array of request args.
 	 */
@@ -182,9 +187,9 @@ class WPForms_Updater {
 	 *
 	 * @since 2.0.0
 	 *
-	 * @param object $api The original plugins_api object.
+	 * @param object $api    The original plugins_api object.
 	 * @param string $action The action sent by plugins_api.
-	 * @param array $args Additional args to send to plugins_api.
+	 * @param array  $args   Additional args to send to plugins_api.
 	 *
 	 * @return object $api   New stdClass with plugin information on success, default response on failure.
 	 */
@@ -195,9 +200,9 @@ class WPForms_Updater {
 		// If our plugin matches the request, set our own plugin data, else return the default response.
 		if ( $plugin ) {
 			return $this->set_plugins_api( $api );
-		} else {
-			return $api;
 		}
+
+		return $api;
 	}
 
 	/**
@@ -222,7 +227,7 @@ class WPForms_Updater {
 		}
 
 		// Create a new stdClass object and populate it with our plugin information.
-		$api                        = new stdClass;
+		$api                        = new stdClass();
 		$api->name                  = isset( $this->info->name ) ? $this->info->name : '';
 		$api->slug                  = isset( $this->info->slug ) ? $this->info->slug : '';
 		$api->version               = isset( $this->info->version ) ? $this->info->version : '';
@@ -246,9 +251,9 @@ class WPForms_Updater {
 	 *
 	 * @since 2.0.0
 	 *
-	 * @param string $action The name of the $_POST action var.
-	 * @param array $body The content to retrieve from the remote URL.
-	 * @param array $headers The headers to send to the remote URL.
+	 * @param string $action        The name of the $_POST action var.
+	 * @param array  $body          The content to retrieve from the remote URL.
+	 * @param array  $headers       The headers to send to the remote URL.
 	 * @param string $return_format The format for returning content from the remote URL.
 	 *
 	 * @return string|bool          Json decoded response on success, false on failure.
@@ -292,7 +297,7 @@ class WPForms_Updater {
 			return false;
 		}
 
-		$response_body = json_decode( $response_body );
+		$response_body = json_decode( $response_body, false );
 
 		// A few items need to be converted from an object to an array as that
 		// is what WordPress expects.
@@ -307,5 +312,31 @@ class WPForms_Updater {
 
 		// Return the json decoded content.
 		return $response_body;
+	}
+
+	/**
+	 * Prepare the "mock" item to the `no_update` property.
+	 * Is required for the enable/disable auto-updates links to correctly appear in UI.
+	 *
+	 * @since 1.6.4
+	 *
+	 * @return object
+	 */
+	protected function get_no_update() {
+
+		return (object) [
+			'id'            => $this->plugin_path,
+			'slug'          => $this->plugin_slug,
+			'plugin'        => $this->plugin_path,
+			'new_version'   => $this->version,
+			'url'           => '',
+			'package'       => '',
+			'icons'         => [],
+			'banners'       => [],
+			'banners_rtl'   => [],
+			'tested'        => '',
+			'requires_php'  => '',
+			'compatibility' => new stdClass(),
+		];
 	}
 }

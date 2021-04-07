@@ -33,24 +33,9 @@ class QLWCDC_Controller_Archives {
             'type' => 'title',
             'id' => 'qlwcdc_archives_section_title'
         ),
-//          array(
-//              'title' => __('Add to cart behaviour', 'woocommerce-direct-checkout'),
-//              'desc' => __('Redirect to the cart page after successful addition', 'woocommerce-direct-checkout'),
-//              'id' => 'woocommerce_cart_redirect_after_add',
-//              'default' => 'no',
-//              'type' => 'checkbox',
-//              'checkboxgroup' => 'start',
-//          ),
-//          array(
-//              'desc' => __('Enable AJAX add to cart buttons on archives', 'woocommerce-direct-checkout'),
-//              'id' => 'woocommerce_enable_ajax_add_to_cart',
-//              'default' => 'yes',
-//              'type' => 'checkbox',
-//              'checkboxgroup' => 'end',
-//          ),
         array(
             'name' => esc_html__('Replace Add to cart text', 'woocommerce-direct-checkout'),
-            'desc_tip' => esc_html__('Replace "Add to cart" text.', 'woocommerce-direct-checkout'),
+            'desc_tip' => esc_html__('Replace Add to cart text', 'woocommerce-direct-checkout'),
             'id' => 'qlwcdc_add_archive_text',
             'type' => 'select',
             'class' => 'chosen_select',

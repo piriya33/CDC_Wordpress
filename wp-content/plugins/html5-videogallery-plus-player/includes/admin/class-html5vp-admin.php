@@ -30,11 +30,21 @@ class Html5vp_Admin {
 	 */
 	function html5vp_register_menu() {
 
+		// How It Work Page
+		add_submenu_page( 'edit.php?post_type='.WP_HTML5VP_POST_TYPE, __('How it works, our plugins and offers', 'html5-videogallery-plus-player'), __('How It Works', 'html5-videogallery-plus-player'), 'manage_options', 'vgap-designs', array($this, 'vgap_designs_page') );
+
 		// Register plugin premium page
 		add_submenu_page( 'edit.php?post_type='.WP_HTML5VP_POST_TYPE, __('Upgrade to PRO - Video gallery and Player', 'html5-videogallery-plus-player'), '<span style="color:#2ECC71">'.__('Upgrade to PRO', 'html5-videogallery-plus-player').'</span>', 'manage_options', 'html5vp-premium', array($this, 'html5vp_premium_page') );
-		
-		// Register plugin premium page
-		add_submenu_page( 'edit.php?post_type='.WP_HTML5VP_POST_TYPE, __('Hire Us', 'html5-videogallery-plus-player'), '<span style="color:#2ECC71">'.__('Hire Us', 'html5-videogallery-plus-player').'</span>', 'manage_options', 'html5vp-hireus', array($this, 'html5vp_hireus_page') );		
+	}
+
+	/**
+	 * How It Work Page HTML
+	 * 
+	 * @package Video gallery and Player
+	 * @since 1.0.0
+	 */
+	function vgap_designs_page() {
+		include_once( WP_HTML5VP_DIR . '/includes/admin/wp-html5vp-how-it-work.php' );
 	}
 
 	/**
@@ -45,16 +55,6 @@ class Html5vp_Admin {
 	 */
 	function html5vp_premium_page() {
 		include_once( WP_HTML5VP_DIR . '/includes/admin/settings/premium.php' );
-	}
-
-	/**
-	 * Hire Us Page Html
-	 * 
-	 * @package Video gallery and Player
-	 * @since 2.2.3
-	 */
-	function html5vp_hireus_page() {
-		include_once( WP_HTML5VP_DIR . '/includes/admin/settings/hire-us.php' );
 	}
 
 	/**

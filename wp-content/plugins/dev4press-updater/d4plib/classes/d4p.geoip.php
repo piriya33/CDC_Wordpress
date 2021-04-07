@@ -2,13 +2,13 @@
 
 /*
 Name:    d4pLib - Features - Geo IP
-Version: v2.7.6
+Version: v2.8.13
 Author:  Milan Petrovic
 Email:   support@dev4press.com
 Website: https://www.dev4press.com/
 
 == Copyright ==
-Copyright 2008 - 2019 Milan Petrovic (email: support@dev4press.com)
+Copyright 2008 - 2020 Milan Petrovic (email: support@dev4press.com)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-if (!defined( 'ABSPATH')) { exit; }
+if (!defined('ABSPATH')) { exit; }
 
 if (!class_exists('d4p_core_geoip')) {
     class d4p_core_geoip {
@@ -175,7 +175,8 @@ if (!class_exists('d4p_base_geoip')) {
                 } else {
                     $code = array(
                         'error_code' => $raw['response']['code'], 
-                        'error_message' => $raw['response']['message']
+                        'error_message' => $raw['response']['message'],
+                        'ip' => $this->_ip
                     );
                 }
             }
@@ -264,7 +265,7 @@ if (!class_exists('d4p_geojsio_geoip')) {
 
             foreach ($this->_ips as $ip) {
                 if (d4p_is_private_ip($ip)) {
-                    $this->_data[$ip] = new d4p_core_geoip(array('status' => 'private', 'ip' => $ip));;
+                    $this->_data[$ip] = new d4p_core_geoip(array('status' => 'private', 'ip' => $ip));
                 } else if (d4p_validate_ip($ip)) {
                     $key = $this->transient_key($ip);
                     $data = get_site_transient($key);
@@ -305,14 +306,27 @@ if (!class_exists('d4p_geojsio_geoip')) {
                     foreach ($raw as $r) {
                         $data = $this->process((array)$r);
 
-                        set_site_transient($this->transient_key($r->ip), $data, $this->_expire * DAY_IN_SECONDS);
+                        if ($this->_expire > 0) {
+                            set_site_transient($this->transient_key($r->ip), $data, $this->_expire * DAY_IN_SECONDS);
+                        }
 
                         $this->_data[$r->ip] = new d4p_core_geoip($data);
                     }
                 } else {
-                    $code = array(
-                        'error_code' => $raw['response']['code'], 
-                        'error_message' => $raw['response']['message']);
+                    if (is_wp_error($raw)) {
+                        $code = array(
+                            'error_code' => $raw->get_error_code(),
+                            'error_message' => $raw->get_error_message());
+                    } else {
+                        $code = array(
+                            'error_code' => isset($raw['response']['code']) ? $raw['response']['code'] : 'error',
+                            'error_message' => isset($raw['response']['message']) ? $raw['response']['message'] : 'Unspecified Error');
+                    }
+
+                    foreach ($ips as $ip) {
+                        $code['ip'] = $ip;
+                        $this->_data[$ip] = new d4p_core_geoip($code);
+                    }
                 }
             }
         }

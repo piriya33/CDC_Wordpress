@@ -1,12 +1,12 @@
 # Custom Login Page Customizer #
 **Stable tag:** trunk  
 **Requires at least:** 4.0  
-**Tested up to:** 4.9  
-**Contributors:** [hardeepasrani](https://profiles.wordpress.org/hardeepasrani), [marius_codeinwp](https://profiles.wordpress.org/marius_codeinwp)
-**Author URI:** http://www.hardeepasrani.com  
+**Tested up to:** 5.6
+**Contributors:** [hardeepasrani](https://profiles.wordpress.org/hardeepasrani), [hiddenpearls](https://profiles.wordpress.org/hiddenpearls)
+**Author URI:** https://loginpress.pro/
 **Tags:** login, customizer, logo, login logo, login customizer, login page,admin, branding, customization, custom login, error, login error, custom login pro  
 **License:** GPLv2 or later  
-**License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
+**License URI:** https://www.gnu.org/licenses/gpl-2.0.html  
 
 Custom Login Customizer allows you to easily customize your admin login page, straight from your WordPress Customizer!
 
@@ -14,7 +14,7 @@ Custom Login Customizer allows you to easily customize your admin login page, st
 
 Custom Login Page Customizer plugin allows you to easily customize your login page straight from your WordPress Customizer! You can preview your custom login changes before you save them! Awesome, right?
 
-https://www.youtube.com/watch?v=rtXJ44BsSWM
+https://www.youtube.com/watch?v=mOmgmN1iRac
 
 In your WordPress Dashboard, navigate to Appearance > Custom Login Page Customizer to get started.
 
@@ -32,7 +32,7 @@ In your WordPress Dashboard, navigate to Appearance > Custom Login Customizer to
 
 ### How to donate or contribute? ###
 
-Please visit <a target="_blank" rel="nofollow" href="http://www.hardeepasrani.com">this link</a> for more info.
+Please visit <a target="_blank" rel="nofollow" href="https://loginpress.pro/">this link</a> for more info.
 
 ## Screenshots ##
 

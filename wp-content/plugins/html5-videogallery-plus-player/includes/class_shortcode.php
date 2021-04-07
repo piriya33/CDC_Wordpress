@@ -1,5 +1,7 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
 /*
  * Add [sp_html5video limit="-1"] shortcode
  *
@@ -58,26 +60,26 @@ function sp_html5video_shortcode( $atts, $content = null ) {
 	$post_type 		= 'sp_html5video';
 	$orderby 		= 'post_date';
 	$order 			= 'DESC';
-	
+
 	$args = array ( 
-								'post_type'      => $post_type,
-								'posts_per_page' => $posts_per_page,
-								'orderby'        => $orderby, 
-								'order'          => $order,
-								'post__in'       => !empty($post_in) ? array($post_in) : array(),
-								'no_found_rows'  => 1
-								) ;
-						
-						
-			if($cat != ""){
-            	$args['tax_query'] = array( array( 'taxonomy' => 'video-category', 'field' => 'tearm_id', 'terms' => $cat) );
-            } 				
-	
+				'post_type'      => $post_type,
+				'posts_per_page' => $posts_per_page,
+				'orderby'        => $orderby, 
+				'order'          => $order,
+				'post__in'       => !empty($post_in) ? array($post_in) : array(),
+				'no_found_rows'  => 1
+			) ;
+
+	if( $cat != "" ){
+		$args['tax_query'] = array( array( 'taxonomy' => 'video-category', 'field' => 'tearm_id', 'terms' => $cat) );
+	}
+
 	//Get post type count
-	
-	$query = new WP_Query($args);
-	$post_count = $query->post_count;
-	$i = 1;
+
+	$query		= new WP_Query($args);
+	$post_count	= $query->post_count;
+	$i			= 1;
+
 	global $post;
 	?>
 	<div class="wp-html5vp-video-row video-row video-row-clearfix" id="wp-html5vp-<?php echo $unique; ?>">
@@ -87,18 +89,21 @@ function sp_html5video_shortcode( $atts, $content = null ) {
 	
 		// Loop
 		while ($query->have_posts()) : $query->the_post();
-		$feat_image = wp_get_attachment_url( get_post_thumbnail_id() );
-		$wpvideo_video_mp4 = get_post_meta($post->ID, '_wpvideo_video_mp4', true);
-		$wpvideo_video_wbbm = get_post_meta($post->ID, '_wpvideo_video_wbbm', true);
-		$wpvideo_video_ogg = get_post_meta($post->ID, '_wpvideo_video_ogg', true);
-		$youtube_link = get_post_meta($post->ID, '_wpvideo_video_yt', true);
-		$vimeo_link = get_post_meta($post->ID, '_wpvideo_video_vm', true);
-		$video_link = '';
-		if($youtube_link != '') 
-			{ $video_link = $youtube_link; } 
-				else
-					{ $video_link = $vimeo_link; }
-		?>
+
+		$feat_image			= wp_get_attachment_url( get_post_thumbnail_id() );
+		$wpvideo_video_mp4	= get_post_meta($post->ID, '_wpvideo_video_mp4', true);
+		$wpvideo_video_wbbm	= get_post_meta($post->ID, '_wpvideo_video_wbbm', true);
+		$wpvideo_video_ogg	= get_post_meta($post->ID, '_wpvideo_video_ogg', true);
+		$youtube_link		= get_post_meta($post->ID, '_wpvideo_video_yt', true);
+		$vimeo_link			= get_post_meta($post->ID, '_wpvideo_video_vm', true);
+		$video_link			= '';
+
+		if( $youtube_link != '' ) {
+			$video_link = $youtube_link;
+		} else {
+			$video_link = $vimeo_link;
+		} ?>
+
 		<div class="video-wrap html5video-medium-<?php echo $video_grid; ?> html5video-columns">
 			<div class="video_frame">
 				<div class="video_image_frame">
@@ -135,14 +140,15 @@ function sp_html5video_shortcode( $atts, $content = null ) {
 		<?php
 		$i++;
 		endwhile;	
-	endif;
-	?>
-	<div class="wp-html5vp-popup-conf"><?php echo json_encode( $popup_conf ); ?></div><!-- end of-popup-conf -->
+	endif; ?>
+
+		<div class="wp-html5vp-popup-conf"><?php echo json_encode( $popup_conf ); ?></div><!-- end of-popup-conf -->
 	</div>
 	<?php
 	// Reset query to prevent conflicts
 	wp_reset_postdata();	
 	return ob_get_clean();
-
 }
+
+// Add shortcode `sp_html5video`
 add_shortcode("sp_html5video", "sp_html5video_shortcode");

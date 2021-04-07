@@ -72,7 +72,7 @@ class WPForms_Conditional_Logic_Fields {
 	 ****************************************************************/
 
 	/**
-	 * Displays conditional logic settings for fields inside the form builder.
+	 * Display conditional logic settings for fields inside the form builder.
 	 *
 	 * @since 1.3.8
 	 *
@@ -82,7 +82,7 @@ class WPForms_Conditional_Logic_Fields {
 	public function builder_field_conditionals( $field, $instance ) {
 
 		// Certain fields don't support conditional logic.
-		if ( in_array( $field['type'], array( 'pagebreak', 'divider', 'hidden' ), true ) ) {
+		if ( in_array( $field['type'], array( 'pagebreak', 'hidden' ), true ) ) {
 			return;
 		}
 		?>
@@ -156,6 +156,11 @@ class WPForms_Conditional_Logic_Fields {
 	 * @return array
 	 */
 	public function frontend_field_attributes( $attributes, $field, $form_data ) {
+
+		// Skip conditional logic attributes on the entry edit admin page.
+		if ( wpforms_is_admin_page( 'entries', 'edit' ) ) {
+			return $attributes;
+		}
 
 		// Check to see if the field displays conditionally.
 		$conditional = $this->field_is_conditional( $field );
@@ -234,7 +239,7 @@ class WPForms_Conditional_Logic_Fields {
 		$form_data['conditional_fields'] = array();
 
 		foreach ( $form_data['fields'] as $id => $field ) {
-			if ( $this->field_is_conditional( $field ) && ! in_array( $field['type'], array( 'html' ), true ) ) {
+			if ( $this->field_is_conditional( $field ) && ! in_array( $field['type'], [ 'html', 'divider' ], true ) ) {
 				$form_data['conditional_fields'][] = $id;
 			}
 		}
@@ -314,10 +319,14 @@ class WPForms_Conditional_Logic_Fields {
 
 				$allowed_keys = array( 'name', 'id', 'type' );
 
-				// Remove any values.
-				foreach ( wpforms()->process->fields[ $field_id ] as $key => $value ) {
-					if ( ! in_array( $key, $allowed_keys, true ) ) {
-						wpforms()->process->fields[ $field_id ][ $key ] = '';
+				$fields = ! empty( wpforms()->process->fields[ $field_id ] ) ? wpforms()->process->fields[ $field_id ] : false;
+
+				if ( is_array( $fields ) ) {
+					// Remove any values.
+					foreach ( $fields as $key => $value ) {
+						if ( ! in_array( $key, $allowed_keys, true ) ) {
+							wpforms()->process->fields[ $field_id ][ $key ] = '';
+						}
 					}
 				}
 			}
@@ -336,12 +345,12 @@ class WPForms_Conditional_Logic_Fields {
 	 *
 	 * @since 1.1.0
 	 *
-	 * @param boolean $process   Whether to process the logic or not.
-	 * @param array   $fields    List of submitted fields.
-	 * @param array   $form_data Form data and settings.
-	 * @param int     $id        Notification ID.
+	 * @param bool  $process   Whether to process the logic or not.
+	 * @param array $fields    List of submitted fields.
+	 * @param array $form_data Form data and settings.
+	 * @param int   $id        Notification ID.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function process_notification_conditionals( $process, $fields, $form_data, $id ) {
 
@@ -392,12 +401,12 @@ class WPForms_Conditional_Logic_Fields {
 	 *
 	 * @since 1.4.8
 	 *
-	 * @param boolean $process   Whether to process the logic or not.
-	 * @param array   $fields    List of submitted fields.
-	 * @param array   $form_data Form data and settings.
-	 * @param int     $id        Confirmation ID.
+	 * @param bool  $process   Whether to process the logic or not.
+	 * @param array $fields    List of submitted fields.
+	 * @param array $form_data Form data and settings.
+	 * @param int   $id        Confirmation ID.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function process_confirmation_conditionals( $process, $fields, $form_data, $id ) {
 
@@ -454,7 +463,7 @@ class WPForms_Conditional_Logic_Fields {
 	 *
 	 * @param array $field Field data.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function field_is_conditional( $field ) {
 
@@ -494,7 +503,7 @@ class WPForms_Conditional_Logic_Fields {
 	 * @param array $field     Field data and settings.
 	 * @param array $form_data Form data and settings.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function field_is_trigger( $field, $form_data ) {
 
@@ -627,12 +636,14 @@ class WPForms_Conditional_Logic_Fields {
 								} else {
 
 									// For rules referring to fields with choices
-									// we need to replace the choice key with the
-									// choice value.
+									// we need to replace the choice key with the choice value.
 									if ( ! empty( $form['fields'][ $rule_field ]['choices'][ $rule_value ]['value'] ) ) {
 										$val = esc_attr( $form['fields'][ $rule_field ]['choices'][ $rule_value ]['value'] );
-									} else {
+									} elseif ( isset( $form['fields'][ $rule_field ]['choices'][ $rule_value ]['label'] ) && '' !== trim( $form['fields'][ $rule_field ]['choices'][ $rule_value ]['label'] ) ) {
 										$val = esc_attr( $form['fields'][ $rule_field ]['choices'][ $rule_value ]['label'] );
+									} else {
+										/* translators: %d - choice number. */
+										$val = sprintf( esc_html__( 'Choice %d', 'wpforms' ), (int) $rule_field );
 									}
 								}
 
@@ -678,9 +689,11 @@ class WPForms_Conditional_Logic_Fields {
 
 			foreach ( $group as $rule_id => $rule ) {
 				// "field" is the only required key we need to have to be able to process the rule.
+				// "field" not selected equal ''.
+				// "field" may be '0' for first field in form.
 				// "operator" is preselected so it's always there.
 				// "value" may be empty.
-				if ( empty( $rule['field'] ) ) {
+				if ( ! isset( $rule['field'] ) || '' === $rule['field'] ) {
 					unset( $conditionals[ $group_id ][ $rule_id ] );
 				}
 			}

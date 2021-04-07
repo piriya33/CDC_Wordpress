@@ -2,13 +2,13 @@
 
 /*
 Name:    d4pLib_Core
-Version: v2.7.6
+Version: v2.8.13
 Author:  Milan Petrovic
 Email:   support@dev4press.com
 Website: https://www.dev4press.com/
 
 == Copyright ==
-Copyright 2008 - 2019 Milan Petrovic (email: support@dev4press.com)
+Copyright 2008 - 2020 Milan Petrovic (email: support@dev4press.com)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -25,11 +25,11 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-if (!defined( 'ABSPATH')) { exit; }
+if (!defined('ABSPATH')) { exit; }
 
 if (!defined('D4P_VERSION')) { 
-    define('D4P_VERSION', '2.7.6');
-    define('D4P_BUILD', '2760');
+    define('D4P_VERSION', '2.8.13');
+    define('D4P_BUILD', '2913');
 }
 
 if (!defined('D4P_FONTAWESOME')) { 
@@ -131,6 +131,12 @@ if (!function_exists('d4p_has_plugin')) {
         $plugin = $name.'/'.$name.'.php';
 
         return d4p_is_plugin_active($plugin);
+    }
+}
+
+if (!function_exists('d4p_library_enqueue_ver')) {
+    function d4p_library_enqueue_ver() {
+        return D4P_VERSION.'.'.D4P_BUILD;
     }
 }
 

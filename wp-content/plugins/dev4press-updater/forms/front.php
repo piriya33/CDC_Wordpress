@@ -10,6 +10,8 @@ $scopes = array(
     'nightly' => array('nightly', 'alpha', 'beta')
 );
 
+$promotions = fetch_feed(d4pupd_updater()->feeds['promotions']);
+
 ?>
 
 <div class="d4p-content-left">
@@ -57,8 +59,24 @@ $scopes = array(
             <a class="button-primary" href="admin.php?page=dev4press-updater-settings&panel=api"><?php _e("Enter API Key", "dev4press-updater"); ?></a>
         </div>
     </div>
-    <?php } else { ?>
-    <?php
+    <?php } else {
+
+        if ($promotions->get_item_quantity() > 0) {
+            $item = $promotions->get_item(0);
+            $_url = d4pupd_plugin()->feed_url($item->get_permalink());
+
+            ?>
+
+            <div class="d4p-group d4p-group-update-status d4p-group-promotion">
+                <h3><?php _e("Promotion", "dev4press-updater"); ?>: <?php echo esc_html($item->get_title()); ?></h3>
+                <div class="d4p-group-inner">
+                    <p><?php echo $item->get_description(); ?></p>
+                    <a target="_blank" class="button-primary" href="<?php echo esc_url($_url); ?>"><?php _e("Read More", "dev4press-updater"); ?></a>
+                </div>
+            </div>
+
+            <?php
+        }
 
         $update_last = _x("Never", "When the last check was performed", "dev4press-updater");
 
@@ -66,45 +84,64 @@ $scopes = array(
             $update_last = sprintf(_x("%s ago", "When the last check was performed", "dev4press-updater"), human_time_diff(d4pupd_updater()->update['core']['time']));
         }
 
+        $core = d4pupd_updater()->core();
         $updates = d4pupd_updater()->has_updates();
-        $no_updates = empty($updates['plugins']);
+        $no_updates = empty($updates['plugins']) || $core === false || $core['status'] != 'ok';
+
+        $_api_key_error = isset($core['code']) && in_array($core['code'], array('api_key_missing', 'api_key_invalid'));
 
     ?>
     <div class="d4p-group d4p-group-update-status">
         <h3><?php _e("Update Status", "dev4press-updater"); ?></h3>
         <div class="d4p-group-inner">
-            <?php if (d4pupd_settings()->get('update_status') != 'stable') {?>
+            <?php if (d4pupd_settings()->get('update_status') != 'stable') { ?>
             <div class="d4p-block-notice-nonstable">
                 <?php echo sprintf(__("The updater is currently set to allow %s updates. These updates can be unstable, they are for testing purposes only, and they should be used on staging, localhost or development websites only, not on live websites!", "dev4press-updater"), '<strong>'.join('</strong>, <strong>', $scopes[d4pupd_settings()->get('update_status')]).'</strong>'); ?> 
                 <?php echo sprintf(__("To change the updates received, visit the <a href='%s'>Settings</a> page.", "dev4press-updater"), network_admin_url('admin.php?page=dev4press-updater-settings&panel=control')); ?>
             </div>
             <?php } ?>
+
             <div class="d4p-block-update-status">
                 <strong><?php _e("Last check performed", "dev4press-updater"); ?>: </strong><?php echo $update_last; ?>
             </div>
+
             <div class="d4p-block-update-updates">
                 <?php
 
-                if ($no_updates) {
-                    _e("There are no updates currently available", "dev4press-updater");
+                if ($core === false || $core['status'] != 'ok') {
+                    echo '<div class="d4p-block-notice-error">';
+                    if ($core === false) {
+                        echo '<p>'.__("Unspecified error occured during the update check, no response received.", "dev4press-updater").'</p>';
+                    } else {
+                        echo '<p>'.__($core['message'], "dev4press-updater").'</p>';
+
+                        if ($_api_key_error) {
+                            echo '<p><a class="button-primary" href="'.network_admin_url("admin.php?page=dev4press-updater-settings&panel=api").'">'.__("Enter Valid API Key", "dev4press-updater").'</a></p>';
+                        }
+                    }
+                    echo '</div>';
                 } else {
-                    if (!empty($updates['plugins'])) {
-                        $num = count($updates['plugins']);
+                    if ($no_updates) {
+                        _e("There are no updates currently available", "dev4press-updater");
+                    } else {
+                        if (!empty($updates['plugins'])) {
+                            $num = count($updates['plugins']);
 
-                        echo sprintf(_n("<strong>%s plugin</strong> availbale for update", "<strong>%s plugins</strong> availbale for update", $num, "dev4press-updater"), $num).':';
+                            echo sprintf(_n("<strong>%s plugin</strong> availbale for update", "<strong>%s plugins</strong> availbale for update", $num, "dev4press-updater"), $num).':';
 
-                        echo '<ul>';
-                        foreach ($updates['plugins'] as $plugin) {
-                            echo '<li>'.$plugin['name'].' <strong>'.$plugin['version'].'</strong>';
+                            echo '<ul>';
+                            foreach ($updates['plugins'] as $plugin) {
+                                echo '<li>'.$plugin['name'].' <strong>'.$plugin['version'].'</strong>';
 
-                            if ($plugin['status'] != 'stable') {
-                                echo ' <strong style="color: #900">'.ucfirst($plugin['status']).'</strong>';
+                                if ($plugin['status'] != 'stable') {
+                                    echo ' <strong style="color: #900">'.ucfirst($plugin['status']).'</strong>';
+                                }
+
+                                echo ' ('.$plugin['released'].')</li>';
                             }
 
-                            echo ' ('.$plugin['released'].')</li>';
+                            echo '</ul>';
                         }
-
-                        echo '</ul>';
                     }
                 }
 
@@ -113,15 +150,15 @@ $scopes = array(
             <div class="d4p-block-update-check">
                 <a href="<?php echo self_admin_url('admin.php?page=dev4press-updater-products'); ?>" class="button-primary"><i aria-hidden="true" class="fa fa-cloud-upload fa-fw"></i> <?php _e("Installed plugins", "dev4press-updater"); ?></a>
                 <?php if (!$no_updates) { ?>
-                <a href="<?php echo self_admin_url('update-core.php'); ?>" class="button-primary"><i aria-hidden="true" class="fa fa-tasks fa-fw"></i> <?php _e("WordPress Updates", "dev4press-updater"); ?></a>
+                    <a href="<?php echo self_admin_url('update-core.php'); ?>" class="button-primary"><i aria-hidden="true" class="fa fa-tasks fa-fw"></i> <?php _e("WordPress Updates", "dev4press-updater"); ?></a>
                 <?php } ?>
                 <?php if (!d4pupd_settings()->update_one_year_expired()) { ?>
-                <a href="<?php echo d4pupd_check_update_url(); ?>" class="button-secondary" style="float: right"><i aria-hidden="true" class="fa fa-refresh fa-fw"></i> <?php _e("Recheck", "dev4press-updater"); ?></a>
+                    <a href="<?php echo d4pupd_check_update_url(); ?>" class="button-secondary" style="float: right"><i aria-hidden="true" class="fa fa-refresh fa-fw"></i> <?php _e("Recheck", "dev4press-updater"); ?></a>
                 <?php } ?>
             </div>
         </div>
     </div>
-    
+
     <div class="d4p-group d4p-group-update-status">
         <h3><?php _e("Additional Options", "dev4press-updater"); ?></h3>
         <div class="d4p-group-inner">

@@ -17,12 +17,15 @@ defined( 'ABSPATH' ) or die( "Restricted access!" );
                     <?php settings_fields( $plugin['settings'] . '_settings_group' ); ?>
 
                     <?php
-                        // Retrieve options from database
-                        $options = get_option( $plugin['settings'] . '_settings' );
+                        // Put the value of the plugin options into an array for easier access
+                        $options = spacexchimp_p001_options();
 
-                        // Set default value if option is empty
-                        $snippets = !empty( $options['snippets'] ) ? $options['snippets'] : '';
-                        $checked = ( !empty( $options['enable'] ) && $options['enable'] == "on" ) ? 'checked' : '';
+                        // Declare variables
+                        if ( $options['enable'] === true ) {
+                            $checked = 'checked';
+                        } else {
+                            $checked = ''; // Empty value
+                        }
                     ?>
 
                     <div class="postbox">
@@ -44,9 +47,17 @@ defined( 'ABSPATH' ) or die( "Restricted access!" );
                                 name="spacexchimp_p001_settings[snippets]"
                                 id="spacexchimp_p001_settings[snippets]"
                                 placeholder="<?php _e( 'Enter your PHP functions here', $plugin['text'] ); ?>"
-                            ><?php echo htmlentities( $snippets ); ?></textarea>
+                            ><?php echo htmlentities( $options['snippets'] ); ?></textarea>
                         </div>
                     </div>
+
+                    <!-- HIDDEN -->
+                    <?php
+                        spacexchimp_p001_control_hidden( 'hidden_scrollto',
+                                                         '0'
+                                                       );
+                    ?>
+                    <!-- END HIDDEN -->
 
                     <!-- SUBMIT -->
                     <input type="submit" name="submit" id="submit" class="btn btn-primary" value="<?php _e( 'Save changes', $plugin['text'] ); ?>">

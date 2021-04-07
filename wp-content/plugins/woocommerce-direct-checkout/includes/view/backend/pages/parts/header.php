@@ -22,7 +22,7 @@
                height: 40px;
                display: inline-block;
                width: 140px;
-               " class="wp-badge">%s</div></a>', 'https://quadlayers.com/?utm_source=qlwapp_admin', plugins_url('/assets/backend/img/quadlayers.jpg', QLWCDC_PLUGIN_FILE), esc_html__('QuadLayers', 'woocommerce-direct-checkout')); ?>
+               " class="wp-badge">%s</div></a>', 'https://quadlayers.com/?utm_source=qlwcdc_admin', plugins_url('/assets/backend/img/quadlayers.jpg', QLWCDC_PLUGIN_FILE), esc_html__('QuadLayers', 'woocommerce-direct-checkout')); ?>
 
 </div>
 

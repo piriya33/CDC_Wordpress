@@ -1,6 +1,8 @@
 <?php
 
-if (!defined('ABSPATH')) exit;
+if (!defined('ABSPATH')) {
+    exit;
+}
 
 class d4pupd_core_settings {
     public $info;
@@ -29,7 +31,7 @@ class d4pupd_core_settings {
 
         return $this->get($get[1], $get[0]);
     }
-    
+
     private function _name($name) {
         return 'dev4press_'.$this->info->code.'_'.$name;
     }

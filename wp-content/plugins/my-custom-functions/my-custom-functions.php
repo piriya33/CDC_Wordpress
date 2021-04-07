@@ -5,12 +5,12 @@
  * Description: Easily and safely add your custom PHP code to your WordPress website, directly out of the WordPress Admin Area, without the need to have an external editor.
  * Author: Space X-Chimp
  * Author URI: https://www.spacexchimp.com
- * Version: 4.41
+ * Version: 4.49
  * License: GPL3
  * Text Domain: my-custom-functions
  * Domain Path: /languages/
  *
- * Copyright 2014-2020 Space X-Chimp ( website : https://www.spacexchimp.com )
+ * Copyright 2014-2021 Space X-Chimp ( website : https://www.spacexchimp.com )
  *
  * This plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -68,7 +68,7 @@ spacexchimp_p001_define_constants( 'PREFIX', 'spacexchimp_p001' );
 spacexchimp_p001_define_constants( 'SETTINGS', 'spacexchimp_p001' );
 
 /**
- * A useful function that returns an array with the contents of plugin constants
+ * A useful function that returns an array with the contents of the plugin constants
  */
 function spacexchimp_p001_plugin() {
     $array = array(
@@ -96,9 +96,11 @@ $plugin = spacexchimp_p001_plugin();
  * Load the plugin modules
  */
 require_once( $plugin['path'] . 'inc/php/core.php' );
+require_once( $plugin['path'] . 'inc/php/options.php' );
 require_once( $plugin['path'] . 'inc/php/upgrade.php' );
 require_once( $plugin['path'] . 'inc/php/versioning.php' );
 require_once( $plugin['path'] . 'inc/php/enqueue.php' );
 require_once( $plugin['path'] . 'inc/php/functional.php' );
+require_once( $plugin['path'] . 'inc/php/controls.php' );
 require_once( $plugin['path'] . 'inc/php/page.php' );
 require_once( $plugin['path'] . 'inc/php/messages.php' );

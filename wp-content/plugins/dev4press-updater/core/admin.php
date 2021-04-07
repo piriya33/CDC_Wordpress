@@ -1,10 +1,10 @@
 <?php
 
-if (!defined('ABSPATH')) exit;
+if (!defined('ABSPATH')) {
+    exit;
+}
 
 class d4pupd_admin_core {
-    public $bulk_edit_added = false;
-
     public $is_debug;
 
     public $page = false;
@@ -12,6 +12,7 @@ class d4pupd_admin_core {
     public $action = false;
 
     public $menu_items;
+    public $page_ids = array();
 
     public function __construct() {
         add_action('d4pupd_plugin_core_ready', array($this, 'core'));
@@ -22,19 +23,19 @@ class d4pupd_admin_core {
         $get = D4PUPD_URL;
 
         if ($d4p) {
-            $get.= 'd4plib/resources/';
+            $get .= 'd4plib/resources/';
         }
 
         if ($name == 'font') {
-            $get.= 'font/styles.css';
+            $get .= 'font/styles.css';
         } else {
-            $get.= $type.'/'.$name;
+            $get .= $type.'/'.$name;
 
             if (!$this->is_debug && $type != 'font') {
-                $get.= '.min';
+                $get .= '.min';
             }
 
-            $get.= '.'.$type;
+            $get .= '.'.$type;
         }
 
         return $get;
@@ -148,28 +149,28 @@ class d4pupd_admin_core {
         $parent = 'dev4press-updater-front';
 
         $this->page_ids[] = add_menu_page(
-                        'Dev4Press Updater', 
-                        'Dev4Press', 
-                        'd4pupd_standard', 
-                        $parent, 
-                        array($this, 'panel_front'), 
-                        d4pupd_plugin()->svg_icon);
+            'Dev4Press Updater',
+            'Dev4Press',
+            'd4pupd_standard',
+            $parent,
+            array($this, 'panel_front'),
+            d4pupd_plugin()->svg_icon);
 
-        foreach($this->menu_items as $item => $data) {
-            $this->page_ids[] = add_submenu_page($parent, 
-                            'Dev4Press Updater: '.$data['title'], 
-                            $data['title'], 
-                            'd4pupd_standard', 
-                            'dev4press-updater-'.$item, 
-                            array($this, 'panel_'.$item));
+        foreach ($this->menu_items as $item => $data) {
+            $this->page_ids[] = add_submenu_page($parent,
+                'Dev4Press Updater: '.$data['title'],
+                $data['title'],
+                'd4pupd_standard',
+                'dev4press-updater-'.$item,
+                array($this, 'panel_'.$item));
         }
 
         if (!d4pupd_settings()->update_one_year_expired()) {
-            add_submenu_page($parent, 
-                'Dev4Press Updater: '.__("Check for updates", "dev4press-updater"), 
-                __("Check for updates", "dev4press-updater"), 
-                'd4pupd_standard', 
-                'dev4press-updater-front&check=run&_wpnonce='.wp_create_nonce('dev4press-updater'), 
+            add_submenu_page($parent,
+                'Dev4Press Updater: '.__("Check for updates", "dev4press-updater"),
+                __("Check for updates", "dev4press-updater"),
+                'd4pupd_standard',
+                'dev4press-updater-front&check=run&_wpnonce='.wp_create_nonce('dev4press-updater'),
                 array($this, 'panel_front'));
         }
 
@@ -240,9 +241,16 @@ class d4pupd_admin_core {
         if ($this->page == 'front') {
             if (isset($_GET['check']) && $_GET['check'] == 'run') {
                 if (wp_verify_nonce($_GET['_wpnonce'], 'dev4press-updater')) {
-                    d4pupd_plugin()->update_check();
+                    $url = self_admin_url('admin.php?page=dev4press-updater-front&message=');
 
-                    wp_redirect(self_admin_url('admin.php?page=dev4press-updater-front'));
+                    if (d4pupd_updater()->is_throttled()) {
+                        $url.= 'wait';
+                    } else {
+                        $url.= 'update';
+                        d4pupd_plugin()->update_check();
+                    }
+
+                    wp_redirect($url);
                     exit;
                 }
             }
@@ -262,7 +270,7 @@ class d4pupd_admin_core {
         if (d4pupd_updater()->update === false) {
             d4pupd_updater()->run();
         }
-        
+
         return $install || $update;
     }
 
@@ -275,12 +283,6 @@ class d4pupd_admin_core {
     public function panel_about() {
         if (!$this->install_or_update()) {
             include(D4PUPD_PATH.'forms/about.php');
-        }
-    }
-
-    public function panel_dashboard() {
-        if (!$this->install_or_update()) {
-            include(D4PUPD_PATH.'forms/dashboard.php');
         }
     }
 

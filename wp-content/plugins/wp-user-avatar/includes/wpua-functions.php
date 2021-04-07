@@ -23,17 +23,20 @@ function has_wp_user_avatar($id_or_email="", $has_wpua="", $user="", $user_id=""
 
 /**
  * Find WPUA, show get_avatar if empty
- * @since 1.8
+ *
  * @param int|string $id_or_email
  * @param int|string $size
  * @param string $align
  * @param string $alt
- * @uses object $wpua_functions
+ * @param array $class
+ *
  * @return object get_wp_user_avatar()
+ * @since 1.8
+ * @uses object $wpua_functions
  */
-function get_wp_user_avatar($id_or_email="", $size="", $align="", $alt="") {
+function get_wp_user_avatar($id_or_email="", $size="", $align="", $alt="",$class=[]) {
   global $wpua_functions;
-  return $wpua_functions->get_wp_user_avatar($id_or_email, $size, $align, $alt);
+  return $wpua_functions->get_wp_user_avatar($id_or_email, $size, $align, $alt, $class);
 }
 
 /**
@@ -76,7 +79,7 @@ function wpua_after_avatar() {
  * @uses wpuf_has_shortcode()
  */
 function wpua_do_before_avatar() {
-  $wpua_profile_title = '<h3>'.__('Avatar','wp-user-avatar').'</h3>';
+  $wpua_profile_title = '<h3>'.__('Profile Picture','wp-user-avatar').'</h3>';
   /**
    * Filter profile title
    * @since 1.9.4
@@ -85,12 +88,12 @@ function wpua_do_before_avatar() {
   $wpua_profile_title = apply_filters('wpua_profile_title', $wpua_profile_title);
 ?>
   <?php if(class_exists('bbPress') && bbp_is_edit()) : // Add to bbPress profile with same style ?>
-    <h2 class="entry-title"><?php _e('Avatar','wp-user-avatar'); ?></h2>
+    <h2 class="entry-title"><?php _e('Profile Picture','wp-user-avatar'); ?></h2>
     <fieldset class="bbp-form">
       <legend><?php _e('Image','wp-user-avatar'); ?></legend>
   <?php elseif(class_exists('WPUF_Main') && wpuf_has_shortcode('wpuf_editprofile')) : // Add to WP User Frontend profile with same style ?>
     <fieldset>
-      <legend><?php _e('Avatar','wp-user-avatar') ?></legend>
+      <legend><?php _e('Profile Picture','wp-user-avatar') ?></legend>
       <table class="wpuf-table">
         <tr>
           <th><label for="wp_user_avatar"><?php _e('Image','wp-user-avatar'); ?></label></th>
@@ -149,10 +152,9 @@ function wpua_after_avatar_admin() {
  */
 function wpua_do_before_avatar_admin() {
 ?>
-  <h3><?php _e('Avatar') ?></h3>
   <table class="form-table">
     <tr>
-      <th><label for="wp_user_avatar"><?php _e('Image','wp-user-avatar'); ?></label></th>
+      <th><label for="wp_user_avatar"><?php _e('Profile Picture','wp-user-avatar'); ?></label></th>
       <td>
   <?php
 }
@@ -170,24 +172,6 @@ function wpua_do_after_avatar_admin() {
   <?php
 }
 add_action('wpua_after_avatar_admin', 'wpua_do_after_avatar_admin');
-
-/**
- * Filter for the inevitable complaints about the donation message :(
- * @since 1.6.6
- * @uses do_action()
- */
-function wpua_donation_message() {
-  do_action('wpua_donation_message');
-}
-
-/**
- * Donation message
- * @since 1.6.6
- */
-function wpua_do_donation_message() { ?>
- <?php 
-}
-//add_action('wpua_donation_message', 'wpua_do_donation_message');
 
 /**
  * Register widget

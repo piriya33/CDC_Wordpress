@@ -1,8 +1,8 @@
 ﻿=== Video gallery and Player ===
 Contributors: wponlinesupport, anoopranawat, pratik-jain
-Tags: wponlinesupport, HTML5, video.js,  HTML5 video, youtube video gallery, vimeo video gallery, youtube video gallery with popup,  Youtube-video, youtube embed, youtube gallery, youtube player, magnific Popup, vimeo video gallery gallery, HTML5 video player, HTML5 video gallery, wordpress HTML5 video, wordpress HTML5 video player, wordpress HTML5 video gallery, responsive, wordpress responsive video gallery  
+Tags: video gallery, video, HTML5 video, video.js, youtube video gallery, vimeo video gallery, youtube video gallery with popup,  youtube gallery, youtube player, magnific Popup, vimeo video gallery, HTML5 video player, HTML5 video gallery, responsive, wordpress responsive video gallery, wponlinesupport  
 Requires at least: 4.0
-Tested up to: 5.3.2
+Tested up to: 5.6
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -75,8 +75,10 @@ directly to your template file.
 > * [video_gallery_slider] – Slider Shortcode
 > * 20 Predefined designs.
 > * WP Templating Features. 
-> * Gutenberg block support.
-> * Visual Composer/WPBakery Page Builder Supports.
+> * Gutenberg Block Supports.
+> * WPBakery Page Builder Support
+> * Elementor, Beaver and SiteOrigin Page Builder Support (New).
+> * Divi Page Builder Native Support (New).
 > * Display videos in a grid view.
 > * Display video with title and description.
 > * Display video in slider view.
@@ -119,6 +121,15 @@ OR
 7. Also work with Gutenberg shortcode block.
 
 == Changelog ==
+
+= 2.4 (29, Oct 2020) =
+* [*] Update - Regular plugin maintenance. Updated readme file.
+* [+] New - Click to copy the shortcode.
+* [+] Added - Added our other Popular Plugins under Video Gallery --> Install Popular Plugins From WPOS. This will help you to save your time during creating a website.
+* [*] Tested up to latest version of WordPress.
+
+= 2.3.5 (14, July  2019) =
+* [*] Follow WordPress Detailed Plugin Guidelines for Offload Media and Analytics Code.
 
 = 2.3.4 (31, Dec  2019) =
 * [*] Fixed HTML5 video lightbox background issue. Added white background.

@@ -15,7 +15,7 @@ class Tribe__Tickets__Editor__Compatibility__Tickets {
 	 * @return void
 	 */
 	public function hook() {
-		add_filter( 'the_content', array( $this, 'include_frontend_form' ), 50 );
+		add_filter( 'the_content', [ $this, 'include_frontend_form' ], 50 );
 	}
 
 	/**
@@ -32,35 +32,49 @@ class Tribe__Tickets__Editor__Compatibility__Tickets {
 			return $content;
 		}
 
-		if ( defined( 'REST_REQUEST' ) && REST_REQUEST ) {
+		/** @var Tribe__Context $context */
+		$context = tribe( 'context' );
+
+		if ( $context->doing_rest() ) {
 			return $content;
 		}
 
-		// Fetch the post
+		// Fetch the post.
 		$post = get_post( get_the_ID() );
 
-		// Return content if post is empty
+		// Return content if post is empty.
 		if ( empty( $post ) ) {
 			return $content;
 		}
 
-		// We don't care about anything other than event for now
-		if ( class_exists( 'Tribe__Events__Main' ) && Tribe__Events__Main::POSTTYPE !== $post->post_type ) {
+		// We don't care about anything other than event for now.
+		if (
+			class_exists( 'Tribe__Events__Main' )
+			&& defined( 'Tribe__Events__Main::POSTTYPE' )
+			&& Tribe__Events__Main::POSTTYPE !== $post->post_type
+		) {
 			return $content;
 		}
 
 		/** @var Tribe__Tickets__Editor__Template__Overwrite $template_overwrite */
 		$template_overwrite = tribe( 'tickets.editor.template.overwrite' );
 
-		// Bail on non gutenberg
-		if ( ! has_blocks( $post->ID ) || $template_overwrite->has_classic_editor( $post->ID ) ) {
+		// Bail on non gutenberg.
+		if (
+			! has_blocks( $post->ID )
+			|| $template_overwrite->has_classic_editor( $post->ID )
+		) {
 			return $content;
 		}
 
-		$hook = tribe( 'tickets.rsvp' )->get_ticket_form_hook();
-		remove_filter( 'the_content', array( $this, 'include_frontend_form' ), 50 );
+		/** @var Tribe__Tickets__RSVP $rsvp */
+		$rsvp = tribe( 'tickets.rsvp' );
 
-		// Remove iCal to prevent infinite loops
+		$hook = $rsvp->get_ticket_form_hook();
+
+		remove_filter( 'the_content', [ $this, 'include_frontend_form' ], 50 );
+
+		// Remove iCal to prevent infinite loops.
 		remove_all_filters( $hook );
 
 		ob_start();

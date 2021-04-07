@@ -1,1 +1,2 @@
-<?php // You're a Jedi!
+<?php 
+// You're a Jedi in Minecraft!

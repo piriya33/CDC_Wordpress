@@ -2,13 +2,13 @@
 
 /*
 Name:    d4pLib_Functions
-Version: v2.7.6
+Version: v2.8.13
 Author:  Milan Petrovic
 Email:   support@dev4press.com
 Website: https://www.dev4press.com/
 
 == Copyright ==
-Copyright 2008 - 2019 Milan Petrovic (email: support@dev4press.com)
+Copyright 2008 - 2020 Milan Petrovic (email: support@dev4press.com)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-if (!defined( 'ABSPATH')) { exit; }
+if (!defined('ABSPATH')) { exit; }
 
 if (!function_exists('is_odd')) {
     function is_odd($number) {
@@ -103,8 +103,8 @@ if (!function_exists('d4p_scan_dir')) {
     }
 }
 
-if (!function_exists('d4p_file_size_format')) {
-    function d4p_file_size_format($size, $decimals = 2) {
+if (!function_exists('d4p_filesize_format')) {
+    function d4p_filesize_format($size, $decimals = 2, $sep = ' ') {
         $_size = intval($size);
 
         if (strlen($_size) <= 9 && strlen($_size) >= 7) {
@@ -124,7 +124,7 @@ if (!function_exists('d4p_file_size_format')) {
             $_size = intval($_size);
         }
 
-        return $_size.' '.$unit;
+        return $_size.$sep.$unit;
     }
 }
 
@@ -330,7 +330,7 @@ if (!function_exists('d4p_url_campaign_tracking')) {
 if (!function_exists('d4p_get_icon_class')) {
     function d4p_get_icon_class($name, $extra = array()) {
         $class = '';
-        $d4p = false; 
+        $d4p = false;
         $dashicons = false;
 
         if (substr($name, 0, 3) == 'd4p') {
@@ -339,6 +339,8 @@ if (!function_exists('d4p_get_icon_class')) {
         } else if (substr($name, 0, 9) == 'dashicons') {
             $class.= 'dashicons '.$name;
             $dashicons = true;
+        } else if (strpos($name, ' ') > 0) {
+            $class.= $name;
         } else {
             $class.= 'fa fa-'.$name;
         }
@@ -381,9 +383,7 @@ if (!function_exists('d4p_render_icon')) {
 if (!function_exists('d4p_user_agent')) {
     function d4p_user_agent() {
         if (isset($_SERVER['HTTP_USER_AGENT'])) {
-            $user_agent = d4p_sanitize_basic(trim($_SERVER['HTTP_USER_AGENT']));
-
-            return $user_agent;
+            return d4p_sanitize_basic(trim($_SERVER['HTTP_USER_AGENT']));
         }
 
         return '';
@@ -393,5 +393,31 @@ if (!function_exists('d4p_user_agent')) {
 if (!function_exists('d4p_is_request_post')) {
     function d4p_is_request_post() {
         return $_SERVER['REQUEST_METHOD'] === 'POST';
+    }
+}
+
+if (!function_exists('d4p_is_regex_valid')) {
+    function d4p_is_regex_valid($regex) {
+        if (preg_match('/'.$regex.'/i', 'dev4press') !== false) {
+            return true;
+        }
+
+        return preg_last_error();
+    }
+}
+
+if (!function_exists('d4p_get_regex_error')) {
+    function d4p_get_regex_error($error_code) {
+        if (is_bool($error_code)) {
+            return 'OK';
+        }
+
+        $errors = array_flip(get_defined_constants(true)['pcre']);
+
+        if (isset($errors[$error_code])) {
+            return $errors[$error_code];
+        }
+
+        return 'UNKNOWN_ERROR';
     }
 }

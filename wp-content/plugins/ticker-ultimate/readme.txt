@@ -1,13 +1,13 @@
-=== Ticker Ultimate ===
+=== Post Ticker Ultimate ===
 Contributors: wponlinesupport, anoopranawat, pratik-jain
-Tags: wponlinesupport, ticker, news ticker, blog ticker, post ticker, ticker slider, ticker vertical slider, ticker horizontal slider
+Tags: ticker, news ticker, blog ticker, post ticker, ticker slider, ticker vertical slider, ticker horizontal slider, wponlinesupport
 Requires at least: 4.0
-Tested up to: 5.3.2
+Tested up to: 5.6.1
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Add and display horizontal or vertical tickers on your website that work with WordPress posts and Custom Post Type with the help of shortcode. Also work with Gutenberg shortcode block.
+Add and display horizontal or vertical post ticker on your website that work with WordPress posts and Custom Post Type with the help of shortcode. Also work with Gutenberg shortcode block.
 
 == Description ==
 A very simple plugin to add and display horizontal or vertical tickers on your website that work with WordPress posts and Custom Post Type with the help of shortcode..
@@ -41,7 +41,7 @@ Ticker Ultimate Shortcode:
 * **Color:** [wp_ticker color="#000"] (To change the post content color)
 * **Title Color:** [wp_ticker title_color="#000"] (To change the Ticker Title color.)
 * **Background Color:** [wp_ticker background_color="#2096CD"] (To change the News Ticker title background color.)
-* **Effect:** [wp_ticker effect="fade"] (You can change the content effect. default effect is fade effect. values are "slide-h", "slide-v", "fade".)
+* **Effect:** [wp_ticker effect="fade"] (You can change the content effect. default effect is fade effect. values are "typography", "slide-up", "fade".)
 * **Font Style:** [wp_ticker fontstyle="normal"] (You can change the Font Style of the content. Values are "normal", "bold", "italic".)
 * **Border:** [wp_ticker border="true"] (Display Border to the Tickers. Values are "true" OR "false".)
 * **Autoplay:** [wp_ticker autoplay="true"] (Start tickers automatically. Values are "true" OR "false".)
@@ -50,6 +50,9 @@ Ticker Ultimate Shortcode:
 * **Post Category:** [wp_ticker post_cat="category"] (You can apply the Default wordpress category with ticker plugin.)
 * **Link:** [wp_ticker link="true"] (You can able to remove link of ticker.)
 * **Link Target:** [wp_ticker link_target="self"] (You can able to set target of link to current/new page.)
+* **Limit:** [wp_ticker limit="15"] (Enter number of post to be displayed. Enter -1 to display all.)
+* **Posts:** [wp_ticker posts=""] (Enter id of the post which you want to display. You can pass multiple ids with comma seperated. You can find id at relevant post listing page.)
+* **Extra Class:** [wp_ticker extra_class=""] (Enter extra CSS class for design customization.)
 
 = Template code is =
 <code><?php echo do_shortcode('[wp_ticker]'); ?></code>
@@ -64,6 +67,7 @@ Ticker Ultimate Shortcode:
 * Strong shortcode parameters
 * 100% Multilanguage
 * Also work with Gutenberg shortcode block.
+* Gutenberg Block Supports.
 
 = PRO Features : =
 > <strong>Premium Version</strong><br>
@@ -71,8 +75,10 @@ Ticker Ultimate Shortcode:
 > * 2 Styles
 > * 2 Shortcodes (Post in ticker mode, RSS feed in ticker mode)	
 > * WP Templating Features Support
-> * Visual Composer / WPBackery Support
-> * Gutenberg Block Support
+> * Gutenberg Block Supports.
+> * WPBakery Page Builder Support
+> * Elementor, Beaver and SiteOrigin Page Builder Support (New).
+> * Divi Page Builder Native Support (New).
 > * Default WordPress Posts Support
 > * Custom Color Change of the Title
 > * Custom Background Color Change of the Title
@@ -104,6 +110,25 @@ Ticker Ultimate Shortcode:
 
 
 == Changelog ==
+
+= 1.4.1 (15, Feb 2021) =
+* [*] Fixed the issue for the ticker custom read more link.
+
+= 1.4 (28, Dec 2020) =
+* [+] New - Added Gutenberg block support. Now use plugin easily with Gutenberg!
+* [+] New - Added native shortcode support for Elementor, SiteOrigin and Beaver builder .
+* [+] New - Added Divi page builder native support.
+* [+] New - Added Fusion Page Builder (Avada) native support.
+* [*] Tweak - Code optimization and performance improvements.
+* [*] jQuery( document ).ready(function($) is replaced with function( $ ) to solve the issue with 3rd party plugin and theme js error.
+
+= 1.3 (30, Oct 2020) =
+* [*] Update - Regular plugin maintenance. Updated readme file.
+* [+] Added - Added our other Popular Plugins under WP Ticker --> Install Popular Plugins From WPOS. This will help you to save your time during creating a website.
+* [*] Tested up to latest version of WordPress.
+
+= 1.2.6 (14, July 2020) =
+* [*] Follow WordPress Detailed Plugin Guidelines for Offload Media and Analytics Code.
 
 = 1.2.5 (02, Jan 2020) =
 * [*] Updated features list.

@@ -187,13 +187,29 @@ class Tribe__Tickets__Attendees_Table extends WP_List_Table {
 	 * @return string
 	 */
 	public function column_primary_info( array $item ) {
-		$purchaser_name  = empty( $item[ 'purchaser_name' ] ) ? '' : esc_html( $item[ 'purchaser_name' ] );
-		$purchaser_email = empty( $item[ 'purchaser_email' ] ) ? '' : esc_html( $item[ 'purchaser_email' ] );
+		$name  = '';
+		$email = '';
 
-		$output = "
-			<div class='purchaser_name'>{$purchaser_name}</div>
-			<div class='purchaser_email'>{$purchaser_email}</div>
-		";
+		if ( ! empty( $item['holder_name'] ) ) {
+			$name = $item['holder_name'];
+		} elseif ( ! empty( $item['purchaser_name'] ) ) {
+			$name = $item['purchaser_name'];
+		}
+
+		if ( ! empty( $item['holder_email'] ) ) {
+			$email = $item['holder_email'];
+		} elseif ( ! empty( $item['purchaser_email'] ) ) {
+			$email = $item['purchaser_email'];
+		}
+
+		$output = sprintf(
+			'
+				<div class="purchaser_name">%1$s</div>
+				<div class="purchaser_email">%2$s</div>
+			',
+			esc_html( $name ),
+			esc_html( $email )
+		);
 
 		/**
 		 * Provides an opportunity to modify the Primary Info column content in
@@ -228,7 +244,6 @@ class Tribe__Tickets__Attendees_Table extends WP_List_Table {
 			$icon = sprintf( "<span class='warning'><img src='%s'/></span> ", esc_url( Tribe__Tickets__Main::instance()->plugin_url . 'src/resources/images/warning.png' ) );
 		}
 
-		// Look for an order_status_label, fall back on the actual order_status string @todo remove fallback in 3.4.3
 		if ( empty( $item['order_status'] ) ) {
 			$item['order_status'] = '';
 		}
@@ -239,8 +254,6 @@ class Tribe__Tickets__Attendees_Table extends WP_List_Table {
 
 		if ( ! empty( $order_id_url ) && ! empty( $item[ 'order_id' ] ) ) {
 			$label = '<a href="' . esc_url( $order_id_url ) . '">#' . esc_html( $item[ 'order_id' ] ) . ' &ndash; ' . $label . '</a>';
-		} elseif ( ! empty( $item[ 'order_id' ] ) ) {
-			$label = '#' . esc_html( $item[ 'order_id' ] ) . ' &ndash; ' . $label;
 		}
 
 		/**
@@ -273,31 +286,47 @@ class Tribe__Tickets__Attendees_Table extends WP_List_Table {
 	}
 
 	/**
-	 * Handler for the ticket column
+	 * Handler for the ticket column.
 	 *
-	 * @since 4.1
+	 * @since  4.1
+	 * @since  4.12.1 Include the raw attendee Post ID in the ticket's ID.
 	 *
-	 * @param array $item Item whose ticket data should be output
+	 * @param array $item Item whose ticket data should be output.
 	 *
 	 * @return string
 	 */
-	public function column_ticket( $item ) {
+	public function column_ticket( array $item ) {
 		ob_start();
 
-		$attendee_id = trim( esc_html( $this->get_attendee_id( $item ) ) );
+		$attendee_id = trim( $this->get_attendee_id( $item ) );
+
+		if (
+			! empty( $attendee_id )
+			&& ! empty( $item['attendee_id'] )
+		) {
+			// Purposefully not forcing strict check here.
+			// phpcs:ignore
+			if ( $attendee_id != $item['attendee_id'] ) {
+				$attendee_id .= sprintf( ' [#%d]', $item['attendee_id'] );
+			} else {
+				$attendee_id = sprintf( '[#%s]', $attendee_id );
+			}
+		}
+
+		$attendee_id = esc_html( $attendee_id );
 
 		if ( ! empty( $attendee_id ) ) {
 			$attendee_id .= ' &ndash; ';
 		}
 
 		?>
-			<div class="event-tickets-ticket-name">
-				<?php echo $attendee_id; ?>
-				<?php echo esc_html( $item['ticket'] ); ?>
-			</div>
+		<div class="event-tickets-ticket-name">
+			<?php echo $attendee_id; ?>
+			<?php echo esc_html( $item['ticket'] ); ?>
+		</div>
 
-			<?php echo $this->get_row_actions( $item ); ?>
 		<?php
+		echo $this->get_row_actions( $item );
 
 		/**
 		 * Hook to allow for the insertion of additional content in the ticket table cell
@@ -319,9 +348,11 @@ class Tribe__Tickets__Attendees_Table extends WP_List_Table {
 	 * @return string
 	 */
 	protected function get_row_actions( array $item ) {
+		/** @var Tribe__Tickets__Attendees $attendees */
+		$attendees = tribe( 'tickets.attendees' );
 
-		if ( ! tribe( 'tickets.attendees' )->user_can_manage_attendees( 0, $this->event->ID ) ) {
-			return false;
+		if ( ! $attendees->user_can_manage_attendees( 0, $this->event->ID ) ) {
+			return '';
 		}
 
 		/**
@@ -345,15 +376,17 @@ class Tribe__Tickets__Attendees_Table extends WP_List_Table {
 	 * @return array
 	 */
 	public function add_default_row_actions( array $row_actions, array $item ) {
+		/** @var Tribe__Tickets__Attendees $attendees */
+		$attendees = tribe( 'tickets.attendees' );
 
-		if ( ! tribe( 'tickets.attendees' )->user_can_manage_attendees( 0, $this->event->ID ) ) {
-			return;
+		if ( ! $attendees->user_can_manage_attendees( 0, $this->event->ID ) ) {
+			return $row_actions;
 		}
 
 		$default_actions = [];
-		$provider = ! empty(  $item['provider'] ) ? $item['provider'] : null;
+		$provider        = ! empty( $item['provider'] ) ? $item['provider'] : null;
 
-		if ( is_object( $this->event ) && isset(  $this->event->ID ) ) {
+		if ( is_object( $this->event ) && isset( $this->event->ID ) ) {
 			$default_actions[] = sprintf(
 				'<span class="inline">
 					<a href="#" class="tickets_checkin" data-attendee-id="%1$d" data-event-id="%2$d" data-provider="%3$s">' . esc_html_x( 'Check In', 'row action', 'event-tickets' ) . '</a>
@@ -914,6 +947,8 @@ class Tribe__Tickets__Attendees_Table extends WP_List_Table {
 			$search_like_keys = [
 				'purchaser_name',
 				'purchaser_email',
+				'holder_name',
+				'holder_email',
 			];
 
 			/**
@@ -978,6 +1013,8 @@ class Tribe__Tickets__Attendees_Table extends WP_List_Table {
 		return [
 			'purchaser_name'  => esc_html_x( 'Search by Purchaser Name', 'Attendees Table search options', 'event-tickets' ),
 			'purchaser_email' => esc_html_x( 'Search by Purchaser Email', 'Attendees Table search options', 'event-tickets' ),
+			'holder_name'     => esc_html_x( 'Search by Ticket Holder Name', 'Attendees Table search options', 'event-tickets' ),
+			'holder_email'    => esc_html_x( 'Search by Ticket Holder Email', 'Attendees Table search options', 'event-tickets' ),
 			'user'            => esc_html_x( 'Search by User ID', 'Attendees Table search options', 'event-tickets' ),
 			'order_status'    => esc_html_x( 'Search by Order Status', 'Attendees Table search options', 'event-tickets' ),
 			'order'           => esc_html_x( 'Search by Order ID', 'Attendees Table search options', 'event-tickets' ),

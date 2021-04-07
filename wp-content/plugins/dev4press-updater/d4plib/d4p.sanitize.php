@@ -2,13 +2,13 @@
 
 /*
 Name:    d4pLib_Sanitize
-Version: v2.7.6
+Version: v2.8.13
 Author:  Milan Petrovic
 Email:   support@dev4press.com
 Website: https://www.dev4press.com/
 
 == Copyright ==
-Copyright 2008 - 2019 Milan Petrovic (email: support@dev4press.com)
+Copyright 2008 - 2020 Milan Petrovic (email: support@dev4press.com)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-if (!defined( 'ABSPATH')) { exit; }
+if (!defined('ABSPATH')) { exit; }
 
 if (!function_exists('d4p_sanitize_file_path')) {
     function d4p_sanitize_file_path($filename) {
@@ -127,6 +127,38 @@ if (!function_exists('d4p_ids_from_string')) {
     }
 }
 
+if (!function_exists('d4p_kses_wide_list_of_tags')) {
+    function d4p_kses_wide_list_of_tags() {
+        return array_merge(d4p_kses_expanded_list_of_tags(), array(
+            'head' => array(),
+            'title' => array(),
+                'html' => array(
+                    'lang' => true
+                ),
+            'link' => array(
+                'rel' => true,
+                'href' => true,
+                'media' => true
+            ),
+            'style' => array(
+                'type' => true,
+                'media' => true
+            ),
+            'meta' => array(
+                'property' => true,
+                'name' => true,
+                'content' => true,
+                'http-equiv' => true,
+                'charset' => true
+            ),
+            'body' => array(
+                'class' => true,
+                'style' => true
+            ),
+        ));
+    }
+}
+
 if (!function_exists('d4p_kses_expanded_list_of_tags')) {
     function d4p_kses_expanded_list_of_tags() {
         return array(
@@ -139,7 +171,10 @@ if (!function_exists('d4p_kses_expanded_list_of_tags')) {
                 'download' => true,
                 'target' => true
             ),
-            'abbr' => array(),
+            'abbr' => array(
+                'class' => true,
+                'style' => true
+            ),
             'blockquote' => array(
                 'class' => true,
                 'style' => true,
@@ -154,6 +189,10 @@ if (!function_exists('d4p_kses_expanded_list_of_tags')) {
                 'style' => true
             ),
             'code' => array(
+                'class' => true,
+                'style' => true
+            ),
+            'p' => array(
                 'class' => true,
                 'style' => true
             ),
@@ -235,6 +274,8 @@ if (!function_exists('d4p_kses_expanded_list_of_tags')) {
                 'width' => true
             ),
             'table' => array(
+                'cellpadding' => true,
+                'cellspacing' => true,
                 'align' => true,
                 'bgcolor' => true,
                 'border' => true,

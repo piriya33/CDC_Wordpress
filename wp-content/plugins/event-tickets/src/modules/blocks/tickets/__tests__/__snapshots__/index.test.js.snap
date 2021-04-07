@@ -36,7 +36,9 @@ Object {
   ],
   "save": [Function],
   "supports": Object {
+    "customClassName": false,
     "html": false,
+    "multiple": false,
   },
   "title": "Tickets",
 }

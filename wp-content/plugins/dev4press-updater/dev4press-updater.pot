@@ -2,13 +2,25 @@
 msgid ""
 msgstr ""
 "Plural - Forms: nplurals = INTEGER; plural = EXPRESSION;\n"
-"Project-Id-Version: dev4press-updater\n"
-"POT-Creation-Date: 12-30-2018 12:26:22 PM\n"
+"Project-Id-Version: Dev4Press Updater\n"
+"POT-Creation-Date: 05/17/2020 12:09:13 PM\n"
 "Language-Team: Milan Petrovic <support@dev4press.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: GD i18n 2.1\n"
+"X-Generator: GD i18n 2.2\n"
+
+#: forms/parts/plugin.purchase.php:35
+msgid "You have %s active license for this plugin."
+msgid_plural "You have %s active licenses for this plugin."
+msgstr[0] ""
+msgstr[1] ""
+
+#: forms/front.php:129
+msgid "<strong>%s plugin</strong> availbale for update"
+msgid_plural "<strong>%s plugins</strong> availbale for update"
+msgstr[0] ""
+msgstr[1] ""
 
 #: core/admin.php:70
 msgid "Dev4Press Updater is activated and it needs to finish installation."
@@ -58,7 +70,7 @@ msgstr ""
 
 #: core/admin.php:168
 #: core/admin.php:169
-#: forms/shared/top.php:81
+#: forms/shared/top.php:89
 msgid "Check for updates"
 msgstr ""
 
@@ -78,175 +90,180 @@ msgstr ""
 msgid "Image not selected."
 msgstr ""
 
-#: core/extra.php:5
-#: core/updater.php:450
+#: core/extra.php:7
+#: core/updater.php:484
 msgid "You are using latest version."
 msgstr ""
 
-#: core/extra.php:6
+#: core/extra.php:8
 msgid "You don't have valid license."
 msgstr ""
 
-#: core/extra.php:7
+#: core/extra.php:9
 msgid "API Key is not set!"
 msgstr ""
 
-#: core/extra.php:8
+#: core/extra.php:10
 msgid "API Key is invalid!"
 msgstr ""
 
-#: core/internal.php:34
-#: core/internal.php:50
-#: core/updater.php:298
+#: core/extra.php:11
+#: core/updater.php:576
+msgid "Invalid response received."
+msgstr ""
+
+#: core/internal.php:36
+#: core/internal.php:52
+#: core/updater.php:322
 msgid "Important"
 msgstr ""
 
-#: core/internal.php:35
+#: core/internal.php:37
 msgid "How to get API Key"
 msgstr ""
 
-#: core/internal.php:37
+#: core/internal.php:39
 #: forms/settings.php:9
 msgid "API Key"
 msgstr ""
 
-#: core/internal.php:38
-#: forms/front.php:56
+#: core/internal.php:40
+#: forms/front.php:58
 msgid "Enter API Key"
 msgstr ""
 
-#: core/internal.php:38
+#: core/internal.php:40
 msgid "Without valid API Key, plugin will not work."
 msgstr ""
 
-#: core/internal.php:42
+#: core/internal.php:44
 msgid "Auto check for updates"
 msgstr ""
 
-#: core/internal.php:43
+#: core/internal.php:45
 msgid "Interval"
 msgstr ""
 
-#: core/internal.php:45
+#: core/internal.php:47
 msgid "Update status"
 msgstr ""
 
-#: core/internal.php:46
+#: core/internal.php:48
 msgid "Check for"
 msgstr ""
 
-#: core/internal.php:46
+#: core/internal.php:48
 msgid "Alpha, Beta and Nightly updates can be unstable, they are for testing purposes only, and they should be used on staging, localhost or development websites only, not on live websites!"
 msgstr ""
 
-#: core/internal.php:51
+#: core/internal.php:53
 msgid "About debugging"
 msgstr ""
 
-#: core/internal.php:53
+#: core/internal.php:55
 msgid "Save data into file for debugging purposes"
 msgstr ""
 
-#: core/internal.php:54
+#: core/internal.php:56
 msgid "What to save"
 msgstr ""
 
-#: core/internal.php:61
+#: core/internal.php:63
 msgid "To get your API Key, log in to Dev4Press website, and visit your dashboard"
 msgstr ""
 
-#: core/internal.php:62
-msgid "Dev4Press Dashboard"
+#: core/internal.php:64
+msgid "User Dashboard API Key"
 msgstr ""
 
-#: core/internal.php:63
+#: core/internal.php:65
 msgid "Make sure you keep your API Key safe, and don't share it with anyone else!"
 msgstr ""
 
-#: core/internal.php:69
+#: core/internal.php:71
 msgid "If you have problems with the updater, it is useful to enable debug mode and plugin will save information about requests sent to Dev4Press and responses received."
 msgstr ""
 
-#: core/internal.php:70
+#: core/internal.php:72
 msgid "All data will be stored into text file 'dev4press.log' in your WordPress uploads folder."
 msgstr ""
 
-#: core/internal.php:77
+#: core/internal.php:79
 msgid "Disable"
 msgstr ""
 
-#: core/internal.php:78
+#: core/internal.php:80
 msgid "Twice Daily"
 msgstr ""
 
-#: core/internal.php:79
+#: core/internal.php:81
 msgid "Daily"
 msgstr ""
 
-#: core/internal.php:80
-#: core/plugin.php:48
+#: core/internal.php:82
+#: core/plugin.php:50
 msgid "Every Two Days"
 msgstr ""
 
-#: core/internal.php:81
-#: core/plugin.php:47
+#: core/internal.php:83
+#: core/plugin.php:49
 msgid "Twice Weekly"
 msgstr ""
 
-#: core/internal.php:82
+#: core/internal.php:84
 msgid "Weekly"
 msgstr ""
 
-#: core/internal.php:88
+#: core/internal.php:90
 msgid "Only stable releases"
 msgstr ""
 
-#: core/internal.php:89
+#: core/internal.php:91
 msgid "Stable and beta releases"
 msgstr ""
 
-#: core/internal.php:90
+#: core/internal.php:92
 msgid "Stable, beta and alpha releases"
 msgstr ""
 
-#: core/internal.php:91
+#: core/internal.php:93
 msgid "Stable, beta, alpha and nightly releases"
 msgstr ""
 
-#: core/internal.php:97
+#: core/internal.php:99
 msgid "No debug"
 msgstr ""
 
-#: core/internal.php:98
+#: core/internal.php:100
 msgid "All requests and responses"
 msgstr ""
 
-#: core/internal.php:99
+#: core/internal.php:101
 msgid "Requests only"
 msgstr ""
 
-#: core/internal.php:100
+#: core/internal.php:102
 msgid "Responses only"
 msgstr ""
 
-#: core/plugin.php:46
+#: core/plugin.php:48
 msgid "Once Weekly"
 msgstr ""
 
-#: core/updater.php:147
-#: core/updater.php:298
+#: core/updater.php:166
+#: core/updater.php:322
 msgid "The new update is a %s version, for testing purposes only. Do not use it on live websites!"
 msgstr ""
 
-#: core/updater.php:153
+#: core/updater.php:172
 msgid "Return to Dev4Press Installer"
 msgstr ""
 
-#: core/updater.php:293
+#: core/updater.php:317
 #: forms/about/changelog.php:3
-#: forms/about/changelog.php:25
-#: forms/about/changelog.php:231
-#: forms/about/changelog.php:317
+#: forms/about/changelog.php:70
+#: forms/about/changelog.php:276
+#: forms/about/changelog.php:363
 #: forms/about/info.php:6
 #: forms/about/info.php:32
 #: forms/about/info.php:37
@@ -256,20 +273,26 @@ msgstr ""
 #: forms/about/info.php:57
 #: forms/about/info.php:62
 #: forms/about/minor.php:3
+#: forms/about/minor.php:7
+#: forms/about/minor.php:11
+#: forms/about/minor.php:15
+#: forms/about/minor.php:19
+#: forms/about/minor.php:23
+#: forms/about/minor.php:27
 #: forms/parts/plugin.install.php:29
-#: forms/front.php:20
+#: forms/front.php:22
 msgid "Version"
 msgstr ""
 
-#: core/updater.php:301
+#: core/updater.php:325
 msgid "Full Changelog"
 msgstr ""
 
-#: core/updater.php:301
+#: core/updater.php:325
 msgid "Changelog page"
 msgstr ""
 
-#: core/updater.php:444
+#: core/updater.php:478
 msgid "There was an error with update check."
 msgstr ""
 
@@ -304,7 +327,7 @@ msgid "Status"
 msgstr ""
 
 #: forms/about/info.php:8
-#: forms/front.php:152
+#: forms/front.php:189
 msgid "Build"
 msgstr ""
 
@@ -333,7 +356,7 @@ msgid "Translator"
 msgstr ""
 
 #: forms/about/info.php:64
-#: forms/front.php:160
+#: forms/front.php:197
 msgid "URL"
 msgstr ""
 
@@ -341,12 +364,13 @@ msgstr ""
 msgid "Maintenance and Security Releases"
 msgstr ""
 
-#: forms/about/minor.php:7
+#: forms/about/minor.php:31
 msgid "For more information, see <a href='%s'>the changelog</a>."
 msgstr ""
 
 #: forms/parts/feed.news.php:27
 #: forms/parts/feed.promotion.php:13
+#: forms/front.php:73
 msgid "Read More"
 msgstr ""
 
@@ -435,12 +459,6 @@ msgstr ""
 msgid "The license price starting from"
 msgstr ""
 
-#: forms/parts/plugin.purchase.php:35
-msgid "You have %s active license for this plugin."
-msgid_plural "You have %s active licenses for this plugin."
-msgstr[0] ""
-msgstr[1] ""
-
 #: forms/setup/install.php:17
 msgid "Installation"
 msgstr ""
@@ -495,162 +513,176 @@ msgstr ""
 msgid "Before you can use the plugin, clear the website and browser cache to make sure that latest JS and CSS files are loaded."
 msgstr ""
 
-#: forms/shared/top.php:35
+#: forms/shared/top.php:36
 msgid "Settings are saved."
 msgstr ""
 
-#: forms/front.php:17
+#: forms/shared/top.php:40
+msgid "Update check is allowed once every 5 minutes, please wait before trying to check for updates."
+msgstr ""
+
+#: forms/shared/top.php:43
+msgid "Update check has been executed."
+msgstr ""
+
+#: forms/front.php:19
 msgid "Dev4Press Updater"
 msgstr ""
 
-#: forms/front.php:33
+#: forms/front.php:35
 msgid "Dev4Press Updater installed on this website is over a year old, and it is no longer allowed to access Dev4Press plugins update system."
 msgstr ""
 
-#: forms/front.php:43
+#: forms/front.php:45
 msgid "Dev4Press Updater installed on this website is older then six months. You need to update it as soon as possible, or you will not be able to update and install plugins using old versions of Dev4Press Updater."
 msgstr ""
 
-#: forms/front.php:53
+#: forms/front.php:55
 msgid "API Key missing!"
 msgstr ""
 
-#: forms/front.php:55
+#: forms/front.php:57
 msgid "You need to enter Dev4Press API Key before you can check for the updates."
 msgstr ""
 
-#: forms/front.php:73
+#: forms/front.php:70
+msgid "Promotion"
+msgstr ""
+
+#: forms/front.php:94
 msgid "Update Status"
 msgstr ""
 
-#: forms/front.php:82
+#: forms/front.php:104
 msgid "Last check performed"
 msgstr ""
 
-#: forms/front.php:88
+#: forms/front.php:124
 msgid "There are no updates currently available"
 msgstr ""
 
-#: forms/front.php:113
+#: forms/front.php:150
 msgid "Installed plugins"
 msgstr ""
 
-#: forms/front.php:115
+#: forms/front.php:152
 msgid "WordPress Updates"
 msgstr ""
 
-#: forms/front.php:118
+#: forms/front.php:155
 msgid "Recheck"
 msgstr ""
 
-#: forms/front.php:125
+#: forms/front.php:162
 msgid "Additional Options"
 msgstr ""
 
-#: forms/front.php:130
+#: forms/front.php:167
 msgid "Check out latest news, new releases and available promotions. Install more plugins if you have active licenses, or purchase licenses for Dev4Press plugins or addons."
 msgstr ""
 
-#: forms/front.php:135
+#: forms/front.php:172
 msgid "News and Deals"
 msgstr ""
 
-#: forms/front.php:136
+#: forms/front.php:173
 msgid "Install more"
 msgstr ""
 
-#: forms/front.php:137
+#: forms/front.php:174
 msgid "Buy licenses"
 msgstr ""
 
-#: forms/front.php:144
+#: forms/front.php:181
 msgid "System Status"
 msgstr ""
 
-#: forms/front.php:149
+#: forms/front.php:186
 msgid "Updater"
 msgstr ""
 
-#: forms/front.php:151
+#: forms/front.php:188
 msgid "Plugin Version"
 msgstr ""
 
-#: forms/front.php:153
+#: forms/front.php:190
 msgid "Update Server Version"
 msgstr ""
 
-#: forms/front.php:154
+#: forms/front.php:191
 msgid "Last Update Check"
 msgstr ""
 
-#: forms/front.php:158
+#: forms/front.php:195
 msgid "Website"
 msgstr ""
 
-#: forms/front.php:161
+#: forms/front.php:198
 msgid "WordPress"
 msgstr ""
 
-#: forms/front.php:165
-#: forms/front.php:167
+#: forms/front.php:202
+#: forms/front.php:204
 msgid "Server"
 msgstr ""
 
-#: forms/front.php:168
+#: forms/front.php:205
 msgid "Operating System"
 msgstr ""
 
-#: forms/front.php:169
+#: forms/front.php:206
 msgid "Hostname"
 msgstr ""
 
-#: forms/front.php:170
+#: forms/front.php:207
 msgid "IP and Port"
 msgstr ""
 
-#: forms/front.php:174
+#: forms/front.php:211
 msgid "Software"
 msgstr ""
 
-#: forms/front.php:176
+#: forms/front.php:213
 msgid "PHP Version"
 msgstr ""
 
-#: forms/front.php:177
+#: forms/front.php:214
 msgid "mySQL Version"
 msgstr ""
 
-#: forms/front.php:62
+#: forms/front.php:80
 msgctxt "When the last check was performed"
 msgid "Never"
 msgstr ""
 
-#: forms/front.php:65
+#: forms/front.php:83
 msgctxt "When the last check was performed"
 msgid "%s ago"
 msgstr ""
 
-#: forms/front.php:77
+#: forms/front.php:98
 msgid "The updater is currently set to allow %s updates. These updates can be unstable, they are for testing purposes only, and they should be used on staging, localhost or development websites only, not on live websites!"
 msgstr ""
 
-#: forms/front.php:78
+#: forms/front.php:99
 msgid "To change the updates received, visit the <a href='%s'>Settings</a> page."
 msgstr ""
 
-#: forms/front.php:153
+#: forms/front.php:113
+msgid "Unspecified error occured during the update check, no response received."
+msgstr ""
+
+#: forms/front.php:118
+msgid "Enter Valid API Key"
+msgstr ""
+
+#: forms/front.php:190
 msgid "Invalid"
 msgstr ""
 
-#: forms/front.php:154
+#: forms/front.php:191
 msgid "No Information"
 msgstr ""
-
-#: forms/front.php:93
-msgid "<strong>%s plugin</strong> availbale for update"
-msgid_plural "<strong>%s plugins</strong> availbale for update"
-msgstr[0] ""
-msgstr[1] ""
 
 #: forms/install.php:24
 msgid "This page shows all Dev4Press plugins you can install."

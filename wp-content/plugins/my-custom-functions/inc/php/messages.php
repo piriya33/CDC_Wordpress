@@ -13,8 +13,8 @@ function spacexchimp_p001_message_hello() {
     // Put value of plugin constants into an array for easier access
     $plugin = spacexchimp_p001_plugin();
 
-    // Retrieve options from database and declare variables
-    $options = get_option( $plugin['settings'] . '_settings' );
+    // Put the value of the plugin options into an array for easier access
+    $options = spacexchimp_p001_options();
 
     // Exit if options are already set in database
     if ( ! empty( $options ) ) {
@@ -126,6 +126,14 @@ function spacexchimp_p001_message_save() {
                 <?php _e( 'Custom code saved successfully.', $plugin['text'] ); ?>
             </p>
         </div>
+        <style>
+            #message.updated {
+                z-index: 9999;
+                position: fixed;
+                top: 40px;
+                right: 40px;
+            }
+        </style>
     <?php
 }
 

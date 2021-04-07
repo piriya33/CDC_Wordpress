@@ -2,13 +2,13 @@
 
 /*
 Name:    d4pLib_Class_Grid
-Version: v2.7.6
+Version: v2.8.13
 Author:  Milan Petrovic
 Email:   support@dev4press.com
 Website: https://www.dev4press.com/
 
 == Copyright ==
-Copyright 2008 - 2019 Milan Petrovic (email: support@dev4press.com)
+Copyright 2008 - 2020 Milan Petrovic (email: support@dev4press.com)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-if (!defined( 'ABSPATH')) { exit; }
+if (!defined('ABSPATH')) { exit; }
 
 if (!class_exists('d4p_grid')) {
     abstract class d4p_grid extends WP_List_Table {
@@ -35,7 +35,7 @@ if (!class_exists('d4p_grid')) {
         public $_checkbox_field = '';
         public $_table_class_name = '';
 
-        public function get_table_classes() {
+        protected function get_table_classes() {
             $classes = parent::get_table_classes();
 
             if (!empty($this->_table_class_name)) {
@@ -49,13 +49,13 @@ if (!class_exists('d4p_grid')) {
             $this->_column_headers = array($this->get_columns(), array(), $this->get_sortable_columns());
         }
 
-        public function get_sortable_columns() {
+        protected function get_sortable_columns() {
             return array();
         }
 
         public function get_row_classes($item) {
             return array();
-	}
+	    }
 
         public function single_row($item) {
             $classes = $this->get_row_classes($item);
@@ -63,13 +63,13 @@ if (!class_exists('d4p_grid')) {
             echo '<tr'.(empty($classes) ? '' : ' class="'.join(' ', $classes).'"').'>';
             $this->single_row_columns($item);
             echo '</tr>';
-	}
+	    }
 
-        public function column_default($item, $column_name){
+        protected function column_default($item, $column_name){
             return $item->$column_name;
         }
 
-        public function column_cb($item){
+        protected function column_cb($item){
             $key = $this->_checkbox_field;
 
             return sprintf('<input type="checkbox" name="%1$s[]" value="%2$s" />', $this->_args['singular'], $item->$key);

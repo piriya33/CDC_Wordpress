@@ -96,6 +96,23 @@ class URE_Ajax_Processor {
     // end of add_role()
     
     
+    protected function update_role() {
+        
+        $editor = URE_Editor::get_instance();
+        $response = $editor->update_role();                
+        
+        $answer = array(
+            'result'=>$response['result'], 
+            'role_id'=>$response['role_id'],  
+            'role_name'=>$response['role_name'],
+            'message'=>$response['message']
+                );
+        
+        return $answer;
+    }
+    // end of add_role()
+
+        
     protected function add_capability() {
         
         $notification = URE_Capability::add( 'role' );
@@ -105,8 +122,11 @@ class URE_Ajax_Processor {
         if (empty( $message ) ) {
             $view = new URE_View();        
             $html = $view->_show_capabilities( true, true );
+            $result = 'success';
         } else {
             $html = '';
+            $result = 'error';
+            $notification = $message;
         }
         
         $answer = array('result'=>'success', 'html'=>$html, 'message'=>$notification);
@@ -243,23 +263,47 @@ class URE_Ajax_Processor {
             $role_options = array();
         }
         
+        $caps = array();
+        foreach( $wp_roles->roles[$role]['capabilities'] as $cap_id=>$allowed ) {
+            $cap = URE_Capability::escape( $cap_id );
+            $caps[$cap] = $allowed;
+        }
+        
         $answer = array(
             'result'=>'success', 
             'message'=>'Role capabilities retrieved successfully', 
             'role_id'=>$role,
             'role_name'=>$wp_roles->roles[$role]['name'],
-            'caps'=>$wp_roles->roles[$role]['capabilities'],
+            'caps'=>$caps,
             'options'=>$role_options
             );
         
         return $answer;
     }
     // end of get_role_caps()
+
+
+    protected function hide_pro_banner() {
+        
+        $this->lib->put_option('ure_hide_pro_banner', 1);	
+        $this->lib->flush_options();
+        
+        $answer = array(
+            'result'=>'success', 
+            'message'=>'Pro banner was hidden'
+            );
+        
+        return $answer;
+    }
+    // end of hide_pro_banner()
     
     
     protected function _dispatch() {
         
         switch ($this->action) {
+            case 'update_role':
+                $answer = $this->update_role();
+                break;
             case 'add_role':
                 $answer = $this->add_role();
                 break;
@@ -290,6 +334,9 @@ class URE_Ajax_Processor {
             case 'rename_role':
                 $answer = $this->rename_role();
                 break;
+            case 'hide_pro_banner':
+                $answer = $this->hide_pro_banner();
+                break;            
             default:
                 $answer = array('result' => 'error', 'message' => 'Unknown action "' . $this->action . '"');
         }

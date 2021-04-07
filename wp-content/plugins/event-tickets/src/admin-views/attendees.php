@@ -11,19 +11,40 @@ $pto      = get_post_type_object( $event->post_type );
 $singular = $pto->labels->singular_name;
 
 /**
- * Whether or not we should display attendees title
+ * Whether we should display the "Attendees for: %s" title.
  *
  * @since  4.6.2
+ * @since  4.12.1 Append the post ID to the Attendees page title and each Ticket's name.
+ * @since  5.0.1 Change default to the result of `is_admin()`.
  *
- * @param  boolean                          $show_title
- * @param  Tribe__Tickets__Tickets_Handler  $handler
+ * @param boolean                   $show_title Whether to show the title.
+ * @param Tribe__Tickets__Attendees $attendees  The attendees object.
  */
-$show_title = apply_filters( 'tribe_tickets_attendees_show_title', true, $attendees );
+$show_title = apply_filters( 'tribe_tickets_attendees_show_title', is_admin(), $attendees );
 ?>
 
 <div class="wrap tribe-report-page">
 	<?php if ( $show_title ) : ?>
-		<h1><?php esc_html_e( 'Attendees', 'event-tickets' ); ?></h1>
+		<h1>
+			<?php
+			echo esc_html(
+				sprintf(
+					// Translators: %1$s: the post/event title, %2$d: the post/event ID.
+					_x( 'Attendees for: %1$s [#%2$d]', 'attendees report screen heading', 'event-tickets' ),
+					get_the_title( $event ),
+					$event_id
+				)
+			);
+			/**
+			 * Add an action to render content after text title.
+			 *
+			 * @since 5.1.0
+			 *
+			 * @param int $event_id Post ID.
+			 */
+			do_action( 'tribe_report_page_after_text_label', $event_id );
+			?>
+		</h1>
 	<?php endif; ?>
 	<div id="tribe-attendees-summary" class="welcome-panel tribe-report-panel">
 		<div class="welcome-panel-content">
@@ -90,16 +111,26 @@ $show_title = apply_filters( 'tribe_tickets_attendees_show_title', true, $attend
 
 					<ul>
 						<?php
+						/** @var Tribe__Tickets__Ticket_Object $ticket */
 						foreach ( $tickets as $ticket ) {
-							/** @var Tribe__Tickets__Ticket_Object $ticket */
+							$ticket_name = sprintf( '%s [#%d]', $ticket->name, $ticket->ID );
 							?>
-						<li>
-							<strong><?php echo esc_html( $ticket->name ) ?>:&nbsp;</strong><?php
-							echo esc_html( tribe_tickets_get_ticket_stock_message( $ticket ) );
-						?></li>
-					<?php } ?>
+							<li>
+								<strong><?php echo esc_html( $ticket_name ) ?>:&nbsp;</strong><?php
+								echo esc_html( tribe_tickets_get_ticket_stock_message( $ticket ) );
+
+								/**
+								 * Adds an entry point to inject additional info for ticket.
+								 *
+								 * @since 5.0.3
+								 */
+								$this->set( 'ticket_item_for_overview', $ticket );
+								$this->do_entry_point( 'overview_section_after_ticket_name' );
+								?>
+							</li>
+						<?php } ?>
 					</ul>
-					<?php do_action( 'tribe_events_tickets_attendees_ticket_sales_bottom', $event_id );  ?>
+					<?php do_action( 'tribe_events_tickets_attendees_ticket_sales_bottom', $event_id ); ?>
 				</div>
 				<div class="welcome-panel-column welcome-panel-last alternate">
 					<?php
@@ -131,7 +162,7 @@ $show_title = apply_filters( 'tribe_tickets_attendees_show_title', true, $attend
 	</div>
 	<?php do_action( 'tribe_events_tickets_attendees_event_summary_table_after', $event_id ); ?>
 
-	<form id="topics-filter" class="topics-filter" method="post">
+	<form id="event-tickets__attendees-admin-form" class="topics-filter event-tickets__attendees-admin-form" method="post">
 		<input type="hidden" name="<?php echo esc_attr( is_admin() ? 'page' : 'tribe[page]' ); ?>" value="<?php echo esc_attr( isset( $_GET['page'] ) ? $_GET['page'] : '' ); ?>" />
 		<input type="hidden" name="<?php echo esc_attr( is_admin() ? 'event_id' : 'tribe[event_id]' ); ?>" id="event_id" value="<?php echo esc_attr( $event_id ); ?>" />
 		<input type="hidden" name="<?php echo esc_attr( is_admin() ? 'post_type' : 'tribe[post_type]' ); ?>" value="<?php echo esc_attr( $event->post_type ); ?>" />

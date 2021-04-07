@@ -2,6 +2,8 @@
 
 namespace WPForms\Pro;
 
+use WPForms\Pro\Integrations\TranslationsPress\Translations;
+
 /**
  * Class Migrations handles Pro plugin upgrade routines.
  *
@@ -21,7 +23,7 @@ class Migrations {
 	 *
 	 * @since 1.5.9
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	private $is_migrated = false;
 
@@ -92,6 +94,8 @@ class Migrations {
 	 */
 	private function migrate( $version ) {
 
+		wpforms()->get( 'pro' )->objects();
+
 		if ( version_compare( $version, '1.1.6', '<' ) ) {
 			$this->v116_upgrade();
 		}
@@ -108,12 +112,12 @@ class Migrations {
 			$this->v150_upgrade();
 		}
 
-		if ( version_compare( $version, '1.5.4.2', '<' ) ) {
-			$this->v1542_upgrade();
-		}
-
 		if ( version_compare( $version, '1.5.9', '<' ) ) {
 			$this->v159_upgrade();
+		}
+
+		if ( version_compare( $version, '1.6.5', '<' ) ) {
+			$this->v165_upgrade();
 		}
 	}
 
@@ -335,27 +339,6 @@ class Migrations {
 	}
 
 	/**
-	 * Check to make sure that database tables are present for Lite users
-	 * who upgraded to Pro using the settings workflow using v1.5.4.
-	 *
-	 * @since 1.5.4.2
-	 * @since 1.5.9 Moved from WPForms_Upgrades.
-	 */
-	private function v1542_upgrade() {
-
-		global $wpdb;
-
-		$table_name = $wpdb->prefix . 'wpforms_entries';
-
-		if ( $wpdb->get_var( $wpdb->prepare( "SHOW TABLES LIKE %s", $table_name ) ) !== $table_name ) {
-			$installer = new WPForms_Install();
-			$installer->manual( true );
-		}
-
-		$this->is_migrated = true;
-	}
-
-	/**
 	 * Re-check that all database tables exist for Lite users
 	 * who upgraded to Pro using the settings workflow for v1.5.9.
 	 *
@@ -419,7 +402,7 @@ class Migrations {
 	}
 
 	/**
-	 * Generates the upgrade tab inside the Tools page if needed.
+	 * Generate the upgrade tab inside the Tools page if needed.
 	 *
 	 * @since 1.4.3
 	 */
@@ -462,5 +445,23 @@ class Migrations {
 		}
 
 		echo '<p>' . esc_html__( 'No updates are currently needed.', 'wpforms' ) . '</p>';
+	}
+
+	/**
+	 * Do all the required migrations for WPForms v1.6.5.
+	 *
+	 * @since 1.6.5
+	 */
+	private function v165_upgrade() {
+
+		if ( ! class_exists( Translations::class ) ) {
+			return;
+		}
+
+		$t15s = new Translations();
+
+		if ( $t15s->allow_load() ) {
+			$t15s->download_plugins_translations();
+		}
 	}
 }

@@ -30,10 +30,18 @@ $_message = '';
 
 if (isset($_GET['message']) && $_GET['message'] != '') {
     $msg = d4p_sanitize_slug($_GET['message']);
+    $class = "";
 
     switch ($msg) {
         case 'saved':
             $_message = __("Settings are saved.", "dev4press-updater");
+            break;
+        case 'wait':
+            $class = "error";
+            $_message = __("Update check is allowed once every 5 minutes, please wait before trying to check for updates.", "dev4press-updater");
+            break;
+        case 'update':
+            $_message = __("Update check has been executed.", "dev4press-updater");
             break;
     }
 }
@@ -90,7 +98,7 @@ if (isset($_GET['message']) && $_GET['message'] != '') {
     <?php
 
     if ($_message != '') {
-        echo '<div class="updated">'.$_message.'</div>';
+        echo '<div class="updated '.$class.'">'.$_message.'</div>';
     }
 
     ?>

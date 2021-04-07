@@ -2,13 +2,13 @@
 
 /*
 Name:    d4pLib - Classes - Debug / Static
-Version: v2.7.6
+Version: v2.8.13
 Author:  Milan Petrovic
 Email:   support@dev4press.com
 Website: https://www.dev4press.com/
 
 == Copyright ==
-Copyright 2008 - 2019 Milan Petrovic (email: support@dev4press.com)
+Copyright 2008 - 2020 Milan Petrovic (email: support@dev4press.com)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-if (!defined( 'ABSPATH')) { exit; }
+if (!defined('ABSPATH')) { exit; }
 
 if (!class_exists('d4p_debug')) {
     class d4p_debug {
@@ -47,7 +47,7 @@ if (!class_exists('d4p_debug')) {
             echo $before.D4P_EOL;
 
             if ($pre) {
-                echo '<pre style="padding: 5px; font-size: 12px; background: #fff; border: 1px solid #000; color: #000;">';
+                echo '<pre style="text-align: left; font-family: monospace; padding: 5px; font-size: 12px; background: #fff; border: 1px solid #000; color: #000;">';
 
                 if ($title != '') {
                     echo '&gt;&gt;&gt;&gt;&nbsp;<strong>'.$title.'</strong>&nbsp;&lt;&lt;&lt;&lt;&lt;<br/><br/>';

@@ -316,7 +316,7 @@ class WPForms_Field_Checkbox extends WPForms_Field {
 							'slug'    => 'show_values',
 							'value'   => isset( $field['show_values'] ) ? $field['show_values'] : '0',
 							'desc'    => esc_html__( 'Show Values', 'wpforms-lite' ),
-							'tooltip' => esc_html__( 'Check this to manually set form field values.', 'wpforms-lite' ),
+							'tooltip' => esc_html__( 'Check this option to manually set form field values.', 'wpforms-lite' ),
 						),
 						false
 					),
@@ -705,7 +705,8 @@ class WPForms_Field_Checkbox extends WPForms_Field {
 				// Determine choices keys, this is needed for image choices.
 				foreach ( $field_submit as $item ) {
 					foreach ( $field['choices'] as $key => $choice ) {
-						if ( $item == $choice['label'] ) {
+						/* translators: %s - choice number. */
+						if ( $item === $choice['label'] || $item === sprintf( esc_html__( 'Choice %s', 'wpforms-lite' ), $key ) ) {
 							$choice_keys[] = $key;
 							break;
 						}

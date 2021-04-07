@@ -223,37 +223,6 @@ class QLWCDC_Controller_Checkout {
     }
   }
 
-  function remove_checkout_fields($fields) {
-
-    if ($remove = get_option('qlwcdc_remove_checkout_fields', array())) {
-      foreach ($remove as $id => $key) {
-        // We need to remove both fields otherwise will be required
-        unset($fields['billing']['billing_' . $key]);
-        unset($fields['shipping']['shipping_' . $key]);
-      }
-    }
-
-    return $fields;
-  }
-
-  function remove_checkout_order_commens($return) {
-
-    if ('yes' === get_option('qlwcdc_remove_checkout_order_comments')) {
-      $return = false;
-    }
-
-    return $return;
-  }
-
-  function remove_checkout_shipping_address($val) {
-
-    if ('yes' === get_option('qlwcdc_remove_checkout_shipping_address')) {
-      $val = 'billing_only';
-    }
-
-    return $val;
-  }
-
 }
 
 QLWCDC_Controller_Checkout::instance();

@@ -1,6 +1,8 @@
 <?php
 
-if (!defined('ABSPATH')) exit;
+if (!defined('ABSPATH')) {
+    exit;
+}
 
 class d4pupd_core_updater {
     public $update = false;
@@ -18,6 +20,7 @@ class d4pupd_core_updater {
 
     public $transcode = array(
         'gd-rating-system-builder' => 'code-builder-addon',
+        'gd-rating-system-analytics' => 'analytics-addon',
         'gd-rating-system-mycred' => 'mycred-integration-addon',
         'gd-rating-system-mycred-simple' => 'mycred-simple-integration-addon',
         'gd-rating-system-rich-snippet-recipe' => 'recipe-rich-snippet-addon',
@@ -36,9 +39,11 @@ class d4pupd_core_updater {
         'gd-mail-queue-aws-ses' => 'aws-ses-addon',
         'gd-mail-queue-mailgun' => 'mailgun-addon',
         'gd-mail-queue-gmail' => 'gmail-addon',
+        'gd-mail-queue-mailjet' => 'mailjet-addon',
         'gd-mail-queue-sendinblue' => 'sendinblue-addon',
 
         'code-builder-addon' => 'gd-rating-system-builder',
+        'analytics-addon' => 'gd-rating-system-analytics',
         'mycred-integration-addon' => 'gd-rating-system-mycred',
         'mycred-simple-integration-addon' => 'gd-rating-system-mycred-simple',
         'recipe-rich-snippet-addon' => 'gd-rating-system-rich-snippet-recipe',
@@ -46,7 +51,6 @@ class d4pupd_core_updater {
         'multi-ratings-addon' => 'gd-rating-system-multi',
         'user-reviews-addon' => 'gd-rating-system-user-reviews',
         'comment-form-addon' => 'gd-rating-system-comment-form',
-        'data-export-addon' => 'gd-rating-system-data-export',
         'emojione-pack-addon' => 'gd-rating-system-emojione',
         'halloween-pack-addon' => 'gd-rating-system-halloween',
         'christmas-pack-addon' => 'gd-rating-system-christmas',
@@ -57,6 +61,7 @@ class d4pupd_core_updater {
         'aws-ses-addon' => 'gd-mail-queue-aws-ses',
         'mailgun-addon' => 'gd-mail-queue-mailgun',
         'gmail-addon' => 'gd-mail-queue-gmail',
+        'mailjet-addon' => 'gd-mail-queue-mailjet',
         'sendinblue-addon' => 'gd-mail-queue-sendinblue'
     );
 
@@ -65,8 +70,8 @@ class d4pupd_core_updater {
 
         'gd-security-toolbox/gd-security-toolbox.php',
         'gd-power-search-for-bbpress/gd-power-search-for-bbpress.php',
-		'gd-quantum-theme-for-bbpress/gd-quantum-theme-for-bbpress.php',
-        'gd-members-directory-for-bbpress/gd-members-directory-for-bbpress.php',
+        'gd-quantum-theme-for-bbpress/gd-quantum-theme-for-bbpress.php',
+        'gd-forum-notices-for-bbpress/gd-forum-notices-for-bbpress.php',
         'gd-rating-system/gd-rating-system.php',
         'gd-seo-toolbox/gd-seo-toolbox.php',
         'gd-bbpress-toolbox/gd-bbpress-toolbox.php',
@@ -93,8 +98,7 @@ class d4pupd_core_updater {
         'gd-rating-system-multi/gd-rating-system-multi.php',
         'gd-rating-system-user-reviews/gd-rating-system-user-reviews.php',
         'gd-rating-system-comment-form/gd-rating-system-comment-form.php',
-        'gd-rating-system-data-export/gd-rating-system-data-export.php',
-        'gd-rating-system-data-analytics/gd-rating-system-data-analytics.php',
+        'gd-rating-system-analytics/gd-rating-system-analytics.php',
 
         'gd-press-tools-storage-dropbox/gd-press-tools-storage-dropbox.php',
         'gd-press-tools-storage-s3/gd-press-tools-storage-s3.php',
@@ -102,7 +106,8 @@ class d4pupd_core_updater {
         'gd-mail-queue-aws-ses/gd-mail-queue-aws-ses.php',
         'gd-mail-queue-mailgun/gd-mail-queue-mailgun.php',
         'gd-mail-queue-gmail/gd-mail-queue-gmail.php',
-        'gd-mail-queue-sendinblue/gd-mail-queue-sendinblue.php',
+        'gd-mail-queue-mailjet/gd-mail-queue-mailjet.php',
+	    'gd-mail-queue-sendinblue/gd-mail-queue-sendinblue.php',
 
         'gd-knowledge-base-integration-wc/gd-knowledge-base-integration-wc.php',
         'gd-knowledge-base-integration-edd/gd-knowledge-base-integration-edd.php'
@@ -223,7 +228,13 @@ class d4pupd_core_updater {
                 }
 
                 if ($release !== false) {
-                    $update = new StdClass;
+	                if (!is_object($updates)) {
+		                $updates = new stdClass;
+		                $updates->response = array();
+		                $updates->no_update = array();
+	                }
+
+	                $update = new StdClass();
 
                     $icon = $this->cdn.'icons/'.$release->category.'s/'.$release->group.'.png';
                     $banner = $this->cdn.'banners/'.$release->category.'s/'.$release->group.'.jpg';
@@ -262,7 +273,7 @@ class d4pupd_core_updater {
                     if ($release->status != 'stable') {
                         $update->new_version.= ' '.strtoupper($release->status);
                     }
-                    
+
                     if ($this->debug == 'full') {
                         dev4upd_debug_log('PLUGIN_UPDATE_PACKAGE', $update);
                     }
@@ -277,15 +288,16 @@ class d4pupd_core_updater {
 
     public function add_plugin_info($result, $action = null, $args = null) {
         if ($action == 'plugin_information' && isset($args->slug) && $args->slug != '') {
-            if (isset($this->update['purchase']) && 
-                isset($this->update['purchase']['plugins']) && 
-                isset($this->update['purchase']['addons']) && 
-                is_array($this->update['purchase']['plugins']) && 
+            if (
+                isset($this->update['purchase']) &&
+                isset($this->update['purchase']['plugins']) &&
+                isset($this->update['purchase']['addons']) &&
+                is_array($this->update['purchase']['plugins']) &&
                 is_array($this->update['purchase']['addons'])) {
 
                 $the_list = array_merge(
-                        $this->update['purchase']['plugins'], 
-                        $this->update['purchase']['addons']);
+                    $this->update['purchase']['plugins'],
+                    $this->update['purchase']['addons']);
 
                 foreach ($the_list as $code => $data) {
                     if ($args->slug == $code) {
@@ -364,6 +376,12 @@ class d4pupd_core_updater {
         return $url;
     }
 
+    public function is_throttled() {
+        $throttle = get_site_transient('dev4press_updater_throttle');
+
+        return $throttle === 'wait';
+    }
+
     public function run() {
         if ($this->apikey != '') {
             $throttle = get_site_transient('dev4press_updater_throttle');
@@ -374,7 +392,7 @@ class d4pupd_core_updater {
                 $this->update = $this->_request($plugins);
 
                 set_site_transient('dev4press_updater_response', $this->update, 604800);
-                set_site_transient('dev4press_updater_throttle', 'wait', 120);
+                set_site_transient('dev4press_updater_throttle', 'wait', 300);
             }
         }
 
@@ -458,6 +476,10 @@ class d4pupd_core_updater {
         return empty($list) ? false : $list;
     }
 
+    public function core() {
+        return isset($this->update['core']) ? $this->update['core'] : false;
+    }
+
     public function generic_error() {
         if (isset($this->update['core']['message'])) {
             return $this->update['core']['message'];
@@ -481,11 +503,11 @@ class d4pupd_core_updater {
 
     private function _meta() {
         return array(
-            d4pupd_settings()->info_build, 
+            d4pupd_settings()->info_build,
             $this->apikey,
-            D4PUPD_WPV, 
-            is_multisite() ? 'Y' : 'N', 
-            d4pupd_prepare_host(), 
+            D4PUPD_WPV,
+            is_multisite() ? 'Y' : 'N',
+            d4pupd_prepare_host(),
             $_SERVER['SERVER_NAME']
         );
     }
@@ -494,8 +516,8 @@ class d4pupd_core_updater {
         global $wp_version;
 
         $options = array(
-            'timeout' => 30, 
-            'body' => serialize($data), 
+            'timeout' => 30,
+            'body' => serialize($data),
             'method' => 'POST',
             'user-agent' => 'WordPress/'.$wp_version.'; '.get_bloginfo('url')
         );
@@ -515,7 +537,7 @@ class d4pupd_core_updater {
             'multisite' => is_multisite() ? 'yes' : 'no',
             'status' => $this->status,
             'meta' => d4pupd_prepare_meta(serialize($this->_meta()), d4pupd_settings()->info_build),
-            'plugins' => $plugins, 
+            'plugins' => $plugins,
             'themes' => array()
         );
 
@@ -529,17 +551,40 @@ class d4pupd_core_updater {
             dev4upd_debug_log('REMOTE_POST_RESPONSE_RAW', $raw);
         }
 
-        $response = false;
+        if (is_wp_error($raw)) {
+            $response = array(
+                'core' => array(
+                    'status' => 'error',
+                    'code' => 'request_failed',
+                    'message' => $raw->get_error_message()
+                )
+            );
+        } else {
+            $body = $raw['body'];
+            $isok = false;
 
-        if (!is_wp_error($raw)) {
-            $response = unserialize($raw['body']);
+            if (is_serialized($body)) {
+                $response = unserialize($body);
 
-            if (isset($response['core']['status']) && $response['core']['status'] == 'ok') {
-                if ($this->debug == 'full' || $this->debug == 'responses') {
-                    dev4upd_debug_log('REMOTE_POST_RESPONSE_DATA', $response);
+                if (is_array($response)) {
+                    if (isset($response['core']['status'])) {
+                        $isok = true;
+
+                        if ($this->debug == 'full' || $this->debug == 'responses') {
+                            dev4upd_debug_log('REMOTE_POST_RESPONSE_DATA', $response);
+                        }
+                    }
                 }
-            } else {
-                $response = array('core' => array('status' => 'remote_error'));
+            }
+
+            if (!$isok) {
+                $response = array(
+                    'core' => array(
+                        'status' => 'error',
+                        'code' => 'invalid_response',
+                        'message' => __("Invalid response received.", "dev4press-updater")
+                    )
+                );
             }
         }
 

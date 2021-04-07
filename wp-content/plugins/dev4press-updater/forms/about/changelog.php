@@ -3,6 +3,45 @@
 <div class="d4p-group d4p-group-changelog">
     <h3><?php _e("Version", "dev4press-updater"); ?> 4</h3>
     <div class="d4p-group-inner">
+        <h4>Version: 4.4 / january 20 2021</h4>
+        <ul>
+            <li><strong>new</strong> support for new addons</li>
+            <li><strong>edit</strong> removed support for GD Members Directory plugin</li>
+            <li><strong>edit</strong> minor updates to the plugin update core</li>
+            <li><strong>edit</strong> d4pLib 2.8.13</li>
+            <li><strong>fix</strong> problem with adding updates into WordPress transient object</li>
+        </ul>
+
+        <h4>Version: 4.3 / november 13 2020</h4>
+        <ul>
+            <li><strong>edit</strong> minor updates to the plugin update core</li>
+        </ul>
+
+        <h4>Version: 4.2 / may 18 2020</h4>
+        <ul>
+            <li><strong>new</strong> show current Dev4Press promotion on the plugin dashboard</li>
+            <li><strong>edit</strong> improved display of update check errors and messages</li>
+            <li><strong>edit</strong> message included when trying to check for updates to quickly</li>
+            <li><strong>edit</strong> update check throttle increased to 5 minutes</li>
+            <li><strong>fix</strong> wrong URL used on the API Key settings panel</li>
+            <li><strong>fix</strong> few minor issues with the core classes organization</li>
+        </ul>
+
+        <h4>Version: 4.1 / may 7 2020</h4>
+        <ul>
+            <li><strong>new</strong> support for new plugins</li>
+            <li><strong>new</strong> tested with PHP 7.4</li>
+            <li><strong>edit</strong> code style improvements</li>
+            <li><strong>edit</strong> d4pLib 2.8.8</li>
+            <li><strong>fix</strong> several minor styling issues</li>
+            <li><strong>fix</strong> minor issue with with the PHP 7.4 deprecations</li>
+        </ul>
+
+        <h4>Version: 4.0.5 / april 7 2020</h4>
+        <ul>
+            <li><strong>new</strong> support for more addons</li>
+        </ul>
+
         <h4>Version: 4.0.4 / october 22 2019</h4>
         <ul>
             <li><strong>new</strong> support for GD Members Directory Pro for bbPress</li>
@@ -255,24 +294,25 @@
 <div class="d4p-group d4p-group-changelog">
     <h3><?php _e("Version", "dev4press-updater"); ?> 2</h3>
     <div class="d4p-group-inner">
-        <h4>Version 2.4.1 / january 7 2015</h3>
+        <h4>Version 2.4.1 / january 7 2015</h4>
         <ul>
             <li><strong>new</strong> support for GD WebFonts Toolbox Pro plugin</li>
         </ul>
-        <h4>Version 2.4 / november 18 2014</h3>
+        <h4>Version 2.4 / november 18 2014</h4>
         <ul>
             <li><strong>new</strong> support for GD Clever Widgets Pro plugin</li>
             <li><strong>new</strong> removed support for retired plugins</li>
             <li><strong>new</strong> removed panels for plugin modules</li>
             <li><strong>new</strong> using HTTPS URL's for connecting to Dev4Press website</li>
         </ul>
-        <h4>Version 2.3 / april 13 2014</h3>
+        <h4>Version 2.3 / april 13 2014</h4>
         <ul>
             <li><strong>edit</strong> improved plugin detection and build version retrieval</li>
             <li><strong>fix</strong> minor issues with the detecting of plugins information</li>
             <li><strong>fix</strong> several layout issues with themes install and updated</li>
         </ul>
-        <h4>Version 2.2.2 / december 13 2013</h4><ul>
+        <h4>Version 2.2.2 / december 13 2013</h4>
+        <ul>
             <li><strong>edit</strong> support for WordPress 3.7 and 3.8</li>
             <li><strong>fix</strong> problem with tabs switching on panels</li>
             <li><strong>fix</strong> few minor issues with the https websites</li>

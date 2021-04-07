@@ -2,9 +2,10 @@
 Contributors: Arthur Gareginyan
 Tags: inject code, inject function, inject snippet, inject php, insert code, insert function, insert snippet, insert php, execute code, execute function, execute snippet, execute php, inject custom code, inject custom function, inject custom snippet, inject custom php, insert custom code, insert custom function, insert custom snippet, insert custom php, execute custom code, execute custom function, execute custom snippet, execute custom php, code, function, snippet, php, functionality plugin
 Donate link: https://www.spacexchimp.com/donate.html
-Requires at least: 3.9
-Tested up to: 5.3
-Stable tag: 4.41
+Requires at least: 4.9
+Tested up to: 5.7
+Requires PHP: 5.6
+Stable tag: 4.49
 License: GPL3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -46,7 +47,7 @@ On the plugin page you find the code editor powered by CodeMirror. This code edi
 **PRO features include**
 
 * Ability to easily customize the code editor by selecting the desired settings
-* 56 themes for syntax highlighting
+* 64 themes for syntax highlighting
 * Toolbar with useful buttons, such as Undo, Redo, etc.
 * Ability to use shortcut keys (both Mac and PC) for Search, Replace, etc.
 * Unlimited number of fields for functions
@@ -77,11 +78,13 @@ If you want to help translate this plugin, please visit the [translation page](h
 
 **Minimum system requirements:**
 
-* [PHP](https://secure.php.net) version **5.2** or higher.
+* [WordPress](https://wordpress.org) version **4.9** or higher.
+* [PHP](https://secure.php.net) version **5.6** or higher.
 * [MySQL](https://www.mysql.com) version **5.0** or higher.
 
 **Recommended system requirements:**
 
+* [WordPress](https://wordpress.org) version **5.0** or higher.
 * [PHP](https://secure.php.net) version **7.0** or higher.
 * [MySQL](https://www.mysql.com) version **5.6** or higher.
 
@@ -115,7 +118,7 @@ Manually via FTP access:
 
 After installation and activation, the "`PHP Inserter`" menu item will appear in the "`Settings`" section of Admin Area. Click on it in order to view the plugin settings page.
 
-[More help installing plugins](http://codex.wordpress.org/Managing_Plugins#Installing_Plugins "WordPress Codex: Installing Plugins")
+[More help installing plugins](https://wordpress.org/support/article/managing-plugins/ "WordPress Codex: Installing Plugins")
 
 
 == Frequently Asked Questions ==
@@ -236,11 +239,13 @@ Commercial licensing (e.g. for projects that can’t use an open-source license)
 
 **Credits**
 
-* The icon of plugin is a copyrighted image created by the [Space X-Chimp](https://www.spacexchimp.com) team. (C) All rights reserved.
-* The banner of plugin is a copyrighted image created by the [Space X-Chimp](https://www.spacexchimp.com) team. (C) All rights reserved.
+* The icon of this plugin is a copyrighted image created by the [Space X-Chimp](https://www.spacexchimp.com) team. (C) All rights reserved.
+* The banner of this plugin is a copyrighted image created by the [Space X-Chimp](https://www.spacexchimp.com) team. (C) All rights reserved.
+* Unless otherwise stated, all images are created by the [Space X-Chimp](https://www.spacexchimp.com) team and are copyrighted. (C) All rights reserved.
 * [CodeMirror](https://codemirror.net/) is an open-source project shared under the [MIT license](https://codemirror.net/LICENSE).
 * [Bootstrap](http://getbootstrap.com) by Twitter, Inc. released under the [MIT license](https://github.com/twbs/bootstrap/blob/master/LICENSE).
 * [Bootstrap-checkbox](https://github.com/vsn4ik/bootstrap-checkbox) is a project of [Vasily A.](https://github.com/vsn4ik), shared under the [MIT license](https://github.com/vsn4ik/bootstrap-checkbox/blob/master/LICENSE).
+* [Font Awesome](https://fontawesome.com) is an open source-project created by Dave Gandy. Font released under the [SIL OFL 1.1 license](http://scripts.sil.org/OFL). Code released under the [MIT License](http://opensource.org/licenses/mit-license.html).
 
 **Links**
 
@@ -251,6 +256,38 @@ Commercial licensing (e.g. for projects that can’t use an open-source license)
 
 
 == Changelog ==
+
+= 4.49 - Mar 8, 2021 =
+* Maintenance: Ensure compatibility with upcoming WordPress 5.7.
+* Maintenance: Processing of options has been improved. Direct retrieving of options from the database is replaced by the "_options" callback. The "options.php" file with the "_options" function added.
+* Maintenance: The contents of PHP files have been optimised; Code formatting and commenting improved.
+
+= 4.48 - Jan 1, 2021 =
+* Maintenance: The copyright date updated to support the 2021 year.
+
+= 4.47 - Dec 8, 2020 =
+* Maintenance: Ensure compatibility with upcoming WordPress 5.6.
+* Maintenance: Every use of the hardcoded plugin slug has been replaced with a variable according to best coding standards.
+
+= 4.46 - Oct 23, 2020 =
+* Framework update: The CodeMirror library has been updated to the latest version v5.58.1.
+
+= 4.45 - Oct 12, 2020 =
+* Fixed: On the plugin settings page, the height of the buttons is too small compared to the width.
+* Enhancement: The plugin settings page has been redesigned. The sidebar added to all tabs for better usability.
+
+= 4.44 - Oct 3, 2020 =
+* New feature: Restoring screen position after saving changes. No more annoying return to the top of the page after clicking the "Save" button on the plugin settings page.
+* Maintenance: Loading of dynamic content on the plugin settings page has been updated to more versatile.
+
+= 4.43 - Aug 10, 2020 =
+* Maintenance: Ensure compatibility with upcoming WordPress 5.5.
+* Enhancement: Remove the second ask for an upgrade on the "Plugins" page and change the color of some links to the right emotional colors. (Thanks to Abdulla Hussain)
+
+= 4.42 - Mar 20, 2020 =
+* Maintenance: Ensure compatibility with upcoming WordPress 5.4.
+* Maintenance: Minimum WordPress version requirement is set to 4.9. Support for WordPress 4.8 and below has been discontinued.
+* Maintenance: Minimum PHP version requirement is set to 5.6. Support for PHP 5.5 and below has been discontinued.
 
 = 4.41 - Jan 20, 2020 =
 * Maintenance: The copyright date updated to support the 2020 year.

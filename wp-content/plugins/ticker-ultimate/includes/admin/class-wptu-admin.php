@@ -8,8 +8,9 @@
  * @since 1.0.0
  */
 
-// Exit if accessed directly
-if ( !defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
 
 class Wptu_Admin {
 	
@@ -24,7 +25,7 @@ class Wptu_Admin {
 		add_action( 'admin_init', array($this, 'wptu_admin_init_process') );
 
 		// Action to register admin menu
-		add_action( 'admin_menu', array($this, 'wptu_register_menu'), 112 );
+		add_action( 'admin_menu', array($this, 'wptu_register_menu') );
 	}
 
 	/**
@@ -37,29 +38,16 @@ class Wptu_Admin {
 
 		// Premium feature page
 		add_submenu_page( 'edit.php?post_type='.WPTU_POST_TYPE, __('Upgrade to PRO - Ticker Ultimate', 'ticker-ultimate'), '<span style="color:#2ECC71">'.__('Upgrade to PRO', 'ticker-ultimate').'</span>', 'manage_options', 'wptu-premium', array($this, 'wptu_premium_page') );
-		
-		// Hire Us Page
-		add_submenu_page( 'edit.php?post_type='.WPTU_POST_TYPE, __('Hire Us', 'ticker-ultimate'), '<span style="color:#2ECC71">'.__('Hire Us', 'ticker-ultimate').'</span>', 'manage_options', 'wptu-hireus', array($this, 'wptu_hireus_page') );
 	}
 
 	/**
-	 * Getting Started Page Html
+	 * Premium Page Html
 	 * 
 	 * @package Ticker Ultimate
 	 * @since 1.0.0
 	 */
 	function wptu_premium_page() {
 		include_once( WPTU_DIR . '/includes/admin/settings/premium.php' );		
-	}
-
-	/**
-	 * Hire Us Page Html
-	 * 
-	 * @package Ticker Ultimate
-	 * @since 1.0.0
-	 */
-	function wptu_hireus_page() {		
-		include_once( WPTU_DIR . '/includes/admin/settings/hire-us.php' );
 	}
 
 	/**

@@ -1,36 +1,40 @@
 <?php
 /*
-Plugin Name: Ticker Ultimate
+Plugin Name: Post Ticker Ultimate
 Plugin URL: https://www.wponlinesupport.com/plugins/
 Text Domain: ticker-ultimate
 Domain Path: /languages/
-Description: Ultimate Ticker Plugin : Add and display horizontal or vertical tickers on your website that work with WordPress posts and Custom Post Type with the help of shortcode. Also work with Gutenberg shortcode block.
-Version: 1.2.5
+Description: Ultimate Post Ticker Plugin : Add and display horizontal or vertical ticker on your website that work with WordPress posts and Custom Post Type with the help of shortcode. Also work with Gutenberg shortcode block.
+Version: 1.4.1
 Author: WP OnlineSupport
 Author URI: https://www.wponlinesupport.com/
 Contributors: WP OnlineSupport
 */
 
-if( !defined( 'WPTU_VERSION' ) ) {
-	define( 'WPTU_VERSION', '1.2.5' ); // Version of plugin
+if( ! defined( 'WPTU_VERSION' ) ) {
+	define( 'WPTU_VERSION', '1.4.1' ); // Version of plugin
 }
-if( !defined( 'WPTU_POST_TYPE' ) ) {
+if( ! defined( 'WPTU_POST_TYPE' ) ) {
 	define( 'WPTU_POST_TYPE', 'wptu_ticker' ); // Plugin post type
 }
-if( !defined( 'WPTU_DIR' ) ) {
+if( ! defined( 'WPTU_DIR' ) ) {
 	define( 'WPTU_DIR', dirname( __FILE__ ) ); // Plugin dir
 }
-if( !defined( 'WPTU_URL' ) ) {
+if( ! defined( 'WPTU_URL' ) ) {
 	define( 'WPTU_URL', plugin_dir_url( __FILE__ ) ); // Plugin url
 }
-if( !defined( 'WPTU_PLUGIN_BASENAME' ) ) {
+if( ! defined( 'WPTU_PLUGIN_BASENAME' ) ) {
 	define( 'WPTU_PLUGIN_BASENAME', plugin_basename( __FILE__ ) ); // Plugin base name
 }
-if( !defined( 'WPTU_CAT' ) ) {
+if( ! defined( 'WPTU_CAT' ) ) {
 	define( 'WPTU_CAT', 'wptu-ticker-category' ); // Plugin category name
 }
-if( !defined( 'WPTU_META_PREFIX' ) ) {
+if( ! defined( 'WPTU_META_PREFIX' ) ) {
 	define( 'WPTU_META_PREFIX', '_wptu_' ); // Plugin metabox prefix
+}
+
+if( ! defined( 'WPTU_PLUGIN_LINK' ) ) {
+	define( 'WPTU_PLUGIN_LINK', 'https://www.wponlinesupport.com/wp-plugin/ticker-ultimate/?utm_source=WP&utm_medium=PostTicker&utm_campaign=Features-PRO' ); // Plugin metabox prefix
 }
 
 /**
@@ -131,6 +135,23 @@ require_once( WPTU_DIR . '/includes/shortcode/wptu-ticker-shortcode.php');
 //admin file
 require_once( WPTU_DIR . '/includes/admin/class-wptu-admin.php');
 
+// Gutenberg Block Initializer
+if ( function_exists( 'register_block_type' ) ) {
+	require_once( WPTU_DIR . '/includes/admin/supports/gutenberg-block.php' );
+}
+
+/* Recommended Plugins Starts */
+if ( is_admin() ) {
+	require_once( WPTU_DIR . '/wpos-plugins/wpos-recommendation.php' );
+
+	wpos_espbw_init_module( array(
+							'prefix'	=> 'wptu',
+							'menu'		=> 'edit.php?post_type='.WPTU_POST_TYPE,
+							'position'	=> 3,
+						));
+}
+/* Recommended Plugins Ends */
+
 /* Plugin Wpos Analytics Data Starts */
 function wpos_analytics_anl5_load() {
 
@@ -143,21 +164,7 @@ function wpos_analytics_anl5_load() {
 							'slug'			=> 'ticker-ultimate',
 							'type'			=> 'plugin',
 							'menu'			=> 'edit.php?post_type=wptu_ticker',
-							'text_domain'	=> 'ticker-ultimate',
-							'promotion'		=> array(
-													'bundle' => array(
-															'name'	=> 'Download FREE 50+ Plugins, 10+ Themes and Dashboard Plugin',
-															'desc'	=> 'Download FREE 50+ Plugins, 10+ Themes and Dashboard Plugin',
-															'file'	=> 'https://www.wponlinesupport.com/latest/wpos-free-50-plugins-plus-12-themes.zip'
-														)
-													),
-							'offers'		=> array(
-													'trial_premium' => array(
-														'image'	=> 'http://analytics.wponlinesupport.com/?anylc_img=5',
-														'link'	=> 'http://analytics.wponlinesupport.com/?anylc_redirect=5',
-														'desc'	=> 'Or start using the plugin from admin menu',
-													)
-												),
+							'text_domain'	=> 'ticker-ultimate',							
 						));
 
 	return $wpos_analytics;

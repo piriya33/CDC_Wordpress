@@ -8,14 +8,21 @@
  *
  * See more documentation about our Blocks Editor templating system.
  *
- * @link {INSERT_ARTICLE_LINK_HERE}
+ * @link    https://evnt.is/1amp Help article for RSVP & Ticket template files.
  *
- * @since 4.9
- * @since 4.11.1 Corrected amount of available/remaining tickets.
+ * @since   4.9
+ * @since   4.11.1 Corrected amount of available/remaining tickets. Removed unused `data-remaining` attribute.
+ * @since   4.11.5 The input's "max" is now always set. The unused `data-remaining` attribute actually didn't get removed
+ *                 in the previous change, above, so it got removed in this version.
+ * @since   5.0.3 Add vars to docblock and removed duplicative vars.
  *
- * @version 4.11.1
+ * @version 5.0.3
+ *
+ * @var Tribe__Tickets__Editor__Template $this    Template object.
+ * @var int                              $post_id [Global] The current Post ID to which RSVPs are attached.
+ * @var Tribe__Tickets__Ticket_Object    $ticket  The ticket object with provider set to RSVP.
+ * @var string                           $going   The RSVP status at time of add/edit (e.g. 'yes'), or empty if not in that context.
  */
-$must_login = ! is_user_logged_in() && tribe( 'tickets.rsvp' )->login_required();
 
 /** @var Tribe__Tickets__Ticket_Object $ticket */
 if ( empty( $ticket->ID ) ) {
@@ -25,7 +32,7 @@ if ( empty( $ticket->ID ) ) {
 /** @var Tribe__Tickets__Tickets_Handler $tickets_handler */
 $tickets_handler = tribe( 'tickets.handler' );
 
-$available = $tickets_handler->get_ticket_max_purchase( $ticket->ID );
+$max_at_a_time = $tickets_handler->get_ticket_max_purchase( $ticket->ID );
 ?>
 <input
 	type="number"
@@ -35,9 +42,6 @@ $available = $tickets_handler->get_ticket_max_purchase( $ticket->ID );
 	min="1"
 	value="1"
 	required
-	data-remaining="<?php echo esc_attr( $available ); ?>"
-	<?php if ( -1 !== $available ) : ?>
-		max="<?php echo esc_attr( $available ); ?>"
-	<?php endif; ?>
+	max="<?php echo esc_attr( $max_at_a_time ); ?>"
 	<?php disabled( $must_login ); ?>
 />

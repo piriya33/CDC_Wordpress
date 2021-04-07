@@ -11,7 +11,7 @@ class Wpml extends Integration {
 	 *
 	 * @return bool
 	 */
-	public function is_installed() {
+	public static function is_installed() {
 		if ( class_exists( 'SitePress' ) ) {
 			return true;
 		}
@@ -52,7 +52,7 @@ class Wpml extends Integration {
 					$new_attachment_id,
 					$old_item->source_path(),
 					wp_basename( $old_item->original_source_path() ),
-					$old_item->private_sizes()
+					$old_item->extra_info()
 				);
 
 				$as3cf_item->save();

@@ -63,7 +63,7 @@ class QLWCDC_Controller_Products {
         ),
         array(
             'name' => esc_html__('Replace Add to cart text', 'woocommerce-direct-checkout'),
-            'desc_tip' => esc_html__('Replace "Add to cart" text.', 'woocommerce-direct-checkout'),
+            'desc_tip' => esc_html__('Replace Add to cart text', 'woocommerce-direct-checkout'),
             'id' => 'qlwcdc_add_product_text',
             'type' => 'select',
             'class' => 'chosen_select',
@@ -91,6 +91,18 @@ class QLWCDC_Controller_Products {
                 'no' => esc_html__('No', 'woocommerce-direct-checkout'),
             ),
             'default' => 'no',
+        ),
+        array(
+            'name' => esc_html__('Add quick purchase button type', 'woocommerce-direct-checkout'),
+            'desc_tip' => esc_html__('Select the WooCommerce button type.', 'woocommerce-direct-checkout'),
+            'id' => 'qlwcdc_add_product_quick_purchase_type',
+            'type' => 'select',
+            'class' => 'chosen_select',
+            'options' => array(
+                '' => esc_html__('Default', 'woocommerce-direct-checkout'),
+                'alt' => esc_html__('Alternative', 'woocommerce-direct-checkout'),
+            ),
+            'default' => '',
         ),
         array(
             'name' => esc_html__('Add quick purchase class', 'woocommerce-direct-checkout'),
@@ -198,7 +210,7 @@ class QLWCDC_Controller_Products {
         array(
             'label' => esc_html__('Replace Add to cart text', 'woocommerce-direct-checkout'),
             'desc_tip' => true,
-            'description' => esc_html__('Replace "Add to cart" text.', 'woocommerce-direct-checkout'),
+            'description' => esc_html__('Replace Add to cart text', 'woocommerce-direct-checkout'),
             'id' => 'qlwcdc_add_product_text',
             'type' => 'select',
             'options' => array(

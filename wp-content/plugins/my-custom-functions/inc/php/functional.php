@@ -7,28 +7,27 @@ defined( 'ABSPATH' ) or die( "Restricted access!" );
 
 /**
  * Prepare the custom code
+ * @return string
  */
 function spacexchimp_p001_prepare() {
 
     // Put value of plugin constants into an array for easier access
     $plugin = spacexchimp_p001_plugin();
 
-    // Retrieve options from database and declare variables
-    $options = get_option( $plugin['settings'] . '_settings' );
-    $data = !empty( $options['snippets'] ) ? $options['snippets'] : '';
-    $enable = !empty( $options['enable'] ) ? $options['enable'] : '';
+    // Put the value of the plugin options into an array for easier access
+    $options = spacexchimp_p001_options();
 
     // Prepare a variable for storing the processed data
     $data_out = "";
 
     // If data is not empty...
-    if ( ! empty( $data ) ) {
+    if ( ! empty( $options['snippets'] ) ) {
 
         // If the custom code is enabled...
-        if ( $enable == "on") {
+        if ( $options['enable'] === true ) {
 
             // Prepare a variable for storing the processing data, and perform data processing
-            $data_tmp = $data;
+            $data_tmp = $options['snippets'];
             $data_tmp = trim( $data_tmp );           // Cleaning
             $data_tmp = ltrim( $data_tmp, '<?php' ); // Cleaning
             $data_tmp = rtrim( $data_tmp, '?>' );    // Cleaning
@@ -43,6 +42,7 @@ function spacexchimp_p001_prepare() {
 
 /**
  * Preparation of the custom code: Check the custom code for duplicate names of functions
+ * @return string
  */
 function spacexchimp_p001_preparation_duplicates( $data ) {
 
@@ -68,7 +68,7 @@ function spacexchimp_p001_preparation_duplicates( $data ) {
         $error_status = '0';
     }
 
-    // Return error status
+    // Return the processed data
     return $error_status;
 }
 

@@ -462,17 +462,25 @@
 }
 
 .d4p-setting-expandable_raw ol,
+.d4p-setting-expandable_regex ol,
 .d4p-setting-expandable_text ol {
     list-style: none;
     margin: 0 0 .5em;
 }
 
 .d4p-setting-expandable_raw .exp-text-element a,
+.d4p-setting-expandable_regex .exp-text-element a,
 .d4p-setting-expandable_text .exp-text-element a {
     margin-left: 10px;
     text-align: center;
     height: 30px;
     line-height: 28px;
+}
+
+.d4p-setting-regex .d4p-regex-is-invalid input,
+.d4p-setting-expandable_regex .d4p-regex-is-invalid input {
+    border-color: #D40000;
+    background-color: #FFD5DB;
 }
 
 .d4p-setting-expandable_pairs > div {
@@ -1293,7 +1301,7 @@
 }
 
 .d4p-whatsnew-section h3 {
-    margin: 1em 0 2em;
+    margin: .25em 0 1.25em;
     font-size: 30px;
     font-weight: 300;
 }
@@ -1334,6 +1342,13 @@
 }
 
 @media screen and (max-width: 1280px) {
+    .d4p-group-dashboard-card {
+        clear: both;
+        width: 100%;
+        max-width: 100%;
+        margin-right: 0;
+    }
+
     .d4p-content-right .d4p-update-info {
         float: none;
         max-width: none;
@@ -1368,6 +1383,10 @@
         display: none;
     }
 
+    .d4p-header {
+        margin-top: 70px;
+    }
+
     .d4p-group-inner .form-table th,
     .d4p-options-panel,
     .d4p-group,
@@ -1399,7 +1418,7 @@
     }
 }
 
-@media screen and (max-width: 640px) {
+@media screen and (max-width: 700px) {
     #dev4press-recommend {
         width: 100%;
     }
