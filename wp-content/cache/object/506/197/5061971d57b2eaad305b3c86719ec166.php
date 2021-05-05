@@ -1,1 +1,1 @@
-‡l’`<?php exit; ?>a:1:{s:7:"content";s:62:"{{WP_PLUGIN_DIR}}/woocommerce/templates/product-searchform.php";}
+‹n’`<?php exit; ?>a:1:{s:7:"content";s:62:"{{WP_PLUGIN_DIR}}/woocommerce/templates/product-searchform.php";}

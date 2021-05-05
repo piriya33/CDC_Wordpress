@@ -1,4 +1,4 @@
-�l�`<?php exit; ?>a:1:{s:7:"content";O:8:"stdClass":23:{s:2:"ID";s:5:"39655";s:11:"post_author";s:3:"739";s:9:"post_date";s:19:"2021-03-26 00:19:59";s:13:"post_date_gmt";s:19:"2021-03-25 17:19:59";s:12:"post_content";s:1603:"<img src="https://www.chaloke.com/wp-content/uploads/2021/03/SharedScreenshot.jpg" />
+�n�`<?php exit; ?>a:1:{s:7:"content";O:8:"stdClass":23:{s:2:"ID";s:5:"39655";s:11:"post_author";s:3:"739";s:9:"post_date";s:19:"2021-03-26 00:19:59";s:13:"post_date_gmt";s:19:"2021-03-25 17:19:59";s:12:"post_content";s:1603:"<img src="https://www.chaloke.com/wp-content/uploads/2021/03/SharedScreenshot.jpg" />
 
 สพฺพทานํ ธมฺมทานํ ชินาติ.
 การให้ธรรมะ ย่อมชนะการให้ทั้งปวง.

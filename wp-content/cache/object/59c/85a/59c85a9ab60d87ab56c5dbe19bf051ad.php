@@ -1,4 +1,4 @@
-‡l’`<?php exit; ?>a:1:{s:7:"content";a:17:{s:19:"_bbp_akismet_result";a:1:{i:0;s:5:"false";}s:20:"_bbp_akismet_history";a:1:{i:0;s:151:"a:4:{s:4:"time";d:1616692799.248755;s:7:"message";s:37:"Akismet cleared this post as not spam";s:5:"event";s:9:"check-ham";s:4:"user";s:9:"michigawa";}";}s:25:"_bbp_akismet_as_submitted";a:1:{i:0;s:7460:"a:88:{s:14:"comment_author";s:0:"";s:20:"comment_author_email";s:0:"";s:18:"comment_author_url";s:0:"";s:15:"comment_content";s:1642:"CDC-D2110
+‹n’`<?php exit; ?>a:1:{s:7:"content";a:17:{s:19:"_bbp_akismet_result";a:1:{i:0;s:5:"false";}s:20:"_bbp_akismet_history";a:1:{i:0;s:151:"a:4:{s:4:"time";d:1616692799.248755;s:7:"message";s:37:"Akismet cleared this post as not spam";s:5:"event";s:9:"check-ham";s:4:"user";s:9:"michigawa";}";}s:25:"_bbp_akismet_as_submitted";a:1:{i:0;s:7460:"a:88:{s:14:"comment_author";s:0:"";s:20:"comment_author_email";s:0:"";s:18:"comment_author_url";s:0:"";s:15:"comment_content";s:1642:"CDC-D2110
 
 <img src="https://s3-ap-southeast-1.amazonaws.com/cdc-wordpress/wp-content/uploads/2021/03/26001303/SharedScreenshot.jpg" />
 
