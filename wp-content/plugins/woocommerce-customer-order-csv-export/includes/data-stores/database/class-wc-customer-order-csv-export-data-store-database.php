@@ -1,6 +1,6 @@
 <?php
 /**
- * WooCommerce Customer/Order CSV Export
+ * WooCommerce Customer/Order/Coupon Export
  *
  * This source file is subject to the GNU General Public License v3.0
  * that is bundled with this package in the file license.txt.
@@ -12,17 +12,18 @@
  *
  * DISCLAIMER
  *
- * Do not edit or add to this file if you wish to upgrade WooCommerce Customer/Order CSV Export to newer
- * versions in the future. If you wish to customize WooCommerce Customer/Order CSV Export for your
+ * Do not edit or add to this file if you wish to upgrade WooCommerce Customer/Order/Coupon Export to newer
+ * versions in the future. If you wish to customize WooCommerce Customer/Order/Coupon Export for your
  * needs please refer to http://docs.woocommerce.com/document/ordercustomer-csv-exporter/
  *
- * @package     WC-Customer-Order-CSV-Export/Data-Stores/Database
  * @author      SkyVerge
- * @copyright   Copyright (c) 2012-2018, SkyVerge, Inc.
+ * @copyright   Copyright (c) 2015-2021, SkyVerge, Inc. (info@skyverge.com)
  * @license     http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
 defined( 'ABSPATH' ) or exit;
+
+use SkyVerge\WooCommerce\PluginFramework\v5_10_6 as Framework;
 
 /**
  * Customer/Order CSV Export Database Data Store
@@ -121,14 +122,19 @@ CREATE TABLE {$table_name} (
 	public function store_item( $export, $content ) {
 		global $wpdb;
 
+		// sanity checks to prevent empty data from being written
+		if ( ! $export || ! is_string( $content ) || '' === trim( $content ) || ! $export->get_id() ) {
+			return false;
+		}
+
 		// `content_length` is tracked so we can re-assemble the overall file size for download headers, so this
 		// should track with the content as it would exist in a downloaded export, not as it will be persisted in the db.
 		// Consequently, `content_length` and the actual length of the data inside `content` will not be equivalent.
-		$result = $wpdb->insert( $this->table_name, array(
+		$result = $wpdb->insert( $this->table_name, [
 			'export_id'      => $export->get_id(),
 			'content_length' => mb_strlen( $content, '8bit' ),
 			'content'        => $this->prepare_content_for_storage( $content )
-		) );
+		] );
 
 		return (bool) $result;
 	}
@@ -184,7 +190,7 @@ CREATE TABLE {$table_name} (
 	 *
 	 * @param \WC_Customer_Order_CSV_Export_Export $export the export object to stream
 	 * @param resource $resource the file pointer resource to stream data to
-	 * @throws \SV_WC_Plugin_Exception
+	 * @throws Framework\SV_WC_Plugin_Exception
 	 */
 	public function stream_output( $export, $resource ) {
 		global $wpdb;
@@ -220,14 +226,14 @@ CREATE TABLE {$table_name} (
 	 *
 	 * @param \WC_Customer_Order_CSV_Export_Export $export the export object to stream
 	 * @param resource $resource the file pointer resource to stream data to
-	 * @throws \SV_WC_Plugin_Exception if called in an inappropriate server context
+	 * @throws Framework\SV_WC_Plugin_Exception if called in an inappropriate server context
 	 */
 	private function inefficient_stream_output( $export, $resource ) {
 		global $wpdb;
 
 		if ( ! is_resource( $wpdb->dbh ) || ! function_exists( 'mysql_query' ) || ! 'mysql link' === get_resource_type( $wpdb->dbh ) ) {
 
-			throw new SV_WC_Plugin_Exception( __( 'Unable to locate a legacy mysql connection in this WordPress install', 'woocommerce-customer-order-csv-export' ) );
+			throw new Framework\SV_WC_Plugin_Exception( __( 'Unable to locate a legacy mysql connection in this WordPress install', 'woocommerce-customer-order-csv-export' ) );
 		}
 
 		$db_result = mysql_query( $wpdb->prepare( 'SELECT id, content FROM ' . $this->table_name . ' WHERE export_id = %s ORDER BY id ASC', $export->get_id() ), $wpdb->dbh );

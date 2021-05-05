@@ -17,11 +17,11 @@
  * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @author    SkyVerge
- * @copyright Copyright (c) 2014-2019, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2021, SkyVerge, Inc. (info@skyverge.com)
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
-use SkyVerge\WooCommerce\PluginFramework\v5_3_1 as Framework;
+use SkyVerge\WooCommerce\PluginFramework\v5_10_6 as Framework;
 
 defined( 'ABSPATH' ) or exit;
 
@@ -46,6 +46,29 @@ abstract class WC_Memberships_User_Membership_Email extends \WC_Email {
 
 	/** @var string rescheduling events action description (optional, used by some emails) */
 	protected $reschedule_description = '';
+
+	/** @var bool whether the contents of the email can be edited from a Membership Plan */
+	protected $plan_editable = false;
+
+
+	/**
+	 * Membership email constructor.
+	 *
+	 * @since 1.14.0
+	 */
+	public function __construct() {
+
+		if ( $this->plan_editable ) {
+
+			$this->description .= ' ' . sprintf(
+				/* translators: Placeholders: %1$s - Opening <a> HTML tag, %2$s - Closing </a> HTML tag */
+				__( 'You can edit the content of this email for %1$seach one of your plans%2$s individually.', 'woocommerce-memberships' ),
+				'<a href="' . esc_url( admin_url( 'edit.php?post_type=wc_membership_plan' )  ) . '">', '</a>'
+			);
+		}
+
+		parent::__construct();
+	}
 
 
 	/**
@@ -85,7 +108,7 @@ abstract class WC_Memberships_User_Membership_Email extends \WC_Email {
 		$expiration_date_timestamp = $user_membership->get_local_end_date( 'timestamp' );
 
 		// placeholders
-		$email_merge_tags = array(
+		$email_merge_tags = [
 			'member_name'                 => $member_name,
 			'member_first_name'           => $member_first_name,
 			'member_last_name'            => $member_last_name,
@@ -95,20 +118,10 @@ abstract class WC_Memberships_User_Membership_Email extends \WC_Email {
 			'membership_expiry_time_diff' => human_time_diff( current_time( 'timestamp', true ), $expiration_date_timestamp ),
 			'membership_view_url'         => esc_url( $user_membership->get_view_membership_url() ),
 			'membership_renewal_url'      => esc_url( $user_membership->get_renew_membership_url() ),
-		);
+		];
 
-		if ( Framework\SV_WC_Plugin_Compatibility::is_wc_version_gte( '3.2' ) ) {
-
-			foreach ( $email_merge_tags as $find => $replace ) {
-				$this->placeholders[ '{' . $find . '}' ] = $replace;
-			}
-
-		} else {
-
-			foreach ( $email_merge_tags as $find => $replace ) {
-				$this->find[ $find ]    = '{' . $find . '}';
-				$this->replace[ $find ] = $replace;
-			}
+		foreach ( $email_merge_tags as $find => $replace ) {
+			$this->placeholders[ '{' . $find . '}' ] = $replace;
 		}
 	}
 

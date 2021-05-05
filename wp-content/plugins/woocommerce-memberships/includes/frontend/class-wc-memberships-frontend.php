@@ -17,11 +17,14 @@
  * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @author    SkyVerge
- * @copyright Copyright (c) 2014-2019, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2021, SkyVerge, Inc. (info@skyverge.com)
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
-use SkyVerge\WooCommerce\PluginFramework\v5_3_1 as Framework;
+use SkyVerge\WooCommerce\Memberships\Frontend\My_Account;
+use SkyVerge\WooCommerce\Memberships\Frontend\Profile_Fields;
+use \SkyVerge\WooCommerce\Memberships\Profile_Fields as Profile_Fields_Handler;
+use SkyVerge\WooCommerce\PluginFramework\v5_10_6 as Framework;
 
 defined( 'ABSPATH' ) or exit;
 
@@ -36,8 +39,11 @@ class WC_Memberships_Frontend {
 	/** @var \WC_Memberships_Checkout instance */
 	protected $checkout;
 
-	/** @var \WC_Memberships_Members_Area instance */
-	protected $members_area;
+	/** @var My_Account instance */
+	protected $my_account;
+
+	/** @var Profile_Fields instance */
+	private $profile_fields;
 
 	/** @var array associative array for caching membership content classes */
 	private $membership_content_classes = array();
@@ -51,11 +57,12 @@ class WC_Memberships_Frontend {
 	public function __construct() {
 
 		// load classes
-		$this->members_area = wc_memberships()->load_class( '/includes/frontend/class-wc-memberships-members-area.php', 'WC_Memberships_Members_Area' );
-		$this->checkout     = wc_memberships()->load_class( '/includes/frontend/class-wc-memberships-checkout.php',     'WC_Memberships_Checkout' );
+		$this->profile_fields = wc_memberships()->load_class( '/includes/frontend/Profile_Fields.php',                'SkyVerge\WooCommerce\Memberships\Frontend\Profile_Fields' );
+		$this->my_account     = wc_memberships()->load_class( '/includes/frontend/My_Account.php',                    My_Account::class );
+		$this->checkout       = wc_memberships()->load_class( '/includes/frontend/class-wc-memberships-checkout.php', 'WC_Memberships_Checkout' );
 
 		// enqueue JS and styles
-		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts_and_styles' ) );
+		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts_and_styles' ] );
 
 		// show a notice to admins on new installs about restricted content
 		add_action( 'wp_footer', array( $this, 'output_admin_message_html' ) );
@@ -68,13 +75,17 @@ class WC_Memberships_Frontend {
 		add_filter( 'body_class', array( $this, 'add_membership_content_body_class' ), 10, 1 );
 		add_filter( 'post_class', array( $this, 'add_membership_content_post_class' ), 10, 3 );
 
+		// optionally redirect members upon login (setting)
+		add_filter( 'login_redirect', [ $this, 'redirect_to_page_upon_wordpress_login' ], 999, 3 );
+		add_action( 'woocommerce_login_redirect', [ $this, 'redirect_to_page_upon_woocommerce_login' ], 30, 2 );
+
 		// display a thank you message when a membership is granted upon order received
 		add_action( 'woocommerce_thankyou', array( $this, 'maybe_render_thank_you_content' ), 9 );
 	}
 
 
 	/**
-	 * Returns the Checkout instance.
+	 * Gets the Checkout instance.
 	 *
 	 * @since 1.6.0
 	 *
@@ -86,14 +97,46 @@ class WC_Memberships_Frontend {
 
 
 	/**
-	 * Returns the Members Area handler instance.
+	 * Gets the My Account handler instance.
+	 *
+	 * @since 1.19.0
+	 *
+	 * @return My_Account
+	 */
+	public function get_my_account_instance() {
+
+		return $this->my_account;
+	}
+
+
+	/**
+	 * Gets the Members Area handler instance.
+	 *
+	 * TODO: remove this method by 2.0.0 or by 2022-03-04 {WV 2020-09-04}
 	 *
 	 * @since 1.7.4
+	 * @deprecated 1.19.0
 	 *
 	 * @return \WC_Memberships_Members_Area
 	 */
 	public function get_members_area_instance() {
-		return $this->members_area;
+
+		wc_deprecated_function( __METHOD__, '1.19.0', __CLASS__ . '::get_my_account_instance()->get_members_area_instance()' );
+
+		return $this->get_my_account_instance()->get_members_area_instance();
+	}
+
+
+	/**
+	 * Gets the Profile Fields handler instance.
+	 *
+	 * @since 1.19.0
+	 *
+	 * @return Profile_Fields
+	 */
+	public function get_profile_fields_instance() {
+
+		return $this->profile_fields;
 	}
 
 
@@ -106,23 +149,141 @@ class WC_Memberships_Frontend {
 	 */
 	public function enqueue_scripts_and_styles() {
 
-		wp_enqueue_style( 'wc-memberships-frontend', wc_memberships()->get_plugin_url() . '/assets/css/frontend/wc-memberships-frontend.min.css', '', \WC_Memberships::VERSION );
+		$this->enqueue_styles();
+		$this->enqueue_scripts();
+	}
+
+
+	/**
+	 * Enqueues front end styles.
+	 *
+	 * @since 1.19.0
+	 */
+	private function enqueue_styles() {
+		global $post;
+
+		$dependencies = [];
+
+		wp_register_style( 'wc-memberships-profile-fields', wc_memberships()->get_plugin_url() . '/assets/css/frontend/wc-memberships-profile-fields.min.css', [ 'select2' ], \WC_Memberships::VERSION );
+		wp_register_style( 'wc-memberships-member-directory', wc_memberships()->get_plugin_url() . '/assets/css/frontend/wc-memberships-directory.min.css', [], WC_Memberships::VERSION );
+
+		if ( $post && is_singular( $post ) && has_shortcode( $post->post_content, 'wcm_directory' ) ) {
+			$dependencies[] = 'wc-memberships-member-directory';
+		}
+
+		// TODO improve conditional load of front end assets for profile fields {FN 2020-09-03}
+		if ( Profile_Fields_Handler::is_using_profile_fields() && ! empty( Profile_Fields_Handler::get_profile_field_definitions( [ 'editable_by' => Profile_Fields_Handler\Profile_Field_Definition::EDITABLE_BY_CUSTOMER, 'type' => [ Profile_Fields_Handler::TYPE_FILE, Profile_Fields_Handler::TYPE_SELECT, Profile_Fields_Handler::TYPE_MULTISELECT ] ] ) ) ) {
+			$dependencies[] = 'wc-memberships-profile-fields';
+		}
+
+		wp_enqueue_style( 'wc-memberships-frontend', wc_memberships()->get_plugin_url() . '/assets/css/frontend/wc-memberships-frontend.min.css', $dependencies, \WC_Memberships::VERSION );
+	}
+
+
+	/**
+	 * Enqueues front end scripts.
+	 *
+	 * @since 1.19.0
+	 */
+	private function enqueue_scripts() {
+
+		// TODO improve conditional load of front end assets {FN 2020-09-03}
+		if ( Profile_Fields_Handler::is_using_profile_fields() ) {
+
+			$dependencies =[ 'jquery' ];
+
+			// if there are file inputs, require plupload
+			if ( ! empty( Profile_Fields_Handler::get_profile_field_definitions( [ 'editable_by' => Profile_Fields_Handler\Profile_Field_Definition::EDITABLE_BY_CUSTOMER, 'type' => Profile_Fields_Handler::TYPE_FILE ] ) ) ) {
+				$dependencies[] = 'plupload-all';
+			}
+
+			// if there are dropdown inputs, ensure Select2 is available to enhanced them
+			if ( ! empty( Profile_Fields_Handler::get_profile_field_definitions( [ 'editable_by' => Profile_Fields_Handler\Profile_Field_Definition::EDITABLE_BY_CUSTOMER, 'type' => [ Profile_Fields_Handler::TYPE_SELECT, Profile_Fields_Handler::TYPE_MULTISELECT ] ] ) ) ) {
+				$dependencies[] = 'selectWoo';
+			}
+
+			wp_register_script( 'wc-memberships-frontend', wc_memberships()->get_plugin_url() . '/assets/js/frontend/wc-memberships-frontend.min.js', $dependencies, \WC_Memberships::VERSION, true );
+
+			wp_localize_script( 'wc-memberships-frontend', 'wc_memberships_frontend', [
+
+				'ajax_url'      => admin_url( 'admin-ajax.php' ),
+				'max_file_size' => wp_max_upload_size(),
+				'max_files'     => 1,
+				'mime_types'    => $this->get_supported_mime_types(),
+
+				'nonces'        => [
+					'profile_field_upload_file'  => wp_create_nonce( 'member-profile-field-upload-file' ),
+					'profile_field_remove_file'  => wp_create_nonce( 'member-profile-field-remove-file' ),
+					'get_product_profile_fields' => wp_create_nonce( Profile_Fields::GET_PRODUCT_PROFILE_FIELDS_ACTION ),
+				],
+
+				'i18n'          => [
+					/* translators: Placeholder: %1$s - error code, %2$s - error message */
+					'upload_error' => __( 'Error %1$s: %2$s', 'woocommerce-memberships' ) // the placeholders content will be handled in JS
+				],
+
+			] );
+
+			wp_enqueue_script( 'wc-memberships-frontend' );
+		}
 
 		if ( \WC_Memberships_User_Messages::show_admin_message() ) {
 
-			$ajax_url = admin_url( 'admin-ajax.php' );
-
 			wc_enqueue_js( "
-				jQuery( document ).ready( function( $ ) {
-					$( 'div.wc-memberships.admin-restricted-content-notice a.dismiss-link' ).click( function ( e ) {
-						e.preventDefault();
-						$.post( '" . esc_js( $ajax_url ) . "', { action: 'wc_memberships_dismiss_admin_restricted_content_notice' } ).done( function() {
-							location.reload();
-						} );
+				$( 'div.wc-memberships.admin-restricted-content-notice a.dismiss-link' ).on( 'click', function ( e ) {
+					e.preventDefault();
+					$.post( '" . esc_js( admin_url( 'admin-ajax.php' ) ) . "', { action: 'wc_memberships_dismiss_admin_restricted_content_notice' } ).done( function() {
+						location.reload();
 					} );
 				} );
 			" );
 		}
+	}
+
+
+	/**
+	 * Gets supported MIME types for file uploads (helper method).
+	 *
+	 * @see \WC_Memberships_Frontend::enqueue_scripts()
+	 *
+	 * @since 1.19.0
+	 *
+	 * @return array
+	 */
+	private function get_supported_mime_types() {
+
+		$extensions = $types = [];
+
+		$allowed_types = get_allowed_mime_types();
+
+		// break the allowed extensions into their respective types
+		foreach ( $allowed_types as $allowed_extensions => $type ) {
+
+			$type = substr( $type, 0, strpos( $type, '/' ) );
+
+			$extensions[ $type ][] = str_replace( '|', ',', $allowed_extensions );
+		}
+
+		// format the extensions for plupload
+		foreach ( $extensions as $type => $file_extensions ) {
+
+			$types[] = [
+				'title'      => $type,
+				'extensions' => implode( ',', $file_extensions ),
+			];
+		}
+
+		/**
+		 * Filters the allowed upload mime types.
+		 *
+		 * @since 1.19.0
+		 *
+		 * @param array $types the allowed types and their extensions, each an array of {
+		 *     @type string $name the mime type name
+		 *     @type string $extensions the supported extensions, comma separated
+		 * }
+		 */
+		return (array) apply_filters( 'wc_memberships_allowed_mime_types', $types );
 	}
 
 
@@ -445,33 +606,34 @@ class WC_Memberships_Frontend {
 						 *
 						 * @since 1.7.4
 						 *
-						 * @param bool $add_to_cart whether to add to cart the product and redirect to checkout (true, default) or redirect to product page instead (false).
-						 * @param \WC_Product $product_for_renewal the product that would renew access if purchased again.
-						 * @param int $user_membership_id the membership being renewed upon purchase.
+						 * @param bool $add_to_cart whether to add to cart the product and redirect to checkout (default true unless a parent of an unspecified variation) or redirect to product page instead (false)
+						 * @param \WC_Product $product_for_renewal the product that would renew access if purchased again
+						 * @param int $user_membership_id the membership being renewed upon purchase
 						 */
-						if ( true === (bool) apply_filters( 'wc_memberships_add_to_cart_renewal_product', true, $product_for_renewal, $user_membership->get_id() ) ) {
+						if ( true === (bool) apply_filters( 'wc_memberships_add_to_cart_renewal_product', ! $product_for_renewal->is_type( 'variable' ), $product_for_renewal, $user_membership->get_id() ) ) {
 
 							// empty the cart and add the one product to renew this membership
 							wc_empty_cart();
 
 							// set up variation data (if needed) before adding to the cart
-							$product_id           = $product_for_renewal->is_type( 'variation' ) ? Framework\SV_WC_Product_Compatibility::get_prop( $product_for_renewal, 'parent_id' ) : $product_for_renewal->get_id();
+							$product_id           = $product_for_renewal->is_type( 'variation' ) ? $product_for_renewal->get_parent_id() : $product_for_renewal->get_id();
 							$variation_id         = $product_for_renewal->is_type( 'variation' ) ? $product_for_renewal->get_id() : 0;
-							$variation_attributes = $product_for_renewal->is_type( 'variation' ) ? wc_get_product_variation_attributes( $variation_id ) : array();
+							$variation_attributes = $product_for_renewal->is_type( 'variation' ) ? wc_get_product_variation_attributes( $variation_id ) : [];
 
 							// add the product to the cart
-							WC()->cart->add_to_cart( $product_id, 1, $variation_id, $variation_attributes );
+							$show_message = WC()->cart->add_to_cart( $product_id, 1, $variation_id, $variation_attributes );
 
 							// then redirect to checkout instead of my account page
 							$redirect_url = wc_get_checkout_url();
 
 						} else {
 
-							$redirect_url = get_permalink( $product_for_renewal->is_type( 'variation' ) ? Framework\SV_WC_Product_Compatibility::get_prop( $product_for_renewal, 'parent_id' ) : $product_for_renewal->get_id() );
+							$show_message = true;
+							$redirect_url = get_permalink( $product_for_renewal->is_type( 'variation' ) ? $product_for_renewal->get_parent_id() : $product_for_renewal->get_id() );
 						}
 
 						/* translators: Placeholder: %s - a product to purchase to renew a membership */
-						$message  = sprintf( __( 'Renew your membership by purchasing %s.', 'woocommerce-memberships' ) . ' ', $product_for_renewal->get_title() );
+						$message  = false === (bool) $show_message ? '' : sprintf( __( 'Renew your membership by purchasing %s.', 'woocommerce-memberships' ) . ' ', $product_for_renewal->get_title() );
 						$message .= is_user_logged_in() ? ' ' : __( 'You must be logged to renew your membership.', 'woocommerce-memberships' );
 
 					} else {
@@ -479,7 +641,7 @@ class WC_Memberships_Frontend {
 						$error_message = $default_error_message;
 					}
 
-					// login process may produce a more generic Exception
+				// login process may produce a more generic Exception
 				} catch ( \Exception $e ) {
 
 					$error_message = $e->getMessage();
@@ -496,6 +658,152 @@ class WC_Memberships_Frontend {
 		}
 
 		return array( 'redirect' => $redirect_url, 'message' => $message );
+	}
+
+
+	/**
+	 * Redirects a user upon login when they used the standard WordPress login form.
+	 *
+	 * The redirection destination is determined based on Memberships settings.
+	 *
+	 * @internal
+	 *
+	 * @since 1.21.2
+	 *
+	 * @param string $redirect_to URL the user is being redirected to
+	 * @param string $requested_redirect_to URL (the presence of a non empty string here means that the user is being redirected already to a different page)
+	 * @param \WP_User|\WP_Error $user user being logged in
+	 * @return string modified URL
+	 */
+	public function redirect_to_page_upon_wordpress_login( $redirect_to, $requested_redirect_to, $user ) {
+
+		// bail if there's a URL already overriding the standard redirect
+		if ( ! $user instanceof \WP_User || ( ! empty( $requested_redirect_to ) && $redirect_to !== $requested_redirect_to ) ) {
+			return $redirect_to;
+		}
+
+		return $this->redirect_to_page_upon_woocommerce_login( $redirect_to, $user );
+	}
+
+
+	/**
+	 * Redirects a user upon login when they used the WooCommerce login form.
+	 *
+	 * The redirection destination is determined based on Memberships settings.
+	 *
+	 * This callback must have a lower priority to allow for restricted content access redirects:
+	 * @see \WC_Memberships_Posts_Restrictions::redirect_to_member_content_upon_login()
+	 * @see \WC_Memberships_Posts_Restrictions::redirect_restricted_content()
+	 *
+	 * @internal
+	 *
+	 * @since 1.16.0
+	 *
+	 * @param string $original_redirect_url URL which WooCommerce is redirecting to
+	 * @param \WP_User $user member user object
+	 * @return string
+	 */
+	public function redirect_to_page_upon_woocommerce_login( $original_redirect_url, $user ) {
+
+		// skip for admins & shop managers
+		if ( user_can( $user, 'manage_woocommerce' ) || user_can( $user, 'install_plugins' ) ) {
+			return $original_redirect_url;
+		}
+
+		$redirect_setting = get_option( 'wc_memberships_redirect_upon_member_login', 'no_redirect' );
+
+		if ( 'no_redirect' !== $redirect_setting ) {
+
+			$no_query_var_redirect_url = preg_replace( '/\?.*/', '', $original_redirect_url );
+
+			// retain default behavior if customer is logging in at checkout
+			if ( in_array( wc_get_checkout_url(), [ $original_redirect_url, $no_query_var_redirect_url ], true ) || in_array( wc_get_cart_url(), [ $original_redirect_url, $no_query_var_redirect_url ], true ) ) {
+				$redirect_setting = 'no_redirect';
+			}
+		}
+
+		if ( $user && wc_memberships_is_user_active_member( $user ) ) {
+
+			$new_redirect_url = $original_redirect_url;
+
+			switch ( $redirect_setting ) {
+
+				case 'site_page' :
+
+					$redirect_to_page_id = get_option( 'wc_memberships_member_login_redirect_page_id', 0 );
+
+					// the member must be able to access to this page, otherwise retain default behavior
+					if ( is_numeric( $redirect_to_page_id ) && $redirect_to_page_id > 0 && wc_memberships_user_can( $user->ID, 'view', [ 'page' => $redirect_to_page_id ] ) ) {
+						$new_redirect_url = get_permalink( $redirect_to_page_id );
+					}
+
+				break;
+
+				case 'members_area' :
+
+					$plans = 0;
+
+					foreach ( wc_memberships_get_user_active_memberships( $user ) as $user_membership ) {
+
+						$plan = $user_membership->get_plan();
+
+						if ( $plan && count( $plan->get_members_area_sections() ) > 0 ) {
+
+							$new_redirect_url = wc_memberships_get_members_area_url( $plan->get_id() );
+
+							$plans++;
+
+							// if there are two or more plans with a members area, just use the members area plans directory
+							if ( 2 === $plans ) {
+
+								$new_redirect_url = wc_memberships_get_members_area_url();
+								break;
+							}
+						}
+					}
+
+				break;
+			}
+
+			if ( ! is_string( $new_redirect_url ) || '' === trim( $new_redirect_url ) ) {
+				$new_redirect_url = $original_redirect_url;
+			}
+
+			/**
+			 * Filters the URL to redirect the logged in member to.
+			 *
+			 * @since 1.16.0
+			 *
+			 * @param string $new_redirect_url URL to redirect member to
+			 * @param string $original_redirect_url URL where WooCommerce originally intended to redirect the member to
+			 * @param \WP_User $user the member user object
+			 */
+			$original_redirect_url = (string) apply_filters( 'wc_memberships_member_login_redirect_url', $new_redirect_url, $original_redirect_url, $user );
+		}
+
+		return $original_redirect_url;
+	}
+
+
+	/**
+	 * Redirects a member who just logged in according to Memberships setting.
+	 *
+	 * @internal
+	 *
+	 * @since 1.16.0
+	 * @deprecated 1.21.2
+	 *
+	 * @TODO remove this deprecated method by version 2.0.0 or by May 2022 {FN 2020-01-20}
+	 *
+	 * @param string $original_redirect_url URL which WooCommerce is redirecting to
+	 * @param \WP_User $user member user object
+	 * @return string
+	 */
+	public function redirect_to_page_upon_login( $original_redirect_url, $user ) {
+
+		wc_deprecated_function( __METHOD__, '1.21.2', __CLASS__ . '::redirect_to_page_upon_woocommerce_login()' );
+
+		return $this->redirect_to_page_upon_woocommerce_login( $original_redirect_url, $user );
 	}
 
 
@@ -663,114 +971,8 @@ class WC_Memberships_Frontend {
 	 * @return string[]
 	 */
 	public function add_membership_content_post_class( $classes, $additional_classes, $post_id ) {
+
 		return array_merge( $classes, $this->get_membership_content_classes( $post_id ) );
-	}
-
-
-	/**
-	 * Handles deprecated methods.
-	 *
-	 * TODO remove deprecated methods when they are at least 3 minor versions older (as in x.Y.z semantic versioning) {FN 2018-11-07}
-	 *
-	 * @since 1.9.0
-	 *
-	 * @param string $method method invoked
-	 * @param array $args optional method arguments
-	 * @return void|null|mixed
-	 */
-	public function __call( $method, $args ) {
-
-		$deprecated = "WC_Memberships_Frontend_::{$method}()";
-
-		switch ( $method ) {
-
-			/* @deprecated since 1.9.0 - remove this by 1.13.0 or higher */
-			case 'get_content_delayed_message' :
-				_deprecated_function( $deprecated, '1.9.0', 'WC_Memberships_User_Messages::get_message_html()' );
-				$user_id     = ! empty( $args[0] ) ? $args[0] : get_current_user_id();
-				$access_type = isset( $args[2] )   ? $args[2] : '';
-				if ( empty( $args[1] ) ) {
-					global $post;
-					$post_id = $post ? $post->ID : 0;
-				} else {
-					$post_id = $args[1];
-				}
-				$args = array(
-					'post_id'     => $post_id,
-					'access_time' => wc_memberships()->get_capabilities_instance()->get_user_access_start_time_for_post( $user_id, $post_id, $access_type ),
-					'context'     => 'notice',
-				);
-				switch ( get_post_type( $post_id ) ) {
-					case 'product':
-					case 'product_variation':
-						$message_code = 'product_access_delayed';
-						break;
-					case 'page':
-						$message_code = 'page_content_delayed';
-						break;
-					case 'post':
-						$message_code = 'post_content_delayed';
-						break;
-					default:
-						$message_code = 'content_delayed';
-						break;
-				}
-				return \WC_Memberships_User_Messages::get_message_html( $message_code, $args );
-
-			/* @deprecated since 1.9.0 - remove this by 1.13.0 or higher */
-			case 'get_content_restricted_message' :
-				_deprecated_function( $deprecated, '1.9.0', 'WC_Memberships_User_Messages::get_message_html()' );
-				$args = isset( $args[0] ) ? array( 'post_id' => $args[0] ) : array( 'post_id' => $args );
-				return \WC_Memberships_User_Messages::get_message_html( 'content_restricted', $args );
-
-			/* @deprecated since 1.9.0 - remove this by 1.13.0 or higher */
-			case 'get_member_discount_message' :
-				_deprecated_function( $deprecated, '1.9.0', "WC_Memberships_User_Messages::get_message_html( 'product_discount' )" );
-				$args = isset( $args[0] ) ? array( 'post_id' => $args[0] ) : array( 'post_id' => $args );
-				return \WC_Memberships_User_Messages::get_message_html( 'product_discount', $args );
-
-			/* @deprecated since 1.9.0 - remove this by 1.13.0 or higher */
-			case 'get_product_purchasing_restricted_message' :
-				_deprecated_function( $deprecated, '1.9.0', "WC_Memberships_User_Messages::get_message_html( 'product_purchasing_restricted' )" );
-				$args = isset( $args[0] ) ? array( 'post_id' => $args[0] ) : array( 'post_id' => $args );
-				return \WC_Memberships_User_Messages::get_message_html( 'product_purchasing_restricted', $args );
-
-			/* @deprecated since 1.9.0 - remove this by 1.13.0 or higher */
-			case 'get_product_viewing_restricted_message' :
-				_deprecated_function( $deprecated, '1.9.0', "WC_Memberships_User_Messages::get_message_html( 'product_viewing_restricted' )" );
-				$args = isset( $args[0] ) ? array( 'post_id' => $args[0] ) : array( 'post_id' => $args );
-				return \WC_Memberships_User_Messages::get_message_html( 'product_viewing_restricted', $args );
-
-			/* @deprecated since 1.9.0 - remove this by 1.13.0 or higher */
-			case 'get_product_taxonomy_term_delayed_message' :
-				_deprecated_function( $deprecated, '1.9.0', "WC_Memberships_User_Messages::get_message_html( 'product_category_viewing_delayed' )" );
-				return \WC_Memberships_User_Messages::get_message_html( 'product_category_viewing_delayed' );
-
-			/* @deprecated since 1.9.0 - remove this by 1.13.0 or higher */
-			case 'get_product_taxonomy_term_viewing_restricted_message';
-				_deprecated_function( $deprecated, '1.9.0', "WC_Memberships_User_Messages::get_message_html( 'product_category_viewing_restricted' )" );
-				return \WC_Memberships_User_Messages::get_message_html( 'product_category_viewing_restricted' );
-
-			/* @deprecated since 1.9.0 - remove this by 1.13.0 or higher */
-			case 'get_restrictions_instance' :
-				_deprecated_function( 'wc_memberships()->get_frontend_instance()->get_restrictions_instance()', '1.9.0', 'wc_memberships()->get_restrictions_instance()' );
-				return wc_memberships()->get_restrictions_instance();
-
-			/* @deprecated since 1.9.0 - remove this by 1.13.0 or higher */
-			case 'get_valid_restriction_message_types' :
-				_deprecated_function( $deprecated, '1.9.0', 'WC_Memberships_User_Messages::get_default_messages( false )' );
-				return \WC_Memberships_User_Messages::get_default_messages( false );
-
-			/* @deprecated since 1.9.0 - remove this by 1.13.0 or higher */
-			case 'restricted_content_redirect' :
-				_deprecated_function( $deprecated, '1.9.0', 'WC_Memberships_Posts_Restrictions::redirect_to_member_content_upon_login()' );
-				return wc_memberships()->get_restrictions_instance()->get_posts_restrictions_instance()->redirect_to_member_content_upon_login( isset( $args[0] ) ? $args[0] : $args );
-
-			// you're probably doing it wrong...
-			default :
-				trigger_error( "Call to undefined method {$deprecated}", E_USER_ERROR );
-				return null;
-		}
 	}
 
 

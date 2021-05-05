@@ -1,10 +1,10 @@
 === Custom Login Page Customizer ===
 Requires at least: 4.0
-Tested up to: 5.6
+Tested up to: 5.7
 Contributors: hardeepasrani, hiddenpearls
 Author URI: https://loginpress.pro/?utm_source=login-customizer-lite&utm_medium=author-url-link
 Tags: login, customizer, logo, login logo, login customizer, login page,admin, branding, customization, custom login, error, login error, custom login pro
-Stable tag: 2.1.2
+Stable tag: 2.1.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -46,16 +46,23 @@ Please visit <a target="_blank" rel="nofollow" href="https://loginpress.pro/?utm
 
 == Upgrade Notice ==
 
-= 2.1.2 =
-* Update immediately - compatible with 5.6 and bugfix release. Introducing New features and settings panel.
+= 2.1.3 =
+* Update immediately - compatible with 5.7
 
 == Changelog ==
+
+= 2.1.3 - 2021-04-17 =
+
+* Enhancement: Compatible with <a href="https://wordpress.org/plugins/two-factor/" rel="plugin">2FA Two Factor Authentication</a> plugin.
+* Compatibility: Compatibile with WordPress 5.7.
+* Compatibility: Compatible with PHP 8.0.
 
 = 2.1.2 - 2021-02-20 =
 
 * New Feature: Introducing new control for customizing privacy policy link on login page.
 
 = 2.1.1 - 2021-01-27 =
+
 * New Feature: Introducing new Login Customizer settings page.
 * New Feature: Introducing "Remember Me" option already checked on login form.
 * New Feature: Introducing "Custom Register Password Fields" which creates custom password field so you don't have to reset the password for the first time through a link in order to login (settings will be shown only if you enable register users for your site).

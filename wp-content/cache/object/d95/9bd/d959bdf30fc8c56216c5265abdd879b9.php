@@ -1,1 +1,1 @@
-Ïžm`<?php exit; ?>a:1:{s:7:"content";s:5:"found";}
+¾k’`<?php exit; ?>a:1:{s:7:"content";s:10:"curl-error";}

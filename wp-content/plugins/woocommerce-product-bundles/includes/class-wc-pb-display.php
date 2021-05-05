@@ -2,7 +2,7 @@
 /**
  * WC_PB_Display class
  *
- * @author   SomewhereWarm <info@somewherewarm.gr>
+ * @author   SomewhereWarm <info@somewherewarm.com>
  * @package  WooCommerce Product Bundles
  * @since    4.5.0
  */
@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Product Bundle display functions and filters.
  *
  * @class    WC_PB_Display
- * @version  6.0.0
+ * @version  6.7.0
  */
 class WC_PB_Display {
 
@@ -37,6 +37,12 @@ class WC_PB_Display {
 	 * @var integer
 	 */
 	private $grid_layout_pos = 1;
+
+	/**
+	 * Runtime cache.
+	 * @var bool
+	 */
+	private $display_cart_prices_incl_tax;
 
 	/**
 	 * The single instance of the class.
@@ -84,8 +90,8 @@ class WC_PB_Display {
 	protected function __construct() {
 
 		// Single product template functions and hooks.
-		require_once( 'wc-pb-template-functions.php' );
-		require_once( 'wc-pb-template-hooks.php' );
+		require_once( WC_PB_ABSPATH . 'includes/wc-pb-template-functions.php' );
+		require_once( WC_PB_ABSPATH . 'includes/wc-pb-template-hooks.php' );
 
 		// Front end bundle add-to-cart script.
 		add_action( 'wp_enqueue_scripts', array( $this, 'frontend_scripts' ), 100 );
@@ -197,39 +203,48 @@ class WC_PB_Display {
 		 * @param  array
 		 */
 		$params = apply_filters( 'woocommerce_bundle_front_end_params', array(
-			'i18n_free'                    => __( 'Free!', 'woocommerce' ),
-			'i18n_total'                   => __( 'Total: ', 'woocommerce-product-bundles' ),
-			'i18n_subtotal'                => __( 'Subtotal: ', 'woocommerce-product-bundles' ),
-			'i18n_price_format'            => sprintf( _x( '%1$s%2$s%3$s', '"Total/Subtotal" string followed by price followed by price suffix', 'woocommerce-product-bundles' ), '%t', '%p', '%s' ),
-			'i18n_strikeout_price_string'  => sprintf( _x( '<del>%1$s</del> <ins>%2$s</ins>', 'Sale/strikeout price', 'woocommerce-product-bundles' ), '%f', '%t' ),
-			'i18n_partially_out_of_stock'  => __( 'Insufficient stock', 'woocommerce-product-bundles' ),
-			'i18n_partially_on_backorder'  => __( 'Available on backorder', 'woocommerce' ),
-			'i18n_select_options'          => __( 'To continue, please choose product options&hellip;', 'woocommerce-product-bundles' ),
-			'i18n_select_options_for'      => __( 'To continue, please choose %s options&hellip;', 'woocommerce-product-bundles' ),
-			'i18n_string_list_item'        => _x( '&quot;%s&quot;', 'string list item', 'woocommerce-product-bundles' ),
-			'i18n_string_list_sep'         => sprintf( _x( '%1$s, %2$s', 'string list item separator', 'woocommerce-product-bundles' ), '%s', '%v' ),
-			'i18n_string_list_last_sep'    => sprintf( _x( '%1$s and %2$s', 'string list item last separator', 'woocommerce-product-bundles' ), '%s', '%v' ),
-			'i18n_qty_string'              => _x( ' &times; %s', 'qty string', 'woocommerce-product-bundles' ),
-			'i18n_optional_string'         => _x( ' &mdash; %s', 'suffix', 'woocommerce-product-bundles' ),
-			'i18n_optional'                => __( 'optional', 'woocommerce-product-bundles' ),
-			'i18n_contents'                => __( 'Includes', 'woocommerce-product-bundles' ),
-			'i18n_title_meta_string'       => sprintf( _x( '%1$s &ndash; %2$s', 'title followed by meta', 'woocommerce-product-bundles' ), '%t', '%m' ),
-			'i18n_title_string'            => sprintf( _x( '%1$s%2$s%3$s%4$s', 'title, quantity, price, suffix', 'woocommerce-product-bundles' ), '<span class="item_title">%t</span>', '<span class="item_qty">%q</span>', '', '<span class="item_suffix">%o</span>' ),
-			'i18n_unavailable_text'        => __( 'This product is currently unavailable.', 'woocommerce-product-bundles' ),
-			'i18n_validation_alert'        => __( 'Please resolve all pending configuration issues before adding this product to your cart.', 'woocommerce-product-bundles' ),
-			'i18n_zero_qty_error'          => __( 'Please choose at least 1 item.', 'woocommerce-product-bundles' ),
-			'currency_symbol'              => get_woocommerce_currency_symbol(),
-			'currency_position'            => esc_attr( stripslashes( get_option( 'woocommerce_currency_pos' ) ) ),
-			'currency_format_num_decimals' => wc_get_price_decimals(),
-			'currency_format_decimal_sep'  => esc_attr( stripslashes( get_option( 'woocommerce_price_decimal_sep' ) ) ),
-			'currency_format_thousand_sep' => esc_attr( stripslashes( get_option( 'woocommerce_price_thousand_sep' ) ) ),
-			'currency_format_trim_zeros'   => false === apply_filters( 'woocommerce_price_trim_zeros', false ) ? 'no' : 'yes',
-			'price_display_suffix'         => esc_attr( get_option( 'woocommerce_price_display_suffix' ) ),
-			'prices_include_tax'           => esc_attr( get_option( 'woocommerce_prices_include_tax' ) ),
-			'tax_display_shop'             => esc_attr( get_option( 'woocommerce_tax_display_shop' ) ),
-			'calc_taxes'                   => esc_attr( get_option( 'woocommerce_calc_taxes' ) ),
-			'photoswipe_enabled'           => current_theme_supports( 'wc-product-gallery-lightbox' ) ? 'yes' : 'no',
-			'force_min_max_qty_input'      => 'yes'
+			'i18n_free'                      => __( 'Free!', 'woocommerce' ),
+			'i18n_total'                     => __( 'Total: ', 'woocommerce-product-bundles' ),
+			'i18n_subtotal'                  => __( 'Subtotal: ', 'woocommerce-product-bundles' ),
+			'i18n_price_format'              => sprintf( _x( '%1$s%2$s%3$s', '"Total/Subtotal" string followed by price followed by price suffix', 'woocommerce-product-bundles' ), '%t', '%p', '%s' ),
+			'i18n_strikeout_price_string'    => sprintf( _x( '<del>%1$s</del> <ins>%2$s</ins>', 'Sale/strikeout price', 'woocommerce-product-bundles' ), '%f', '%t' ),
+			'i18n_insufficient_stock_list'   => sprintf( _x( '<p class="stock out-of-stock insufficient-stock">%1$s &rarr; %2$s</p>', 'insufficiently stocked items template', 'woocommerce-product-bundles' ), __( 'Insufficient stock', 'woocommerce-product-bundles' ), '%s' ),
+			'i18n_on_backorder_list'         => sprintf( _x( '<p class="stock available-on-backorder">%1$s &rarr; %2$s</p>', 'backordered items template', 'woocommerce-product-bundles' ), __( 'Available on backorder', 'woocommerce' ), '%s' ),
+			'i18n_insufficient_stock_status' => sprintf( _x( '<p class="stock out-of-stock insufficient-stock">%s</p>', 'insufficiently stocked item exists template', 'woocommerce-product-bundles' ), __( 'Insufficient stock', 'woocommerce-product-bundles' ) ),
+			'i18n_on_backorder_status'       => sprintf( _x( '<p class="stock available-on-backorder">%s</p>', 'backordered item exists template', 'woocommerce-product-bundles' ), __( 'Available on backorder', 'woocommerce' ) ),
+			'i18n_select_options'            => __( 'Please choose product options.', 'woocommerce-product-bundles' ),
+			'i18n_select_options_for'        => __( 'Please choose %s options.', 'woocommerce-product-bundles' ),
+			'i18n_enter_valid_price'         => __( 'Please enter valid amounts.', 'woocommerce-product-bundles' ),
+			'i18n_enter_valid_price_for'     => __( 'Please enter a valid %s amount.', 'woocommerce-product-bundles' ),
+			'i18n_string_list_item'          => _x( '&quot;%s&quot;', 'string list item', 'woocommerce-product-bundles' ),
+			'i18n_string_list_sep'           => sprintf( _x( '%1$s, %2$s', 'string list item separator', 'woocommerce-product-bundles' ), '%s', '%v' ),
+			'i18n_string_list_last_sep'      => sprintf( _x( '%1$s and %2$s', 'string list item last separator', 'woocommerce-product-bundles' ), '%s', '%v' ),
+			'i18n_qty_string'                => _x( ' &times; %s', 'qty string', 'woocommerce-product-bundles' ),
+			'i18n_optional_string'           => _x( ' &mdash; %s', 'suffix', 'woocommerce-product-bundles' ),
+			'i18n_optional'                  => __( 'optional', 'woocommerce-product-bundles' ),
+			'i18n_contents'                  => __( 'Includes', 'woocommerce-product-bundles' ),
+			'i18n_title_meta_string'         => sprintf( _x( '%1$s &ndash; %2$s', 'title followed by meta', 'woocommerce-product-bundles' ), '%t', '%m' ),
+			'i18n_title_string'              => sprintf( _x( '%1$s%2$s%3$s%4$s', 'title, quantity, price, suffix', 'woocommerce-product-bundles' ), '<span class="item_title">%t</span>', '<span class="item_qty">%q</span>', '', '<span class="item_suffix">%o</span>' ),
+			'i18n_unavailable_text'          => __( 'This product is currently unavailable.', 'woocommerce-product-bundles' ),
+			'i18n_validation_alert'          => __( 'Please resolve all pending issues before adding this product to your cart.', 'woocommerce-product-bundles' ),
+			'i18n_zero_qty_error'            => __( 'Please choose at least 1 item.', 'woocommerce-product-bundles' ),
+			'i18n_recurring_price_join'      => sprintf( _x( '%1$s,</br>%2$s', 'subscription price html', 'woocommerce-product-bundles' ), '%r', '%c' ),
+			'i18n_recurring_price_join_last' => sprintf( _x( '%1$s, and</br>%2$s', 'subscription price html', 'woocommerce-product-bundles' ), '%r', '%c' ),
+			'discounted_price_decimals'      => WC_PB_Product_Prices::get_discounted_price_precision(),
+			'currency_symbol'                => get_woocommerce_currency_symbol(),
+			'currency_position'              => esc_attr( stripslashes( get_option( 'woocommerce_currency_pos' ) ) ),
+			'currency_format_num_decimals'   => wc_pb_price_num_decimals(),
+			'currency_format_decimal_sep'    => esc_attr( stripslashes( get_option( 'woocommerce_price_decimal_sep' ) ) ),
+			'currency_format_thousand_sep'   => esc_attr( stripslashes( get_option( 'woocommerce_price_thousand_sep' ) ) ),
+			'currency_format_trim_zeros'     => false === apply_filters( 'woocommerce_price_trim_zeros', false ) ? 'no' : 'yes',
+			'price_display_suffix'           => esc_attr( get_option( 'woocommerce_price_display_suffix' ) ),
+			'prices_include_tax'             => esc_attr( get_option( 'woocommerce_prices_include_tax' ) ),
+			'tax_display_shop'               => esc_attr( get_option( 'woocommerce_tax_display_shop' ) ),
+			'calc_taxes'                     => esc_attr( get_option( 'woocommerce_calc_taxes' ) ),
+			'photoswipe_enabled'             => current_theme_supports( 'wc-product-gallery-lightbox' ) ? 'yes' : 'no',
+			'responsive_breakpoint'          => 380,
+			'zoom_enabled'                   => 'no',
+			'force_min_max_qty_input'        => 'yes'
 		) );
 
 		wp_localize_script( 'wc-add-to-cart-bundle', 'wc_bundle_params', $params );
@@ -380,7 +395,16 @@ class WC_PB_Display {
 	public function structured_product_data( $data, $product ) {
 
 		if ( is_object( $product ) && $product->is_type( 'bundle' ) ) {
-			$data[ 'price' ] = $product->get_bundle_price();
+
+			$bundle_price = $product->get_bundle_price();
+
+			if ( isset( $data[ 'price' ] ) ) {
+				$data[ 'price' ] = $bundle_price;
+			}
+
+			if ( isset( $data[ 'priceSpecification' ][ 'price' ] ) ) {
+				$data[ 'priceSpecification' ][ 'price' ] = $bundle_price;
+			}
 		}
 
 		return $data;
@@ -416,6 +440,22 @@ class WC_PB_Display {
 	*/
 
 	/**
+	 * Back-compat wrapper for 'WC_Cart::display_price_including_tax'.
+	 *
+	 * @since  6.3.2
+	 *
+	 * @return string
+	 */
+	private function display_cart_prices_including_tax() {
+
+		if ( is_null( $this->display_cart_prices_incl_tax ) ) {
+			$this->display_cart_prices_incl_tax = WC_PB_Core_Compatibility::is_wc_version_gte( '3.3' ) ? WC()->cart->display_prices_including_tax() : ( 'incl' === get_option( 'woocommerce_tax_display_cart' ) );
+		}
+
+		return $this->display_cart_prices_incl_tax;
+	}
+
+	/**
 	 * Outputs a formatted subtotal.
 	 *
 	 * @param  WC_Product  $product
@@ -432,7 +472,7 @@ class WC_PB_Display {
 
 			$tax_subtotal = WC_PB_Core_Compatibility::is_wc_version_gte( '3.2' ) ? $cart->get_subtotal_tax() : $cart->tax_total;
 
-			if ( 'excl' === get_option( 'woocommerce_tax_display_cart' ) ) {
+			if ( ! $this->display_cart_prices_including_tax() ) {
 
 				if ( wc_prices_include_tax() && $tax_subtotal > 0 ) {
 					$formatted_subtotal .= ' <small class="tax_label">' . WC()->countries->ex_tax_or_vat() . '</small>';
@@ -554,8 +594,7 @@ class WC_PB_Display {
 
 			if ( $aggregate_prices ) {
 
-				$tax_display_cart    = get_option( 'woocommerce_tax_display_cart' );
-				$calc_type           = 'excl' === $tax_display_cart ? 'excl_tax' : 'incl_tax';
+				$calc_type           = ! $this->display_cart_prices_including_tax() ? 'excl_tax' : 'incl_tax';
 				$bundle_price        = WC_PB_Product_Prices::get_product_price( $cart_item[ 'data' ], array( 'price' => $cart_item[ 'data' ]->get_price(), 'calc' => $calc_type ) );
 				$bundled_cart_items  = wc_pb_get_bundled_cart_items( $cart_item, WC()->cart->cart_contents );
 				$bundled_items_price = 0.0;
@@ -578,7 +617,7 @@ class WC_PB_Display {
 
 					$bundled_item_qty     = $bundled_cart_item[ 'data' ]->is_sold_individually() ? 1 : $bundled_cart_item[ 'quantity' ] / $cart_item[ 'quantity' ];
 					$bundled_item_price   = WC_PB_Product_Prices::get_product_price( $bundled_cart_item[ 'data' ], array( 'price' => $bundled_item_raw_price, 'calc' => $calc_type, 'qty' => $bundled_item_qty ) );
-					$bundled_items_price += wc_format_decimal( (double) $bundled_item_price, wc_get_price_decimals() );
+					$bundled_items_price += wc_format_decimal( (double) $bundled_item_price, wc_pb_price_num_decimals() );
 				}
 
 				$price = wc_price( (double) $bundle_price + $bundled_items_price );
@@ -683,8 +722,7 @@ class WC_PB_Display {
 
 			if ( $aggregate_subtotals ) {
 
-				$tax_display_cart    = get_option( 'woocommerce_tax_display_cart' );
-				$calc_type           = 'excl' === $tax_display_cart ? 'excl_tax' : 'incl_tax';
+				$calc_type           = ! $this->display_cart_prices_including_tax() ? 'excl_tax' : 'incl_tax';
 				$bundle_price        = WC_PB_Product_Prices::get_product_price( $cart_item[ 'data' ], array( 'price' => $cart_item[ 'data' ]->get_price(), 'calc' => $calc_type, 'qty' => $cart_item[ 'quantity' ] ) );
 				$bundled_cart_items  = wc_pb_get_bundled_cart_items( $cart_item, WC()->cart->cart_contents );
 				$bundled_items_price = 0.0;
@@ -706,7 +744,7 @@ class WC_PB_Display {
 					}
 
 					$bundled_item_price    = WC_PB_Product_Prices::get_product_price( $bundled_cart_item[ 'data' ], array( 'price' => $bundled_item_raw_price, 'calc' => $calc_type, 'qty' => $bundled_cart_item[ 'quantity' ] ) );
-					$bundled_items_price  += wc_format_decimal( (double) $bundled_item_price, wc_get_price_decimals() );
+					$bundled_items_price  += wc_format_decimal( (double) $bundled_item_price, wc_pb_price_num_decimals() );
 				}
 
 				$subtotal = $this->format_subtotal( $cart_item[ 'data' ], (double) $bundle_price + $bundled_items_price );
@@ -1004,7 +1042,7 @@ class WC_PB_Display {
 	}
 
 	/**
-	 * Add "Part of" and "Purchased with" cart item data to bundled items.
+	 * Add "Part of" cart item data to bundled items.
 	 *
 	 * @param  array  $data
 	 * @param  array  $cart_item
@@ -1045,7 +1083,21 @@ class WC_PB_Display {
 			if ( $bundled_item = $bundle_container_item[ 'data' ]->get_bundled_item( $bundled_item_id) ) {
 
 				if ( false === $bundled_item->is_thumbnail_visible() ) {
-					$image = '';
+
+					$is_faked_parent_item = false;
+
+					if ( WC_Product_Bundle::group_mode_has( $bundle_container_item[ 'data' ]->get_group_mode(), 'faked_parent_item' ) ) {
+
+						$bundled_cart_item_keys = wc_pb_get_bundled_cart_items( $bundle_container_item, false, true );
+
+						if ( ! empty( $bundled_cart_item_keys ) && current( $bundled_cart_item_keys ) === $cart_item_key ) {
+							$is_faked_parent_item = true;
+						}
+					}
+
+					if ( ! $is_faked_parent_item ) {
+						$image = '';
+					}
 				}
 			}
 		}
@@ -1415,8 +1467,8 @@ class WC_PB_Display {
 						$cloned_item = clone $item;
 
 						foreach ( $children as $child ) {
-							$cloned_item->set_subtotal( $cloned_item->get_subtotal( 'edit' ) + round( $child->get_subtotal( 'edit' ), wc_get_price_decimals() ) );
-							$cloned_item->set_subtotal_tax( $cloned_item->get_subtotal_tax( 'edit' ) + round( $child->get_subtotal_tax( 'edit' ), wc_get_price_decimals() ) );
+							$cloned_item->set_subtotal( $cloned_item->get_subtotal( 'edit' ) + round( $child->get_subtotal( 'edit' ), wc_pb_price_num_decimals() ) );
+							$cloned_item->set_subtotal_tax( $cloned_item->get_subtotal_tax( 'edit' ) + round( $child->get_subtotal_tax( 'edit' ), wc_pb_price_num_decimals() ) );
 						}
 
 						$cloned_item->child_subtotals_added = 'yes';

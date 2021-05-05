@@ -17,11 +17,11 @@
  * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @author    SkyVerge
- * @copyright Copyright (c) 2014-2019, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2021, SkyVerge, Inc. (info@skyverge.com)
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
-use SkyVerge\WooCommerce\PluginFramework\v5_3_1 as Framework;
+use SkyVerge\WooCommerce\PluginFramework\v5_10_6 as Framework;
 
 defined( 'ABSPATH' ) or exit;
 
@@ -47,15 +47,12 @@ class WC_Memberships_User_Membership_Renewal_Reminder_Email extends \WC_Membersh
 	 */
 	public function __construct() {
 
-		$this->id    = __CLASS__;
-		$this->title = __( 'Membership renewal reminder', 'woocommerce-memberships' );
+		$this->id            = __CLASS__;
+		$this->plan_editable = true;
 
+		$this->title       = __( 'Membership renewal reminder', 'woocommerce-memberships' );
 		/* translators: Placeholders: %1$s - <strong> tag, %2$s - </strong> tag */
-		$description  =  sprintf( __( 'Membership renewal reminder emails are sent to former plan members inviting them to renew their membership. %1$sRenewal reminders are not sent for non-renewable memberships, such as registration-based or admin-assign only memberships%2$s.', 'woocommerce-memberships' ), '<strong>', '</strong>' );
-		/* translators: Placeholders: %1$s - Opening <a> HTML tag, %2$s - Closing </a> HTML tag */
-		$description .= '<br>' . sprintf( __( 'You can edit the content of this email for %1$seach one of your plans%2$s individually.', 'woocommerce-memberships' ), '<a href="' . esc_url( admin_url( 'edit.php?post_type=wc_membership_plan' )  ) . '">', '</a>' );
-
-		$this->description = $description;
+		$this->description = sprintf( __( 'Membership renewal reminder emails are sent to former plan members inviting them to renew their membership. %1$sRenewal reminders are not sent for non-renewable memberships, such as registration-based or admin-assign only memberships%2$s.', 'woocommerce-memberships' ), '<strong>', '</strong>' );
 		$this->subject     = __( 'Renew your {site_title} membership!', 'woocommerce-memberships');
 		$this->heading     = __( 'You can renew your {membership_plan}', 'woocommerce-memberships');
 

@@ -8,8 +8,9 @@
  * @since 1.0.0
  */
 
-// Exit if accessed directly
-if ( !defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
 
 class Html5vp_Admin {
 
@@ -20,6 +21,13 @@ class Html5vp_Admin {
 
 		// Admin Prior Processes
 		add_action( 'admin_init', array($this, 'html5vp_admin_init_process') );
+
+		// Filter to add row data
+		add_filter( 'post_row_actions', array( $this, 'html5vp_add_post_row_data' ), 10, 2 );
+
+		// Filter Custom Coluum 
+		add_filter("manage_video-category_custom_column", array($this, 'html5vp_video_category_columns'), 10, 3);
+		add_filter("manage_edit-video-category_columns", array($this, 'html5vp_video_category_manage_columns'));
 	}
 	
 	/**
@@ -68,7 +76,53 @@ class Html5vp_Admin {
 	    if( isset($_GET['message']) && $_GET['message'] == 'wp-html5vp-plugin-notice' ) {
 	    	set_transient( 'wp_html5vp_install_notice', true, 604800 );
 	    }
-	}	
+	}
+
+	/**
+	 * Function to add custom quick links at post listing page
+	 * 
+	 * @package Video gallery and Player
+	 * @since 2.5
+	 */
+	function html5vp_add_post_row_data( $actions, $post ) {
+
+		if( $post->post_type == WP_HTML5VP_POST_TYPE ) {
+			return array_merge( array( 'wpos_id' => 'ID: ' . $post->ID ), $actions );
+		}
+
+		return $actions;
+	}
+
+	/**
+	 * function for category columns manage
+	 * 
+	 * @package Video gallery and Player
+	 * @since 2.5
+	 */
+	function html5vp_video_category_manage_columns($columns) {
+	   
+		$new_columns['video_shortcode'] = __( 'Category Shortcode', 'html5-videogallery-plus-player' );
+		
+		$columns = wp_html5vp_add_array( $columns, $new_columns, 2 );
+
+		return $columns;
+	}
+
+	/**
+	 * function for category columns
+	 * 
+	 * @package Video gallery and Player
+	 * @since 2.5
+	 */
+	function html5vp_video_category_columns($out, $column_name, $theme_id) {
+		
+		switch ($column_name) {
+			case 'video_shortcode':
+				echo '[sp_html5video category="' . $theme_id. '"]';
+				break;
+		}
+		return $out;
+	}
 }
 
 $html5vp_admin = new Html5vp_Admin();

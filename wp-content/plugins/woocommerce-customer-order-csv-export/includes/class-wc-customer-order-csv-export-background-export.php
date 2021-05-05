@@ -1,6 +1,6 @@
 <?php
 /**
- * WooCommerce Customer/Order CSV Export
+ * WooCommerce Customer/Order/Coupon Export
  *
  * This source file is subject to the GNU General Public License v3.0
  * that is bundled with this package in the file license.txt.
@@ -12,17 +12,18 @@
  *
  * DISCLAIMER
  *
- * Do not edit or add to this file if you wish to upgrade WooCommerce Customer/Order CSV Export to newer
- * versions in the future. If you wish to customize WooCommerce Customer/Order CSV Export for your
+ * Do not edit or add to this file if you wish to upgrade WooCommerce Customer/Order/Coupon Export to newer
+ * versions in the future. If you wish to customize WooCommerce Customer/Order/Coupon Export for your
  * needs please refer to http://docs.woocommerce.com/document/ordercustomer-csv-exporter/
  *
- * @package     WC-Customer-Order-CSV-Export/Background-Export
  * @author      SkyVerge
- * @copyright   Copyright (c) 2012-2018, SkyVerge, Inc.
+ * @copyright   Copyright (c) 2015-2021, SkyVerge, Inc. (info@skyverge.com)
  * @license     http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
 defined( 'ABSPATH' ) or exit;
+
+use SkyVerge\WooCommerce\PluginFramework\v5_10_6 as Framework;
 
 /**
  * Customer/Order CSV Export Background Export
@@ -31,7 +32,7 @@ defined( 'ABSPATH' ) or exit;
  *
  * @since 4.0.0
  */
-class WC_Customer_Order_CSV_Export_Background_Export extends SV_WP_Background_Job_Handler {
+class WC_Customer_Order_CSV_Export_Background_Export extends Framework\SV_WP_Background_Job_Handler {
 
 
 	/**
@@ -41,15 +42,15 @@ class WC_Customer_Order_CSV_Export_Background_Export extends SV_WP_Background_Jo
 	 */
 	public function __construct() {
 
-		$this->prefix   = 'wc_customer_order_csv_export';
+		$this->prefix   = 'wc_customer_order_export';
 		$this->action   = 'background_export';
 		$this->data_key = 'object_ids';
 
 		parent::__construct();
 
-		add_action( "{$this->identifier}_job_complete", array( $this, 'finish_export' ) );
-		add_action( "{$this->identifier}_job_failed",   array( $this, 'failed_export' ) );
-		add_action( "{$this->identifier}_job_deleted",  array( $this, 'delete_export_data' ) );
+		add_action( "{$this->identifier}_job_complete", [ $this, 'finish_export' ] );
+		add_action( "{$this->identifier}_job_failed",   [ $this, 'failed_export' ] );
+		add_action( "{$this->identifier}_job_deleted",  [ $this, 'delete_export_data' ] );
 	}
 
 

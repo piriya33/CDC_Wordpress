@@ -1,6 +1,6 @@
 <?php
 /**
- * WooCommerce Customer/Order CSV Export
+ * WooCommerce Customer/Order/Coupon Export
  *
  * This source file is subject to the GNU General Public License v3.0
  * that is bundled with this package in the file license.txt.
@@ -12,17 +12,19 @@
  *
  * DISCLAIMER
  *
- * Do not edit or add to this file if you wish to upgrade WooCommerce Customer/Order CSV Export to newer
- * versions in the future. If you wish to customize WooCommerce Customer/Order CSV Export for your
+ * Do not edit or add to this file if you wish to upgrade WooCommerce Customer/Order/Coupon Export to newer
+ * versions in the future. If you wish to customize WooCommerce Customer/Order/Coupon Export for your
  * needs please refer to http://docs.woocommerce.com/document/ordercustomer-csv-exporter/
  *
- * @package     WC-Customer-Order-CSV-Export/Generator
  * @author      SkyVerge
- * @copyright   Copyright (c) 2012-2018, SkyVerge, Inc.
+ * @copyright   Copyright (c) 2015-2021, SkyVerge, Inc. (info@skyverge.com)
  * @license     http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
 defined( 'ABSPATH' ) or exit;
+
+use SkyVerge\WooCommerce\CSV_Export\Export_Generator;
+use SkyVerge\WooCommerce\PluginFramework\v5_10_6 as Framework;
 
 /**
  * Customer/Order CSV Export Compatibility
@@ -36,16 +38,6 @@ defined( 'ABSPATH' ) or exit;
  */
 class WC_Customer_Order_CSV_Export_Compatibility {
 
-
-	/** @var string order export format */
-	private $orders_format;
-
-	/** @var string customer export format */
-	private $customers_format;
-
-	/** @var string coupon export format */
-	private $coupons_format;
-
 	/**
 	 * Constructor
 	 *
@@ -55,26 +47,12 @@ class WC_Customer_Order_CSV_Export_Compatibility {
 	 */
 	public function __construct() {
 
-		$this->orders_format    = get_option( 'wc_customer_order_csv_export_orders_format' );
-		$this->customers_format = get_option( 'wc_customer_order_csv_export_customers_format' );
-		$this->coupons_format   = get_option( 'wc_customer_order_csv_export_coupons_format' );
+		add_filter( 'wc_customer_order_export_csv_order_headers', [ $this, 'modify_order_headers' ], 0, 2 );
+		add_filter( 'wc_customer_order_export_csv_order_row',     [ $this, 'modify_order_row' ], 0, 3 );
 
-		if ( 'default' !== $this->orders_format ) {
+		add_filter( 'wc_customer_order_export_csv_customer_row', [ $this, 'modify_customer_row' ], 0, 4 );
 
-			add_filter( 'wc_customer_order_csv_export_order_headers', array( $this, 'modify_order_headers' ), 0, 2 );
-			add_filter( 'wc_customer_order_csv_export_order_row', array( $this, 'modify_order_row' ), 0, 2 );
-		}
-
-		if ( 'default' !== $this->customers_format ) {
-
-			add_filter( 'wc_customer_order_csv_export_customer_row', array( $this, 'modify_customer_row' ), 0, 2 );
-		}
-
-
-		if ( 'default' !== $this->coupons_format ) {
-
-			add_filter( 'wc_customer_order_csv_export_coupon_row', array( $this, 'modify_coupon_row' ), 0, 2 );
-		}
+		add_filter( 'wc_customer_order_export_csv_coupon_row', [ $this, 'modify_coupon_row' ], 0, 3 );
 	}
 
 
@@ -83,7 +61,7 @@ class WC_Customer_Order_CSV_Export_Compatibility {
 	 *
 	 * @since 3.0.0
 	 * @param array $headers Original, unmodified headers
-	 * @param \WC_Customer_Order_CSV_Export_Generator the generator instance
+	 * @param Export_Generator the generator instance
 	 * @return array modified column headers
 	 */
 	public function modify_order_headers( $headers, $generator ) {
@@ -91,9 +69,9 @@ class WC_Customer_Order_CSV_Export_Compatibility {
 		// at the time when formats are defined in the Formats class, there is no way to
 		// know how many order items or shipping items any order will have. For this reason,
 		// the individual headers for each line/shipping item are added here.
-		if ( 'legacy_import' === $this->orders_format ) {
+		if ( 'legacy_import' === $generator->export_format ) {
 
-			$order_item_headers = $shipping_headers = array();
+			$order_item_headers = $shipping_headers = [];
 
 			$max_line_items     = $this->get_max_line_items( $generator->ids );
 			$max_shipping_items = $this->get_max_shipping_line_items( $generator->ids );
@@ -111,8 +89,8 @@ class WC_Customer_Order_CSV_Export_Compatibility {
 				$shipping_headers[ "shipping_cost_{$i}" ]   = "shipping_cost_{$i}";
 			}
 
-			$headers = SV_WC_Helper::array_insert_after( $headers, 'order_item_[i]', $order_item_headers );
-			$headers = SV_WC_Helper::array_insert_after( $headers, 'shipping_method_[i]', $shipping_headers );
+			$headers = Framework\SV_WC_Helper::array_insert_after( $headers, 'order_item_[i]', $order_item_headers );
+			$headers = Framework\SV_WC_Helper::array_insert_after( $headers, 'shipping_method_[i]', $shipping_headers );
 
 			// remove placeholder headers
 			unset( $headers['order_item_[i]'], $headers['shipping_method_[i]'] );
@@ -128,28 +106,31 @@ class WC_Customer_Order_CSV_Export_Compatibility {
 	 *
 	 * @since 3.0.0
 	 * @param array $order_data an array of order data for the given order
-	 * @param WC_Order $order the WC_Order object
+	 * @param \WC_Order $order the WC_Order object
+	 * @param Export_Generator $generator export generator
 	 * @return array modified order data
 	 */
-	public function modify_order_row( $order_data, $order ) {
+	public function modify_order_row( $order_data, $order, $generator = null ) {
 
-		if ( 'custom' === $this->orders_format ) {
+		$format = $generator ? $generator->export_format : '';
 
-			return $this->get_custom_order_columns( $order_data, $order );
+		if ( 'custom' === $format ) {
 
-		} elseif ( 'import' === $this->orders_format ) {
+			return $this->get_custom_order_columns( $order_data, $order, $generator->custom_export_format );
+
+		} elseif ( 'import' === $format ) {
 
 			return $this->get_import_columns( $order_data, $order );
 
-		} elseif ( 'legacy_import' === $this->orders_format ) {
+		} elseif ( 'legacy_import' === $format ) {
 
 			return $this->get_legacy_import_one_column_per_line_item( $order_data, $order );
 
-		} elseif ( 'legacy_one_row_per_item' === $this->orders_format ) {
+		} elseif ( 'legacy_one_row_per_item' === $format ) {
 
 			return $this->get_legacy_one_row_per_line_item( $order_data, $order );
 
-		} elseif ( 'legacy_single_column' === $this->orders_format ) {
+		} elseif ( 'legacy_single_column' === $format ) {
 
 			return $this->get_legacy_single_column_line_item( $order_data, $order );
 		}
@@ -162,16 +143,18 @@ class WC_Customer_Order_CSV_Export_Compatibility {
 	 * Get the order data format for the custom order export format
 	 *
 	 * @since 4.0.0
+	 *
 	 * @param array $order_data an array of order data for the given order
-	 * @param WC_Order $order the WC_Order object
+	 * @param \WC_Order $order the WC_Order object
+	 * @param string $format_key custom format key
 	 * @return array modified order data
 	 */
-	private function get_custom_order_columns( $order_data, WC_Order $order ) {
+	private function get_custom_order_columns( $order_data, WC_Order $order, $format_key ) {
 
 		// data can be an array of arrays when each line item is it's own row
 		$one_row_per_item = is_array( reset( $order_data ) );
-		$meta_columns     = $this->get_custom_format_meta_keys( 'orders' );
-		$static_columns   = $this->get_custom_format_static_columns( 'orders' );
+		$meta_columns     = $this->get_custom_format_meta_keys( WC_Customer_Order_CSV_Export::EXPORT_TYPE_ORDERS, $format_key );
+		$static_columns   = $this->get_custom_format_static_columns( WC_Customer_Order_CSV_Export::EXPORT_TYPE_ORDERS, $format_key );
 
 		// add meta columns
 		if ( ! empty( $meta_columns ) ) {
@@ -179,7 +162,7 @@ class WC_Customer_Order_CSV_Export_Compatibility {
 			foreach ( $meta_columns as $meta_key ) {
 
 				$data_key   = 'meta:' . $meta_key;
-				$meta_value = maybe_serialize( get_post_meta( SV_WC_Order_Compatibility::get_prop( $order, 'id' ), $meta_key, true ) );
+				$meta_value = maybe_serialize( get_post_meta( $order->get_id(), $meta_key, true ) );
 
 				if ( $one_row_per_item ) {
 
@@ -255,28 +238,28 @@ class WC_Customer_Order_CSV_Export_Compatibility {
 			$sku = $product->get_sku();
 
 			// note that product ID must be prefixed with `product_id:` so the importer can properly parse it vs. the SKU
-			$product_id = SV_WC_Plugin_Compatibility::product_get_id( $product );
+			$product_id = $product->get_id();
 
-			$line_item = array(
+			$line_item = [
 				$sku ? $sku : "product_id:{$product_id}",
 				$item['qty'],
 				$order->get_line_total( $item )
-			);
+			];
 
 			// Add item meta with WC 3.1 Compatibility
-			$formatted_meta = SV_WC_Order_Compatibility::get_item_formatted_meta_data( $item );
+			$formatted_meta = Framework\SV_WC_Order_Compatibility::get_item_formatted_meta_data( $item );
 
 			if ( ! empty( $formatted_meta ) ) {
 
 				foreach ( $formatted_meta as $meta_key => $meta ) {
 
 					// remove newlines
-					$label = str_replace( array( "\r", "\r\n", "\n" ), '', $meta['label'] );
-					$value = str_replace( array( "\r", "\r\n", "\n" ), '', $meta['value'] );
+					$label = str_replace( [ "\r", "\r\n", "\n" ], '', $meta['label'] );
+					$value = str_replace( [ "\r", "\r\n", "\n" ], '', $meta['value'] );
 
 					// escape reserved chars (:;|)
-					$label = str_replace( array( ': ', ':', ';', '|' ), array( '\: ', '\:', '\;', '\|' ), $label );
-					$value = str_replace( array( ': ', ':', ';', '|' ), array( '\: ', '\:', '\;', '\|' ), $value );
+					$label = str_replace( [ ': ', ':', ';', '|' ], [ '\: ', '\:', '\;', '\|' ], $label );
+					$value = str_replace( [ ': ', ':', ';', '|' ], [ '\: ', '\:', '\;', '\|' ], $value );
 
 					$line_item[] = wp_kses_post( $label . ': ' . $value );
 				}
@@ -334,12 +317,12 @@ class WC_Customer_Order_CSV_Export_Compatibility {
 			$order_data[ $line_item ]['line_item_price']     = $order_data[ $line_item ]['item_total'];
 
 			// convert country codes to full name
-			if ( isset( WC()->countries->countries[ SV_WC_Order_Compatibility::get_prop( $order, 'billing_country' ) ] ) ) {
-				$order_data[ $line_item ]['billing_country'] = WC()->countries->countries[ SV_WC_Order_Compatibility::get_prop( $order, 'billing_country' ) ];
+			if ( isset( WC()->countries->countries[ $order->get_billing_country() ] ) ) {
+				$order_data[ $line_item ]['billing_country'] = WC()->countries->countries[ $order->get_billing_country() ];
 			}
 
-			if ( isset( WC()->countries->countries[ SV_WC_Order_Compatibility::get_prop( $order, 'shipping_country' ) ] ) ) {
-				$order_data[ $line_item ]['shipping_country'] = WC()->countries->countries[ SV_WC_Order_Compatibility::get_prop( $order, 'shipping_country' ) ];
+			if ( isset( WC()->countries->countries[ $order->get_shipping_country() ] ) ) {
+				$order_data[ $line_item ]['shipping_country'] = WC()->countries->countries[ $order->get_shipping_country() ];
 			}
 
 			// set order ID to order number
@@ -363,7 +346,7 @@ class WC_Customer_Order_CSV_Export_Compatibility {
 	 */
 	private function get_legacy_single_column_line_item( $order_data, WC_Order $order ) {
 
-		$line_items = array();
+		$line_items = [];
 
 		foreach ( $order->get_items() as $_ => $item ) {
 
@@ -381,38 +364,30 @@ class WC_Customer_Order_CSV_Export_Compatibility {
 
 			$line_item .= ' x' . $item['qty'];
 
-			if ( SV_WC_Plugin_Compatibility::is_wc_version_gte_3_1() ) {
-
-				$variation = wp_strip_all_tags( wc_display_item_meta( $item, array(
-					'before'    => '',
-					'after'     => '',
-					'separator' => "\n",
-					'echo'      => false,
-				) ) );
-
-			} else {
-
-				$item_meta = new WC_Order_Item_Meta( $item );
-				$variation = $item_meta->display( true, true );
-			}
+			$variation = wp_strip_all_tags( wc_display_item_meta( $item, [
+				'before'    => '',
+				'after'     => '',
+				'separator' => "\n",
+				'echo'      => false,
+			] ) );
 
 			if ( $variation ) {
-				$line_item .= ' - ' . str_replace( array( "\r", "\r\n", "\n" ), '', $variation );
+				$line_item .= ' - ' . str_replace( [ "\r", "\r\n", "\n" ], '', $variation );
 			}
 
 
-			$line_items[] = str_replace( array( '&#8220;', '&#8221;' ), '', $line_item );
+			$line_items[] = str_replace( [ '&#8220;', '&#8221;' ], '', $line_item );
 		}
 
 		$order_data['order_items'] = implode( '; ', $line_items );
 
 		// convert country codes to full name
-		if ( isset( WC()->countries->countries[ SV_WC_Order_Compatibility::get_prop( $order, 'billing_country' ) ] ) ) {
-			$order_data['billing_country'] = WC()->countries->countries[ SV_WC_Order_Compatibility::get_prop( $order, 'billing_country' ) ];
+		if ( isset( WC()->countries->countries[ $order->get_billing_country() ] ) ) {
+			$order_data['billing_country'] = WC()->countries->countries[ $order->get_billing_country() ];
 		}
 
-		if ( isset( WC()->countries->countries[ SV_WC_Order_Compatibility::get_prop( $order, 'shipping_country' ) ] ) ) {
-			$order_data['shipping_country'] = WC()->countries->countries[ SV_WC_Order_Compatibility::get_prop( $order, 'shipping_country' ) ];
+		if ( isset( WC()->countries->countries[ $order->get_shipping_country() ] ) ) {
+			$order_data['shipping_country'] = WC()->countries->countries[ $order->get_shipping_country() ];
 		}
 
 		// set order ID to order number
@@ -483,18 +458,43 @@ class WC_Customer_Order_CSV_Export_Compatibility {
 
 
 	/**
+	 * Gets selected format.
+	 *
+	 * @since 4.7.0
+	 *
+	 * @param $export_type
+	 * @return array|null
+	 */
+	private function get_selected_format( $export_type ) {
+
+		$format_attribute_name = $export_type . '_format';
+		$format_key            = $this->$format_attribute_name;
+
+		return wc_customer_order_csv_export()->get_formats_instance()->get_format( $export_type, $format_key );
+	}
+
+
+	/**
 	 * Get meta keys that should be included in the custom export format
 	 *
 	 * @since 4.0.0
-	 * @param string $export_type
+	 *
+	 * @param string $export_type export type, such as orders or customers
+	 * @param string $format_key format key
 	 * @return array
 	 */
-	private function get_custom_format_meta_keys( $export_type ) {
+	private function get_custom_format_meta_keys( $export_type, $format_key ) {
 
-		$meta = array();
+		$meta = [];
+
+		$custom_format = wc_customer_order_csv_export()->get_formats_instance()->get_format( $export_type, $format_key );
+
+		if ( null === $custom_format ) {
+			return $meta;
+		}
 
 		// Include all meta
-		if ( 'yes' === get_option( "wc_customer_order_csv_export_{$export_type}_custom_format_include_all_meta" ) ) {
+		if ( $custom_format['include_all_meta'] ) {
 
 			$all_meta = wc_customer_order_csv_export()->get_formats_instance()->get_all_meta_keys( $export_type );
 
@@ -509,7 +509,7 @@ class WC_Customer_Order_CSV_Export_Compatibility {
 		// Include some meta only, if defined
 		} else {
 
-			$column_mapping = (array) get_option( "wc_customer_order_csv_export_{$export_type}_custom_format_mapping" );
+			$column_mapping = $custom_format['mapping'];
 
 			foreach ( $column_mapping as $column ) {
 
@@ -528,14 +528,22 @@ class WC_Customer_Order_CSV_Export_Compatibility {
 	 * Returns static columns that should be included in the custom export format
 	 *
 	 * @since 4.3.0
-	 * @param string $export_type
+	 *
+	 * @param string $export_type export type, such as orders or customers
+	 * @param string $format_key custom format key
 	 * @return array
 	 */
-	private function get_custom_format_static_columns( $export_type ) {
+	private function get_custom_format_static_columns( $export_type, $format_key ) {
 
-		$statics = array();
+		$statics = [];
 
-		$column_mapping = (array) get_option( 'wc_customer_order_csv_export_' . $export_type . '_custom_format_mapping' );
+		$custom_format = wc_customer_order_csv_export()->get_formats_instance()->get_format( $export_type, $format_key );
+
+		if ( null === $custom_format ) {
+			return $statics;
+		}
+
+		$column_mapping = $custom_format['mapping'];
 
 		foreach ( $column_mapping as $column ) {
 
@@ -554,14 +562,17 @@ class WC_Customer_Order_CSV_Export_Compatibility {
 	 * @since 3.0.0
 	 * @param array $customer_data an array of customer data for the given user
 	 * @param WP_User $user the WP User object
+	 * @param int $order_id order ID, if any
+	 * @param Export_Generator $generator export generator
 	 * @return array modified customer data
 	 */
-	public function modify_customer_row( $customer_data, $user ) {
+	public function modify_customer_row( $customer_data, $user, $order_id, $generator ) {
 
-		if ( 'custom' === $this->customers_format ) {
+		if ( 'custom' === $generator->export_format ) {
 
 			if ( $user->ID ) {
-				$meta = $this->get_custom_format_meta_keys( 'customers' );
+
+				$meta = $this->get_custom_format_meta_keys( \WC_Customer_Order_CSV_Export::EXPORT_TYPE_CUSTOMERS, $generator->custom_export_format );
 
 				// Fetch meta
 				if ( ! empty( $meta ) ) {
@@ -572,7 +583,7 @@ class WC_Customer_Order_CSV_Export_Compatibility {
 				}
 			}
 
-			$customer_data = array_merge( $customer_data, $this->get_custom_format_static_columns( 'customers' ) );
+			$customer_data = array_merge( $customer_data, $this->get_custom_format_static_columns( WC_Customer_Order_CSV_Export::EXPORT_TYPE_CUSTOMERS, $generator->custom_export_format ) );
 		}
 
 		return $customer_data;
@@ -586,13 +597,14 @@ class WC_Customer_Order_CSV_Export_Compatibility {
    *
 	 * @param array $coupon_data an array of coupon data for the given coupon
 	 * @param WC_Coupon $coupon the WC_Coupon object
+	 * @param Export_Generator $generator export generator
 	 * @return array modified coupon data
 	 */
-	public function modify_coupon_row( $coupon_data, $coupon ) {
+	public function modify_coupon_row( $coupon_data, $coupon, $generator ) {
 
-		if ( 'custom' === $this->coupons_format ) {
+		if ( 'custom' === $generator->export_format ) {
 
-			$meta = $this->get_custom_format_meta_keys( 'coupons' );
+			$meta = $this->get_custom_format_meta_keys( WC_Customer_Order_CSV_Export::EXPORT_TYPE_COUPONS, $generator->custom_export_format );
 
 			// Fetch meta columns
 			if ( ! empty( $meta ) ) {
@@ -603,7 +615,7 @@ class WC_Customer_Order_CSV_Export_Compatibility {
 			}
 
 			// fetch static columns
-			$coupon_data = array_merge( $coupon_data, $this->get_custom_format_static_columns( 'coupons' ) );
+			$coupon_data = array_merge( $coupon_data, $this->get_custom_format_static_columns( WC_Customer_Order_CSV_Export::EXPORT_TYPE_COUPONS, $generator->custom_export_format ) );
 		}
 
 		return $coupon_data;

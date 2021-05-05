@@ -17,11 +17,11 @@
  * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @author    SkyVerge
- * @copyright Copyright (c) 2014-2019, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2021, SkyVerge, Inc. (info@skyverge.com)
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
-use SkyVerge\WooCommerce\PluginFramework\v5_3_1 as Framework;
+use SkyVerge\WooCommerce\PluginFramework\v5_10_6 as Framework;
 
 defined( 'ABSPATH' ) or exit;
 
@@ -81,33 +81,39 @@ class WC_Memberships_Integration_Subscriptions_Frontend {
 	 * @since 1.6.0
 	 *
 	 * @param array $actions
-	 * @param \WC_Memberships_User_Membership $user_membership post object
+	 * @param \WC_Memberships_User_Membership|\WC_Memberships_Integration_Subscriptions_User_Membership $user_membership post object
 	 * @return array
 	 */
-	public function my_membership_actions( $actions, WC_Memberships_User_Membership $user_membership ) {
+	public function my_membership_actions( $actions, \WC_Memberships_User_Membership $user_membership ) {
 
 		$integration = wc_memberships()->get_integrations_instance()->get_subscriptions_instance();
 
 		if ( $integration && wc_memberships_is_user_membership_linked_to_subscription( $user_membership ) ) {
 
-			$subscription = $integration->get_subscription_from_membership( $user_membership->get_id() );
+			$user_membership = new \WC_Memberships_Integration_Subscriptions_User_Membership( $user_membership->post );
+			$subscription    = $integration->get_subscription_from_membership( $user_membership->get_id() );
 
 			if ( $subscription instanceof \WC_Subscription ) {
 
 				// a Membership tied to a Subscription can only be cancelled by cancelling the associated Subscription
 				unset( $actions['cancel'] );
 
-				$is_renewable = $integration->is_subscription_linked_to_membership_renewable( $subscription, $user_membership );
-
-				if ( ! $is_renewable ) {
+				if ( $user_membership->can_be_renewed_early() ) {
+					// allow a renew button if the Subscription-tied Membership can be renewed early
+					$actions['renew'] = [
+						'url'  => $user_membership->get_renew_membership_url(),
+						'name' => __( 'Renew', 'woocommerce-memberships' ),
+					];
+				} elseif ( ! $user_membership->can_be_renewed() ) {
+					// normally, otherwise we want to make sure that no renew button is displayed, as subscribers can renew from the Subscriptions dashboard section
 					unset( $actions['renew'] );
 				}
 
-				// now add an action to view the billing record
-				$actions['view-subscription'] = array(
+				// finally, add an action to view the billing record
+				$actions['view-subscription'] = [
 					'url'  => $subscription->get_view_order_url(),
 					'name' => __( 'View Billing', 'woocommerce-memberships' ),
-				);
+				];
 			}
 		}
 
@@ -189,8 +195,13 @@ class WC_Memberships_Integration_Subscriptions_Frontend {
 
 		$next_bill_on = null;
 
-		if ( $user_membership instanceof \WC_Memberships_Integration_Subscriptions_User_Membership ) {
-			$next_bill_on = $user_membership->get_next_bill_on_local_date( wc_date_format() );
+		if ( $user_membership instanceof \WC_Memberships_User_Membership ) {
+
+			$user_membership = new \WC_Memberships_Integration_Subscriptions_User_Membership( $user_membership->post );
+
+			if ( $user_membership->has_subscription() ) {
+				$next_bill_on = $user_membership->get_next_bill_on_local_date( wc_date_format() );
+			}
 		}
 
 		echo null === $next_bill_on ? esc_html__( 'N/A', 'woocommerce-memberships' ) : $next_bill_on;

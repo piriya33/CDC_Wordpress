@@ -4,7 +4,7 @@
 Plugin Name: Dev4Press Updater
 Plugin URI: https://plugins.dev4press.com/dev4press-updater/
 Description: Dev4Press Updater is a plugin for performing installation and updating of Dev4Press Pro plugins, including alpha, beta and nightly releases, directly from WordPress Updater.
-Version: 4.4
+Version: 4.4.1
 Author: Milan Petrovic
 Author URI: https://www.dev4press.com/
 Private: true

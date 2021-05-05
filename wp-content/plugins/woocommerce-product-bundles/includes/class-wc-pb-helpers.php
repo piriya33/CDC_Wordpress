@@ -2,7 +2,7 @@
 /**
  * WC_PB_Helpers class
  *
- * @author   SomewhereWarm <info@somewherewarm.gr>
+ * @author   SomewhereWarm <info@somewherewarm.com>
  * @package  WooCommerce Product Bundles
  * @since    4.0.0
  */
@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Product Bundle Helper Functions.
  *
  * @class    WC_PB_Helpers
- * @version  5.5.0
+ * @version  6.5.0
  */
 class WC_PB_Helpers {
 
@@ -106,12 +106,40 @@ class WC_PB_Helpers {
 	 * @param  mixed   $value
 	 * @return void
 	 */
-	public static function cache_invalidate( $group_key ) {
+	public static function cache_invalidate( $group_key = '' ) {
 
-		if ( $group_id = self::cache_get( $group_key . '_id' ) ) {
+		if ( '' === $group_key ) {
+			self::$cache = array();
+		} elseif ( $group_id = self::cache_get( $group_key . '_id' ) ) {
 			$group_id = md5( $group_key . '_' . $group_id );
 			self::cache_set( $group_key . '_id', $group_id );
 		}
+	}
+
+	/**
+	 * Runtime object prop getter.
+	 *
+	 * @since  6.2.4
+	 *
+	 * @param  object  $object
+	 * @param  string  $prop
+	 * @return mixed
+	 */
+	public static function get_runtime_prop( $object, $prop ) {
+		return isset( $object->$prop ) ? $object->$prop : null;
+	}
+
+	/**
+	 * Runtime object prop checker.
+	 *
+	 * @since  6.2.4
+	 *
+	 * @param  object  $object
+	 * @param  string  $prop
+	 * @return mixed
+	 */
+	public static function has_runtime_prop( $object, $prop ) {
+		return isset( $object->$prop );
 	}
 
 	/**
@@ -305,5 +333,75 @@ class WC_PB_Helpers {
 		}
 
 		return $item_string;
+	}
+
+	/**
+	 * Array of allowed HTML tags per case.
+	 *
+	 * @since  6.1.5
+	 *
+	 * @param  string  $case
+	 * @return array
+	 */
+	public static function get_allowed_html( $case ) {
+
+		$allowed_html = array();
+
+		switch ( $case ) {
+			case 'inline':
+				$allowed_html = array(
+
+					// Formatting.
+					'strong' => array(),
+					'em'     => array(),
+					'b'      => array(),
+					'i'      => array(),
+					'span'   => array(
+						'class' => array()
+					),
+
+					// Links.
+					'a'      => array(
+						'href'   => array(),
+						'target' => array()
+					)
+				);
+				break;
+
+			default:
+				break;
+		}
+
+		return $allowed_html;
+	}
+
+	/**
+	 * Get a new product instance, preserving runtime meta from another one.
+	 *
+	 * @since  6.3.5
+	 *
+	 * @param  WC_Product  $product
+	 * @return WC_Product
+	 */
+	public static function get_product_preserving_meta( $product ) {
+
+		$clone = wc_get_product( $product->get_id() );
+
+		$meta_data_to_set = array();
+
+		foreach ( $product->get_meta_data() as $meta ) {
+			if ( ! isset( $meta->id ) ) {
+				$meta_data_to_set[] = array(
+					'key'   => $meta->key,
+					'value' => $meta->value
+				);
+			}
+		}
+
+		foreach ( $meta_data_to_set as $meta ) {
+			$clone->add_meta_data( $meta[ 'key' ], $meta[ 'value' ], true );
+		}
+
+		return $clone;
 	}
 }

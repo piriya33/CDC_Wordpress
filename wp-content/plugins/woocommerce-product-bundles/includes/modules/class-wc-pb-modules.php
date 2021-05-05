@@ -2,7 +2,7 @@
 /**
  * WC_PB_Modules class
  *
- * @author   SomewhereWarm <info@somewherewarm.gr>
+ * @author   SomewhereWarm <info@somewherewarm.com>
  * @package  WooCommerce Product Bundles
  * @since    5.8.0
  */
@@ -71,8 +71,12 @@ class WC_PB_Modules {
 		// Bundle-Sells module.
 		require_once( 'bundle-sells/class-wc-pb-bs-module.php' );
 
+		// Min/Max Items module.
+		require_once( 'min-max-items/class-wc-pb-mmi-module.php' );
+
 		$module_names = apply_filters( 'woocommerce_bundles_modules', array(
-			'WC_PB_BS_Module'
+			'WC_PB_BS_Module',
+			'WC_PB_MMI_Module'
 		) );
 
 		foreach ( $module_names as $module_name ) {

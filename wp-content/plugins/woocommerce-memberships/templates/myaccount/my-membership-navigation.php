@@ -17,7 +17,7 @@
  * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @author    SkyVerge
- * @copyright Copyright (c) 2014-2019, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2021, SkyVerge, Inc. (info@skyverge.com)
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
@@ -30,7 +30,7 @@ defined( 'ABSPATH' ) or exit;
  * @since 1.9.0
  */
 
-$members_area          = wc_memberships()->get_frontend_instance()->get_members_area_instance();
+$members_area          = wc_memberships()->get_frontend_instance()->get_my_account_instance()->get_members_area_instance();
 $customer_membership   = $members_area->get_members_area_user_membership();
 $membership_plan       = $customer_membership ? $customer_membership->get_plan() : null;
 $members_area_sections = $membership_plan ? $members_area->get_members_area_navigation_items( $membership_plan ) : null;

@@ -1,6 +1,6 @@
 <?php
 /**
- * WooCommerce Customer/Order CSV Export
+ * WooCommerce Customer/Order/Coupon Export
  *
  * This source file is subject to the GNU General Public License v3.0
  * that is bundled with this package in the file license.txt.
@@ -12,13 +12,12 @@
  *
  * DISCLAIMER
  *
- * Do not edit or add to this file if you wish to upgrade WooCommerce Customer/Order CSV Export to newer
- * versions in the future. If you wish to customize WooCommerce Customer/Order CSV Export for your
+ * Do not edit or add to this file if you wish to upgrade WooCommerce Customer/Order/Coupon Export to newer
+ * versions in the future. If you wish to customize WooCommerce Customer/Order/Coupon Export for your
  * needs please refer to http://docs.woocommerce.com/document/ordercustomer-csv-exporter/
  *
- * @package     WC-Customer-Order-CSV-Export/Data-Stores
  * @author      SkyVerge
- * @copyright   Copyright (c) 2012-2018, SkyVerge, Inc.
+ * @copyright   Copyright (c) 2015-2021, SkyVerge, Inc. (info@skyverge.com)
  * @license     http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
@@ -45,18 +44,18 @@ class WC_Customer_Order_CSV_Export_Data_Store_Factory {
 
 		$plugin_path = wc_customer_order_csv_export()->get_plugin_path();
 
-		$includes = array(
+		$includes = [
 
-			'database' => array(
+			'database' => [
 				$plugin_path . '/includes/data-stores/database/class-wc-customer-order-csv-export-data-store-database.php',
 				$plugin_path . '/includes/data-stores/database/class-wc-customer-order-csv-export-database-stream-iterator.php',
 				$plugin_path . '/includes/data-stores/database/class-wc-customer-order-csv-export-database-stream-wrapper.php',
-			),
+			],
 
-			'filesystem' => array(
+			'filesystem' => [
 				$plugin_path . '/includes/data-stores/filesystem/class-wc-customer-order-csv-export-data-store-filesystem.php',
-			),
-		);
+			],
+		];
 
 		if ( isset( $includes[ $data_store_slug ] ) ) {
 
@@ -77,9 +76,10 @@ class WC_Customer_Order_CSV_Export_Data_Store_Factory {
 	 * @since 4.5.0
 	 *
 	 * @param string $type data store type slug
+	 * @param string $output_type such as csv or xml
 	 * @return \WC_Customer_Order_CSV_Export_Data_Store|null instance of the data store
 	 */
-	public static function create( $type ) {
+	public static function create( $type, $output_type ) {
 
 		self::includes( $type );
 
@@ -98,11 +98,21 @@ class WC_Customer_Order_CSV_Export_Data_Store_Factory {
 				/**
 				 * Filters the data store to allow actors to instantiate and return a custom data store.
 				 *
-				 * @since 4.5.0
+				 * @since 5.0.0
 				 *
 				 * @param string $type data store type slug
 				 */
-				$data_store = apply_filters( 'wc_customer_order_csv_export_custom_data_store', $type );
+				$data_store = apply_filters( "wc_customer_order_export_{$output_type}_custom_data_store", $type );
+
+				/**
+				 * Filters the data store to allow actors to instantiate and return a custom data store.
+				 *
+				 * @since 5.0.0
+				 *
+				 * @param string $type data store type slug
+				 * @param string $output_type such as csv or xml
+				 */
+				$data_store = apply_filters( 'wc_customer_order_export_custom_data_store', $data_store, $output_type );
 
 				return $data_store instanceof WC_Customer_Order_CSV_Export_Data_Store ? $data_store : null;
 

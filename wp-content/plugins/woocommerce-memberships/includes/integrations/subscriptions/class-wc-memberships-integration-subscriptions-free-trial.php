@@ -17,11 +17,11 @@
  * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @author    SkyVerge
- * @copyright Copyright (c) 2014-2019, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2021, SkyVerge, Inc. (info@skyverge.com)
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
-use SkyVerge\WooCommerce\PluginFramework\v5_3_1 as Framework;
+use SkyVerge\WooCommerce\PluginFramework\v5_10_6 as Framework;
 
 defined( 'ABSPATH' ) or exit;
 
@@ -42,8 +42,6 @@ class WC_Memberships_Integration_Subscriptions_Free_Trial {
 
 		// add a free_trial membership status
 		add_filter( 'wc_memberships_user_membership_statuses',                   array( $this, 'add_free_trial_status' ) );
-		add_filter( 'wc_memberships_active_access_membership_statuses',          array( $this, 'mark_free_trial_for_active_access' ) );
-		add_filter( 'wc_memberships_valid_membership_statuses_for_cancel',       array( $this, 'enable_cancel_for_free_trial' ) );
 		add_filter( 'wc_memberships_edit_user_membership_screen_status_options', array( $this, 'edit_user_membership_screen_status_options' ), 10, 2 );
 		add_filter( 'wc_memberships_bulk_edit_user_memberships_status_options',  array( $this, 'remove_free_trial_from_bulk_edit' ) );
 
@@ -77,41 +75,6 @@ class WC_Memberships_Integration_Subscriptions_Free_Trial {
 
 
 	/**
-	 * Add sthe free trial status to the list of statuses that have access.
-	 *
-	 * @internal
-	 *
-	 * @since 1.7.0
-	 *
-	 * @param string[] $statuses array of statuses
-	 * @return array
-	 */
-	public function mark_free_trial_for_active_access( $statuses ) {
-
-		$statuses[] = 'free_trial';
-
-		return $statuses;
-	}
-
-
-	/**
-	 * Adds free trial status to valid statuses for membership cancellation.
-	 *
-	 * @internal
-	 *
-	 * @since 1.6.0
-	 * @param array $statuses array of status slugs
-	 * @return array modified status slugs
-	 */
-	public function enable_cancel_for_free_trial( $statuses ) {
-
-		$statuses[] = 'free_trial';
-
-		return $statuses;
-	}
-
-
-	/**
 	 * Removes free trial status from status options.
 	 *
 	 * An exception is if the membership actually is on free trial.
@@ -128,8 +91,19 @@ class WC_Memberships_Integration_Subscriptions_Free_Trial {
 
 		$user_membership = wc_memberships_get_user_membership( $user_membership_id );
 
-		if ( $user_membership && 'free_trial' !== $user_membership->get_status() ) {
-			unset( $statuses['wcm-free_trial'] );
+		if ( $user_membership ) {
+
+			$unset = ! $user_membership->has_status( 'free_trial' );
+
+			if ( $unset && $user_membership instanceof \WC_Memberships_Integration_Subscriptions_User_Membership ) {
+
+				$subscription = $user_membership->get_subscription();
+				$unset        = ! $subscription || ! ( $subscription->has_status( 'pending-cancel' ) && $user_membership->is_in_free_trial_period() );
+			}
+
+			if ( $unset ) {
+				unset( $statuses['wcm-free_trial'] );
+			}
 		}
 
 		return $statuses;
@@ -170,6 +144,11 @@ class WC_Memberships_Integration_Subscriptions_Free_Trial {
 
 			$integration = wc_memberships()->get_integrations_instance()->get_subscriptions_instance();
 			$memberships = $integration ? $integration->get_memberships_from_subscription( $subscription ) : array();
+
+			// if the end date has been deleted, look for its historical record if the subscription is now pending cancellation
+			if ( empty( $date ) && 'woocommerce_subscription_date_deleted' === current_action() ) {
+				$date = $subscription->has_status( 'pending-cancel' ) ? $subscription->get_meta( 'trial_end_pre_cancellation' ) : $date;
+			}
 
 			if ( ! empty( $memberships ) ) {
 

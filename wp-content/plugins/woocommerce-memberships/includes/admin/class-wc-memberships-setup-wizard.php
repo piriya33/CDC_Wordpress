@@ -17,7 +17,7 @@
  * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @author    SkyVerge
- * @copyright Copyright (c) 2014-2019, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2021, SkyVerge, Inc. (info@skyverge.com)
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
@@ -25,7 +25,7 @@ namespace SkyVerge\WooCommerce\Memberships\Admin;
 
 defined( 'ABSPATH' ) or exit;
 
-use SkyVerge\WooCommerce\PluginFramework\v5_3_1 as Framework;
+use SkyVerge\WooCommerce\PluginFramework\v5_10_6 as Framework;
 
 /**
  * Onboarding Setup Wizard.
@@ -61,38 +61,6 @@ class Setup_Wizard extends Framework\Admin\Setup_Wizard {
 
 
 	/**
-	 * Shows installation or upgrade notices.
-	 *
-	 * Extends parent method to display an additional notice on advanced emails.
-	 *
-	 * @internal
-	 *
-	 * @since 1.11.1
-	 */
-	public function add_admin_notices() {
-
-		parent::add_admin_notices();
-
-		// show a notice about advanced emails with Jilt after upgrading to 1.11.0 when the feature was launched
-		if ( 'yes' === get_option( 'wc_memberships_show_advanced_emails_notice', 'no' ) ) {
-
-			$message = sprintf(
-				/* translators: Placeholders: %1$s - opening <strong> HTML tag, %2$s - closing </strong> HTML tag, %3$s - opening <a> HTML link tag, %4$s - closing </a> HTML link tag, %5$s - opening <a> HTML link tag, %6$s - closing </a> HTML link tag */
-				esc_html__( '%1$sAdvanced Member Emails%2$s: WooCommerce Memberships has been upgraded to version 1.11.0! With this version, you can connect to %3$sJilt%4$s to send advanced member emails like a welcome series, winbacks for cancelled memberships, and more. %5$sLearn more&rarr;%6$s', 'woocommerce-memberships' ),
-				'<strong>', '</strong>',
-				'<a href="https://jilt.com/go/memberships-notice">', '</a>',
-				'<a href="https://jilt.com/go/memberships-notice">', '</a>'
-			);
-
-			$this->get_plugin()->get_admin_notice_handler()->add_admin_notice( $message, 'memberships_upgrade_to_1_11_0', array(
-				'always_show_on_settings' => false,
-				'notice_class'            => 'updated',
-			) );
-		}
-	}
-
-
-	/**
 	 * Loads additional scripts and styles for the setup wizard.
 	 *
 	 * @see \WC_Memberships_Admin::enqueue_scripts()
@@ -110,7 +78,7 @@ class Setup_Wizard extends Framework\Admin\Setup_Wizard {
 		wp_enqueue_style( 'wc-memberships-setup-wizard', $this->get_plugin()->get_plugin_url() . '/assets/css/admin/wc-memberships-setup-wizard.min.css', array( 'sv-wc-admin-setup', 'jquery-ui' ), \WC_Memberships::VERSION );
 
 		// register script dependencies
-		wp_register_script( 'select2', wc()->plugin_url() . '/assets/js/select2/select2.full.min.js', array( 'jquery' ), Framework\SV_WC_Plugin_Compatibility::is_wc_version_gte_3_0() ? '4.0.3' : '3.5.4' );
+		wp_register_script( 'select2', wc()->plugin_url() . '/assets/js/select2/select2.full.min.js', [ 'jquery' ], '4.0.3' );
 		wp_register_script( 'wc-memberships-enhanced-select', $this->get_plugin()->get_plugin_url() . '/assets/js/admin/wc-memberships-enhanced-select.min.js', array( 'jquery', 'select2' ), \WC_Memberships::VERSION, true );
 		wp_register_script( 'wc-memberships-rules', $this->get_plugin()->get_plugin_url() . '/assets/js/admin/wc-memberships-rules.min.js', array( 'wc-memberships-enhanced-select' ), \WC_Memberships::VERSION, true );
 
@@ -120,7 +88,6 @@ class Setup_Wizard extends Framework\Admin\Setup_Wizard {
 		// the script is localized to `wc_memberships_admin` to match the handling of the enhanced select script
 		wp_localize_script( 'wc-memberships-setup-wizard', 'wc_memberships_admin', array(
 			'ajax_url'              => admin_url( 'admin-ajax.php' ),
-			'select2_version'       => Framework\SV_WC_Plugin_Compatibility::is_wc_version_gte_3_0() ? '4.0.3' : '3.5.3',
 			'calendar_image'        => wc()->plugin_url() . '/assets/images/calendar.png',
 			'search_products_nonce' => wp_create_nonce( 'search-products' ),
 			'search_posts_nonce'    => wp_create_nonce( 'search-posts' ),
@@ -326,54 +293,21 @@ class Setup_Wizard extends Framework\Admin\Setup_Wizard {
 			); ?>
 
 			<div class="product-purchase" <?php if ( 'purchase' !== $plan->get_access_method() ) { echo 'style="display: none;"'; } ?>>
-
 				<label for="product_ids"><small class="description"><?php esc_html_e( 'Which products can be purchased to become a member?', 'woocommerce-memberships' ) ?></small></label>
-
-				<?php if ( Framework\SV_WC_Plugin_Compatibility::is_wc_version_gte_3_0() ) : ?>
-
-					<select
-						name="product_ids[]"
-						id="product_ids"
-						class="js-ajax-select-products"
-						style="width: 100%;"
-						multiple="multiple"
-						data-placeholder="<?php esc_attr_e( 'Search products&hellip;', 'woocommerce-memberships' ); ?>">
-						<?php $product_ids = $plan->get_product_ids(); ?>
-						<?php foreach ( $product_ids as $product_id ) : ?>
-							<?php if ( $product = wc_get_product( $product_id ) ) : ?>
-								<option value="<?php echo $product_id; ?>" selected><?php echo esc_html( $product->get_formatted_name() ); ?></option>
-							<?php endif; ?>
-						<?php endforeach; ?>
-					</select>
-
-				<?php else : ?>
-
-					<input
-						type="hidden"
-						name="product_ids"
-						id="product_ids"
-						class="js-ajax-select-products"
-						style="width: 100%;"
-						data-placeholder="<?php esc_attr_e( 'Search products&hellip;', 'woocommerce-memberships' ); ?>"
-						data-multiple="true"
-						data-selected="<?php
-						$product_ids = array_filter( array_map( 'absint', $plan->get_product_ids() ) );
-						$json_ids    = array();
-
-						foreach ( $product_ids as $product_id ) {
-
-							$product = wc_get_product( $product_id );
-
-							if ( is_object( $product ) ) {
-								$json_ids[ $product_id ] = wp_kses_post( html_entity_decode( $product->get_formatted_name() ) );
-							}
-						}
-
-						echo esc_attr( wp_json_encode( $json_ids ) ); ?>"
-						value="<?php echo esc_attr( implode( ',', array_keys( $json_ids ) ) ); ?>"
-					/>
-
-				<?php endif; ?>
+				<select
+					name="product_ids[]"
+					id="product_ids"
+					class="js-ajax-select-products"
+					style="width: 100%;"
+					multiple="multiple"
+					data-placeholder="<?php esc_attr_e( 'Search products&hellip;', 'woocommerce-memberships' ); ?>">
+					<?php $product_ids = $plan->get_product_ids(); ?>
+					<?php foreach ( $product_ids as $product_id ) : ?>
+						<?php if ( $product = wc_get_product( $product_id ) ) : ?>
+							<option value="<?php echo $product_id; ?>" selected><?php echo esc_html( $product->get_formatted_name() ); ?></option>
+						<?php endif; ?>
+					<?php endforeach; ?>
+				</select>
 			</div>
 		</div>
 
@@ -716,52 +650,22 @@ class Setup_Wizard extends Framework\Admin\Setup_Wizard {
 							</select>
 						</td>
 						<td>
-							<?php if ( Framework\SV_WC_Plugin_Compatibility::is_wc_version_gte_3_0() ) : ?>
-
-								<select
-									name="content_restriction_rule_object_ids[]"
-									id="content-restriction-rule-object-ids"
-									class="wc-memberships-object-search js-object-ids"
-									style="width: 100%;"
-									multiple="multiple"
-									data-placeholder="<?php esc_attr_e( 'Search content&hellip;', 'woocommerce-memberships' ); ?>"
-									data-action="<?php echo esc_attr( \WC_Memberships_Admin_Membership_Plan_Rules::get_rule_object_search_action( $rule ) ); ?>">
-									<?php if ( $rule->has_objects() ) : ?>
-										<?php foreach ( $rule->get_object_ids() as $object_id ) : ?>
-											<?php if ( $object_label = \WC_Memberships_Admin_Membership_Plan_Rules::get_rule_object_label( $rule, $object_id, true ) ) : ?>
-												<option value="<?php echo esc_attr( $object_id ); ?>" selected><?php echo esc_html( $object_label ); ?></option>
-											<?php endif; ?>
-										<?php endforeach; ?>
-									<?php endif; ?>
-								</select>
-
-							<?php else : ?>
-
-								<input
-									type="hidden"
-									name="content_restriction_rule_object_ids"
-									id="content-restriction-rule-object-ids"
-									class="wc-memberships-object-search js-object-ids"
-									style="width: 100%;"
-									data-placeholder="<?php esc_attr_e( 'Search content&hellip;', 'woocommerce-memberships' ); ?>"
-									data-action="<?php echo esc_attr( \WC_Memberships_Admin_Membership_Plan_Rules::get_rule_object_search_action( $rule ) ); ?>"
-									data-multiple="true"
-									data-selected="<?php
-									$json_ids = array();
-
-									if ( $rule->has_objects() ) {
-										foreach ( $rule->get_object_ids() as $object_id ) {
-											if ( $object_label = \WC_Memberships_Admin_Membership_Plan_Rules::get_rule_object_label( $rule, $object_id, true ) ) {
-												$json_ids[ $object_id ] = wp_kses_post( html_entity_decode( $object_label ) );
-											}
-										}
-									}
-
-									echo esc_attr( wp_json_encode( $json_ids ) ); ?>"
-									value="<?php echo esc_attr( implode( ',', array_keys( $json_ids ) ) ); ?>"
-								/>
-
-							<?php endif; ?>
+							<select
+								name="content_restriction_rule_object_ids[]"
+								id="content-restriction-rule-object-ids"
+								class="wc-memberships-object-search js-object-ids"
+								style="width: 100%;"
+								multiple="multiple"
+								data-placeholder="<?php esc_attr_e( 'Search content&hellip;', 'woocommerce-memberships' ); ?>"
+								data-action="<?php echo esc_attr( \WC_Memberships_Admin_Membership_Plan_Rules::get_rule_object_search_action( $rule ) ); ?>">
+								<?php if ( $rule->has_objects() ) : ?>
+									<?php foreach ( $rule->get_object_ids() as $object_id ) : ?>
+										<?php if ( $object_label = \WC_Memberships_Admin_Membership_Plan_Rules::get_rule_object_label( $rule, $object_id, true ) ) : ?>
+											<option value="<?php echo esc_attr( $object_id ); ?>" selected><?php echo esc_html( $object_label ); ?></option>
+										<?php endif; ?>
+									<?php endforeach; ?>
+								<?php endif; ?>
+							</select>
 						</td>
 					</tr>
 				</tbody>
@@ -828,52 +732,22 @@ class Setup_Wizard extends Framework\Admin\Setup_Wizard {
 							</select>
 						</td>
 						<td>
-							<?php if ( Framework\SV_WC_Plugin_Compatibility::is_wc_version_gte_3_0() ) : ?>
-
-								<select
-									name="product_restriction_rule_object_ids[]"
-									id="product-restriction-rule-object-ids"
-									class="wc-memberships-object-search js-object-ids"
-									style="width: 100%;"
-									multiple="multiple"
-									data-placeholder="<?php esc_attr_e( 'Search products&hellip;', 'woocommerce-memberships' ); ?>"
-									data-action="<?php echo esc_attr( \WC_Memberships_Admin_Membership_Plan_Rules::get_rule_object_search_action( $rule ) ); ?>">
-									<?php if ( $rule->has_objects() ) : ?>
-										<?php foreach ( $rule->get_object_ids() as $object_id ) : ?>
-											<?php if ( $object_label = \WC_Memberships_Admin_Membership_Plan_Rules::get_rule_object_label( $rule, $object_id, true ) ) : ?>
-												<option value="<?php echo esc_attr( $object_id ); ?>" selected><?php echo esc_html( $object_label ); ?></option>
-											<?php endif; ?>
-										<?php endforeach; ?>
-									<?php endif; ?>
-								</select>
-
-							<?php else : ?>
-
-								<input
-									type="hidden"
-									name="product_restriction_rule_object_ids"
-									id="product-restriction-rule-object-ids"
-									class="wc-memberships-object-search js-object-ids"
-									style="width: 100%;"
-									data-placeholder="<?php esc_attr_e( 'Search products&hellip;', 'woocommerce-memberships' ); ?>"
-									data-action="<?php echo esc_attr( \WC_Memberships_Admin_Membership_Plan_Rules::get_rule_object_search_action( $rule ) ); ?>"
-									data-multiple="true"
-									data-selected="<?php
-									$json_ids = array();
-
-									if ( $rule->has_objects() ) {
-										foreach ( $rule->get_object_ids() as $object_id ) {
-											if ( $object_label = \WC_Memberships_Admin_Membership_Plan_Rules::get_rule_object_label( $rule, $object_id, true ) ) {
-												$json_ids[ $object_id ] = wp_kses_post( html_entity_decode( $object_label ) );
-											}
-										}
-									}
-
-									echo esc_attr( wp_json_encode( $json_ids ) ); ?>"
-									value="<?php echo esc_attr( implode( ',', array_keys( $json_ids ) ) ); ?>"
-								/>
-
-							<?php endif; ?>
+							<select
+								name="product_restriction_rule_object_ids[]"
+								id="product-restriction-rule-object-ids"
+								class="wc-memberships-object-search js-object-ids"
+								style="width: 100%;"
+								multiple="multiple"
+								data-placeholder="<?php esc_attr_e( 'Search products&hellip;', 'woocommerce-memberships' ); ?>"
+								data-action="<?php echo esc_attr( \WC_Memberships_Admin_Membership_Plan_Rules::get_rule_object_search_action( $rule ) ); ?>">
+								<?php if ( $rule->has_objects() ) : ?>
+									<?php foreach ( $rule->get_object_ids() as $object_id ) : ?>
+										<?php if ( $object_label = \WC_Memberships_Admin_Membership_Plan_Rules::get_rule_object_label( $rule, $object_id, true ) ) : ?>
+											<option value="<?php echo esc_attr( $object_id ); ?>" selected><?php echo esc_html( $object_label ); ?></option>
+										<?php endif; ?>
+									<?php endforeach; ?>
+								<?php endif; ?>
+							</select>
 						</td>
 					</tr>
 					<tr>
@@ -955,52 +829,22 @@ class Setup_Wizard extends Framework\Admin\Setup_Wizard {
 							</select>
 						</td>
 						<td>
-							<?php if ( Framework\SV_WC_Plugin_Compatibility::is_wc_version_gte_3_0() ) : ?>
-
-								<select
-									name="purchasing_discount_rule_object_ids[]"
-									id="purchasing-discount-rule-object-ids"
-									class="wc-memberships-object-search js-object-ids"
-									style="width: 100%;"
-									multiple="multiple"
-									data-placeholder="<?php esc_attr_e( 'Search products&hellip;', 'woocommerce-memberships' ); ?>"
-									data-action="<?php echo esc_attr( \WC_Memberships_Admin_Membership_Plan_Rules::get_rule_object_search_action( $rule ) ); ?>">
-									<?php if ( $rule->has_objects() ) : ?>
-										<?php foreach ( $rule->get_object_ids() as $object_id ) : ?>
-											<?php if ( $object_label = \WC_Memberships_Admin_Membership_Plan_Rules::get_rule_object_label( $rule, $object_id, true ) ) : ?>
-												<option value="<?php echo esc_attr( $object_id ); ?>" selected><?php echo esc_html( $object_label ); ?></option>
-											<?php endif; ?>
-										<?php endforeach; ?>
-									<?php endif; ?>
-								</select>
-
-							<?php else : ?>
-
-								<input
-									type="hidden"
-									name="purchasing_discount_rule_object_ids"
-									id="purchasing-discount-rule-object-ids"
-									class="wc-memberships-object-search js-object-ids"
-									style="width: 100%;"
-									data-placeholder="<?php esc_attr_e( 'Search products&hellip;', 'woocommerce-memberships' ); ?>"
-									data-action="<?php echo esc_attr( \WC_Memberships_Admin_Membership_Plan_Rules::get_rule_object_search_action( $rule ) ); ?>"
-									data-multiple="true"
-									data-selected="<?php
-									$json_ids = array();
-
-									if ( $rule->has_objects() ) {
-										foreach ( $rule->get_object_ids() as $object_id ) {
-											if ( $object_label = \WC_Memberships_Admin_Membership_Plan_Rules::get_rule_object_label( $rule, $object_id, true ) ) {
-												$json_ids[ $object_id ] = wp_kses_post( html_entity_decode( $object_label ) );
-											}
-										}
-									}
-
-									echo esc_attr( wp_json_encode( $json_ids ) ); ?>"
-									value="<?php echo esc_attr( implode( ',', array_keys( $json_ids ) ) ); ?>"
-								/>
-
-							<?php endif; ?>
+							<select
+								name="purchasing_discount_rule_object_ids[]"
+								id="purchasing-discount-rule-object-ids"
+								class="wc-memberships-object-search js-object-ids"
+								style="width: 100%;"
+								multiple="multiple"
+								data-placeholder="<?php esc_attr_e( 'Search products&hellip;', 'woocommerce-memberships' ); ?>"
+								data-action="<?php echo esc_attr( \WC_Memberships_Admin_Membership_Plan_Rules::get_rule_object_search_action( $rule ) ); ?>">
+								<?php if ( $rule->has_objects() ) : ?>
+									<?php foreach ( $rule->get_object_ids() as $object_id ) : ?>
+										<?php if ( $object_label = \WC_Memberships_Admin_Membership_Plan_Rules::get_rule_object_label( $rule, $object_id, true ) ) : ?>
+											<option value="<?php echo esc_attr( $object_id ); ?>" selected><?php echo esc_html( $object_label ); ?></option>
+										<?php endif; ?>
+									<?php endforeach; ?>
+								<?php endif; ?>
+							</select>
 						</td>
 					</tr>
 					<tr>
@@ -1149,48 +993,38 @@ class Setup_Wizard extends Framework\Admin\Setup_Wizard {
 		$ended            = $this->get_plugin()->get_emails_instance()->get_user_membership_ended_email_instance();
 		$renewal_reminder = $this->get_plugin()->get_emails_instance()->get_user_membership_renewal_reminder_email_instance();
 
-		$toggles = array(
-			'ending_soon'  => array(
+		$toggles = [
+			'ending_soon'      => [
 				'type'        => 'toggle',
 				'name'        => 'ending_soon',
 				'value'       => 'yes',
 				'allow_html'  => true,
-				'input_class' => array( 'toggle-preferences' ),
+				'input_class' => [ 'toggle-preferences' ],
 				'label'       => __( 'Ending Soon', 'woocommerce-memberships' ),
 				'description' => $this->get_ending_soon_email_preferences_field( $ending_soon && $ending_soon->is_enabled() ),
 				'checked'     => $ending_soon && $ending_soon->is_enabled()
-			),
-			'expired' => array(
+			],
+			'expired'          => [
 				'type'        => 'toggle',
 				'name'        => 'expired',
 				'value'       => 'yes',
 				'allow_html'  => true,
-				'input_class' => array( 'toggle-preferences' ),
+				'input_class' => [ 'toggle-preferences' ],
 				'label'       => __( 'Expired', 'woocommerce-memberships' ),
 				'description' => $this->get_expired_email_preferences_field( $ended && $ended->is_enabled() ),
 				'checked'     => $ended && $ended->is_enabled(),
-			),
-			'renewal_reminder' => array(
+			],
+			'renewal_reminder' => [
 				'type'        => 'toggle',
 				'name'        => 'renewal_reminder',
 				'value'       => 'yes',
 				'allow_html'  => true,
-				'input_class' => array( 'toggle-preferences' ),
+				'input_class' => [ 'toggle-preferences' ],
 				'label'       => __( 'Renewal Reminder', 'woocommerce-memberships' ),
 				'description' => $this->get_renewal_reminder_email_preferences_field( $renewal_reminder && $renewal_reminder->is_enabled() ),
 				'checked'     => $renewal_reminder && $renewal_reminder->is_enabled(),
-			),
-			'advanced_emails' => array(
-				'type'        => 'toggle',
-				'name'        => 'advanced_emails',
-				'value'       => 'yes',
-				'allow_html'  => true,
-				'input_class' => array( 'toggle-preferences' ),
-				'label'       => __( 'Advanced Emails', 'woocommerce-memberships' ),
-				'description' => $this->get_advanced_emails_preferences_field( true ),
-				'checked'     => false,
-			),
-		);
+			],
+		];
 
 		foreach ( $toggles as $field_id => $field_data ) {
 
@@ -1301,40 +1135,6 @@ class Setup_Wizard extends Framework\Admin\Setup_Wizard {
 
 
 	/**
-	 * Returns the form fields HTML for the advanced emails preferences.
-	 *
-	 * @since 1.11.0
-	 *
-	 * @param bool $show_preferences whether preferences should by shown by default (true) or hidden (false)	 *
-	 * @return string HTML
-	 */
-	private function get_advanced_emails_preferences_field( $show_preferences = true ) {
-
-		ob_start();
-
-		printf(
-			/* translators: Placeholders: %1$s - opening <a> HTML link tag, %2$s - closing </a> HTML link tag */
-			esc_html__( 'Send advanced emails like welcome or win-back series %1$susing Jilt%2$s. Try it free for 14 days!', 'woocommerce-memberships' ),
-			'<a href="https://jilt.com/go/memberships-onboarding" target="__blank">', '</a>'
-		);
-
-		?>
-		<br /><br />
-		<span class="preferences" <?php if ( ! $show_preferences ) { echo 'style="display:none;"'; } ?>><em>
-			<?php printf(
-				/* translators: Placeholders: %1$s - opening <a> HTML link tag, %2$s - closing </a> HTML link tag */
-				esc_html__( 'This plugin will be installed and activated for you: %1$sJilt for WooCommerce%2$s', 'woocommerce-memberships' ),
-				'<br /><strong><a href="https://wordpress.org/plugins/jilt-for-woocommerce/">',
-				'</a></strong>'
-			); ?>
-		</em></span>
-		<?php
-
-		return ob_get_clean();
-	}
-
-
-	/**
 	 * Saves preferences for member emails.
 	 *
 	 * @since 1.11.0
@@ -1369,24 +1169,6 @@ class Setup_Wizard extends Framework\Admin\Setup_Wizard {
 				$renewal_reminder->set_schedule( max( 1, isset( $_POST['renewal_reminder_email_send_days_after'] ) && is_numeric( $_POST['renewal_reminder_email_send_days_after'] ) ? absint( $_POST['renewal_reminder_email_send_days_after'] ) : $ending_soon_email->get_schedule() ) );
 			} else {
 				$renewal_reminder->disable();
-			}
-		}
-
-		// maybe install & activate Jilt for WooCommerce
-		if ( isset( $_POST['advanced_emails'] ) && 'yes' === $_POST['advanced_emails'] ) {
-
-			try {
-
-				\WC_Install::background_installer( 'jilt-for-woocommerce', array(
-					'name'      => __( 'Jilt for WooCommerce', 'woocommerce-memberships' ),
-					'repo-slug' => 'jilt-for-woocommerce'
-				) );
-
-				$this->get_plugin()->log( 'Jilt for WooCommerce installed from Setup Wizard.' );
-
-			} catch ( \Exception $e ) {
-
-				$this->get_plugin()->log( sprintf( 'An error occurred while trying to install Jilt for WooCommerce from Setup Wizard: %s', $e->getMessage() ) );
 			}
 		}
 	}
@@ -1450,20 +1232,16 @@ class Setup_Wizard extends Framework\Admin\Setup_Wizard {
 	 */
 	protected function render_after_next_steps() {
 
-		$email   = wp_get_current_user()->user_email;
-		$open_a  = '<a href="https://www.skyverge.com/newsletter/?email=' . $email . '&mc_ref=MEMBERSHIPS_ONBOARDING">';
-		$close_a = '</a>';
-
 		?>
 		<div class="newsletter-prompt">
-			<p>
-				<?php printf(
-					/* translators: Placeholders: %1$s - opening <a> HTML link tag, %2$s - closing </a> HTML link tag, %3$s - opening <a> HTML link tag, %4$s - closing </a> HTML link tag */
-					esc_html__( 'Want to keep learning? Check out our %1$smonthly newsletter%2$s where we share updates, tutorials, and sneak peeks for new development. %3$sSign up &rarr;%4$s', 'woocommerce-memberships' ),
-					$open_a, $close_a,
-					$open_a, $close_a
-				); ?>
-			</p>
+			<h3><?php esc_html_e( 'Want to keep learning?', 'woocommerce-memberships' ); ?></h3>
+			<p><?php esc_html_e( 'Check out our monthly newsletter where we share updates, tutorials, and sneak peeks for new development!', 'woocommerce-memberships' ); ?></p>
+			<button
+				class="button button-primary newsletter-signup"
+				data-user-email="<?php echo esc_attr( wp_get_current_user()->user_email ); ?>"
+				data-thank-you="<?php esc_attr_e( 'Thanks for signing up! Keep an eye on your inbox for product updates and helpful tips!', 'woocommerce-memberships' ); ?>"
+			><?php echo esc_html_x( 'Sign up', 'Newsletter sign up', 'woocommerce-memberships' ); ?></button>
+			<span class="spinner" style="display:inline-block; position: absolute;"></span>
 		</div>
 		<?php
 	}

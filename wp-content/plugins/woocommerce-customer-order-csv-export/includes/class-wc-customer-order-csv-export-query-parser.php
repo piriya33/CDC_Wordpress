@@ -1,6 +1,6 @@
 <?php
 /**
- * WooCommerce Customer/Order CSV Export
+ * WooCommerce Customer/Order/Coupon Export
  *
  * This source file is subject to the GNU General Public License v3.0
  * that is bundled with this package in the file license.txt.
@@ -12,17 +12,19 @@
  *
  * DISCLAIMER
  *
- * Do not edit or add to this file if you wish to upgrade WooCommerce Customer/Order CSV Export to newer
- * versions in the future. If you wish to customize WooCommerce Customer/Order CSV Export for your
+ * Do not edit or add to this file if you wish to upgrade WooCommerce Customer/Order/Coupon Export to newer
+ * versions in the future. If you wish to customize WooCommerce Customer/Order/Coupon Export for your
  * needs please refer to http://docs.woocommerce.com/document/ordercustomer-csv-exporter/
  *
- * @package     WC-Customer-Order-CSV-Export/Query-Parser
  * @author      SkyVerge
- * @copyright   Copyright (c) 2012-2018, SkyVerge, Inc.
+ * @copyright   Copyright (c) 2015-2021, SkyVerge, Inc. (info@skyverge.com)
  * @license     http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
 defined( 'ABSPATH' ) or exit;
+
+use SkyVerge\WooCommerce\CSV_Export\Taxonomies_Handler;
+use SkyVerge\WooCommerce\PluginFramework\v5_10_6 as Framework;
 
 /**
  * Customer/Order CSV Export Query Parser
@@ -33,45 +35,63 @@ defined( 'ABSPATH' ) or exit;
  */
 class WC_Customer_Order_CSV_Export_Query_Parser {
 
+
 	/**
 	 * Get object IDs to export based on the input query
 	 *
 	 * @since 4.0.0
 	 * @param array $query
-	 * @param string $export_type Export type, 'orders', 'customers', or 'coupons'
+	 * @param string $export_type Export type, `orders`, `customers` or `coupons`
+	 * @param string $output_type Output type, `csv` or `xml`
 	 * @return array
 	 */
-	public static function parse_export_query( $query, $export_type ) {
+	public static function parse_export_query( $query, $export_type, $output_type = \WC_Customer_Order_CSV_Export::OUTPUT_TYPE_CSV ) {
 
-		$ids = array();
+		$ids = [];
 
 		switch ( $export_type ) {
 
-			case 'orders':
+			case WC_Customer_Order_CSV_Export::EXPORT_TYPE_ORDERS:
 
-				$ids = self::parse_orders_export_query( $query );
+				$ids = self::parse_orders_export_query( $query, $export_type, $output_type );
 			break;
 
-			case 'customers':
+			case WC_Customer_Order_CSV_Export::EXPORT_TYPE_CUSTOMERS:
 
-				$ids = self::parse_customers_export_query( $query );
+				$ids = self::parse_customers_export_query( $query, $output_type );
 			break;
 
-			case 'coupons':
+			case WC_Customer_Order_CSV_Export::EXPORT_TYPE_COUPONS:
 
-				$ids = self::parse_coupons_export_query( $query );
+				$ids = self::parse_coupons_export_query( $query, $output_type );
 				break;
 		}
 
 		/**
-		 * Allow actors to adjust the parsed query results, or provide results for custom export types
+		 * Filters the parsed query results for the given output type.
 		 *
-		 * @since 4.0.0
+		 * Allows actors to adjust the parsed query results or provide results for custom export types.
+		 *
+		 * @since 5.0.0
+		 *
 		 * @param array $ids array of resulting object IDs
 		 * @param array $query export query
 		 * @param string $export_type
 		 */
-		return apply_filters( 'wc_customer_order_csv_export_parsed_query_results', $ids, $query, $export_type );
+		$ids = apply_filters( "wc_customer_order_export_parsed_{$output_type}_query_results", $ids, $query, $export_type );
+
+		/**
+		 * Filters the parsed query results.
+		 *
+		 * Allows actors to adjust the parsed query results or provide results for custom export types.
+		 *
+		 * @since 5.0.0
+		 *
+		 * @param array $ids array of resulting object IDs
+		 * @param array $query export query
+		 * @param string $export_type
+		 */
+		return apply_filters( 'wc_customer_order_export_parsed_query_results', $ids, $query, $export_type, $output_type );
 	}
 
 
@@ -97,24 +117,31 @@ class WC_Customer_Order_CSV_Export_Query_Parser {
 	 *                 @type int $offset offset for the order query
 	 * }
 	 * @param string $export_type optional, defaults to `orders`
+	 * @param string $output_type optional, defaults to `csv`
 	 * @return array
 	 */
-	public static function parse_orders_export_query( $query, $export_type = 'orders' ) {
+	public static function parse_orders_export_query( $query, $export_type = WC_Customer_Order_CSV_Export::EXPORT_TYPE_ORDERS, $output_type = WC_Customer_Order_CSV_Export::OUTPUT_TYPE_CSV ) {
 
-		$query_args = array(
+		if ( WC_Customer_Order_CSV_Export::EXPORT_TYPE_ORDERS === $export_type ) {
+			$default_order_statuses = array_keys( (array) wc_get_order_statuses() );
+		} else {
+			$default_order_statuses = 'any';
+		}
+
+		$query_args = [
 			'fields'         => 'ids',
 			'post_type'      => 'shop_order',
-			'post_status'    => ( ! empty( $query['statuses'] ) && 'orders' === $export_type ) ? (array) $query['statuses'] : 'any',
+			'post_status'    => ! empty( $query['statuses'] ) && WC_Customer_Order_CSV_Export::EXPORT_TYPE_ORDERS === $export_type ? (array) $query['statuses'] : $default_order_statuses,
 			'posts_per_page' => ! empty( $query['limit'] ) ? max( 1, (int) $query['limit'] ) : -1,
 			'offset'         => empty( $query['offset'] ) ? 0 : absint( $query['offset'] ),
-			'date_query'  => array(
-				array(
+			'date_query'  => [
+				[
 					'before'    => empty( $query['end_date'] )   ? date( 'Y-m-d 23:59', current_time( 'timestamp' ) ) : $query['end_date'] . ' 23:59:59.99',
 					'after'     => empty( $query['start_date'] ) ? date( 'Y-m-d 00:00', 0 ) : $query['start_date'],
 					'inclusive' => true,
-				),
-			),
-		);
+				],
+			],
+		];
 
 		// allow offset to be used with "no" posts limit
 		if ( $query_args['offset'] > 0 && -1 === $query_args['posts_per_page'] ) {
@@ -122,40 +149,95 @@ class WC_Customer_Order_CSV_Export_Query_Parser {
 		}
 
 		// only include orders with guest customers
-		if ( 'customers' === $export_type ) {
+		if ( WC_Customer_Order_CSV_Export::EXPORT_TYPE_CUSTOMERS === $export_type ) {
 
-			$query_args['meta_query'] = array(
-				array(
+			$query_args['meta_query'] = [
+				[
 					'key'   => '_customer_user',
 					'value' => 0
-				),
-			);
+				],
+			];
 
 			if ( ! empty( $query['exclude_billing_emails'] ) ) {
 
-				$query_args['meta_query'][] = array(
+				$query_args['meta_query'][] = [
 					'key'     => '_billing_email',
 					'value'   => $query['exclude_billing_emails'],
 					'compare' => 'NOT IN',
-				);
+				];
 			}
 		}
 
 		if ( ! empty( $query['not_exported'] ) ) {
 
-			if ( ! isset( $query_args['meta_query'] ) ) {
-				$query_args['meta_query'] = array();
+			$term_slugs_to_exclude = [
+				// exclude globally exported orders/customers
+				Taxonomies_Handler::GLOBAL_TERM,
+			];
+
+			if ( ! empty( $query['automation_id'] ) ) {
+
+				// excluded orders/customers exported for this automation
+				$term_slugs_to_exclude[] = Taxonomies_Handler::TERM_PREFIX . $query['automation_id'];
 			}
 
-			$exclude_exported          = array();
-			$exclude_exported['key']   = 'customers' === $export_type ? '_wc_customer_order_csv_export_customer_is_exported' : '_wc_customer_order_csv_export_is_exported';
-			$exclude_exported['value'] = 0;
+			if ( WC_Customer_Order_CSV_Export::EXPORT_TYPE_CUSTOMERS === $export_type ) {
+				$taxonomy = Taxonomies_Handler::TAXONOMY_NAME_GUEST_CUSTOMER;
+			} else {
+				$taxonomy = Taxonomies_Handler::TAXONOMY_NAME_ORDERS;
+			}
 
-			$query_args['meta_query'][] = $exclude_exported;
+			$exclude_exported = [
+				'relation' => 'OR',
+				[
+					// exclude orders/customers exported globally or for this automation
+					'taxonomy' => $taxonomy,
+					'terms'    => $term_slugs_to_exclude,
+					'field'    => 'slug',
+					'operator' => 'NOT IN',
+				],
+				[
+					// include orders/customers never exported
+					'taxonomy' => $taxonomy,
+					'operator' => 'NOT EXISTS',
+				]
+			];
+
+			$query_args['tax_query'] = $exclude_exported;
+		}
+
+		if ( 'orders' === $export_type && isset( $_POST['export_query']['refunds'] ) && 'only_refunds' === $_POST['export_query']['refunds'] ) {
+
+			// we don't need the refund's ID, just order IDs
+			$refund_order_ids = array_unique( get_posts( [
+				'fields'      => 'id=>parent',
+				'nopaging'    => true,
+				'post_type'   => 'shop_order_refund',
+				'post_status' => 'any',
+			] ) );
+
+			if ( ! empty( $refund_order_ids ) ) {
+				$query_args['post__in'] = isset( $query_args['post__in'] ) ? array_merge( (array) $query_args['post__in'], $refund_order_ids ) : $refund_order_ids;
+			} else {
+				$query_args['post__in'] = [0]; // will produce no results as no matching refunds were found
+			}
 		}
 
 		/**
-		 * Allow actors to change the WP_Query args used for selecting orders to export based on a query.
+		 * Filters the \WP_Query args used for selecting orders to export based on a query.
+		 *
+		 * These query args affect both orders and customers, as guest customers are exported
+		 * from orders, not from the users table.
+		 *
+		 * @since 5.0.0
+		 *
+		 * @param array $query_args \WP_Query arguments
+		 * @param string $export_type such as orders, customers, or coupons
+		 */
+		$query_args = apply_filters( "wc_customer_order_export_{$output_type}_query_args", $query_args, $export_type );
+
+		/**
+		 * Filters the \WP_Query args used for selecting orders to export based on a query.
 		 *
 		 * These query args affect both orders and customers, as guest customers are exported
 		 * from orders, not from the users table.
@@ -163,33 +245,59 @@ class WC_Customer_Order_CSV_Export_Query_Parser {
 		 * In 4.0.0 removed $this param, renamed from `wc_customer_order_csv_export_admin_query_args`
 		 * to `wc_customer_order_csv_export_query_args`, moved here from WC_Customer_Order_Export_Admin class
 		 *
-		 * @since 3.0.6
-		 * @param array $query_args - WP_Query arguments
-		 * @param string $export_type - either `customers` or `orders`
+		 * @since 5.0.0
+		 *
+		 * @param array $query_args \WP_Query arguments
+		 * @param string $export_type such as orders, customers, or coupons
+		 * @param string $output_type such as csv or xml
 		 */
-		$query_args = apply_filters( 'wc_customer_order_csv_export_query_args', $query_args, $export_type );
+		$query_args = apply_filters( 'wc_customer_order_export_query_args', $query_args, $export_type, $output_type );
+
+		/**
+		 * Fires before running the WP_Query for orders export to the given output type.
+		 *
+		 * @since 5.0.0
+		 *
+		 * @param array $query_args \WP_Query arguments
+		 * @param string $export_type such as orders, customers, or coupons
+		 */
+		do_action( "wc_customer_order_export_before_{$output_type}_orders_query", $query_args, $export_type );
 
 		/**
 		 * Fires before running the WP_Query for orders export
 		 *
-		 * @since 4.0.0
-		 * @param array $query_args
-		 * @param string $export_type - either `customers` or `orders`
+		 * @since 5.0.0
+		 *
+		 * @param array $query_args \WP_Query arguments
+		 * @param string $export_type such as orders, customers, or coupons
+		 * @param string $output_type such as csv or xml
 		 */
-		do_action( 'wc_customer_order_csv_export_before_orders_query', $query_args, $export_type );
+		do_action( 'wc_customer_order_export_before_orders_query', $query_args, $export_type, $output_type );
 
 		// get order IDs
 		$order_query = new WP_Query( $query_args );
 		$order_ids   = $order_query->posts;
 
 		/**
-		 * Fires after running the WP_Query for orders export
+		 * Fires after running the WP_Query for orders export to the given output type.
 		 *
-		 * @since 4.0.0
-		 * @param array $query_args
-		 * @param string $export_type - either `customers` or `orders`
+		 * @since 5.0.0
+		 *
+		 * @param array $query_args \WP_Query arguments
+		 * @param string $export_type such as orders, customers, or coupons
 		 */
-		do_action( 'wc_customer_order_csv_export_after_orders_query', $query_args, $export_type );
+		do_action( "wc_customer_order_export_after_{$output_type}_orders_query", $query_args, $export_type );
+
+		/**
+		 * Fires after running the WP_Query for orders export to the given output type.
+		 *
+		 * @since 5.0.0
+		 *
+		 * @param array $query_args \WP_Query arguments
+		 * @param string $export_type such as orders, customers, or coupons
+		 * @param string $output_type such as csv or xml
+		 */
+		do_action( 'wc_customer_order_export_after_orders_query', $query_args, $export_type, $output_type );
 
 
 		// filter order IDs based on additional filtering criteria (products and product categories)
@@ -208,7 +316,7 @@ class WC_Customer_Order_CSV_Export_Query_Parser {
 		// handle subscription & renewal order filtering
 		if ( wc_customer_order_csv_export()->is_plugin_active( 'woocommerce-subscriptions.php' ) ) {
 
-			$subscriptions = $renewals = array();
+			$subscriptions = $renewals = [];
 
 			if ( isset( $query['subscription_orders'] ) ) {
 				$subscriptions = self::filter_orders_containing_subscriptions( $order_ids, 'subscriptions' );
@@ -241,55 +349,44 @@ class WC_Customer_Order_CSV_Export_Query_Parser {
 	 */
 	private static function filter_orders_containing_subscriptions( $order_ids, $which ) {
 
-		$order_ids    = is_array( $order_ids ) ? array_filter( array_map( 'absint', $order_ids ) ) : array();
-		$filtered_ids = array();
+		$order_ids    = is_array( $order_ids ) ? array_filter( array_map( 'absint', $order_ids ) ) : [];
+		$filtered_ids = [];
 
 		if ( ! empty( $order_ids ) ) {
 
-			if ( SV_WC_Plugin_Compatibility::is_wc_subscriptions_version_gte_2_0() ) {
+			$query_args = [
+				'nopaging'    => true,
+				'post_status' => 'any',
+			];
 
-				$query_args = array(
-					'nopaging'    => true,
-					'post_status' => 'any',
-				);
+			if ( 'subscriptions' === $which ) {
 
-				if ( 'subscriptions' === $which ) {
+				$subscription_orders = get_posts( array_merge( $query_args, [
+					'fields'          => 'id=>parent',
+					'post_type'       => 'shop_subscription',
+					'post_parent__in' => $order_ids,
+				] ) );
 
-					$subscription_orders = get_posts( array_merge( $query_args, array(
-						'fields'          => 'id=>parent',
-						'post_type'       => 'shop_subscription',
-						'post_parent__in' => $order_ids,
-					) ) );
+				if ( ! empty( $subscription_orders ) ) {
 
-					if ( ! empty( $subscription_orders ) ) {
+					foreach ( $subscription_orders as $subscription_order ) {
 
-						foreach ( $subscription_orders as $subscription_order ) {
+						$order_id = current( (array) $subscription_order );
 
-							$order_id = current( (array) $subscription_order );
-
-							if ( is_numeric( $order_id ) && in_array( $order_id, $order_ids, false ) ) {
-								$filtered_ids[] = (int) $order_id;
-							}
+						if ( is_numeric( $order_id ) && in_array( $order_id, $order_ids, false ) ) {
+							$filtered_ids[] = (int) $order_id;
 						}
 					}
-
-				} elseif( 'renewals' === $which ) {
-
-					$filtered_ids = get_posts( array_merge( $query_args, array(
-						'fields'    => 'ids',
-						'post_type' => 'shop_order',
-						'meta_key'  => '_subscription_renewal',
-						'post__in'  => $order_ids,
-					) ) );
 				}
 
-			} else { // legacy handling for Subscriptions 1.5.x
+			} elseif( 'renewals' === $which ) {
 
-				if ( 'subscriptions' === $which ) {
-					$filtered_ids = array_filter( $order_ids, array( 'WC_Subscriptions_Order', 'order_contains_subscription' ) );
-				} elseif ( 'renewals' === $which ) {
-					$filtered_ids = array_filter( $order_ids, array( 'WC_Subscriptions_Renewal_Order', 'is_renewal' ) );
-				}
+				$filtered_ids = get_posts( array_merge( $query_args, [
+					'fields'    => 'ids',
+					'post_type' => 'shop_order',
+					'meta_key'  => '_subscription_renewal',
+					'post__in'  => $order_ids,
+				] ) );
 			}
 		}
 
@@ -308,59 +405,111 @@ class WC_Customer_Order_CSV_Export_Query_Parser {
 	 *                 @type string $start_date minimum order date
 	 *                 @type string $end_date maximum order date
 	 * }
+	 * @param string $output_type the output type, either `csv` or `xml`
 	 * @return array of mixed items. int $id for registered customers, array with keys of `email` and `order_id` for guest customers
 	 */
-	public static function parse_customers_export_query( $query ) {
+	public static function parse_customers_export_query( $query, $output_type = \WC_Customer_Order_CSV_Export::OUTPUT_TYPE_CSV ) {
 		global $wpdb;
 
-		$query_args = array(
+		$query_args = [
 			// will exclude shop employees for stores using WP 4.4+
-			'role__not_in' => array( 'administrator', 'shop_manager' ),
-			'date_query'   => array(
-				array(
+			'role__not_in' => [ 'administrator', 'shop_manager' ],
+			'date_query'   => [
+				[
 					'before'    => empty( $query['end_date'] )   ? date( 'Y-m-d 23:59', current_time( 'timestamp' ) ) : $query['end_date'] . ' 23:59:59.99',
 					'after'     => empty( $query['start_date'] ) ? date( 'Y-m-d 00:00', 0 ) : $query['start_date'],
 					'inclusive' => true,
-				),
-			),
-		);
+				],
+			],
+		];
 
 		if ( ! empty( $query['not_exported'] ) ) {
 
-			$query_args['meta_key']   = '_wc_customer_order_csv_export_is_exported';
-			$query_args['meta_value'] = 0;
+			// exclude customers with exported terms (WP_User_Query does not support tax_query yet)
+			// @see https://core.trac.wordpress.org/ticket/31383
+
+			$term_slugs_to_exclude = [
+				// exclude globally exported customers
+				Taxonomies_Handler::GLOBAL_TERM,
+			];
+			if ( ! empty( $query['automation_id'] ) ) {
+				// excluded customers exported for this automation
+				$term_slugs_to_exclude[] = Taxonomies_Handler::TERM_PREFIX . $query['automation_id'];
+			}
+
+			$terms_to_exclude = [];
+			foreach ( $term_slugs_to_exclude as $term_slug ) {
+				$term               = get_term_by( 'slug', $term_slug, Taxonomies_Handler::TAXONOMY_NAME_USER_CUSTOMER, 'ARRAY_A' );
+				$terms_to_exclude[] = $term['term_id'];
+			}
+			$customers_to_exclude = get_objects_in_term( $terms_to_exclude, Taxonomies_Handler::TAXONOMY_NAME_USER_CUSTOMER );
+
+			$query_args['exclude'] = $customers_to_exclude;
 		}
 
 		/**
-		 * Allow actors to change the WP_User_Query args used for selecting customers to export based on a query.
+		 * Filters the \WP_User_Query args used for selecting customers to export based on a query.
 		 *
-		 * @since 4.0.0
-		 * @param array $query_args - WP_User_Query arguments
+		 * @since 5.0.0
+		 *
+		 * @param array $query_args \WP_User_Query arguments
 		 */
-		$query_args = apply_filters( 'wc_customer_order_csv_export_user_query_args', $query_args );
+		$query_args = apply_filters( "wc_customer_order_export_{$output_type}_user_query_args", $query_args );
 
 		/**
-		 * Fires before running the WP_User_Query for customers export
+		 * Filters the \WP_User_Query args used for selecting customers to export based on a query.
 		 *
-		 * @since 4.0.0
-		 * @param array $query_args
+		 * @since 5.0.0
+		 *
+		 * @param array $query_args \WP_User_Query arguments
+		 * @param string $output_type such as csv or xml
 		 */
-		do_action( 'wc_customer_order_csv_export_before_users_query', $query_args );
+		$query_args = apply_filters( 'wc_customer_order_export_user_query_args', $query_args, $output_type );
+
+		/**
+		 * Fires before running the \WP_User_Query for customers export to the given output type.
+		 *
+		 * @since 5.0.0
+		 *
+		 * @param array $query_args \WP_User_Query arguments
+		 */
+		do_action( "wc_customer_order_export_before_{$output_type}_users_query", $query_args );
+
+		/**
+		 * Fires before running the \WP_User_Query for customers export.
+		 *
+		 * @since 5.0.0
+		 *
+		 * @param array $query_args \WP_User_Query arguments
+		 * @param string $output_type such as csv or xml
+		 */
+		do_action( 'wc_customer_order_export_before_users_query', $query_args, $output_type );
 
 		$users = get_users( $query_args );
 
 		/**
-		 * Fires after running the WP_User_Query for customers export
+		 * Fires after running the \WP_User_Query for customers export to the given output type.
 		 *
-		 * @since 4.0.0
-		 * @param array $query_args
+		 * @since 5.0.0
+		 *
+		 * @param array $query_args \WP_User_Query arguments
 		 */
-		do_action( 'wc_customer_order_csv_export_after_users_query', $query_args );
+		do_action( "wc_customer_order_export_after_{$output_type}_users_query", $query_args );
 
-		$customers = array();
+		/**
+		 * Fires after running the \WP_User_Query for customers export.
+		 *
+		 * @since 5.0.0
+		 *
+		 * @param array $query_args \WP_User_Query arguments
+		 * @param string $output_type such as csv or xml
+		 */
+		do_action( 'wc_customer_order_export_after_users_query', $query_args, $output_type );
+
+		$customers = [];
 
 		// Exclude registered customers from guest customer query
-		$query['exclude_billing_emails'] = array();
+		$query['exclude_billing_emails'] = [];
 
 		foreach ( $users as $user ) {
 
@@ -375,7 +524,7 @@ class WC_Customer_Order_CSV_Export_Query_Parser {
 		// to export guest customers, we need to fetch them from orders...
 		// please, Lord, make https://trello.com/c/4Ll0X3pL/44-separate-customers-from-user-accounts
 		// come true soon!
-		$order_ids = self::parse_orders_export_query( $query, 'customers' );
+		$order_ids = self::parse_orders_export_query( $query, WC_Customer_Order_CSV_Export::EXPORT_TYPE_CUSTOMERS, $output_type );
 
 		foreach ( $order_ids as $order_id ) {
 
@@ -388,15 +537,31 @@ class WC_Customer_Order_CSV_Export_Query_Parser {
 
 			if ( ! empty( $query['not_exported'] ) ) {
 
+				// escape the term values
+				$term_slugs_to_exclude = array_map( 'esc_sql', (array) $term_slugs_to_exclude );
+				// comma separated string with string placeholders (%s)
+				$terms_placeholder_string = implode( ', ', array_fill( 0, count( $term_slugs_to_exclude ), '%s' ) );
+
 				// check if a registered customer with this billing address has already been exported
-				$is_exported = $wpdb->get_var( $wpdb->prepare( "
-					SELECT u.ID
-					FROM $wpdb->users u
-					LEFT JOIN $wpdb->usermeta um ON u.ID = um.user_id
-					WHERE u.user_email = %s
-					AND um.meta_key = '_wc_customer_order_csv_export_is_exported'
-					AND CAST( um.meta_value AS CHAR ) = '1'
-				", $billing_email ) );
+				$is_exported = $wpdb->get_var(
+					$wpdb->prepare(
+						"SELECT u.ID
+						FROM $wpdb->users u
+						LEFT JOIN $wpdb->term_relationships tr ON u.ID = tr.object_id
+						LEFT JOIN $wpdb->term_taxonomy tt ON tr.term_taxonomy_id = tt.term_taxonomy_id
+						LEFT JOIN $wpdb->terms t ON tt.term_id = t.term_id
+						WHERE u.user_email = %s
+						AND tt.taxonomy = %s
+						AND t.slug IN ( $terms_placeholder_string )",
+						array_merge(
+							[
+								$billing_email,
+								Taxonomies_Handler::TAXONOMY_NAME_USER_CUSTOMER,
+							],
+							$term_slugs_to_exclude
+						)
+					)
+				);
 
 				// skip customers already exported as registered customers
 				if ( $is_exported ) {
@@ -404,22 +569,38 @@ class WC_Customer_Order_CSV_Export_Query_Parser {
 				}
 
 				// find orders with the same billing address, for which the customer has already been exported
-				$exported_orders = new WP_Query( array(
+
+				$term_slugs = [
+					// globally exported guest customers
+					Taxonomies_Handler::GLOBAL_TERM,
+				];
+
+				if ( ! empty( $query['automation_id'] ) ) {
+
+					// guest customers exported for this automation
+					$term_slugs[] = Taxonomies_Handler::TERM_PREFIX . $query['automation_id'];
+				}
+
+				$exported_orders = new WP_Query( [
 					'fields'         => 'ids',
 					'post_type'      => 'shop_order',
 					'post_status'    => 'any',
 					'posts_per_page' => 1,
-					'meta_query'     => array(
-						array(
+					'meta_query'     => [
+						[
 							'key'   => '_billing_email',
 							'value' => $billing_email,
-						),
-						array(
-							'key'   => '_wc_customer_order_csv_export_customer_is_exported',
-							'value' => 1,
-						),
-					),
-				) );
+						],
+					],
+					'tax_query' => [
+						[
+							'taxonomy' => Taxonomies_Handler::TAXONOMY_NAME_GUEST_CUSTOMER,
+							'terms'    => $term_slugs,
+							'field'    => 'slug',
+							'operator' => 'IN',
+						]
+					]
+				] );
 
 				// skip customers that have already been exported from another order
 				if ( count( $exported_orders->posts ) > 0 ) {
@@ -429,7 +610,7 @@ class WC_Customer_Order_CSV_Export_Query_Parser {
 			}
 
 			// uniquely identify a guest customer based on their billing email and related order id
-			$customers[] = array( $billing_email, $order_id );
+			$customers[] = [ $billing_email, $order_id ];
 		}
 
 		return $customers;
@@ -504,33 +685,64 @@ class WC_Customer_Order_CSV_Export_Query_Parser {
 	 *                             Array of product categories coupons must
 	 *                             support to be exported
 	 * }
+	 * @param string $output_type such as csv or xml
 	 * @return array of coupon IDs
 	 */
-	public static function parse_coupons_export_query( $query ) {
+	public static function parse_coupons_export_query( $query, $output_type = \WC_Customer_Order_CSV_Export::OUTPUT_TYPE_CSV ) {
 
-		$query_args = array(
+		$query_args = [
 			'fields'         => 'ids',
 			'post_type'      => 'shop_coupon',
 			'posts_per_page' => -1,
-		);
+		];
 
 		/**
-		 * Filters the query args used for getting coupons during a coupon export.
+		 * Filters the \WP_Query args used for selecting coupons to export based on a query.
 		 *
-		 * @since 4.6.2
+		 * @since 5.0.0
 		 *
-		 * @param array $query_args query args
+		 * @param array $query_args \WP_Query arguments
 		 */
-		$query_args = apply_filters( 'wc_customer_order_csv_export_coupon_query_args', $query_args );
+		$query_args = apply_filters( "wc_customer_order_export_{$output_type}_coupon_query_args", $query_args );
+
+		/**
+		 * Filters the \WP_Query args used for selecting coupons to export based on a query.
+		 *
+		 * @since 5.0.0
+		 *
+		 * @param array $query_args \WP_Query arguments
+		 * @param string $output_type such as csv or xml
+		 */
+		$query_args = apply_filters( 'wc_customer_order_export_coupon_query_args', $query_args, $output_type );
+
+		/**
+		 * Fires before running the \WP_Query for coupons export.
+		 *
+		 * @since 5.0.0
+		 *
+		 * @param array $query_args \WP_Query arguments
+		 * @param string $output_type such as csv or xml
+		 */
+		do_action( 'wc_customer_order_export_before_coupons_query', $query_args, $output_type );
 
 		// get coupon IDs
 		$coupon_query = new WP_Query( $query_args );
 		$coupon_ids   = $coupon_query->posts;
 
+		/**
+		 * Fires after running the \WP_Query for coupons export.
+		 *
+		 * @since 5.0.0
+		 *
+		 * @param array $query_args \WP_Query arguments
+		 * @param string $output_type such as csv or xml
+		 */
+		do_action( 'wc_customer_order_export_after_coupons_query', $query_args, $output_type );
+
 		// filter coupon IDs based on additional filtering criteria (products and product categories)
 		if ( ! empty( $coupon_ids ) && ! empty( $query['coupon_products'] ) ) {
 
-			$coupon_products = ( is_array( $query['coupon_products'] ) ) ? $query['coupon_products'] : array( $query['coupon_products'] );
+			$coupon_products = ( is_array( $query['coupon_products'] ) ) ? $query['coupon_products'] : [ $query['coupon_products'] ];
 
 			$coupon_ids = self::filter_coupons_for_products( $coupon_ids, $coupon_products );
 
@@ -538,7 +750,7 @@ class WC_Customer_Order_CSV_Export_Query_Parser {
 
 		if ( ! empty( $coupon_ids ) && ! empty( $query['coupon_product_categories'] ) ) {
 
-			$coupon_product_categories = ( is_array( $query['coupon_product_categories'] ) ) ? $query['coupon_product_categories'] : array( $query['coupon_product_categories'] );
+			$coupon_product_categories = ( is_array( $query['coupon_product_categories'] ) ) ? $query['coupon_product_categories'] : [ $query['coupon_product_categories'] ];
 
 			$coupon_ids = self::filter_coupons_for_product_categories( $coupon_ids, $coupon_product_categories );
 
@@ -570,7 +782,7 @@ class WC_Customer_Order_CSV_Export_Query_Parser {
 		" );
 
 		// filter out coupons that don't apply to at least one provided product
-		$filtered_coupon_ids = array();
+		$filtered_coupon_ids = [];
 
 		foreach ( $coupons as $coupon ) {
 
@@ -610,7 +822,7 @@ class WC_Customer_Order_CSV_Export_Query_Parser {
 		" );
 
 		// filter out coupons that don't apply to at least one provided product category
-		$filtered_coupon_ids = array();
+		$filtered_coupon_ids = [];
 
 		foreach ( $coupons as $coupon ) {
 

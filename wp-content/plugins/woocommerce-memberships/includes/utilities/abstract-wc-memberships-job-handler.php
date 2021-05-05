@@ -17,11 +17,11 @@
  * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @author    SkyVerge
- * @copyright Copyright (c) 2014-2019, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2021, SkyVerge, Inc. (info@skyverge.com)
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
-use SkyVerge\WooCommerce\PluginFramework\v5_3_1 as Framework;
+use SkyVerge\WooCommerce\PluginFramework\v5_10_6 as Framework;
 
 defined( 'ABSPATH' ) or exit;
 
@@ -96,22 +96,6 @@ abstract class WC_Memberships_Job_Handler extends Framework\SV_WP_Background_Job
 		}
 
 		return $job;
-	}
-
-
-	/**
-	 * Processes a single item from the background job.
-	 *
-	 * Child classes should override this method.
-	 *
-	 * @since 1.10.0
-	 *
-	 * @param mixed $item current item in queue
-	 * @param \stdClass $job related job instance
-	 * @return \stdClass the $job, processed
-	 */
-	public function process_item( $item, $job ) {
-		return parent::process_item( $item, $job );
 	}
 
 
@@ -420,6 +404,7 @@ abstract class WC_Memberships_Job_Handler extends Framework\SV_WP_Background_Job
 			'member_first_name'     => 'member_first_name',
 			'member_last_name'      => 'member_last_name',
 			'member_email'          => 'member_email',
+			'member_role'           => 'member_role',
 			'membership_plan_id'    => 'membership_plan_id',
 			'membership_plan'       => 'membership_plan',
 			'membership_plan_slug'  => 'membership_plan_slug',
@@ -463,7 +448,16 @@ abstract class WC_Memberships_Job_Handler extends Framework\SV_WP_Background_Job
 			break;
 		}
 
-		return $delimiter;
+		/**
+		 * Filters the CSV delimiter.
+		 *
+		 * @since 1.13.1
+		 *
+		 * @param string $delimiter the CSV delimiter as a character
+		 * @param null|string|\stdClass $item the original context identifier
+		 * @param \WC_Memberships_Job_Handler|\WC_Memberships_CSV_Import_User_Memberships|\WC_Memberships_CSV_Export_User_Memberships $handler the job handler instance
+		 */
+		return (string) apply_filters( 'wc_memberships_csv_delimiter', $delimiter, $item, $this );
 	}
 
 

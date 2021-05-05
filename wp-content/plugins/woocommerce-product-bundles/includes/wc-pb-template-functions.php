@@ -2,7 +2,7 @@
 /**
  * Product Bundles template functions
  *
- * @author   SomewhereWarm <info@somewherewarm.gr>
+ * @author   SomewhereWarm <info@somewherewarm.com>
  * @package  WooCommerce Product Bundles
  * @since    4.11.0
  */
@@ -62,18 +62,20 @@ function wc_pb_template_add_to_cart() {
 		$form_classes[] = 'bundle_out_of_stock';
 	}
 
-	if ( $product->contains( 'out_of_stock' ) ) {
+	if ( 'outofstock' === $product->get_bundled_items_stock_status() ) {
 		$form_classes[] = 'bundle_insufficient_stock';
 	}
 
 	if ( ! empty( $bundled_items ) ) {
+
 		wc_get_template( 'single-product/add-to-cart/bundle.php', array(
-			'availability_html' => wc_get_stock_html( $product ),
-			'bundle_price_data' => $product->get_bundle_price_data(),
 			'bundled_items'     => $bundled_items,
 			'product'           => $product,
+			'classes'           => implode( ' ', apply_filters( 'woocommerce_bundle_form_classes', $form_classes, $product ) ),
+			// Back-compat.
 			'product_id'        => $product->get_id(),
-			'classes'           => implode( ' ', $form_classes )
+			'availability_html' => wc_get_stock_html( $product ),
+			'bundle_price_data' => $product->get_bundle_form_data()
 		), false, WC_PB()->plugin_path() . '/templates/' );
 	}
 }
@@ -96,13 +98,13 @@ function wc_pb_template_add_to_cart_wrap( $product ) {
 
 		// Give store owners a reason.
 		if ( defined( 'WC_PB_UPDATING' ) ) {
-			$purchasable_notice_reason .= __( 'The Product Bundles database is updating in the background. During this time, all bundles on your site will be unavailable. If this message persists, please <a href="https://woocommerce.com/my-account/marketplace-ticket-form/" target="_blank">get in touch</a> with our support team. This note cannot be viewed by customers.', 'woocommerce-product-bundles' );
+			$purchasable_notice_reason .= sprintf( __( 'The Product Bundles database is updating in the background. During this time, all bundles on your site will be unavailable. If this message persists, please <a href="%s" target="_blank">get in touch</a> with our support team. Note: This message is visible to store managers only.', 'woocommerce-product-bundles' ), WC_PB()->get_resource_url( 'ticket-form' ) );
 		} elseif ( false === $product->contains( 'priced_individually' ) && '' === $product->get_price() ) {
-			$purchasable_notice_reason .= __( 'The pricing configuration of this bundle is incomplete. To give this bundle a static price, navigate to <strong>Product Data > General</strong> tab and fill in the <strong>Regular Price</strong> field. If you prefer to calculate its price dynamically, go to <strong>Product Data > Bundled Products</strong> and enable <strong>Priced Individually</strong> for all bundled products whose price you want to preserve. Then, save your changes. This note cannot be viewed by customers.', 'woocommerce-product-bundles' );
+			$purchasable_notice_reason .= sprintf( __( '&quot;%1$s&quot; is not purchasable just yet. But, fear not &ndash; setting up <a href="%2$s" target="_blank">pricing options</a> only takes a minute! <ul class="pb_notice_list"><li>To give &quot;%1$s&quot; a static base price, navigate to <strong>Product Data > General</strong> and fill in the <strong>Regular Price</strong> field.</li><li>To preserve the prices and taxes of individual bundled products, go to <strong>Product Data > Bundled Products</strong> and enable <strong>Priced Individually</strong> for each bundled product whose price must be preserved.</li></ul>Note: This message is visible to store managers only.', 'woocommerce-product-bundles' ), $product->get_title(), WC_PB()->get_resource_url( 'pricing-options' ) );
 		} elseif ( $product->contains( 'non_purchasable' ) ) {
-			$purchasable_notice_reason .= __( 'Please make sure that all products contained in this bundle have a price. WooCommerce does not allow products with a blank price to be purchased. This note cannot be viewed by customers.', 'woocommerce-product-bundles' );
+			$purchasable_notice_reason .= __( 'Please make sure that all products contained in this bundle have a price. WooCommerce does not allow products with a blank price to be purchased. Note: This message is visible to store managers only.', 'woocommerce-product-bundles' );
 		} elseif ( $product->contains( 'subscriptions' ) && class_exists( 'WC_Subscriptions_Admin' ) && 'yes' !== get_option( WC_Subscriptions_Admin::$option_prefix . '_multiple_purchase', 'no' ) ) {
-			$purchasable_notice_reason .= __( 'Please enable <strong>Mixed Checkout</strong> under <strong>WooCommerce > Settings > Subscriptions</strong>. Bundles that contain subscription-type products cannot be purchased when <strong>Mixed Checkout</strong> is disabled. This note cannot be viewed by customers.', 'woocommerce-product-bundles' );
+			$purchasable_notice_reason .= __( 'Please enable <strong>Mixed Checkout</strong> under <strong>WooCommerce > Settings > Subscriptions</strong>. Bundles that contain subscription-type products cannot be purchased when <strong>Mixed Checkout</strong> is disabled. Note: This message is visible to store managers only.', 'woocommerce-product-bundles' );
 		}
 
 		if ( $purchasable_notice_reason ) {
@@ -110,13 +112,17 @@ function wc_pb_template_add_to_cart_wrap( $product ) {
 		}
 	}
 
+	$form_data = $product->get_bundle_form_data();
+
 	wc_get_template( 'single-product/add-to-cart/bundle-add-to-cart-wrap.php', array(
 		'is_purchasable'     => $is_purchasable,
 		'purchasable_notice' => $purchasable_notice,
 		'availability_html'  => wc_get_stock_html( $product ),
-		'bundle_price_data'  => $product->get_bundle_price_data(),
+		'bundle_form_data'   => $form_data,
 		'product'            => $product,
-		'product_id'         => $product->get_id()
+		'product_id'         => $product->get_id(),
+		// Back-compat:
+		'bundle_price_data'  => $form_data,
 	), false, WC_PB()->plugin_path() . '/templates/' );
 }
 
@@ -148,16 +154,17 @@ function wc_pb_template_add_to_cart_button( $bundle = false ) {
  */
 function wc_pb_template_bundled_item_title( $bundled_item, $bundle ) {
 
-	$min_qty = $bundled_item->get_quantity();
+	$min_qty = $bundled_item->get_quantity( 'min' );
 	$max_qty = $bundled_item->get_quantity( 'max' );
 
-	$qty     = $min_qty > 1 && $min_qty === $max_qty ? $min_qty : '';
+	$qty     = 'tabular' !== $bundle->get_layout() && $min_qty > 1 && $min_qty === $max_qty ? $min_qty : '';
 
 	wc_get_template( 'single-product/bundled-item-title.php', array(
 		'quantity'     => $qty,
 		'title'        => $bundled_item->get_title(),
 		'permalink'    => $bundled_item->get_permalink(),
 		'optional'     => $bundled_item->is_optional(),
+		'title_suffix' => $bundled_item->get_optional_suffix(),
 		'bundled_item' => $bundled_item,
 		'bundle'       => $bundle
 	), false, WC_PB()->plugin_path() . '/templates/' );
@@ -189,14 +196,22 @@ function wc_pb_template_bundled_item_thumbnail( $bundled_item, $bundle ) {
 			 */
 			$gallery_classes = apply_filters( 'woocommerce_bundled_product_gallery_classes', array( 'bundled_product_images', 'images' ), $bundled_item );
 
-			wc_get_template( 'single-product/bundled-item-image.php', array(
+			/**
+			 * 'woocommerce_bundled_item_image_tmpl_params' filter.
+			 *
+			 * @param  array            $params
+			 * @param  WC_Bundled_Item  $bundled_item
+			 */
+			$bundled_item_image_tmpl_params = apply_filters( 'woocommerce_bundled_item_image_tmpl_params', array(
 				'post_id'         => $product_id,
 				'product_id'      => $product_id,
 				'bundled_item'    => $bundled_item,
 				'gallery_classes' => $gallery_classes,
 				'image_size'      => $bundled_item->get_bundled_item_thumbnail_size(),
 				'image_rel'       => current_theme_supports( 'wc-product-gallery-lightbox' ) ? 'photoSwipe' : 'prettyPhoto',
-			), false, WC_PB()->plugin_path() . '/templates/' );
+			), $bundled_item );
+
+			wc_get_template( 'single-product/bundled-item-image.php', $bundled_item_image_tmpl_params, false, WC_PB()->plugin_path() . '/templates/' );
 		}
 	}
 
@@ -212,6 +227,10 @@ function wc_pb_template_bundled_item_thumbnail( $bundled_item, $bundle ) {
  * @param  WC_Product_Bundle  $bundle
  */
 function wc_pb_template_bundled_item_description( $bundled_item, $bundle ) {
+
+	if ( ! $bundled_item->get_description() ) {
+		return;
+	}
 
 	wc_get_template( 'single-product/bundled-item-description.php', array(
 		'description' => $bundled_item->get_description()
@@ -268,10 +287,11 @@ function wc_pb_template_tabular_bundled_item_qty( $bundled_item, $bundle ) {
 		/** Documented in 'WC_PB_Cart::get_posted_bundle_configuration'. */
 		$bundle_fields_prefix = apply_filters( 'woocommerce_product_bundle_field_prefix', '', $bundle->get_id() );
 
-		$quantity_min = $bundled_item->get_quantity();
-		$quantity_max = $bundled_item->get_quantity( 'max', array( 'bound_by_stock' => true ) );
-		$input_name   = $bundle_fields_prefix . 'bundle_quantity_' . $bundled_item->get_id();
-		$hide_input   = $quantity_min === $quantity_max || false === $bundled_item->is_in_stock();
+		$quantity_min     = $bundled_item->get_quantity( 'min' );
+		$quantity_max     = $bundled_item->get_quantity( 'max' );
+		$quantity_default = $bundled_item->get_quantity( 'default' );
+		$input_name       = $bundle_fields_prefix . 'bundle_quantity_' . $bundled_item->get_id();
+		$hide_input       = $quantity_min === $quantity_max;
 
 		echo '<td class="bundled_item_col bundled_item_qty_col">';
 
@@ -279,6 +299,7 @@ function wc_pb_template_tabular_bundled_item_qty( $bundled_item, $bundle ) {
 			'bundled_item'         => $bundled_item,
 			'quantity_min'         => $quantity_min,
 			'quantity_max'         => $quantity_max,
+			'quantity_default'     => $quantity_default,
 			'input_name'           => $input_name,
 			'layout'               => $layout,
 			'hide_input'           => $hide_input,
@@ -304,15 +325,16 @@ function wc_pb_template_default_bundled_item_qty( $bundled_item ) {
 		/** Documented in 'WC_PB_Cart::get_posted_bundle_configuration'. */
 		$bundle_fields_prefix = apply_filters( 'woocommerce_product_bundle_field_prefix', '', $bundle->get_id() );
 
-		$quantity_min = $bundled_item->get_quantity();
-		$quantity_max = $bundled_item->get_quantity( 'max', array( 'bound_by_stock' => true ) );
-		$input_name   = $bundle_fields_prefix . 'bundle_quantity_' . $bundled_item->get_id();
-		$hide_input   = $quantity_min === $quantity_max || false === $bundled_item->is_in_stock();
-
+		$quantity_min     = $bundled_item->get_quantity( 'min' );
+		$quantity_max     = $bundled_item->get_quantity( 'max' );
+		$quantity_default = $bundled_item->get_quantity( 'default' );
+		$input_name       = $bundle_fields_prefix . 'bundle_quantity_' . $bundled_item->get_id();
+		$hide_input       = $quantity_min === $quantity_max;
 		wc_get_template( 'single-product/bundled-item-quantity.php', array(
 			'bundled_item'         => $bundled_item,
 			'quantity_min'         => $quantity_min,
 			'quantity_max'         => $quantity_max,
+			'quantity_default'     => $quantity_default,
 			'input_name'           => $input_name,
 			'layout'               => $layout,
 			'hide_input'           => $hide_input,
@@ -403,11 +425,40 @@ function wc_pb_template_bundled_item_product_details( $bundled_item, $bundle ) {
 
 		if ( $bundled_item->is_optional() ) {
 
+			$label_price = '';
+
+			if ( ( $price_html = $bundled_item->product->get_price_html() ) && $bundled_item->is_priced_individually() ) {
+
+				$label_price_format = __( ' for %s', 'woocommerce-product-bundles' );
+				$html_from_text_native = wc_get_price_html_from_text();
+
+				if ( false !== strpos( $price_html, $html_from_text_native ) ) {
+					$label_price_format = __( ' from %s', 'woocommerce-product-bundles' );
+					$price_html  = str_replace( $html_from_text_native, '', $price_html );
+				}
+
+				$label_price = sprintf( $label_price_format, '<span class="price">' . $price_html . '</span>' );
+			}
+
+			$label_title = '';
+
+			if ( $bundled_item->get_title() === '' ) {
+
+				$min_quantity = $bundled_item->get_quantity( 'min' );
+				$max_quantity = $bundled_item->get_quantity( 'max' );
+				$label_suffix = $min_quantity > 1 && $max_quantity === $min_quantity ? $min_quantity : '';
+				$label_title  = sprintf( __( ' &quot;%s&quot;', 'woocommerce-product-bundles' ), WC_PB_Helpers::format_product_shop_title( $bundled_item->get_raw_title(), $label_suffix ) );
+			}
+
 			// Optional checkbox template.
 			wc_get_template( 'single-product/bundled-item-optional.php', array(
-				'quantity'             => $bundled_item->get_quantity(),
+				'label_title'          => $label_title,
+				'label_price'          => $label_price,
 				'bundled_item'         => $bundled_item,
-				'bundle_fields_prefix' => $bundle_fields_prefix
+				'bundle_fields_prefix' => $bundle_fields_prefix,
+				'availability_html'    => false === $bundled_item->is_in_stock() ? $bundled_item->get_availability_html() : '',
+				// Back-compat.
+				'quantity'             => $bundled_item->get_quantity( 'min' )
 			), false, WC_PB()->plugin_path() . '/templates/' );
 		}
 
@@ -428,13 +479,13 @@ function wc_pb_template_bundled_item_product_details( $bundled_item, $bundle ) {
 		} elseif ( $bundled_product->get_type() === 'variable' || $bundled_product->get_type() === 'variable-subscription' ) {
 
 			$do_ajax                       = $bundled_item->use_ajax_for_product_variations();
-			$variations                    = $do_ajax ? false : $bundled_item->get_product_variations( false );
+			$variations                    = $do_ajax ? false : $bundled_item->get_product_variations();
 			$variation_attributes          = $bundled_item->get_product_variation_attributes();
 			$selected_variation_attributes = $bundled_item->get_selected_product_variation_attributes();
 
 			if ( ! $do_ajax && empty( $variations ) ) {
 
-				$is_out_of_stock = sizeof( $variations ) === 0 && false === $bundled_item->is_in_stock();
+				$is_out_of_stock = false === $bundled_item->is_in_stock();
 
 				// Unavailable Product template.
 				wc_get_template( 'single-product/bundled-product-unavailable.php', array(
@@ -708,7 +759,8 @@ function wc_pb_template_bundled_variation_attribute_options( $args ) {
 		$variation_attribute_keys = array_keys( $variation_attributes );
 		// ...and add the reset-variations link.
 		if ( end( $variation_attribute_keys ) === $variation_attribute_name ) {
-			$html .= wp_kses_post( apply_filters( 'woocommerce_reset_variations_link', '<div class="reset_bundled_variations"><a class="reset_variations" href="#">' . esc_html__( 'Clear', 'woocommerce' ) . '</a></div>' ) );
+			// Change 'reset_bundled_variations_fixed' to 'reset_bundled_variations' if you want the 'Clear' link to slide in/out of view.
+			$html .= wp_kses_post( apply_filters( 'woocommerce_reset_variations_link', '<div class="reset_bundled_variations_fixed"><a class="reset_variations" href="#">' . esc_html__( 'Clear', 'woocommerce' ) . '</a></div>' ) );
 		}
 	}
 

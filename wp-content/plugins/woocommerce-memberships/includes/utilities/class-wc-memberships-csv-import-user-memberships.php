@@ -17,11 +17,14 @@
  * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @author    SkyVerge
- * @copyright Copyright (c) 2014-2019, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2021, SkyVerge, Inc. (info@skyverge.com)
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
-use SkyVerge\WooCommerce\PluginFramework\v5_3_1 as Framework;
+use SkyVerge\WooCommerce\Memberships\Profile_Fields;
+use SkyVerge\WooCommerce\Memberships\Profile_Fields\Profile_Field;
+use SkyVerge\WooCommerce\Memberships\Profile_Fields\Exceptions\Invalid_Field;
+use SkyVerge\WooCommerce\PluginFramework\v5_10_6 as Framework;
 
 defined( 'ABSPATH' ) or exit;
 
@@ -125,7 +128,7 @@ class WC_Memberships_CSV_Import_User_Memberships extends \WC_Memberships_Job_Han
 		 * @since 1.6.0
 		 *
 		 * @param string $enclosure default double quote `"`
-		 * @param \WC_Memberships_CSV_Import_User_Memberships_Background_Job $import_instance instance of the export class
+		 * @param \WC_Memberships_CSV_Import_User_Memberships_Background_Job $import_instance instance of the import class
 		 * @param \stdClass $job import job
 		 */
 		return (string) apply_filters( 'wc_memberships_csv_import_enclosure', parent::get_csv_enclosure(), $this, $job );
@@ -182,12 +185,14 @@ class WC_Memberships_CSV_Import_User_Memberships extends \WC_Memberships_Job_Han
 			'notify_new_users'           => false,
 			'fields_delimiter'           => 'comma',
 			'timezone'                   => wc_timezone_string(),
+			'cli'                        => false,
 			'total'                      => 0,
 			'results'                    => (object) array(
 				'memberships_created' => 0,
 				'memberships_merged'  => 0,
 				'users_created'       => 0,
 				'rows_skipped'        => 0,
+				'profile_fields'      => [],
 				'html'                => '',
 			),
 		) );
@@ -228,20 +233,42 @@ class WC_Memberships_CSV_Import_User_Memberships extends \WC_Memberships_Job_Han
 		$upload_dir    = wp_upload_dir( null, false );
 		$imports_dir   = trailingslashit( $upload_dir['basedir'] ) . $this->imports_dir;
 		$imported_path = trailingslashit( $imports_dir ) . $attrs['file_name'];
+		$htaccess_path = trailingslashit( $imports_dir ) . '.htaccess';
 
 		/* translators: Placeholders: %1$s - file name, %2$s - file path */
 		$write_error_message = sprintf( esc_html__( 'Failed to move the file "%1$s" to "%2$s" for processing: is the directory writable?', 'woocommerce-memberships' ), $file_name, $imports_dir );
 
 		// cannot create the imports directory
 		if ( ! wp_mkdir_p( $imports_dir ) ) {
-			throw  new Framework\SV_WC_Plugin_Exception( $write_error_message );
+			throw new Framework\SV_WC_Plugin_Exception( $write_error_message );
 		}
 
-		// cannot move file to imports directory
-		if ( ! @move_uploaded_file( $attrs['file']['tmp_name'], $imported_path ) ) {
-			throw new Framework\SV_WC_Plugin_Exception( $write_error_message );
+		// protect import files in case of failed/frozen job
+		if ( ! file_exists( $htaccess_path ) && $file_handle = @fopen( $htaccess_path, 'w' ) ) {
+
+			fwrite( $file_handle, 'deny from all' );
+			fclose( $file_handle );
+		}
+
+		// when importing memberships from the CLI, we use the file path provided directly from the CLI user instead of creating a temporary file from a form upload
+		if ( defined( 'WP_CLI' ) && WP_CLI && ! empty( $attrs['file']['tmp_name'] ) ) {
+
+			$file_name     = $attrs['file']['name'];
+			$imported_path = untrailingslashit( str_replace( $file_name, '', $attrs['file']['tmp_name'] ) );
+
+			$attrs['cli']       = true;
+			$attrs['file_name'] = $file_name;
+			$attrs['file_path'] = $imported_path . '/' . $file_name;
+
+		// when importing from a form upload, create a temporary file in the designated WordPress import path
 		} else {
-			$attrs['file_path'] = $imported_path;
+
+			// cannot move file to imports directory
+			if ( ! @move_uploaded_file( $attrs['file']['tmp_name'], $imported_path ) ) {
+				throw new Framework\SV_WC_Plugin_Exception( $write_error_message );
+			} else {
+				$attrs['file_path'] = $imported_path;
+			}
 		}
 
 		$this->handle_file_encoding( $file_name );
@@ -249,7 +276,7 @@ class WC_Memberships_CSV_Import_User_Memberships extends \WC_Memberships_Job_Han
 		$file_handle = @fopen( $attrs['file_path'], 'r' );
 
 		// this shouldn't happen by this point, yet throw an error in case
-		if ( false === $file_handle || ! is_writable( $attrs['file_path'] ) ) {
+		if ( false === $file_handle || ( ! ( defined( 'WP_CLI' ) && WP_CLI ) && ! is_writable( $attrs['file_path'] ) ) ) {
 			throw new Framework\SV_WC_Plugin_Exception( $write_error_message );
 		}
 
@@ -330,6 +357,7 @@ class WC_Memberships_CSV_Import_User_Memberships extends \WC_Memberships_Job_Han
 		$current_position = $file_position;
 		$file_size        = max( 0, (int) $job->file_size );
 		$headers          = fgetcsv( $file_handle, 0, $this->get_csv_delimiter( $job ), $this->get_csv_delimiter( 'import' ) );
+		$headers          = is_array( $headers ) ? array_map( 'trim', $headers ) : $headers;
 		$headers_columns  = $headers ? count( $headers ) : 0;
 
 		// cannot parse headers
@@ -511,6 +539,7 @@ class WC_Memberships_CSV_Import_User_Memberships extends \WC_Memberships_Job_Han
 			$import_data['member_last_name']      = ! empty( $row['member_last_name'] )  ? $row['member_last_name']  : null;
 			$import_data['membership_status']     = ! empty( $row['membership_status'] ) ? $row['membership_status'] : null;
 			$import_data['member_since']          = ! empty( $row['member_since'] )      ? $row['member_since']      : null;
+			$import_data['member_role']           = ! empty( $row['member_role'] )       ? $row['member_role']       : null;
 
 			// we don't check for empty here, because an empty string membership expiration means the membership is unlimited
 			if ( isset( $row['membership_expiration'] ) && ( is_string( $row['membership_expiration'] ) || is_numeric( $row['membership_expiration'] ) ) ) {
@@ -519,6 +548,9 @@ class WC_Memberships_CSV_Import_User_Memberships extends \WC_Memberships_Job_Han
 			} else {
 				$import_data['membership_expiration'] = null;
 			}
+
+			// add the profile fields' data
+			$import_data = array_merge( $this->get_profile_fields_import_data( $row ), $import_data );
 
 			/**
 			 * Filter CSV User Membership import data before processing an import.
@@ -596,6 +628,29 @@ class WC_Memberships_CSV_Import_User_Memberships extends \WC_Memberships_Job_Han
 
 
 	/**
+	 * Gets the member profile fields' values from row data.
+	 *
+	 * @since 1.19.0
+	 *
+	 * @param array $row_data CSV row data
+	 * @return array
+	 */
+	private function get_profile_fields_import_data( $row_data ) {
+
+		$profile_fields_import_data = $row_data;
+
+		foreach ( $row_data as $key => $value ) {
+
+			if ( ! Profile_Fields::is_profile_field_slug( $key ) ) {
+				unset( $profile_fields_import_data[ $key ] );
+			}
+		}
+
+		return $profile_fields_import_data;
+	}
+
+
+	/**
 	 * Creates or updates a User Membership according to import data.
 	 *
 	 * @see \WC_Memberships_CSV_Import_User_Memberships::import_user_memberships()
@@ -611,7 +666,7 @@ class WC_Memberships_CSV_Import_User_Memberships extends \WC_Memberships_Job_Han
 
 		$user_membership = null;
 
-		if ( in_array( $action, array( 'create', 'merge' ), false ) ) {
+		if ( in_array( $action, [ 'create', 'merge' ], false ) ) {
 
 			// make sure an user id exists
 			$user    = $this->import_user_id( $action, $import_data, $job );
@@ -622,13 +677,7 @@ class WC_Memberships_CSV_Import_User_Memberships extends \WC_Memberships_Job_Han
 				$user_handling = key( $user );
 
 				if ( 'created' === $user_handling ) {
-
 					$job = $this->update_job_results( $job, 'users_created' );
-
-					// optionally notify a newly created user by sending a new account WordPress email notification
-					if ( 'create' === $action && ! empty( $job->notify_new_users ) ) {
-						wp_new_user_notification( $user_id, null, 'user' );
-					}
 				}
 
 				// update the import data with the retrieved id
@@ -647,13 +696,13 @@ class WC_Memberships_CSV_Import_User_Memberships extends \WC_Memberships_Job_Han
 						// create the User Membership
 						try {
 
-							$user_membership = wc_memberships_create_user_membership( array(
+							$user_membership = wc_memberships_create_user_membership( [
 								'user_membership_id' => 0,
 								'plan_id'            => $import_data['membership_plan']->get_id(),
 								'user_id'            => $user_id,
 								'product_id'         => ! empty( $import_data['product_id'] ) ? (int) $import_data['product_id'] : 0,
 								'order_id'           => ! empty( $import_data['order_id'] )   ? (int) $import_data['order_id']   : 0,
-							), 'create' );
+							], 'create' );
 
 						} catch ( Framework\SV_WC_Plugin_Exception $e ) {
 
@@ -681,6 +730,26 @@ class WC_Memberships_CSV_Import_User_Memberships extends \WC_Memberships_Job_Han
 
 					// update meta upon create or update action
 					$user_membership = $this->update_user_membership_meta( $user_membership, $action, $import_data, $job );
+
+					// update member profile fields upon create or update action
+					$user_membership = $this->update_member_profile_fields( $user_membership, $import_data, $job );
+
+					// update user role
+					if ( ! empty( $import_data['member_role'] ) ) {
+
+						$user = get_user_by( 'id', $user_membership->get_user_id() );
+
+						if ( $user ) {
+
+							// the merchant wants to set the user to a specific role, the behavior below to remove the last role they had is for backwards compatibility from a free add on that was merged into the core plugin
+							wc_memberships()->get_user_memberships_instance()->update_member_user_role(
+								$user->ID,
+								is_array( $user->roles ) ? array_shift( $user->roles ) : '',
+								$import_data['member_role'],
+								true
+							);
+						}
+					}
 
 					/**
 					 * Fires upon creating or updating a User Membership from import data.
@@ -808,6 +877,51 @@ class WC_Memberships_CSV_Import_User_Memberships extends \WC_Memberships_Job_Han
 
 
 	/**
+	 * Updates the member profile fields.
+	 *
+	 * @since 1.19.0
+	 *
+	 * @param \WC_Memberships_User_Membership $user_membership
+	 * @param array $data import data
+	 * @param \stdClass $job job object being processed
+	 * @return \WC_Memberships_User_Membership
+	 */
+	private function update_member_profile_fields( \WC_Memberships_User_Membership $user_membership, $data, $job ) {
+
+		foreach ( $data as $key => $value ) {
+
+			if ( Profile_Fields::is_profile_field_slug( $key ) ) {
+
+				try {
+
+					// in case of multi-value profile fields, ensure the value to set is of array type
+					if ( is_string( $value ) ) {
+
+						$definition = Profile_Fields::get_profile_field_definition( $key );
+
+						if ( $definition && $definition->is_multiple() ) {
+							$value = array_map( 'trim', explode( ',', $value ) );
+						}
+					}
+
+					$user_membership->set_profile_field( $key, $value );
+
+				} catch ( \Exception $exception ) {
+
+					$code = $exception->getCode();
+
+					$job->results->profile_fields[ $code ] = ( isset( $job->results->profile_fields[ $code ] ) ? $job->results->profile_fields[ $code ] + 1 : 1 );
+				}
+			}
+		}
+
+		$this->update_job( $job );
+
+		return $user_membership;
+	}
+
+
+	/**
 	 * Updates a User Membership meta data.
 	 *
 	 * @since 1.10.0
@@ -897,7 +1011,7 @@ class WC_Memberships_CSV_Import_User_Memberships extends \WC_Memberships_Job_Han
 			if ( is_numeric( $expiry_date ) && $expiry_date - 60 <= current_time( 'timestamp', true ) && ! $user_membership->is_expired() && ! $user_membership->is_cancelled() ) {
 				$user_membership->expire_membership();
 			// sanity check for memberships created with a start date in the future
-			} elseif ( 'delayed' !== $user_membership->get_status()  && $user_membership->get_start_date( 'timestamp' ) > current_time( 'timestamp', true ) ) {
+			} elseif ( ! $user_membership->has_status( 'delayed' )  && $user_membership->get_start_date( 'timestamp' ) > current_time( 'timestamp', true ) ) {
 				$user_membership->update_status( 'delayed' );
 			}
 		}
@@ -912,31 +1026,28 @@ class WC_Memberships_CSV_Import_User_Memberships extends \WC_Memberships_Job_Han
 	 * @since 1.10.0
 	 *
 	 * @param string $action either 'merge' or 'create
-	 * @param array $data import data
+	 * @param array $import_data import data
 	 * @param \stdClass $job current job in progress
-	 * @return array an associative array reflecting the user handling and the user ID (if 0, the import is unsuccessfull)
+	 * @return array an associative array reflecting the user handling and the user ID (if 0, the import is unsuccessful)
 	 */
-	private function import_user_id( $action, $data, $job )  {
+	private function import_user_id( $action, $import_data, $job )  {
 
-		// try to get a user from passed data, by id or other fields
-		$user_id  = isset( $data['user_id'] ) ? (int) $data['user_id'] : 0;
-		$user     = $user_id > 0 ? get_user_by( 'id', $user_id ) : $this->get_user( $data );
+		// try to get a user from user data, by id or other fields
+		$user     = $this->get_user( $import_data );
 		$user_id  = $user instanceof \WP_User ? $user->ID : 0;
 		$handling = 'updated';
 
 		// if can't determine a valid user, try to create one
-		if ( 0 === $user_id && $job->create_new_users && ( 'create' === $action || ( $job->allow_memberships_transfer && isset( $data['member_email'] ) ) ) ) {
+		if ( 0 === $user_id && $job->create_new_users && ( 'create' === $action || ( $job->allow_memberships_transfer && isset( $import_data['member_email'] ) ) ) ) {
 
-			$user     = $this->create_user( $data );
+			$user     = $this->create_user( $import_data, $job );
 			$user_id  = $user ? $user->ID : $user_id;
 			$handling = 'created';
 		}
 
-		$user = null;
-
 		unset( $user );
 
-		return array( $handling => $user_id );
+		return [ $handling => $user_id ];
 	}
 
 
@@ -983,22 +1094,23 @@ class WC_Memberships_CSV_Import_User_Memberships extends \WC_Memberships_Job_Han
 	 *
 	 * @since 1.10.0
 	 *
-	 * @param array $user_data arguments to create a user, must contain at least a 'member_email' key
+	 * @param array $import_data arguments to create a user, must contain at least a 'member_email' key
+	 * @param \stdClass $job job object
 	 * @return false|\WP_User
 	 */
-	private function create_user( $user_data ) {
+	private function create_user( $import_data, $job ) {
 
 		// we need at least a valid email
-		if ( empty( $user_data['member_email'] ) || ! is_email( $user_data['member_email'] ) )  {
+		if ( empty( $import_data['member_email'] ) || ! is_email( $import_data['member_email'] ) )  {
 			return false;
 		}
 
-		$email    = $user_data['member_email'];
+		$email    = $import_data['member_email'];
 		$username = null;
 
-		if ( ! empty( $user_data['user_name'] ) && ! get_user_by( 'login', $user_data['user_name'] ) ) {
+		if ( ! empty( $import_data['user_name'] ) && ! get_user_by( 'login', $import_data['user_name'] ) ) {
 
-			$username = $user_data['user_name'];
+			$username = $import_data['user_name'];
 		}
 
 		if ( ! $username ) {
@@ -1012,22 +1124,48 @@ class WC_Memberships_CSV_Import_User_Memberships extends \WC_Memberships_Job_Han
 			}
 		}
 
-		$data = array(
+		$user_data = [
 			'user_login' => wp_slash( $username ),
-			'user_pass'  => wp_generate_password(),
 			'user_email' => wp_slash( $email ),
-			'first_name' => ! empty( $user_data['member_first_name'] ) ? $user_data['member_first_name'] : '',
-			'last_name'  => ! empty( $user_data['member_last_name'] ) ? $user_data['member_last_name'] : '',
+			'first_name' => ! empty( $import_data['member_first_name'] ) ? $import_data['member_first_name'] : '',
+			'last_name'  => ! empty( $import_data['member_last_name'] )  ? $import_data['member_last_name']  : '',
 			'role'       => 'customer',
-		);
+		];
+
+		/**
+		 * Filters how to handle imported user password generation.
+		 *
+		 * If true, WooCommerce will generate the password and display the password in the welcome email.
+		 * If false, WordPress will generate the password quietly and WooCommerce won't display it in the welcome email.
+		 *
+		 * @since 1.19.2
+		 *
+		 * @param bool $notify_new_users_password whether the password will be displayed in WooCommerce emails
+		 * @param array $import_data the user import data
+		 * @param \stdClass $job member import job
+		 */
+		if ( ! empty( $job->notify_new_users ) && (bool) apply_filters( 'wc_memberships_csv_import_woocommerce_generate_password', 'yes' === get_option( 'woocommerce_registration_generate_password' ), $import_data, $job ) ) {
+			$user_data['user_pass'] = ''; /** handled in {@see wc_create_new_customer()} */
+		} else {
+			$user_data['user_pass'] = wp_generate_password();
+		}
 
 		// we need to unhook our automatic handling to avoid race conditions or duplicated free memberships creation
-		remove_action( 'user_register', array( wc_memberships()->get_plans_instance(), 'grant_access_to_free_membership' ), 10 );
+		remove_action( 'user_register', [ wc_memberships()->get_plans_instance(), 'grant_access_to_free_membership' ], 10 );
 
-		$user_id = wp_insert_user( $data );
+		// do not send default Wordpress emails on manual user creation in the current thread
+		add_filter( 'send_password_change_email', '__return_false' );
+		add_filter( 'send_email_change_email',    '__return_false' );
+
+		// optionally notify a newly created user by sending a new account WooCommerce New Account email notification
+		if ( ! empty( $job->notify_new_users ) ) {
+			$user_id = wc_create_new_customer( $user_data['user_email'], $user_data['user_login'], $user_data['user_pass'], $user_data );
+		} else {
+			$user_id = wp_insert_user( $user_data );
+		}
 
 		/* this hook is documented in class-wc-memberships-membership-plans.php */
-		add_action( 'user_register', array( wc_memberships()->get_plans_instance(), 'grant_access_to_free_membership' ), 10, 2 );
+		add_action( 'user_register', [ wc_memberships()->get_plans_instance(), 'grant_access_to_free_membership' ], 10, 2 );
 
 		return is_wp_error( $user_id ) ? false : get_user_by( 'id', $user_id );
 	}
@@ -1088,6 +1226,27 @@ class WC_Memberships_CSV_Import_User_Memberships extends \WC_Memberships_Job_Han
 					$message .= '<li>' . sprintf( _n( '%s row skipped.', '%s rows skipped.', $skipped_rows, 'woocommerce-memberships' ), $skipped_rows ) . '</li>';
 				}
 
+				foreach ( $results->profile_fields as $error_code => $error_count ) {
+
+					if ( $error_count > 0 ) {
+
+						switch ( $error_code ) {
+
+							case Invalid_Field::ERROR_REQUIRED_VALUE:
+								$message .= '<li>' . __( 'Some required profile fields had empty values and were not imported.', 'woocommerce-memberships' ) . '</li>';
+							break;
+
+							case Invalid_Field::ERROR_INVALID_PLAN:
+								$message .= '<li>' . __( 'Some profile fields could not be populated for users based on their assigned membership plans.', 'woocommerce-memberships' ) . '</li>';
+							break;
+
+							case Invalid_Field::ERROR_INVALID_VALUE:
+								$message .= '<li>' . __( 'Some profile fields had invalid values and were not imported.', 'woocommerce-memberships' ) . '</li>';
+							break;
+						}
+					}
+				}
+
 				$message .= '</ul>';
 
 			} else {
@@ -1112,7 +1271,18 @@ class WC_Memberships_CSV_Import_User_Memberships extends \WC_Memberships_Job_Han
 	 */
 	public function delete_import_file( $job ) {
 
-		$success = parent::delete_attached_file( $job );
+		if ( is_object( $job ) ) {
+			$job_data = (array) $job;
+		} else {
+			$job_data = [];
+		}
+
+		// do not actually delete the original file if importing via WP CLI, only log message
+		if ( isset( $job_data['cli'] ) && true === $job_data['cli'] ) {
+			$success = true;
+		} else {
+			$success = $this->delete_attached_file( $job );
+		}
 
 		switch ( current_action() ) {
 			case "{$this->identifier}_job_failed" :
@@ -1128,71 +1298,9 @@ class WC_Memberships_CSV_Import_User_Memberships extends \WC_Memberships_Job_Han
 		}
 
 		wc_memberships()->log( $log_message );
-
-		if ( null !== $job && is_object( $job ) ) {
-			wc_memberships()->log( print_r( (array) $job, true ) );
-		}
+		wc_memberships()->log( print_r( $job_data, true ) );
 
 		return $success;
-	}
-
-
-	/**
-	 * Backwards compatibility handler for deprecated methods.
-	 *
-	 * TODO remove deprecated methods when they are at least 3 minor versions older (as in x.Y.z semantic versioning) {FN 2017-23-06}
-	 *
-	 * @since 1.10.0
-	 *
-	 * @param string $method method called
-	 * @param void|string|array|mixed $args optional argument(s)
-	 * @return null|void|mixed
-	 */
-	public function __call( $method, $args ) {
-
-		$deprecated = "WC_Memberships_CSV_Import_User_Memberships::{$method}()";
-
-		switch ( $method ) {
-
-			/* @deprecated  since 1.10.0 - remove this method by 1.13.0 */
-			case 'get_fields' :
-				_deprecated_function( $deprecated, '1.10.0' );
-				return array();
-
-			/* @deprecated  since 1.10.0 - remove this method by 1.13.0 */
-			case 'render_section' :
-				_deprecated_function( $deprecated, '1.10.0' );
-				return null;
-
-			/* @deprecated  since 1.10.0 - remove this method by 1.13.0 */
-			case 'render_content' :
-				_deprecated_function( $deprecated, '1.10.0' );
-				return null;
-
-			/* @deprecated  since 1.10.0 - remove this method by 1.13.0 */
-			case 'render_file_upload_field' :
-				_deprecated_function( $deprecated, '1.10.0' );
-				return null;
-
-			/* @deprecated  since 1.10.0 - remove this method by 1.13.0 */
-			case 'render_date_range_field' :
-				_deprecated_function( $deprecated, '1.10.0' );
-				return null;
-
-			/* @deprecated  since 1.10.0 - remove this method by 1.13.0 */
-			case 'set_admin_page_title' :
-				_deprecated_function( $deprecated, '1.10.0' );
-				return isset( $args[0] ) ? $args[0] : '';
-
-			/* @deprecated  since 1.10.0 - remove this method by 1.13.0 */
-			case 'process_import' :
-				_deprecated_function( $deprecated, '1.10.0' );
-				return null;
-		}
-
-		// you're probably doing it wrong
-		trigger_error( "Call to undefined method {$deprecated}", E_USER_ERROR );
-		return null;
 	}
 
 

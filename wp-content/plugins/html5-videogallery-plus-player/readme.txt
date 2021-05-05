@@ -2,7 +2,7 @@
 Contributors: wponlinesupport, anoopranawat, pratik-jain
 Tags: video gallery, video, HTML5 video, video.js, youtube video gallery, vimeo video gallery, youtube video gallery with popup,  youtube gallery, youtube player, magnific Popup, vimeo video gallery, HTML5 video player, HTML5 video gallery, responsive, wordpress responsive video gallery, wponlinesupport  
 Requires at least: 4.0
-Tested up to: 5.6
+Tested up to: 5.7.1
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -13,7 +13,7 @@ Easy to add and display your HTML5, YouTube, Vimeo vedio gallery with Magnific P
 
 This plugin add a responsive HTML5, YouTube, Vimeo vedio gallery with Magnific Popup to your  WordPress website. Display video gallery in grid view(1,2,3,4) etc. You can also use category id to create multiple vedio galleries.
 
-Check [Demo and Features](https://demo.wponlinesupport.com/video-gallery-and-player-demo/) for additional information.
+Check [Features and Demo](https://www.wponlinesupport.com/wp-plugin/video-gallery-player/) for additional information.
 
 The plugin adds a Video gallery tab to your admin menu, which allows you to enter Video Title and Video source items just as you would regular posts.
 
@@ -79,6 +79,7 @@ directly to your template file.
 > * WPBakery Page Builder Support
 > * Elementor, Beaver and SiteOrigin Page Builder Support (New).
 > * Divi Page Builder Native Support (New).
+> * Fusion Page Builder(Avada) Native Support (New).
 > * Display videos in a grid view.
 > * Display video with title and description.
 > * Display video in slider view.
@@ -121,6 +122,12 @@ OR
 7. Also work with Gutenberg shortcode block.
 
 == Changelog ==
+
+= 2.5 (3, May 2021) =
+* [+] New - Added Gutenberg block support. Now use plugin easily with Gutenberg!
+* [+] New - Added 'align' and 'extra_class' parameter for all shortcode. Now both slider shortcode is support twenty-nineteen and twenty-twenty theme Gutenberg block align and additional class feature.
+* [*] Tweak - Code optimization and performance improvements.
+* [*] jQuery( document ).ready(function($) is replaced with function( $ ) to solve the issue with 3rd party plugin and theme js error.
 
 = 2.4 (29, Oct 2020) =
 * [*] Update - Regular plugin maintenance. Updated readme file.

@@ -139,6 +139,7 @@ jQuery( function( $ ) {
 	}
 
 	var $edit_in_cart                 = $( 'p._wc_pb_edit_in_cart_field' ),
+		$product_type_select          = $( 'select#product-type' ),
 		$group_mode_select            = $( 'select#_wc_pb_group_mode' ),
 		$bundled_products_panel       = $( '#bundled_product_data' ),
 		$bundled_products_wrapper     = $bundled_products_panel.find( '.wc-metaboxes-wrapper' ),
@@ -184,14 +185,29 @@ jQuery( function( $ ) {
 			$( '.show_if_external' ).hide();
 			$( '.show_if_bundle' ).show();
 
-			$( 'input#_manage_stock' ).change();
+			$( 'input#_manage_stock' ).trigger( 'change' );
 
-			$( '#_nyp' ).change();
+			$( '#_nyp' ).trigger( 'change' );
 		}
 
 	} );
 
-	$group_mode_select.change( function() {
+	// On submit, post two inputs to determine if 'max_input_vars' kicks in: One at the start of the form (control) and one at the end (test).
+	$( 'form#post' ).on( 'submit', function() {
+
+		if ( 'bundle' === $product_type_select.val() ) {
+
+			var $form        = $( this ),
+			    $control_var = $( '<input type="hidden" name="pb_post_control_var" value="1"/>' ),
+			    $test_var    = $( '<input type="hidden" name="pb_post_test_var" value="1"/>' );
+
+			$form.prepend( $control_var );
+			$form.append( $test_var );
+		}
+	} );
+
+	// Show/hide 'Edit in cart' option.
+	$group_mode_select.on( 'change', function() {
 		if ( $.inArray( $group_mode_select.val(), wc_bundles_admin_params.group_modes_with_parent ) === -1 ) {
 			$edit_in_cart.hide();
 		} else {
@@ -200,15 +216,15 @@ jQuery( function( $ ) {
 	} );
 
 	// Downloadable support.
-	$( 'input#_downloadable' ).change( function() {
-		$( 'select#product-type' ).change();
+	$( 'input#_downloadable' ).on( 'change', function() {
+		$product_type_select.trigger( 'change' );
 	} );
 
 	// Trigger product type change.
-	$( 'select#product-type' ).change();
+	$product_type_select.trigger( 'change' );
 
 	// Trigger group mode change.
-	$group_mode_select.change();
+	$group_mode_select.trigger( 'change' );
 
 	init_event_handlers();
 
@@ -234,7 +250,7 @@ jQuery( function( $ ) {
 					return false;
 				}
 
-				$bundled_product_search.val( [] ).change();
+				$bundled_product_search.val( [] ).trigger( 'change' );
 
 				$bundled_products_panel.block( block_params );
 
@@ -501,7 +517,7 @@ jQuery( function( $ ) {
 	function init_nux() {
 
 		if ( 'yes' === wc_bundles_admin_params.is_first_bundle ) {
-			$( 'select#product-type' ).val( 'bundle' ).change().focus();
+			$product_type_select.val( 'bundle' ).trigger( 'change' ).trigger( 'focus' );
 			setTimeout( function() {
 				$( '.bundled_products_tab a' ).trigger( 'click' );
 			}, 500 );
@@ -539,7 +555,7 @@ jQuery( function( $ ) {
 			$this.addClass( 'sw-expanding-button--open' );
 
 			focus_timer = setTimeout( function() {
-				$input.focus();
+				$input.trigger( 'focus' );
 			}, 700 );
 
 			$bundled_product_search.one( 'change', function() {
@@ -563,8 +579,7 @@ jQuery( function( $ ) {
 			$virtual_checkbox        = $( 'input#_virtual' ),
 			$bundle_type_container   = $shipping_data_container.find( '.options_group.bundle_type' ),
 			$bundle_type_options     = $bundle_type_container.find( '.bundle_type_options li' ),
-			virtual_state            = $( 'input#_virtual:checked' ).length ? true : false,
-			$product_type_select     = $( 'select#product-type' );
+			virtual_state            = $( 'input#_virtual:checked' ).length ? true : false;
 
 		// Move Bundle type options group first.
 		$bundle_type_container.detach().prependTo( $shipping_data_container );
@@ -584,7 +599,7 @@ jQuery( function( $ ) {
 			if ( 'bundle' !== select_val ) {
 				// Restore virtual state.
 				if ( 'simple' === select_val ) {
-					$virtual_checkbox.prop( 'checked', virtual_state ).change();
+					$virtual_checkbox.prop( 'checked', virtual_state ).trigger( 'change' );
 				}
 			}
 

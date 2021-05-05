@@ -1,6 +1,6 @@
 <?php
 /**
- * WooCommerce Customer/Order CSV Export
+ * WooCommerce Customer/Order/Coupon Export
  *
  * This source file is subject to the GNU General Public License v3.0
  * that is bundled with this package in the file license.txt.
@@ -12,17 +12,21 @@
  *
  * DISCLAIMER
  *
- * Do not edit or add to this file if you wish to upgrade WooCommerce Customer/Order CSV Export to newer
- * versions in the future. If you wish to customize WooCommerce Customer/Order CSV Export for your
+ * Do not edit or add to this file if you wish to upgrade WooCommerce Customer/Order/Coupon Export to newer
+ * versions in the future. If you wish to customize WooCommerce Customer/Order/Coupon Export for your
  * needs please refer to http://docs.woocommerce.com/document/ordercustomer-csv-exporter/
  *
- * @package     WC-Customer-Order-CSV-Export/Classes
  * @author      SkyVerge
- * @copyright   Copyright (c) 2012-2018, SkyVerge, Inc.
+ * @copyright   Copyright (c) 2015-2021, SkyVerge, Inc. (info@skyverge.com)
  * @license     http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
 defined( 'ABSPATH' ) or exit;
+
+use SkyVerge\WooCommerce\CSV_Export\CSV_Export_Generator;
+use SkyVerge\WooCommerce\CSV_Export\Export_Generator;
+use SkyVerge\WooCommerce\CSV_Export\XML_Export_Generator;
+use SkyVerge\WooCommerce\PluginFramework\v5_10_6 as Framework;
 
 /**
  * Customer/Order CSV Export Export class
@@ -40,7 +44,7 @@ class WC_Customer_Order_CSV_Export_Export {
 	/** @var \WC_Customer_Order_CSV_Export_Data_Store data store instance */
 	protected $data_store;
 
-	/** @var \WC_Customer_Order_CSV_Export_Generator generator instance */
+	/** @var Export_Generator generator instance */
 	protected $generator;
 
 
@@ -51,15 +55,20 @@ class WC_Customer_Order_CSV_Export_Export {
 	 *
 	 * @param string|object|array $args {
 	 *     A job ID string, a stdClass job object, or an array of arguments to create a new job with the following options:
+	 *     @type string $automation_id the ID of an automation associated with the export
 	 *     @type array $object_ids an array of order/customer IDs to be exported
+	 *     @type string $output_type output type either `csv` or `xml`. Defaults to `csv`
 	 *     @type string $type Export type either `orders` or `customers`. Defaults to `orders`
+	 *     @type string $format_key an identifier for a export format definition
 	 *     @type string $method Export transfer method, such as `email`, `ftp`, etc. Defaults to `download`
 	 *     @type string $invocation Export invocation type, used for informational purposes. One of `manual` or `auto`, defaults to `manual`
 	 *     @type string $storage_method the slug of the data store to be used for persisting the export, defaults to `database`
 	 *     @type string $filename the desired export filename
+	 *     @type bool $mark_as_exported whether exported objects should be marked as exported and excluded from future exports
+	 *     @type bool $add_notes whether notes should be added to exported objects
 	 *     @type bool $dispatch true to dispatch the background job queue after creation, false if not using background processing
 	 * }
-	 * @throws \SV_WC_Plugin_Exception
+	 * @throws Framework\SV_WC_Plugin_Exception
 	 */
 	public function __construct( $args ) {
 
@@ -79,19 +88,20 @@ class WC_Customer_Order_CSV_Export_Export {
 		// array of attributes for a new job
 		} elseif ( is_array( $args ) ) {
 
-			$args = wp_parse_args( $args, array(
-				'type'            => 'orders',
+			$args = wp_parse_args( $args, [
+				'output_type'     => WC_Customer_Order_CSV_Export::OUTPUT_TYPE_CSV,
+				'type'            => WC_Customer_Order_CSV_Export::EXPORT_TYPE_ORDERS,
 				'method'          => 'download',
 				'invocation'      => 'manual',
 				'storage_method'  => 'database',
 				'transfer_status' => null
-			) );
+			] );
 
 			$dispatch = isset( $args['dispatch'] ) ? (bool)$args['dispatch'] : false;
 
 			unset( $args['dispatch'] );
 
-			$data_store = WC_Customer_Order_CSV_Export_Data_Store_Factory::create( $args['storage_method'] );
+			$data_store = \WC_Customer_Order_CSV_Export_Data_Store_Factory::create( $args['storage_method'], $args['output_type'] );
 
 			if ( $data_store ) {
 
@@ -103,7 +113,7 @@ class WC_Customer_Order_CSV_Export_Export {
 		}
 
 		if ( ! $job ) {
-			throw new SV_WC_Plugin_Exception( __( 'Unable to find or create export job', 'woocommerce-customer-order-csv-export' ) );
+			throw new Framework\SV_WC_Plugin_Exception( __( 'Unable to find or create export job', 'woocommerce-customer-order-csv-export' ) );
 		}
 
 		$this->job = $job;
@@ -123,7 +133,7 @@ class WC_Customer_Order_CSV_Export_Export {
 	 */
 	public function export_item( $item ) {
 
-		$this->store_item( $this->get_generator()->get_output( array( $item ) ) );
+		$this->store_item( $this->get_generator()->get_output( [ $item ] ) );
 	}
 
 
@@ -199,7 +209,7 @@ class WC_Customer_Order_CSV_Export_Export {
 			$this->update_job_attr( 'storage_method', $storage_method );
 		}
 
-		return $storage_method ? $this->data_store = WC_Customer_Order_CSV_Export_Data_Store_Factory::create( $storage_method ) : null;
+		return $storage_method ? $this->data_store = \WC_Customer_Order_CSV_Export_Data_Store_Factory::create( $storage_method, $this->get_output_type() ) : null;
 	}
 
 
@@ -208,18 +218,42 @@ class WC_Customer_Order_CSV_Export_Export {
 	 *
 	 * @since 4.5.0
 	 *
-	 * @return \WC_Customer_Order_CSV_Export_Generator
+	 * @return Export_Generator
 	 */
 	public function get_generator() {
 
 		if ( $this->generator ) {
-
 			return $this->generator;
 		}
 
-		require_once wc_customer_order_csv_export()->get_plugin_path() . '/includes/class-wc-customer-order-csv-export-generator.php';
+		switch ( $this->get_output_type() ) {
 
-		return $this->generator = new WC_Customer_Order_CSV_Export_Generator( $this->get_type(), $this->get_object_ids() );
+			case WC_Customer_Order_CSV_Export::OUTPUT_TYPE_CSV:
+
+				require_once wc_customer_order_csv_export()->get_plugin_path() . '/includes/Export_Generator.php';
+				require_once wc_customer_order_csv_export()->get_plugin_path() . '/includes/CSV_Export_Generator.php';
+				$this->generator = new CSV_Export_Generator( $this->get_type(), $this->get_object_ids(), $this->get_format_key() );
+
+				return $this->generator;
+
+			break;
+
+			case WC_Customer_Order_CSV_Export::OUTPUT_TYPE_XML:
+
+				require_once wc_customer_order_csv_export()->get_plugin_path() . '/includes/Export_Generator.php';
+				require_once wc_customer_order_csv_export()->get_plugin_path() . '/includes/XML_Export_Generator.php';
+				$this->generator = new XML_Export_Generator( $this->get_type(), $this->get_object_ids(), $this->get_format_key() );
+
+				return $this->generator;
+			break;
+
+			default:
+
+				_doing_it_wrong( __FUNCTION__, sprintf( 'Invalid output type' ), '5.0.0' );
+				return null;
+
+			break;
+		}
 	}
 
 
@@ -357,6 +391,22 @@ class WC_Customer_Order_CSV_Export_Export {
 
 
 	/**
+	 * Gets the output type.
+	 *
+	 * @since 5.0.0
+	 *
+	 * @return string output type - either `csv` or `xml`
+	 */
+	public function get_output_type() {
+
+		$job_output_type = $this->get_job_attr( 'output_type' );
+
+		// defaults to CSV if the job attribute is not set
+		return ! empty( $job_output_type ) ? $job_output_type : WC_Customer_Order_CSV_Export::OUTPUT_TYPE_CSV;
+	}
+
+
+	/**
 	 * Gets the export type.
 	 *
 	 * @since 4.5.0
@@ -435,6 +485,19 @@ class WC_Customer_Order_CSV_Export_Export {
 
 
 	/**
+	 * Gets the failed-at date/time.
+	 *
+	 * @since 5.0.0
+	 *
+	 * @return string the time this export failed
+	 */
+	public function get_failed_at() {
+
+		return $this->get_job_attr( 'failed_at' );
+	}
+
+
+	/**
 	 * Gets the export transfer status.
 	 *
 	 * @since 4.5.0
@@ -473,6 +536,72 @@ class WC_Customer_Order_CSV_Export_Export {
 	public function set_internal_filename( $internal_filename ) {
 
 		$this->update_job_attr( 'internal_filename', $internal_filename );
+	}
+
+
+	/**
+	 * Gets the ID of the automation associated with this export.
+	 *
+	 * @since 5.0.0
+	 *
+	 * @return string
+	 */
+	public function get_automation_id() {
+
+		return $this->get_job_attr( 'automation_id' );
+	}
+
+
+	/**
+	 * Gets the format key for the format definition that should be used in this export.
+	 *
+	 * @since 5.0.0
+	 *
+	 * @return string
+	 */
+	public function get_format_key() {
+
+		return $this->get_job_attr( 'format_key' );
+	}
+
+
+	/**
+	 * Determines whether a note should be added to objects included in this export.
+	 *
+	 * @since 5.0.0
+	 *
+	 * @return bool
+	 */
+	public function is_note_enabled() {
+
+		return (bool) $this->get_job_attr( 'add_notes' );
+	}
+
+
+	/**
+	 * Determines whether exported objects should be marked as exported and excluded
+	 * from future exports.
+	 *
+	 * @since 5.0.0
+	 *
+	 * @return bool
+	 */
+	public function is_mark_as_exported_enabled() {
+
+		return (bool) $this->get_job_attr( 'mark_as_exported' );
+	}
+
+
+	/**
+	 * Determines whether batch processing was used to start this export.
+	 *
+	 * @since 5.0.0
+	 *
+	 * @return bool
+	 */
+	public function is_batch_enabled() {
+
+		return (bool) $this->get_job_attr( 'batch_enabled' );
 	}
 
 

@@ -17,11 +17,11 @@
  * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @author    SkyVerge
- * @copyright Copyright (c) 2014-2019, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2021, SkyVerge, Inc. (info@skyverge.com)
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
-use SkyVerge\WooCommerce\PluginFramework\v5_3_1 as Framework;
+use SkyVerge\WooCommerce\PluginFramework\v5_10_6 as Framework;
 
 defined( 'ABSPATH' ) or exit;
 
@@ -161,7 +161,8 @@ class WC_Memberships_Integration_Bbpress {
 
 		} else {
 
-			$is_endpoint_url = ! empty( $_GET['members_area'] ) && is_numeric( $_GET['members_area'] );
+			$query_var       = wc_memberships_get_members_area_query_var();
+			$is_endpoint_url = ! empty( $_GET[ $query_var ] ) && is_numeric( $_GET[ $query_var ] );
 		}
 
 		return $is_endpoint_url;

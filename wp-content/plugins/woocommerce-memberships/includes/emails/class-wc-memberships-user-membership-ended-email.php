@@ -17,11 +17,11 @@
  * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @author    SkyVerge
- * @copyright Copyright (c) 2014-2019, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2021, SkyVerge, Inc. (info@skyverge.com)
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
-use SkyVerge\WooCommerce\PluginFramework\v5_3_1 as Framework;
+use SkyVerge\WooCommerce\PluginFramework\v5_10_6 as Framework;
 
 defined( 'ABSPATH' ) or exit;
 
@@ -42,16 +42,13 @@ class WC_Memberships_User_Membership_Ended_Email extends \WC_Memberships_User_Me
 	 */
 	public function __construct() {
 
-		$this->id    = __CLASS__;
-		$this->title = __( 'Membership ended', 'woocommerce-memberships' );
+		$this->id            = __CLASS__;
+		$this->plan_editable = true;
 
-		$description  =  __( 'Membership ended emails are sent to plan members in the moment their membership expires.', 'woocommerce-memberships' );
-		/* translators: Placeholders: %1$s - Opening <a> HTML tag, %2$s - Closing </a> HTML tag */
-		$description .= '<br>' . sprintf( __( 'You can edit the content of this email for %1$seach one of your plans%2$s individually.', 'woocommerce-memberships' ), '<a href="' . esc_url( admin_url( 'edit.php?post_type=wc_membership_plan' )  ) . '">', '</a>' );
-
-		$this->description    = $description;
-		$this->subject        = __( 'Your {site_title} membership has expired', 'woocommerce-memberships');
-		$this->heading        = __( 'Renew your {membership_plan}', 'woocommerce-memberships');
+		$this->title       = __( 'Membership ended', 'woocommerce-memberships' );
+		$this->description = __( 'Membership ended emails are sent to plan members in the moment their membership expires.', 'woocommerce-memberships' );
+		$this->subject     = __( 'Your {site_title} membership has expired', 'woocommerce-memberships');
+		$this->heading     = __( 'Renew your {membership_plan}', 'woocommerce-memberships');
 
 		$this->template_html  = 'emails/membership-ended.php';
 		$this->template_plain = 'emails/plain/membership-ended.php';

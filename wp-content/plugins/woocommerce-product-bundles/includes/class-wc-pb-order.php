@@ -2,7 +2,7 @@
 /**
  * WC_PB_Order class
  *
- * @author   SomewhereWarm <info@somewherewarm.gr>
+ * @author   SomewhereWarm <info@somewherewarm.com>
  * @package  WooCommerce Product Bundles
  * @since    4.5.0
  */
@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Product Bundle order-related functions and filters.
  *
  * @class    WC_PB_Order
- * @version  5.11.0
+ * @version  6.4.0
  */
 class WC_PB_Order {
 
@@ -121,6 +121,7 @@ class WC_PB_Order {
 			return false;
 		}
 
+		$bundle              = wc_get_product( $order_item->get_product_id() );
 		$configuration       = $order_item->get_meta( '_stamp', true );
 		$bundled_order_items = wc_pb_get_bundled_order_items( $order_item, $order );
 
@@ -148,7 +149,8 @@ class WC_PB_Order {
 			$configuration[ $bundled_item_id ][ 'quantity' ] = $bundled_order_item_qty / $order_item->get_quantity();
 		}
 
-		return $configuration;
+		// Finally, parse the configuration to add data for any new bundled items.
+		return $bundle ? WC_PB()->cart->parse_bundle_configuration( $bundle, $configuration ) : $configuration;
 	}
 
 	/**
@@ -219,7 +221,7 @@ class WC_PB_Order {
 					foreach ( $bundled_items as $bundled_item_id => $bundled_item ) {
 
 						$bundled_item_configuration  = isset( $configuration[ $bundled_item_id ] ) ? $configuration[ $bundled_item_id ] : array();
-						$bundled_item_quantity       = isset( $bundled_item_configuration[ 'quantity' ] ) ? absint( $bundled_item_configuration[ 'quantity' ] ) : $bundled_item->get_quantity();
+						$bundled_item_quantity       = isset( $bundled_item_configuration[ 'quantity' ] ) ? absint( $bundled_item_configuration[ 'quantity' ] ) : $bundled_item->get_quantity( 'default' );
 						$bundled_product             = isset( $bundled_item_configuration[ 'variation_id' ] ) && in_array( $bundled_item->product->get_type(), array( 'variable', 'variable-subscription' ) ) ? wc_get_product( $bundled_item_configuration[ 'variation_id' ] ) : $bundled_item->product;
 						$bundled_item_variation_data = isset( $bundled_item_configuration[ 'attributes' ] ) && in_array( $bundled_item->product->get_type(), array( 'variable', 'variable-subscription' ) ) ? $bundled_item_configuration[ 'attributes' ] : array();
 						$bundled_item_discount       = isset( $bundled_item_configuration[ 'discount' ] ) ? wc_format_decimal( $bundled_item_configuration[ 'discount' ] ) : $bundled_item->get_discount();
@@ -240,8 +242,8 @@ class WC_PB_Order {
 
 						if ( $bundled_item->is_priced_individually() ) {
 							if ( $bundled_item_discount ) {
-								$bundled_item_args[ 'subtotal' ]     = isset( $bundled_item_args[ 'subtotal' ] ) ? $bundled_item_args[ 'subtotal' ] : wc_get_price_excluding_tax( $bundled_product, array( 'qty' => $bundled_item_quantity * $quantity ) ) * ( 1 - (float) $bundled_item_discount / 100 );
-								$bundled_item_args[ 'total' ]        = isset( $bundled_item_args[ 'total' ] ) ? $bundled_item_args[ 'total' ] : wc_get_price_excluding_tax( $bundled_product, array( 'qty' => $bundled_item_quantity * $quantity ) ) * ( 1 - (float) $bundled_item_discount / 100 );
+								$bundled_item_args[ 'subtotal' ]     = isset( $bundled_item_args[ 'subtotal' ] ) ? $bundled_item_args[ 'subtotal' ] : wc_get_price_excluding_tax( $bundled_product, array( 'qty' => $bundled_item_quantity * $quantity, 'price' => $bundled_item->is_discount_allowed_on_sale_price() ? $bundled_product->get_price() : $bundled_product->get_regular_price() ) ) * ( 1 - (float) $bundled_item_discount / 100 );
+								$bundled_item_args[ 'total' ]        = isset( $bundled_item_args[ 'total' ] ) ? $bundled_item_args[ 'total' ] : wc_get_price_excluding_tax( $bundled_product, array( 'qty' => $bundled_item_quantity * $quantity, 'price' => $bundled_item->is_discount_allowed_on_sale_price() ? $bundled_product->get_price() : $bundled_product->get_regular_price() ) ) * ( 1 - (float) $bundled_item_discount / 100 );
 								$bundled_item_args[ 'subtotal_tax' ] = isset( $bundled_item_args[ 'subtotal_tax' ] ) ? $bundled_item_args[ 'subtotal_tax' ] : 0;
 								$bundled_item_args[ 'total_tax' ]    = isset( $bundled_item_args[ 'total_tax' ] ) ? $bundled_item_args[ 'total_tax' ] : 0;
 							}
@@ -300,11 +302,8 @@ class WC_PB_Order {
 
 						if ( $bundled_product->needs_shipping() && $bundled_item->is_shipped_individually( $bundled_product ) ) {
 							$shipped_individually = true;
-						} elseif ( $bundled_product->needs_shipping() ) {
-							/** Hook documented in 'WC_PB_Cart::set_bundled_cart_item()'. */
-							if ( apply_filters( 'woocommerce_bundled_item_has_bundled_weight', $bundle->get_aggregate_weight(), $bundled_product, $bundled_item_id, $bundle ) ) {
-								$bundled_weight += (double) $bundled_product->get_weight( 'edit' ) * $bundled_item_quantity;
-							}
+						} elseif ( $bundled_product->needs_shipping() && $bundled_item->is_weight_aggregated( $bundled_product ) ) {
+							$bundled_weight += (double) $bundled_product->get_weight( 'edit' ) * $bundled_item_quantity;
 						}
 
 						$bundled_order_item->add_meta_data( '_bundled_item_needs_shipping', $shipped_individually ? 'yes' : 'no', true );

@@ -2,7 +2,7 @@
 /**
  * WC_PB_CLI class
  *
- * @author   SomewhereWarm <info@somewherewarm.gr>
+ * @author   SomewhereWarm <info@somewherewarm.com>
  * @package  WooCommerce Product Bundles
  * @since    5.5.0
  */
@@ -30,7 +30,7 @@ class WC_PB_CLI {
 	 * Load command files.
 	 */
 	private function includes() {
-		require_once( 'cli/class-wc-pb-cli-update.php' );
+		require_once( WC_PB_ABSPATH . 'includes/cli/class-wc-pb-cli-update.php' );
 	}
 
 	/**

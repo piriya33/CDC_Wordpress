@@ -68,6 +68,8 @@ class d4pupd_core_updater {
     public $plugins = array(
         'dev4press-updater/dev4press-updater.php',
 
+        'breadcrumbspress/breadcrumbspress.php',
+
         'gd-security-toolbox/gd-security-toolbox.php',
         'gd-power-search-for-bbpress/gd-power-search-for-bbpress.php',
         'gd-quantum-theme-for-bbpress/gd-quantum-theme-for-bbpress.php',

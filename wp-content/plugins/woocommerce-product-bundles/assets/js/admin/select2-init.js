@@ -199,7 +199,7 @@ jQuery( function( $ ) {
 
 							var terms = [];
 
-							if ( data.action === 'woocommerce_json_search_products_and_variations_in_component' ) {
+							if ( 'woocommerce_json_search_products_and_variations_in_component' === $el.data( 'action' ) ) {
 
 								if ( 'yes' === $el.data( 'component_optional' ) ) {
 									terms.push( { id: '-1', text: wc_composite_admin_params.i18n_none } );
@@ -249,9 +249,9 @@ jQuery( function( $ ) {
 				select2_args = {
 
 					cache:              true,
-					allowClear:         $( this ).data( 'allow_clear' ) ? true : false,
-					placeholder:        $( this ).data( 'placeholder' ),
-					minimumInputLength: $( this ).data( 'minimum_input_length' ) ? $( this ).data( 'minimum_input_length' ) : 3,
+					allowClear:         $el.data( 'allow_clear' ) ? true : false,
+					placeholder:        $el.data( 'placeholder' ),
+					minimumInputLength: $el.data( 'minimum_input_length' ) ? $el.data( 'minimum_input_length' ) : 3,
 					escapeMarkup:       function( m ) {
 						return m;
 					},
@@ -297,6 +297,63 @@ jQuery( function( $ ) {
 			select2_args = $.extend( select2_args, select2_format_string );
 
 			$el.selectSW( select2_args ).addClass( 'sw-select2--initialized' );
+
+		} );
+
+		$( '.sw-select2-search--customers', this ).filter( ':not(.sw-select2--initialized)' ).each( function() {
+
+			var $el          = $( this ),
+				wrap         = $el.data( 'wrap' ),
+				select2_args = {
+
+					cache:              true,
+					allowClear:         $el.data( 'allow_clear' ) ? true : false,
+					placeholder:        $el.data( 'placeholder' ),
+					minimumInputLength: $el.data( 'minimum_input_length' ) ? $el.data( 'minimum_input_length' ) : 3,
+					escapeMarkup:       function( m ) {
+						return m;
+					},
+					ajax: {
+						url:         wc_enhanced_select_params.ajax_url,
+						dataType:    'json',
+						delay:       1000,
+						data:        function( params ) {
+							return {
+								term:     params.term,
+								action:   'woocommerce_json_search_customers',
+								security: wc_enhanced_select_params.search_customers_nonce,
+								exclude:  $el.data( 'exclude' )
+							};
+						},
+						processResults: function( data ) {
+
+							var terms = [];
+
+							if ( data ) {
+								$.each( data, function( id, text ) {
+									terms.push({
+										id: id,
+										text: text
+									});
+								});
+							}
+
+							return {
+								results: terms
+							};
+						},
+						cache: true
+					}
+				};
+
+				if ( wrap ) {
+					wrap = 'yes' !== wrap ? 'sw-select2-wrap-' + wrap.toString() : 'sw-select2-wrap';
+					$el.wrap( '<div class="' + wrap + '"></div>' );
+				}
+
+				select2_args = $.extend( select2_args, select2_format_string );
+
+				$el.selectSW( select2_args ).addClass( 'sw-select2--initialized' );
 
 		} );
 

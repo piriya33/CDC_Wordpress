@@ -17,11 +17,11 @@
  * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @author    SkyVerge
- * @copyright Copyright (c) 2014-2019, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2021, SkyVerge, Inc. (info@skyverge.com)
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
-use SkyVerge\WooCommerce\PluginFramework\v5_3_1 as Framework;
+use SkyVerge\WooCommerce\PluginFramework\v5_10_6 as Framework;
 
 defined( 'ABSPATH' ) or exit;
 
@@ -444,52 +444,18 @@ class WC_Memberships_Meta_Box_Product_Memberships_Data extends \WC_Memberships_M
 
 					<p class="form-field">
 						<label for="_wc_memberships_membership_plan_ids"><?php esc_html_e( 'Purchasing product grants access to', 'woocommerce-memberships' ); ?></label>
-
-						<?php if ( Framework\SV_WC_Plugin_Compatibility::is_wc_version_gte_3_0() ) : ?>
-
-							<select
-								name="_wc_memberships_membership_plan_ids[]"
-								id="_wc_memberships_membership_plan_ids"
-								class="js-membership-plan-ids"
-								style="width: 90%;"
-								multiple="multiple"
-								data-placeholder="<?php esc_attr_e( 'Search for a membership plan&hellip;', 'woocommerce-memberships' ); ?>"
-								data-action="wc_memberships_search_membership_plans">
-								<?php foreach ( $grant_access_to_plans as $plan ) : ?>
-									<option value="<?php echo $plan->get_id() ?>" selected><?php echo esc_html( $plan->get_formatted_name() ); ?></option>
-								<?php endforeach; ?>
-							</select>
-
-						<?php else : ?>
-
-							<input
-								type="hidden"
-								name="_wc_memberships_membership_plan_ids"
-								id="_wc_memberships_membership_plan_ids"
-								class="js-membership-plan-ids"
-								style="width: 90%;"
-								data-placeholder="<?php esc_attr_e( 'Search for a membership plan&hellip;', 'woocommerce-memberships' ); ?>"
-								data-action="wc_memberships_search_membership_plans"
-								data-multiple="true"
-								data-selected="<?php
-								$json_ids = array();
-
-								if ( ! empty( $grant_access_to_plans ) ) {
-
-									foreach ( $grant_access_to_plans as $plan ) {
-
-										if ( is_object( $plan ) ) {
-											$json_ids[ $plan->get_id() ] = wp_kses_post( html_entity_decode( $plan->get_formatted_name() ) );
-										}
-									}
-								}
-
-								echo esc_attr( wp_json_encode( $json_ids ) ); ?>"
-								value="<?php echo esc_attr( implode( ',', array_keys( $json_ids ) ) ); ?>"
-							/>
-
-						<?php endif; ?>
-
+						<select
+							name="_wc_memberships_membership_plan_ids[]"
+							id="_wc_memberships_membership_plan_ids"
+							class="js-membership-plan-ids"
+							style="width: 90%;"
+							multiple="multiple"
+							data-placeholder="<?php esc_attr_e( 'Search for a membership plan&hellip;', 'woocommerce-memberships' ); ?>"
+							data-action="wc_memberships_search_membership_plans">
+							<?php foreach ( $grant_access_to_plans as $plan ) : ?>
+								<option value="<?php echo $plan->get_id() ?>" selected><?php echo esc_html( $plan->get_formatted_name() ); ?></option>
+							<?php endforeach; ?>
+						</select>
 						<?php echo wc_help_tip( __( 'Select which membership plans does purchasing this product grant access to.', 'woocommerce-memberships' ) ); ?>
 					</p>
 
@@ -518,7 +484,7 @@ class WC_Memberships_Meta_Box_Product_Memberships_Data extends \WC_Memberships_M
 									<?php foreach ( $variation_grants_access_to_plans as $variation_id => $access_plan ) : ?>
 
 										<?php if ( $variation_product = wc_get_product( $variation_id ) ) : ?>
-											<strong><?php echo esc_html( $variation_product->get_formatted_name() ); ?></strong>: <?php echo wc_memberships_list_items( $variation_grants_access_to_plans, __( 'and', 'woocommerce-memberships' ) ); ?>.<br />
+											<strong><?php echo esc_html( $variation_product->get_formatted_name() ); ?></strong>: <?php echo wc_memberships_list_items( $variation_grants_access_to_plans, 'and' ); ?>.<br />
 										<?php endif; ?>
 
 									<?php endforeach; ?>
@@ -609,16 +575,12 @@ class WC_Memberships_Meta_Box_Product_Memberships_Data extends \WC_Memberships_M
 	 */
 	public function update_data( $post_id, \WP_Post $post ) {
 
-		// for some reason WC 3.0 triggers this method twice, creating issues in the rules array
-		if ( Framework\SV_WC_Plugin_Compatibility::is_wc_version_gte_3_0() ) {
+		$has_updated = self::$updated;
 
-			$has_updated = self::$updated;
-
-			if ( ! $has_updated ) {
-				self::$updated = true;
-			} else {
-				return;
-			}
+		if ( ! $has_updated ) {
+			self::$updated = true;
+		} else {
+			return;
 		}
 
 		// update restriction & discount rules

@@ -11,19 +11,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 <div class="wrap">
-	
-	<h2><?php _e( 'Video Gallery and Player - Features', 'html5-videogallery-plus-player' ); ?></h2><br />	
+	<h2><?php _e( 'Video Gallery and Player - Features', 'html5-videogallery-plus-player' ); ?></h2><br />
 
 	<style>
 		.wprps-notice{padding: 10px; color: #3c763d; background-color: #dff0d8; border:1px solid #d6e9c6; margin: 0 0 20px 0;}
 		.wpos-plugin-pricing-table thead th h2{font-weight: 400; font-size: 2.4em; line-height:normal; margin:0px; color: #2ECC71;}
 		.wpos-plugin-pricing-table thead th h2 + p{font-size: 1.25em; line-height: 1.4; color: #999; margin:5px 0 5px 0;}
 		.wpos-new-feature{ font-size: 10px; margin-left:3px; color: #fff; font-weight: bold; background-color: #03aa29; padding:1px 4px; font-style: normal; margin-left: 3px;}
-
 		table.wpos-plugin-pricing-table{width:90%; text-align: left; border-spacing: 0; border-collapse: collapse; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;}
-
 		.wpos-plugin-pricing-table th, .wpos-plugin-pricing-table td{font-size:14px; line-height:normal; color:#444; vertical-align:middle; padding:12px;}
-
 		.wpos-plugin-pricing-table colgroup:nth-child(1) { width: 31%; border: 0 none; }
 		.wpos-plugin-pricing-table colgroup:nth-child(2) { width: 22%; border: 1px solid #ccc; }
 		.wpos-plugin-pricing-table colgroup:nth-child(3) { width: 25%; border: 10px solid #2ECC71; }
@@ -40,12 +36,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 		/* Tablebody */
 		.wpos-plugin-pricing-table tbody th{background: #fff; border-left: 1px solid #ccc; font-weight: 600;}
 		.wpos-plugin-pricing-table tbody th span{font-weight: normal; font-size: 87.5%; color: #999; display: block;}
-
 		.wpos-plugin-pricing-table tbody td{background: #fff; text-align: center;}
 		.wpos-plugin-pricing-table tbody td .dashicons{height: auto; width: auto; font-size:30px;}
 		.wpos-plugin-pricing-table tbody td .dashicons-no-alt{color: #ca4a1f;}
 		.wpos-plugin-pricing-table tbody td .dashicons-yes{color: #2ECC71;}
-
 		.wpos-plugin-pricing-table tbody tr:nth-child(even) th,
 		.wpos-plugin-pricing-table tbody tr:nth-child(even) td { background: #f5f5f5; border: 1px solid #ccc; border-width: 1px 0 1px 1px; }
 		.wpos-plugin-pricing-table tbody tr:last-child td {border-bottom: 0 none;}
@@ -53,13 +47,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 		/* Table Footer */
 		.wpos-plugin-pricing-table tfoot th, .wpos-plugin-pricing-table tfoot td{text-align: center; border-top: 1px solid #ccc;}
 		.wpos-plugin-pricing-table tfoot a{font-weight: 600; color: #fff; text-decoration: none; text-transform: uppercase; display: inline-block; padding: 1em 2em; background: #ca4a1f; border-radius: .2em;}
-
 	</style>
 
 	<table class="wpos-plugin-pricing-table">
 		<colgroup></colgroup>
 		<colgroup></colgroup>
-		<colgroup></colgroup>	
+		<colgroup></colgroup>
 		<thead>
 			<tr>
 				<th></th>
@@ -71,7 +64,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<h2>Premium</h2>
 					<p>Gain access to <strong>Video Gallery and Player</strong> included in <br /><strong>Essential Plugin Bundle</p>
 					<p class="promo">Our most valuable package!</p>
-				</th>	    		
+				</th>
 			</tr>
 		</thead>
 
@@ -129,8 +122,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<th>Pagination Support  <span>Pagination support for grid shortcode</span></th>
 				<td><i class="dashicons dashicons-no-alt"></i></td>
 				<td><i class="dashicons dashicons-yes"></i></td>
-			</tr>    	
-			
+			</tr>
 			<tr>
 				<th>Loop Control for slider  <span>Infinite scroll control </span></th>
 				<td><i class="dashicons dashicons-no-alt"></i></td>
@@ -167,11 +159,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<td><i class="dashicons dashicons-yes"></i></td>
 			</tr>
 			<tr>
+	    		<th>Fusion Page Builder (Avada) Native Support <em class="wpos-new-feature">New</em> <span>Use this plugin with Fusion Page Builder (Avada) easily</span></th>
+	    		<td><i class="dashicons dashicons-no-alt"></i></td>
+	    		<td><i class="dashicons dashicons-yes"></i></td>
+	    	</tr>
+			<tr>
 				<th>WPBakery Page Builder Support <span>Use this plugin with Visual Composer easily</span></th>
 				<td><i class="dashicons dashicons-no-alt"></i></td>
 				<td><i class="dashicons dashicons-yes"></i></td>
-			</tr>	
-			
+			</tr>
 			<tr>
 				<th>Display Videos for Particular Categories <span>Display only video with particular category</span></th>
 					<td><i class="dashicons dashicons-yes"></i></td>
@@ -211,7 +207,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<th>Support <span>Get support for plugin</span></th>
 				<td>Limited</td>
 				<td>1 Year</td>
-			</tr>    	
+			</tr>
 		</tbody>
 	</table>
 </div>

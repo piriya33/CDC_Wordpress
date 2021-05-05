@@ -17,11 +17,11 @@
  * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @author    SkyVerge
- * @copyright Copyright (c) 2014-2019, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2021, SkyVerge, Inc. (info@skyverge.com)
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
-use SkyVerge\WooCommerce\PluginFramework\v5_3_1 as Framework;
+use SkyVerge\WooCommerce\PluginFramework\v5_10_6 as Framework;
 
 defined( 'ABSPATH' ) or exit;
 
@@ -126,57 +126,56 @@ class WC_Memberships_User_Messages {
 	 */
 	public static function get_default_messages( $with_labels = true ) {
 
-		$messages = array(
+		$messages = [
 
 			// generic content (e.g. any other post type than blog posts, pages and products)
-			'content_delayed_message'                                 => __( 'This content is part of your membership, but not yet! You will gain access on {date}.', 'woocommerce-memberships' ),
-			'content_restricted_message'                              => __( 'To access this content, you must purchase {products}.', 'woocommerce-memberships' ),
-			'content_restricted_message_no_products'                  => __( 'This content is only available to members.', 'woocommerce-memberships' ),
+			'content_delayed_message'                                               => __( 'This content is part of your membership, but not yet! You will gain access on {date}.', 'woocommerce-memberships' ),
+			'content_restricted_message'                                            => __( 'To access this content, you must purchase {products}.', 'woocommerce-memberships' ),
+			'content_restricted_message_no_products'                                => __( 'This content is only available to members.', 'woocommerce-memberships' ),
 
 			// content categories
-			'content_category_delayed_message'                        => __( 'This category is part of your membership, but not yet! You will gain access on {date}.', 'woocommerce-memberships' ),
-			'content_category_restricted_message'                     => __( 'This category can only be viewed by members. To view this category, sign up by purchasing {products}.', 'woocommerce-memberships' ),
-			'content_category_restricted_message_no_products'         => __( 'This category can only be viewed by members.', 'woocommerce-memberships' ),
+			'content_category_delayed_message'                                      => __( 'This category is part of your membership, but not yet! You will gain access on {date}.', 'woocommerce-memberships' ),
+			'content_category_restricted_message'                                   => __( 'This category can only be viewed by members. To view this category, sign up by purchasing {products}.', 'woocommerce-memberships' ),
+			'content_category_restricted_message_no_products'                       => __( 'This category can only be viewed by members.', 'woocommerce-memberships' ),
 
 			// blog posts
-			'post_content_delayed_message'                            => __( 'This post is part of your membership, but not yet! You will gain access on {date}.', 'woocommerce-memberships' ),
-			'post_content_restricted_message'                         => __( 'To access this post, you must purchase {products}.', 'woocommerce-memberships' ),
-			'post_content_restricted_message_no_products'             => __( 'This post is only available to members.', 'woocommerce-memberships' ),
+			'post_content_delayed_message'                                          => __( 'This post is part of your membership, but not yet! You will gain access on {date}.', 'woocommerce-memberships' ),
+			'post_content_restricted_message'                                       => __( 'To access this post, you must purchase {products}.', 'woocommerce-memberships' ),
+			'post_content_restricted_message_no_products'                           => __( 'This post is only available to members.', 'woocommerce-memberships' ),
 
 			// pages
-			'page_content_delayed_message'                            => __( 'This page is part of your membership, but not yet! You will gain access on {date}.', 'woocommerce-memberships' ),
-			'page_content_restricted_message'                         => __( 'To access this page, you must purchase {products}.', 'woocommerce-memberships' ),
-			'page_content_restricted_message_no_products'             => __( 'This page is only available to members.', 'woocommerce-memberships' ),
+			'page_content_delayed_message'                                          => __( 'This page is part of your membership, but not yet! You will gain access on {date}.', 'woocommerce-memberships' ),
+			'page_content_restricted_message'                                       => __( 'To access this page, you must purchase {products}.', 'woocommerce-memberships' ),
+			'page_content_restricted_message_no_products'                           => __( 'This page is only available to members.', 'woocommerce-memberships' ),
 
 			// products
-			'product_access_delayed_message'                          => __( 'This product is part of your membership, but not yet! It will become available on {date}.', 'woocommerce-memberships' ),
-			'product_viewing_restricted_message'                      => __( 'This product can only be viewed by members. To view or purchase this product, sign up by purchasing {products}.', 'woocommerce-memberships' ),
-			'product_viewing_restricted_message_no_products'          => __( 'This product can only be viewed by members.', 'woocommerce-memberships' ),
-			'product_purchasing_restricted_message'                   => __( 'This product can only be purchased by members. To purchase this product, sign up by purchasing {products}.', 'woocommerce-memberships' ),
-			'product_purchasing_restricted_message_no_products'       => __( 'This product can only be purchased by members.', 'woocommerce-memberships' ),
+			'product_access_delayed_message'                                        => __( 'This product is part of your membership, but not yet! It will become available on {date}.', 'woocommerce-memberships' ),
+			'product_viewing_restricted_message'                                    => __( 'This product can only be viewed by members. To view or purchase this product, sign up by purchasing {products}.', 'woocommerce-memberships' ),
+			'product_viewing_restricted_message_no_products'                        => __( 'This product can only be viewed by members.', 'woocommerce-memberships' ),
+			'product_purchasing_restricted_message'                                 => __( 'This product can only be purchased by members. To purchase this product, sign up by purchasing {products}.', 'woocommerce-memberships' ),
+			'product_purchasing_restricted_message_no_products'                     => __( 'This product can only be purchased by members.', 'woocommerce-memberships' ),
 
 			// product categories
-			'product_category_viewing_delayed_message'                => __( 'This product category is part of your membership, but not yet! You will gain access on {date}.', 'woocommerce-memberships' ),
-			'product_category_viewing_restricted_message'             => __( 'This product category can only be viewed by members. To view this category, sign up by purchasing {products}.', 'woocommerce-memberships' ),
-			'product_category_viewing_restricted_message_no_products' => __( 'This product category can only be viewed by members.', 'woocommerce-memberships' ),
+			'product_category_viewing_delayed_message'                              => __( 'This product category is part of your membership, but not yet! You will gain access on {date}.', 'woocommerce-memberships' ),
+			'product_category_viewing_restricted_message'                           => __( 'This product category can only be viewed by members. To view this category, sign up by purchasing {products}.', 'woocommerce-memberships' ),
+			'product_category_viewing_restricted_message_no_products'               => __( 'This product category can only be viewed by members.', 'woocommerce-memberships' ),
 
 			// product discount messages (non-restrictions)
-			'product_discount_message'                                => __( 'Want a discount? Become a member by purchasing {products}!', 'woocommerce-memberships' ),
-			'product_discount_message_no_products'                    => __( 'Want a discount? Become a member!', 'woocommerce-memberships' ),
+			'product_discount_message'                                              => __( 'Want a discount? Become a member by purchasing {products}!', 'woocommerce-memberships' ),
+			'product_discount_message_no_products'                                  => __( 'Want a discount? Become a member!', 'woocommerce-memberships' ),
 
 			// product discount cart messages (non-restrictions)
-			'cart_sole_item_discount_message'                         => __( 'This item is discounted for members. {Login} to claim it!', 'woocommerce-memberships' ),
-			'cart_item_discount_message'                              => __( 'An item in your cart is discounted for members. {Login} to claim it!', 'woocommerce-memberships' ),
-			'cart_items_discount_message'                             => __( 'Some items in your cart are discounted for members. {Login} to claim them!', 'woocommerce-memberships' ),
+			'cart_sole_item_discount_message'                                       => __( 'This item is discounted for members. {Login} to claim it!', 'woocommerce-memberships' ),
+			'cart_item_discount_message'                                            => __( 'An item in your cart is discounted for members. {Login} to claim it!', 'woocommerce-memberships' ),
+			'cart_items_discount_message'                                           => __( 'Some items in your cart are discounted for members. {Login} to claim them!', 'woocommerce-memberships' ),
+
+			// messages for non-members with discounting products in their cart
+			'product_discounted_by_membership_products_in_cart_message_no_products' => __( 'Discounted by membership plans in the cart', 'woocommerce-memberships' ),
+			'product_discounted_by_membership_product_in_cart_message'              => __( 'Discounted by {products} in cart', 'woocommerce-memberships' ),
 
 			// member login message (blank by default)
-			'member_login_message'                                    => '',
-		);
-
-		/** TODO remove this filter deprecation notice by version 1.13.0 {FN 2017-08-03} */
-		if ( has_filter( 'wc_memberships_valid_restriction_message_types' ) ) {
-			_deprecated_function( 'the filter "wc_memberships_valid_restriction_message_types"', '1.9.0', '"wc_memberships_default_messages" filter' );
-		}
+			'member_login_message'                                                  => '',
+		];
 
 		/**
 		 * Filter the default user messages.
@@ -382,7 +381,7 @@ class WC_Memberships_User_Messages {
 	 * @param array $args optional array of arguments
 	 * @return string HTML
 	 */
-	public static function get_message_html( $code_shorthand, $args = array() ) {
+	public static function get_message_html( $code_shorthand, $args = [] ) {
 
 		$args     = self::parse_message_args( $code_shorthand, $args );
 		$the_post = self::parse_post_from_message_args( $args );
@@ -399,7 +398,7 @@ class WC_Memberships_User_Messages {
 		 * @param array $args the message args, if any
 		 */
 		if ( false === apply_filters( "wc_memberships_display_{$code_shorthand}_messages", true, $args ) ) {
-			return 'content' === $args['context'] && self::should_get_content_excerpt( $the_post, $code_shorthand ) ? self::get_restricted_content_excerpt( $the_post, $code_shorthand ) : '';
+			return 'content' === $args['context'] && ! empty( $args['use_excerpt'] ) && self::should_get_content_excerpt( $the_post, $code_shorthand ) ? self::get_restricted_content_excerpt( $the_post, $code_shorthand ) : '';
 		}
 
 		if ( empty( $args['rule_type'] ) ) {
@@ -410,7 +409,7 @@ class WC_Memberships_User_Messages {
 
 		$products     = self::get_products_that_grant_access_or_discount( $the_term instanceof \WP_Term ? $the_term : $the_post, $rule_type, $args );
 		$access_time  = ! empty( $args['access_time'] ) ? $args['access_time'] : 0;
-		$message_args = array(
+		$message_args = [
 			'code'          => $code_shorthand,
 			'context'       => $args['context'],
 			'post'          => $the_post,
@@ -422,31 +421,85 @@ class WC_Memberships_User_Messages {
 			'products'      => $products,
 			'rule_type'     => $rule_type,
 			'classes'       => $args['classes'],
-		);
+		];
 
-		// find message by code key
-		$message_code = empty( $products ) && ! in_array( $code_shorthand, array( 'cart_sole_item_discount', 'cart_item_discount', 'cart_items_discount', 'member_login' ), false ) && ! Framework\SV_WC_Helper::str_ends_with( $code_shorthand, 'delayed' ) ? $code_shorthand . '_message_no_products' : $code_shorthand . '_message';
+		// find message by code key, parse shortcode and merge tags
+		$message_code = empty( $products ) && ! in_array( $code_shorthand, [ 'cart_sole_item_discount', 'cart_item_discount', 'cart_items_discount', 'member_login' ], false ) && ! Framework\SV_WC_Helper::str_ends_with( $code_shorthand, 'delayed' ) ? $code_shorthand . '_message_no_products' : $code_shorthand . '_message';
 		$message      = do_shortcode( self::get_message( $message_code, $message_args ) );
-		// TODO remove deprecated filters handling by version 1.13.0 {FN 2018-11-07}
-		$message      = self::handle_deprecated_filters( $message, $message_code, $message_args );
-		// handle merge tags
 		$message      = self::parse_message_merge_tags( $message, $message_args );
-		// parse allowed HTML
-		$html_message = wp_kses( $message, self::get_message_allowed_html( $message_code ) );
-		// get HTML classes
-		$classes      = self::get_message_classes( $message_code, $message_args );
 
-		if ( 'content' === $message_args['context'] ) {
+		if ( 'content' === $message_args['context'] && '' !== trim( $message ) ) {
+			$html_message = self::get_notice_html( $message_code, $message, $args );
+		} else { // 'notice' === $message_args['context'] : the content is going to be wrapped in a WC notice already, so we don't duplicate HTML (such is the case for cart messages for example)
+			$html_message = wp_kses( $message, self::get_message_allowed_html( $message_code ) );
+			$html_message = self::filter_message_html( $html_message, $message, $message_code, $message_args );
+		}
 
-			$excerpt = '';
+		return $html_message;
+	}
 
-			if ( self::should_get_content_excerpt( $the_post, $message_code ) ) {
-				$excerpt = self::get_restricted_content_excerpt( $the_post, $message_code );
-			}
 
-			$html_message = $excerpt . ( ! empty( $html_message ) ? '<div class="woocommerce"><div class="' . implode( ' ', $classes ) . '">'. $html_message . '</div></div>' : '' );
+	/**
+	 * Gets a user message wrapped in a notice HTML.
+	 *
+	 * @since 1.15.0
+	 *
+	 * @param string $message_code the message code
+	 * @param string $message_body may include HTML, shortcodes, merge tags
+	 * @param array $message_args associative array of message arguments
+	 * @return string HTML
+	 */
+	public static function get_notice_html( $message_code, $message_body, $message_args ) {
 
-		} // another context means we're already using a notice, don't build further html
+		ob_start();
+
+		// TODO may consider turning the following into a template file, passing the same arguments as in this method {FN:2019-30-08}
+		?>
+		<div class="woocommerce">
+			<div class="<?php echo implode( ' ', self::get_message_classes( $message_code, $message_args ) ); ?>">
+				<?php echo wp_kses( $message_body, self::get_message_allowed_html( $message_code ) ); ?>
+		    </div>
+		</div>
+		<?php
+
+		/**
+		 * Filters a Memberships notice HTML.
+		 *
+		 * @since 1.15.0
+		 *
+		 * @param string $notice_html HTML content
+		 * @param string $message_body original message content
+		 * @param string $message_code message code
+		 * @param array $message_args associative array of message arguments
+		 */
+		$html = $notice = (string) apply_filters( 'wc_memberships_notice_html', ob_get_clean(), $message_body, $message_code, $message_args );
+
+		if ( ! empty( $message_args['post'] ) && ! empty( $message_args['use_excerpt'] ) && self::should_get_content_excerpt( $message_args['post'], $message_code ) ) {
+			$excerpt = self::get_restricted_content_excerpt( $message_args['post'], $message_code );
+			$html = $excerpt . ' ' . $notice;
+		}
+
+		// TODO the output of a possible template file can still pass through the same filtering with no BC change {FN:2019-08-30}
+		return self::filter_message_html( $html, $message_body, $message_code, $message_args );
+	}
+
+
+	/**
+	 * Applies filters to the final message HTML.
+	 *
+	 * Helper method, do not open to public.
+	 *
+	 * @since 1.15.0
+	 *
+	 * @param string $message_html fully formed HTML message
+	 * @param string $message message string for legacy filters
+	 * @param string $message_code message code
+	 * @param array $message_args message arguments
+	 * @return string HTML
+	 */
+	private static function filter_message_html( $message_html, $message, $message_code, $message_args ) {
+
+		$the_post = isset( $message_args['post'] ) ? $message_args['post'] : null;
 
 		/**
 		 * Filter whether to process shortcodes on user messages.
@@ -458,7 +511,7 @@ class WC_Memberships_User_Messages {
 		 * @param array $message_args optional arguments being processed
 		 */
 		if ( true === (bool) apply_filters( 'wc_memberships_message_process_shortcodes', true, $message_code, $message_args ) ) {
-			$html_message = do_shortcode( $html_message );
+			$message_html = do_shortcode( $message_html );
 		}
 
 		/**
@@ -474,7 +527,7 @@ class WC_Memberships_User_Messages {
 		 * @param string $message the message that has replaced the content or appended to an excerpt
 		 * @param \WP_Post $the_post the post object being restricted
 		 */
-		$html_message = apply_filters( 'wc_memberships_the_restricted_content', $html_message, true, $message, $the_post );
+		$message_html = (string) apply_filters( 'wc_memberships_the_restricted_content', $message_html, true, $message, $the_post );
 
 		/**
 		 * Filter the message HTML.
@@ -484,7 +537,7 @@ class WC_Memberships_User_Messages {
 		 * @param string $html_message the HTML message
 		 * @param array $message_args array of arguments used to build the message
 		 */
-		$html_message = apply_filters( "wc_memberships_{$message_code}_html", $html_message, $message_args );
+		$message_html = (string) apply_filters( "wc_memberships_{$message_code}_html", $message_html, $message_args );
 
 		/**
 		 * Filters the message HTML.
@@ -496,7 +549,7 @@ class WC_Memberships_User_Messages {
 		 * @param string $message_code the message code being parsed
 		 * @param array $message_args array of arguments used to build the message
 		 */
-		return (string) apply_filters( 'wc_memberships_restricted_message_html', $html_message, $the_post, $message_code, $message_args );
+		return (string) apply_filters( 'wc_memberships_restricted_message_html', $message_html, $the_post, $message_code, $message_args );
 	}
 
 
@@ -652,6 +705,7 @@ class WC_Memberships_User_Messages {
 		$args = wp_parse_args( $args, array(
 			'code'          => $code,     // (string) code (key) of the message to fetch
 			'context'       => 'content', // (string) whether the message will appear in the context of a notice or elsewhere
+			'use_excerpt'   => true,      // (bool) display an excerpt when appropriate, pass false to force no excerpt
 			'post'          => null,      // (\WP_Post) the post object, used for processing the message variables
 			'post_id'       => 0,         // (int) the post ID, used when the post object is not passed directly
 			'term'          => null,      // (\WP_Term) the term object, used when viewing a restricted term archive page
@@ -700,7 +754,7 @@ class WC_Memberships_User_Messages {
 			// sanity check: by this point we should have accessible products to link...
 			if ( ! empty( $products_links ) ) {
 
-				$products_merge_tag = wc_memberships_list_items( $products_links );
+				$products_merge_tag = wc_memberships_list_items( $products_links, 'or' );
 
 			// ...however if we don't, then set a fallback:
 			} else {
@@ -719,8 +773,6 @@ class WC_Memberships_User_Messages {
 
 						/* @see \WC_Memberships_User_Messages::get_message_html() */
 						$message = do_shortcode( self::get_message( $message_code, $args ) );
-						// TODO remove deprecated filters handling by version 1.13.0 {FN 2018-11-07}
-						$message = self::handle_deprecated_filters( $message, $message_code, $args );
 					}
 				}
 			}
@@ -768,89 +820,7 @@ class WC_Memberships_User_Messages {
 			/* translators: Placeholders: %1$s - opening HTML <a> link tag, %2$s closing HTML </a> link tag */
 			$message = str_replace( '{login}', sprintf( _x( '%1$slog in%2$s', 'Lowercase',   'woocommerce-memberships' ), '<a href="{login_url}">', '</a>' ), $message );
 			// replace {login_url}
-			$message = str_replace( '{login_url}', esc_url( self::get_restricted_content_redirect_url() ), $message );
-		}
-
-		return $message;
-	}
-
-
-	/**
-	 * Handle messages deprecated filters for backwards compatibility.
-	 *
-	 * TODO remove this method by version 1.13.0 - do not open to public {FN 2017-07-04}
-	 * @see \WC_Memberships_User_Messages::parse_message_merge_tags()
-	 * @see \WC_Memberships_User_Messages::get_message_html()
-	 *
-	 * @since 1.9.0
-	 *
-	 * @param string $message may contain HTML
-	 * @param string $message_code
-	 * @param array $args associative array
-	 * @return string message (may contain HTML)
-	 */
-	private static function handle_deprecated_filters( $message, $message_code, $args ) {
-
-		$deprecated = false;
-
-		if ( ! empty( $args['access_time'] ) && has_filter( 'get_content_delayed_message' ) ) {
-
-			$deprecated = 'get_content_delayed_message';
-
-			/**
-			 * Filter the delayed content message.
-			 *
-			 * TODO this filter will be removed by version 1.13.0 {FN 2017-07-03}
-			 *
-			 * @deprecated since 1.9.0
-			 * @since 1.0.0
-			 *
-			 * @param string $message delayed content message
-			 * @param array $args array of vars used to construct the message
-			 */
-			$message = (string) apply_filters( 'get_content_delayed_message', $message, $args['post_id'], $args['access_time'] );
-
-		} elseif ( has_filter( 'wc_memberships_member_discount_message' ) ) {
-
-			$deprecated = 'wc_memberships_member_discount_message';
-			$post_id    = ! empty( $args['post'] ) ? $args['post']->ID : 0;
-
-			/**
-			 * Filter the product member discount message
-			 *
-			 * TODO this filter will be removed by version 1.13.0 {FN 2017-07-03}
-			 *
-			 * @deprecated since 1.9.0
-			 * @since 1.0.0
-			 *
-			 * @param string $message the discount message
-			 * @param int $product_id ID of the product that has member discounts
-			 * @param int[] $products array of product IDs that grant access to this product
-			 */
-			$message = (string) apply_filters( 'wc_memberships_member_discount_message', $message, $post_id, $args['products'] );
-
-		} elseif ( has_filter( 'wc_memberships_product_taxonomy_viewing_restricted_message' ) ) {
-
-			$deprecated = 'wc_memberships_product_taxonomy_viewing_restricted_message';
-
-			/**
-			 * Filter the product term viewing restricted message.
-			 *
-			 * TODO this filter will be removed by version 1.13.0 {FN 2017-07-03}
-			 *
-			 * @deprecated since 1.9.0
-			 * @since 1.4.0
-			 *
-			 * @param string $message the restriction message
-			 * @param string $taxonomy product taxonomy
-			 * @param int $term_id product taxonomy term id
-			 * @param array $products array of product IDs that grant access to products taxonomy
-			 */
-			$message = (string) apply_filters( 'wc_memberships_product_taxonomy_viewing_restricted_message', $message );
-		}
-
-		if ( false !== $deprecated ) {
-			_deprecated_function( "the filter {$deprecated}", '1.9.0', '"wc_memberships_' . $message_code . '_html" or "wc_memberships_' . $message_code . '" filters' );
+			$message = str_replace( '{login_url}', esc_url( self::get_restricted_content_redirect_url( $args ) ), $message );
 		}
 
 		return $message;
@@ -943,9 +913,10 @@ class WC_Memberships_User_Messages {
 	 *
 	 * @since 1.9.0
 	 *
+	 * @param array $args message args
 	 * @return string URL
 	 */
-	private static function get_restricted_content_redirect_url() {
+	private static function get_restricted_content_redirect_url( $args = [] ) {
 
 		$login_url = wc_get_page_permalink( 'myaccount' );
 
@@ -961,6 +932,20 @@ class WC_Memberships_User_Messages {
 				$post = get_post( $redirect_id );
 			} else {
 				$term = get_term( $redirect_id, $redirect_to );
+			}
+
+		// otherwise, try and use the provided message args
+		} elseif ( is_array( $args ) ) {
+
+			if ( isset( $args['term'] ) && $args['term'] instanceof \WP_Term ) {
+
+				$term        = $args['term'];
+				$redirect_id = $term->term_id;
+
+			} elseif ( isset( $args['post'] ) && $args['post'] instanceof \WP_Post ) {
+
+				$post        = $args['post'];
+				$redirect_id = $post->ID;
 			}
 		}
 
@@ -1064,7 +1049,7 @@ class WC_Memberships_User_Messages {
 	 * @param array $args optional arguments
 	 * @return string[] array of CSS classes (dashed)
 	 */
-	private static function get_message_classes( $type, $args = array() ) {
+	private static function get_message_classes( $type, $args = [] ) {
 
 		$classes = array( 'woocommerce-info' );
 
@@ -1133,13 +1118,19 @@ class WC_Memberships_User_Messages {
 	 *
 	 * @since 1.10.1
 	 *
-	 * @param \WP_Post $post the post object
+	 * @param \WP_Post $the_post the post object
 	 * @return string the trimmed excerpt
 	 */
-	private static function trim_excerpt( $post ) {
+	private static function trim_excerpt( $the_post ) {
+
+		if ( ! $the_post instanceof \WP_Post ) {
+			$post = get_post( $the_post );
+		} else {
+			$post = $the_post;
+		}
 
 		if ( ! $post instanceof \WP_Post ) {
-			$post = get_post( $post );
+			return '';
 		}
 
 		$excerpt = $post->post_content;
@@ -1170,9 +1161,6 @@ class WC_Memberships_User_Messages {
 
 		$excerpt = str_replace( ']]>', ']]&gt;', $excerpt );
 
-		/** This filter is documented in wp-includes/formatting.php */
-		$excerpt_length = apply_filters( 'excerpt_length', 55 );
-
 		/**
 		 * Filters the excerpt length (number of words).
 		 *
@@ -1181,7 +1169,7 @@ class WC_Memberships_User_Messages {
 		 * @param int $length the excerpt length (number of words)
 		 * @param \WP_Post $post the post object
 		 */
-		$excerpt_length = (int) apply_filters( 'wc_memberships_restricted_excerpt_length', $excerpt_length, $post );
+		$excerpt_length = absint( apply_filters( 'wc_memberships_restricted_excerpt_length', (int) get_option( 'wc_memberships_excerpt_length', 55 ), $post ) );
 
 		/** This filter is documented in wp-includes/formatting.php */
 		$excerpt_more = (string) apply_filters( 'excerpt_more', ' ' . '[&hellip;]' );
@@ -1195,7 +1183,44 @@ class WC_Memberships_User_Messages {
 		 */
 		$excerpt_more = (string) apply_filters( 'wc_memberships_restricted_excerpt_more', $excerpt_more );
 
-		return wp_trim_words( $excerpt, $excerpt_length, $excerpt_more );
+		/**
+		 * Filters the restricted content being trimmed.
+		 *
+		 * @since 1.15.0
+		 *
+		 * @param string $trimmed_excerpt trimmed excerpt
+		 * @param string $excerpt original $excerpt
+		 * @param int $excerpt_length length of the intended trim
+		 * @param string $excerpt_more word/symbol used to crop the excerpt at the set length
+		 */
+		return (string) apply_filters( 'wc_memberships_trimmed_restricted_excerpt', wp_trim_words( $excerpt, $excerpt_length, $excerpt_more ), $excerpt, $excerpt_length, $excerpt_more );
+	}
+
+
+	/**
+	 * Gets a list of available merge tags for user messages.
+	 *
+	 * @since 1.15.0
+	 *
+	 * @param bool $with_descriptions whether to return some help text related to each table, or an array of merge tag keys only
+	 * @return array|string[]
+	 */
+	public static function get_available_merge_tags( $with_descriptions = false ) {
+
+		$merge_tags = [
+			/* translators: Placeholder: %s shows a message merge tag to be used */
+			'products'  => __( '%s automatically inserts the product(s) needed to gain access.', 'woocommerce-memberships' ),
+			/* translators: Placeholder: %s shows a message merge tag to be used */
+			'date'      => __( '%s inserts the date when the member will gain access to delayed content.', 'woocommerce-memberships' ),
+			/* translators: Placeholder: %s shows a message merge tag to be used */
+			'discount'  => __( '%s inserts the highest product discount obtainable by becoming a member.', 'woocommerce-memberships' ),
+			/* translators: Placeholder: %s shows a message merge tag to be used */
+			'login_url' => __( '%s inserts the URL to the "My Account" page with the login form.', 'woocommerce-memberships' ),
+			/* translators: Placeholder: %s shows a message merge tag to be used */
+			'login'     => __( '%s inserts a login link to the "My Account" page with the login form.', 'woocommerce-memberships' ),
+		];
+
+		return $with_descriptions ? $merge_tags : array_keys( $merge_tags );
 	}
 
 
@@ -1219,7 +1244,7 @@ class WC_Memberships_User_Messages {
 				'<strong>', '</strong>'
 			);
 
-			$message = '<div class="woocommerce wc-memberships admin-restricted-content-notice">' . wp_kses_post( $text ) . ' <a href="#" class="dismiss-link">' . __( 'Dismiss', 'woocommerce-memberships' ) . '</a></div>';
+			$message = '<div class="woocommerce wc-memberships wc-memberships-frontend-banner admin-restricted-content-notice">' . wp_kses_post( $text ) . ' <a href="#" class="dismiss-link">' . __( 'Dismiss', 'woocommerce-memberships' ) . '</a></div>';
 		}
 
 		return $message;

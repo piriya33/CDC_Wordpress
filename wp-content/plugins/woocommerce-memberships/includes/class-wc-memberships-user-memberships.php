@@ -17,11 +17,11 @@
  * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @author    SkyVerge
- * @copyright Copyright (c) 2014-2019, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2021, SkyVerge, Inc. (info@skyverge.com)
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
-use SkyVerge\WooCommerce\PluginFramework\v5_3_1 as Framework;
+use SkyVerge\WooCommerce\PluginFramework\v5_10_6 as Framework;
 
 defined( 'ABSPATH' ) or exit;
 
@@ -73,21 +73,15 @@ class WC_Memberships_User_Memberships {
 		add_filter( 'comments_clauses',   array( $this, 'exclude_membership_notes_from_queries' ) );
 		add_action( 'comment_feed_join',  array( $this, 'exclude_membership_notes_from_feed_join' ) );
 		add_action( 'comment_feed_where', array( $this, 'exclude_membership_notes_from_feed_where' ) );
-		add_filter( 'wp_count_comments',  array( $this, 'exclude_membership_notes_from_comments_count' ), 999, 2 );
+		add_filter( 'wp_count_comments',  [ $this, 'exclude_membership_notes_from_comments_count' ], 999, 2 );
 
 		// expiration events handling
 		add_action( 'wc_memberships_user_membership_expiry',           array( $this, 'trigger_expiration_events' ), 10, 1 );
 		add_action( 'wc_memberships_user_membership_expiring_soon',    array( $this, 'trigger_expiration_events' ), 10, 1 );
 		add_action( 'wc_memberships_user_membership_renewal_reminder', array( $this, 'trigger_expiration_events' ), 10, 1 );
 
-		// schedule recurring cron to activate delayed User Memberships
-		if ( ! (bool) wp_next_scheduled( 'wc_memberships_activate_delayed_user_memberships', array() ) ) {
-
-			wp_schedule_event( current_time( 'timestamp', true ) + MINUTE_IN_SECONDS, 'hourly', 'wc_memberships_activate_delayed_user_memberships', array() );
-		}
-
 		// activate delayed User Memberships
-		add_action( 'wc_memberships_activate_delayed_user_memberships', array( $this, 'activate_delayed_user_memberships' ) );
+		add_action( 'wc_memberships_activate_delayed_user_membership', [ $this, 'activate_delayed_user_memberships' ] );
 	}
 
 
@@ -148,7 +142,7 @@ class WC_Memberships_User_Memberships {
 
 		// bail out if a plan cannot be found before setting a new user membership
 		if ( ! wc_memberships_get_membership_plan( $args['plan_id'] ) ) {
-			/* translators: Placeholder: %s - membership plan ID */
+			/* translators: Placeholder: %d - membership plan ID */
 			throw new Framework\SV_WC_Plugin_Exception( sprintf( __( 'Cannot create User Membership: Membership Plan with ID %d does not exist', 'woocommerce-memberships' ), (int) $args['plan_id'] ) );
 		}
 
@@ -175,8 +169,8 @@ class WC_Memberships_User_Memberships {
 
 		// this shouldn't happen, yet ensure $user_membership isn't null
 		if ( ! $user_membership instanceof \WC_Memberships_User_Membership ) {
-			/* translators: Placeholder: %s - membership plan ID */
-			throw new Framework\SV_WC_Plugin_Exception( sprintf( __( 'Cannot create User Membership "%s".', 'woocommerce-memberships' ), $user_membership_id ) );
+			/* translators: Placeholder: %d - membership plan ID */
+			throw new Framework\SV_WC_Plugin_Exception( sprintf( __( 'Cannot create User Membership #%d.', 'woocommerce-memberships' ), $user_membership_id ) );
 		}
 
 		// save/update product id that granted access
@@ -206,7 +200,7 @@ class WC_Memberships_User_Memberships {
 
 			$user_membership->set_start_date( $start_date );
 
-		} elseif ( 'delayed' !== $user_membership->get_status() && $user_membership->get_start_date( 'timestamp' ) > strtotime( 'tomorrow', current_time( 'timestamp', true ) ) ) {
+		} elseif ( ! $user_membership->has_status( 'delayed' ) && $user_membership->get_start_date( 'timestamp' ) > strtotime( 'tomorrow', current_time( 'timestamp', true ) ) ) {
 
 			$user_membership->update_status( 'delayed' );
 		}
@@ -480,7 +474,7 @@ class WC_Memberships_User_Memberships {
 		if ( is_numeric( $order ) ) {
 			$order_id = (int) $order;
 		} elseif ( $order instanceof \WC_Order || $order instanceof \WC_Order_Refund ) {
-			$order_id = (int) Framework\SV_WC_Order_Compatibility::get_prop( $order, 'id' );
+			$order_id = (int) $order->get_id();
 		} else {
 			return null;
 		}
@@ -514,12 +508,12 @@ class WC_Memberships_User_Memberships {
 
 
 	/**
-	 * Checks if user is a member of one particular or any membership plan.
+	 * Determines if a user is a member of one particular plan or any membership plan.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param int|\WP_User $user_id optional, defaults to current user
-	 * @param int|string|\WC_Memberships_Membership_Plan $membership_plan optional: membership plan ID, object or slug - leave empty to check if the user is a member of any plan
+	 * @param int|\WP_User|null $user_id optional: defaults to current user
+	 * @param int|string|\WC_Memberships_Membership_Plan|null $membership_plan optional: membership plan ID, object or slug - leave empty to check if the user is a member of any plan
 	 * @param bool|string $check_if_active optional additional check to see if the member has currently active access (pass param as true or 'active') or delayed access (use 'delayed')
 	 * @param bool $cache whether to use cached results (default true)
 	 * @return bool
@@ -537,19 +531,21 @@ class WC_Memberships_User_Memberships {
 		// sanity check (invalid user or not logged in)
 		if ( ! is_numeric( $user_id ) || 0 === $user_id ) {
 			return $is_member;
-		} else {
-			$user_id = (int) $user_id;
 		}
 
-		$plan_id = null;
+		$user_id = (int) $user_id;
 
-		if ( is_numeric( $membership_plan ) ) {
-			$plan_id = $membership_plan;
+		if ( null === $membership_plan ) {
+			$plan_id = 0; // this is used to cache if a user is a member of any plan
+		} elseif ( is_numeric( $membership_plan ) ) {
+			$plan_id = (int) $membership_plan;
 		} elseif ( $membership_plan instanceof \WC_Memberships_Membership_Plan ) {
 			$plan_id = $membership_plan->get_id();
+		} elseif ( is_string( $membership_plan ) && '' !== $membership_plan && ( $membership_plan = wc_memberships_get_membership_plan( $membership_plan ) ?: null ) ) {
+			$plan_id = $membership_plan->get_id();
+		} else {
+			return $is_member;
 		}
-
-		$member_status_cache_key = null;
 
 		// set status check cache key
 		if ( true === $check_if_active ) {
@@ -557,21 +553,22 @@ class WC_Memberships_User_Memberships {
 		} elseif ( ! $check_if_active ) {
 			$member_status_cache_key = 'is_member';
 		} elseif ( is_string( $check_if_active ) ) {
-			$member_status_cache_key = "is_{$check_if_active}";
+			$member_status_cache_key = "is_{$check_if_active}"; // allow custom cache keys, e.g. "is_delayed"
+		} else {
+			$member_status_cache_key = null;
 		}
 
 		// use memoization to fetch a value faster, if user member status is cached
 		if (    false !== $cache
 		     && $member_status_cache_key
-		     && is_numeric( $plan_id )
 		     && isset( $this->is_user_member[ $user_id ][ $plan_id ][ $member_status_cache_key ] ) ) {
 
 			$is_member = $this->is_user_member[ $user_id ][ $plan_id ][ $member_status_cache_key ];
 
 		} else {
 
-			// note 'true' is for legacy purposes here (check for active)
-			$must_be_active_member = in_array( $check_if_active, array( 'active', 'delayed', true ), true );
+			// note: 'true' is for legacy purposes here (check for active)
+			$must_be_active_member = in_array( $check_if_active, [ 'active', 'delayed', true ], true );
 
 			if ( null === $membership_plan ) {
 
@@ -590,14 +587,13 @@ class WC_Memberships_User_Memberships {
 
 							if ( true === $must_be_active_member ) {
 
+								// return true if we are checking for currently active
 								if ( $is_member = ( $user_membership->is_active() && $user_membership->is_in_active_period() ) ) {
-
-									// return true if we are checking for currently active
 									break;
+								}
 
-								} elseif ( 'delayed' === $check_if_active && ( $is_member = $user_membership->is_delayed() ) ) {
-
-									// return true if we are checking if start is delayed
+								// return true if we are checking if start is delayed
+								if ( 'delayed' === $check_if_active && ( $is_member = $user_membership->is_delayed() ) ) {
 									break;
 								}
 
@@ -610,13 +606,13 @@ class WC_Memberships_User_Memberships {
 					}
 				}
 
-			} else {
+			} elseif ( $user_membership = $this->get_user_membership( $user_id, $membership_plan ) ) {
 
-				// check if the user is a member of a specific plan
-				$user_membership = $this->get_user_membership( $user_id, $membership_plan );
-				$is_member       = (bool) $user_membership;
+				if ( ! $must_be_active_member ) {
 
-				if ( $user_membership && $must_be_active_member ) {
+					$is_member = true;
+
+				} else {
 
 					$is_member = $user_membership->is_active() && $user_membership->is_in_active_period();
 
@@ -628,7 +624,7 @@ class WC_Memberships_User_Memberships {
 				}
 			}
 
-			$this->is_user_member[ $user_id ][ $plan_id ][ $member_status_cache_key ] = $is_member;
+			$this->is_user_member[ $user_id ][ $plan_id ][ (string) $member_status_cache_key ] = $is_member;
 		}
 
 		return $is_member;
@@ -636,12 +632,12 @@ class WC_Memberships_User_Memberships {
 
 
 	/**
-	 * Checks if user is a member with active access of one particular or any membership plan
+	 * Determines if a user is a member with active access of one particular or any membership plan
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param int|\WP_User $user_id optional, defaults to current user
-	 * @param int|string $membership_plan optional: membership plan ID or slug - leave empty to check if the user is a member of any plan
+	 * @param int|\WP_User|null $user_id optional: defaults to current user
+	 * @param int|string|\WC_Memberships_Membership_Plan|null $membership_plan optional: membership plan ID, object or slug - leave empty to check if the user is an active member of any plan
 	 * @param bool $cache whether to use cache results (default true)
 	 * @return bool
 	 */
@@ -651,14 +647,14 @@ class WC_Memberships_User_Memberships {
 
 
 	/**
-	 * Checks if user is an active member of one particular or any membership plan but is delayed.
+	 * Determines if a user is an active member of one particular or any membership plan but is delayed.
 	 *
 	 * This is when a member has not gained access yet because the start date of the plan is in the future.
 	 *
 	 * @since 1.7.0
 	 *
-	 * @param int|\WP_User $user_id optional, defaults to current user
-	 * @param int|string $membership_plan optional: membership plan ID or slug - leave empty to check if the user is a member of any plan
+	 * @param int|\WP_User|null $user_id optional: defaults to current user
+	 * @param int|string|\WC_Memberships_Membership_Plan|null $membership_plan optional: membership plan ID, object or slug - leave empty to check if the user is a delayed member of any plan
 	 * @param bool $cache whether to use cache results (default true)
 	 * @return bool
 	 */
@@ -668,7 +664,7 @@ class WC_Memberships_User_Memberships {
 
 
 	/**
-	 * Checks if user is either a member with active or delayed access of one particular or any membership plan.
+	 * Determines if a user is either a member with active or delayed access of one particular or any membership plan.
 	 *
 	 * Note: this isn't the equivalent of doing `! wc_memberships_is_user_active_member()`
 	 * @see \WC_Memberships_User_Memberships::is_user_active_member()
@@ -676,8 +672,8 @@ class WC_Memberships_User_Memberships {
 	 *
 	 * @since 1.7.0
 	 *
-	 * @param int|\WP_User $user_id optional, defaults to current user
-	 * @param int|string $membership_plan optional: membership plan ID or slug - leave empty to check if the user is a member of any plan
+	 * @param int|\WP_User|null $user_id optional: defaults to current user
+	 * @param int|string|\WC_Memberships_Membership_Plan|null $membership_plan optional: membership plan ID, object or slug - leave empty to check if the user is an active or delayed member of any plan
 	 * @param bool $cache whether to use cache results (default true)
 	 * @return bool
 	 */
@@ -896,11 +892,12 @@ class WC_Memberships_User_Memberships {
 		 *
 		 * @param string[] $statuses array of statuses
 		 */
-		return (array) apply_filters( 'wc_memberships_active_access_membership_statuses', array(
+		return array_unique( (array) apply_filters( 'wc_memberships_active_access_membership_statuses', [
 			'active',
 			'complimentary',
+			'free_trial',
 			'pending',
-		) );
+		] ) );
 	}
 
 
@@ -918,14 +915,14 @@ class WC_Memberships_User_Memberships {
 		 *
 		 * @since 1.0.0
 		 *
-		 * @param array $statuses array of statuses valid for renewal
+		 * @param string[] $statuses array of statuses valid for renewal
 		 */
-		return (array) apply_filters( 'wc_memberships_valid_membership_statuses_for_renewal', array(
+		return array_unique( (array) apply_filters( 'wc_memberships_valid_membership_statuses_for_renewal', [
 			'active',
 			'cancelled',
 			'expired',
 			'paused',
-		) );
+		] ) );
 	}
 
 
@@ -945,10 +942,11 @@ class WC_Memberships_User_Memberships {
 		 *
 		 * @param string[] $statuses array of statuses valid for cancellation
 		 */
-		return (array) apply_filters( 'wc_memberships_valid_membership_statuses_for_cancel', array(
+		return array_unique( (array) apply_filters( 'wc_memberships_valid_membership_statuses_for_cancel', [
 			'active',
 			'delayed',
-		) );
+			'free_trial',
+		] ) );
 	}
 
 
@@ -992,14 +990,17 @@ class WC_Memberships_User_Memberships {
 	 * @param string $old_status old status slug
 	 * @param \WP_Post $post related WP_Post object
 	 */
-	public function transition_post_status( $new_status, $old_status, WP_Post $post ) {
+	public function transition_post_status( $new_status, $old_status, $post ) {
 
-		if ( 'wc_user_membership' !== $post->post_type || $new_status === $old_status ) {
-			return;
-		}
+		// skip if:
+		if (
+			   ! $post                                   // undetermined post (likely an error)
+			|| 'wc_user_membership' !== $post->post_type // not a membership
+			|| $new_status === $old_status               // not a status update
+			|| 'new' === $old_status                     // new post
+			|| 'auto-draft' === $old_status              // auto-draft
+		) {
 
-		// skip for new posts and auto drafts
-		if ( 'new' === $old_status || 'auto-draft' === $old_status ) {
 			return;
 		}
 
@@ -1025,7 +1026,7 @@ class WC_Memberships_User_Memberships {
 
 				case 'cancelled':
 
-					$user_membership->set_cancelled_date( current_time( 'mysql', true ) );
+					$user_membership->cancel_membership();
 					$user_membership->unschedule_expiration_events();
 
 				break;
@@ -1046,13 +1047,11 @@ class WC_Memberships_User_Memberships {
 
 				case 'paused':
 
-					$now = current_time( 'mysql', true );
-
-					$user_membership->set_paused_date( $now );
+					$user_membership->pause_membership();
 
 					// delayed memberships should disregard intervals at all
 					if ( 'delayed' !== $old_status ) {
-						$user_membership->set_paused_interval( 'start', strtotime( $now ) );
+						$user_membership->set_paused_interval( 'start', current_time( 'mysql', true ) );
 					}
 
 					// restore expiration events if the Membership was cancelled
@@ -1139,6 +1138,32 @@ class WC_Memberships_User_Memberships {
 			 */
 			do_action( 'wc_memberships_user_membership_status_changed', $user_membership, $old_status, $new_status );
 
+			if ( $user = $user_membership->get_user() ) {
+
+				$active_role   = $from_role = $this->get_default_user_role( $user, 'active' );
+				$inactive_role = $to_role   = $this->get_default_user_role( $user, 'inactive' );
+
+				if ( in_array( $new_status, $this->get_active_access_membership_statuses(), true ) ) {
+
+					$from_role = $inactive_role;
+					$to_role   = $active_role;
+
+				} else {
+
+					foreach ( wc_memberships_get_user_memberships( $user ) as $other_membership ) {
+
+						if ( $user_membership->get_id() !== $other_membership->get_id() && in_array( $other_membership->get_status(), $this->get_active_access_membership_statuses(), true ) ) {
+
+							$from_role = $inactive_role;
+							$to_role   = $active_role;
+							break;
+						}
+					}
+				}
+
+				$this->update_member_user_role( $user->ID, $from_role, $to_role );
+			}
+
 			$this->prune_object_caches( $user_membership );
 		}
 	}
@@ -1181,48 +1206,201 @@ class WC_Memberships_User_Memberships {
 
 
 	/**
+	 * Changes a member user role.
+	 *
+	 * When both roles to move to and from are omitted, it will fetch the default active/inactive member user roles.
+	 *
+	 * @since 1.21.0
+	 *
+	 * @param int $user_id the member user ID
+	 * @param string $from_role role to remove from the user
+	 * @param string $to_role role to add to the user
+	 * @param bool $force_update bypasses setting option to force a user role update (default false)
+	 * @return bool whether an update took place or not
+	 */
+	public function update_member_user_role( int $user_id, string $from_role = '', string $to_role = '', bool $force_update = false ) : bool {
+
+		// bail if setting excluded to update member user roles
+		if ( ! $force_update && 'yes' !== get_option( 'wc_memberships_assign_user_roles_to_members', 'no' ) ) {
+			return false;
+		}
+
+		$user = get_user_by( 'id', $user_id );
+
+		if ( ! $user instanceof \WP_User ) {
+			return false;
+		}
+
+		if ( '' === $from_role && '' === $to_role ) {
+
+			$this->prune_object_caches();
+
+			$active_role   = $this->get_default_user_role( $user, 'active' );
+			$inactive_role = $this->get_default_user_role( $user, 'inactive' );
+
+			// assume no active memberships: the member has inactive role
+			$from_role = $active_role;
+			$to_role   = $inactive_role;
+
+			// if there's at least one active membership, set the role to active
+			foreach ( wc_memberships_get_user_memberships( $user_id ) as $user_membership ) {
+
+				if ( in_array( $user_membership->get_status(), $this->get_active_access_membership_statuses(), true ) ) {
+
+					$from_role = $inactive_role;
+					$to_role   = $active_role;
+					break;
+				}
+			}
+		}
+
+		/**
+		 * Filters whether the member user role should be changed.
+		 *
+		 * @since 1.21.0
+		 *
+		 * @param bool $change_role whether role should change or not, by default this is false is user has no roles, or for admins and shop managers to prevent them to be locked out
+		 * @param \WP_User $user user being updated
+		 * @param string $to_role the role that the user will be moved to
+		 * @param string $from_role the role that the user will be remove from
+		 */
+		if ( ! (bool) apply_filters( 'wc_memberships_update_member_user_role', is_array( $user->roles ) && ! in_array( 'shop_manager', $user->roles, true ) && ! in_array( 'administrator', $user->roles, true ) && ! user_can( $user, 'manage_woocommerce' ), $user, $to_role, $from_role ) ) {
+			return false;
+		}
+
+		if ( '' !== $from_role && in_array( $from_role, $user->roles, true ) ) {
+			$user->remove_role( $from_role );
+			$changed = true;
+		}
+
+		if ( ! in_array( $to_role, $user->roles, true ) ) {
+			$user->add_role( $to_role );
+			$changed = true;
+		}
+
+		if ( empty( $changed ) ) {
+			return false;
+		}
+
+		/**
+		 * Fires when a member user has had a role changed.
+		 *
+		 * @since 1.21.0
+		 *
+		 * @param \WP_User $user updated member user object
+		 * @param string $to_role the role that has been added
+		 * @param string $from_role the role that has been removed
+		 */
+		do_action( 'wc_memberships_member_user_role_updated', $user, $to_role, $from_role );
+
+		return true;
+	}
+
+
+	/**
+	 * Gets the default role for the member user.
+	 *
+	 * @since 1.21.0
+	 *
+	 * @param \WP_User $user the member user object
+	 * @param string $which optional, to return the default role for active or inactive member
+	 * @return string user role
+	 */
+	private function get_default_user_role( \WP_User $user, string $which = '' ) : string {
+
+		$default_role = array_shift( $user->roles );
+
+		if ( 'active' === $which ) {
+
+			$active_role = get_option( 'wc_memberships_active_member_user_role', 'customer' );
+
+			if ( empty( $active_role ) ) {
+				$active_role = get_option( 'default_role', 'subscriber' );
+			}
+
+			/**
+			 * Filters the default active member user role.
+			 *
+			 * @since 1.21.0
+			 *
+			 * @param string $active_role user role
+			 * @param \WP_User $user the user the role is for
+			 */
+			$default_role = (string) apply_filters( 'wc_memberships_active_member_default_user_role', $active_role, $user );
+
+		} elseif ( 'inactive' === $which ) {
+
+			$inactive_role = get_option( 'wc_memberships_inactive_member_user_role', 'customer' );
+
+			if ( empty( $inactive_role ) ) {
+				$inactive_role = get_option( 'default_role', 'subscriber' );
+			}
+
+			/**
+			 * Filters the default inactive member user role.
+			 *
+			 * @since 1.21.0
+			 *
+			 * @param string $inactive_role user role
+			 * @param \WP_User $user the user the role is for
+			 */
+			$default_role = (string) apply_filters( 'wc_memberships_inactive_member_default_user_role', $inactive_role, $user );
+		}
+
+		return $default_role;
+	}
+
+
+	/**
 	 * Activates delayed memberships, if found.
 	 *
-	 * Used mainly as a callback for a recurring WP Cron scheduled action.
+	 * Used mainly as a callback for an Action Scheduler task callback.
 	 * Third parties can use this public method to manually activate delayed memberships too.
 	 *
 	 * @since 1.12.0
 	 *
 	 * @param array $args optional arguments (may be used in callback or directly: accepts WP_Query arguments)
 	 */
-	public function activate_delayed_user_memberships( $args = array() ) {
+	public function activate_delayed_user_memberships( $args = [] ) {
 
 		if ( ! is_array( $args ) ) {
-			$args = array();
+			$args = [];
+		} elseif ( isset( $args['user_membership_id'] ) ) {
+			$args['p'] = (int) $args['user_membership_id'];
+			unset( $args['user_membership_id'] );
 		}
 
 		$args['post_type']   = 'wc_user_membership';
 		$args['post_status'] = 'wcm-delayed';
 
-		/**
-		 * Filters the number of delayed memberships that will be queried for activation on each batch.
-		 *
-		 * @since 1.12.0
-		 *
-		 * @param int $batch default 20
-		 * @param array $args optional arguments
-		 */
-		$args['posts_per_page'] = max( 1, (int) apply_filters( 'wc_memberships_activate_delayed_user_memberships_batch', ! empty( $args['posts_per_page'] ) ? (int) $args['posts_per_page'] : 20, $args ) );
+		// if a specific post search is included, this must be in an action scheduler callback context
+		if ( empty( $args['p'] ) ) {
 
-		// set meta query to look for memberships with a start date in the past
-		if ( ! isset( $args['meta_query'] ) || ! is_array( $args['meta_query'] ) ) {
-			$args['meta_query'] = array();
-		}
+			/**
+			 * Filters the number of delayed memberships that will be queried for activation on each batch.
+			 *
+			 * @since 1.12.0
+			 *
+			 * @param int $batch default 20
+			 * @param array $args optional arguments
+			 */
+			$args['posts_per_page'] = max( 1, (int) apply_filters( 'wc_memberships_activate_delayed_user_memberships_batch', ! empty( $args['posts_per_page'] ) ? (int) $args['posts_per_page'] : 20, $args ) );
 
-		$args['meta_query'][] = array(
-			'key'     => '_start_date',
-			'value'   => date( 'Y-m-d H:i:s', current_time( 'timestamp', true ) ),
-			'compare' => '<=',
-			'type'    => 'DATETIME'
-		);
+			// set meta query to look for memberships with a start date in the past
+			if ( ! isset( $args['meta_query'] ) || ! is_array( $args['meta_query'] ) ) {
+				$args['meta_query'] = [];
+			}
 
-		if ( count( $args['meta_query'] ) > 1 ) {
-			$args['meta_query']['relation'] = 'AND';
+			$args['meta_query'][] = [
+				'key'     => '_start_date',
+				'value'   => date( 'Y-m-d H:i:s', current_time( 'timestamp', true ) ),
+				'compare' => '<=',
+				'type'    => 'DATETIME'
+			];
+
+			if ( count( $args['meta_query'] ) > 1 ) {
+				$args['meta_query']['relation'] = 'AND';
+			}
 		}
 
 		// look for memberships whose status is delayed and the start date is set in the past or matches now
@@ -1399,6 +1577,10 @@ class WC_Memberships_User_Memberships {
 				'is_update'          => $update,
 			) );
 
+			if ( $user = get_user_by( 'id', $user_membership->get_user_id() ) ) {
+				$this->update_member_user_role( $user->ID );
+			}
+
 			$this->prune_object_caches( $user_membership );
 		}
 	}
@@ -1439,23 +1621,64 @@ class WC_Memberships_User_Memberships {
 
 		$this->prune_object_caches();
 
-		// delete scheduled events
-		if ( $user_membership = $this->get_user_membership( $post_id ) ) {
+		$user_membership = $this->get_user_membership( $post_id );
 
-			/**
-			 * Fires before a user membership is deleted.
-			 *
-			 * @since 1.11.0
-			 *
-			 * @param \WC_Memberships_User_Membership $user_membership membership object
-			 */
-			do_action( 'wc_memberships_user_membership_deleted', $user_membership );
-
-			$user_membership->unschedule_expiration_events();
-
-			$this->prune_object_caches( $user_membership );
-
+		if ( ! $user_membership ) {
+			return;
 		}
+
+		/**
+		 * Fires before a user membership is deleted.
+		 *
+		 * @since 1.11.0
+		 *
+		 * @param \WC_Memberships_User_Membership $user_membership membership object
+		 */
+		do_action( 'wc_memberships_user_membership_deleted', $user_membership );
+
+		// delete scheduled events for the membership
+		$user_membership->unschedule_expiration_events();
+		$user_membership->unschedule_activation_events();
+
+		// delete profile fields (check if there are overlapping plans where the profile fields would still apply first)
+		$other_user_memberships = wc_memberships_get_user_memberships( $user_membership->get_user_id() );
+		$user_membership_plans  = [];
+		$has_active_memberships = false;
+
+		foreach ( $other_user_memberships as $other_user_membership ) {
+
+			$user_membership_plans[] = $other_user_membership->get_plan_id();
+
+			if ( $other_user_membership->is_active() ) {
+				$has_active_memberships = true;
+			}
+		}
+
+		// change role to inactive member if there are no other active memberships
+		if ( ! $has_active_memberships && ( $user = get_user_by( 'id', $user_membership->get_user_id() ) ) ) {
+			$this->update_member_user_role( $user->ID, $this->get_default_user_role( $user, 'active' ), $this->get_default_user_role( $user, 'inactive' ) );
+		}
+
+		foreach ( $user_membership->get_profile_fields() as $profile_field ) {
+
+			$definition = $profile_field->get_definition();
+
+			if ( ! $definition ) {
+				$profile_field->delete();
+				continue;
+			}
+
+			$profile_field_plans = $definition->get_membership_plan_ids();
+
+			// delete profile field if:
+			// - profile field applies to all plans, but user only has access to the plan being deleted
+			// - profile field applies to some other plans the user has still access to
+			if ( ( empty( $profile_field_plans ) && 1 === count( $user_membership_plans ) ) || ( ! empty( $profile_field_plans ) && empty( array_diff( $profile_field_plans, $user_membership_plans ) ) ) ) {
+				$profile_field->delete();
+			}
+		}
+
+		$this->prune_object_caches( $user_membership );
 	}
 
 
@@ -1607,11 +1830,14 @@ class WC_Memberships_User_Memberships {
 
 		if ( 0 === $post_id ) {
 
-			$notes = $this->get_user_membership_notes_count();
+			if ( ! empty( $counts ) && isset( $counts->all, $counts->approved ) ) {
 
-			if ( $notes > 0 ) {
-				$counts->all      = max( 0, (int) $counts->all - $notes );
-				$counts->approved = max( 0, (int) $counts->approved - $notes );
+				$notes = $this->get_user_membership_notes_count();
+
+				if ( $notes > 0 ) {
+					$counts->all      = max( 0, (int) $counts->all - $notes );
+					$counts->approved = max( 0, (int) $counts->approved - $notes );
+				}
 			}
 
 		} elseif ( is_numeric( $post_id ) && $post_id > 0 && 'wc_user_membership' === get_post_type( $post_id ) ) {

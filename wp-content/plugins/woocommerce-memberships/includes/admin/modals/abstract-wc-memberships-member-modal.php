@@ -17,11 +17,11 @@
  * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @author    SkyVerge
- * @copyright Copyright (c) 2014-2019, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2021, SkyVerge, Inc. (info@skyverge.com)
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
-use SkyVerge\WooCommerce\PluginFramework\v5_3_1 as Framework;
+use SkyVerge\WooCommerce\PluginFramework\v5_10_6 as Framework;
 
 defined( 'ABSPATH' ) or exit;
 
@@ -125,29 +125,16 @@ abstract class WC_Memberships_Member_Modal extends \WC_Memberships_Modal {
 
 		ob_start();
 
-		if ( Framework\SV_WC_Plugin_Compatibility::is_wc_version_gte_3_0() ) : ?>
-
-			<select
-				class="wc-customer-search"
-				id="search_member_id"
-				placeholder="<?php esc_html_e( 'Search for user', 'woocommerce-memberships' ); ?>"
-				data-placeholder="<?php esc_html_e( 'Search for user', 'woocommerce-memberships' ); ?>"
-				data-allow_clear="true"
-				style="width:100%;">
-			</select>
-
-		<?php else : ?>
-
-			<input
-				type="hidden"
-				class="wc-customer-search"
-				id="search_member_id"
-				data-placeholder="<?php esc_html_e( 'Search for user', 'woocommerce-memberships' ); ?>"
-				data-allow_clear="true"
-				style="width: 100%;"
-			/>
-
-		<?php endif;
+		?>
+		<select
+			class="wc-customer-search"
+			id="search_member_id"
+			placeholder="<?php esc_html_e( 'Search for user', 'woocommerce-memberships' ); ?>"
+			data-placeholder="<?php esc_html_e( 'Search for user', 'woocommerce-memberships' ); ?>"
+			data-allow_clear="true"
+			style="width:100%;">
+		</select>
+		<?php
 
 		return ob_get_clean();
 	}

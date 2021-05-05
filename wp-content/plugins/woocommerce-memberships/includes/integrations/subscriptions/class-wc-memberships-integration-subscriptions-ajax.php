@@ -17,11 +17,11 @@
  * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @author    SkyVerge
- * @copyright Copyright (c) 2014-2019, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2021, SkyVerge, Inc. (info@skyverge.com)
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
-use SkyVerge\WooCommerce\PluginFramework\v5_3_1 as Framework;
+use SkyVerge\WooCommerce\PluginFramework\v5_10_6 as Framework;
 
 defined( 'ABSPATH' ) or exit;
 
@@ -100,16 +100,14 @@ class WC_Memberships_Integration_Subscriptions_Ajax {
 			if ( $user_membership = wc_memberships_get_user_membership( $user_membership_id ) ) {
 
 				$integration  = wc_memberships()->get_integrations_instance()->get_subscriptions_instance();
-				$subscription = $integration->get_subscription_from_membership( $user_membership->get_id() );
+				$subscription = $integration ? $integration->get_subscription_from_membership( $user_membership->get_id() ) : null;
 
-				if ( $subscription instanceof \WC_Subscription && $subscription_id === (int) Framework\SV_WC_Order_Compatibility::get_prop( $subscription, 'id' ) ) {
+				if ( $subscription instanceof \WC_Subscription && $subscription_id === (int) $subscription->get_id() ) {
 
-					$results = array(
-						'delete-subscription' => wp_delete_post( $subscription_id ),
+					wp_send_json_success( [
+						'delete-subscription'    => wp_delete_post( $subscription_id ),
 						'delete-user-membership' => wp_delete_post( $user_membership_id ),
-					);
-
-					wp_send_json_success( $results );
+					] );
 				}
 			}
 		}

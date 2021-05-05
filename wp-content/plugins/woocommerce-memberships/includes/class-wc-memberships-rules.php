@@ -17,11 +17,11 @@
  * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @author    SkyVerge
- * @copyright Copyright (c) 2014-2019, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2021, SkyVerge, Inc. (info@skyverge.com)
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
-use SkyVerge\WooCommerce\PluginFramework\v5_3_1 as Framework;
+use SkyVerge\WooCommerce\PluginFramework\v5_10_6 as Framework;
 
 defined( 'ABSPATH' ) or exit;
 
@@ -36,16 +36,22 @@ class WC_Memberships_Rules {
 
 
 	/** @var \WC_Memberships_Membership_Plan_Rule[] all rules (associative array of rule IDs and initialized rule objects) */
-	private $rules = array();
+	private $rules = [];
 
 	/** @var array|\WC_Memberships_Membership_Plan_Rule[] queried rules (associative array with cache keys according to rule query) */
-	private $applied_rules = array();
+	private $applied_rules = [];
 
 	/** @var array of product IDs that have been checked and are purchasable */
-	private $purchasable_product_ids = array();
+	private $purchasable_product_ids = [];
 
 	/** @var array of product IDs that have been checked and aren't purchasable */
-	private $non_purchasable_product_ids = array();
+	private $non_purchasable_product_ids = [];
+
+	/** @var array of plan IDs and their corresponding post status */
+	private $plan_statuses = [];
+
+	/** @var array associative array of memoized post data used when querying rules */
+	private $post_data = [];
 
 
 	/**
@@ -110,6 +116,7 @@ class WC_Memberships_Rules {
 	 * @return array
 	 */
 	public function get_rules_raw() {
+
 		return get_option( 'wc_memberships_rules', array() );
 	}
 
@@ -207,6 +214,7 @@ class WC_Memberships_Rules {
 	 * @return string[]
 	 */
 	public function get_valid_rule_types() {
+
 		return array(
 			'content_restriction',
 			'product_restriction',
@@ -224,6 +232,7 @@ class WC_Memberships_Rules {
 	 * @return bool
 	 */
 	public function is_valid_rule_type( $type ) {
+
 		return in_array( $type, $this->get_valid_rule_types(), true );
 	}
 
@@ -238,7 +247,7 @@ class WC_Memberships_Rules {
 	 */
 	public function get_rules_valid_access_types( $rule_type = 'product_restriction' ) {
 
-		$access_types = array( array(
+		$access_types = array(
 			'content_restriction' => array(
 				'view',
 			),
@@ -246,7 +255,7 @@ class WC_Memberships_Rules {
 				'view',
 				'purchase',
 			),
-		) );
+		);
 
 		return isset( $access_types[ $rule_type ] ) ? $access_types[ $rule_type ] : array();
 	}
@@ -262,6 +271,7 @@ class WC_Memberships_Rules {
 	 * @return bool
 	 */
 	public function is_valid_rule_access_type( $type, $rule_type = 'product_restriction' ) {
+
 		return in_array( $type, $this->get_rules_valid_access_types( $rule_type ), true );
 	}
 
@@ -274,6 +284,7 @@ class WC_Memberships_Rules {
 	 * @return string[]
 	 */
 	public function get_rule_valid_content_types() {
+
 		return array(
 			'post_type',
 			'taxonomy',
@@ -293,6 +304,7 @@ class WC_Memberships_Rules {
 	 * @return bool
 	 */
 	public function is_valid_rule_content_type( $type ) {
+
 		return in_array( $type, $this->get_rule_valid_content_types(), true );
 	}
 
@@ -382,6 +394,7 @@ class WC_Memberships_Rules {
 	 * @return bool
 	 */
 	public function is_valid_discount_type( $type ) {
+
 		return in_array( $type, $this->get_valid_discount_types(), true );
 	}
 
@@ -450,13 +463,13 @@ class WC_Memberships_Rules {
 	 */
 	private function query_rules( array $args ) {
 
-		$applicable_rules     = array();
+		$applicable_rules     = [];
 		$inherit_restrictions = wc_memberships()->get_restrictions_instance()->inherit_restriction_rules();
 
 		if ( ! empty( $this->rules ) ) {
 			foreach ( $this->rules as $key => $rule ) {
 
-				$rule_type   = $rule->get_rule_type();
+				$rule_type = $rule->get_rule_type();
 
 				// Sanity checks:
 				// - skip invalid rule types (shouldn't happen)
@@ -467,7 +480,7 @@ class WC_Memberships_Rules {
 				}
 
 				$apply_rule  = false;
-				$plan_status = get_post_status( $rule->get_membership_plan_id() );
+				$plan_status = $this->get_plan_status( $rule->get_membership_plan_id() );
 
 				// check if the membership plan of this rule matches the requested status
 				if ( is_array( $args['plan_status'] ) ) {
@@ -505,10 +518,15 @@ class WC_Memberships_Rules {
 							// object ID, content type & name all match
 							$apply_rule = true;
 
-						} elseif ( 'product_variation' === get_post_type( $args['object_id'] ) && in_array( 'purchasing_discount', (array) $args['rule_type'], true ) ) {
+						} elseif ( in_array( 'purchasing_discount', (array) $args['rule_type'], true ) ) {
 
-							// special handling for purchasing discounts that apply to variable products
-							$apply_rule = $rule->applies_to( 'object_id', wp_get_post_parent_id( $args['object_id'] ) );
+							$post_data = $this->get_post_data( (int) $args['object_id'] );
+
+							if ( isset( $post_data['post_type'], $post_data['post_parent'] ) && 'product_variation' === $post_data['post_type'] ) {
+
+								// special handling for purchasing discounts that apply to variable products
+								$apply_rule = $rule->applies_to( 'object_id', $post_data['post_parent'] );
+							}
 						}
 					}
 
@@ -635,6 +653,72 @@ class WC_Memberships_Rules {
 		}
 
 		return $applicable_rules;
+	}
+
+
+	/**
+	 * Gets post data information (helper method).
+	 *
+	 * @since 1.21.0
+	 *
+	 * @param int $object_id post ID
+	 * @return array associative data
+	 */
+	private function get_post_data( int $object_id ) : array {
+
+		if ( ! isset( $this->post_data[ $object_id ] ) ) {
+
+			$this->post_data[ $object_id ] = [
+				'post_type'   => '',
+				'post_parent' => 0,
+			];
+
+			if ( $post = get_post( $object_id ) ) {
+
+				$this->post_data[ $object_id ]['post_type']   = (string) $post->post_type;
+				$this->post_data[ $object_id ]['post_parent'] = (int) $post->post_parent;
+
+				if ( in_array( $post->post_type, [ 'product', 'product_variation' ], true ) ) {
+
+					if ( $post->post_parent > 0 ) {
+						$product = wc_get_product( (int) $post->post_parent );
+					} else {
+						$product = wc_get_product( (int) $post->ID );
+					}
+
+					if ( $product ) {
+
+						foreach ( (array) $product->get_children() as $child_object_id ) {
+
+							$this->post_data[ (int) $child_object_id ] = [
+								'post_type'   => 'product_variation',
+								'post_parent' => (int) $product->get_id(),
+							];
+						}
+					}
+				}
+			}
+		}
+
+		return $this->post_data[ $object_id ];
+	}
+
+
+	/**
+	 * Gets a membership plan's status (helper method).
+	 *
+	 * @since 1.21.0
+	 *
+	 * @param int $membership_plan_id
+	 * @return string
+	 */
+	private function get_plan_status( int $membership_plan_id ) : string {
+
+		if ( ! isset( $this->plan_statuses[ $membership_plan_id ] ) ) {
+			$this->plan_statuses[ $membership_plan_id ] = get_post_status( $membership_plan_id );
+		}
+
+		return $this->plan_statuses[ $membership_plan_id ];
 	}
 
 
@@ -1158,7 +1242,7 @@ class WC_Memberships_Rules {
 
 		if ( is_numeric( $product_id ) ) {
 
-			$all_discount_rules  = $this->get_product_purchasing_discount_rules( $product_id );
+			$all_discount_rules = $this->get_product_purchasing_discount_rules( $product_id );
 
 			if ( ! empty( $all_discount_rules ) ) {
 				foreach ( $all_discount_rules as $rule ) {
@@ -1249,8 +1333,6 @@ class WC_Memberships_Rules {
 	 */
 	public function get_products_to_purchase_from_rules( $rules, $object = null, $rule_type = '', $args = array() ) {
 
-		$is_wc_version_lt_3_3 = Framework\SV_WC_Plugin_Compatibility::is_wc_version_lt( '3.3' );
-
 		$processed_plans = $filtered_products = $unfiltered_products = array();
 
 		// build an array of product IDs to check
@@ -1304,15 +1386,8 @@ class WC_Memberships_Rules {
 					continue;
 				}
 
-				// WC < 3.3 requires us to check a variation's parent's visibility
-				if ( $is_wc_version_lt_3_3 && $product->is_type( 'variation' ) && ( $parent = Framework\SV_WC_Product_Compatibility::get_parent( $product ) ) ) {
-					$is_visible = $parent->is_visible();
-				} else {
-					$is_visible = $product->is_visible();
-				}
-
 				// store the product as purchasable so it isn't re-checked
-				if ( $is_visible && $product->is_purchasable()  ) {
+				if ( $product->is_visible() && $product->is_purchasable()  ) {
 
 					$this->purchasable_product_ids[] = $product_id;
 
@@ -1351,257 +1426,6 @@ class WC_Memberships_Rules {
 		 * @param int[] $unfiltered_products IDs of the products that grant access, including those hidden from catalog or not purchasable
 		 */
 		return (array) apply_filters( 'wc_memberships_products_that_grant_access', ! empty( $filtered_products ) ? array_unique( $filtered_products ) : array(), $object_id, $rule_type, $args, $unfiltered_products );
-	}
-
-
-	/**
-	 * Handles deprecated methods.
-	 *
-	 * TODO remove these in a future major update of the plugin, 3 minor x.Y.z versions from deprecation {FN 2017-06-21}
-	 *
-	 * @since 1.9.0
-	 *
-	 * @param string $method called method not found
-	 * @param array $args possible arguments passed to method invoked
-	 * @return mixed|null
-	 */
-	public function __call( $method, $args ) {
-
-		switch ( $method ) {
-
-			/* @deprecated since 1.9.0 - remove by version 1.13.0 */
-			case 'get_content_restriction_rules' :
-
-				_deprecated_function( 'WC_Memberships_Rules::get_content_restriction_rules()', '1.9.0', 'WC_Memberships_Rules::get_rules()' );
-
-				return isset( $args[0] ) ? $this->get_rules( $args[0] ) : $this->get_rules();
-
-			/* @deprecated since 1.9.0 - remove by version 1.13.0 */
-			case 'get_the_product_restriction_rules' :
-
-				_deprecated_function( 'WC_Memberships_Rules::get_the_product_restriction_rules()', '1.9.0', 'WC_Memberships_Rules::get_product_restriction_rules()' );
-
-				return $this->get_product_restriction_rules( isset( $args[0] ) ? $args[0] : $args );
-
-			/* @deprecated since 1.9.0 - remove by version 1.13.0 */
-			case 'get_public_posts' :
-
-				_deprecated_function( 'WC_Memberships_Rules::get_public_posts()', '1.9.0', 'get_posts()' );
-
-				return get_posts( array(
-					'post_type'      => get_post_types(),
-					'post_status'    => 'any',
-					'meta_key'       => '_wc_memberships_force_public',
-					'meta_value'     => 'yes',
-				) );
-
-			/* @deprecated since 1.9.0 - remove by version 1.13.0 */
-			case 'get_public_products' :
-
-				_deprecated_function( 'WC_Memberships_Rules::get_public_products()', '1.9.0', 'get_posts()' );
-
-				return get_posts( array(
-					'post_type'      => 'product',
-					'post_status'    => 'any',
-					'meta_key'       => '_wc_memberships_force_public',
-					'meta_value'     => 'yes',
-				) );
-
-			/* @deprecated since 1.9.0 - remove by version 1.13.0 */
-			case 'get_user_content_restriction_rules' :
-
-				_deprecated_function( 'WC_Memberships_Rules::get_user_content_restriction_rules()', '1.9.0', 'WC_Memberships_Rules::get_rules()' );
-
-				$method_args              = isset( $args[1] ) ? $args[1] : array();
-				$method_args['rule_type'] = 'content_restriction';
-				$all_rules                = $this->get_rules( $method_args );
-				$user_rules               = array();
-
-				if ( ! empty( $all_rules ) ) {
-					foreach ( $all_rules as $rule ) {
-						if ( wc_memberships_is_user_active_or_delayed_member( $args[0], $rule->get_membership_plan_id() ) ) {
-							$user_rules[] = $rule;
-						}
-					}
-				}
-
-				return $user_rules;
-
-			/* @deprecated since 1.9.0 - remove by version 1.13.0 */
-			case 'get_user_product_restriction_rules' :
-
-				_deprecated_function( 'WC_Memberships_Rules::get_user_product_restriction_rules()', '1.9.0', 'WC_Memberships_Rules::get_rules()' );
-
-				$method_args = isset( $args[1] ) ? $args[1] : array();
-				$access_type = isset( $args[2] ) ? $args[2] : null;
-				$all_rules   = $this->get_products_restriction_rules( $method_args );
-				$user_rules  = array();
-
-				if ( ! empty( $all_rules ) ) {
-
-					foreach ( $all_rules as $rule ) {
-
-						$matches_access_type = true;
-
-						if ( 'view' === $access_type ) {
-							$matches_access_type = in_array( $rule->get_access_type(), array( 'view', 'purchase' ), true );
-						} elseif ( 'purchase' === $args ) {
-							$matches_access_type = 'purchase' === $rule->get_access_type();
-						}
-
-						if ( $matches_access_type && wc_memberships_is_user_active_or_delayed_member( $args[0], $rule->get_membership_plan_id() ) ) {
-							$user_rules[] = $rule;
-						}
-					}
-				}
-
-				return $user_rules;
-
-			/* @deprecated since 1.9.0 - remove by version 1.13.0 */
-			case 'product_has_member_discount' :
-
-				_deprecated_function( 'WC_Memberships_Rules::product_has_member_discount()', '1.9.0', 'WC_Memberships_Rules::product_has_purchasing_discount_rules()' );
-
-				return $this->product_has_purchasing_discount_rules( isset( $args[0] ) ? $args[0] : $args );
-
-			/* @deprecated since 1.9.0 - remove by version 1.13.0 */
-			case 'user_has_content_access_from_rules' :
-
-				_deprecated_function( 'WC_Memberships_Rules::user_has_content_access_from_rules()', '1.9.0' );
-
-				list( $user_id, $rules ) = $args;
-
-				$object_id  = ! empty( $args[2] ) ? $args[2] : null;
-				$has_access = true;
-
-				if ( empty( $user_id ) ) {
-
-					$has_access = false;
-
-				} elseif ( ! empty( $rules ) ) {
-
-					$has_access = false;
-
-					/** @type \WC_Memberships_Membership_Plan_Rule[] $rules */
-					foreach ( $rules as $rule ) {
-
-						if ( empty( $object_id ) && $rule->has_object_ids() ) {
-							continue;
-						} elseif ( wc_memberships_is_user_active_or_delayed_member( $user_id, $rule->get_membership_plan_id() ) ) {
-							$has_access = true;
-							break;
-						}
-					}
-				}
-
-				return $has_access;
-
-			/* @deprecated since 1.9.0 - remove by version 1.13.0 */
-			case 'user_has_product_member_discount' :
-
-				_deprecated_function( 'WC_Memberships_Rules::user_has_product_member_discount()', '1.9.0' );
-
-				list( $user_id, $product_id ) = $args;
-
-				$rules = $this->get_user_product_purchasing_discount_rules( $user_id, $product_id );
-
-				if ( ! empty( $rules ) ) {
-
-					foreach ( $rules as $key => $rule ) {
-
-						if ( ! $rule->is_active() || ! wc_memberships_is_user_active_member( $user_id, $rule->get_membership_plan_id() ) ) {
-							unset( $rules[ $key ] );
-						}
-					}
-				}
-
-				return ! empty( $rules );
-
-			/* @deprecated since 1.9.0 - remove by version 1.13.0 */
-			case 'user_has_product_view_access_from_rules' :
-
-				_deprecated_function( 'WC_Memberships_Rules::user_has_product_view_access_from_rules()', '1.9.0' );
-
-				list( $user_id, $rules ) = $args;
-
-				$object_id  = ! empty( $args[2] ) ? $args[2] : null;
-				$has_access = true;
-
-				if ( empty( $user_id ) ) {
-
-					$has_access = false;
-
-				} elseif ( ! empty( $rules ) ) {
-
-					/** @type \WC_Memberships_Membership_Plan_Rule[] $rules */
-					foreach ( $rules as $rule ) {
-
-						if ( ! $object_id && $rule->has_object_ids() ) {
-							continue;
-						} elseif ( 'view' === $rule->get_access_type() ) {
-							$has_access = false;
-							break;
-						}
-					}
-
-					if ( $user_id && ! $has_access ) {
-
-						foreach ( $rules as $rule ) {
-
-							if ( ! $object_id && $rule->has_object_ids() ) {
-								continue;
-							} elseif ( in_array( $rule->get_access_type(), array( 'view', 'purchase' ), true ) && wc_memberships_is_user_active_or_delayed_member( $user_id, $rule->get_membership_plan_id() ) ) {
-								$has_access = true;
-								break;
-							}
-						}
-					}
-				}
-
-				return $has_access;
-
-			/* @deprecated since 1.9.0 - remove by version 1.13.0 */
-			case 'user_has_product_purchase_access_from_rules' :
-
-				_deprecated_function( 'WC_Memberships_Rules::user_has_product_purchase_access_from_rules()', '1.9.0' );
-
-				list( $user_id, $rules ) = $args;
-
-				$has_access = true;
-
-				if ( empty( $user_id ) ) {
-
-					$has_access = false;
-
-				} elseif ( ! empty( $rules ) ) {
-
-					/** @type \WC_Memberships_Membership_Plan_Rule[] $rules */
-					foreach ( $rules as $rule ) {
-
-						if ( 'purchase' === $rule->get_access_type() ) {
-							$has_access = false;
-							break;
-						}
-					}
-
-					if ( ! $has_access ) {
-
-						foreach ( $rules as $rule ) {
-
-							if ( 'purchase' === $rule->get_access_type() && wc_memberships_is_user_active_or_delayed_member( $user_id, $rule->get_membership_plan_id() ) ) {
-								$has_access = true;
-								break;
-							}
-						}
-					}
-				}
-
-				return $has_access;
-		}
-
-		// you're probably doing it wrong
-		trigger_error( 'Call to undefined method ' . __CLASS__ . '::' . $method . '()', E_USER_ERROR );
-		return null;
 	}
 
 

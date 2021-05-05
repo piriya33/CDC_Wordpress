@@ -17,11 +17,12 @@
  * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @author    SkyVerge
- * @copyright Copyright (c) 2014-2019, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2021, SkyVerge, Inc. (info@skyverge.com)
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
-use SkyVerge\WooCommerce\PluginFramework\v5_3_1 as Framework;
+use SkyVerge\WooCommerce\Memberships\Profile_Fields;
+use SkyVerge\WooCommerce\PluginFramework\v5_10_6 as Framework;
 
 defined( 'ABSPATH' ) or exit;
 
@@ -53,6 +54,10 @@ class WC_Memberships_CSV_Export_User_Memberships extends \WC_Memberships_Job_Han
 		// delete export files on failure or job deletion
 		add_action( "{$this->identifier}_job_failed",  array( $this, 'delete_export_file' ) );
 		add_action( "{$this->identifier}_job_deleted", array( $this, 'delete_export_file' ) );
+
+		if ( isset( $_GET['download_exported_csv_file'], $_GET['job_id'], $_GET['job_name'] ) ) {
+			add_action( 'init', [ $this, 'download_exported_file' ] );
+		}
 	}
 
 
@@ -67,6 +72,22 @@ class WC_Memberships_CSV_Export_User_Memberships extends \WC_Memberships_Job_Han
 	protected function get_csv_headers( $job = null ) {
 
 		$headers = parent::get_csv_headers( $job );
+
+		if ( $job && ! empty( $job->include_profile_fields ) ) {
+
+			$profile_fields = Profile_Fields::get_profile_field_definitions();
+
+			foreach ( $profile_fields as $profile_field ) {
+
+				$headers[ $profile_field->get_slug() ] = $profile_field->get_slug();
+
+				if ( Profile_Fields::TYPE_FILE === $profile_field->get_type() ) {
+
+					// add a column for the attachment URL
+					$headers[ $profile_field->get_slug() . '(url)' ] = $profile_field->get_slug() . '(url)';
+				}
+			}
+		}
 
 		if ( $job && ! empty( $job->include_meta_data ) ) {
 			$headers['user_membership_meta'] = 'user_membership_meta';
@@ -218,19 +239,20 @@ class WC_Memberships_CSV_Export_User_Memberships extends \WC_Memberships_Job_Han
 			throw new Framework\SV_WC_Plugin_Exception( esc_html__( "No valid filename given for export file, can't export memberships.", 'woocommerce-memberships' ) );
 		}
 
-		$job = parent::create_job( wp_parse_args( $attrs, array(
-			'file_name'         => $file_name,
-			'file_path'         => $file_path,
-			'file_url'          => $file_url,
-			'fields_delimiter'  => 'comma',
-			'include_meta_data' => false,
-			'results'           => (object) array(
+		$job = parent::create_job( wp_parse_args( $attrs, [
+			'file_name'              => $file_name,
+			'file_path'              => $file_path,
+			'file_url'               => $file_url,
+			'fields_delimiter'       => 'comma',
+			'include_profile_fields' => false,
+			'include_meta_data'      => false,
+			'results'                => (object) [
 				'skipped'   => 0,
 				'exported'  => 0,
 				'processed' => 0,
 				'html'      => '',
-			),
-		) ) );
+			],
+		] ) );
 
 		if ( $job ) {
 
@@ -382,6 +404,17 @@ class WC_Memberships_CSV_Export_User_Memberships extends \WC_Memberships_Job_Han
 
 			$job = $this->update_job_results( $job, 'html' );
 			$job = $this->complete_job( $job );
+
+			$download_url = wp_nonce_url( admin_url(), 'download-export' );
+
+			// return the download url for the exported file
+			$download_url = add_query_arg( [
+				'download_exported_csv_file' => 1,
+				'job_name'                   => $job->name,
+				'job_id'                     => $job->id,
+			], $download_url );
+
+			$job->download_url = $download_url;
 		}
 
 		return $job;
@@ -457,6 +490,11 @@ class WC_Memberships_CSV_Export_User_Memberships extends \WC_Memberships_Job_Han
 							$value = $user instanceof \WP_User ? $user->user_email : '';
 						break;
 
+						case 'member_role' :
+							$role  = $user instanceof \WP_User ? array_shift( $user->roles ) : '';
+							$value = is_string( $role ) ? $role : '';
+						break;
+
 						case 'membership_plan_id' :
 							$value = $membership_plan->get_id();
 						break;
@@ -512,18 +550,53 @@ class WC_Memberships_CSV_Export_User_Memberships extends \WC_Memberships_Job_Han
 
 						default :
 
-							/**
-							 * Filter a User Membership CSV data custom column.
-							 *
-							 * @since 1.6.0
-							 *
-							 * @param string $value the value that should be returned for this column, default empty string
-							 * @param string $key the matching key of this column
-							 * @param \WC_Memberships_User_Membership $user_membership User Membership object
-							 * @param \WC_Memberships_CSV_Export_User_Memberships $export_instance an instance of the export class
-							 * @param \stdClass $job current export job
-							 */
-							$value = apply_filters( "wc_memberships_csv_export_user_memberships_{$column_name}_column", '', $column_name, $user_membership, $this, $job );
+							$value = '';
+
+							// check if the column is a profile field
+							if ( Profile_Fields::is_profile_field_slug( $column_name ) ) {
+
+								// check if profile fields should be included and if the field is set for this membership
+								if ( $job && ! empty( $job->include_profile_fields ) && ! empty( $profile_field = $user_membership->get_profile_field( $column_name ) ) ) {
+
+									if ( Profile_Fields::TYPE_FILE === $profile_field->get_definition()->get_type() ) {
+
+										// the column should contain the attachment ID
+										$value = $profile_field->get_value();
+									} else {
+
+										$value = $profile_field->get_formatted_value();
+									}
+
+								}
+
+							// check if the column is a URL column for a file profile field
+							} elseif ( Profile_Fields::is_profile_field_slug( str_replace( '(url)', '', $column_name ) ) ) {
+
+								// check if profile fields should be included and if the field is set for this membership
+								if ( $job && ! empty( $job->include_profile_fields ) && ! empty( $profile_field = $user_membership->get_profile_field( str_replace( '(url)', '', $column_name ) ) ) ) {
+
+									if ( Profile_Fields::TYPE_FILE === $profile_field->get_definition()->get_type() ) {
+
+										// the column should contain the attachment URL
+										$value = $profile_field->get_formatted_value();
+									}
+								}
+
+							} else {
+
+								/**
+								 * Filter a User Membership CSV data custom column.
+								 *
+								 * @since 1.6.0
+								 *
+								 * @param string $value the value that should be returned for this column, default empty string
+								 * @param string $key the matching key of this column
+								 * @param \WC_Memberships_User_Membership $user_membership User Membership object
+								 * @param \WC_Memberships_CSV_Export_User_Memberships $export_instance an instance of the export class
+								 * @param \stdClass $job current export job
+								 */
+								$value = apply_filters( "wc_memberships_csv_export_user_memberships_{$column_name}_column", $value, $column_name, $user_membership, $this, $job );
+							}
 
 						break;
 					}
@@ -868,76 +941,83 @@ class WC_Memberships_CSV_Export_User_Memberships extends \WC_Memberships_Job_Han
 	 * @return bool
 	 */
 	public function delete_export_file( $job ) {
-		return parent::delete_attached_file( $job );
+
+		return $this->delete_attached_file( $job );
 	}
 
 
 	/**
-	 * Backwards compatibility handler for deprecated methods.
+	 * Downloads an exported file.
 	 *
-	 * TODO remove deprecated methods when they are at least 3 minor versions older (as in x.Y.z semantic versioning) {FN 2017-23-06}
+	 * @internal
 	 *
-	 * @since 1.10.0
-	 *
-	 * @param string $method method called
-	 * @param void|string|array|mixed $args optional argument(s)
-	 * @return null|void|mixed
+	 * @since 1.13.2
 	 */
-	public function __call( $method, $args ) {
+	public function download_exported_file() {
 
-		$deprecated = "WC_Memberships_CSV_Export_User_Memberships::{$method}()";
+		check_admin_referer( 'download-export' );
 
-		switch ( $method ) {
-
-			/* @deprecated  since 1.10.0 - remove this method by 1.13.0 */
-			case 'get_fields' :
-				_deprecated_function( $deprecated, '1.10.0' );
-				return array();
-
-			/* @deprecated  since 1.10.0 - remove this method by 1.13.0 */
-			case 'render_section' :
-				_deprecated_function( $deprecated, '1.10.0' );
-				return null;
-
-			/* @deprecated  since 1.10.0 - remove this method by 1.13.0 */
-			case 'render_content' :
-				_deprecated_function( $deprecated, '1.10.0' );
-				return null;
-
-			/* @deprecated  since 1.10.0 - remove this method by 1.13.0 */
-			case 'render_file_upload_field' :
-				_deprecated_function( $deprecated, '1.10.0' );
-				return null;
-
-			/* @deprecated  since 1.10.0 - remove this method by 1.13.0 */
-			case 'render_date_range_field' :
-				_deprecated_function( $deprecated, '1.10.0' );
-				return null;
-
-			/* @deprecated  since 1.10.0 - remove this method by 1.13.0 */
-			case 'set_admin_page_title' :
-				_deprecated_function( $deprecated, '1.10.0' );
-				return isset( $args[0] ) ? $args[0] : '';
-
-			/* @deprecated  since 1.10.0 - remove this method by 1.13.0 */
-			case 'set_export_ids' :
-				_deprecated_function( $deprecated, '1.10.0' );
-				return null;
-
-			/* @deprecated  since 1.10.0 - remove this method by 1.13.0 */
-			case 'process_export' :
-				_deprecated_function( $deprecated, '1.10.0' );
-				return null;
-
-			/* @deprecated  since 1.10.0 - remove this method by 1.13.0 */
-			case 'download' :
-				_deprecated_function( $deprecated, '1.10.0' );
-				return null;
+		if ( ! current_user_can( 'manage_woocommerce_user_memberships' ) ) {
+			wp_die( __( 'You do not have the proper permissions to download this file.', 'woocommerce-memberships' ) );
 		}
 
-		// you're probably doing it wrong
-		trigger_error( "Call to undefined method {$deprecated}", E_USER_ERROR );
-		return null;
+		$job_name = wc_clean( $_GET['job_name'] );
+		$job_id   = wc_clean( $_GET['job_id'] );
+		$job      = wc_memberships()->get_utilities_instance()->get_job_object( $job_name, $job_id );
+
+		if ( ! $job ) {
+
+			// die with an error message if the download fails
+			wp_die( __( 'Export job not found', 'woocommerce-memberships' ), '', [ 'response' => 404 ] );
+		}
+
+		$filename = $job->file_name;
+
+		header( 'Content-type: text/csv' );
+		header( 'Content-Description: File Transfer' );
+		header( 'Content-Disposition: attachment; filename="' . $filename . '"' );
+		header( 'Expires: 0' );
+		header( 'Cache-Control: must-revalidate, post-check=0, pre-check=0' );
+		header( 'Pragma: public' );
+
+		// stream the file
+		$fp = fopen( $job->file_path, 'rb' );
+
+		$fpassthru_disabled = $this->is_fpassthru_disabled();
+
+		// fpassthru might be disabled in some hosts (like Flywheel)
+		if ( $fpassthru_disabled || ! @fpassthru( $fp ) ) {
+
+			$contents = @stream_get_contents( $fp );
+
+			echo $contents ?: '';
+		}
+
+		exit();
+	}
+
+
+	/**
+	 * Checks whether fpassthru has been disabled in PHP.
+	 *
+	 * Helper method, do not open to public.
+	 *
+	 * @since 1.15.3
+	 *
+	 * @return bool
+	 */
+	private function is_fpassthru_disabled() {
+
+		$disabled = false;
+
+		if ( function_exists( 'ini_get' ) ) {
+
+			$disabled_functions = @ini_get( 'disable_functions' );
+
+			$disabled = is_string( $disabled_functions ) && in_array( 'fpassthru', explode( ',', $disabled_functions ), false );
+		}
+
+		return $disabled;
 	}
 
 

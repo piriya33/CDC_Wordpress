@@ -2,7 +2,7 @@
 /**
  * WC_PB_Admin_Order class
  *
- * @author   SomewhereWarm <info@somewherewarm.gr>
+ * @author   SomewhereWarm <info@somewherewarm.com>
  * @package  WooCommerce Product Bundles
  * @since    5.8.0
  */
@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Product Bundles edit-order functions and filters.
  *
  * @class    WC_PB_Admin_Order
- * @version  5.12.1
+ * @version  6.1.5
  */
 class WC_PB_Admin_Order {
 
@@ -134,25 +134,68 @@ class WC_PB_Admin_Order {
 
 						if ( WC_PB_Core_Compatibility::is_wc_version_gte( '3.6' ) ) {
 
-							$bundled_order_items = wc_pb_get_bundled_order_items( $order->get_item( $added_to_order ), $order );
+							$new_container_item = $order->get_item( $added_to_order );
+
+							if ( $item_reduced_stock = $item->get_meta( '_reduced_stock', true ) ) {
+								$new_container_item->add_meta_data( '_reduced_stock', $item_reduced_stock, true );
+								$new_container_item->save();
+							}
+
+							$bundled_order_items = wc_pb_get_bundled_order_items( $new_container_item, $order );
+							$product_ids = array();
 							$order_notes         = array();
 
 							foreach ( $bundled_order_items as $order_item_id => $order_item ) {
-								$product                       = $order_item->get_product();
-								$order_notes[ $order_item_id ] = $product->get_formatted_name();
 
-								if ( $product->managing_stock() ) {
-									$qty                           = $order_item->get_quantity();
-									$old_stock                     = $product->get_stock_quantity();
-									$new_stock                     = wc_update_product_stock( $product, $qty, 'decrease' );
-									$order_notes[ $order_item_id ] = $product->get_formatted_name() . ' &ndash; ' . $old_stock . '&rarr;' . $new_stock;
+								$bundled_item_id = $order_item->get_meta( '_bundled_item_id', true );
+								$product_id      = $order_item->get_product_id();
+
+								if ( $variation_id = $order_item->get_variation_id() ) {
+									$product_id = $variation_id;
+								}
+
+								$product_ids[ $bundled_item_id ] = $product_id;
+							}
+
+							$duplicate_product_ids              = array_diff_assoc( $product_ids, array_unique( $product_ids ) );
+							$duplicate_product_bundled_item_ids = array_keys( array_intersect( $product_ids, $duplicate_product_ids ) );
+
+							foreach ( $bundled_order_items as $order_item_id => $order_item ) {
+
+								$bundled_item_id     = $order_item->get_meta( '_bundled_item_id', true );
+								$bundled_product     = $order_item->get_product();
+								$bundled_product_sku = $bundled_product->get_sku();
+
+								if ( ! $bundled_product_sku ) {
+									$bundled_product_sku = '#' . $bundled_product->get_id();
+								}
+
+								if ( in_array( $bundled_item_id, $duplicate_product_bundled_item_ids ) ) {
+									$stock_id = sprintf( _x( '%1$s:%2$s', 'bundled items stock change note sku with id format', 'woocommerce-product-bundles' ), $bundled_product_sku, $item_id );
+								} else {
+									$stock_id = $bundled_product_sku;
+								}
+
+								$order_note = sprintf( _x( '%1$s (%2$s)', 'bundled items stock change note format', 'woocommerce-product-bundles' ), $order_item->get_name(), $stock_id );
+
+								if ( $bundled_product->managing_stock() ) {
+
+									$qty           = $order_item->get_quantity();
+									$old_stock     = $bundled_product->get_stock_quantity();
+									$new_stock     = wc_update_product_stock( $bundled_product, $qty, 'decrease' );
+									$stock_from_to = $old_stock . '&rarr;' . $new_stock;
+									$order_note    = sprintf( _x( '%1$s (%2$s) &ndash; %3$s', 'bundled items stock change note format', 'woocommerce-product-bundles' ), $order_item->get_name(), $stock_id, $stock_from_to );
 
 									$order_item->add_meta_data( '_reduced_stock', $qty, true );
 									$order_item->save();
 								}
+
+								$order_notes[] = $order_note;
 							}
 
-							$order->add_order_note( sprintf( __( 'Added line items: %s', 'woocommerce' ), implode( ', ', $order_notes ) ), false, true );
+							if ( ! empty( $order_notes ) ) {
+								$order->add_order_note( sprintf( __( 'Added bundled line items: %s', 'woocommerce-product-bundles' ), implode( ', ', $order_notes ) ), false, true );
+							}
 						}
 
 						$order->remove_item( $item_id );

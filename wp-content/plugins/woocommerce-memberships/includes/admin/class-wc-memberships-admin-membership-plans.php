@@ -17,11 +17,11 @@
  * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @author    SkyVerge
- * @copyright Copyright (c) 2014-2019, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2021, SkyVerge, Inc. (info@skyverge.com)
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
-use SkyVerge\WooCommerce\PluginFramework\v5_3_1 as Framework;
+use SkyVerge\WooCommerce\PluginFramework\v5_10_6 as Framework;
 
 defined( 'ABSPATH' ) or exit;
 
@@ -55,7 +55,6 @@ class WC_Memberships_Admin_Membership_Plans {
 
 		// custom admin plan actions
 		add_action( 'admin_action_duplicate_plan', array( $this, 'duplicate_membership_plan' ) );
-		add_action( 'admin_action_grant_access',   array( $this, 'grant_access_to_membership' ) );
 
 		// add/edit plan screen hooks
 		add_action( 'post_submitbox_misc_actions', array( $this, 'post_submitbox_misc_actions' ) );
@@ -238,7 +237,7 @@ class WC_Memberships_Admin_Membership_Plans {
 		if ( $product instanceof \WC_Product ) {
 
 			if ( $product->is_type( 'variation' ) ) {
-				$product_link = get_edit_post_link( Framework\SV_WC_Product_Compatibility::get_parent( $product ) );
+				$product_link = get_edit_post_link( $product->get_parent_id( 'edit' ) );
 			} else {
 				$product_link = get_edit_post_link( $product->get_id() );
 			}
@@ -376,14 +375,10 @@ class WC_Memberships_Admin_Membership_Plans {
 
 			$handler = wc_memberships()->get_utilities_instance()->get_grant_retroactive_access_instance();
 
-			// opens the modal if there's an ongoing job
 			if ( $handler->has_ongoing_job( $plan->get_id() ) ) {
 
-				wc_enqueue_js( '
-					jQuery( document ).ready( function( $ ) {
-						$( "#grant-access-modal-plan-' . $plan->get_id() . '" ).trigger( "click" );
-					} ); 
-				' );
+				// opens the modal if there's an ongoing job
+				wc_enqueue_js( ' $( "#grant-access-modal-plan-' . $plan->get_id() . '" ).trigger( "click" ); ' );
 
 			} elseif ( $job = $handler->get_job() ) {
 
@@ -581,8 +576,8 @@ class WC_Memberships_Admin_Membership_Plans {
 		global $wpdb;
 
 		$post_meta_infos = $wpdb->get_results( $wpdb->prepare( "
-			SELECT meta_key, meta_value 
-			FROM $wpdb->postmeta 
+			SELECT meta_key, meta_value
+			FROM $wpdb->postmeta
 			WHERE post_id=%d
 		", absint( $id ) ) );
 
@@ -629,40 +624,6 @@ class WC_Memberships_Admin_Membership_Plans {
 		}
 
 		update_option( 'wc_memberships_rules', array_merge( $rules, $new_rules ) );
-	}
-
-
-	/**
-	 * Grants access to a membership plan.
-	 *
-	 * TODO remove this method by version 1.13.0 {FN 2018-02-13}
-	 *
-	 * @internal
-	 *
-	 * @since 1.0.0
-	 * @deprecated since 1.10.0
-	 */
-	public function grant_access_to_membership() {
-
-		_deprecated_function( 'WC_Memberships_Admin_Membership_Plans::grant_access_to_membership()', '1.10.0' );
-	}
-
-
-	/**
-	 * Shows the duplicate plan link in admin edit screen.
-	 *
-	 * TODO remove this method by version 1.13.0 {FN 2018-02-13}
-	 *
-	 * @internal
-	 *
-	 * @since 1.0.0
-	 * @deprecated since 1.10.0
-	 */
-	public function duplicate_button() {
-
-		_deprecated_function( 'WC_Memberships_Admin_Membership_Plans::duplicate_button()', '1.10.0', 'WC_Memberships_Admin_Membership_Plans::post_submitbox_start()' );
-
-		$this->post_submitbox_start();
 	}
 
 

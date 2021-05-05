@@ -3,6 +3,11 @@
 <div class="d4p-group d4p-group-changelog">
     <h3><?php _e("Version", "dev4press-updater"); ?> 4</h3>
     <div class="d4p-group-inner">
+        <h4>Version: 4.4.1 / april 15 2021</h4>
+        <ul>
+            <li><strong>new</strong> support for BreadcrumbsPress Pro</li>
+        </ul>
+
         <h4>Version: 4.4 / january 20 2021</h4>
         <ul>
             <li><strong>new</strong> support for new addons</li>

@@ -17,11 +17,11 @@
  * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @author    SkyVerge
- * @copyright Copyright (c) 2014-2019, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2021, SkyVerge, Inc. (info@skyverge.com)
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
-use SkyVerge\WooCommerce\PluginFramework\v5_3_1 as Framework;
+use SkyVerge\WooCommerce\PluginFramework\v5_10_6 as Framework;
 
 defined( 'ABSPATH' ) or exit;
 
@@ -60,13 +60,9 @@ class WC_Memberships_Integration_Measurement_Price_Calculator {
 			add_filter( 'wc_measurement_price_calculator_settings_rule',  array( $this, 'apply_discounts_to_settings_rule_prices' ), 999, 2 );
 			// handle the HTML price to display before/after discount price information
 			add_filter( 'wc_measurement_price_calculator_get_price_html', array( $this, 'get_measurements_price_html' ), 999, 5 );
-			// handle the correct cart and checkout product subtotal according to filter in different WC versions
-			if ( Framework\SV_WC_Plugin_Compatibility::is_wc_version_lt_3_0() ) {
-				add_filter( 'woocommerce_get_price',                          array( $this, 'handle_product_cart_item_subtotal_price' ), 999, 2 );
-			} else {
-				add_filter( 'woocommerce_product_get_price',                  array( $this, 'handle_product_cart_item_subtotal_price' ), 999, 2 );
-			}
-			add_filter( 'woocommerce_cart_item_price',                        array( $this, 'handle_product_cart_item_subtotal_price' ), 999, 2 );
+			// handle the correct cart and checkout product subtotal
+			add_filter( 'woocommerce_product_get_price',                  array( $this, 'handle_product_cart_item_subtotal_price' ), 999, 2 );
+			add_filter( 'woocommerce_cart_item_price',                    array( $this, 'handle_product_cart_item_subtotal_price' ), 999, 2 );
 		}
 	}
 
@@ -145,29 +141,10 @@ class WC_Memberships_Integration_Measurement_Price_Calculator {
 		     && $settings->is_pricing_calculator_enabled()
 		     && $discounts->user_has_member_discount( $product ) ) {
 
-			if ( Framework\SV_WC_Plugin_Compatibility::is_wc_version_gte_3_0() ) {
-
-				if ( 'woocommerce_cart_item_price' === $filter && 'dimensions' !== $settings->get_calculator_type() ) {
-					$price = $settings->pricing_rules_enabled() ? $raw_price : $discounts->get_discounted_price( $raw_price, $product );
-				} elseif ( $settings->pricing_rules_enabled() ) {
-					$price = $discounts->get_original_price( $raw_price, $product );
-				}
-
-			} else {
-
-				if ( 'woocommerce_cart_item_price' === $filter && 'dimensions' !== $settings->get_calculator_type() ) {
-
-					$price = $settings->pricing_rules_enabled() ? $discounts->get_original_price( $raw_price, $product ) : $raw_price;
-
-				} elseif ( is_cart() || is_checkout() ) {
-
-					if ( $settings->pricing_rules_enabled() ) {
-						do_action( 'wc_memberships_discounts_disable_price_adjustments' );
-						do_action( 'wc_memberships_discounts_disable_price_html_adjustments' );
-					}
-
-					$price = $discounts->get_original_price( $raw_price, $product );
-				}
+			if ( 'woocommerce_cart_item_price' === $filter && 'dimensions' !== $settings->get_calculator_type() ) {
+				$price = $settings->pricing_rules_enabled() ? $raw_price : $discounts->get_discounted_price( $raw_price, $product );
+			} elseif ( $settings->pricing_rules_enabled() ) {
+				$price = $discounts->get_original_price( $raw_price, $product );
 			}
 
 			// when filtering cart item price we need to return a string

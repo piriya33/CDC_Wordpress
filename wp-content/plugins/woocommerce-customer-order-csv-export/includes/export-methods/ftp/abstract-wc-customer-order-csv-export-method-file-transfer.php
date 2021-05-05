@@ -1,6 +1,6 @@
 <?php
 /**
- * WooCommerce Customer/Order CSV Export
+ * WooCommerce Customer/Order/Coupon Export
  *
  * This source file is subject to the GNU General Public License v3.0
  * that is bundled with this package in the file license.txt.
@@ -12,17 +12,18 @@
  *
  * DISCLAIMER
  *
- * Do not edit or add to this file if you wish to upgrade WooCommerce Customer/Order CSV Export to newer
- * versions in the future. If you wish to customize WooCommerce Customer/Order CSV Export for your
+ * Do not edit or add to this file if you wish to upgrade WooCommerce Customer/Order/Coupon Export to newer
+ * versions in the future. If you wish to customize WooCommerce Customer/Order/Coupon Export for your
  * needs please refer to http://docs.woocommerce.com/document/ordercustomer-csv-exporter/
  *
- * @package     WC-Customer-Order-CSV-Export/Export-Methods/File-Transfer
  * @author      SkyVerge
- * @copyright   Copyright (c) 2012-2018, SkyVerge, Inc.
+ * @copyright   Copyright (c) 2015-2021, SkyVerge, Inc. (info@skyverge.com)
  * @license     http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
 defined( 'ABSPATH' ) or exit;
+
+use SkyVerge\WooCommerce\PluginFramework\v5_10_6 as Framework;
 
 /**
  * Export File Transfer Class
@@ -64,7 +65,7 @@ abstract class WC_Customer_Order_CSV_Export_Method_File_Transfer implements WC_C
 	 * Setup FTP information and check for any invalid/missing info
 	 *
 	 * @since 3.0.0
-	 * @throws SV_WC_Plugin_Exception on missing configuration variables
+	 * @throws Framework\SV_WC_Plugin_Exception on missing configuration variables
 	 * @param array $args {
 	 *     An array of arguments.
 	 *
@@ -79,7 +80,7 @@ abstract class WC_Customer_Order_CSV_Export_Method_File_Transfer implements WC_C
 	 */
 	 public function __construct( $args ) {
 
-		$args = wp_parse_args( $args, array(
+		$args = wp_parse_args( $args, [
 			'ftp_server'       => '',
 			'ftp_username'     => '',
 			'ftp_password'     => '',
@@ -87,7 +88,7 @@ abstract class WC_Customer_Order_CSV_Export_Method_File_Transfer implements WC_C
 			'ftp_path'         => '',
 			'ftp_security'     => '',
 			'ftp_passive_mode' => 'no',
-		) );
+		] );
 
 		// set connection info
 		$this->server       = $args['ftp_server'];
@@ -96,7 +97,7 @@ abstract class WC_Customer_Order_CSV_Export_Method_File_Transfer implements WC_C
 		$this->port         = $args['ftp_port'];
 		$this->path         = $args['ftp_path'];
 		$this->security     = $args['ftp_security'];
-		$this->passive_mode = 'yes' === $args['ftp_passive_mode'];
+		$this->passive_mode = wc_string_to_bool( $args['ftp_passive_mode'] ); // make sure 'yes' and 'no' also result in boolean
 
 		/**
 		 * Allow actors to adjust the FTP timeout
@@ -104,12 +105,12 @@ abstract class WC_Customer_Order_CSV_Export_Method_File_Transfer implements WC_C
 		 * @since 3.0.0
 		 * @param int $timeout Timeout in seconds
 		 */
-		$this->timeout = apply_filters( 'wc_customer_order_csv_export_ftp_timeout', 30 );
+		$this->timeout = apply_filters( 'wc_customer_order_export_ftp_timeout', 30 );
 
 		// check for blank username
 		if ( ! $this->username ) {
 
-			throw new SV_WC_Plugin_Exception( __( 'FTP Username is blank.', 'woocommerce-customer-order-csv-export' ) );
+			throw new Framework\SV_WC_Plugin_Exception( __( 'FTP Username is blank.', 'woocommerce-customer-order-csv-export' ) );
 		}
 
 		/* allow blank passwords */
@@ -117,13 +118,13 @@ abstract class WC_Customer_Order_CSV_Export_Method_File_Transfer implements WC_C
 		// check for blank server
 		if ( ! $this->server ) {
 
-			throw new SV_WC_Plugin_Exception( __( 'FTP Server is blank.', 'woocommerce-customer-order-csv-export' ) );
+			throw new Framework\SV_WC_Plugin_Exception( __( 'FTP Server is blank.', 'woocommerce-customer-order-csv-export' ) );
 		}
 
 		// check for blank port
 		if ( ! $this->port ) {
 
-			throw new SV_WC_Plugin_Exception ( __( 'FTP Port is blank.', 'woocommerce-customer-order-csv-export' ) );
+			throw new Framework\SV_WC_Plugin_Exception ( __( 'FTP Port is blank.', 'woocommerce-customer-order-csv-export' ) );
 		}
 	}
 

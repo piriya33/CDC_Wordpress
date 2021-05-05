@@ -17,7 +17,7 @@
  * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @author    SkyVerge
- * @copyright Copyright (c) 2014-2019, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2021, SkyVerge, Inc. (info@skyverge.com)
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
@@ -30,20 +30,19 @@ defined( 'ABSPATH' ) or exit;
  * @type \WP_Query $restricted_products Query results of products post objects for all products restricted to the membership
  * @type int $user_id The current user ID
  *
- * @version 1.12.0
+ * @version 1.13.0
  * @since 1.4.0
  */
 
-do_action( 'wc_memberships_before_members_area', 'my-membership-products', $customer_membership );
+if ( empty ( $restricted_products->posts ) ) :
 
-?>
-
-<?php if ( empty ( $restricted_products->posts ) ) : ?>
-
+	?>
 	<p><?php esc_html_e( 'There are no products assigned to this membership.', 'woocommerce-memberships' ); ?></p>
+	<?php
 
-<?php else : ?>
+else :
 
+	?>
 	<table class="shop_table shop_table_responsive my_account_orders my_account_memberships my_membership_products">
 
 		<thead>
@@ -86,8 +85,8 @@ do_action( 'wc_memberships_before_members_area', 'my-membership-products', $cust
 				}
 
 				if ( $product->is_type( 'variation' ) ) {
-					$parent     = wc_memberships_get_product_parent( $product );
-					$product_id = $parent->get_id();
+					$parent     = wc_get_product( $product->get_parent_id( 'edit' ) );
+					$product_id = $parent ? $parent->get_id() : 0;
 				} else {
 					$product_id = $product->get_id();
 				}
@@ -187,9 +186,6 @@ do_action( 'wc_memberships_before_members_area', 'my-membership-products', $cust
 		<?php endif; ?>
 
 	</table>
+	<?php
 
-<?php endif; ?>
-
-<?php
-
-do_action( 'wc_memberships_after_members_area', 'my-membership-products', $customer_membership );
+endif;

@@ -17,11 +17,11 @@
  * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @author    SkyVerge
- * @copyright Copyright (c) 2014-2019, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2021, SkyVerge, Inc. (info@skyverge.com)
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
-use SkyVerge\WooCommerce\PluginFramework\v5_3_1 as Framework;
+use SkyVerge\WooCommerce\PluginFramework\v5_10_6 as Framework;
 
 defined( 'ABSPATH' ) or exit;
 
@@ -338,54 +338,20 @@ class WC_Memberships_Meta_Box_Membership_Plan_Data extends \WC_Memberships_Meta_
 
 				<p class="form-field js-show-if-access-method-purchase <?php if ( 'purchase' !== $current_access_type ) : ?>hide<?php endif; ?>">
 					<label for="_product_ids"><?php esc_html_e( 'Products', 'woocommerce-memberships' ); ?></label>
-
-					<?php if ( Framework\SV_WC_Plugin_Compatibility::is_wc_version_gte_3_0() ) : ?>
-
-						<select
-							name="_product_ids[]"
-							id="_product_ids"
-							class="js-ajax-select-products"
-							style="width: 90%;"
-							multiple="multiple"
-							data-placeholder="<?php esc_attr_e( 'Search for a product&hellip;', 'woocommerce-memberships' ); ?>">
-							<?php $product_ids = $membership_plan->get_product_ids(); ?>
-							<?php foreach ( $product_ids as $product_id ) : ?>
-								<?php if ( $product = wc_get_product( $product_id ) ) : ?>
-									<option value="<?php echo $product_id; ?>" selected><?php echo esc_html( $product->get_formatted_name() ); ?></option>
-								<?php endif; ?>
-							<?php endforeach; ?>
-						</select>
-
-					<?php else : ?>
-
-						<input
-							type="hidden"
-							name="_product_ids"
-							id="_product_ids"
-							class="js-ajax-select-products"
-							style="width: 90%;"
-							data-placeholder="<?php esc_attr_e( 'Search for a product&hellip;', 'woocommerce-memberships' ); ?>"
-							data-multiple="true"
-							data-selected="<?php
-							$product_ids = array_filter( array_map( 'absint', $membership_plan->get_product_ids() ) );
-							$json_ids    = array();
-
-							foreach ( $product_ids as $product_id ) {
-
-								$product = wc_get_product( $product_id );
-
-								if ( is_object( $product ) ) {
-									$json_ids[ $product_id ] = wp_kses_post( html_entity_decode( $product->get_formatted_name() ) );
-								}
-							}
-
-							echo esc_attr( wp_json_encode( $json_ids ) ); ?>"
-							value="<?php echo esc_attr( implode( ',', array_keys( $json_ids ) ) ); ?>"
-						/>
-
-					<?php endif; ?>
-
+					<select
+						name="_product_ids[]"
+						id="_product_ids"
+						class="js-ajax-select-products"
+						style="width: 90%;"
+						multiple="multiple"
+						data-placeholder="<?php esc_attr_e( 'Search for a product&hellip;', 'woocommerce-memberships' ); ?>">
+						<?php $products = $membership_plan->get_products(); ?>
+						<?php foreach ( $products as $product_id => $product ) : ?>
+							<option value="<?php echo $product_id; ?>" selected><?php echo esc_html( $product->get_formatted_name() ); ?></option>
+						<?php endforeach; ?>
+					</select>
 					<?php echo wc_help_tip( __( 'Leave empty to only allow members you manually assign.', 'woocommerce-memberships' ) ); ?>
+					<?php echo $this->get_trashed_products_message( $products ); ?>
 				</p>
 
 			</div>
@@ -453,6 +419,7 @@ class WC_Memberships_Meta_Box_Membership_Plan_Data extends \WC_Memberships_Meta_
 									<option value="<?php echo esc_attr( $key ); ?>" <?php selected( $key, $access_length_period ); ?>><?php echo esc_html( strtolower( $label ) ); ?></option>
 								<?php endforeach; ?>
 							</select>
+							<?php echo wc_help_tip( 'The membership will end after the specified length of time.', 'woocommerce-memberships' ); ?>
 						</span>
 					</span>
 
@@ -473,7 +440,7 @@ class WC_Memberships_Meta_Box_Membership_Plan_Data extends \WC_Memberships_Meta_
 							    name="_access_start_date"
 							    class="access_length-start-date js-plan-access-set-date"
 							    value="<?php echo esc_attr( $current_access_start_date ); ?>"
-							><span class="description"><?php echo 'YYYY-MM-DD'; ?></span>
+							><span class="description"><?php echo '<code>YYYY-MM-DD</code> '. wc_help_tip( 'The membership will start on the beginning of this day.', 'woocommerce-memberships' ); ?></span>
 						</span>
 						<span>
 							<label for="_access_end_date"><?php esc_html_e( 'End date', 'woocommerce-memberships' ); ?></label>
@@ -483,7 +450,7 @@ class WC_Memberships_Meta_Box_Membership_Plan_Data extends \WC_Memberships_Meta_
 								name="_access_end_date"
 								class="access_length-end-date js-plan-access-set-date"
 								value="<?php echo esc_attr( $current_access_end_date ); ?>"
-							/><span class="description"><?php echo 'YYYY-MM-DD'; ?></span>
+							/><span class="description"><?php echo '<code>YYYY-MM-DD</code> ' . wc_help_tip( 'The membership will end on the beginning of this day.', 'woocommerce-memberships' ) ?></span>
 						</span>
 					</span>
 
@@ -502,6 +469,49 @@ class WC_Memberships_Meta_Box_Membership_Plan_Data extends \WC_Memberships_Meta_
 			?>
 		</div><!-- //#membership-plan-data-general -->
 		<?php
+	}
+
+
+	/**
+	 * Gets a message to warn the shop manager about trashed products selected to grant access to the plan.
+	 *
+	 * @since 1.15.0
+	 *
+	 * @param \WC_Product[] $chosen_products array of products chosen to grant access
+	 * @return string HTML
+	 */
+	private function get_trashed_products_message( $chosen_products ) {
+
+		$message          = '';
+		$trashed_products = [];
+
+		foreach ( $chosen_products as $chosen_product ) {
+
+			if ( 'trash' === $chosen_product->get_status() ) {
+
+				$trashed_products[] = '<a href="' . esc_url( get_edit_post_link( $chosen_product->is_type( 'variation' ) ? $chosen_product->get_parent_id() : $chosen_product->get_id() ) ) . '">' . $chosen_product->get_name() . '</a>';
+			}
+		}
+
+		 if ( ! empty( $trashed_products ) ) :
+
+			ob_start();
+
+		    ?>
+			<span class="description" style="clear:left;display:block;">
+				<?php printf(
+					/* translators: Placeholder: %s - list of products that are in the trash, linked to their edit screen */
+					_n( 'The product %s is in the trash and may not be purchasable.', 'The products %s are in the trash and may not be purchasable.', count( $trashed_products ), 'woocommerce-memberships'),
+					wc_memberships_list_items( $trashed_products, 'and' )
+				); ?>
+			</span>
+		    <?php
+
+		    $message = ob_get_clean();
+
+		endif;
+
+		return $message;
 	}
 
 
@@ -550,7 +560,7 @@ class WC_Memberships_Meta_Box_Membership_Plan_Data extends \WC_Memberships_Meta_
 				$public_posts = get_posts( array(
 					'post_type'   => $post_types,
 					'post_status' => 'any',
-					'post__in'    => call_user_func_array( 'array_merge', $public_post_ids ),
+					'post__in'    => array_merge( ...$public_post_ids ),
 				) );
 			}
 
@@ -835,7 +845,7 @@ class WC_Memberships_Meta_Box_Membership_Plan_Data extends \WC_Memberships_Meta_
 				$items[] = '<a href="' . get_edit_post_link( $post->ID ) . '">' . get_the_title( $post->ID ) . '</a>';
 			}
 
-			$post_links = wc_memberships_list_items( $items, __( 'and', 'woocommerce-memberships' ) );
+			$post_links = wc_memberships_list_items( $items, 'and' );
 		}
 
 		return $post_links;
@@ -853,29 +863,28 @@ class WC_Memberships_Meta_Box_Membership_Plan_Data extends \WC_Memberships_Meta_
 
 		wc_memberships()->get_admin_notice_handler()->add_admin_notice(
 			/* translators: %1$s - line break, %2$s - opening <a> link tag, %3$s - closing </a> tag */
-			sprintf( __( 'When you add a restriction rule for content, it will no longer be public on your site. By adding a rule for a page, post, or taxonomy, it will become restricted, and can only be accessed by members of this plan, or by members of another plan that grants access to the content.%1$sLearn more about %2$srestriction rules in the documentation%3$s.', 'woocommerce-memberships' ),
-				'<br />',
-				'<em><a href="https://docs.woocommerce.com/document/woocommerce-memberships-restrict-content/">',
-				'</a></em>'
+			sprintf( __( 'When you add a restriction rule for content, it will no longer be public on your site. By adding a rule for a page, post, or taxonomy, it will become restricted, and can only be accessed by members of this plan, or by members of another plan that grants access to the content. Learn more about %1$srestriction rules in the documentation%2$s.', 'woocommerce-memberships' ),
+				'<a href="https://docs.woocommerce.com/document/woocommerce-memberships-restrict-content/">', '</a>'
 			),
 			'restrict-content-notice',
-			array(
+			[
 				'always_show_on_settings' => false,
 				'notice_class'            => $notice_classes . ' ' . 'js-memberships-restrict-content-notice',
-			)
+			]
 		);
 
 		wc_memberships()->get_admin_notice_handler()->add_admin_notice(
 			/* translators: these %s placeholders consist of pairs of opening a closing <strong> HTML tags highlighting text */
-			sprintf( __( 'When you add a %1$sviewing%2$s restriction rule for a product, it will no longer be public on your site, and can only be accessed by members of this plan, or by members of another plan that grants access to the product. By adding a %3$spurchasing%4$s restriction rule, the product can be viewed publicly, but only purchased by members.', 'woocommerce-memberships' ),
+			sprintf( __( 'When you add a %1$sviewing%2$s restriction rule for a product, it will no longer be public on your site, and can only be accessed by members of this plan, or by members of another plan that grants access to the product. By adding a %3$spurchasing%4$s restriction rule, the product can be viewed publicly, but only purchased by members. Learn more about %5$srestriction rules in the documentation%6$s.', 'woocommerce-memberships' ),
 				'<strong>', '</strong>',
-				'<strong>',	'</strong>'
+				'<strong>', '</strong>',
+				'<a href="https://docs.woocommerce.com/document/woocommerce-memberships-restrict-content/">', '</a>'
 			),
 			'restrict-products-notice',
-			array(
+			[
 				'always_show_on_settings' => false,
 				'notice_class'            => $notice_classes . ' ' . 'js-memberships-restrict-products-notice',
-			)
+			]
 		);
 	}
 
@@ -891,10 +900,9 @@ class WC_Memberships_Meta_Box_Membership_Plan_Data extends \WC_Memberships_Meta_
 	 */
 	public function render_admin_notice_js() {
 
-		// remove force-hide class (which prevents message flicker on page load)
-		// and simply hide the hidden notices
+		// remove force-hide class (which prevents message flicker on page load) and simply hide the hidden notices
 		wc_enqueue_js( "
-			$( '.js-wc-plugin-framework-admin-notice.force-hide' ).removeClass( 'force-hide' ).hide()
+			$( '.js-wc-plugin-framework-admin-notice.force-hide' ).removeClass( 'force-hide' ).hide();
 		" );
 	}
 

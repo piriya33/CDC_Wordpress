@@ -2,7 +2,7 @@
 /**
  * WC_PB_Addons_Compatibility class
  *
- * @author   SomewhereWarm <info@somewherewarm.gr>
+ * @author   SomewhereWarm <info@somewherewarm.com>
  * @package  WooCommerce Product Bundles
  * @since    4.11.4
  */
@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Product Addons Compatibility.
  *
- * @version  6.0.4
+ * @version  6.4.1
  */
 class WC_PB_Addons_Compatibility {
 
@@ -261,7 +261,7 @@ class WC_PB_Addons_Compatibility {
 	public static function validate_bundled_item_addons( $add, $bundle, $bundled_item, $quantity, $variation_id ) {
 
 		// Ordering again? When ordering again, do not revalidate addons.
-		$order_again = isset( $_GET[ 'order_again' ] ) && isset( $_GET[ '_wpnonce' ] ) && wp_verify_nonce( $_GET[ '_wpnonce' ], 'woocommerce-order_again' );
+		$order_again = isset( $_GET[ 'order_again' ] ) && isset( $_GET[ '_wpnonce' ] ) && wp_verify_nonce( wc_clean( $_GET[ '_wpnonce' ] ), 'woocommerce-order_again' );
 
 		if ( $order_again  ) {
 			return $add;
@@ -366,8 +366,12 @@ class WC_PB_Addons_Compatibility {
 			return $cart_item;
 		}
 
+		$bundled_item    = WC_PB_Helpers::get_runtime_prop( $cart_item[ 'data' ], 'bundled_cart_item' );
 		$bundled_item_id = $cart_item[ 'bundled_item_id' ];
-		$bundled_item    = $bundle->get_bundled_item( $bundled_item_id );
+
+		if ( is_null( $bundled_item ) ) {
+			$bundled_item = $bundle->get_bundled_item( $bundled_item_id );
+		}
 
 		if ( ! $bundled_item ) {
 			return $cart_item;
@@ -426,13 +430,17 @@ class WC_PB_Addons_Compatibility {
 
 		if ( $bundle_container_item = wc_pb_get_bundled_cart_item_container( $cart_item ) ) {
 
-			$adjust          = false;
-			$bundle          = $bundle_container_item[ 'data' ];
-			$bundled_item_id = $cart_item[ 'bundled_item_id' ];
-			$bundled_item    = $bundle->get_bundled_item( $bundled_item_id );
+			$adjust       = false;
+			$bundled_item = WC_PB_Helpers::get_runtime_prop( $cart_item[ 'data' ], 'bundled_cart_item' );
+
+			if ( is_null( $bundled_item ) ) {
+				$bundle          = $bundle_container_item[ 'data' ];
+				$bundled_item_id = $cart_item[ 'bundled_item_id' ];
+				$bundled_item    = $bundle->get_bundled_item( $bundled_item_id );
+			}
 
 			// Only let add-ons adjust prices if PB doesn't modify bundled item prices in any way.
-			if ( $bundled_item->is_priced_individually() && ! $bundled_item->get_discount( 'cart' ) ) {
+			if ( $bundled_item && $bundled_item->is_priced_individually() && ! $bundled_item->get_discount( 'cart' ) ) {
 				$adjust = true;
 			}
 		}
@@ -450,6 +458,7 @@ class WC_PB_Addons_Compatibility {
 	public static function add_addon_price_zero_filter( $bundled_item ) {
 
 		if ( ! $bundled_item->is_priced_individually() ) {
+			add_filter( 'woocommerce_product_addons_price_raw', array( __CLASS__, 'option_price_raw_zero_filter' ) );
 			add_filter( 'woocommerce_product_addons_option_price_raw', array( __CLASS__, 'option_price_raw_zero_filter' ) );
 		}
 	}
@@ -464,6 +473,7 @@ class WC_PB_Addons_Compatibility {
 	public static function remove_addon_price_zero_filter( $bundled_item ) {
 
 		if ( ! $bundled_item->is_priced_individually() ) {
+			remove_filter( 'woocommerce_product_addons_price_raw', array( __CLASS__, 'option_price_raw_zero_filter' ) );
 			remove_filter( 'woocommerce_product_addons_option_price_raw', array( __CLASS__, 'option_price_raw_zero_filter' ) );
 		}
 	}

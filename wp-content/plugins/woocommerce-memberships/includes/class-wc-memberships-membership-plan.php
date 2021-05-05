@@ -17,11 +17,11 @@
  * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @author    SkyVerge
- * @copyright Copyright (c) 2014-2019, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2021, SkyVerge, Inc. (info@skyverge.com)
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
-use SkyVerge\WooCommerce\PluginFramework\v5_3_1 as Framework;
+use SkyVerge\WooCommerce\PluginFramework\v5_10_6 as Framework;
 
 defined( 'ABSPATH' ) or exit;
 
@@ -46,6 +46,9 @@ class WC_Memberships_Membership_Plan {
 
 	/** @var \WP_Post Membership Plan post object */
 	public $post;
+
+	/** @var int[] array of IDs of products that grant access */
+	private $product_ids;
 
 	/** @var string access method meta */
 	protected $access_method_meta = '';
@@ -213,9 +216,12 @@ class WC_Memberships_Membership_Plan {
 	 */
 	public function get_product_ids() {
 
-		$product_ids = get_post_meta( $this->id, $this->product_ids_meta, true );
+		if ( null === $this->product_ids ) {
+			$this->product_ids = get_post_meta( $this->id, $this->product_ids_meta, true );
+			$this->product_ids = is_array( $this->product_ids ) ? array_unique( array_map( 'absint', $this->product_ids ) ) : [];
+		}
 
-		return is_array( $product_ids ) ? array_unique( array_map( 'absint', $product_ids ) ) : array();
+		return $this->product_ids;
 	}
 
 
@@ -229,7 +235,7 @@ class WC_Memberships_Membership_Plan {
 	 */
 	public function get_products( $exclude_subscriptions = false ) {
 
-		$products = array();
+		$products = [];
 
 		if ( $this->has_products() ) {
 
@@ -274,7 +280,7 @@ class WC_Memberships_Membership_Plan {
 			$product_ids = explode( ',', $product_ids );
 		}
 
-		$product_ids = array_map( 'intval', (array) $product_ids );
+		$product_ids = array_map( 'absint', (array) $product_ids );
 
 		// ensure all products are valid
 		foreach ( $product_ids as $index => $product_id ) {
@@ -289,7 +295,13 @@ class WC_Memberships_Membership_Plan {
 			$product_ids = array_merge( $this->get_product_ids(), $product_ids );
 		}
 
-		update_post_meta( $this->id, $this->product_ids_meta, array_unique( $product_ids ) );
+		$this->product_ids = array_unique( $product_ids );
+
+		if ( empty( $this->product_ids ) ) {
+			delete_post_meta( $this->id, $this->product_ids_meta );
+		} else {
+			update_post_meta( $this->id, $this->product_ids_meta, $this->product_ids );
+		}
 	}
 
 
@@ -304,6 +316,8 @@ class WC_Memberships_Membership_Plan {
 
 		if ( empty( $product_ids ) ) {
 
+			$this->product_ids = [];
+
 			delete_post_meta( $this->id, $this->product_ids_meta );
 
 		} else {
@@ -312,10 +326,16 @@ class WC_Memberships_Membership_Plan {
 				$product_ids = (array) $product_ids;
 			}
 
-			$remove_ids   = array_map( 'intval', $product_ids );
+			$remove_ids   = array_map( 'absint', $product_ids );
 			$existing_ids = $this->get_product_ids();
 
-			update_post_meta( $this->id, $this->product_ids_meta, array_diff( $existing_ids, $remove_ids ) );
+			$this->product_ids = array_diff( array_unique( $existing_ids ), array_unique( $remove_ids ) );
+
+			if ( empty( $this->product_ids ) ) {
+				delete_post_meta( $this->id, $this->product_ids_meta );
+			} else {
+				update_post_meta( $this->id, $this->product_ids_meta, $this->product_ids );
+			}
 		}
 	}
 
@@ -329,9 +349,7 @@ class WC_Memberships_Membership_Plan {
 	 */
 	public function has_products() {
 
-		$product_ids = $this->get_product_ids();
-
-		return ! empty( $product_ids );
+		return ! empty( $this->get_product_ids() );
 	}
 
 
@@ -344,7 +362,8 @@ class WC_Memberships_Membership_Plan {
 	 * @return bool
 	 */
 	public function has_product( $product_id ) {
-		return is_numeric( $product_id ) ? in_array( (int) $product_id, $this->get_product_ids(), true ) : false;
+
+		return is_numeric( $product_id ) && in_array( (int) $product_id, $this->get_product_ids(), true );
 	}
 
 
@@ -434,15 +453,18 @@ class WC_Memberships_Membership_Plan {
 	 * @since 1.7.0
 	 *
 	 * @param string $access_length an access period defined as "2 weeks", "5 months", "1 year" etc.
+	 * @return bool success
 	 */
 	public function set_access_length( $access_length ) {
 
+		$success       = false;
 		$access_length = (string) wc_memberships_parse_period_length( $access_length );
 
 		if ( ! empty( $access_length ) ) {
-
-			update_post_meta( $this->id, $this->access_length_meta, $access_length );
+			$success = (bool) update_post_meta( $this->id, $this->access_length_meta, $access_length );
 		}
+
+		return $success;
 	}
 
 
@@ -614,10 +636,12 @@ class WC_Memberships_Membership_Plan {
 	 * @see \WC_Memberships_Membership_Plan::delete_access_end_date()
 	 *
 	 * @since 1.7.0
+	 *
+	 * @return bool success
 	 */
 	public function delete_access_length() {
 
-		delete_post_meta( $this->id, $this->access_length_meta );
+		return (bool) delete_post_meta( $this->id, $this->access_length_meta );
 	}
 
 
@@ -644,7 +668,7 @@ class WC_Memberships_Membership_Plan {
 
 
 	/**
-	 * Checks the plan's access length type
+	 * Checks the plan's access length type.
 	 *
 	 * @since 1.7.0
 	 *
@@ -652,25 +676,32 @@ class WC_Memberships_Membership_Plan {
 	 * @return bool
 	 */
 	public function is_access_length_type( $type ) {
+
 		return is_array( $type ) ? in_array( $this->get_access_length_type(), $type, true ) : $type === $this->get_access_length_type();
 	}
 
 
 	/**
-	 * Sets the plan access start date
+	 * Sets the plan access start date.
 	 *
-	 * Note: this only affects memberships of fixed length
+	 * Note: this only affects memberships of fixed length.
 	 *
 	 * @since 1.7.0
 	 *
 	 * @param string|null $date optional, defaults to now, otherwise a date in mysql format
+	 * @return bool success
 	 */
 	public function set_access_start_date( $date = null ) {
 
+		$success = false;
+		$date    = null === $date ? (string) date( 'Y-m-d H:i:s', current_time( 'timestamp', true ) ) : $date;
+
 		if ( $start_date = wc_memberships_parse_date( $date, 'mysql' ) ) {
 
-			update_post_meta( $this->id, $this->access_start_date_meta, $start_date );
+			$success = (bool) update_post_meta( $this->id, $this->access_start_date_meta, $start_date );
 		}
+
+		return $success;
 	}
 
 
@@ -757,10 +788,12 @@ class WC_Memberships_Membership_Plan {
 	 * Note: this only affects membership plans of fixed length.
 	 *
 	 * @since 1.7.0
+	 *
+	 * @return bool success
 	 */
 	public function delete_access_start_date() {
 
-		delete_post_meta( $this->id, $this->access_start_date_meta );
+		return (bool) delete_post_meta( $this->id, $this->access_start_date_meta );
 	}
 
 
@@ -772,13 +805,18 @@ class WC_Memberships_Membership_Plan {
 	 * @since 1.7.0
 	 *
 	 * @param string $date a date in MySQL format
+	 * @return bool
 	 */
 	public function set_access_end_date( $date ) {
 
+		$success = false;
+
 		if ( $end_date = wc_memberships_parse_date( $date, 'mysql' ) ) {
 
-			update_post_meta( $this->id, $this->access_end_date_meta, $end_date );
+			$success = (bool) update_post_meta( $this->id, $this->access_end_date_meta, $end_date );
 		}
+
+		return $success;
 	}
 
 
@@ -839,10 +877,12 @@ class WC_Memberships_Membership_Plan {
 	 * Deletes the access end date meta.
 	 *
 	 * @since 1.7.0
+	 *
+	 * @return bool success
 	 */
 	public function delete_access_end_date() {
 
-		delete_post_meta( $this->id, $this->access_end_date_meta );
+		return (bool) delete_post_meta( $this->id, $this->access_end_date_meta );
 	}
 
 
@@ -926,6 +966,7 @@ class WC_Memberships_Membership_Plan {
 	 * @since 1.7.0
 	 *
 	 * @param null|string|array $sections array of section keys or single section key (string).
+	 * @return bool success
 	 */
 	public function set_members_area_sections( $sections = null ) {
 
@@ -941,12 +982,12 @@ class WC_Memberships_Membership_Plan {
 			$sections = array();
 		}
 
-		update_post_meta( $this->id, $this->members_area_sections_meta, $sections );
+		return (bool) update_post_meta( $this->id, $this->members_area_sections_meta, $sections );
 	}
 
 
 	/**
-	 * Returns members area sections for this plan.
+	 * Gets members area sections for this plan.
 	 *
 	 * @see wc_memberships_get_members_area_sections()
 	 *
@@ -966,10 +1007,12 @@ class WC_Memberships_Membership_Plan {
 	 * Removes the members area sections for this plan.
 	 *
 	 * @since 1.7.4
+	 *
+	 * @return bool success
 	 */
 	public function delete_members_area_sections() {
 
-		delete_post_meta( $this->id, $this->members_area_sections_meta );
+		return (bool) delete_post_meta( $this->id, $this->members_area_sections_meta );
 	}
 
 
@@ -980,9 +1023,11 @@ class WC_Memberships_Membership_Plan {
 	 *
 	 * @param array|string $email email to update, or associative array with all emails to update
 	 * @param string $content content to set, default empty string
+	 * @return bool success
 	 */
 	public function set_email_content( $email, $content = '' ) {
 
+		$success       = false;
 		$emails        = wc_memberships()->get_emails_instance()->get_email_classes();
 		$email_content = get_post_meta( $this->id, $this->email_content_meta, true );
 		$email_content = ! is_array( $email_content ) ? array() : $email_content;
@@ -1003,7 +1048,7 @@ class WC_Memberships_Membership_Plan {
 				}
 			}
 
-			update_post_meta( $this->id, $this->email_content_meta, $email_content );
+			$success = (bool) update_post_meta( $this->id, $this->email_content_meta, $email_content );
 
 		} elseif ( is_string( $email ) ) {
 
@@ -1018,14 +1063,16 @@ class WC_Memberships_Membership_Plan {
 
 				$email_content[ $email ] = $new_content;
 
-				update_post_meta( $this->id, $this->email_content_meta, $email_content );
+				$success = (bool) update_post_meta( $this->id, $this->email_content_meta, $email_content );
 			}
 		}
+
+		return $success;
 	}
 
 
 	/**
-	 * Returns the plan's email content.
+	 * Gets the plan's email content.
 	 *
 	 * @since 1.7.0
 	 *
@@ -1060,19 +1107,21 @@ class WC_Memberships_Membership_Plan {
 	 * @since 1.7.0
 	 *
 	 * @param string $email email to delete content for, 'all' or 'any' for all
+	 * @return bool success
 	 */
 	public function delete_email_content( $email = '' ) {
 
-		$emails = wc_memberships()->get_emails_instance()->get_email_classes();
+		$success = [];
+		$emails  = wc_memberships()->get_emails_instance()->get_email_classes();
 
 		if ( in_array( $email, array( 'all', 'any' ), true ) ) {
 
-			delete_post_meta( $this->id, $this->email_content_meta );
+			$success[] = (bool) delete_post_meta( $this->id, $this->email_content_meta );
 
 		} else {
 
 			// ensure the email class is capitalized
-			$email  = implode( '_', array_map( 'ucfirst', explode( '_', $email ) ) );
+			$email = implode( '_', array_map( 'ucfirst', explode( '_', $email ) ) );
 
 			if ( isset( $emails[ $email ] ) ) {
 
@@ -1082,10 +1131,12 @@ class WC_Memberships_Membership_Plan {
 
 					unset( $email_content[ $email ] );
 
-					update_post_meta( $this->id, $this->email_content_meta, $email_content );
+					$success[] = (bool) update_post_meta( $this->id, $this->email_content_meta, $email_content );
 				}
 			}
 		}
+
+		return ! empty( $success ) && ! in_array( false, $success, true );
 	}
 
 
@@ -1300,6 +1351,7 @@ class WC_Memberships_Membership_Plan {
 				'discount_amount'               => $rule->get_discount_amount(),
 				'discount_type'                 => $rule->get_discount_type(),
 				'rule_type'                     => $rule->get_rule_type(),
+				'meta_data'                     => $rule->get_meta_data(),
 			) );
 
 			// Further subdivide rules between those that target higher level content (e.g. a whole taxonomy or post type) and those that target individual objects (posts, terms):
@@ -1426,7 +1478,7 @@ class WC_Memberships_Membership_Plan {
 			}
 		}
 
-		$post_ids = array_unique( array_map( 'absint', call_user_func_array( 'array_merge', $post_ids ) ) );
+		$post_ids = array_unique( array_map( 'absint', array_merge( ...$post_ids ) ) );
 
 		// remove from found results items that are forced public for everyone
 		if ( ! empty( $post_ids ) ) {
@@ -1464,19 +1516,20 @@ class WC_Memberships_Membership_Plan {
 					if ( $product = wc_get_product( $post_id ) ) {
 
 						$product_id = $post_id;
-						$parent     = Framework\SV_WC_Product_Compatibility::get_parent( $product );
 
 						if ( $exclude_hidden && ! $product->is_visible() ) {
 							continue;
 						}
 
-						if ( ! empty( $parent ) && $product->is_type( 'variation' ) && $parent->is_type( 'variable' ) ) {
+						$parent = $product->is_type( 'variation' ) ? wc_get_product( $product->get_parent_id( 'edit' ) ) : null;
+
+						if ( $parent && $parent->is_type( 'variable' ) ) {
 
 							if ( $exclude_hidden && ! $parent->is_visible() ) {
 								continue;
 							}
 
-							$parent_id        = Framework\SV_WC_Product_Compatibility::get_prop( $parent, 'id' );
+							$parent_id        = $parent->get_id();
 							$can_list_product = true;
 
 							// sanity check: maybe a variation is included in this plan
@@ -1648,7 +1701,7 @@ class WC_Memberships_Membership_Plan {
 	public function get_product_discount( $product ) {
 
 		$member_discount = '';
-		$product_id      = $product instanceof \WC_Product ? Framework\SV_WC_Product_Compatibility::get_prop( $product, 'id' ) : $product;
+		$product_id      = $product instanceof \WC_Product ? $product->get_id() : $product;
 		$discount_rules  = wc_memberships()->get_rules_instance()->get_product_purchasing_discount_rules( $product_id );
 
 		foreach ( $discount_rules as $discount_rule ) {
@@ -1719,7 +1772,7 @@ class WC_Memberships_Membership_Plan {
 			}
 
 			if ( ! empty( $child_discounts ) ) {
-				$member_discount = wc_memberships_list_items( $child_discounts );
+				$member_discount = wc_memberships_list_items( $child_discounts, 'or' );
 			}
 
 		} elseif ( ! empty( $member_discount ) && is_numeric( $member_discount ) ) {
@@ -1970,7 +2023,7 @@ class WC_Memberships_Membership_Plan {
 
 			$user_membership->add_note(
 				/* translators: Placeholders: %1$s - product name, %2$s - order number. */
-				sprintf(__('Membership access granted from purchasing %1$s (Order %2$s)'),
+				sprintf( __( 'Membership access granted from purchasing %1$s (Order %2$s)', 'woocommerce-memberships' ),
 					$product->get_title(),
 					$order->get_order_number()
 				)
@@ -1983,7 +2036,7 @@ class WC_Memberships_Membership_Plan {
 
 				$user_membership->add_note(
 					/* translators: Placeholders: %1$s - product name, %2$s - order number. */
-					sprintf(__('Membership access renewed from purchasing %1$s (Order %2$s)'),
+					sprintf( __( 'Membership access renewed from purchasing %1$s (Order %2$s)', 'woocommerce-memberships' ),
 						$product->get_title(),
 						$order->get_order_number()
 					)

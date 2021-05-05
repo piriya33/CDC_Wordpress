@@ -2,7 +2,7 @@
 /**
  * WC_PB_BS_Admin class
  *
- * @author   SomewhereWarm <info@somewherewarm.gr>
+ * @author   SomewhereWarm <info@somewherewarm.com>
  * @package  WooCommerce Product Bundles
  * @since    5.8.0
  */
@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Admin functions and filters.
  *
  * @class    WC_PB_BS_Admin
- * @version  6.0.0
+ * @version  6.1.5
  */
 class WC_PB_BS_Admin {
 
@@ -51,7 +51,7 @@ class WC_PB_BS_Admin {
 		?>
 		<div class="options_group hide_if_grouped hide_if_external hide_if_bundle">
 			<p class="form-field ">
-				<label for="crosssell_ids"><?php _e( 'Bundle-sells', 'woocommerce-product-bundles' ); ?></label>
+				<label for="bundle_sell_ids"><?php _e( 'Bundle-sells', 'woocommerce-product-bundles' ); ?></label>
 				<select class="wc-product-search" multiple="multiple" style="width: 50%;" id="bundle_sell_ids" name="bundle_sell_ids[]" data-placeholder="<?php esc_attr_e( 'Search for a product&hellip;', 'woocommerce' ); ?>" data-action="woocommerce_json_search_bundle_sells" data-exclude="<?php echo intval( $product_object->get_id() ); ?>" data-limit="100" data-sortable="true">
 					<?php
 
@@ -68,13 +68,18 @@ class WC_PB_BS_Admin {
 							}
 						}
 					?>
-				</select> <?php echo wc_help_tip( __( 'Bundle-sells are optional products that can be selected and added to the cart along with this product.', 'woocommerce-product-bundles' ) ); ?>
+				</select> <?php 
+
+					$supported_product_types_disclaimer = class_exists( 'WC_Subscriptions' ) ? __( 'Supported product types: Simple, Simple subscription.', 'woocommerce-product-bundles' ) : __( 'Supports Simple products only.', 'woocommerce-product-bundles' );
+					echo wc_help_tip( sprintf( __( 'Bundle-sells are optional products that can be selected and added to the cart along with this product. %s', 'woocommerce-product-bundles' ), $supported_product_types_disclaimer ) );
+				?>
+				<span class="bundle-sells-search-description"><?php echo class_exists( 'WC_Subscriptions' ) ? __( 'Supported product types: Simple, Simple subscription.', 'woocommerce-product-bundles' ) : __( 'Supports Simple products only.', 'woocommerce-product-bundles' ); ?></span>
 			</p>
 			<?php
 
 				woocommerce_wp_textarea_input( array(
 					'id'            => 'wc_pb_bundle_sells_title',
-					'value'         => esc_html( WC_PB_BS_Product::get_bundle_sells_title( $product_object, 'edit' ) ),
+					'value'         => WC_PB_BS_Product::get_bundle_sells_title( $product_object, 'edit' ),
 					'label'         => __( 'Bundle-sells title', 'woocommerce-product-bundles' ),
 					'description'   => __( 'Text to display above the bundle-sells section.', 'woocommerce-product-bundles' ),
 					'placeholder'   => __( 'e.g. "Frequently Bought Together"', 'woocommerce-product-bundles' ),
@@ -84,7 +89,8 @@ class WC_PB_BS_Admin {
 				woocommerce_wp_text_input( array(
 					'id'            => 'wc_pb_bundle_sells_discount',
 					'value'         => WC_PB_BS_Product::get_bundle_sells_discount( $product_object, 'edit' ),
-					'type'          => 'number',
+					'type'          => 'text',
+					'class'         => 'input-text wc_input_decimal',
 					'label'         => __( 'Bundle-sells discount', 'woocommerce-product-bundles' ),
 					'description'   => __( 'Discount to apply to bundle-sells (%). Accepts values from 0 to 100.', 'woocommerce-product-bundles' ),
 					'desc_tip'      => true
@@ -116,7 +122,7 @@ class WC_PB_BS_Admin {
 		 * Process bundle-sells title.
 		 */
 
-		$title = ! empty( $_POST[ 'wc_pb_bundle_sells_title' ] ) ? wp_kses_post( stripslashes( $_POST[ 'wc_pb_bundle_sells_title' ] ) ) : false;
+		$title = ! empty( $_POST[ 'wc_pb_bundle_sells_title' ] ) ? wp_kses( wp_unslash( $_POST[ 'wc_pb_bundle_sells_title' ] ), WC_PB_Helpers::get_allowed_html( 'inline' ) ) : false; // @phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 
 		if ( $title ) {
 			$product->update_meta_data( '_wc_pb_bundle_sells_title',  $title );
@@ -128,7 +134,7 @@ class WC_PB_BS_Admin {
 		 * Process bundle-sells discount.
 		 */
 
-		$discount = ! empty( $_POST[ 'wc_pb_bundle_sells_discount' ] ) ? stripslashes( $_POST[ 'wc_pb_bundle_sells_discount' ] ) : false;
+		$discount = ! empty( $_POST[ 'wc_pb_bundle_sells_discount' ] ) ? sanitize_text_field( $_POST[ 'wc_pb_bundle_sells_discount' ] ) : false;
 
 		if ( ! empty( $discount ) ) {
 

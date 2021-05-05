@@ -1,4 +1,119 @@
-*** WooCommerce Customer/Order CSV Export Changelog ***
+*** WooCommerce Customer/Order/Coupon Export Changelog ***
+
+2021.03.15 - version 5.3.2
+ * Feature - Add support for the WooCommerce Navigation admin feature
+
+2021.03.05 - version 5.3.1
+ * Fix - Ensure that when editing an Automated Export, the Export Options select fields are updated as well
+
+2021.01.22 - version 5.3.0
+ * Feature - Merge the Export Refunds Only free add on into the core plugin
+ * Feature - Merge the Export Vat Number free add on into the core plugin
+ * Fix - Address a possible issue when exporting refunded orders in XML
+
+2020.12.07 - version 5.2.0
+ * Tweak - Append the file extension automatically if the exported filename is missing it
+ * Tweak - Prevent automated exports to be created with an empty filename
+ * Fix - Export meta columns with the same ordering they're set in the Custom Formats admin page
+ * Fix - Fix create/edit/delete operations on custom formats using multibyte (non-ASCII) characters in the format name
+ * Fix - Ensure that `woocommerce_email_headers` hook receives all arguments as expected by the core filter
+ * Dev - Add `wc_customer_order_export_decimal_separator` and `wc_customer_order_export_thousands_separator` filters to allow the use of custom separators in exports
+ * Misc - Add compatibility for WooCommerce 4.7
+ * Misc - Require PHP 7.0 or newer
+
+2020.09.30 - version 5.1.2
+ * Misc - Remove the SkyVerge help menu item as part of the plugin assets
+
+2020.09.09 - version 5.1.1
+ * Tweak - Add the 'item_price' column option to the order exporter
+ * Tweak - Unify the custom formats list table to a single screen for all export types
+
+2020.08.24 - version 5.1.0
+ * Misc - Add SkyVerge help menu for support on WooCommerce.com connected sites
+
+2020.07.28 - version 5.0.14
+ * Fix - Escape quotes in the export name field
+ * Fix - Hide start date and end date fields when Export Type is set to Coupon in the Manual Export
+
+2020.06.04 - version 5.0.13
+ * Fix - Address a potential PHP fatal error when exporting coupons that are configured to exclude some products, but the products no longer exist
+
+2020.05.04 - version 5.0.12
+ * Misc - Add support for WooCommerce 4.1
+
+2020.04.16 - version 5.0.11
+ * Fix - Fix a bug that was causing orders not to be properly marked as exported by immediate automated exports when changing the order status via the edit page
+
+2020.04.09 - version 5.0.10
+ * Fix - Fix a bug that could cause automations to be scheduled at the wrong time after the interval was changed
+
+2020.03.05 - version 5.0.9
+ * Tweak - Mark customer/order as globally exported when it is exported by all automated exports of the associated type
+ * Fix - Prevent error notices when marking orders as exported
+ * Misc - Add support for WooCommerce 4.0
+
+2020.02.06 - version 5.0.8
+ * Fix - Use a background process to mark orders as exported
+
+2020.01.24 - version 5.0.7
+ * Fix - Correctly use FTP Passive mode when specified in the plugin settings
+
+2020.01.02 - version 5.0.6
+ * Fix - Fix a JavaScript bug that could cause an endless loop of downloads while using the Download to CSV or Download to XML bulk actions
+ * Misc - Add support for WooCommerce 3.9
+
+2019.12.11 - version 5.0.5
+ * Misc - Add support for migrating from the XML Export Suite plugin
+
+2019.12.05 - version 5.0.4
+ * Fix - Correctly send the output_type to the format data sources filter
+ * Fix - Ensure meta values are properly set when exporting to legacy custom formats
+ * Fix - Ensure third-party column options are available when creating new custom formats
+
+2019.11.26 - version 5.0.3
+ * Fix - Add configuration modal to download actions
+ * Fix - Fix empty exports when using a migrated custom format
+ * Fix - Fix fatal error on get_settings_url
+
+2019.11.19 - version 5.0.2
+ * Fix - Order status filter should only consider globally exported orders (for consistency with order status column)
+
+2019.11.13 - version 5.0.1
+ * Fix - Fix a Fatal error triggered if Action Scheduler 3.0 is being used on the website
+ * Fix - Manual exports via order actions or order/user bulk actions should mark the order/user as globally exported
+
+2019.11.12 - version 5.0.0
+ * Feature - Unify the functionality of Customer/Order CSV & XML Export into a single plugin
+ * Feature - Add support for multiple automated exports to send exports to different destinations, in different formats, on their own schedule
+ * Misc - Add support for WooCommerce 3.8
+
+2019.08.21 - version 4.8.1
+ * Fix - Fix issue preventing database-stored exports from displaying properly on some hosts
+
+2019.08.12 - version 4.8.0
+ * Fix - Fix a bug which caused exports not to work without re-saving settings after install
+ * Misc - Add support for WooCommerce 3.7
+ * Misc - Remove support for WooCommerce 2.6
+ * Misc - Require PHP 5.6+
+
+2019.07.30 - version 4.7.1
+ * Fix - Only test loopback connection on plugin settings page
+
+2019.06.27 - version 4.7.0
+ * Feature - Create and manage multiple custom formats for order, customer, and coupon exports
+ * Misc - Update the SkyVerge Plugin Framework to version 5
+
+2019.06.05 - version 4.6.4
+ * Tweak - Drop support for legacy export formats in fresh installations of the plugin
+ * Fix - Exclude auto-draft orders from order export
+ * Fix - Fix load mapping functionality for Coupons custom format
+ * Fix - Address a bug that may have produced a PHP warning in the system status report admin page
+ * Fix - Bail out from writing rows to CSV that may contain empty data and cause file download issues in some circumstances
+
+2019.04.17 - version 4.6.3
+ * Fix - Fix an error which could occur when running certain third-party plugins
+ * Dev - Filter the maximum age of stored exports
+ * Misc - Add support for WooCommerce 3.6
 
 2019.01.22 - version 4.6.2
  * Fix - Fix issue causing the download_permissions column to always be populated with 0

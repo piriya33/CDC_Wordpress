@@ -2,7 +2,7 @@
 /**
  * WC_PB_Admin_Ajax class
  *
- * @author   SomewhereWarm <info@somewherewarm.gr>
+ * @author   SomewhereWarm <info@somewherewarm.com>
  * @package  WooCommerce Product Bundles
  * @since    5.0.0
  */
@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Admin AJAX meta-box handlers.
  *
  * @class    WC_PB_Admin_Ajax
- * @version  5.14.0
+ * @version  6.7.3
  */
 class WC_PB_Admin_Ajax {
 
@@ -37,6 +37,9 @@ class WC_PB_Admin_Ajax {
 
 		// Dismiss notices.
 		add_action( 'wp_ajax_woocommerce_dismiss_bundle_notice', array( __CLASS__ , 'dismiss_notice' ) );
+
+		// Ajax handler for performing loopback tests.
+		add_action( 'wp_ajax_woocommerce_bundles_health-check-loopback_test', array( __CLASS__, 'ajax_loopback_test' ) );
 
 		/*
 		 * Edit-Product screens.
@@ -95,6 +98,57 @@ class WC_PB_Admin_Ajax {
 		if ( ! $dismissed ) {
 			wp_send_json( $failure );
 		}
+
+		$response = array(
+			'result' => 'success'
+		);
+
+		wp_send_json( $response );
+	}
+
+	/**
+	 * Checks if loopback requests work.
+	 *
+	 * @since  6.3.0
+	 *
+	 * @return void
+	 */
+	public static function ajax_loopback_test() {
+
+		$failure = array(
+			'result' => 'failure',
+			'reason' => ''
+		);
+
+		if ( ! check_ajax_referer( 'wc_pb_loopback_notice_nonce', 'security', false ) ) {
+			$failure[ 'reason' ] = 'nonce';
+			wp_send_json( $failure );
+		}
+
+		if ( ! current_user_can( 'manage_woocommerce' ) ) {
+			$failure[ 'reason' ] = 'user_role';
+			wp_send_json( $failure );
+		}
+
+		if ( ! class_exists( 'WP_Site_Health' ) ) {
+			require_once( ABSPATH . 'wp-admin/includes/class-wp-site-health.php' );
+		}
+
+		$site_health = method_exists( 'WP_Site_Health', 'get_instance' ) ? WP_Site_Health::get_instance() : new WP_Site_Health();
+		$result      = $site_health->can_perform_loopback();
+		$passes_test = 'good' === $result->status;
+
+		WC_PB_Admin_Notices::set_notice_option( 'loopback', 'last_tested', gmdate( 'U' ) );
+		WC_PB_Admin_Notices::set_notice_option( 'loopback', 'last_result', $passes_test ? 'pass' : 'fail' );
+
+		if ( ! $passes_test ) {
+			$failure[ 'reason' ]  = 'status';
+			$failure[ 'status' ]  = $result->status;
+			$failure[ 'message' ] = $result->message;
+			wp_send_json( $failure );
+		}
+
+		WC_PB_Admin_Notices::remove_maintenance_notice( 'loopback' );
 
 		$response = array(
 			'result' => 'success'
@@ -164,9 +218,9 @@ class WC_PB_Admin_Ajax {
 
 		check_ajax_referer( 'wc_bundles_add_bundled_product', 'security' );
 
-		$loop               = intval( $_POST[ 'id' ] );
-		$post_id            = intval( $_POST[ 'post_id' ] );
-		$product_id         = intval( $_POST[ 'product_id' ] );
+		$loop               = isset( $_POST[ 'id' ] ) ? intval( $_POST[ 'id' ] ) : 0;
+		$post_id            = isset( $_POST[ 'post_id' ] ) ? intval( $_POST[ 'post_id' ] ) : 0;
+		$product_id         = isset( $_POST[ 'product_id' ] ) ? intval( $_POST[ 'product_id' ] ) : 0;
 		$item_id            = false;
 		$toggle             = 'open';
 		$tabs               = WC_PB_Meta_Box_Product_Data::get_bundled_product_tabs();
@@ -191,7 +245,7 @@ class WC_PB_Admin_Ajax {
 				}
 
 				ob_start();
-				include( 'meta-boxes/views/html-bundled-product.php' );
+				include( WC_PB_ABSPATH . 'includes/admin/meta-boxes/views/html-bundled-product.php' );
 				$response[ 'markup' ] = ob_get_clean();
 
 			} else {
@@ -277,9 +331,11 @@ class WC_PB_Admin_Ajax {
 
 		// Hide prices.
 		add_filter( 'woocommerce_bundled_item_is_priced_individually', '__return_false' );
+		// Hide descriptions.
+		add_filter( 'woocommerce_bundled_item_description', '__return_false' );
 
 		ob_start();
-		include( 'meta-boxes/views/html-bundle-edit-form.php' );
+		include( WC_PB_ABSPATH . 'includes/admin/meta-boxes/views/html-bundle-edit-form.php' );
 		$html = ob_get_clean();
 
 		$response = array(
@@ -335,7 +391,7 @@ class WC_PB_Admin_Ajax {
 		}
 
 		if ( ! empty( $_POST[ 'fields' ] ) ) {
-			parse_str( $_POST[ 'fields' ], $posted_form_fields );
+			parse_str( $_POST[ 'fields' ], $posted_form_fields ); // @phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 			$_POST = array_merge( $_POST, $posted_form_fields );
 		}
 
@@ -346,7 +402,18 @@ class WC_PB_Admin_Ajax {
 		if ( $posted_configuration !== $current_configuration ) {
 
 			$added_to_order = WC_PB()->order->add_bundle_to_order( $product, $order, $item->get_quantity(), array(
-				'configuration' => $posted_configuration
+
+				/**
+				 * 'woocommerce_editing_bundle_in_order_configuration' filter.
+				 *
+				 * Use this filter to modify the posted configuration.
+				 *
+				 * @param  $config   array
+				 * @param  $product  WC_Product_Bundle
+				 * @param  $item     WC_Order_Item
+				 * @param  $order    WC_Order
+				 */
+				'configuration' => apply_filters( 'woocommerce_editing_bundle_in_order_configuration', $posted_configuration, $product, $item, $order )
 			) );
 
 			// Invalid configuration?
@@ -354,11 +421,11 @@ class WC_PB_Admin_Ajax {
 
 				$message = __( 'The submitted configuration is invalid.', 'woocommerce-product-bundles' );
 				$data    = $added_to_order->get_error_data();
-
-				$notice = isset( $data[ 'notices' ] ) ? html_entity_decode( current( $data[ 'notices' ] ) ) : '';
+				$notice  = isset( $data[ 'notices' ] ) ? current( $data[ 'notices' ] ) : '';
 
 				if ( $notice ) {
-					$message = sprintf( _x( '%1$s %2$s', 'edit bundle in order: formatted validation message', 'woocommerce-product-bundles' ), $message, $notice );
+					$notice_text = WC_PB_Core_Compatibility::is_wc_version_gte( '3.9' ) ? $notice[ 'notice' ] : $notice;
+					$message     = sprintf( _x( '%1$s %2$s', 'edit bundle in order: formatted validation message', 'woocommerce-product-bundles' ), $message, html_entity_decode( $notice_text ) );
 				}
 
 				$response = array(
@@ -368,66 +435,226 @@ class WC_PB_Admin_Ajax {
 
 				wp_send_json( $response );
 
-			// Remove old items.
+			// Adjust stock and remove old items.
 			} else {
 
-				if ( has_action( 'woocommerce_editing_bundle_in_order' ) ) {
+				$new_container_item = $order->get_item( $added_to_order );
 
-					$new_container_item = $order->get_item( $added_to_order );
+				/**
+				 * 'woocommerce_editing_bundle_in_order' action.
+				 *
+				 * @since  5.9.2
+				 *
+				 * @param  WC_Order_Item_Product  $new_item
+				 * @param  WC_Order_Item_Product  $old_item
+				 */
+				do_action( 'woocommerce_editing_bundle_in_order', $new_container_item, $item, $order );
 
-					/**
-					 * 'woocommerce_editing_bundle_in_order' action.
-					 *
-					 * @since  5.9.2
-					 *
-					 * @param  WC_Order_Item_Product  $new_item
-					 * @param  WC_Order_Item_Product  $old_item
-					 */
-					do_action( 'woocommerce_editing_bundle_in_order', $new_container_item, $item, $order );
-				}
+				$bundled_items_to_remove = wc_pb_get_bundled_order_items( $item, $order );
+				$items_to_remove         = array( $item ) + $bundled_items_to_remove;
 
-				$items_to_remove = array( $item ) + wc_pb_get_bundled_order_items( $item, $order );
-				$pre_stock_map   = array();
+				/*
+				 * Adjust stock.
+				 */
+				if ( WC_PB_Core_Compatibility::is_wc_version_gte( '3.6' ) ) {
 
-				foreach ( $items_to_remove as $remove_item ) {
+					if ( $item_reduced_stock = $item->get_meta( '_reduced_stock', true ) ) {
+						$new_container_item->add_meta_data( '_reduced_stock', $item_reduced_stock, true );
+						$new_container_item->save();
+					}
 
-					if ( WC_PB_Core_Compatibility::is_wc_version_gte( '3.6' ) ) {
+					$stock_map   = array();
+					$changes_map = array();
+					$product_ids = array();
 
-						$changed_stock = wc_maybe_adjust_line_item_product_stock( $remove_item, 0 );
-						if ( $changed_stock && isset( $changed_stock[ 'from' ] ) ) {
-							$bundled_item_id                   = $remove_item->get_meta( '_bundled_item_id' );
-							$pre_stock_map[ $bundled_item_id ] = $changed_stock[ 'from' ];
+					foreach ( $bundled_items_to_remove as $bundled_item_to_remove ) {
+
+						$bundled_item_id = $bundled_item_to_remove->get_meta( '_bundled_item_id', true );
+						$product_id      = $bundled_item_to_remove->get_product_id();
+
+						if ( $variation_id = $bundled_item_to_remove->get_variation_id() ) {
+							$product_id = $variation_id;
+						}
+
+						$product_ids[ $bundled_item_id ] = $product_id;
+
+						// Store change to add in order note.
+						$changes_map[ $bundled_item_id ] = array(
+							'id'      => $product_id,
+							'actions' => array(
+								'remove' => array(
+									'title' => $bundled_item_to_remove->get_name(),
+									'sku'   => '#' . $product_id
+								)
+							)
+						);
+
+						$changed_stock = wc_maybe_adjust_line_item_product_stock( $bundled_item_to_remove, 0 );
+
+						if ( $changed_stock && ! is_wp_error( $changed_stock ) ) {
+
+							$product             = $bundled_item_to_remove->get_product();
+							$product_sku         = $product->get_sku();
+							$stock_managed_by_id = $product->get_stock_managed_by_id();
+
+							if ( ! $product_sku ) {
+								$product_sku = '#' . $product->get_id();
+							}
+
+							// Associate change with stock.
+							$changes_map[ $bundled_item_id ][ 'actions' ][ 'remove' ][ 'stock_managed_by_id' ] = $stock_managed_by_id;
+							$changes_map[ $bundled_item_id ][ 'actions' ][ 'remove' ][ 'sku' ]                 = $product_sku;
+
+							if ( isset( $stock_map[ $stock_managed_by_id ] ) ) {
+								$stock_map[ $stock_managed_by_id ][ 'to' ] = $changed_stock[ 'to' ];
+							} else {
+								$stock_map[ $stock_managed_by_id ] = array(
+									'from' => $changed_stock[ 'from' ],
+									'to'   => $changed_stock[ 'to' ]
+								);
+							}
 						}
 					}
 
-					$order->remove_item( $remove_item->get_id() );
-					$remove_item->delete();
-				}
+					$bundled_order_items = wc_pb_get_bundled_order_items( $new_container_item, $order );
 
-				if ( WC_PB_Core_Compatibility::is_wc_version_gte( '3.6' ) ) {
-
-					$bundled_order_items = wc_pb_get_bundled_order_items( $order->get_item( $added_to_order ), $order );
 					foreach ( $bundled_order_items as $order_item_id => $order_item ) {
-						$product = $order_item->get_product();
-						$qty     = $order_item->get_quantity();
 
-						if ( $product->managing_stock() ) {
-							$bundled_item_id = $order_item->get_meta( '_bundled_item_id' );
-							$old_stock       = isset( $pre_stock_map[ $bundled_item_id ] ) ? $pre_stock_map[ $bundled_item_id ] : $product->get_stock_quantity();
-							$new_stock       = wc_update_product_stock( $product, $qty, 'decrease' );
+						$bundled_item_id = $order_item->get_meta( '_bundled_item_id', true );
+						$product         = $order_item->get_product();
+						$product_id      = $product->get_id();
+						$action          = 'add';
 
-							if ( $old_stock && $old_stock !== $new_stock ) {
-								$order->add_order_note( sprintf( __( 'Adjusted %s stock', 'woocommerce-product-bundles' ), $product->get_formatted_name() ) . ' (' . $old_stock . '&rarr;' . $new_stock . ')', false, true );
+						$product_ids[ $bundled_item_id ] = $product_id;
+
+						// Store change to add in order note.
+						if ( isset( $changes_map[ $bundled_item_id ] ) ) {
+
+							// If the selection didn't change, log it as an adjustment.
+							if ( $product_id === $changes_map[ $bundled_item_id ][ 'id' ] ) {
+
+								$action = 'adjust';
+
+								$changes_map[ $bundled_item_id ][ 'actions' ] = array(
+									'adjust' => array(
+										'title' => $order_item->get_name(),
+										'sku'   => '#' . $product_id
+									)
+								);
+
+							// Otherwise, log another 'add' action.
+							} else {
+
+								$changes_map[ $bundled_item_id ][ 'actions' ][ 'add' ] = array(
+									'title' => $order_item->get_name(),
+									'sku'   => '#' . $product_id
+								);
+							}
+
+						// If we're seeing this bundled item for the first, time, log an 'add' action.
+						} else {
+
+							$changes_map[ $bundled_item_id ] = array(
+								'id'      => $product_id,
+								'actions' => array(
+									'add' => array(
+										'title' => $order_item->get_name(),
+										'sku'   => '#' . $product_id
+									)
+								)
+							);
+						}
+
+						if ( $product && $product->managing_stock() ) {
+
+							$product_sku         = $product->get_sku();
+							$stock_managed_by_id = $product->get_stock_managed_by_id();
+							$qty                 = $order_item->get_quantity();
+
+							if ( ! $product_sku ) {
+								$product_sku = '#' . $product->get_id();
+							}
+
+							// Associate change with stock.
+							$changes_map[ $bundled_item_id ][ 'actions' ][ $action ][ 'stock_managed_by_id' ] = $stock_managed_by_id;
+							$changes_map[ $bundled_item_id ][ 'actions' ][ $action ][ 'sku' ]                 = $product_sku;
+
+							$old_stock = $product->get_stock_quantity();
+							$new_stock = wc_update_product_stock( $product, $qty, 'decrease' );
+
+							if ( isset( $stock_map[ $stock_managed_by_id ] ) ) {
+								$stock_map[ $stock_managed_by_id ][ 'to' ] = $new_stock;
+							} else {
+								$stock_map[ $stock_managed_by_id ] = array(
+									'from'    => $old_stock,
+									'to'      => $new_stock
+								);
 							}
 
 							$order_item->add_meta_data( '_reduced_stock', $qty, true );
 							$order_item->save();
 						}
 					}
+
+					$duplicate_product_ids              = array_diff_assoc( $product_ids, array_unique( $product_ids ) );
+					$duplicate_product_bundled_item_ids = array_keys( array_intersect( $product_ids, $duplicate_product_ids ) );
+
+					$stock_strings = array(
+						'add'    => array(),
+						'remove' => array(),
+						'adjust' => array()
+					);
+
+					foreach ( $changes_map as $item_id => $item_changes ) {
+
+						$actions = array( 'add', 'remove', 'adjust' );
+
+						foreach ( $actions as $action ) {
+
+							if ( isset( $item_changes[ 'actions' ][ $action ] ) ) {
+
+								$stock_changes        = isset( $item_changes[ 'actions' ][ $action ][ 'stock_managed_by_id' ] ) && isset( $stock_map[ $item_changes[ 'actions' ][ $action ][ 'stock_managed_by_id' ] ] ) ? $stock_map[ $item_changes[ 'actions' ][ $action ][ 'stock_managed_by_id' ] ] : false;
+								$stock_from_to_string = $stock_changes && $stock_changes[ 'from' ] && $stock_changes[ 'from' ] !== $stock_changes[ 'to' ] ? ( $stock_changes[ 'from' ] . '&rarr;' . $stock_changes[ 'to' ] ) : '';
+
+								if ( in_array( $item_id, $duplicate_product_bundled_item_ids ) ) {
+									$stock_id = sprintf( _x( '%1$s:%2$s', 'bundled items stock change note sku with id format', 'woocommerce-product-bundles' ), $item_changes[ 'actions' ][ $action ][ 'sku' ], $item_id );
+								} else {
+									$stock_id = $item_changes[ 'actions' ][ $action ][ 'sku' ];
+								}
+
+								if ( $stock_from_to_string ) {
+									$stock_strings[ $action ][] = sprintf( _x( '%1$s (%2$s) &ndash; %3$s', 'bundled items stock change note format', 'woocommerce-product-bundles' ), $item_changes[ 'actions' ][ $action ][ 'title' ], $stock_id, $stock_from_to_string );
+								} else {
+									$stock_strings[ $action ][] = sprintf( _x( '%1$s (%2$s)', 'bundled items change note format', 'woocommerce-product-bundles' ), $item_changes[ 'actions' ][ $action ][ 'title' ], $stock_id );
+								}
+							}
+						}
+					}
+
+					if ( ! empty( $stock_strings[ 'remove' ] ) ) {
+						$order->add_order_note( sprintf( __( 'Deleted bundled line items: %s', 'woocommerce-product-bundles' ), implode( ', ', $stock_strings[ 'remove' ] ) ), false, true );
+					}
+
+					if ( ! empty( $stock_strings[ 'add' ] ) ) {
+						$order->add_order_note( sprintf( __( 'Added bundled line items: %s', 'woocommerce-product-bundles' ), implode( ', ', $stock_strings[ 'add' ] ) ), false, true );
+					}
+
+					if ( ! empty( $stock_strings[ 'adjust' ] ) ) {
+						$order->add_order_note( sprintf( __( 'Adjusted bundled line items: %s', 'woocommerce-product-bundles' ), implode( ', ', $stock_strings[ 'adjust' ] ) ), false, true );
+					}
 				}
 
-				unset( $pre_stock_map );
+				/*
+				 * Remove old items.
+				 */
+				foreach ( $items_to_remove as $remove_item ) {
+					$order->remove_item( $remove_item->get_id() );
+					$remove_item->delete();
+				}
 
+				/*
+				 * Recalculate totals.
+				 */
 				if ( isset( $_POST[ 'country' ], $_POST[ 'state' ], $_POST[ 'postcode' ], $_POST[ 'city' ] ) ) {
 
 					$calculate_tax_args = array(

@@ -6,7 +6,7 @@
  * Domain Path: /languages/
  * Description: Easy to add and display your HTML5, YouTube, Vimeo vedio gallery with Magnific Popup to your website. Also work with Gutenberg shortcode block.
  * Author: WP OnlineSupport
- * Version: 2.4
+ * Version: 2.5
  * Author URI: https://www.wponlinesupport.com/
  *
  * @package WordPress
@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if( ! defined( 'WP_HTML5VP_VERSION' ) ) {
-	define( 'WP_HTML5VP_VERSION', '2.4' ); // Version of plugin
+	define( 'WP_HTML5VP_VERSION', '2.5' ); // Version of plugin
 }
 if( ! defined( 'WP_HTML5VP_DIR' ) ) {
 	define( 'WP_HTML5VP_DIR', dirname( __FILE__ ) ); // Plugin dir
@@ -28,144 +28,78 @@ if( ! defined( 'WP_HTML5VP_URL' ) ) {
 if( ! defined( 'WP_HTML5VP_POST_TYPE' ) ) {
 	define( 'WP_HTML5VP_POST_TYPE', 'sp_html5video' ); // Plugin post type name
 }
-
-/**
- * Function to load text domain
- * 
- * @package HTML5 Video gallery and Player
- * @since 1.1
- */ 
- 
-add_action('plugins_loaded', 'wp_html5video_load_textdomain');
-function wp_html5video_load_textdomain() {
-	load_plugin_textdomain( 'html5-videogallery-plus-player', false, dirname( plugin_basename(__FILE__) ) . '/languages/' );
-} 
-
-/**
- * Function to load JS and CSS files
- * 
- * @package HTML5 Video gallery and Player
- * @since 1.1
- */
-add_action( 'wp_enqueue_scripts','wp_html5video_style_css' );
-
-function wp_html5video_style_css() {		
-	
-	wp_enqueue_style( 'wp_html5video_css',  plugin_dir_url( __FILE__ ). 'assets/css/video-js.css', array(), WP_HTML5VP_VERSION );
-	wp_enqueue_style( 'wp_html5video_colcss',  plugin_dir_url( __FILE__ ). 'assets/css/video-style.css', array(), WP_HTML5VP_VERSION );		
-
-	// Registring and enqueing wpos-magnific-popup-style css
-	if( ! wp_style_is( 'wpos-magnific-popup-style', 'registered' ) ) {
-			wp_enqueue_style( 'wpos-magnific-popup-style',  plugin_dir_url( __FILE__ ). 'assets/css/magnific-popup.css', array(), WP_HTML5VP_VERSION );
-			wp_enqueue_style( 'wpos-magnific-popup-style' );
-	}			
-	
-	wp_register_script( 'wp-html5video-js', WP_HTML5VP_URL.'assets/js/video.js', array('jquery'), WP_HTML5VP_VERSION, true );
-	wp_enqueue_script( 'wp-html5video-js' );
-	
-	if( ! wp_script_is( 'wpos-magnific-popup-jquery', 'registered' ) ) {
-			wp_register_script( 'wpos-magnific-popup-jquery', WP_HTML5VP_URL.'assets/js/jquery.magnific-popup.min.js', array('jquery'), WP_HTML5VP_VERSION, true );
-		}	
-
-	wp_register_script( 'wp-html5video-public-js', WP_HTML5VP_URL.'assets/js/wp-html5vp-public.js', array('jquery'), WP_HTML5VP_VERSION, true );
+if( ! defined( 'WP_HTML5VP_PLUGIN_LINK' ) ) {
+    define( 'WP_HTML5VP_PLUGIN_LINK', 'https://www.wponlinesupport.com/wp-plugin/video-gallery-player/?utm_source=WP&utm_medium=video-gallery&utm_campaign=Features-PRO' ); // Plugin link
 }
 
-// Action to add style at admin side
-add_action( 'admin_enqueue_scripts', 'wp_html5vp_admin_script' );
-
 /**
- * Function to add script at admin side
+ * Load Text Domain
+ * This gets the plugin ready for translation
  * 
- * @package HTML5 Video gallery and Player
- * @since 2.4
+ * @package Video gallery and Player
+ * @since 1.0.0
  */
-function wp_html5vp_admin_script( $hook ) {
+function wp_html5video_load_textdomain() {
 
-	if( $hook == WP_HTML5VP_POST_TYPE.'_page_vgap-designs' ) {
+	global $wp_version;
 
-		// Registring admin script
-		wp_register_script( 'wp-html5vp-admin-script', WP_HTML5VP_URL.'assets/js/wp-html5vp-admin.js', array('jquery'), WP_HTML5VP_VERSION, true );
-		wp_enqueue_script( 'wp-html5vp-admin-script' );
+	// Set filter for plugin's languages directory
+	$wp_html5vp_lang_dir = dirname( plugin_basename( __FILE__ ) ) . '/languages/';
+	$wp_html5vp_lang_dir = apply_filters( 'wp_html5vp_languages_directory', $wp_html5vp_lang_dir );
+
+	// Traditional WordPress plugin locale filter.
+	$get_locale = get_locale();
+
+	if ( $wp_version >= 4.7 ) {
+		$get_locale = get_user_locale();
+	}
+
+	// Traditional WordPress plugin locale filter
+	$locale = apply_filters( 'plugin_locale',  $get_locale, 'html5-videogallery-plus-player' );
+	$mofile = sprintf( '%1$s-%2$s.mo', 'html5-videogallery-plus-player', $locale );
+
+	// Setup paths to current locale file
+	$mofile_global  = WP_LANG_DIR . '/plugins/' . basename( WP_HTML5VP_DIR ) . '/' . $mofile;
+
+	if ( file_exists( $mofile_global ) ) { // Look in global /wp-content/languages/plugin-name folder
+		load_textdomain( 'html5-videogallery-plus-player', $mofile_global );
+	} else { // Load the default language files
+		load_plugin_textdomain( 'html5-videogallery-plus-player', false, $wp_html5vp_lang_dir );
 	}
 }
- 
+
+// Action for Plugins Load
+add_action('plugins_loaded', 'wp_html5video_load_textdomain');
+
 /**
- * Function to create custom post type
+ * Activation Hook
  * 
- * @package HTML5 Video gallery and Player
- * @since 1.1
+ * Register plugin activation hook.
+ * 
+ * @package Video gallery and Player
+ * @since 2.5
  */
-function html5video_setup_post_types() {
+register_activation_hook( __FILE__, 'sp_html5video_rewrite_flush' );
 
-	$html5video_labels =  apply_filters( 'sp_html5video_labels', array(
-		'name'                => 'Video Gallery',
-		'singular_name'       => 'Video Gallery',
-		'add_new'             => __('Add New', 'html5-videogallery-plus-player'),
-		'add_new_item'        => __('Add New Video', 'html5-videogallery-plus-player'),
-		'edit_item'           => __('Edit Video', 'html5-videogallery-plus-player'),
-		'new_item'            => __('New Video', 'html5-videogallery-plus-player'),
-		'all_items'           => __('All Videos', 'html5-videogallery-plus-player'),
-		'view_item'           => __('View Video Gallery', 'html5-videogallery-plus-player'),
-		'search_items'        => __('Search Video Gallery', 'html5-videogallery-plus-player'),
-		'not_found'           => __('No Videos Gallery found', 'html5-videogallery-plus-player'),
-		'not_found_in_trash'  => __('No Videos Gallery found in Trash', 'html5-videogallery-plus-player'),
-		'parent_item_colon'   => '',
-		'menu_name'           => __('Video Gallery', 'html5-videogallery-plus-player'),
-		'exclude_from_search' => true
-	) );
+/**
+ * Deactivation Hook
+ * 
+ * Register plugin deactivation hook.
+ * 
+ * @package Video gallery and Player
+ * @since 2.5
+ */
+register_deactivation_hook( __FILE__, 'sp_html5video_uninstall');
 
-
-	$html5video_args = array(
-		'labels' 			=> $html5video_labels,
-		'public' 			=> false,
-		'publicly_queryable'=> false,
-		'show_ui' 			=> true,
-		'show_in_menu' 		=> true,
-		'query_var' 		=> false,
-		'capability_type' 	=> 'post',
-		'has_archive' 		=> false,
-		'menu_icon'   		=> 'dashicons-format-video',
-		'hierarchical' 		=> false,
-		'supports' => array('title','thumbnail')
-	);
-	register_post_type( 'sp_html5video', apply_filters( 'sp_html5video_post_type_args', $html5video_args ) );
-
-}
-
-add_action('init', 'html5video_setup_post_types');
-
-/* Register Taxonomy */
-add_action( 'init', 'sp_html5video_taxonomies');
-function sp_html5video_taxonomies() {
-	$labels = array(
-		'name'              => _x( 'Category', 'html5-videogallery-plus-player' ),
-		'singular_name'     => _x( 'Category', 'html5-videogallery-plus-player' ),
-		'search_items'      => __( 'Search Category', 'html5-videogallery-plus-player' ),
-		'all_items'         => __( 'All Category', 'html5-videogallery-plus-player' ),
-		'parent_item'       => __( 'Parent Category', 'html5-videogallery-plus-player' ),
-		'parent_item_colon' => __( 'Parent Category:', 'html5-videogallery-plus-player' ),
-		'edit_item'         => __( 'Edit Category', 'html5-videogallery-plus-player' ),
-		'update_item'       => __( 'Update Category', 'html5-videogallery-plus-player' ),
-		'add_new_item'      => __( 'Add New Category', 'html5-videogallery-plus-player' ),
-		'new_item_name'     => __( 'New Category Name', 'html5-videogallery-plus-player' ),
-		'menu_name'         => __( 'Video Category', 'html5-videogallery-plus-player' ),
-	);
-
-	$args = array(
-		'public'            => false,
-		'hierarchical'      => true,
-		'labels'            => $labels,
-		'show_ui'           => true,
-		'show_admin_column' => true,
-		'query_var'         => true,
-		'rewrite'           => false,
-	);
-
-	register_taxonomy( 'video-category', array( 'sp_html5video' ), $args );
-}
-
+/**
+ * Plugin Activation Function
+ * Does the initial setup, sets the default values for the plugin options
+ * 
+ * @package Video gallery and Player
+ * @since 2.5
+ */
 function sp_html5video_rewrite_flush() {  
-	html5video_setup_post_types();  
+	wp_html5video_setup_post_types();  
 	flush_rewrite_rules();
 
 	// Deactivate pro version
@@ -173,7 +107,19 @@ function sp_html5video_rewrite_flush() {
 		add_action('update_option_active_plugins', 'wp_html5vp_deactivate_pro_version');
 	}
 }
-register_activation_hook( __FILE__, 'sp_html5video_rewrite_flush' );
+
+/**
+ * Plugin Deactivation Function
+ * Delete  plugin options
+ * 
+ * @package Video gallery and Player
+ * @since 2.5
+ */
+function sp_html5video_uninstall() {
+
+	// IMP need to flush rules for custom registered post type
+	flush_rewrite_rules();
+}
 
 /**
  * Deactivate pro plugin
@@ -217,42 +163,28 @@ function wp_html5vp_admin_notice() {
 // Action to display notice
 add_action( 'admin_notices', 'wp_html5vp_admin_notice');
 
-/**
- * Function to create category shortcode
- * 
- * @package HTML5 Video gallery and Player
- * @since 1.1
- */
-add_filter("manage_video-category_custom_column", 'video_category_columns', 10, 3);
-add_filter("manage_edit-video-category_columns", 'video_category_manage_columns'); 
-
-function video_category_manage_columns($columns) {
-	   
-	$new_columns['video_shortcode'] = __( 'Category Shortcode', 'html5-videogallery-plus-player' );
-	
-	$columns = wp_html5vp_add_array( $columns, $new_columns, 2 );
-
-	return $columns;
-}
-
-function video_category_columns($out, $column_name, $theme_id) {
-	
-	switch ($column_name) {
-		case 'video_shortcode':
-			echo '[sp_html5video category="' . $theme_id. '"]';
-			break;
-	}
-	return $out;
-}
+// Admin File
+require_once( WP_HTML5VP_DIR . '/includes/admin/class-html5vp-admin.php' );
 
 // Functions File
 require_once( WP_HTML5VP_DIR . '/includes/wp-html5vp-functions.php' );
 
-require_once( WP_HTML5VP_DIR . '/includes/class_shortcode.php' );
-require_once( WP_HTML5VP_DIR . '/includes/class_admin_metabox.php' );
+// Post Type File
+require_once( WP_HTML5VP_DIR . '/includes/wp-html5vp-post-types.php' );
 
-// Admin File
-require_once( WP_HTML5VP_DIR . '/includes/admin/class-html5vp-admin.php' );
+// Script File
+require_once( WP_HTML5VP_DIR . '/includes/class-wp-html5vp-script.php' );
+
+// Shortcode File
+require_once( WP_HTML5VP_DIR . '/includes/shortcode/class_shortcode.php' );
+
+// Admin Matabox File
+require_once( WP_HTML5VP_DIR . '/includes/admin/metabox/class_admin_metabox.php' );
+
+// Gutenberg Block Initializer
+if ( function_exists( 'register_block_type' ) ) {
+	require_once ( WP_HTML5VP_DIR . '/includes/admin/supports/gutenberg-block.php' );
+}
 
 /* Recommended Plugins Starts */
 if ( is_admin() ) {

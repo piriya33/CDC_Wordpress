@@ -17,11 +17,11 @@
  * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @author    SkyVerge
- * @copyright Copyright (c) 2014-2019, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2021, SkyVerge, Inc. (info@skyverge.com)
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
-use SkyVerge\WooCommerce\PluginFramework\v5_3_1 as Framework;
+use SkyVerge\WooCommerce\PluginFramework\v5_10_6 as Framework;
 
 defined( 'ABSPATH' ) or exit;
 
@@ -40,12 +40,12 @@ class WC_Memberships_Admin_Products {
 	 */
 	public function __construct() {
 
+		// display a notice when a product that grants access is trashed, unlink from plan when permanently deleted
+		add_action( 'trashed_post', [ $this, 'handle_trashed_product_that_grants_access' ], 20 );
+		add_action( 'delete_post',  [ $this, 'handle_deleted_product_that_grants_access' ], 20 );
+
 		// duplicate memberships settings for products
-		if ( Framework\SV_WC_Plugin_Compatibility::is_wc_version_gte_3_0() ) {
-			add_action( 'woocommerce_product_duplicate', array( $this, 'duplicate_product_memberships_data' ), 10, 2 );
-		} else {
-			add_action( 'woocommerce_duplicate_product', array( $this, 'duplicate_product_memberships_data' ), 10, 2 );
-		}
+		add_action( 'woocommerce_product_duplicate', array( $this, 'duplicate_product_memberships_data' ), 10, 2 );
 
 		// add additional bulk actions to bulk exclude products from restriction rules or member discounts
 		// TODO when WordPress 4.7 is the minimum required version, this may be updated to use new hooks {FN 2018-11-05}
@@ -56,29 +56,90 @@ class WC_Memberships_Admin_Products {
 
 
 	/**
-	 * Duplicates memberships data for a product.
+	 * Alerts the admin with a notice when a product that may grant access to plans is trashed.
 	 *
-	 * TODO update phpdoc and method when WC 3.0 is the minimal requirement {FN 2017-01-13}
+	 * @internal
+	 *
+	 * @since 1.15.0
+	 *
+	 * @param int $post_id the ID of the product that is being trashed
+	 */
+	public function handle_trashed_product_that_grants_access( $post_id ) {
+
+		if ( ! in_array( get_post_type( $post_id ), [ 'product', 'product_variation' ], true ) ) {
+			return;
+		}
+
+		$affected_plans = [];
+		$plan_statuses  = [
+			'draft',
+			'pending',
+			'publish',
+			'future',
+		];
+
+		foreach ( wc_memberships_get_membership_plans( [ 'post_status' => $plan_statuses ] ) as $plan ) {
+
+			if ( $plan->has_product( $post_id ) ) {
+
+				$affected_plans[] = '<a href="' . esc_url( get_edit_post_link( $plan->get_id() ) ) . '">' . $plan->get_name() . '</a>';
+			}
+		}
+
+		if ( ! empty( $affected_plans ) && ( $product = wc_get_product( $post_id ) ) ) {
+
+			wc_memberships()->get_admin_instance()->get_message_handler()->add_warning(
+				sprintf(
+					/* translators: Placeholder: %1$s - product name linked to edit screen, %2$s list of membership plan names linked to edit screens */
+					__( 'The product %1$s is currently set to grant membership access to %2$s. When permanently deleted, it will be removed from the list of products that grant access.', 'woocommerce-memberships' ),
+					'<a href="' . get_edit_post_link( $product->is_type( 'variation' ) ? $product->get_parent_id() : $product->get_id() ) . '">' . $product->get_name() . '</a>',
+					wc_memberships_list_items( $affected_plans, 'and' )
+				)
+			);
+		}
+	}
+
+
+	/**
+	 * Removes a product from the list of products that grant access when the product is permanently deleted.
+	 *
+	 * @internal
+	 *
+	 * @since 1.15.0
+	 *
+	 * @param int $post_id ID of the product that has been set for deletion
+	 */
+	public function handle_deleted_product_that_grants_access( $post_id ) {
+
+		if ( ! in_array( get_post_type( $post_id ), [ 'product', 'product_variation' ], true ) ) {
+			return;
+		}
+
+		foreach ( wc_memberships_get_membership_plans() as $plan ) {
+
+			if ( $plan->has_product( $post_id ) ) {
+
+				$plan->delete_product_ids( $post_id );
+			}
+		}
+	}
+
+
+	/**
+	 * Duplicates memberships data for a product.
 	 *
 	 * @internal
 	 *
 	 * @since 1.9.0
 	 *
-	 * @param int|\WC_Product $new_product new product (was product id in WC versions earlier than 3.0)
-	 * @param \WP_Post|\WC_Product $old_product old product (was old post object in WC versions earlier than 3.0)
+	 * @param \WC_Product $new_product new product being created
+	 * @param \WP_Post|\WC_Product $old_product old product being cloned
 	 */
 	public function duplicate_product_memberships_data( $new_product, $old_product ) {
 
-		if ( Framework\SV_WC_Plugin_Compatibility::is_wc_version_gte_3_0() ) {
-			$new_product_id        = $new_product->get_id();
-			$old_product_id        = $old_product->get_id();
-			$old_product_post_type = get_post_type( $old_product );
-		} else {
-			$new_product_id        = $new_product;
-			$new_product           = wc_get_product( $new_product_id );
-			$old_product_id        = $old_product->ID;
-			$old_product_post_type = $old_product->post_type;
-		}
+		$new_product_id        = $new_product->get_id();
+		$old_product_id        = $old_product->get_id();
+		$old_product_post_type = get_post_type( $old_product );
 
 		// get product restriction rules
 		$product_restriction_rules = wc_memberships()->get_rules_instance()->get_rules( array(
@@ -153,6 +214,10 @@ class WC_Memberships_Admin_Products {
 		if ( in_array( $old_product_id, wc_memberships()->get_member_discounts_instance()->get_products_excluded_from_member_discounts(), false ) ) {
 			wc_memberships()->get_member_discounts_instance()->set_product_excluded_from_member_discounts( $new_product );
 		}
+
+		// prune public content caches
+		wc_memberships()->get_restrictions_instance()->delete_public_content_cache();
+		wc_memberships()->get_member_discounts_instance()->delete_excluded_member_discounts_products_cache();
 	}
 
 
@@ -193,12 +258,12 @@ class WC_Memberships_Admin_Products {
 
 			?>
 			<script type="text/javascript">
-				jQuery( document ).ready( function( $ ) {
+				( function( $ ) {
 					<?php foreach ( $this->get_membership_bulk_actions( true ) as $id => $label ) : ?>
 						$( '<option>' ).val( '<?php echo esc_js( $id ); ?>' ).text( '<?php echo esc_js( $label ); ?>' ).appendTo( 'select[name="action"]' );
 						$( '<option>' ).val( '<?php echo esc_js( $id ); ?>' ).text( '<?php echo esc_js( $label ); ?>' ).appendTo( 'select[name="action2"]' );
 					<?php endforeach; ?>
-				} );
+				} ) ( jQuery );
 			</script>
 			<?php
 

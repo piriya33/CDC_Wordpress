@@ -2,7 +2,7 @@
 /**
  * WC_PB_Stock_Manager and WC_PB_Stock_Manager_Item classes
  *
- * @author   SomewhereWarm <info@somewherewarm.gr>
+ * @author   SomewhereWarm <info@somewherewarm.com>
  * @package  WooCommerce Product Bundles
  * @since    4.8.7
  */
@@ -20,11 +20,23 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class WC_PB_Stock_Manager {
 
+	/**
+	 * Stock managed items.
+	 * @var array
+	 */
 	private $items;
+
+	/**
+	 * Product managing the collection.
+	 * @var WC_Product|false
+	 */
 	public $product;
 
+	/**
+	 * Contructor.
+	 * @param boolean|WC_Product  $product
+	 */
 	public function __construct( $product = false ) {
-
 		$this->product = $product;
 		$this->items   = array();
 	}

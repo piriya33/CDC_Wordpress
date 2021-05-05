@@ -17,11 +17,13 @@
  * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @author    SkyVerge
- * @copyright Copyright (c) 2014-2019, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2021, SkyVerge, Inc. (info@skyverge.com)
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
-use SkyVerge\WooCommerce\PluginFramework\v5_3_1 as Framework;
+use SkyVerge\WooCommerce\Memberships\Profile_Fields\Profile_Field;
+use SkyVerge\WooCommerce\Memberships\Profile_Fields;
+use SkyVerge\WooCommerce\PluginFramework\v5_10_6 as Framework;
 
 defined( 'ABSPATH' ) or exit;
 
@@ -133,7 +135,7 @@ class WC_Memberships_User_Membership {
 
 
 	/**
-	 * Returns the user membership ID.
+	 * Gets the user membership ID.
 	 *
 	 * @since 1.0.0
 	 *
@@ -145,7 +147,7 @@ class WC_Memberships_User_Membership {
 
 
 	/**
-	 * Returns the user ID.
+	 * Gets the user ID.
 	 *
 	 * @since 1.0.0
 	 *
@@ -157,7 +159,7 @@ class WC_Memberships_User_Membership {
 
 
 	/**
-	 * Returns the user object.
+	 * Gets the user object.
 	 *
 	 * @since 1.9.0
 	 *
@@ -172,19 +174,20 @@ class WC_Memberships_User_Membership {
 
 
 	/**
-	 * Returns the associated plan ID.
+	 * Gets the associated plan ID.
 	 *
 	 * @since 1.0.0
 	 *
 	 * @return int Membership Plan ID
 	 */
 	public function get_plan_id() {
+
 		return $this->plan_id;
 	}
 
 
 	/**
-	 * Returns the associated plan object.
+	 * Gets the associated plan object.
 	 *
 	 * @since 1.0.0
 	 *
@@ -208,7 +211,7 @@ class WC_Memberships_User_Membership {
 
 
 	/**
-	 * Returns the membership status.
+	 * Gets the membership status.
 	 *
 	 * Note: trims the `wcm-` internal prefix from the returned status.
 	 *
@@ -217,12 +220,13 @@ class WC_Memberships_User_Membership {
 	 * @return string status slug
 	 */
 	public function get_status() {
+
 		return 0 === strpos( $this->status, 'wcm-' ) ? substr( $this->status, 4 ) : $this->status;
 	}
 
 
 	/**
-	 * Returns the Members Area URL to view the membership.
+	 * Gets the Members Area URL to view the membership.
 	 *
 	 * @since 1.11.0
 	 *
@@ -235,7 +239,7 @@ class WC_Memberships_User_Membership {
 
 
 	/**
-	 * Returns meta keys used to store user membership meta data.
+	 * Gets the meta keys used to store user membership meta data.
 	 *
 	 * @since 1.11.0
 	 *
@@ -275,7 +279,7 @@ class WC_Memberships_User_Membership {
 
 
 	/**
-	 * Returns the user membership type.
+	 * Gets the user membership type.
 	 *
 	 * @since 1.7.0
 	 *
@@ -321,6 +325,7 @@ class WC_Memberships_User_Membership {
 	 * @return bool
 	 */
 	public function is_type( $type ) {
+
 		return is_array( $type ) ? in_array( $this->get_type(), $type, true ) : $type === $this->get_type();
 	}
 
@@ -330,27 +335,64 @@ class WC_Memberships_User_Membership {
 	 *
 	 * @since 1.6.2
 	 *
-	 * @param string $date a date in Y-m-d H:i:s MySQL format
+	 * @param int|string $date a date in Y-m-d H:i:s MySQL format, or timestamp (assumed UTC), leave empty to set to "now"
+	 * @return bool success
 	 */
-	public function set_start_date( $date ) {
+	public function set_start_date( $date = '' ) {
 
-		$start_date = wc_memberships_parse_date( $date, 'mysql' );
+		$start_date = $start_timestamp = null;
 
-		if ( ! $start_date ) {
-			$start_date = date( 'Y-m-d H:i:s', current_time( 'timestamp', true ) );
+		if ( ! empty( $date ) ) {
+			$start_date      = wc_memberships_parse_date( $date, 'mysql' );
+			$start_timestamp = $start_date ? strtotime( $start_date ) : null;
 		}
 
-		update_post_meta( $this->id, $this->start_date_meta, $start_date );
+		if ( ! $start_date || ! $start_timestamp ) {
+			$start_timestamp = current_time( 'timestamp', true );
+			$start_date      = date( 'Y-m-d H:i:s', $start_timestamp );
+		}
 
-		if ( 'delayed' !== $this->get_status() && strtotime( 'today', strtotime( $start_date ) ) > current_time( 'timestamp', true ) ) {
+		$plan = $this->get_plan();
+
+		// if the plan is with fixed dates, ensure the start date begins at midnight of the start day
+		if ( $plan && $plan->is_access_length_type( 'fixed' )  ) {
+
+			try {
+
+				$utc_timezone   = new \DateTimeZone( 'UTC' );
+				$local_timezone = new \DateTimeZone( wc_timezone_string() );
+				$start_datetime = new \DateTime( date( 'c', (int) $start_timestamp ), $utc_timezone );
+
+				// since the input date is in UTC, convert the date to local timezone, set to beginning of the day, then convert back to UTC for storage purposes
+				$start_datetime->setTimezone( $local_timezone );
+				$start_datetime->setTime( 0, 0 );
+				$start_datetime->setTimezone( $utc_timezone );
+
+				$start_date      = $start_datetime->format( 'Y-m-d H:i:s' );
+				$start_timestamp = $start_datetime->getTimestamp();
+
+			} catch ( \Exception $e ) {
+
+				// in case of DateTime errors, just use the start date as is but issue a warning
+				trigger_error( sprintf( 'Unable to set start date for User Membership #%d: %s', $this->get_id(), $e->getMessage() ), E_USER_WARNING );
+			}
+		}
+
+		$success = $start_date && (bool) update_post_meta( $this->id, $this->start_date_meta, $start_date );
+
+		if ( ! $this->has_status( 'delayed' ) && strtotime( 'today', (int) $start_timestamp ) > current_time( 'timestamp', true ) ) {
 
 			$this->update_status( 'delayed' );
 		}
+
+		$this->schedule_activation_events();
+
+		return $success;
 	}
 
 
 	/**
-	 * Returns the membership start datetime.
+	 * Gets the membership start datetime.
 	 *
 	 * @since 1.0.0
 	 *
@@ -366,7 +408,7 @@ class WC_Memberships_User_Membership {
 
 
 	/**
-	 * Returns the membership start local datetime.
+	 * Gets the membership start local datetime.
 	 *
 	 * @since 1.3.8
 	 *
@@ -391,6 +433,7 @@ class WC_Memberships_User_Membership {
 	 * @return bool
 	 */
 	public function has_start_date() {
+
 		return is_numeric( $this->get_start_date( 'timestamp' ) );
 	}
 
@@ -399,7 +442,9 @@ class WC_Memberships_User_Membership {
 	 * Sets the membership end datetime.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @param string|int $date end date either as a unix timestamp or mysql datetime string - defaults to empty string (unlimited membership, no end date)
+	 * @return bool success
 	 */
 	public function set_end_date( $date = '' ) {
 
@@ -414,22 +459,46 @@ class WC_Memberships_User_Membership {
 
 		if ( ! empty( $end_timestamp ) ) {
 
-			// for fixed date memberships set end date to the end of the day
-			$end_timestamp = $this->get_plan() && $this->plan->is_access_length_type( 'fixed' ) ? wc_memberships_adjust_date_by_timezone( strtotime( 'midnight', $end_timestamp ), 'timestamp', wc_timezone_string() ) : $end_timestamp;
+			$plan = $this->get_plan();
+
+			// if the plan is with fixed dates, ensure the end date is set at midnight of the end day
+			if ( $plan && $plan->is_access_length_type( 'fixed' )  ) {
+
+				try {
+
+					$utc_timezone   = new \DateTimeZone( 'UTC' );
+					$local_timezone = new \DateTimeZone( wc_timezone_string() );
+					$end_datetime   = new \DateTime( date( 'c', $end_timestamp ), $utc_timezone );
+
+					// since the input date is in UTC, convert the date to local timezone, set to end of the day, then convert back to UTC for storage purposes
+					$end_datetime->setTimezone( $local_timezone );
+					$end_datetime->setTime( 0, 0 );
+					$end_datetime->setTimezone( $utc_timezone );
+
+					$end_timestamp = $end_datetime->getTimestamp();
+
+				} catch ( \Exception $e ) {
+
+					// in case of DateTime errors, just use the end date timestamp as is but issue a warning
+					trigger_error( sprintf( 'Unable to end start date for User Membership #%d: %s', $this->get_id(), $e->getMessage() ), E_USER_WARNING );
+				}
+			}
 
 			$end_date = date( 'Y-m-d H:i:s', (int) $end_timestamp );
 		}
 
 		// update end date in post meta
-		update_post_meta( $this->id, $this->end_date_meta, $end_date );
+		$success = (bool) update_post_meta( $this->id, $this->end_date_meta, $end_date ?: '' );
 
 		// set expiration scheduled events
 		$this->schedule_expiration_events( $end_timestamp );
+
+		return $success;
 	}
 
 
 	/**
-	 * Returns the membership end datetime.
+	 * Gets the membership end datetime.
 	 *
 	 * @since 1.0.0
 	 *
@@ -455,7 +524,7 @@ class WC_Memberships_User_Membership {
 
 
 	/**
-	 * Returns the membership end local datetime.
+	 * Gets the membership end local datetime.
 	 *
 	 * @since 1.3.8
 	 *
@@ -481,12 +550,13 @@ class WC_Memberships_User_Membership {
 	 * @return bool
 	 */
 	public function has_end_date() {
+
 		return is_numeric( $this->get_end_date( 'timestamp', false ) );
 	}
 
 
 	/**
-	 * Returns the membership cancelled datetime.
+	 * Gets the membership cancelled datetime.
 	 *
 	 * @since 1.6.2
 	 *
@@ -502,7 +572,7 @@ class WC_Memberships_User_Membership {
 
 
 	/**
-	 * Returns the membership cancelled local datetime.
+	 * Gets the membership cancelled local datetime.
 	 *
 	 * @since 1.6.2
 	 *
@@ -525,13 +595,18 @@ class WC_Memberships_User_Membership {
 	 * @since 1.6.2
 	 *
 	 * @param string $date a date in MySQL format
+	 * @return bool
 	 */
 	public function set_cancelled_date( $date ) {
 
+		$success = false;
+
 		if ( $cancelled_date = wc_memberships_parse_date( $date, 'mysql' ) ) {
 
-			update_post_meta( $this->id, $this->cancelled_date_meta, $cancelled_date );
+			$success = (bool) update_post_meta( $this->id, $this->cancelled_date_meta, $cancelled_date );
 		}
+
+		return $success;
 	}
 
 
@@ -575,13 +650,18 @@ class WC_Memberships_User_Membership {
 	 * @since 1.6.2
 	 *
 	 * @param string $date a date in MySQL format
+	 * @return bool success
 	 */
 	public function set_paused_date( $date ) {
 
+		$success = false;
+
 		if ( $paused_date = wc_memberships_parse_date( $date, 'mysql' ) ) {
 
-			update_post_meta( $this->id, $this->paused_date_meta, $paused_date );
+			$success = (bool) update_post_meta( $this->id, $this->paused_date_meta, $paused_date );
 		}
+
+		return $success;
 	}
 
 
@@ -699,7 +779,7 @@ class WC_Memberships_User_Membership {
 		/* @see \WC_Memberships_User_Membership::set_paused_interval() remove any lock set */
 		delete_post_meta( $this->id, $this->locked_meta );
 
-		return delete_post_meta( $this->id, $this->paused_intervals_meta );
+		return (bool) delete_post_meta( $this->id, $this->paused_intervals_meta );
 	}
 
 
@@ -812,6 +892,57 @@ class WC_Memberships_User_Membership {
 
 
 	/**
+	 * Unschedules activation events.
+	 *
+	 * @since 1.13.2
+	 */
+	public function unschedule_activation_events() {
+
+		$hook_args = [ 'user_membership_id' => $this->id ];
+
+		// set a post meta to use as a lock to ensure all events are unscheduled before scheduling new ones
+		if ( ! get_post_meta( $this->id, $this->locked_meta, true ) ) {
+			add_post_meta( $this->id, $this->locked_meta, true, true );
+		}
+
+		// unschedule any previously scheduled activation hooks
+		if ( (bool) as_next_scheduled_action( 'wc_memberships_activate_delayed_user_membership', $hook_args, 'woocommerce-memberships'  ) ) {
+			as_unschedule_action( 'wc_memberships_activate_delayed_user_membership', $hook_args, 'woocommerce-memberships' );
+		}
+
+		// remove the lock
+		delete_post_meta( $this->id, $this->locked_meta );
+	}
+
+
+	/**
+	 * Schedules activation events.
+	 *
+	 * @see \WC_Memberships_User_Membership::set_start_date()
+	 * @see \WC_Memberships_User_Memberships::activate_delayed_user_memberships()
+	 *
+	 * @since 1.13.2
+	 */
+	public function schedule_activation_events() {
+
+		$hook_args = [ 'user_membership_id' => $this->id ];
+
+		$this->unschedule_activation_events();
+
+		// avoid race conditions by introducing a recursion if a lock is found
+		if ( get_post_meta( $this->id, $this->locked_meta, true ) ) {
+			$this->schedule_activation_events();
+			return;
+		}
+
+		if ( $this->has_status( 'delayed' ) ) {
+
+			as_schedule_single_action( $this->get_start_date( 'timestamp' ), 'wc_memberships_activate_delayed_user_membership', $hook_args, 'woocommerce-memberships' );
+		}
+	}
+
+
+	/**
 	 * Unschedules expiration events.
 	 *
 	 * @since 1.7.0
@@ -890,7 +1021,7 @@ class WC_Memberships_User_Membership {
 					as_schedule_single_action( $days_before_expiry, 'wc_memberships_user_membership_expiring_soon', $hook_args, 'woocommerce-memberships' );
 				} else {
 					// if it's less than one day, schedule as a median time between now and the effective end date (in the course of the last remaining day)
-					as_schedule_single_action( max( $now + MINUTE_IN_SECONDS, round( ( $now + $end_timestamp ) / 2 ) ), 'wc_memberships_user_membership_expiring_soon', $hook_args, 'woocommerce-memberships' );
+					as_schedule_single_action( max( $now + MINUTE_IN_SECONDS, (int) round( ( $now + $end_timestamp ) / 2 ) ), 'wc_memberships_user_membership_expiring_soon', $hook_args, 'woocommerce-memberships' );
 				}
 			}
 		}
@@ -932,14 +1063,16 @@ class WC_Memberships_User_Membership {
 	 * @since 1.7.0
 	 *
 	 * @param int $order_id WC_Order ID
+	 * @return bool success
 	 */
 	public function set_order_id( $order_id ) {
 
+		$success  = false;
 		$order_id = is_numeric( $order_id ) ? (int) $order_id : 0;
 
 		if ( $order = $order_id > 0 ? wc_get_order( $order_id ) : null ) {
 
-			update_post_meta( $this->id, $this->order_id_meta, $order_id );
+			$success = (bool) update_post_meta( $this->id, $this->order_id_meta, $order_id );
 
 			// sanity check, ensures the matching order has a grant access record
 			if ( ! wc_memberships_has_order_granted_access( $order, array( 'user_membership' => $this ) ) ) {
@@ -950,11 +1083,13 @@ class WC_Memberships_User_Membership {
 				) );
 			}
 		}
+
+		return $success;
 	}
 
 
 	/**
-	 * Returns the order id that granted access.
+	 * Gets the order id that granted access.
 	 *
 	 * @since 1.0.0
 	 *
@@ -969,7 +1104,7 @@ class WC_Memberships_User_Membership {
 
 
 	/**
-	 * Returns the order that granted access.
+	 * Gets the order that granted access.
 	 *
 	 * @since 1.0.0
 	 *
@@ -1002,22 +1137,27 @@ class WC_Memberships_User_Membership {
 	 * @since 1.7.0
 	 *
 	 * @param int $product_id WC_Product ID
+	 * @return bool success
 	 */
 	public function set_product_id( $product_id ) {
 
+		$success    = false;
 		$product_id = is_numeric( $product_id ) ? (int) $product_id : 0;
 
 		// check that the id belongs to an actual product
 		if ( $product_id > 0 && wc_get_product( $product_id ) ) {
 
-			update_post_meta( $this->id, $this->product_id_meta, $product_id );
+			$success = (bool) update_post_meta( $this->id, $this->product_id_meta, $product_id );
+
 			unset( $this->product );
 		}
+
+		return $success;
 	}
 
 
 	/**
-	 * Returns the product id that granted access.
+	 * Gets the product id that granted access.
 	 *
 	 * @since 1.0.0
 	 *
@@ -1043,8 +1183,8 @@ class WC_Memberships_User_Membership {
 
 						if ( $variation_product && $variation_product->is_type( 'variation' ) ) {
 
-							$parent    = Framework\SV_WC_Product_Compatibility::get_parent( $variation_product );
-							$parent_id = $parent ? $parent->get_id() : null;
+							$parent    = wc_get_product( $variation_product->get_parent_id( 'edit' ) );
+							$parent_id = ! $parent ?: $parent->get_id();
 
 							if ( $product_id && $parent_id === (int) $product_id ) {
 
@@ -1062,7 +1202,7 @@ class WC_Memberships_User_Membership {
 
 
 	/**
-	 * Returns the product that granted access as an object.
+	 * Gets the product that granted access as an object.
 	 *
 	 * @since 1.0.0
 	 *
@@ -1093,7 +1233,7 @@ class WC_Memberships_User_Membership {
 	 */
 	public function delete_product_id() {
 
-		$success = delete_post_meta( $this->id, $this->product_id_meta );
+		$success = (bool) delete_post_meta( $this->id, $this->product_id_meta );
 
 		if ( $success ) {
 			unset( $this->product );
@@ -1108,7 +1248,7 @@ class WC_Memberships_User_Membership {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string|array $status single status or array of statuses
+	 * @param string|string[] $status single status or array of statuses
 	 * @return bool
 	 */
 	public function has_status( $status ) {
@@ -1178,7 +1318,8 @@ class WC_Memberships_User_Membership {
 	 * @return bool
 	 */
 	public function is_cancelled() {
-		return 'cancelled' === $this->get_status();
+
+		return $this->has_status( 'cancelled' );
 	}
 
 
@@ -1190,7 +1331,8 @@ class WC_Memberships_User_Membership {
 	 * @return bool
 	 */
 	public function is_expired() {
-		return 'expired' === $this->get_status();
+
+		return $this->has_status( 'expired' );
 	}
 
 
@@ -1202,7 +1344,8 @@ class WC_Memberships_User_Membership {
 	 * @return bool
 	 */
 	public function is_paused() {
-		return 'paused' === $this->get_status();
+
+		return $this->has_status( 'paused' );
 	}
 
 
@@ -1217,7 +1360,7 @@ class WC_Memberships_User_Membership {
 
 		$is_delayed = false;
 
-		if ( 'delayed' === $this->get_status() ) {
+		if ( $this->has_status( 'delayed' ) ) {
 
 			// always perform a check until start date is in the past...
 			if ( $this->get_start_date( 'timestamp' ) <= current_time( 'timestamp', true ) ) {
@@ -1355,7 +1498,7 @@ class WC_Memberships_User_Membership {
 		 *
 		 * @since 1.7.0
 		 *
-		 * @param \WC_Memberships_User_Membership $user_membership user membershp being cancelled.
+		 * @param \WC_Memberships_User_Membership $user_membership user membership being cancelled.
 		 */
 		do_action( 'wc_memberships_user_membership_cancelled', $this );
 	}
@@ -1477,7 +1620,7 @@ class WC_Memberships_User_Membership {
 	public function can_be_cancelled() {
 
 		// check if membership has eligible status for cancellation
-		$can_be_cancelled = in_array( $this->get_status(), wc_memberships()->get_user_memberships_instance()->get_valid_user_membership_statuses_for_cancellation(), true );
+		$can_be_cancelled = $this->has_status( wc_memberships()->get_user_memberships_instance()->get_valid_user_membership_statuses_for_cancellation() );
 
 		/**
 		 * Whether a user membership can be cancelled.
@@ -1565,23 +1708,35 @@ class WC_Memberships_User_Membership {
 	 */
 	public function get_products_for_renewal() {
 
-		$renewal_products = array();
-		$original_product = $this->get_product();
+		$renewal_products = [];
 
-		// make sure the original product is the first in array
-		if ( $original_product && $original_product->is_purchasable() ) {
+		// start off with the original product that granted access to put it at the beginning of the array
+		if ( $original_product = $this->get_product( true ) ) {
 
-			$renewal_products[ $original_product->get_id() ] = $original_product;
+			// ensure it is available for purchase
+			if ( $original_product->is_purchasable() && $original_product->is_in_stock() ) {
+
+				$renewal_products[ $original_product->get_id() ] = $original_product;
+
+			// otherwise, if a variation is not available, try with the parent variable
+			} elseif ( $original_product->is_type( 'variation' ) ) {
+
+				// do not simply get the parent from the variation, as it may not be a product that grants access, instead use the same method to see if it returns a parent
+				$parent_product = $this->get_product();
+
+				if ( $parent_product && $parent_product->is_purchasable() && $parent_product->is_in_stock() ) {
+
+					$renewal_products[ $parent_product->get_id() ] = $parent_product;
+				}
+			}
 		}
 
-		$plan = $this->get_plan();
+		// then, get as the other purchasable products that may grant access according to the plan settings
+		if ( $plan = $this->get_plan() ) {
 
-		// get all the other purchasable products according to the plan settings
-		if ( $plan && ( $products = $plan->get_products() ) ) {
+			foreach ( $plan->get_products() as $product_id => $product ) {
 
-			foreach ( $products as $product_id => $product ) {
-
-				if ( $product->is_purchasable() ) {
+				if ( ! array_key_exists( $product_id, $renewal_products ) && $product->is_purchasable() && $product->is_in_stock() ) {
 
 					$renewal_products[ $product_id ] = $product;
 				}
@@ -1605,7 +1760,7 @@ class WC_Memberships_User_Membership {
 
 		// check first if the status allows renewal
 		$membership_plan = $this->plan instanceof \WC_Memberships_Membership_Plan ? $this->plan : $this->get_plan();
-		$can_be_renewed  = $membership_plan && in_array( $this->get_status(), wc_memberships()->get_user_memberships_instance()->get_valid_user_membership_statuses_for_renewal(), true );
+		$can_be_renewed  = $membership_plan && $this->has_status( wc_memberships()->get_user_memberships_instance()->get_valid_user_membership_statuses_for_renewal() );
 
 		if ( $can_be_renewed ) {
 
@@ -2030,6 +2185,87 @@ class WC_Memberships_User_Membership {
 		}
 
 		return $comment_id;
+	}
+
+
+	/**
+	 * Creates or updates a profile field.
+	 *
+	 * @since 1.19.0
+	 *
+	 * @param string $field_slug
+	 * @param string|bool|int|float|array $value
+	 * @return Profile_Field object
+	 * @throws Framework\SV_WC_Plugin_Exception
+	 */
+	public function set_profile_field( $field_slug, $value ) {
+
+		if ( $profile_field = $this->get_profile_field( $field_slug ) ) {
+
+			$profile_field->set_value( $value );
+
+		} else {
+
+			$profile_field = new Profile_Field();
+			$profile_field->set_slug( $field_slug );
+			$profile_field->set_user_id( $this->get_user_id() );
+			$profile_field->set_value( $value );
+		}
+
+		$profile_field->save();
+
+		return $profile_field;
+	}
+
+
+	/**
+	 * Deletes a profile field.
+	 *
+	 * @since 1.19.0
+	 *
+	 * @param string $field_slug the slug of profile field to remove
+	 * @return bool
+	 */
+	public function delete_profile_field( $field_slug ) {
+
+		if ( $profile_field = $this->get_profile_field( $field_slug ) ) {
+
+			$profile_field->delete( true );
+
+			return true;
+		}
+
+		return false;
+	}
+
+
+	/**
+	 * Gets the user's profile field associated with the membership plan identified by the field slug.
+	 *
+	 * @since 1.19.0
+	 *
+	 * @param string $field_slug
+	 * @return Profile_Field|null
+	 */
+	public function get_profile_field( $field_slug ) {
+
+		return Profile_Fields::get_profile_field( $this->get_user_id(), $field_slug );
+	}
+
+
+	/**
+	 * Gets the user's profile fields associated with the membership plan.
+	 *
+	 * @since 1.19.0
+	 *
+	 * @param array $args
+	 * @return Profile_Field[]
+	 */
+	public function get_profile_fields( array $args = [] ) {
+
+		$args['membership_plan_ids'] = [ $this->get_plan_id() ];
+
+		return Profile_Fields::get_profile_fields( $this->get_user_id(), $args );
 	}
 
 

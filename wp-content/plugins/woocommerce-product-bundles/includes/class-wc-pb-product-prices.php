@@ -2,7 +2,7 @@
 /**
  * WC_PB_Product_Prices class
  *
- * @author   SomewhereWarm <info@somewherewarm.gr>
+ * @author   SomewhereWarm <info@somewherewarm.com>
  * @package  WooCommerce Product Bundles
  * @since    5.0.0
  */
@@ -16,9 +16,23 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Price functions and hooks.
  *
  * @class    WC_PB_Product_Prices
- * @version  6.0.4
+ * @version  6.7.7
  */
 class WC_PB_Product_Prices {
+
+	/**
+	 * Flag indicating whether 'filter_get_price_cart' is applied on a variable product price.
+	 *
+	 * @var boolean
+	 */
+	private static $filtering_variable_price_html = false;
+
+	/**
+	 * Flag indicating whether 'get_extended_price_precision' is being used to filter WC decimals.
+	 *
+	 * @var boolean
+	 */
+	private static $filtering_price_decimals = false;
 
 	/**
 	 * Bundled items whose prices are currently being filtered -- all states.
@@ -44,9 +58,11 @@ class WC_PB_Product_Prices {
 
 			add_filter( 'woocommerce_product_get_price', array( __CLASS__, 'filter_get_price_cart' ), 99, 2 );
 			add_filter( 'woocommerce_product_get_sale_price', array( __CLASS__, 'filter_get_sale_price_cart' ), 99, 2 );
+			add_filter( 'woocommerce_product_get_regular_price', array( __CLASS__, 'filter_get_regular_price_cart' ), 99, 2 );
 
 			add_filter( 'woocommerce_product_variation_get_price', array( __CLASS__, 'filter_get_price_cart' ), 99, 2 );
 			add_filter( 'woocommerce_product_variation_get_sale_price', array( __CLASS__, 'filter_get_sale_price_cart' ), 99, 2 );
+			add_filter( 'woocommerce_product_variation_get_regular_price', array( __CLASS__, 'filter_get_regular_price_cart' ), 99, 2 );
 		}
 	}
 
@@ -68,7 +84,7 @@ class WC_PB_Product_Prices {
 	public static function is_bundled_pricing_context( $product, $context = 'any' ) {
 
 		if ( in_array( $context, array( 'any', 'catalog' ) ) ) {
-			return self::$bundled_item && self::$bundled_item->get_product_id() === $product->get_id();
+			return self::$bundled_item && in_array( self::$bundled_item->get_product_id(), array( $product->get_id(), $product->get_parent_id() ) );
 		} elseif ( in_array( $context, array( 'any', 'cart' ) ) ) {
 			return isset( $product->bundled_cart_item );
 		}
@@ -89,7 +105,8 @@ class WC_PB_Product_Prices {
 		 *
 		 * @param  string  $method  Method to use for calculating cart item discounts. Values: 'filters' | 'props'.
 		 */
-		return apply_filters( 'woocommerce_bundled_cart_item_discount_method', 'filters' );
+		$discount_method = apply_filters( 'woocommerce_bundled_cart_item_discount_method', 'filters' );
+		return in_array( $discount_method, array( 'filters', 'props' ) ) ? $discount_method : 'filters';
 	}
 
 	/**
@@ -120,14 +137,14 @@ class WC_PB_Product_Prices {
 	 * Filters the 'woocommerce_price_num_decimals' option to use the internal WC rounding precision.
 	 */
 	public static function extend_price_display_precision() {
-		add_filter( 'option_woocommerce_price_num_decimals', array( 'WC_PB_Core_Compatibility', 'wc_get_rounding_precision' ) );
+		add_filter( 'wc_get_price_decimals', array( __CLASS__, 'get_extended_price_precision' ) );
 	}
 
 	/**
 	 * Reset applied filters to the 'woocommerce_price_num_decimals' option.
 	 */
 	public static function reset_price_display_precision() {
-		remove_filter( 'option_woocommerce_price_num_decimals', array( 'WC_PB_Core_Compatibility', 'wc_get_rounding_precision' ) );
+		remove_filter( 'wc_get_price_decimals', array( __CLASS__, 'get_extended_price_precision' ) );
 	}
 
 	/**
@@ -171,6 +188,28 @@ class WC_PB_Product_Prices {
 	}
 
 	/**
+	 * Get extended rounding precision.
+	 *
+	 * @since  6.7.7
+	 *
+	 * @param  int  $decimals
+	 * @return int
+	 */
+	public static function get_extended_price_precision( $decimals = null ) {
+
+		// Prevent infinite loops through 'wc_pb_price_num_decimals'.
+		if ( ! is_null( $decimals ) && self::$filtering_price_decimals ) {
+			return $decimals;
+		}
+
+		self::$filtering_price_decimals = true;
+		$decimals = wc_pb_price_num_decimals( 'extended' );
+		self::$filtering_price_decimals = false;
+
+		return $decimals;
+	}
+
+	/**
 	 * Discounted bundled item price precision. Defaults to the price display precision, a.k.a. wc_get_price_decimals.
 	 *
 	 * @since  5.7.8
@@ -178,7 +217,7 @@ class WC_PB_Product_Prices {
 	 * @return int
 	 */
 	public static function get_discounted_price_precision() {
-		return apply_filters( 'woocommerce_bundled_item_discounted_price_precision', wc_get_price_decimals() );
+		return wc_pb_price_num_decimals( 'extended' );
 	}
 
 	/**
@@ -225,32 +264,39 @@ class WC_PB_Product_Prices {
 	 */
 	public static function add_price_filters( $bundled_item ) {
 
+		$add_filters = false;
+
 		if ( empty( self::$bundled_item_pre ) ) {
 			self::$bundled_item_pre = array();
+			$add_filters            = true;
 		}
 
 		self::$bundled_item_pre[] = $bundled_item;
 		self::$bundled_item       = $bundled_item;
 
-		add_filter( 'woocommerce_product_get_price', array( __CLASS__, 'filter_get_price' ), 15, 2 );
-		add_filter( 'woocommerce_product_get_sale_price', array( __CLASS__, 'filter_get_sale_price' ), 15, 2 );
-		add_filter( 'woocommerce_product_get_regular_price', array( __CLASS__, 'filter_get_regular_price' ), 15, 2 );
-		add_filter( 'woocommerce_product_variation_get_price', array( __CLASS__, 'filter_get_price' ), 15, 2 );
-		add_filter( 'woocommerce_product_variation_get_sale_price', array( __CLASS__, 'filter_get_sale_price' ), 15, 2 );
-		add_filter( 'woocommerce_product_variation_get_regular_price', array( __CLASS__, 'filter_get_regular_price' ), 15, 2 );
+		if ( $add_filters ) {
 
-		add_filter( 'woocommerce_get_price_html', array( __CLASS__, 'filter_get_price_html' ), 10, 2 );
-		add_filter( 'woocommerce_get_children', array( __CLASS__, 'filter_children' ), 10, 2 );
-		add_filter( 'woocommerce_get_variation_prices_hash', array( __CLASS__, 'filter_variation_prices_hash' ), 10, 2 );
-		add_filter( 'woocommerce_variation_prices', array( __CLASS__, 'filter_get_variation_prices' ), 15, 2 );
-		add_filter( 'woocommerce_show_variation_price', array( __CLASS__, 'filter_show_variation_price' ), 10, 3 );
+			add_filter( 'woocommerce_product_get_price', array( __CLASS__, 'filter_get_price' ), 15, 2 );
+			add_filter( 'woocommerce_product_get_sale_price', array( __CLASS__, 'filter_get_sale_price' ), 15, 2 );
+			add_filter( 'woocommerce_product_get_regular_price', array( __CLASS__, 'filter_get_regular_price' ), 15, 2 );
+			add_filter( 'woocommerce_product_variation_get_price', array( __CLASS__, 'filter_get_price' ), 15, 2 );
+			add_filter( 'woocommerce_product_variation_get_sale_price', array( __CLASS__, 'filter_get_sale_price' ), 15, 2 );
+			add_filter( 'woocommerce_product_variation_get_regular_price', array( __CLASS__, 'filter_get_regular_price' ), 15, 2 );
 
-		/**
-		 * 'woocommerce_bundled_product_price_filters_added' hook.
-		 *
-		 * @param  WC_Bundled_Item  $bundled_item
-		 */
-		do_action( 'woocommerce_bundled_product_price_filters_added', $bundled_item );
+			add_filter( 'woocommerce_get_price_html', array( __CLASS__, 'filter_get_price_html' ), 10, 2 );
+			add_filter( 'woocommerce_get_children', array( __CLASS__, 'filter_children' ), 10, 2 );
+			add_filter( 'woocommerce_variable_price_html', array( __CLASS__, 'filter_variable_price_html' ), 10, 2 );
+			add_filter( 'woocommerce_variation_prices', array( __CLASS__, 'filter_get_variation_prices' ), 15, 2 );
+			add_filter( 'woocommerce_show_variation_price', array( __CLASS__, 'filter_show_variation_price' ), 10, 3 );
+			add_filter( 'woocommerce_get_variation_prices_hash', array( __CLASS__, 'filter_variation_prices_hash' ), 10, 2 );
+
+			/**
+			 * 'woocommerce_bundled_product_price_filters_added' hook.
+			 *
+			 * @param  WC_Bundled_Item  $bundled_item
+			 */
+			do_action( 'woocommerce_bundled_product_price_filters_added', $bundled_item );
+		}
 	}
 
 	/**
@@ -258,28 +304,35 @@ class WC_PB_Product_Prices {
 	 */
 	public static function remove_price_filters() {
 
-		remove_filter( 'woocommerce_product_get_price', array( __CLASS__, 'filter_get_price' ), 15, 2 );
-		remove_filter( 'woocommerce_product_get_sale_price', array( __CLASS__, 'filter_get_sale_price' ), 15, 2 );
-		remove_filter( 'woocommerce_product_get_regular_price', array( __CLASS__, 'filter_get_regular_price' ), 15, 2 );
-		remove_filter( 'woocommerce_product_variation_get_price', array( __CLASS__, 'filter_get_price' ), 15, 2 );
-		remove_filter( 'woocommerce_product_variation_get_sale_price', array( __CLASS__, 'filter_get_sale_price' ), 15, 2 );
-		remove_filter( 'woocommerce_product_variation_get_regular_price', array( __CLASS__, 'filter_get_regular_price' ), 15, 2 );
-
-		remove_filter( 'woocommerce_get_price_html', array( __CLASS__, 'filter_get_price_html' ), 10, 2 );
-		remove_filter( 'woocommerce_get_children', array( __CLASS__, 'filter_children' ), 10, 2 );
-		remove_filter( 'woocommerce_get_variation_prices_hash', array( __CLASS__, 'filter_variation_prices_hash' ), 10, 2 );
-		remove_filter( 'woocommerce_variation_prices', array( __CLASS__, 'filter_get_variation_prices' ), 15, 2 );
-		remove_filter( 'woocommerce_show_variation_price', array( __CLASS__, 'filter_show_variation_price' ), 10, 3 );
-
-		/**
-		 * 'woocommerce_bundled_product_price_filters_removed' hook.
-		 *
-		 * @param  WC_Bundled_Item  $bundled_item
-		 */
-		do_action( 'woocommerce_bundled_product_price_filters_removed', self::$bundled_item );
+		$bundled_item = self::$bundled_item;
 
 		array_pop( self::$bundled_item_pre );
+
 		self::$bundled_item = ! empty( self::$bundled_item_pre ) && is_array( self::$bundled_item_pre ) ? end( self::$bundled_item_pre ) : null;
+
+		if ( $bundled_item && empty( self::$bundled_item ) ) {
+
+			remove_filter( 'woocommerce_product_get_price', array( __CLASS__, 'filter_get_price' ), 15, 2 );
+			remove_filter( 'woocommerce_product_get_sale_price', array( __CLASS__, 'filter_get_sale_price' ), 15, 2 );
+			remove_filter( 'woocommerce_product_get_regular_price', array( __CLASS__, 'filter_get_regular_price' ), 15, 2 );
+			remove_filter( 'woocommerce_product_variation_get_price', array( __CLASS__, 'filter_get_price' ), 15, 2 );
+			remove_filter( 'woocommerce_product_variation_get_sale_price', array( __CLASS__, 'filter_get_sale_price' ), 15, 2 );
+			remove_filter( 'woocommerce_product_variation_get_regular_price', array( __CLASS__, 'filter_get_regular_price' ), 15, 2 );
+
+			remove_filter( 'woocommerce_get_price_html', array( __CLASS__, 'filter_get_price_html' ), 10, 2 );
+			remove_filter( 'woocommerce_get_children', array( __CLASS__, 'filter_children' ), 10, 2 );
+			remove_filter( 'woocommerce_variable_price_html', array( __CLASS__, 'filter_variable_price_html' ), 10, 2 );
+			remove_filter( 'woocommerce_variation_prices', array( __CLASS__, 'filter_get_variation_prices' ), 15, 2 );
+			remove_filter( 'woocommerce_show_variation_price', array( __CLASS__, 'filter_show_variation_price' ), 10, 3 );
+			remove_filter( 'woocommerce_get_variation_prices_hash', array( __CLASS__, 'filter_variation_prices_hash' ), 10, 2 );
+
+			/**
+			 * 'woocommerce_bundled_product_price_filters_removed' hook.
+			 *
+			 * @param  WC_Bundled_Item  $bundled_item
+			 */
+			do_action( 'woocommerce_bundled_product_price_filters_removed', $bundled_item );
+		}
 	}
 
 	/*
@@ -426,10 +479,15 @@ class WC_PB_Product_Prices {
 
 		if ( $bundled_item ) {
 
-			$show = false;
+			$prices_equal = ! $show;
+			$show         = false;
 
 			if ( $bundled_item->is_priced_individually() && $bundled_item->is_price_visible( 'product' ) ) {
 				$show = true;
+				// If the product is optional and all prices are equal, then the prices is already displayed in "Add for $XXX".
+				if ( $bundled_item->is_optional() && $prices_equal ) {
+					$show = false;
+				}
 			}
 		}
 
@@ -526,23 +584,6 @@ class WC_PB_Product_Prices {
 			if ( ! $bundled_item->is_priced_individually() ) {
 				return 0;
 			}
-
-			if ( empty( $regular_price ) ) {
-
-				if ( isset( $product->bundled_cart_item ) ) {
-					$product->bundled_cart_item = false;
-				} else {
-					self::$bundled_item = false;
-				}
-
-				$regular_price = $product->get_price();
-
-				if ( isset( $product->bundled_cart_item ) ) {
-					$product->bundled_cart_item = $bundled_item;
-				} else {
-					self::$bundled_item = $bundled_item;
-				}
-			}
 		}
 
 		return $regular_price;
@@ -637,6 +678,35 @@ class WC_PB_Product_Prices {
 	}
 
 	/**
+	 * Filter get_regular_price() calls for bundled cart items.
+	 *
+	 * @since  6.1.4
+	 *
+	 * @param  double      $price
+	 * @param  WC_Product  $product
+	 * @return double
+	 */
+	public static function filter_get_regular_price_cart( $price, $product ) {
+		return self::is_bundled_pricing_context( $product, 'cart' ) ? self::filter_get_regular_price( $price, $product, 'cart' ) : $price;
+	}
+
+	/**
+	 * Wrapper of 'filter_get_price_html' for variable products.
+	 *
+	 * @param  string      $price_html
+	 * @param  WC_Product  $product
+	 * @return string
+	 */
+	public static function filter_variable_price_html( $price_html, $product ) {
+
+		self::$filtering_variable_price_html = true;
+		$price_html = self::filter_get_price_html( $price_html, $product );
+		self::$filtering_variable_price_html = false;
+
+		return $price_html;
+	}
+
+	/**
 	 * Filter the html price string of bundled items to show the correct price with discount and tax - needs to be hidden when the bundled item is priced individually.
 	 *
 	 * @param  string      $price_html
@@ -644,6 +714,10 @@ class WC_PB_Product_Prices {
 	 * @return string
 	 */
 	public static function filter_get_price_html( $price_html, $product ) {
+
+		if ( $product->is_type( 'variable' ) && false === self::$filtering_variable_price_html ) {
+			return $price_html;
+		}
 
 		$bundled_item = self::$bundled_item;
 
@@ -657,7 +731,7 @@ class WC_PB_Product_Prices {
 				return '';
 			}
 
-			$quantity = $bundled_item->get_quantity( 'max', array( 'bound_by_stock' => true ) );
+			$quantity = $bundled_item->get_quantity( 'max' );
 
 			/**
 			 * 'woocommerce_bundled_item_price_html' filter.

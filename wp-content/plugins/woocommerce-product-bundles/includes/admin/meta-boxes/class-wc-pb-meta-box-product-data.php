@@ -2,7 +2,7 @@
 /**
  * WC_PB_Meta_Box_Product_Data class
  *
- * @author   SomewhereWarm <info@somewherewarm.gr>
+ * @author   SomewhereWarm <info@somewherewarm.com>
  * @package  WooCommerce Product Bundles
  * @since    5.0.0
  */
@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Product meta-box data for the 'Bundle' type.
  *
  * @class    WC_PB_Meta_Box_Product_Data
- * @version  6.0.0
+ * @version  6.7.4
  */
 class WC_PB_Meta_Box_Product_Data {
 
@@ -52,11 +52,56 @@ class WC_PB_Meta_Box_Product_Data {
 		add_action( 'woocommerce_bundled_product_admin_advanced_html', array( __CLASS__, 'bundled_product_admin_advanced_item_id_html' ), 100, 4 );
 
 		// Bundle tab settings.
-		add_action( 'woocommerce_bundled_products_admin_config', array( __CLASS__, 'bundled_products_admin_config' ), 10 );
+		add_action( 'woocommerce_bundled_products_admin_config', array( __CLASS__, 'bundled_products_admin_config_layout' ), 5 );
+		add_action( 'woocommerce_bundled_products_admin_config', array( __CLASS__, 'bundled_products_admin_config_form_location' ), 10 );
+		add_action( 'woocommerce_bundled_products_admin_config', array( __CLASS__, 'bundled_products_admin_config_group_mode' ), 15 );
+		add_action( 'woocommerce_bundled_products_admin_config', array( __CLASS__, 'bundled_products_admin_config_edit_in_cart' ), 20 );
 		add_action( 'woocommerce_bundled_products_admin_contents', array( __CLASS__, 'bundled_products_admin_contents' ), 20 );
 
 		// Extended "Sold Individually" option.
 		add_action( 'woocommerce_product_options_sold_individually', array( __CLASS__, 'sold_individually_option' ) );
+
+		/*
+		 * Support.
+		 */
+
+		// Add a notice if prices not set.
+		add_action( 'admin_notices', array( __CLASS__, 'maybe_add_non_purchasable_notice' ), 0 );
+	}
+
+	/**
+	 * Adds a notice if prices not set.
+	 *
+	 * @return void
+	 */
+	public static function maybe_add_non_purchasable_notice() {
+
+		global $post_id;
+
+		// Get admin screen ID.
+		$screen    = get_current_screen();
+		$screen_id = $screen ? $screen->id : '';
+
+		if ( 'product' !== $screen_id ) {
+			return;
+		}
+
+		$product_type = WC_Product_Factory::get_product_type( $post_id );
+
+		if ( 'bundle' !== $product_type ) {
+			return;
+		}
+
+		$product = wc_get_product( $post_id );
+
+		if ( ! $product ) {
+			return;
+		}
+
+		if ( false === $product->contains( 'priced_individually' ) && '' === $product->get_price( 'edit' ) ) {
+			$notice = sprintf( __( '&quot;%1$s&quot; is not purchasable just yet. But, fear not &ndash; setting up <a href="%2$s" target="_blank">pricing options</a> only takes a minute! <ul class="pb_notice_list"><li>To give &quot;%1$s&quot; a static base price, navigate to <strong>Product Data > General</strong> and fill in the <strong>Regular Price</strong> field.</li><li>To preserve the prices and taxes of individual bundled products, go to <strong>Product Data > Bundled Products</strong> and enable <strong>Priced Individually</strong> for each bundled product whose price must be preserved.</li></ul> Then, save your changes.', 'woocommerce-product-bundles' ), $product->get_title(), WC_PB()->get_resource_url( 'pricing-options' ) );
+			WC_PB_Admin_Notices::add_notice( $notice, 'warning' );
+		}
 	}
 
 	/**
@@ -135,7 +180,7 @@ class WC_PB_Meta_Box_Product_Data {
 
 		global $product_bundle_object;
 
-		?><div id="bundled_product_data" class="panel woocommerce_options_panel wc_gte_30">
+		?><div id="bundled_product_data" class="panel woocommerce_options_panel wc_gte_30" style="display:none">
 			<div class="options_group_general">
 				<?php
 				/**
@@ -217,7 +262,7 @@ class WC_PB_Meta_Box_Product_Data {
 		</div>
 		<div class="options_group bundle_type show_if_bundle">
 			<div class="form-field">
-				<label for="_bundle_type">Bundle type</label>
+				<label><?php _e( 'Bundle type', 'woocommerce-product-bundles' ); ?></label>
 				<ul class="bundle_type_options">
 					<?php
 					foreach ( $bundle_type_options as $type ) {
@@ -227,7 +272,7 @@ class WC_PB_Meta_Box_Product_Data {
 						}
 						?>
 						<li class="<?php echo implode( ' ', $classes ); ?>" >
-							<input type="radio"<?php echo $type[ 'checked' ] ?> name="_bundle_type" id="_bundle_type" value="<?php echo $type[ 'value' ] ?>">
+							<input type="radio"<?php echo $type[ 'checked' ] ?> name="_bundle_type" class="bundle_type_option" value="<?php echo $type[ 'value' ] ?>">
 							<?php echo wc_help_tip( '<strong>' . $type[ 'title' ] . '</strong> &ndash; ' . $type[ 'description' ] ); ?>
 						</li>
 						<?php
@@ -238,8 +283,8 @@ class WC_PB_Meta_Box_Product_Data {
 			<div class="wp-clearfix"></div>
 			<div id="message" class="inline notice">
 				<p>
-					<span class="assembled_notice_title"><?php _e( 'Where did the shipping options go?', 'woocommerce-product-bundles' ); ?></span><br/>
-					<?php _e( 'The contents of this bundle preserve their dimensions, weight and shipping classes. Unassembled bundles do not have a physical container. The parent item that groups bundled products in the cart is virtual &ndash; it has no shipping properties of its own.', 'woocommerce-product-bundles' ); ?>
+					<span class="assembled_notice_title"><?php _e( 'What happened to the shipping options?', 'woocommerce-product-bundles' ); ?></span>
+					<?php echo sprintf( __( 'The contents of this bundle preserve their dimensions, weight and shipping classes. <a href="%s" target="_blank">Unassembled</a> bundles do not have a physical container &ndash; or any shipping options to configure.', 'woocommerce-product-bundles' ), WC_PB()->get_resource_url( 'shipping-options' ) ); ?>
 				</p>
 			</div>
 		<?php
@@ -284,9 +329,9 @@ class WC_PB_Meta_Box_Product_Data {
 					if ( 'bundle' === select_val ) {
 
 						// Force virtual container to always show the shipping tab.
-						virtual_checkbox.removeAttr( 'checked' ).change();
+						virtual_checkbox.prop( 'checked', false ).change();
 
-						if ( 'unassembled' === bundle_type_options.find( 'input#_bundle_type:checked' ).first().val() ) {
+						if ( 'unassembled' === bundle_type_options.find( 'input.bundle_type_option:checked' ).first().val() ) {
 							shipping_product_data.addClass( 'bundle_unassembled' );
 							bundled_product_data.addClass( 'bundle_unassembled' );
 						}
@@ -315,6 +360,14 @@ class WC_PB_Meta_Box_Product_Data {
 	public static function process_bundle_data( $product ) {
 
 		if ( $product->is_type( 'bundle' ) ) {
+
+			/*
+			 * Test if 'max_input_vars' limit may have been exceeded.
+			 */
+			if ( isset( $_POST[ 'pb_post_control_var' ] ) && ! isset( $_POST[ 'pb_post_test_var' ] ) ) {
+				$notice = sprintf( __( 'Product Bundles has detected that your server may have failed to process and save some of the data on this page. Please get in touch with your server\'s host or administrator and (kindly) ask them to <a href="%1$s" target="_blank">increase the number of variables</a> that PHP scripts can post and process%2$s.', 'woocommerce-product-bundles' ), WC_PB()->get_resource_url( 'max-input-vars' ), function_exists( 'ini_get' ) && ini_get( 'max_input_vars' ) ? sprintf( __( ' (currently %s)', 'woocommerce-product-bundles' ), ini_get( 'max_input_vars' ) ) : '' );
+				self::add_admin_notice( $notice, 'warning' );
+			}
 
 			$props = array(
 				'layout'                    => 'default',
@@ -395,7 +448,7 @@ class WC_PB_Meta_Box_Product_Data {
 
 			if ( ! defined( 'WC_PB_UPDATING' ) ) {
 
-				$posted_bundle_data    = isset( $_POST[ 'bundle_data' ] ) ? $_POST[ 'bundle_data' ] : false;
+				$posted_bundle_data    = isset( $_POST[ 'bundle_data' ] ) ? $_POST[ 'bundle_data' ] : false; // @phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 				$processed_bundle_data = self::process_posted_bundle_data( $posted_bundle_data, $product->get_id() );
 
 				if ( empty( $processed_bundle_data ) ) {
@@ -441,9 +494,20 @@ class WC_PB_Meta_Box_Product_Data {
 					}
 				}
 
-				$group_modes_without_parent_msg = sprintf( _n( '%s is only supported by <a href="https://docs.woocommerce.com/document/bundles/bundles-configuration/#shipping" target="_blank">unassembled</a> bundles with an empty <a href="https://docs.woocommerce.com/document/bundles/bundles-configuration/#pricing" target="_blank">base price</a>.', '%s are only supported by <a href="https://docs.woocommerce.com/document/bundles/bundles-configuration/#shipping" target="_blank">unassembled</a> bundles with an empty <a href="https://docs.woocommerce.com/document/bundles/bundles-configuration/#pricing" target="_blank">base price</a>.', sizeof( $group_modes_without_parent ), 'woocommerce-product-bundles' ), WC_PB_Helpers::format_list_of_items( $group_modes_without_parent ) );
+				$group_modes_without_parent_msg = sprintf( _n( '%1$s is only supported by <a href="%2$s" target="_blank">unassembled</a> bundles with an empty <a href="%3$s" target="_blank">base price</a>.', '%1$s are only supported by <a href="%2$s" target="_blank">unassembled</a> bundles with an empty <a href="%3$s" target="_blank">base price</a>.', sizeof( $group_modes_without_parent ), 'woocommerce-product-bundles' ), WC_PB_Helpers::format_list_of_items( $group_modes_without_parent ), WC_PB()->get_resource_url( 'shipping-options' ), WC_PB()->get_resource_url( 'pricing-options' ) );
 
 				self::add_admin_error( sprintf( __( 'The chosen <strong>Item Grouping</strong> option is invalid. %s', 'woocommerce-product-bundles' ), $group_modes_without_parent_msg ) );
+
+			}
+
+			/*
+			 * Show non-mandatory bundle notice.
+			 */
+			if ( 'none' !== $product->get_group_mode( 'edit' ) && $product->get_bundled_items() && ! $product->contains( 'mandatory' ) ) {
+
+				$notice = __( 'This bundle does not contain any mandatory items. To control the minimum and/or maximum number of items that customers must choose in this bundle, use the <strong>Min Bundle Size</strong> and <strong>Max Bundle Size</strong> fields under <strong>Product Data > Bundled Products</strong>.', 'woocommerce-product-bundles' );
+
+				self::add_admin_notice( $notice, array( 'dismiss_class' => 'process_data_min_max', 'type' => 'info' ) );
 			}
 
 			// Clear dismissible welcome notice.
@@ -577,7 +641,7 @@ class WC_PB_Meta_Box_Product_Data {
 						$item_data[ 'shipped_individually' ] = 'no';
 					}
 
-					// Save quantity data.
+					// Save min quantity.
 					if ( isset( $data[ 'quantity_min' ] ) ) {
 
 						if ( is_numeric( $data[ 'quantity_min' ] ) ) {
@@ -586,15 +650,15 @@ class WC_PB_Meta_Box_Product_Data {
 
 							if ( $quantity >= 0 && $data[ 'quantity_min' ] - $quantity == 0 ) {
 
-								if ( $quantity !== 1 && $product->is_sold_individually() ) {
-									self::add_admin_error( sprintf( __( '<strong>%s</strong> is sold individually &ndash; its <strong>Quantity Min</strong> cannot be higher than 1.', 'woocommerce-product-bundles' ), $item_title ) );
+								if ( $quantity > 1 && $product->is_sold_individually() ) {
+									self::add_admin_error( sprintf( __( '<strong>%s</strong> is sold individually &ndash; its <strong>Min Quantity</strong> cannot be higher than 1.', 'woocommerce-product-bundles' ), $item_title ) );
 									$item_data[ 'quantity_min' ] = 1;
 								} else {
 									$item_data[ 'quantity_min' ] = $quantity;
 								}
 
 							} else {
-								self::add_admin_error( sprintf( __( 'The minimum quantity of <strong>%s</strong> was not valid and has been reset. Please enter a non-negative integer <strong>Quantity Min</strong> value.', 'woocommerce-product-bundles' ), $item_title ) );
+								self::add_admin_error( sprintf( __( 'The minimum quantity of <strong>%s</strong> was not valid and has been reset. Please enter a non-negative integer <strong>Min Quantity</strong> value.', 'woocommerce-product-bundles' ), $item_title ) );
 								$item_data[ 'quantity_min' ] = 1;
 							}
 						}
@@ -605,7 +669,7 @@ class WC_PB_Meta_Box_Product_Data {
 
 					$quantity_min = $item_data[ 'quantity_min' ];
 
-					// Save max quantity data.
+					// Save max quantity.
 					if ( isset( $data[ 'quantity_max' ] ) && ( is_numeric( $data[ 'quantity_max' ] ) || '' === $data[ 'quantity_max' ] ) ) {
 
 						$quantity = '' !== $data[ 'quantity_max' ] ? absint( $data[ 'quantity_max' ] ) : '';
@@ -613,18 +677,15 @@ class WC_PB_Meta_Box_Product_Data {
 						if ( '' === $quantity || ( $quantity > 0 && $quantity >= $quantity_min && $data[ 'quantity_max' ] - $quantity == 0 ) ) {
 
 							if ( $quantity !== 1 && $product->is_sold_individually() ) {
-
-								self::add_admin_error( sprintf( __( '<strong>%s</strong> is sold individually &ndash; <strong>Quantity Max</strong> cannot be higher than 1.', 'woocommerce-product-bundles' ), $item_title ) );
-
+								self::add_admin_error( sprintf( __( '<strong>%s</strong> is sold individually &ndash; <strong>Max Quantity</strong> cannot be higher than 1.', 'woocommerce-product-bundles' ), $item_title ) );
 								$item_data[ 'quantity_max' ] = 1;
-
 							} else {
 								$item_data[ 'quantity_max' ] = $quantity;
 							}
 
 						} else {
 
-							self::add_admin_error( sprintf( __( 'The maximum quantity of <strong>%s</strong> was not valid and has been reset. Please enter a positive integer equal to or higher than <strong>Quantity Min</strong>, or leave the <strong>Quantity Max</strong> field empty for an unlimited maximum quantity.', 'woocommerce-product-bundles' ), $item_title ) );
+							self::add_admin_error( sprintf( __( 'The maximum quantity of <strong>%s</strong> was not valid and has been reset. Please enter a positive integer equal to or higher than <strong>Min Quantity</strong>, or leave the <strong>Max Quantity</strong> field empty for an unlimited maximum quantity.', 'woocommerce-product-bundles' ), $item_title ) );
 
 							if ( 0 === $quantity_min ) {
 								$item_data[ 'quantity_max' ] = 1;
@@ -635,6 +696,24 @@ class WC_PB_Meta_Box_Product_Data {
 
 					} else {
 						$item_data[ 'quantity_max' ] = max( $quantity_min, 1 );
+					}
+
+					$quantity_max = $item_data[ 'quantity_max' ];
+
+					// Save default quantity.
+					if ( isset( $data[ 'quantity_default' ] ) && is_numeric( $data[ 'quantity_default' ] ) ) {
+
+						$quantity = absint( $data[ 'quantity_default' ] );
+
+						if ( $quantity >= $quantity_min && ( $quantity <= $quantity_max || '' === $quantity_max ) ) {
+							$item_data[ 'quantity_default' ] = $quantity;
+						} else {
+							self::add_admin_error( sprintf( __( 'The default quantity of <strong>%s</strong> was not valid and has been reset. Please enter an integer between the <strong>Min Quantity</strong> and <strong>Max Quantity</strong>.', 'woocommerce-product-bundles' ), $item_title ) );
+							$item_data[ 'quantity_default' ] = $quantity_min;
+						}
+
+					} else {
+						$item_data[ 'quantity_default' ] = $quantity_min;
 					}
 
 					// Save sale price data.
@@ -949,8 +1028,9 @@ class WC_PB_Meta_Box_Product_Data {
 			</div><?php
 		}
 
-		$item_quantity     = isset( $item_data[ 'quantity_min' ] ) ? absint( $item_data[ 'quantity_min' ] ) : 1;
-		$item_quantity_max = $item_quantity;
+		$item_quantity         = isset( $item_data[ 'quantity_min' ] ) ? absint( $item_data[ 'quantity_min' ] ) : 1;
+		$item_quantity_max     = $item_quantity;
+		$item_quantity_default = $item_quantity;
 
 		if ( isset( $item_data[ 'quantity_max' ] ) ) {
 			if ( '' !== $item_data[ 'quantity_max' ] ) {
@@ -958,6 +1038,10 @@ class WC_PB_Meta_Box_Product_Data {
 			} else {
 				$item_quantity_max = '';
 			}
+		}
+
+		if ( isset( $item_data[ 'quantity_default' ] ) ) {
+			$item_quantity_default = absint( $item_data[ 'quantity_default' ] ) ;
 		}
 
 		$is_priced_individually  = isset( $item_data[ 'priced_individually' ] ) && 'yes' === $item_data[ 'priced_individually' ] ? 'yes' : '';
@@ -980,17 +1064,25 @@ class WC_PB_Meta_Box_Product_Data {
 
 		<div class="quantity_min">
 			<div class="form-field">
-				<label><?php echo __( 'Quantity Min', 'woocommerce-product-bundles' ); ?></label>
+				<label><?php echo __( 'Min Quantity', 'woocommerce-product-bundles' ); ?></label>
 				<input type="number" class="item_quantity" size="6" name="bundle_data[<?php echo $loop; ?>][quantity_min]" value="<?php echo $item_quantity; ?>" step="any" min="0" />
-				<?php echo wc_help_tip( __( 'The minimum/default quantity of this bundled product.', 'woocommerce-product-bundles' ) ); ?>
+				<?php echo wc_help_tip( __( 'The minimum quantity of this bundled product.', 'woocommerce-product-bundles' ) ); ?>
 			</div>
 		</div>
 
 		<div class="quantity_max">
 			<div class="form-field">
-				<label><?php echo __( 'Quantity Max', 'woocommerce-product-bundles' ); ?></label>
+				<label><?php echo __( 'Max Quantity', 'woocommerce-product-bundles' ); ?></label>
 				<input type="number" class="item_quantity" size="6" name="bundle_data[<?php echo $loop; ?>][quantity_max]" value="<?php echo $item_quantity_max; ?>" step="any" min="0" />
 				<?php echo wc_help_tip( __( 'The maximum quantity of this bundled product. Leave the field empty for an unlimited maximum quantity.', 'woocommerce-product-bundles' ) ); ?>
+			</div>
+		</div>
+
+		<div class="quantity_default">
+			<div class="form-field">
+				<label><?php echo __( 'Default Quantity', 'woocommerce-product-bundles' ); ?></label>
+				<input type="number" class="item_quantity" size="6" name="bundle_data[<?php echo $loop; ?>][quantity_default]" value="<?php echo $item_quantity_default; ?>" step="any" min="0" />
+				<?php echo wc_help_tip( __( 'The default quantity of this bundled product.', 'woocommerce-product-bundles' ) ); ?>
 			</div>
 		</div>
 
@@ -1018,7 +1110,7 @@ class WC_PB_Meta_Box_Product_Data {
 			<div class="form-field">
 				<label><?php echo __( 'Discount %', 'woocommerce-product-bundles' ); ?></label>
 				<input type="text" class="input-text item_discount wc_input_decimal" size="5" name="bundle_data[<?php echo $loop; ?>][discount]" value="<?php echo $item_discount; ?>" />
-				<?php echo wc_help_tip( __( 'Discount applied to the regular price of this bundled product when Priced Individually is checked. If a Discount is applied to a bundled product which has a sale price defined, the sale price will be overridden.', 'woocommerce-product-bundles' ) ); ?>
+				<?php echo wc_help_tip( __( 'Discount applied to the price of this bundled product when Priced Individually is checked. If a Discount is applied to a bundled product which has a sale price defined, the sale price will be overridden.', 'woocommerce-product-bundles' ) ); ?>
 			</div>
 		</div><?php
 	}
@@ -1147,21 +1239,6 @@ class WC_PB_Meta_Box_Product_Data {
 				<?php echo sprintf( _x( 'Item ID: %s', 'bundled product id', 'woocommerce-product-bundles' ), $item_data[ 'bundled_item' ]->get_id() ); ?>
 			</span><?php
 		}
-	}
-
-	/**
-	 * Render top-level options on 'woocommerce_bundled_products_admin_config'.
-	 *
-	 * @since  5.8.0
-	 *
-	 * @param  WC_Product_Bundle  $product_bundle_object
-	 */
-	public static function bundled_products_admin_config( $product_bundle_object ) {
-
-		self::bundled_products_admin_config_layout( $product_bundle_object );
-		self::bundled_products_admin_config_form_location( $product_bundle_object );
-		self::bundled_products_admin_config_group_mode( $product_bundle_object );
-		self::bundled_products_admin_config_edit_in_cart( $product_bundle_object );
 	}
 
 	/**
@@ -1329,7 +1406,7 @@ class WC_PB_Meta_Box_Product_Data {
 								$stock_status_label = __( 'On backorder', 'woocommerce' );
 							}
 
-							include( 'views/html-bundled-product.php' );
+							include( WC_PB_ABSPATH . 'includes/admin/meta-boxes/views/html-bundled-product.php' );
 
 							$loop++;
 						}
@@ -1406,11 +1483,15 @@ class WC_PB_Meta_Box_Product_Data {
 	 * Add admin notices.
 	 *
 	 * @param  string  $content
-	 * @param  string  $type
+	 * @param  mixed   $args
 	 */
-	public static function add_admin_notice( $content, $type ) {
-
-		WC_PB_Admin_Notices::add_notice( $content, $type, true );
+	public static function add_admin_notice( $content, $args ) {
+		if ( is_array( $args ) && ! empty( $args[ 'dismiss_class' ] ) ) {
+			$args[ 'save_notice' ] = true;
+			WC_PB_Admin_Notices::add_dismissible_notice( $content, $args );
+		} else {
+			WC_PB_Admin_Notices::add_notice( $content, $args, true );
+		}
 	}
 
 	/**
@@ -1420,7 +1501,6 @@ class WC_PB_Meta_Box_Product_Data {
 	 * @return string
 	 */
 	public static function add_admin_error( $error ) {
-
 		self::add_admin_notice( $error, 'error' );
 	}
 
@@ -1430,12 +1510,14 @@ class WC_PB_Meta_Box_Product_Data {
 	|--------------------------------------------------------------------------
 	*/
 
+	public static function bundled_products_admin_config( $product_bundle_object ) {
+		_deprecated_function( __METHOD__ . '()', '6.4.0' );
+	}
 	public static function form_location_option( $product_bundle_object ) {
 		_deprecated_function( __METHOD__ . '()', '5.8.0', __CLASS__ . '::bundled_products_admin_config_form_location()' );
 		global $product_bundle_object;
 		return self::bundled_products_admin_config_form_location( $product_bundle_object );
 	}
-
 	public static function build_bundle_config( $post_id, $posted_bundle_data ) {
 		_deprecated_function( __METHOD__ . '()', '4.11.7', __CLASS__ . '::process_posted_bundle_data()' );
 		return self::process_posted_bundle_data( $posted_bundle_data, $post_id );

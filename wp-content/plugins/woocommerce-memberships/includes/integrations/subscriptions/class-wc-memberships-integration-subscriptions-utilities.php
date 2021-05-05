@@ -17,11 +17,11 @@
  * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @author    SkyVerge
- * @copyright Copyright (c) 2014-2019, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2021, SkyVerge, Inc. (info@skyverge.com)
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
-use SkyVerge\WooCommerce\PluginFramework\v5_3_1 as Framework;
+use SkyVerge\WooCommerce\PluginFramework\v5_10_6 as Framework;
 
 defined( 'ABSPATH' ) or exit;
 
@@ -71,25 +71,6 @@ class WC_Memberships_Integration_Subscriptions_Utilities {
 
 
 	/**
-	 * Adds a `subscription_id` column to CSV export headers.
-	 *
-	 * @internal
-	 *
-	 * @since 1.10.1
-	 * @deprecated since 1.12.3
-	 *
-	 * TODO remove this method by December 2019 or version 2.0.0, whichever comes first {FN 2018-12-26}
-	 *
-	 * @param array $headers
-	 * @return array
-	 */
-	public function export_user_membership_headers_add_subscription_id( array $headers ) {
-		_deprecated_function( 'WC_Memberships_Integration_Subscriptions_Utilities::export_user_membership_headers_add_subscription_id()', '1.12.3', 'WC_Memberships_Integration_Subscriptions_Utilities::add_user_memberships_export_subscription_headers()' );
-		return $this->add_user_memberships_export_subscription_headers( $headers );
-	}
-
-
-	/**
 	 * Adds a `subscription_id` and an `installment_plan` columns to CSV export headers.
 	 *
 	 * @internal
@@ -125,7 +106,7 @@ class WC_Memberships_Integration_Subscriptions_Utilities {
 	 * @param \WC_Memberships_User_Membership $user_membership the User Membership being exported
 	 * @return string
 	 */
-	public function export_user_membership_subscription_id( $value = '', $column, $user_membership ) {
+	public function export_user_membership_subscription_id( $value, $column, $user_membership ) {
 
 		$subscription_id = null;
 
@@ -151,7 +132,7 @@ class WC_Memberships_Integration_Subscriptions_Utilities {
 	 * @param \WC_Memberships_User_Membership $user_membership the User Membership being exported
 	 * @return string
 	 */
-	public function export_user_membership_installment_plan( $value = '', $column, $user_membership ) {
+	public function export_user_membership_installment_plan( $value, $column, $user_membership ) {
 
 		if ( 'installment_plan' === $column && $user_membership instanceof \WC_Memberships_User_Membership ) {
 
@@ -160,28 +141,6 @@ class WC_Memberships_Integration_Subscriptions_Utilities {
 		}
 
 		return $value;
-	}
-
-
-	/**
-	 * Adds a Subscription ID to be added to the data to be processed on a import with Memberships Import.
-	 *
-	 * @internal
-	 *
-	 * @since 1.10.1
-	 * @deprecated since 1.12.3
-	 *
-	 * TODO remove this method by December 2019 or version 2.0.0, whichever comes first {FN 2018-12-26}
-	 *
-	 * @param array $import_data data to import to create or update a membership
-	 * @param string $action create or merge a membership
-	 * @param array $columns the CSV columns
-	 * @param array $row the CSV row being processed
-	 * @return array data
-	 */
-	public function import_user_membership_data( array $import_data, $action, array $columns, array $row ) {
-		_deprecated_function( 'WC_Memberships_Integration_Subscriptions_Utilities::import_user_membership_data()', '1.12.3', 'WC_Memberships_Integration_Subscriptions_Utilities::parse_user_membership_subscription_import_data()' );
-		return $this->parse_user_membership_subscription_import_data( $import_data, $action, $columns, $row );
 	}
 
 
@@ -217,28 +176,6 @@ class WC_Memberships_Integration_Subscriptions_Utilities {
 
 		return $import_data;
 	}
-
-
-	/**
-	 * Imports the subscription ID for a User Membership when using Memberships Import.
-	 *
-	 * @internal
-	 *
-	 * @since 1.10.1
-	 * @deprecated since 1.12.3
-	 *
-	 * TODO remove this method by December 2019 or version 2.0.0, whichever comes first {FN 2018-12-26}
-	 *
-	 * @param \WC_Memberships_User_Membership $user_membership the user membership
-	 * @param string $action either 'create' or 'renew'
-	 * @param array $import_data import data
-	 * @param \stdClass $import_job import job
-	 */
-	public function import_user_membership_subscription_id( $user_membership, $action, $import_data, $import_job ) {
-		_deprecated_function( 'WC_Memberships_Integration_Subscriptions_Utilities::import_user_membership_subscription_id()', '1.12.3', 'WC_Memberships_Integration_Subscriptions_Utilities::import_user_membership_subscription_data()');
-		$this->import_user_membership_subscription_data( $user_membership, $action, $import_data, $import_job );
-	}
-
 
 
 	/**

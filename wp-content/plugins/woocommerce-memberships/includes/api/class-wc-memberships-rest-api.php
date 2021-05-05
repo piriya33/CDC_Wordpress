@@ -17,13 +17,13 @@
  * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @author    SkyVerge
- * @copyright Copyright (c) 2014-2019, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2021, SkyVerge, Inc. (info@skyverge.com)
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
 namespace SkyVerge\WooCommerce\Memberships;
 
-use SkyVerge\WooCommerce\PluginFramework\v5_3_1 as Framework;
+use SkyVerge\WooCommerce\PluginFramework\v5_10_6 as Framework;
 
 defined( 'ABSPATH' ) or exit;
 
@@ -40,14 +40,11 @@ class REST_API extends Framework\REST_API {
 	/** @var string[] supported API versions (matches namespaces) */
 	private $supports;
 
-	/** @var \SkyVerge\WooCommerce\Memberships\API\Webhooks instance */
-	private $webhooks;
-
 	/** @var \SkyVerge\WooCommerce\Memberships\API\Controller\Membership_Plans[] instances */
-	private $membership_plans = array();
+	private $membership_plans = [];
 
 	/** @var \SkyVerge\WooCommerce\Memberships\API\Controller\User_Memberships[] instances */
-	private $user_memberships = array();
+	private $user_memberships = [];
 
 
 	/**
@@ -61,16 +58,41 @@ class REST_API extends Framework\REST_API {
 
 		parent::__construct( $plugin );
 
-		// controller abstracts
+		$this->supports = [
+			'v2',
+			'v3',
+		];
+
+		if ( Framework\SV_WC_Plugin_Compatibility::is_wc_version_gte( '3.6.0' ) ) {
+			$this->includes();
+		} else {
+			add_action( 'rest_api_init', [ $this, 'includes' ], 5 );
+		}
+	}
+
+
+	/**
+	 * Loads handlers.
+	 *
+	 * @internal
+	 *
+	 * @since 1.13.0
+	 */
+	public function includes() {
+
+		// ensure that WC REST API base abstracts extended by Memberships are available also while processing webhooks
+		if (
+			     Framework\SV_WC_Plugin_Compatibility::is_wc_version_gte( '3.6.0' )
+			&&   Framework\SV_WC_Plugin_Compatibility::is_wc_version_lt( '3.7.0' )
+			&& ! did_action( 'rest_api_init' )
+			&& ! class_exists( 'WC_REST_Posts_Controller', false )
+		) {
+			wc()->api->rest_api_includes();
+		}
+
 		require_once( $this->get_plugin()->get_plugin_path() . '/includes/api/abstract-wc-memberships-rest-api-controller.php' );
 		require_once( $this->get_plugin()->get_plugin_path() . '/includes/api/abstract-wc-memberships-rest-api-membership-plans.php' );
 		require_once( $this->get_plugin()->get_plugin_path() . '/includes/api/abstract-wc-memberships-rest-api-user-memberships.php' );
-
-		$this->webhooks = $this->get_plugin()->load_class( '/includes/api/class-wc-memberships-webhooks.php', '\SkyVerge\WooCommerce\Memberships\API\Webhooks' );
-		$this->supports = array(
-			'v2',
-			'v3',
-		);
 	}
 
 
@@ -95,6 +117,31 @@ class REST_API extends Framework\REST_API {
 				$user_memberships_api->register_routes();
 			}
 		}
+	}
+
+
+	/**
+	 * Determines if the current request is for a WC REST API endpoint.
+	 *
+	 * @since 1.19.0-dev.1
+	 *
+	 * @return bool
+	 */
+	public function is_rest_api_request() {
+
+		if ( function_exists( 'WC' ) && is_callable( [ WC(), 'is_rest_api_request' ] ) ) {
+			return (bool) WC()->is_rest_api_request();
+		}
+
+		if ( empty( $_SERVER['REQUEST_URI'] ) || ! function_exists( 'rest_get_url_prefix' ) ) {
+			return false;
+		}
+
+		$rest_prefix         = trailingslashit( rest_get_url_prefix() );
+		$is_rest_api_request = false !== strpos( $_SERVER['REQUEST_URI'], $rest_prefix );
+
+		/* applies WooCommerce core filter */
+		return (bool) apply_filters( 'woocommerce_is_rest_api_request', $is_rest_api_request );
 	}
 
 
@@ -137,9 +184,14 @@ class REST_API extends Framework\REST_API {
 	private function get_instance( $which, $version ) {
 
 		$instance  = null;
-		$namespace = null === $version ? array_pop( $this->supports ) : strtolower( $version );
+		$namespace = null === $version ? end( $this->supports ) : strtolower( $version );
 
-		if ( $namespace && in_array( $namespace, $this->supports, true ) ) {
+		if ( in_array( $namespace, $this->supports, true ) && class_exists( 'WC_REST_Posts_Controller' ) ) {
+
+			// make sure abstract handlers are always available when needed
+			if ( ! class_exists( '\\SkyVerge\\WooCommerce\\Memberships\\API\\Controller' ) ) {
+				$this->includes();
+			}
 
 			if ( 'user_memberships' === $which ) {
 
@@ -194,19 +246,6 @@ class REST_API extends Framework\REST_API {
 
 
 	/**
-	 * Returns the webhooks handler instance.
-	 *
-	 * @since 1.11.0
-	 *
-	 * @return \SkyVerge\WooCommerce\Memberships\API\Webhooks
-	 */
-	public function get_webhooks() {
-
-		return $this->webhooks;
-	}
-
-
-	/**
 	 * Returns the data to add to the WooCommerce REST API System Status response.
 	 *
 	 * @see \SkyVerge\WooCommerce\Memberships\System_Status_Report::get_system_status_report_data() for extending the response data
@@ -217,7 +256,7 @@ class REST_API extends Framework\REST_API {
 	 */
 	protected function get_system_status_data() {
 
-		$status_data = array();
+		$status_data = [];
 
 		foreach ( System_Status_Report::get_system_status_report_data() as $export_key => $data ) {
 

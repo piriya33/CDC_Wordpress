@@ -17,11 +17,11 @@
  * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @author    SkyVerge
- * @copyright Copyright (c) 2014-2019, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2021, SkyVerge, Inc. (info@skyverge.com)
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
-use SkyVerge\WooCommerce\PluginFramework\v5_3_1 as Framework;
+use SkyVerge\WooCommerce\PluginFramework\v5_10_6 as Framework;
 
 defined( 'ABSPATH' ) or exit;
 
@@ -42,12 +42,6 @@ class WC_Memberships_Integration_Bookings {
 
 		// adjusts discounts
 		add_filter( 'booking_form_calculated_booking_cost', array( $this, 'adjust_booking_cost' ), 10, 3 );
-
-		if ( ! is_admin() ) {
-
-			// ensures a purchaseable booking product can be added to cart
-			add_action( 'woocommerce_booking_add_to_cart', array( $this, 'add_purchaseable_product_to_cart' ), 1 );
-		}
 	}
 
 
@@ -75,37 +69,14 @@ class WC_Memberships_Integration_Bookings {
 
 
 	/**
-	 * Removes add to cart button for nun-purchasable booking products.
-	 *
-	 * TODO: remove this once WC Bookings fixes their is_purchasable implementation {FN 2016-06-20}
+	 * Removes the add to cart button for non-purchasable bookable products.
 	 *
 	 * @since 1.6.2
+	 * @deprecated 1.17.2
 	 */
 	public function add_purchaseable_product_to_cart() {
-		global $wp_filter, $product;
 
-		// get the restrictions class
-		$restrictions = wc_memberships()->get_restrictions_instance();
-
-		if ( $restrictions && ! $restrictions->get_products_restrictions_instance()->product_is_purchasable( true, $product ) ) {
-
-			$tag = 'woocommerce_booking_add_to_cart';
-
-			if ( isset( $wp_filter[ $tag ] ) && ! empty( $wp_filter[ $tag ] ) ) {
-
-				foreach ( $wp_filter[ $tag ] as $priority => $filters ) {
-
-					foreach ( $filters as $key => $filter ) {
-
-						if ( is_array( $filter['function'] ) && is_a( $filter['function'][0], 'WC_Booking_Cart_Manager' ) && 'add_to_cart' === $filter['function'][1] ) {
-
-							unset( $wp_filter[ $tag ][ $priority ][ $key ] );
-							unset( $GLOBALS['merged_filters'][ $tag ] );
-						}
-					}
-				}
-			}
-		}
+		wc_deprecated_function( __METHOD__, '1.17.2' );
 	}
 
 

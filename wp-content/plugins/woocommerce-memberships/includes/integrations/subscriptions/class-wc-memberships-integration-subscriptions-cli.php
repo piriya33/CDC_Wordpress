@@ -17,11 +17,11 @@
  * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @author    SkyVerge
- * @copyright Copyright (c) 2014-2019, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2021, SkyVerge, Inc. (info@skyverge.com)
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
-use SkyVerge\WooCommerce\PluginFramework\v5_3_1 as Framework;
+use SkyVerge\WooCommerce\PluginFramework\v5_10_6 as Framework;
 
 /**
  * WooCommerce Memberships CLI Subscriptions extension.
@@ -224,7 +224,7 @@ class WC_Memberships_Integration_Subscriptions_CLI {
 				throw new \WC_CLI_Exception( 'woocommerce_memberships_subscription_not_found', sprintf( 'Subscription %s not found.', $data['subscription'] ) );
 			}
 
-			$data['subscription'] = (int) Framework\SV_WC_Order_Compatibility::get_prop( $subscription, 'id' );
+			$data['subscription'] = (int) $subscription->get_id();
 		}
 
 		return $data;

@@ -2,7 +2,7 @@
 /**
  * WC_PB_Background_Updater class
  *
- * @author   SomewhereWarm <info@somewherewarm.gr>
+ * @author   SomewhereWarm <info@somewherewarm.com>
  * @package  WooCommerce Product Bundles
  * @since    5.0.0
  */
@@ -147,7 +147,7 @@ class WC_PB_Background_Updater extends WP_Background_Process {
 	 */
 	protected function task( $callback ) {
 
-		include_once( 'wc-pb-update-functions.php' );
+		include_once( WC_PB_ABSPATH . 'includes/wc-pb-update-functions.php' );
 
 		if ( is_callable( $callback ) ) {
 

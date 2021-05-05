@@ -17,11 +17,11 @@
  * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @author    SkyVerge
- * @copyright Copyright (c) 2014-2019, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2021, SkyVerge, Inc. (info@skyverge.com)
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
-use SkyVerge\WooCommerce\PluginFramework\v5_3_1 as Framework;
+use SkyVerge\WooCommerce\PluginFramework\v5_10_6 as Framework;
 
 defined( 'ABSPATH' ) or exit;
 
@@ -46,14 +46,11 @@ class WC_Memberships_User_Membership_Ending_Soon_Email extends \WC_Memberships_U
 	 */
 	public function __construct() {
 
-		$this->id    = __CLASS__;
-		$this->title = __( 'Membership ending soon', 'woocommerce-memberships' );
+		$this->id            = __CLASS__;
+		$this->plan_editable = true;
 
-		$description  = __( 'Membership ending soon emails are sent to plan members when their membership is about to expire.', 'woocommerce-memberships' );
-		/* translators: Placeholders: %1$s - Opening <a> HTML tag, %2$s - Closing </a> HTML tag */
-		$description .= '<br>' . sprintf( __( 'You can edit the content of this email for %1$seach one of your plans%2$s individually.', 'woocommerce-memberships' ), '<a href="' . esc_url( admin_url( 'edit.php?post_type=wc_membership_plan' )  ) . '">', '</a>' );
-
-		$this->description = $description;
+		$this->title       = __( 'Membership ending soon', 'woocommerce-memberships' );
+		$this->description = __( 'Membership ending soon emails are sent to plan members when their membership is about to expire.', 'woocommerce-memberships' );
 		$this->subject     = __( 'Your {site_title} membership ends soon!', 'woocommerce-memberships');
 		$this->heading     = __( 'An update about your {membership_plan}', 'woocommerce-memberships');
 

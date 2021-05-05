@@ -1,6 +1,6 @@
 <?php
 /**
- * WooCommerce Customer/Order CSV Export
+ * WooCommerce Customer/Order/Coupon Export
  *
  * This source file is subject to the GNU General Public License v3.0
  * that is bundled with this package in the file license.txt.
@@ -12,23 +12,24 @@
  *
  * DISCLAIMER
  *
- * Do not edit or add to this file if you wish to upgrade WooCommerce Customer/Order CSV Export to newer
- * versions in the future. If you wish to customize WooCommerce Customer/Order CSV Export for your
+ * Do not edit or add to this file if you wish to upgrade WooCommerce Customer/Order/Coupon Export to newer
+ * versions in the future. If you wish to customize WooCommerce Customer/Order/Coupon Export for your
  * needs please refer to http://docs.woocommerce.com/document/ordercustomer-csv-exporter/
  *
- * @package     WC-Customer-Order-CSV-Export/Classes
  * @author      SkyVerge
- * @copyright   Copyright (c) 2012-2018, SkyVerge, Inc.
+ * @copyright   Copyright (c) 2015-2021, SkyVerge, Inc. (info@skyverge.com)
  * @license     http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
 defined( 'ABSPATH' ) or exit;
 
+use SkyVerge\WooCommerce\PluginFramework\v5_10_6 as Framework;
+
 /**
  * Customer/Order CSV Export Methods
  *
  * Handles loading export methods and provides utility functions for
- * checking if auto export methods are configurered, etc.
+ * checking if auto export methods are configured, etc.
  *
  * @since 4.0.0
  */
@@ -41,11 +42,15 @@ class WC_Customer_Order_CSV_Export_Methods {
 	 * In 4.0.0 added $export_type param, moved here from WC_Customer_Order_CSV_Export_Admin class
 	 *
 	 * @since 3.1.0
+	 * @deprecated 5.0.0
+	 *
 	 * @param string $method export method, either `ftp` or `http_post`
 	 * @param string $export_type export type, either `orders` or `customers`
 	 * @return bool
 	 */
-	public function method_settings_exist( $method, $export_type = 'orders' ) {
+	public function method_settings_exist( $method, $export_type = WC_Customer_Order_CSV_Export::EXPORT_TYPE_ORDERS ) {
+
+		wc_deprecated_function( __METHOD__, '5.0.0' );
 
 		// assume true
 		$exist  = true;
@@ -68,11 +73,15 @@ class WC_Customer_Order_CSV_Export_Methods {
 	 * Get the auto-export method and its label
 	 *
 	 * @since 4.0.0
+	 * @deprecated 5.0.0
+	 *
 	 * @param string $export_type One of `orders` or `customers`
 	 * @param bool $check_if_configured Optional. Defaults to true
 	 * @return string|null Export method or null if not configured
 	 */
 	public function get_auto_export_method( $export_type, $check_if_configured = true ) {
+
+		wc_deprecated_function( __METHOD__, '5.0.0' );
 
 		$export_method = get_option( 'wc_customer_order_csv_export_' . $export_type . '_auto_export_method' );
 
@@ -91,6 +100,8 @@ class WC_Customer_Order_CSV_Export_Methods {
 	/**
 	 * Returns the export method object
 	 *
+	 * In 5.0.0 added $args param
+	 *
 	 * In 4.0.0 added $export_type param, moved here from
 	 * WC_Customer_Order_CSV_Export_Handler class
 	 *
@@ -99,88 +110,72 @@ class WC_Customer_Order_CSV_Export_Methods {
 	 * @param string $method the export method, `download`, `ftp`, `http_post`, or `email`
 	 * @param string $export_type the export type, `orders` or `customers`
 	 * @param string $completed_at optional - a string representation of the completion date
+	 * @param string $output_type output type, either `csv` or `xml`
+	 * @param array $args settings for the export method
 	 * @return \WC_Customer_Order_CSV_Export_Method the export method
-	 * @throws \SV_WC_Plugin_Exception
+	 * @throws Framework\SV_WC_Plugin_Exception
 	 */
-	public function get_export_method( $method, $export_type, $completed_at = '' ) {
-
-		$path          = wc_customer_order_csv_export()->get_plugin_path() . '/includes/export-methods';
-		$option_prefix = 'wc_customer_order_csv_export_' . $export_type . '_';
-
-		require_once( $path. '/interface-wc-customer-order-csv-export-method.php' );
+	public function get_export_method( $method, $export_type, $completed_at = '', $output_type = WC_Customer_Order_CSV_Export::OUTPUT_TYPE_CSV, $args = [] ) {
 
 		// get the export method specified
 		switch ( $method ) {
 
 			case 'ftp':
-				// abstract FTP class
-				require_once( $path . '/ftp/abstract-wc-customer-order-csv-export-method-file-transfer.php' );
-
-				$ftp_path = get_option( $option_prefix . 'ftp_path', '' );
-				$ftp_path = $ftp_path ? trailingslashit( $ftp_path ) : '';
-
-				$args = array(
-					'ftp_server'       => get_option( $option_prefix . 'ftp_server' ),
-					'ftp_username'     => get_option( $option_prefix . 'ftp_username' ),
-					'ftp_password'     => get_option( $option_prefix . 'ftp_password', '' ),
-					'ftp_port'         => get_option( $option_prefix . 'ftp_port' ),
-					'ftp_path'         => $ftp_path,
-					'ftp_security'     => get_option( $option_prefix . 'ftp_security' ),
-					'ftp_passive_mode' => get_option( $option_prefix . 'ftp_passive_mode' ),
-				);
 
 				switch ( $args['ftp_security'] ) {
 
 					// FTP over SSH
 					case 'sftp' :
-						require_once( $path . '/ftp/class-wc-customer-order-csv-export-method-sftp.php' );
 						return new WC_Customer_Order_CSV_Export_Method_SFTP( $args );
 
 					// FTP with Implicit SSL
 					case 'ftp_ssl' :
-						require_once( $path . '/ftp/class-wc-customer-order-csv-export-method-ftp-implicit-ssl.php' );
 						return new WC_Customer_Order_CSV_Export_Method_FTP_Implicit_SSL( $args );
 
 					// FTP with explicit SSL/TLS *or* regular FTP
 					case 'ftps' :
 					case 'none' :
-						require_once( $path . '/ftp/class-wc-customer-order-csv-export-method-ftp.php' );
 						return new WC_Customer_Order_CSV_Export_Method_FTP( $args );
 				}
 				break;
 
 			case 'http_post':
-				require_once( $path . '/class-wc-customer-order-csv-export-method-http-post.php' );
 
-				$args = array(
-					'content_type'  => 'text/csv',
-					'http_post_url' => get_option( $option_prefix . 'http_post_url' ),
-				);
+				$args['content_type'] = WC_Customer_Order_CSV_Export::OUTPUT_TYPE_CSV === $output_type ? 'text/csv' : 'application/xml';
 
 				return new WC_Customer_Order_CSV_Export_Method_HTTP_POST( $args );
 
 			case 'email':
-				require_once( $path . '/class-wc-customer-order-csv-export-method-email.php' );
 
 				/**
-				 * Allow actors to change the email subject used for automated exports.
+				 * Filters the email subject used for automated exports to the given output type.
+				 *
+				 * @since 5.0.0
+				 *
+				 * @param string $subject subject text as set in the plugin settings
+				 */
+				$subject = apply_filters( "wc_customer_order_export_{$output_type}_email_subject", $args['email_subject'] );
+
+				/**
+				 * Filters the email subject used for automated exports.
 				 *
 				 * In 4.0.0 moved here from WC_Customer_Order_CSV_Export_Method_Email class
 				 *
-				 * @since 3.1.0
-				 * @param string the subject as set in the plugin settings
+				 * @since 5.0.0
+				 *
+				 * @param string $subject subject text as set in the plugin settings
 				 */
-				$subject = apply_filters( 'wc_customer_order_csv_export_email_subject', get_option( $option_prefix . 'email_subject' ) );
+				$subject = apply_filters( 'wc_customer_order_export_email_subject', $subject );
 
 				// create email message based on export type
 				switch ( $export_type ) {
 
-					case 'orders':
+					case WC_Customer_Order_CSV_Export::EXPORT_TYPE_ORDERS:
 						/* translators: Placeholders: %s - date */
 						$message = esc_html__( 'Order Export for %s', 'woocommerce-customer-order-csv-export' );
 					break;
 
-					case 'customers':
+					case WC_Customer_Order_CSV_Export::EXPORT_TYPE_CUSTOMERS:
 						/* translators: Placeholders: %s - date */
 						$message = esc_html__( 'Customer Export for %s', 'woocommerce-customer-order-csv-export' );
 					break;
@@ -191,33 +186,44 @@ class WC_Customer_Order_CSV_Export_Methods {
 					break;
 				}
 
-				$timestamp = '' !== $completed_at ? strtotime( $completed_at ) : current_time( 'timestamp' );
+				$timestamp = ! empty( $args['completed_at'] ) ? strtotime( $args['completed_at'] ) : current_time( 'timestamp' );
 				$message   = sprintf( $message, date_i18n( wc_date_format(), $timestamp ) );
 
-				$args = array(
-					'email_recipients' => get_option( $option_prefix . 'email_recipients' ),
+				$args = array_merge( $args, [
 					'email_subject'    => $subject,
 					'email_message'    => $message,
 					'email_id'         => 'wc_customer_order_csv_export',
-				);
+				] );
 
 				return new WC_Customer_Order_CSV_Export_Method_Email( $args );
 
 			default:
 
 				/**
-				 * Get Export Method
+				 * Fires when getting the export method for the given output type.
 				 *
-				 * Triggered when getting the export method. This is designed for
-				 * custom methods to hook in and load their class so it can be
+				 * This is designed for custom methods to hook in and load their class so it can be
+				 * returned and used.
+				 *
+				 * @since 5.0.0
+				 *
+				 * @param \WC_Customer_Order_CSV_Export_Methods $handler export methods instance
+				 */
+				do_action( "wc_customer_order_export_get_{$output_type}_export_method", $this );
+
+				/**
+				 * Fires when getting the export method.
+				 *
+				 * This is designed for custom methods to hook in and load their class so it can be
 				 * returned and used.
 				 *
 				 * In 4.0.0 moved here from WC_Customer_Order_CSV_Export_Handler class
 				 *
-				 * @since 3.4.0
-				 * @param \WC_Customer_Order_CSV_Export_Methods $this, export methods instance
+				 * @since 5.0.0
+				 *
+				 * @param \WC_Customer_Order_CSV_Export_Methods $handler export methods instance
 				 */
-				do_action( 'wc_customer_order_csv_export_get_export_method', $this );
+				do_action( 'wc_customer_order_export_get_export_method', $this );
 
 				$class_name = sprintf( 'WC_Customer_Order_CSV_Export_Custom_Method_%s', ucwords( strtolower( $method ) ) );
 
@@ -225,6 +231,70 @@ class WC_Customer_Order_CSV_Export_Methods {
 		}
 	}
 
+
+	/**
+	 * Gets the export method class name for the given method type.
+	 *
+	 * @since 5.0.0
+	 *
+	 * @param string $method_type the export method type
+	 * @param array $method_settings settings for the export method
+	 * @return string|false
+	 */
+	public function get_export_method_class( $method_type, array $method_settings = [] ) {
+
+		switch ( $method_type ) {
+
+			case 'ftp':
+
+				$ftp_security = ! empty( $method_settings['ftp_security'] ) ? $method_settings['ftp_security'] : null;
+
+				switch ( $ftp_security ) {
+
+					// FTP over SSH
+					case 'sftp' :
+						$class_name = 'WC_Customer_Order_CSV_Export_Method_SFTP';
+					break;
+
+					// FTP with Implicit SSL
+					case 'ftp_ssl' :
+						$class_name = 'WC_Customer_Order_CSV_Export_Method_FTP_Implicit_SSL';
+					break;
+
+					// FTP with explicit SSL/TLS *or* regular FTP
+					case 'ftps' :
+					case 'none' :
+					default:
+						$class_name = 'WC_Customer_Order_CSV_Export_Method_FTP';
+				}
+
+			break;
+
+			case 'http_post':
+				$class_name = 'WC_Customer_Order_CSV_Export_Method_HTTP_POST';
+			break;
+
+			case 'email':
+				$class_name = 'WC_Customer_Order_CSV_Export_Method_Email';
+			break;
+
+			default:
+				// TODO: should we fire wc_customer_order_export_get_export_method and wc_customer_order_export_get_{$output_type}_export_method here? {WV 2109-10-22}
+				$class_name = sprintf( 'WC_Customer_Order_CSV_Export_Custom_Method_%s', ucwords( strtolower( $method_type ) ) );
+		}
+
+		/**
+		 * Fires when getting the class name for the given export method type.
+		 *
+		 * @since 5.0.0
+		 *
+		 * @param string $class_name the class name for the export method
+		 * @param string $method_type the export method type
+		 */
+		$class_name = apply_filters( 'wc_customer_order_coupon_export_export_method_class_name', $class_name, $method_type );
+
+		return class_exists( $class_name ) && is_subclass_of( $class_name, WC_Customer_Order_CSV_Export_Method::class ) ? $class_name : false;
+	}
 
 
 	/**
@@ -245,12 +315,12 @@ class WC_Customer_Order_CSV_Export_Methods {
 		 * @since 4.0.0
 		 * @param array
 		 */
-		return apply_filters( 'wc_customer_order_csv_export_methods', array(
-			'local'     => __( 'locally', 'woocommerce-customer-order-xml-export-suite' ),
-			'ftp'       => __( 'via FTP', 'woocommerce-customer-order-csv-export' ),
-			'http_post' => __( 'via HTTP POST', 'woocommerce-customer-order-csv-export' ),
-			'email'     => __( 'via Email', 'woocommerce-customer-order-csv-export' ),
-		) );
+		return apply_filters( 'wc_customer_order_export_methods', [
+			'local'     => __( 'Locally', 'woocommerce-customer-order-xml-export-suite' ),
+			'ftp'       => __( 'FTP', 'woocommerce-customer-order-csv-export' ),
+			'http_post' => __( 'HTTP POST', 'woocommerce-customer-order-csv-export' ),
+			'email'     => __( 'Email', 'woocommerce-customer-order-csv-export' ),
+		] );
 	}
 
 
@@ -265,8 +335,12 @@ class WC_Customer_Order_CSV_Export_Methods {
 
 		$methods = $this->get_export_method_labels();
 
+		if ( ! empty( $methods[ $method ] ) ) {
+			$method = $methods[ $method ];
+		}
+
 		/* translators: Placeholders: %s - export method name, example: "via Email" */
-		return ! empty( $methods[ $method ] ) ? $methods[ $method ] : sprintf( __( 'via %s', 'woocommerce-customer-order-csv-export' ), $method );
+		return sprintf( __( 'via %s', 'woocommerce-customer-order-csv-export' ), $method );
 	}
 
 

@@ -17,11 +17,11 @@
  * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @author    SkyVerge
- * @copyright Copyright (c) 2014-2019, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2021, SkyVerge, Inc. (info@skyverge.com)
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
-use SkyVerge\WooCommerce\PluginFramework\v5_3_1 as Framework;
+use SkyVerge\WooCommerce\PluginFramework\v5_10_6 as Framework;
 
 defined( 'ABSPATH' ) or exit;
 
@@ -42,16 +42,27 @@ class WC_Memberships_Upgrade extends Framework\Plugin\Lifecycle {
 	 *
 	 * @since 1.11.0
 	 *
-	 * @param \WC_Memberships|\SkyVerge\WooCommerce\PluginFramework\v5_3_1\SV_WC_Plugin $wc_memberships
+	 * @param \WC_Memberships $wc_memberships
 	 */
-	public function __construct( \SkyVerge\WooCommerce\PluginFramework\v5_3_1\SV_WC_Plugin $wc_memberships ) {
+	public function __construct( $wc_memberships ) {
 
 		parent::__construct( $wc_memberships );
 
-		// lifecycle: activation
-		add_action( 'admin_init', array ( $this, 'activate' ) );
-		// lifecycle: deactivation
-		register_deactivation_hook( __FILE__, array( $this, 'deactivate' ) );
+		$this->upgrade_versions = [
+			'1.1.0',
+			'1.4.0',
+			'1.7.0',
+			'1.9.0',
+			'1.9.2',
+			'1.10.0',
+			'1.10.5',
+			'1.11.1',
+			'1.13.2',
+			'1.16.2',
+			'1.19.0',
+			'1.20.0',
+			'1.21.0',
+		];
 	}
 
 
@@ -82,8 +93,8 @@ class WC_Memberships_Upgrade extends Framework\Plugin\Lifecycle {
 			flush_rewrite_rules();
 
 			// flush caches
-			wc_memberships()->get_restrictions_instance()->delete_public_content_cache();
-			wc_memberships()->get_member_discounts_instance()->delete_excluded_member_discounts_products_cache();
+			$this->get_plugin()->get_restrictions_instance()->delete_public_content_cache();
+			$this->get_plugin()->get_member_discounts_instance()->delete_excluded_member_discounts_products_cache();
 		}
 	}
 
@@ -127,6 +138,12 @@ class WC_Memberships_Upgrade extends Framework\Plugin\Lifecycle {
 		// show a notice about restricted content to admin users as they get started
 		update_option( 'wc_memberships_admin_restricted_content_notice', 'yes' );
 
+		// default option to the my account members area endpoint
+		update_option( 'woocommerce_myaccount_members_area_endpoint', 'members-area' );
+
+		// default option to the my account profile fields area endpoint
+		update_option( 'woocommerce_myaccount_profile_fields_area_endpoint', 'my-profile' );
+
 		// load settings and install default values
 		include_once( WC()->plugin_path() . '/includes/admin/settings/class-wc-settings-page.php' );
 
@@ -159,6 +176,9 @@ class WC_Memberships_Upgrade extends Framework\Plugin\Lifecycle {
 
 			$wizard->delete_my_first_membership_plan_id();
 		}
+
+		// filesystem
+		self::create_files();
 	}
 
 
@@ -171,65 +191,84 @@ class WC_Memberships_Upgrade extends Framework\Plugin\Lifecycle {
 	 */
 	protected function upgrade( $installed_version ) {
 
-		if ( ! empty( $installed_version ) ) {
-
-			$update_path = array(
-				'1.1.0'  => 'update_to_1_1_0',
-				'1.4.0'  => 'update_to_1_4_0',
-				'1.7.0'  => 'update_to_1_7_0',
-				'1.9.0'  => 'update_to_1_9_0',
-				'1.9.2'  => 'update_to_1_9_2',
-				'1.10.0' => 'update_to_1_10_0',
-				'1.10.5' => 'update_to_1_10_5',
-				'1.11.0' => 'update_to_1_11_0',
-				'1.11.1' => 'update_to_1_11_1',
-			);
-
-			foreach ( $update_path as $update_to_version => $update_script ) {
-
-				if ( version_compare( $installed_version, $update_to_version, '<' ) ) {
-
-					$this->$update_script();
-
-					$this->get_plugin()->log( sprintf( 'Completed upgrade to version %1$s from version %2$s.', $update_to_version, $installed_version ) );
-				}
-			}
-		}
+		parent::upgrade( $installed_version );
 
 		$this->get_plugin()->add_rewrite_endpoints();
 
 		flush_rewrite_rules();
 
 		// flush caches
-		wc_memberships()->get_restrictions_instance()->delete_public_content_cache();
-		wc_memberships()->get_member_discounts_instance()->delete_excluded_member_discounts_products_cache();
+		$this->get_plugin()->get_restrictions_instance()->delete_public_content_cache();
+		$this->get_plugin()->get_member_discounts_instance()->delete_excluded_member_discounts_products_cache();
 	}
 
 
 	/**
-	 * Runs updates.
+	 * Creates files/directories.
 	 *
-	 * TODO remove this method by version 1.13.0 {FN 2018-07-06}
+	 * Based on WC_Install::create_files()
 	 *
-	 * @since 1.6.2
-	 * @deprecated since 1.11.0
-	 *
-	 * @param string $installed_version semver
+	 * @since 1.13.2
 	 */
-	public function run_update_scripts( $installed_version ) {
+	private static function create_files() {
 
-		_deprecated_function( 'WC_Memberships_Upgrade::run_update_scripts()', '1.11.0' );
+		self::create_access_protected_uploads_dir( 'memberships_csv_exports' );
+		self::create_access_protected_uploads_dir( 'memberships_profile_fields' );
+	}
 
-		$this->upgrade( $installed_version );
+
+	/**
+	 * Creates a directory with access protection files in WordPress uploads.
+	 *
+	 * Adds files to loosely protect a directory from access:
+	 * - empty "index.html"
+	 * - .htaccess with "deny from all"
+	 *
+	 * Helper method, do not open to public.
+	 *
+	 * @since 1.19.0
+	 *
+	 * @param string $dir
+	 */
+	public static function create_access_protected_uploads_dir( $dir ) {
+
+		// install files and folders for exported files and prevent hotlinking
+		$upload_dir = wp_upload_dir();
+		$directory  = trailingslashit( $upload_dir['basedir'] ) . $dir;
+
+		$files = [
+			[
+				'base'    => $directory,
+				'file'    => 'index.html',
+				'content' => '',
+			],
+			[
+				'base'    => $directory,
+				'file'    => '.htaccess',
+				'content' => 'deny from all',
+			],
+		];
+
+		foreach ( $files as $file ) {
+
+			if ( wp_mkdir_p( $file['base'] ) && ! file_exists( trailingslashit( $file['base'] ) . $file['file'] ) ) {
+
+				if ( $file_handle = @fopen( trailingslashit( $file['base'] ) . $file['file'], 'w' ) ) {
+
+					fwrite( $file_handle, $file['content'] );
+					fclose( $file_handle );
+				}
+			}
+		}
 	}
 
 
 	/**
 	 * Updates to v1.1.0
 	 *
-	 * @since 1.6.2
+	 * @since 1.13.0
 	 */
-	private function update_to_1_1_0() {
+	protected function upgrade_to_1_1_0() {
 
 		$all_rules = array();
 
@@ -262,9 +301,9 @@ class WC_Memberships_Upgrade extends Framework\Plugin\Lifecycle {
 	/**
 	 * Updates to v1.4.0
 	 *
-	 * @since 1.6.2
+	 * @since 1.13.0
 	 */
-	private function update_to_1_4_0() {
+	protected function upgrade_to_1_4_0() {
 
 		// product category custom restriction messages in settings options
 		update_option( 'wc_memberships_product_category_viewing_restricted_message', __( 'This product category can only be viewed by members. To view this category, sign up by purchasing {products}.', 'woocommerce-memberships' ) );
@@ -280,9 +319,9 @@ class WC_Memberships_Upgrade extends Framework\Plugin\Lifecycle {
 	 * The update won't unschedule the memberships expiration events to prevent possible timeouts or out of memory errors on very large installs while the wp cron array in option has to be updated several times.
 	 * However, such events won't have a callback attached anymore and thus gracefully disappear when they are naturally due.
 	 *
-	 * @since 1.7.0
+	 * @since 1.13.0
 	 */
-	private function update_to_1_7_0() {
+	protected function upgrade_to_1_7_0() {
 
 		// get all wp cron events to process the memberships expiry ones
 		$cron_events = get_option( 'cron' );
@@ -292,7 +331,7 @@ class WC_Memberships_Upgrade extends Framework\Plugin\Lifecycle {
 			return;
 		}
 
-		wc_memberships()->log( sprintf( 'Starting upgrade to 1.7.0 for %d events', count( $cron_events ) ) );
+		$this->get_plugin()->log( sprintf( 'Starting upgrade to 1.7.0 for %d events', count( $cron_events ) ) );
 
 		// process 50 events at one time, so in case of timeouts
 		// one can always resume the script by activating again...
@@ -339,9 +378,9 @@ class WC_Memberships_Upgrade extends Framework\Plugin\Lifecycle {
 	 * - Adds a "Details" members area section that became available in the new version.
 	 * - Compacts rules for all plans to improve plan handling and general performance.
 	 *
-	 * @since 1.9.0
+	 * @since 1.13.0
 	 */
-	private function update_to_1_9_0() {
+	protected function upgrade_to_1_9_0() {
 
 		$new_messages    = array();
 		$legacy_messages = array(
@@ -407,21 +446,21 @@ class WC_Memberships_Upgrade extends Framework\Plugin\Lifecycle {
 			delete_option( $legacy_option );
 		}
 
-		wc_memberships()->log( 'Moved all user messages into a single option' );
+		$this->get_plugin()->log( 'Moved all user messages into a single option' );
 
 		// add the new "Manage" membership members area section to existing plans
-		$plans = wc_memberships()->get_plans_instance()->get_membership_plans( array( 'post_status' => 'any' ) );
+		$plans = $this->get_plugin()->get_plans_instance()->get_membership_plans( array( 'post_status' => 'any' ) );
 
 		foreach ( $plans as $plan ) {
 			$plan->set_members_area_sections( array_merge( $plan->get_members_area_sections(), array( 'my-membership-details' ) ) );
 		}
 
-		wc_memberships()->log( 'Updated membership plans members area sections' );
+		$this->get_plugin()->log( 'Updated membership plans members area sections' );
 
 		// optimize the plan rules using the new rules compacting feature
-		wc_memberships()->get_rules_instance()->compact_rules();
+		$this->get_plugin()->get_rules_instance()->compact_rules();
 
-		wc_memberships()->log( 'Compacted membership plans rules' );
+		$this->get_plugin()->log( 'Compacted membership plans rules' );
 	}
 
 
@@ -430,9 +469,9 @@ class WC_Memberships_Upgrade extends Framework\Plugin\Lifecycle {
 	 *
 	 * Repair custom taxonomy product rules that may have been corrupted after saving in 1.9.0
 	 *
-	 * @since 1.9.2
+	 * @since 1.13.0
 	 */
-	private function update_to_1_9_2() {
+	protected function upgrade_to_1_9_2() {
 
 		$raw_rules = get_option( 'wc_memberships_rules' );
 
@@ -441,7 +480,7 @@ class WC_Memberships_Upgrade extends Framework\Plugin\Lifecycle {
 
 		// get all product rules
 		// non-taxonomy rules are filtered out below
-		$product_rules = wc_memberships()->get_rules_instance()->get_rules( array(
+		$product_rules = $this->get_plugin()->get_rules_instance()->get_rules( array(
 			'rule_type' => array(
 				'product_restriction',
 				'purchasing_discount',
@@ -464,23 +503,23 @@ class WC_Memberships_Upgrade extends Framework\Plugin\Lifecycle {
 
 			$term = get_term( current( $term_ids ) );
 
-			if ( ! is_wp_error( $term ) && $term && ! empty( $term->taxonomy ) ) {
+			if ( $term && ! empty( $term->taxonomy ) && ! is_wp_error( $term ) ) {
 
 				$product_rules[ $rule_key ]->set_content_type_name( $term->taxonomy );
 				continue;
 			}
 		}
 
-		wc_memberships()->get_rules_instance()->update_rules( $product_rules );
+		$this->get_plugin()->get_rules_instance()->update_rules( $product_rules );
 	}
 
 
 	/**
 	 * Updates to 1.10.0
 	 *
-	 * @since 1.10.0
+	 * @since 1.13.0
 	 */
-	private function update_to_1_10_0() {
+	protected function upgrade_to_1_10_0() {
 
 		delete_option( 'wc_memberships_rules_backup' );
 	}
@@ -489,9 +528,9 @@ class WC_Memberships_Upgrade extends Framework\Plugin\Lifecycle {
 	/**
 	 * Updates to 1.10.5
 	 *
-	 * @since 1.10.5
+	 * @since 1.13.0
 	 */
-	private static function update_to_1_10_5() {
+	protected function upgrade_to_1_10_5() {
 
 		delete_option( 'wc_memberships_product_category_viewing_restricted_message' );
 		delete_option( 'wc_memberships_product_category_viewing_restricted_message_no_products' );
@@ -501,9 +540,9 @@ class WC_Memberships_Upgrade extends Framework\Plugin\Lifecycle {
 	/**
 	 * Updates to 1.11.0
 	 *
-	 * @since 1.11.0
+	 * @since 1.13.0
 	 */
-	private function update_to_1_11_0() {
+	protected function upgrade_to_1_11_0() {
 
 		// skips the wizard if not a new installation
 		if ( $wizard = $this->get_plugin()->get_setup_wizard_handler() ) {
@@ -514,14 +553,142 @@ class WC_Memberships_Upgrade extends Framework\Plugin\Lifecycle {
 
 
 	/**
-	 * Updates to 1.11.1
+	 * Updates to version 1.13.2
 	 *
-	 * @since 1.11.1
+	 * - Creates .htaccess and index.php files in the exports directory.
+	 * - Renames a WP Cron event and moves it into an Action Scheduler task.
+	 *
+	 * @since 1.13.2
 	 */
-	private function update_to_1_11_1() {
+	protected function upgrade_to_1_13_2() {
 
-		// add a flag to display a notice about Jilt advanced emails on upgrade
-		update_option( 'wc_memberships_show_advanced_emails_notice', 'yes' );
+		self::create_files();
+
+		$legacy_wp_cron_hook = 'wc_memberships_activate_delayed_user_memberships';
+		$new_as_task_hook    = 'wc_memberships_activate_delayed_user_membership';
+
+		if ( $next_scheduled = wp_next_scheduled( $legacy_wp_cron_hook ) ) {
+
+			wp_unschedule_event( $next_scheduled, $legacy_wp_cron_hook );
+
+			as_schedule_single_action(
+				// schedules activation of all delayed memberships 10 minutes after the upgrade routine is complete (may be worth to give a little time in case the user is updating multiple plugins, etc.)
+				max( 0, $next_scheduled, current_time( 'timestamp', true ) ) + ( 10 * MINUTE_IN_SECONDS ),
+				$new_as_task_hook,
+				[],
+				'woocommerce-memberships'
+			);
+		}
+	}
+
+
+	/**
+	 * Updates to version 1.16.2
+	 *
+	 * Logs whether the installation was found running Action Scheduler when 1.16.0 was deployed bundling AS 3.0.0-beta.
+	 *
+	 * TODO remove this upgrade script when requiring WooCommerce 4.0+ and delete the option "wc_memberships_use_as_3_0_0" {FN 2020-11-17}
+	 *
+	 * @since 1.16.2
+	 *
+	 * @param null|string $upgrading_from version installed
+	 */
+	protected function upgrade_to_1_16_2( $upgrading_from = null ) {
+
+		if ( in_array( $upgrading_from, [ '1.16.0', '1.16.1' ], false ) && 'yes' === get_option( 'wc_memberships_use_as_3_0_0' ) ) {
+			$this->get_plugin()->log( 'Action Scheduler 3.0.0 will be used after Memberships 1.16.0 update' );
+		} else {
+			update_option( 'wc_memberships_use_as_3_0_0', 'no' );
+		}
+	}
+
+
+	/**
+	 * Updates to version 1.19.0
+	 *
+	 * @since 1.19.0
+	 */
+	protected function upgrade_to_1_19_0() {
+
+		self::create_access_protected_uploads_dir( 'memberships_profile_fields' );
+
+		update_option( 'woocommerce_myaccount_profile_fields_area_endpoint', 'my-profile' );
+	}
+
+
+	/**
+	 * Updates to version 1.20.0
+	 *
+	 * @since 1.20.0
+	 */
+	protected function upgrade_to_1_20_0() {
+
+		// Jilt Promotions flags
+		delete_option( 'wc_memberships_show_advanced_emails_notice' );
+		delete_option( 'wc_memberships_show_jilt_cross_sell_notice' );
+	}
+
+
+	/**
+	 * Updates to version 1.21.0
+	 *
+	 * @since 1.21.0
+	 */
+	protected function upgrade_to_1_21_0() {
+
+		$found_plugins = [];
+		$free_add_ons  = [
+			'directory-shortcode',
+			'excerpt-length',
+			'role-handler',
+			'sensei-member-area',
+		];
+
+		foreach ( $free_add_ons as $i => $free_add_on ) {
+
+			$prefix   = 'woocommerce-memberships';
+			$dirname  = "{$prefix}-{$free_add_on}";
+			$filename = $dirname . '.php';
+
+			if ( $this->get_plugin()->is_plugin_active( $filename ) ) {
+
+				// deactivate the plugin if found active
+				$found_plugins[] = $dirname . '/' . $filename;
+
+				// special handling for role handler: it will be enabled for users that migrated
+				if ( 'role-handler' === $free_add_on ) {
+					update_option( 'wc_memberships_assign_user_roles_to_members', 'yes' );
+				}
+
+			} elseif ( ! $this->get_plugin()->is_plugin_installed( $filename ) ) {
+
+				// do not track the plugin if not installed
+				unset( $free_add_ons[ $i ] );
+			}
+		}
+
+		if ( ! empty( $found_plugins ) ) {
+
+			require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+
+			deactivate_plugins( $found_plugins );
+		}
+
+		if ( ! empty( $free_add_ons ) ) {
+			update_option( 'wc_memberships_installed_free_add_ons_migrated', $free_add_ons );
+		}
+
+		// migrates Memberships Role Handler settings
+		update_option( 'wc_memberships_active_member_user_role',   get_option( 'wc_memberships_role_handler_member_role', 'customer' ) );
+		update_option( 'wc_memberships_inactive_member_user_role', get_option( 'wc_memberships_role_handler_inactive_role', 'customer' ) );
+		delete_option( 'wc_memberships_role_handler_member_role' );
+		delete_option( 'wc_memberships_role_handler_inactive_role' );
+
+		// cleanup: remove version options
+		delete_option( 'wc_memberships_role_handler_version' );
+		delete_option( 'wc_memberships_directory_shortcode_version' );
+		delete_option( 'wc_memberships_sensei_member_area_version' );
+		delete_option( 'wc_memberships_excerpt_length_version' );
 	}
 
 

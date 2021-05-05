@@ -1,6 +1,6 @@
 <?php
 /**
- * WooCommerce Customer/Order CSV Export
+ * WooCommerce Customer/Order/Coupon Export
  *
  * This source file is subject to the GNU General Public License v3.0
  * that is bundled with this package in the file license.txt.
@@ -12,17 +12,18 @@
  *
  * DISCLAIMER
  *
- * Do not edit or add to this file if you wish to upgrade WooCommerce Customer/Order CSV Export to newer
- * versions in the future. If you wish to customize WooCommerce Customer/Order CSV Export for your
+ * Do not edit or add to this file if you wish to upgrade WooCommerce Customer/Order/Coupon Export to newer
+ * versions in the future. If you wish to customize WooCommerce Customer/Order/Coupon Export for your
  * needs please refer to http://docs.woocommerce.com/document/ordercustomer-csv-exporter/
  *
- * @package     WC-Customer-Order-CSV-Export/Data-Stores/Database
  * @author      SkyVerge
- * @copyright   Copyright (c) 2012-2018, SkyVerge, Inc.
+ * @copyright   Copyright (c) 2015-2021, SkyVerge, Inc. (info@skyverge.com)
  * @license     http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
 defined( 'ABSPATH' ) or exit;
+
+use SkyVerge\WooCommerce\PluginFramework\v5_10_6 as Framework;
 
 /**
  * Customer/Order CSV Export Database Stream Iterator
@@ -59,13 +60,13 @@ class WC_Customer_Order_CSV_Export_Database_Stream_Iterator implements Iterator 
 	 * @since 4.5.0
 	 *
 	 * @param \WC_Customer_Order_CSV_Export_Export $export the export object
-	 * @throws \SV_WC_Plugin_Exception if export is invalid
+	 * @throws Framework\SV_WC_Plugin_Exception if export is invalid
 	 */
 	public function __construct( $export ) {
 
 		if ( ! $export || ! $export instanceof WC_Customer_Order_CSV_Export_Export ) {
 
-			throw new SV_WC_Plugin_Exception( __( 'Unable to find export for iteration', 'woocommerce-customer-order-csv-export' ) );
+			throw new Framework\SV_WC_Plugin_Exception( __( 'Unable to find export for iteration', 'woocommerce-customer-order-csv-export' ) );
 		}
 
 		$this->export     = $export;

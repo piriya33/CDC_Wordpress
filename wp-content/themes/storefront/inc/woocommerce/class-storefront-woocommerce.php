@@ -26,23 +26,18 @@ if ( ! class_exists( 'Storefront_WooCommerce' ) ) :
 			add_action( 'after_setup_theme', array( $this, 'setup' ) );
 			add_filter( 'body_class', array( $this, 'woocommerce_body_class' ) );
 			add_action( 'wp_enqueue_scripts', array( $this, 'woocommerce_scripts' ), 20 );
-			add_filter( 'woocommerce_enqueue_styles', '__return_empty_array' );
 			add_filter( 'woocommerce_output_related_products_args', array( $this, 'related_products_args' ) );
 			add_filter( 'woocommerce_product_thumbnails_columns', array( $this, 'thumbnail_columns' ) );
 			add_filter( 'woocommerce_breadcrumb_defaults', array( $this, 'change_breadcrumb_delimiter' ) );
-
-			if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '2.5', '<' ) ) {
-				add_action( 'wp_footer', array( $this, 'star_rating_script' ) );
-			}
-
-			if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '3.3', '<' ) ) {
-				add_filter( 'loop_shop_per_page', array( $this, 'products_per_page' ) );
-			}
 
 			// Integrations.
 			add_action( 'storefront_woocommerce_setup', array( $this, 'setup_integrations' ) );
 			add_action( 'wp_enqueue_scripts', array( $this, 'woocommerce_integrations_scripts' ), 99 );
 			add_action( 'wp_enqueue_scripts', array( $this, 'add_customizer_css' ), 140 );
+
+			// Instead of loading Core CSS files, we only register the font families.
+			add_filter( 'woocommerce_enqueue_styles', '__return_empty_array' );
+			add_filter( 'wp_enqueue_scripts', array( $this, 'add_core_fonts' ), 130 );
 		}
 
 		/**
@@ -57,8 +52,10 @@ if ( ! class_exists( 'Storefront_WooCommerce' ) ) :
 		 */
 		public function setup() {
 			add_theme_support(
-				'woocommerce', apply_filters(
-					'storefront_woocommerce_args', array(
+				'woocommerce',
+				apply_filters(
+					'storefront_woocommerce_args',
+					array(
 						'single_image_width'    => 416,
 						'thumbnail_image_width' => 324,
 						'product_grid'          => array(
@@ -93,6 +90,41 @@ if ( ! class_exists( 'Storefront_WooCommerce' ) ) :
 		 */
 		public function add_customizer_css() {
 			wp_add_inline_style( 'storefront-woocommerce-style', $this->get_woocommerce_extension_css() );
+		}
+
+		/**
+		 * Add CSS in <head> to register WooCommerce Core fonts.
+		 *
+		 * @since 3.4.0
+		 * @return void
+		 */
+		public function add_core_fonts() {
+			$fonts_url = plugins_url( '/woocommerce/assets/fonts/' );
+			wp_add_inline_style(
+				'storefront-woocommerce-style',
+				'@font-face {
+				font-family: star;
+				src: url(' . $fonts_url . '/star.eot);
+				src:
+					url(' . $fonts_url . '/star.eot?#iefix) format("embedded-opentype"),
+					url(' . $fonts_url . '/star.woff) format("woff"),
+					url(' . $fonts_url . '/star.ttf) format("truetype"),
+					url(' . $fonts_url . '/star.svg#star) format("svg");
+				font-weight: 400;
+				font-style: normal;
+			}
+			@font-face {
+				font-family: WooCommerce;
+				src: url(' . $fonts_url . '/WooCommerce.eot);
+				src:
+					url(' . $fonts_url . '/WooCommerce.eot?#iefix) format("embedded-opentype"),
+					url(' . $fonts_url . '/WooCommerce.woff) format("woff"),
+					url(' . $fonts_url . '/WooCommerce.ttf) format("truetype"),
+					url(' . $fonts_url . '/WooCommerce.svg#WooCommerce) format("svg");
+				font-weight: 400;
+				font-style: normal;
+			}'
+			);
 		}
 
 		/**
@@ -139,7 +171,7 @@ if ( ! class_exists( 'Storefront_WooCommerce' ) ) :
 
 			$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 
-			wp_enqueue_style( 'storefront-woocommerce-style', get_template_directory_uri() . '/assets/css/woocommerce/woocommerce.css', array(), $storefront_version );
+			wp_enqueue_style( 'storefront-woocommerce-style', get_template_directory_uri() . '/assets/css/woocommerce/woocommerce.css', array( 'storefront-style', 'storefront-icons' ), $storefront_version );
 			wp_style_add_data( 'storefront-woocommerce-style', 'rtl', 'replace' );
 
 			wp_register_script( 'storefront-header-cart', get_template_directory_uri() . '/assets/js/woocommerce/header-cart' . $suffix . '.js', array(), $storefront_version, true );
@@ -149,33 +181,6 @@ if ( ! class_exists( 'Storefront_WooCommerce' ) ) :
 
 			if ( ! class_exists( 'Storefront_Sticky_Add_to_Cart' ) && is_product() ) {
 				wp_register_script( 'storefront-sticky-add-to-cart', get_template_directory_uri() . '/assets/js/sticky-add-to-cart' . $suffix . '.js', array(), $storefront_version, true );
-			}
-
-			if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '3.3', '<' ) ) {
-				wp_enqueue_style( 'storefront-woocommerce-legacy', get_template_directory_uri() . '/assets/css/woocommerce/woocommerce-legacy.css', array(), $storefront_version );
-				wp_style_add_data( 'storefront-woocommerce-legacy', 'rtl', 'replace' );
-			}
-		}
-
-		/**
-		 * Star rating backwards compatibility script (WooCommerce <2.5).
-		 *
-		 * @since 1.6.0
-		 */
-		public function star_rating_script() {
-			if ( is_product() ) {
-				?>
-			<script type="text/javascript">
-				var starsEl = document.querySelector( '#respond p.stars' );
-				if ( starsEl ) {
-					starsEl.addEventListener( 'click', function( event ) {
-						if ( event.target.tagName === 'A' ) {
-							starsEl.classList.add( 'selected' );
-						}
-					} );
-				}
-			</script>
-				<?php
 			}
 		}
 
@@ -188,7 +193,8 @@ if ( ! class_exists( 'Storefront_WooCommerce' ) ) :
 		 */
 		public function related_products_args( $args ) {
 			$args = apply_filters(
-				'storefront_related_products_args', array(
+				'storefront_related_products_args',
+				array(
 					'posts_per_page' => 3,
 					'columns'        => 3,
 				)
@@ -211,16 +217,6 @@ if ( ! class_exists( 'Storefront_WooCommerce' ) ) :
 			}
 
 			return intval( apply_filters( 'storefront_product_thumbnail_columns', $columns ) );
-		}
-
-		/**
-		 * Products per page
-		 *
-		 * @return integer number of products
-		 * @since  1.0.0
-		 */
-		public function products_per_page() {
-			return intval( apply_filters( 'storefront_products_per_page', 12 ) );
 		}
 
 		/**
@@ -413,9 +409,9 @@ if ( ! class_exists( 'Storefront_WooCommerce' ) ) :
 			global $storefront;
 
 			if ( ! is_object( $storefront ) ||
-				 ! property_exists( $storefront, 'customizer' ) ||
-				 ! is_a( $storefront->customizer, 'Storefront_Customizer' ) ||
-				 ! method_exists( $storefront->customizer, 'get_storefront_theme_mods' ) ) {
+				! property_exists( $storefront, 'customizer' ) ||
+				! is_a( $storefront->customizer, 'Storefront_Customizer' ) ||
+				! method_exists( $storefront->customizer, 'get_storefront_theme_mods' ) ) {
 				return apply_filters( 'storefront_customizer_woocommerce_extension_css', '' );
 			}
 

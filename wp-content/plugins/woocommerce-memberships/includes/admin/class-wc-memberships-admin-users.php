@@ -17,11 +17,11 @@
  * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @author    SkyVerge
- * @copyright Copyright (c) 2014-2019, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2021, SkyVerge, Inc. (info@skyverge.com)
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
-use SkyVerge\WooCommerce\PluginFramework\v5_3_1 as Framework;
+use SkyVerge\WooCommerce\PluginFramework\v5_10_6 as Framework;
 
 defined( 'ABSPATH' ) or exit;
 
@@ -166,7 +166,7 @@ class WC_Memberships_Admin_Users {
 						<?php
 						/* translators: Placeholder: %s - Membership Plan(s) */
 						printf( __( 'This user is a member of %s.', 'woocommerce-memberships' ),
-							wc_memberships_list_items( $plan_links, __( 'and', 'woocommerce-memberships' ) )
+							wc_memberships_list_items( $plan_links, 'and' )
 						); ?>
 						<?php if ( $can_edit_user_memberships ) : ?>
 							<br><br><a class="button" href="<?php echo esc_url( admin_url( 'post-new.php?post_type=wc_user_membership&user=' . $user->ID ) ); ?>"><?php esc_html_e( 'Add another membership.', 'woocommerce-memberships' ); ?></a>

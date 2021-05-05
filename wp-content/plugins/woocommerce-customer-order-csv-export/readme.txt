@@ -1,9 +1,9 @@
-=== WooCommerce Customer/Order CSV Export ===
+=== WooCommerce Customer/Order/Coupon Export ===
 Author: skyverge
 Tags: woocommerce
-Requires at least: 4.4
-Tested up to: 5.0.3
-Requires PHP: 5.2
+Requires at least: 5.2
+Tested up to: 5.7
+Requires PHP: 7.0
 
 Easily download customers & orders in CSV format and automatically export FTP or HTTP POST on a recurring schedule
 

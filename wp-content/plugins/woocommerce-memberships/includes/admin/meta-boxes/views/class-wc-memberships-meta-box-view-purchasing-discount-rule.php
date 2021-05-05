@@ -17,11 +17,11 @@
  * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @author    SkyVerge
- * @copyright Copyright (c) 2014-2019, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2021, SkyVerge, Inc. (info@skyverge.com)
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
-use SkyVerge\WooCommerce\PluginFramework\v5_3_1 as Framework;
+use SkyVerge\WooCommerce\PluginFramework\v5_10_6 as Framework;
 
 defined( 'ABSPATH' ) or exit;
 
@@ -153,56 +153,23 @@ class WC_Memberships_Meta_Box_View_Purchasing_Discount_Rule extends \WC_Membersh
 					<td class="purchasing-discount-objects objects-column">
 						<p class="form-field">
 							<label for="_purchasing_discount_rules<?php echo esc_attr( $index ); ?>_object_ids"><?php esc_html_e( 'Title', 'woocommerce-memberships' ); ?>:</label>
-
-							<?php if ( Framework\SV_WC_Plugin_Compatibility::is_wc_version_gte_3_0() ) : ?>
-
-								<select
-									name="_purchasing_discount_rules[<?php echo esc_attr( $index ); ?>][object_ids][]"
-									id="_purchasing_discount_rules_<?php echo esc_attr( $index ); ?>_object_ids"
-									class="wc-memberships-object-search js-object-ids"
-									style="width: 90%;"
-									multiple="multiple"
-									data-placeholder="<?php esc_attr_e( 'Search&hellip; or leave blank to apply to all', 'woocommerce-memberships' ); ?>"
-									data-action="<?php echo esc_attr( \WC_Memberships_Admin_Membership_Plan_Rules::get_rule_object_search_action( $this->rule ) ); ?>"
-									<?php if ( ! $this->rule->current_user_can_edit() ) : ?>disabled<?php endif; ?>>
-									<?php if ( $this->rule->has_objects() ) : ?>
-										<?php foreach ( $this->rule->get_object_ids() as $object_id ) : ?>
-											<?php if ( $object_label = \WC_Memberships_Admin_Membership_Plan_Rules::get_rule_object_label( $this->rule, $object_id, true ) ) : ?>
-												<option value="<?php echo $object_id; ?>" selected><?php echo esc_html( $object_label ); ?></option>
-											<?php endif; ?>
-										<?php endforeach; ?>
-									<?php endif; ?>
-								</select>
-
-							<?php else : ?>
-
-								<input
-									type="hidden"
-									name="_purchasing_discount_rules[<?php echo esc_attr( $index ); ?>][object_ids]"
-									id="_purchasing_discount_rules_<?php echo esc_attr( $index ); ?>_object_ids"
-									class="wc-memberships-object-search js-object-ids"
-									style="width: 90%;"
-									data-placeholder="<?php esc_attr_e( 'Search&hellip; or leave blank to apply to all', 'woocommerce-memberships' ); ?>"
-									data-action="<?php echo esc_attr( \WC_Memberships_Admin_Membership_Plan_Rules::get_rule_object_search_action( $this->rule ) ); ?>"
-									data-multiple="true"
-									data-selected="<?php
-										$json_ids = array();
-
-										if ( $this->rule->has_objects() ) {
-											foreach ( $this->rule->get_object_ids() as $object_id ) {
-												if ( $object_label = \WC_Memberships_Admin_Membership_Plan_Rules::get_rule_object_label( $this->rule, $object_id, true ) ) {
-													$json_ids[ $object_id ] = wp_kses_post( html_entity_decode( $object_label ) );
-												}
-											}
-										}
-
-										echo esc_attr( wp_json_encode( $json_ids ) );?>"
-									value="<?php echo esc_attr( implode( ',', array_keys( $json_ids ) ) ); ?>"
-									<?php if ( ! $this->rule->current_user_can_edit() ) : ?>disabled<?php endif; ?>
-								/>
-
-							<?php endif; ?>
-
+							<select
+								name="_purchasing_discount_rules[<?php echo esc_attr( $index ); ?>][object_ids][]"
+								id="_purchasing_discount_rules_<?php echo esc_attr( $index ); ?>_object_ids"
+								class="wc-memberships-object-search js-object-ids"
+								style="width: 90%;"
+								multiple="multiple"
+								data-placeholder="<?php esc_attr_e( 'Search&hellip; or leave blank to apply to all', 'woocommerce-memberships' ); ?>"
+								data-action="<?php echo esc_attr( \WC_Memberships_Admin_Membership_Plan_Rules::get_rule_object_search_action( $this->rule ) ); ?>"
+								<?php if ( ! $this->rule->current_user_can_edit() ) : ?>disabled<?php endif; ?>>
+								<?php if ( $this->rule->has_objects() ) : ?>
+									<?php foreach ( $this->rule->get_object_ids() as $object_id ) : ?>
+										<?php if ( $object_label = \WC_Memberships_Admin_Membership_Plan_Rules::get_rule_object_label( $this->rule, $object_id, true ) ) : ?>
+											<option value="<?php echo $object_id; ?>" selected><?php echo esc_html( $object_label ); ?></option>
+										<?php endif; ?>
+									<?php endforeach; ?>
+								<?php endif; ?>
+							</select>
 						</p>
 					</td>
 
@@ -224,6 +191,7 @@ class WC_Memberships_Meta_Box_View_Purchasing_Discount_Rule extends \WC_Membersh
 								name="_purchasing_discount_rules[<?php echo esc_attr( $index ); ?>][membership_plan_id]"
 								id="_purchasing_discount_rules_<?php echo esc_attr( $index ); ?>_membership_plan_id"
 								class="<?php echo '__INDEX__' !== $index ? 'wc-enhanced-select' : ''; ?> membership-plan wide"
+								style="width:90%;"
 								<?php if ( ! $this->rule->current_user_can_edit() || ! $this->rule->current_context_allows_editing() ) : ?>disabled<?php endif; ?>>
 								<?php foreach ( $this->meta_box->get_membership_plan_options() as $id => $label ) : ?>
 									<option value="<?php echo esc_attr( $id ); ?>" <?php selected( $id, $this->rule->get_membership_plan_id() ); ?>><?php echo esc_html( $label ); ?></option>

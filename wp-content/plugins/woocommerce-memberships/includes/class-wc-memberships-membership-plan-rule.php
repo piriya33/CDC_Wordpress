@@ -17,11 +17,11 @@
  * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @author    SkyVerge
- * @copyright Copyright (c) 2014-2019, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2021, SkyVerge, Inc. (info@skyverge.com)
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
-use SkyVerge\WooCommerce\PluginFramework\v5_3_1 as Framework;
+use SkyVerge\WooCommerce\PluginFramework\v5_10_6 as Framework;
 
 defined( 'ABSPATH' ) or exit;
 
@@ -30,6 +30,8 @@ defined( 'ABSPATH' ) or exit;
  *
  * This class represents an individual Membership Plan rule.
  * Rules can be of content or product restriction type or purchasing discount type.
+ *
+ * @TODO consider having this object extend {@see \WC_Data} and use a custom option data store {unfulvio 2021-05-03}
  *
  * @since 1.0.0
  */
@@ -42,7 +44,7 @@ class WC_Memberships_Membership_Plan_Rule {
 	/** @var int the ID of the plan the rule belongs to */
 	private $membership_plan_id = 0;
 
-	/** @var null (yes/no) whether the rule is active (for example discounts) */
+	/** @var string (yes/no) whether the rule is active (for example discounts) */
 	private $active = '';
 
 	/** @var string the rule type: e.g. `content_restriction`, `product_restriction`, `purchasing_discount` */
@@ -75,6 +77,9 @@ class WC_Memberships_Membership_Plan_Rule {
 	/** @var string (yes/no) whether the rule excludes subscriptions trial periods */
 	private $access_schedule_exclude_trial = '';
 
+	/** @var array associative array of key-values for handling additional rule meta data */
+	private $meta_data = [];
+
 
 	/**
 	 * Sets up the rule object when instantiated with arguments to be turned into properties.
@@ -85,7 +90,7 @@ class WC_Memberships_Membership_Plan_Rule {
 	 */
 	public function __construct( $data = array() ) {
 
-		$data = wp_parse_args( (array) $data, $this->get_default_data() );
+		$data = (array) wp_parse_args( (array) $data, $this->get_default_data() );
 
 		foreach ( $data as $property => $value ) {
 			if ( property_exists( $this, $property ) ) {
@@ -96,7 +101,7 @@ class WC_Memberships_Membership_Plan_Rule {
 
 
 	/**
-	 * Returns the rule default data.
+	 * Gets the rule default data.
 	 *
 	 * @since 1.9.0
 	 *
@@ -105,33 +110,35 @@ class WC_Memberships_Membership_Plan_Rule {
 	private function get_default_data() {
 		global $post;
 
-		return array(
+		return [
 			'id'                            => '',
 			'membership_plan_id'            => $post && 'wc_membership_plan' === get_post_type( $post ) ? (int) $post->ID : 0,
 			'active'                        => '',
 			'rule_type'                     => '',
 			'content_type'                  => '',
 			'content_type_name'             => '',
-			'object_ids'                    => array(),
+			'object_ids'                    => [],
 			'discount_type'                 => '',
 			'discount_amount'               => '',
 			'access_type'                   => '',
 			'access_schedule'               => 'immediate',
 			'access_schedule_exclude_trial' => '',
-		);
+			'meta_data'                     => [],
+		];
 	}
 
 
 	/**
-	 * Returns the the whole rule data as associative array.
+	 * Gets the the whole rule data as associative array.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @return array associative array
 	 */
 	public function get_raw_data() {
 
 		$defaults = $this->get_default_data();
-		$raw_data = array();
+		$raw_data = [];
 
 		foreach ( array_keys( $defaults ) as $key ) {
 			if ( property_exists( $this, $key ) ) {
@@ -638,7 +645,7 @@ class WC_Memberships_Membership_Plan_Rule {
 			}
 		}
 
-		return array_unique( array_merge( $children, call_user_func_array( 'array_merge', $descendants ) ) );
+		return array_unique( array_merge( $children, array_merge( ...$descendants ) ) );
 	}
 
 
@@ -669,6 +676,8 @@ class WC_Memberships_Membership_Plan_Rule {
 	/**
 	 * Checks if the access schedule does not apply for subscription trials.
 	 *
+	 * @TODO this method should be removed in favor of {@see get_meta()} within the Subscriptions integration {unfulvio 2021-04-29}
+	 *
 	 * @since 1.9.0
 	 *
 	 * @return null|bool
@@ -681,6 +690,8 @@ class WC_Memberships_Membership_Plan_Rule {
 	/**
 	 * Set the rule access schedule TO NOT APPLY during subscriptions trials.
 	 *
+	 * @TODO this method should be removed in favor of {@see set_meta()} within the Subscriptions integration {unfulvio 2021-04-29}
+	 *
 	 * @since 1.9.0
 	 */
 	public function set_access_schedule_exclude_trial() {
@@ -691,6 +702,8 @@ class WC_Memberships_Membership_Plan_Rule {
 
 	/**
 	 * Checks if the access schedule does apply for subscription trials.
+	 *
+	 * @TODO this method should be removed in favor of {@see get_meta()} within the Subscriptions integration {unfulvio 2021-04-29}
 	 *
 	 * @since 1.9.0
 	 *
@@ -703,6 +716,8 @@ class WC_Memberships_Membership_Plan_Rule {
 
 	/**
 	 * Sets the rule access schedule TO APPLY during subscriptions trials.
+	 *
+	 * @TODO this method should be removed in favor of {@see set_meta()} within the Subscriptions integration {unfulvio 2021-04-29}
 	 *
 	 * @since 1.9.0
 	 */
@@ -929,12 +944,65 @@ class WC_Memberships_Membership_Plan_Rule {
 	 * Sets the rule as inactive.
 	 *
 	 * @since 1.9.0
-	 *
-	 * @return bool
 	 */
 	public function set_inactive() {
 
-		return $this->active = 'no';
+		$this->active = 'no';
+	}
+
+
+	/**
+	 * Gets all meta data for the rule.
+	 *
+	 * @since 1.22.0
+	 *
+	 * @return array
+	 */
+	public function get_meta_data() : array {
+
+		return $this->meta_data;
+	}
+
+
+	/**
+	 * Gets a meta data value for the rule.
+	 *
+	 * @since 1.22.0
+	 *
+	 * @param string $key meta data key
+	 * @param mixed|null $default optional default value to return if meta data key is not present, default null
+	 * @return mixed|null
+	 */
+	public function get_meta( string $key, $default = null ) {
+
+		return $this->meta_data[ $key ] ?? $default;
+	}
+
+
+	/**
+	 * Sets a meta data key-value for the rule.
+	 *
+	 * @since 1.22.0
+	 *
+	 * @param string $key meta data key
+	 * @param mixed $value meta data value
+	 */
+	public function set_meta( string $key, $value ) {
+
+		$this->meta_data[ $key ] = $value;
+	}
+
+
+	/**
+	 * Deletes a meta data key from the rule.
+	 *
+	 * @since 1.22.0
+	 *
+	 * @param string $key
+	 */
+	public function delete_meta( string $key ) {
+
+		unset( $this->meta_data[ $key ] );
 	}
 
 
@@ -1104,6 +1172,7 @@ class WC_Memberships_Membership_Plan_Rule {
 	 * Checks if this rule applies to a key-value combination
 	 *
 	 * @since 1.0.0
+	 *
 	 * @param string $key Content type key
 	 * @param string $value Optional. Value. Defaults to null.
 	 * @return bool True if applies to the specified key-value combination, false otherwise
@@ -1183,133 +1252,6 @@ class WC_Memberships_Membership_Plan_Rule {
 		}
 
 		return $allow_edit;
-	}
-
-
-
-	/**
-	 * Handler of deprecated methods.
-	 *
-	 * TODO remove magic overrides by version 1.13.0 or higher {FN 2017-06-06}
-	 *
-	 * Originally (version 1.0.0) this was used to perform CRUD operations on the rule object.
-	 * In version 1.9.0 these have been refactored into explicit methods and the override turned into a deprecated methods handler.
-	 *
-	 * @since 1.0.0
-	 * @deprecated since 1.9.0
-	 *
-	 * @param string $method called method
-	 * @param string|array $args method arguments
-	 * @return mixed
-	 */
-	public function __call( $method, $args ) {
-
-		/** @deprecated since 1.9.0 - remove by version 1.13.0 */
-		if ( 0 === strpos( $method, 'get_' ) ) {
-
-			if ( 'get_access_schedule_exclude_trial' === $method ) {
-
-				_deprecated_function( "WC_Memberships_Membership_Plan_Rule::{$method}()", '1.9.0', 'WC_Memberships_Membership_Plan_Rule::is_access_schedule_excluding_trial()' );
-
-				return $this->is_access_schedule_excluding_trial();
-
-			} else {
-
-				$data = $this->get_raw_data();
-				$key  = str_replace( 'get_', '', $method );
-
-				if ( isset( $data[ $key ] ) ) {
-
-					_deprecated_function( "WC_Memberships_Membership_Plan_Rule::{$method}", '1.9.0', 'get_active' === $method ? 'WC_Memberships_Membership_Plan_Rule::is_active()' : null );
-
-					return $data[ $key ];
-				}
-			}
-
-		/** @deprecated since 1.9.0 - remove by version 1.13.0 */
-		} elseif ( isset( $args[0] ) && 0 === strpos( $method, 'set_' ) ) {
-
-			$key = str_replace( 'set_', '', $method );
-
-			if ( property_exists( $this, $key ) ) {
-
-				_deprecated_function( "WC_Memberships_Membership_Plan_Rule::{$method}", '1.9.0' );
-
-				$this->$key = $args[0];
-
-				return null;
-			}
-
-		/** @deprecated since 1.9.0 - remove by version 1.13.0 */
-		} elseif ( 0 === strpos( $method, 'has_' ) ) {
-
-			$data = $this->get_raw_data();
-			$key  = str_replace( 'has_', '', $method );
-
-			if ( isset( $data[ $key ] ) ) {
-
-				_deprecated_function( "WC_Memberships_Membership_Plan_Rule::{$method}()", '1.9.0' );
-
-				return ! empty( $data[ $key ] );
-			}
-
-		/** @deprecated since 1.9.0 - remove by version 1.13.0 */
-		} elseif ( 'applies_to_multiple_objects' === $method ) {
-
-			_deprecated_function( "WC_Memberships_Membership_Plan_Rule::{$method}()", '1.9.0' );
-
-			$object_ids = $this->get_object_ids();
-
-			return is_array( $object_ids ) && count( $object_ids ) > 1;
-
-		/** @deprecated since 1.9.0 - remove by version 1.13.0 */
-		} elseif ( 'applies_to_single_object' === $method ) {
-
-			_deprecated_function( "WC_Memberships_Membership_Plan_Rule::{$method}()", '1.9.0' );
-
-			$object_id  = isset( $args[0] ) ? $args[0] : $args;
-			$object_ids = $this->get_object_ids();
-
-			return is_array( $object_ids ) && count( $object_ids ) === 1 && ( $object_id ? $this->applies_to( 'object_id', $object_id ) : true );
-
-		/** @deprecated since 1.9.0 - remove by version 1.13.0 */
-		} elseif ( 'content_type_exists' === $method ) {
-
-			_deprecated_function( "WC_Memberships_Membership_Plan_Rule::{$method}()", '1.9.0', 'WC_Memberships_Rules::rule_content_type_exists()' );
-
-			return wc_memberships()->get_rules_instance()->rule_content_type_exists( $this );
-
-		/** @deprecated since 1.9.0 - remove by version 1.13.0 */
-		} elseif ( 'get_object_label' === $method ) {
-
-			_deprecated_function( "WC_Memberships_Membership_Plan_Rule::{$method}()", '1.9.0', 'WC_Memberships_Admin_Membership_Plan_Rules::get_rule_object_label()' );
-
-			$label = null;
-			$admin = wc_memberships()->get_admin_instance();
-
-			if ( $admin && class_exists( 'WC_Memberships_Admin_Membership_Plan_Rules' ) ) {
-				$label = \WC_Memberships_Admin_Membership_Plan_Rules::get_rule_object_label( $this, isset( $args[0] ) ? $args[0] : $args );
-			}
-
-			return $label;
-
-		/** @deprecated since 1.9.0 - remove by version 1.13.0 */
-		} elseif ( 'get_object_search_action_name' === $method ) {
-
-			_deprecated_function( "WC_Memberships_Membership_Plan_Rule::{$method}()", '1.9.0', 'WC_Memberships_Admin_Membership_Plan_Rules::get_rule_object_search_action()' );
-			$name  = '';
-			$admin = wc_memberships()->get_admin_instance();
-
-			if ( $admin && class_exists( 'WC_Memberships_Admin_Membership_Plan_Rules' ) ) {
-				$name = \WC_Memberships_Admin_Membership_Plan_Rules::get_rule_object_search_action( $this );
-			}
-
-			return $name;
-		}
-
-		// you're probably doing it wrong
-		trigger_error( 'Call to undefined method ' . __CLASS__ . '::' . $method . '()', E_USER_ERROR );
-		return null;
 	}
 
 

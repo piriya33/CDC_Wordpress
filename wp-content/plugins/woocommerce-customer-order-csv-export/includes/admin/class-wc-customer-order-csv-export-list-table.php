@@ -1,6 +1,6 @@
 <?php
 /**
- * WooCommerce Customer/Order CSV Export
+ * WooCommerce Customer/Order/Coupon Export
  *
  * This source file is subject to the GNU General Public License v3.0
  * that is bundled with this package in the file license.txt.
@@ -12,13 +12,12 @@
  *
  * DISCLAIMER
  *
- * Do not edit or add to this file if you wish to upgrade WooCommerce Customer/Order CSV Export to newer
- * versions in the future. If you wish to customize WooCommerce Customer/Order CSV Export for your
+ * Do not edit or add to this file if you wish to upgrade WooCommerce Customer/Order/Coupon Export to newer
+ * versions in the future. If you wish to customize WooCommerce Customer/Order/Coupon Export for your
  * needs please refer to http://docs.woocommerce.com/document/ordercustomer-csv-exporter/
  *
- * @package     WC-Customer-Order-CSV-Export/Admin
  * @author      SkyVerge
- * @copyright   Copyright (c) 2012-2018, SkyVerge, Inc.
+ * @copyright   Copyright (c) 2015-2021, SkyVerge, Inc. (info@skyverge.com)
  * @license     http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
@@ -38,6 +37,12 @@ if ( ! class_exists( 'WP_List_Table' ) ) {
 class WC_Customer_Order_CSV_Export_List_Table extends WP_List_Table {
 
 
+	/** @var string specific export type to list */
+	private $export_type;
+
+	/** @var string specific method type to list */
+	private $method_type;
+
 	/** @var array associative array of translated export status labels */
 	private $statuses;
 
@@ -49,21 +54,70 @@ class WC_Customer_Order_CSV_Export_List_Table extends WP_List_Table {
 	 * @param array $args
 	 * @return \WC_Customer_Order_CSV_Export_List_Table
 	 */
-	public function __construct( $args = array() ) {
+	public function __construct( $args = [] ) {
 
-		parent::__construct( array(
+		parent::__construct( [
 			'singular' => 'export',
 			'plural'   => 'exports',
 			'ajax'     => false
-		) );
+		] );
 
-		$this->statuses = array(
+		$this->statuses = [
 			'queued'     => esc_html__( 'Queued', 'woocommerce-customer-order-csv-export' ),
 			'processing' => esc_html__( 'Processing', 'woocommerce-customer-order-csv-export' ),
 			'completed'  => esc_html__( 'Completed', 'woocommerce-customer-order-csv-export' ),
 			'failed'     => esc_html__( 'Failed', 'woocommerce-customer-order-csv-export' ),
 			'paused'     => esc_html__( 'Paused', 'woocommerce-customer-order-csv-export' )
-		);
+		];
+	}
+
+
+	/**
+	 * Outputs the filter dropdowns and button.
+	 *
+	 * @since 5.0.0
+	 *
+	 * @param string $which the tablenav this is for -- 'top' or 'bottom'
+	 */
+	protected function extra_tablenav( $which ) {
+
+		if ( 'top' === $which ) {
+
+			?>
+			<div class="alignleft actions">
+
+				<label class="screen-reader-text" for="filter-by-export-type"><?php esc_html_e( 'Filter by export type', 'woocommerce-customer-order-csv-export' ); ?></label>
+				<select id="filter-by-export-type" name="export_type">
+					<option value=""><?php esc_html_e( 'Show all types', 'woocommerce-customer-order-csv-export' ); ?></option>
+
+					<?php foreach ( wc_customer_order_csv_export()->get_export_types() as $type => $label ) : ?>
+
+						<option value="<?php echo esc_attr( $type ); ?>" <?php selected( $type, $this->get_export_type() ); ?>>
+							<?php echo esc_html( $label ); ?>
+						</option>
+
+					<?php endforeach; ?>
+				</select>
+
+				<label class="screen-reader-text" for="filter-by-method"><?php esc_html_e( 'Filter by method', 'woocommerce-customer-order-csv-export' ); ?></label>
+				<select id="filter-by-method" name="method_type">
+					<option value=""><?php esc_html_e( 'Show all transfer methods', 'woocommerce-customer-order-csv-export' ); ?></option>
+					<option value="download"><?php esc_html_e( 'Manual', 'woocommerce-customer-order-csv-export' ); ?></option>
+
+					<?php foreach ( wc_customer_order_csv_export()->get_methods_instance()->get_export_method_labels() as $type => $label ) : ?>
+
+						<option value="<?php echo esc_attr( $type ); ?>" <?php selected( $type, $this->get_method_type() ); ?>>
+							<?php echo esc_html( $label ); ?>
+						</option>
+
+					<?php endforeach; ?>
+				</select>
+
+				<?php submit_button( _x( 'Filter', 'button text', 'woocommerce-customer-order-csv-export' ), '', 'filter_action', false ); ?>
+
+			</div>
+			<?php
+		}
 	}
 
 
@@ -75,32 +129,29 @@ class WC_Customer_Order_CSV_Export_List_Table extends WP_List_Table {
 	 */
 	public function get_columns() {
 
-		$columns = array(
+		$columns = [
 			'cb'              => '<input type="checkbox" />',
 			'export_status'   => '<span class="status_head tips" data-tip="' . esc_attr__( 'Export Status', 'woocommerce-customer-order-csv-export' ) . '">' . esc_attr__( 'Export Status', 'woocommerce-customer-order-csv-export' ) . '</span>',
 			'transfer_status' => '<span class="transfer_status_head tips" data-tip="' . esc_attr__( 'Transfer Status', 'woocommerce-customer-order-csv-export' ) . '">' . esc_attr__( 'Transfer Status', 'woocommerce-customer-order-csv-export' ) . '</span>',
 			'export_type'     => esc_html__( 'Type', 'woocommerce-customer-order-csv-export' ),
-			'invocation'      => esc_html__( 'Invocation', 'woocommerce-customer-order-csv-export' ),
+			'output_type'     => esc_html__( 'Output', 'woocommerce-customer-order-csv-export' ),
+			'invocation'      => esc_html__( 'Export name', 'woocommerce-customer-order-csv-export' ),
 			'filename'        => esc_html__( 'File name', 'woocommerce-customer-order-csv-export' ),
 			'export_date'     => esc_html__( 'Date', 'woocommerce-customer-order-csv-export' ),
 			'file_actions'    => esc_html__( 'Actions', 'woocommerce-customer-order-csv-export' ),
-		);
+		];
 
 		$auto_exports_enabled = false;
+		$automations          = \SkyVerge\WooCommerce\CSV_Export\Automations\Automation_Factory::get_automations();
 
-		foreach ( array( 'orders', 'customers', 'coupons' ) as $export_type ) {
+		foreach ( $automations as $key => $automation ) {
 
-			if ( $auto_export_method = wc_customer_order_csv_export()->get_methods_instance()->get_auto_export_method( $export_type ) ) {
-
-				if ( 'local' !== $auto_export_method ) {
-					$auto_exports_enabled = true;
-					break;
-				}
+			if ( 'local' === $automation->get_method_type() ) {
+				unset( $automations[ $key ] );
 			}
 		}
 
-		// hide transfer status column if no auto exports have been configured
-		if ( ! $auto_exports_enabled ) {
+		if ( empty( $automations ) ) {
 			unset( $columns['transfer_status'] );
 		}
 
@@ -112,7 +163,7 @@ class WC_Customer_Order_CSV_Export_List_Table extends WP_List_Table {
 		 * @param array $columns the export list columns
 		 * @param bool $auto_exports_enabled true if automated exports are enabled
 		 */
-		return apply_filters( 'wc_customer_order_csv_export_admin_export_list_columns', $columns, $auto_exports_enabled );
+		return apply_filters( 'wc_customer_order_export_admin_export_list_columns', $columns, $auto_exports_enabled );
 	}
 
 
@@ -137,7 +188,7 @@ class WC_Customer_Order_CSV_Export_List_Table extends WP_List_Table {
 
 			case 'export_status':
 
-				$status = 'processing' === $export->get_status() && wc_customer_order_csv_export()->is_batch_processing_enabled() ? 'paused' : $export->get_status();
+				$status = 'processing' === $export->get_status() && $export->is_batch_enabled() ? 'paused' : $export->get_status();
 
 				$label = $this->statuses[ $status ];
 
@@ -161,7 +212,24 @@ class WC_Customer_Order_CSV_Export_List_Table extends WP_List_Table {
 
 			case 'invocation':
 
-				return 'auto' === $export->get_invocation() ? esc_html__( 'Auto', 'woocommerce-customer-order-csv-export' ) : esc_html__( 'Manual', 'woocommerce-customer-order-csv-export' );
+				if ( 'auto' === $export->get_invocation() ) {
+
+					if ( $export->get_automation_id() && $automation = \SkyVerge\WooCommerce\CSV_Export\Automations\Automation_Factory::get_automation( $export->get_automation_id() ) ) {
+
+						$url   = \SkyVerge\WooCommerce\CSV_Export\Admin\Automations::get_automation_edit_url( $automation->get_id() );
+						$value = $url ? '<a href="' . esc_url( $url ) . '">' . esc_html( $automation->get_name() ) . '</a>' : $automation->get_name();
+
+					} else {
+
+						$value = __( 'Auto', 'woocommerce-customer-order-csv-export' );
+					}
+
+				} else {
+
+					$value = esc_html__( 'Manual', 'woocommerce-customer-order-csv-export' );
+				}
+
+				return $value;
 
 			break;
 
@@ -173,18 +241,26 @@ class WC_Customer_Order_CSV_Export_List_Table extends WP_List_Table {
 
 			case 'export_type':
 
-				if ( 'orders' === $export->get_type() ) {
+				if ( WC_Customer_Order_CSV_Export::EXPORT_TYPE_ORDERS === $export->get_type() ) {
 
 					return esc_html__( 'Orders', 'woocommerce-customer-order-csv-export' );
 
-				} elseif ( 'customers' === $export->get_type() ) {
+				} elseif ( WC_Customer_Order_CSV_Export::EXPORT_TYPE_CUSTOMERS === $export->get_type() ) {
 
 					return esc_html__( 'Customers', 'woocommerce-customer-order-csv-export' );
 
-				} elseif ( 'coupons' === $export->get_type() ) {
+				} elseif ( WC_Customer_Order_CSV_Export::EXPORT_TYPE_COUPONS === $export->get_type() ) {
 
 					return esc_html__( 'Coupons', 'woocommerce-customer-order-csv-export' );
 				}
+			break;
+
+			case 'output_type':
+
+				$output_types = wc_customer_order_csv_export()->get_output_types();
+
+				return esc_html( ! empty( $output_types[ $export->get_output_type() ] ) ? $output_types[ $export->get_output_type() ] : $export->get_output_type() );
+
 			break;
 
 			case 'export_date':
@@ -202,7 +278,7 @@ class WC_Customer_Order_CSV_Export_List_Table extends WP_List_Table {
 				 * @param string $column_name the column name
 				 * @param \stdClass $export the export job
 				 */
-				return apply_filters( 'wc_customer_order_csv_export_admin_export_list_custom_column', '', $column_name, $export );
+				return apply_filters( 'wc_customer_order_export_admin_export_list_custom_column', '', $column_name, $export );
 		}
 	}
 
@@ -224,66 +300,68 @@ class WC_Customer_Order_CSV_Export_List_Table extends WP_List_Table {
 
 		?><p>
 			<?php
-				$actions = array();
+				$actions = [];
 
 				if ( 'completed' === $export->get_status() ) {
 
 					$download_url = wp_nonce_url( admin_url(), 'download-export' );
 
-					$download_url = add_query_arg( array(
-						'download_exported_csv_file' => 1,
-						'export_id'                  => $export->get_id(),
-					), $download_url );
+					$download_url = add_query_arg( [
+						'download_exported_file' => 1,
+						'export_id'              => $export->get_id(),
+					], $download_url );
 
-					$actions['download'] = array(
+					$actions['download'] = [
 						'url'    => $download_url,
 						'name'   => esc_html__( 'Download', 'woocommerce-customer-order-csv-export' ),
 						'action' => 'download'
-					);
+					];
 
-					if ( $auto_export_method = wc_customer_order_csv_export()->get_methods_instance()->get_auto_export_method( $export->get_type() ) ) {
+					if ( $export->get_automation_id() && $automation = \SkyVerge\WooCommerce\CSV_Export\Automations\Automation_Factory::get_automation( $export->get_automation_id() ) ) {
 
-						if ( 'local' !== $auto_export_method ) {
+						$method = $automation->get_method_type();
 
-							$label = wc_customer_order_csv_export()->get_methods_instance()->get_export_method_label( $auto_export_method );
+						if ( 'local' !== $method ) {
+
+							$label = wc_customer_order_csv_export()->get_methods_instance()->get_export_method_label( $method );
 
 							$transfer_url = wp_nonce_url( admin_url(), 'transfer-export' );
-							$transfer_url = add_query_arg( array(
-								'transfer_csv_export' => 1,
-								'export_id'           => $export->get_id(),
-							), $transfer_url );
+							$transfer_url = add_query_arg( [
+								'transfer_export' => 1,
+								'export_id'       => $export->get_id(),
+							], $transfer_url );
 
-							$actions['transfer'] = array(
+							$actions['transfer'] = [
 								'url'    => $transfer_url,
 								/* translators: Placeholders: %s - via [method], full example: Send via Email */
 								'name'   => sprintf( esc_html__( 'Send %s', 'woocommerce-customer-order-csv-export' ), $label ),
-								'action' => 'email' === $auto_export_method ? 'email' : 'transfer',
-							);
+								'action' => 'email' === $method ? 'email' : 'transfer',
+							];
 						}
 					}
 
-				} elseif ( 'processing' === $export->get_status() && wc_customer_order_csv_export()->is_batch_processing_enabled() ) {
+				} elseif ( 'processing' === $export->get_status() && $export->is_batch_enabled() ) {
 
-					$actions['resume'] = array(
+					$actions['resume'] = [
 						'name'   => __( 'Resume', 'woocommerce-customer-order-csv-export' ),
 						'action' => 'resume',
 						'url'    => '#',
-					);
+					];
 				}
 
 				$delete_url = wp_nonce_url( admin_url(), 'delete-export' );
-				$delete_url = add_query_arg( array(
+				$delete_url = add_query_arg( [
 					'delete_csv_export' => 1,
 					'export_id'         => $export->get_id(),
-				), $delete_url );
+				], $delete_url );
 
-				$done = in_array( $export->get_status(), array( 'completed', 'failed' ), true );
+				$done = in_array( $export->get_status(), [ 'completed', 'failed' ], true );
 
-				$actions['delete'] = array(
+				$actions['delete'] = [
 					'url'    => $delete_url,
 					'name'   => $done ? esc_html__( 'Delete', 'woocommerce-customer-order-csv-export' ) : esc_html__( 'Cancel', 'woocommerce-customer-order-csv-export' ),
 					'action' => $done ? 'delete' : 'cancel',
-				);
+				];
 
 				/**
 				 * Allow actors to change the available actions for an export in Exports List
@@ -292,7 +370,7 @@ class WC_Customer_Order_CSV_Export_List_Table extends WP_List_Table {
 				 * @param array $actions
 				 * @param stdClass $export
 				 */
-				$actions = apply_filters( 'wc_customer_order_csv_export_admin_export_actions', $actions, $export );
+				$actions = apply_filters( 'wc_customer_order_export_admin_export_actions', $actions, $export );
 
 				foreach ( $actions as $action ) {
 					printf( '<a class="button tips %1$s" href="%2$s" data-tip="%3$s" data-export-id="%4$s">%5$s</a>', esc_attr( $action['action'] ), esc_url( $action['url'] ), esc_attr( $action['name'] ), esc_attr( $export->get_id() ), esc_attr( $action['name'] ) );
@@ -341,13 +419,53 @@ class WC_Customer_Order_CSV_Export_List_Table extends WP_List_Table {
 	 */
 	public function prepare_items() {
 
-		// set column headers manually, see https://codex.wordpress.org/Class_Reference/WP_List_Table#Extended_Properties
-		$columns               = $this->get_columns();
-		$hidden                = array();
-		$sortable              = array();
-		$this->_column_headers = array( $columns, $hidden, $sortable );
+		$this->_column_headers = [
+			$this->get_columns(),
+			[],
+			$this->get_sortable_columns()
+		];
 
-		$this->items = wc_customer_order_csv_export()->get_export_handler_instance()->get_exports();
+		$exports = wc_customer_order_csv_export()->get_export_handler_instance()->get_exports();
+
+		if ( ! empty( $exports ) ) {
+
+			foreach ( $exports as $key => $export ) {
+
+				$export = wc_customer_order_csv_export_get_export( $export );
+
+				if ( ! $export ) {
+					unset( $exports[ $key ] );
+				}
+
+				if ( $this->get_export_type() && $export->get_type() !== $this->get_export_type() ) {
+					unset( $exports[ $key ] );
+					continue;
+				}
+
+				if ( $this->get_method_type() && $export->get_transfer_method() !== $this->get_method_type() ) {
+					unset( $exports[ $key ] );
+					continue;
+				}
+			}
+
+		} else {
+
+			$exports = [];
+		}
+
+		$this->set_pagination_args( [
+			'total_items' => count( $exports ),
+			'per_page'    => $this->get_items_per_page( 'wc_customer_order_export_admin_exports_per_page' ),
+		] );
+
+		if ( $page_number = $this->get_pagenum() ) {
+
+			$per_page = $this->get_pagination_arg( 'per_page' );
+
+			$exports = array_splice( $exports, $per_page * ( $page_number - 1 ), $per_page );
+		}
+
+		$this->items = $exports;
 	}
 
 
@@ -373,9 +491,54 @@ class WC_Customer_Order_CSV_Export_List_Table extends WP_List_Table {
 	 */
 	protected function get_bulk_actions() {
 
-		return array(
+		return [
 			'delete' => esc_html__( 'Delete', 'woocommerce-customer-order-csv-export' ),
-		);
+		];
+	}
+
+
+	/**
+	 * Gets the specific export type to list.
+	 *
+	 * @since 5.0.0
+	 *
+	 * @return string|null
+	 */
+	private function get_export_type() {
+
+		if ( null === $this->export_type && ! empty( $_POST['export_type'] ) ) {
+
+			$export_types = wc_customer_order_csv_export()->get_export_types();
+
+			if ( isset( $export_types[ $_POST['export_type'] ] ) ) {
+				$this->export_type = $_POST['export_type'];
+			}
+		}
+
+		return $this->export_type;
+	}
+
+
+	/**
+	 * Gets the specific method type to list.
+	 *
+	 * @since 5.0.0
+	 *
+	 * @return string|null
+	 */
+	private function get_method_type() {
+
+		if ( null === $this->method_type && ! empty( $_POST['method_type'] ) ) {
+
+			$method_types   = wc_customer_order_csv_export()->get_methods_instance()->get_export_method_labels();
+			$method_types['download'] = 'Manual';
+
+			if ( isset( $method_types[ $_POST['method_type'] ] ) ) {
+				$this->method_type = $_POST['method_type'];
+			}
+		}
+
+		return $this->method_type;
 	}
 
 }

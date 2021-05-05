@@ -17,11 +17,11 @@
  * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @author    SkyVerge
- * @copyright Copyright (c) 2014-2019, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2021, SkyVerge, Inc. (info@skyverge.com)
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
-use SkyVerge\WooCommerce\PluginFramework\v5_3_1 as Framework;
+use SkyVerge\WooCommerce\PluginFramework\v5_10_6 as Framework;
 
 defined( 'ABSPATH' ) or exit;
 
@@ -51,13 +51,16 @@ class WC_Memberships_Integration_Subscriptions_Discounts {
 	public function __construct() {
 
 		// process member discounts for Subscriptions after standard discounts
-		add_action( 'init', array( $this, 'init' ), 20 );
+		add_action( 'wp_loaded', [ $this, 'init' ], 20 );
 
 		// create an option in settings to enable sign up fees discounts
 		add_filter( 'wc_memberships_products_settings', array( $this, 'enable_discounts_to_sign_up_fees' ) );
 
 		// ensure we filter member prices before Subscriptions calculates cart totals
 		add_filter( 'wc_memberships_price_adjustments_filter_priority', array( $this, 'adjust_price_filters_priority' ) );
+
+		// if using cart discounts, ensure renewals don't get double discounted
+		add_filter( 'wc_memberships_exclude_product_from_member_discounts', [ $this, 'disable_cart_discounts_for_renewals' ], 999, 2 );
 	}
 
 
@@ -137,11 +140,11 @@ class WC_Memberships_Integration_Subscriptions_Discounts {
 
 				do_action( 'wc_memberships_discounts_disable_price_adjustments' );
 
-				$price_before_discount = $product->get_price();
+				$price_before_discount = wc_get_price_to_display( $product );
 
 				do_action( 'wc_memberships_discounts_enable_price_adjustments' );
 
-				$price_after_discount = $product->get_price();
+				$price_after_discount = wc_get_price_to_display( $product );
 
 				if ( $price_before_discount !== $price_after_discount ) {
 
@@ -154,7 +157,7 @@ class WC_Memberships_Integration_Subscriptions_Discounts {
 					if ( 'variable-subscription' === $product->get_type() ) {
 
 						// with variable subscription product we need to insert the before price after the "From:" string
-						$from_text = Framework\SV_WC_Product_Compatibility::wc_get_price_html_from_text( $product );
+						$from_text = wc_get_price_html_from_text( $product );
 
 						if ( Framework\SV_WC_Helper::str_starts_with( $html_price, $from_text ) || ( is_rtl() && Framework\SV_WC_Helper::str_ends_with( $html_price, $from_text ) ) ) {
 							$html_price = $from_text . ' <del>' . wc_price( $price_before_discount ) . '</del> ' . wc_price( $price_after_discount ) . ' ';
@@ -225,7 +228,10 @@ class WC_Memberships_Integration_Subscriptions_Discounts {
 	 */
 	public function disable_price_adjustments_for_renewal() {
 
-		if ( function_exists( 'wcs_cart_contains_renewal' ) && false !== wcs_cart_contains_renewal() ) {
+		if (
+			( function_exists( 'wcs_cart_contains_renewal' ) && false !== wcs_cart_contains_renewal() )
+		 || ( function_exists( 'wcs_cart_contains_resubscribe' ) && false !== wcs_cart_contains_resubscribe() )
+		) {
 
 			$disable_price_adjustments = false;
 
@@ -274,6 +280,37 @@ class WC_Memberships_Integration_Subscriptions_Discounts {
 
 
 	/**
+	 * Avoids double-discounting when adding a product to cart intended for subscription's renewal.
+	 *
+	 * @internal
+	 *
+	 * @since 1.17.6
+	 *
+	 * @param bool $exclude_from_discounts whether the product should be excluded from discounts
+	 * @param null|int|\WC_Product $product the product object or ID (null value is for a legacy version of this callback)
+	 * @return bool
+	 */
+	public function disable_cart_discounts_for_renewals( $exclude_from_discounts, $product = null ) {
+
+		if ( ! $exclude_from_discounts && isset( WC()->cart ) && \WC_Subscriptions_Product::is_subscription( $product ) && is_user_logged_in() ) {
+
+			$product_id = $product instanceof \WC_Product ? $product->get_id() : $product;
+
+			foreach ( WC()->cart->get_cart_contents() as $item ) {
+
+				if ( $product_id && isset( $item['subscription_renewal'] ) && (int) $product_id === (int) $item['product_id'] ) {
+
+					$exclude_from_discounts = true;
+					break;
+				}
+			}
+		}
+
+		return $exclude_from_discounts;
+	}
+
+
+	/**
 	 * Maybe filters the sign up fee for handling member discounts.
 	 *
 	 * @internal
@@ -300,23 +337,6 @@ class WC_Memberships_Integration_Subscriptions_Discounts {
 		}
 
 		return $sign_up_fee;
-	}
-
-
-	/**
-	 * Filters the subscription product cart price to address some discrepancies with the real product subtotal.
-	 *
-	 * @since 1.8.8
-	 * @deprecated 1.9.1
-	 *
-	 * @param string $cart_price HTML price
-	 * @param \WC_Product_Subscription $subscription_product
-	 * @return string HTML
-	 */
-	public function maybe_adjust_cart_product_sign_up_fee( $cart_price, $subscription_product ) {
-
-		_deprecated_function( 'WC_Memberships_Integration_Subscriptions_Discounts::maybe_adjust_cart_product_sign_up_fee()', '1.9.1' );
-		return $cart_price;
 	}
 
 

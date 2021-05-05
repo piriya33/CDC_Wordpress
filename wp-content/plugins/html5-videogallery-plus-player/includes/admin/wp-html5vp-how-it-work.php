@@ -27,7 +27,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<div class="post-box-container">
 		<div id="poststuff">
 			<div id="post-body" class="metabox-holder columns-2">
-			
+
 				<!--How it workd HTML -->
 				<div id="post-body-content">
 					<div class="metabox-holder">
@@ -160,16 +160,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 										<li>WP Templating Features.</li>
 										<li>Gutenberg Block Supports.</li>
 										<li>WPBakery Page Builder Supports</li>
-										<li>Elementor, Beaver and SiteOrigin Page Builder Support. <span class="wpos-new-feature">New</span></li>
-										<li>Divi Page Builder Native Support. <span class="wpos-new-feature">New</span></li>
+										<li>Elementor, Beaver and SiteOrigin Page Builder Support <span class="wpos-new-feature">New</span></li>
+										<li>Divi Page Builder Native Support <span class="wpos-new-feature">New</span></li>
+										<li>Fusion Page Builder (Avada) Native Support <span class="wpos-new-feature">New</span></li>
 										<li>Editor support</li>
 										<li>Drag and drop custom ordering</li>
 										<li>Responsive</li>
 										<li>Popup gallery slider</li>
 									</ul>
 									<div class="upgrade-to-pro">Gain access to <strong>Video Gallery and Player</strong> included in <br /><strong>Essential Plugin Bundle</div>
-									<a class="button button-primary wpos-button-full" href="https://www.wponlinesupport.com/wp-plugin/video-gallery-player/?ref=WposPratik&utm_source=WP&utm_medium=Video&utm_campaign=Upgrade-PRO" target="_blank"><?php _e('Go Premium ', 'html5-videogallery-plus-player'); ?></a>	
-									<p><a class="button button-primary wpos-button-full" href="https://demo.wponlinesupport.com/prodemo/video-gallery-and-player-pro-demo/" target="_blank"><?php _e('View PRO Demo ', 'html5-videogallery-plus-player'); ?></a>			</p>								
+									<a class="button button-primary wpos-button-full" href="https://www.wponlinesupport.com/wp-plugin/video-gallery-player/?ref=WposPratik&utm_source=WP&utm_medium=Video&utm_campaign=Upgrade-PRO" target="_blank"><?php _e('Go Premium ', 'html5-videogallery-plus-player'); ?></a>
+									<p><a class="button button-primary wpos-button-full" href="https://demo.wponlinesupport.com/prodemo/video-gallery-and-player-pro-demo/" target="_blank"><?php _e('View PRO Demo ', 'html5-videogallery-plus-player'); ?></a></p>
 								</div><!-- .inside -->
 							</div><!-- #general -->
 						</div><!-- .meta-box-sortables ui-sortable -->

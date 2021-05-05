@@ -17,11 +17,11 @@
  * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @author    SkyVerge
- * @copyright Copyright (c) 2014-2019, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2021, SkyVerge, Inc. (info@skyverge.com)
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
-use SkyVerge\WooCommerce\PluginFramework\v5_3_1 as Framework;
+use SkyVerge\WooCommerce\PluginFramework\v5_10_6 as Framework;
 
 defined( 'ABSPATH' ) or exit;
 
@@ -80,25 +80,6 @@ class WC_Memberships_Integration_Subscriptions_User_Membership extends \WC_Membe
 			'_has_installment_plan',
 			'_free_trial_end_date',
 		) );
-	}
-
-
-	/**
-	 * Checks whether the order that granted access contains a subscription.
-	 *
-	 * @since 1.7.0
-	 *
-	 * @return bool
-	 */
-	private function order_contains_subscription() {
-
-		if ( ! $this->get_order() ) {
-			$contains_subscription = false;
-		} else {
-			$contains_subscription = wcs_order_contains_subscription( $this->get_order_id() );
-		}
-
-		return $contains_subscription;
 	}
 
 
@@ -201,7 +182,7 @@ class WC_Memberships_Integration_Subscriptions_User_Membership extends \WC_Membe
 		if ( $subscription = wcs_get_subscription( $subscription_id ) ) {
 
 			$old_subscription_id = $this->get_subscription_id();
-			$new_subscription_id = (int) Framework\SV_WC_Order_Compatibility::get_prop( $subscription, 'id' );
+			$new_subscription_id = (int) $subscription->get_id();
 			$set_subscription_id = (bool) update_post_meta( $this->id, $this->subscription_id_meta, $new_subscription_id );
 
 			if ( $set_subscription_id ) {
@@ -295,10 +276,80 @@ class WC_Memberships_Integration_Subscriptions_User_Membership extends \WC_Membe
 
 
 	/**
-	 * Checks Whether the user membership can be renewed by the user.
+	 * Returns the renew membership URL for frontend use.
 	 *
-	 * Subscription-tied memberships can be renewed if the subscription has expired.
-	 * Note: does not check whether the user has capability to renew.
+	 * This may correspond to a subscription early renewal URl for subscription-linked memberships.
+	 *
+	 * @since 1.14.0
+	 *
+	 * @return string URL
+	 */
+	public function get_renew_membership_url() {
+
+		// WooCommerce Subscriptions 2.4.4 is the minimum version that we could use as in earlier versions a nonce would make it difficult to use early renewal URLs in email contexts
+		if (    function_exists( 'wcs_get_early_renewal_url' )
+		     && $this->can_be_renewed_early()
+		     && version_compare( \WC_Subscriptions::$version, '2.4.4', '>=' ) ) {
+
+			$url = wcs_get_early_renewal_url( $this->get_subscription() );
+
+		} else {
+
+			$url = parent::get_renew_membership_url();
+		}
+
+		return $url;
+	}
+
+
+	/**
+	 * Checks whether the user membership can be renewed early by the user.
+	 *
+	 * @since 1.14.0
+	 *
+	 * @return bool
+	 */
+	public function can_be_renewed_early() {
+
+		// note: this is intentional, do not call child method in this class to avoid infinite recursion loops
+		$early_renewal = parent::can_be_renewed();
+
+		if ( $subscription = $this->get_subscription() ) {
+
+			$early_renewal     = false;
+			$expiry_date       = $this->get_subscription_end_date();
+			$next_bill_on_date = $this->get_next_bill_on_date();
+
+			if ( ( $expiry_date || $next_bill_on_date ) && function_exists( 'wcs_can_user_renew_early' ) && class_exists( 'WCS_Early_Renewal_Manager' ) ) {
+
+				$early_renewal = \WCS_Early_Renewal_Manager::is_early_renewal_enabled() && wcs_can_user_renew_early( $this->get_subscription(), $this->get_user_id() );
+
+				if ( $early_renewal ) {
+
+					// memberships on installment plans can be renewed only if not on fixed dates in the past
+					if ( $this->has_installment_plan() && $this->get_plan() && $this->plan->is_access_length_type( 'fixed' ) ) {
+
+						$fixed_end_date = $this->plan->get_access_end_date( 'timestamp' );
+						$early_renewal  = ! empty( $fixed_end_date ) ? $fixed_end_date < current_time( 'timestamp', true ) : $early_renewal;
+
+					// for all other memberships, we want to make sure that only subscriptions with a set end date are offered to be renewed early from a memberships perspective
+					} elseif ( ! $expiry_date ) {
+
+						$early_renewal  = false;
+					}
+				}
+			}
+		}
+
+		return $early_renewal;
+	}
+
+
+	/**
+	 * Checks whether the user membership can be renewed by the user.
+	 *
+	 * Subscription-tied memberships can be renewed if the subscription has expired or early renewal is allowed.
+	 * Note: does not check whether the user has the actual capability to renew.
 	 *
 	 * @since 1.7.0
 	 *
@@ -312,14 +363,25 @@ class WC_Memberships_Integration_Subscriptions_User_Membership extends \WC_Membe
 		// make sure that besides the subscription the membership has an order linked
 		if ( $subscription instanceof \WC_Subscription && $this->order_contains_subscription() ) {
 
-			// check if the subscription has a valid status to be resubscribed
-			$can_be_renewed = $subscription->has_status( array( 'expired', 'cancelled', 'pending-cancel', 'on-hold' ) );
+			// check if the subscription has a valid status to be resubscribed or early renewal is allowed
+			$can_be_renewed_early = $can_be_renewed = $this->can_be_renewed_early();
 
-			// memberships on installment plans can be renewed only if not on fixed dates in the past
-			if ( $can_be_renewed && $this->has_installment_plan() && $this->get_plan() && $this->plan->is_access_length_type( 'fixed' ) ) {
+			if ( ! $can_be_renewed_early ) {
 
-				$fixed_end_date = $this->plan->get_access_end_date( 'timestamp' );
-				$can_be_renewed = ! empty( $fixed_end_date ) ? $fixed_end_date < current_time( 'timestamp', true ) : $can_be_renewed;
+				$can_be_renewed = $subscription->has_status( [ 'expired', 'cancelled', 'pending-cancel', 'on-hold' ] );
+
+				// memberships on installment plans can be renewed only if not on fixed dates in the past
+				if ( $can_be_renewed && $this->has_installment_plan() && $this->get_plan() && $this->plan->is_access_length_type( 'fixed' ) ) {
+
+					$fixed_end_date = $this->plan->get_access_end_date( 'timestamp' );
+					$can_be_renewed = ! empty( $fixed_end_date ) ? $fixed_end_date < current_time( 'timestamp', true ) : $can_be_renewed;
+				}
+			}
+
+			// ultimately, check if the member can repurchase the subscription
+			if ( $can_be_renewed && ! $can_be_renewed_early && function_exists( 'wcs_can_user_resubscribe_to' ) ) {
+
+				$can_be_renewed = wcs_can_user_resubscribe_to( $subscription, $this->get_user_id() );
 			}
 		}
 
@@ -328,7 +390,53 @@ class WC_Memberships_Integration_Subscriptions_User_Membership extends \WC_Membe
 
 
 	/**
-	 * Returns the linked subscription's next payment date.
+	 * Checks whether the order that granted access contains a subscription.
+	 *
+	 * Helper method, do not open to public.
+	 *
+	 * @since 1.7.0
+	 *
+	 * @return bool
+	 */
+	private function order_contains_subscription() {
+
+		if ( ! $this->get_order() ) {
+			$contains_subscription = false;
+		} else {
+			$contains_subscription = wcs_order_contains_subscription( $this->get_order_id() );
+		}
+
+		return $contains_subscription;
+	}
+
+
+	/**
+	 * Gets the linked subscription's optionally set end date in UTC.
+	 *
+	 * Helper method, do not open to public.
+	 *
+	 * @since 1.13.2
+	 *
+	 * @param string $format a valid PHP format, or 'timestamp', or 'mysql'
+	 * @return int|string|null
+	 */
+	private function get_subscription_end_date( $format = 'mysql' ) {
+
+		$subscription = $this->get_subscription();
+		$expiry_date  = ! $subscription ?: $subscription->get_time( 'end', 'gmt' );
+
+		if ( ! empty( $expiry_date ) ) {
+			$expiry_date = wc_memberships_format_date( $expiry_date, $format );
+		}
+
+		return ! empty( $expiry_date ) ? $expiry_date : null;
+	}
+
+
+	/**
+	 * Gets the linked subscription's next payment date.
+	 *
+	 * Helper method, do not open to public.
 	 *
 	 * @since 1.10.4
 	 *
@@ -341,7 +449,7 @@ class WC_Memberships_Integration_Subscriptions_User_Membership extends \WC_Membe
 		$next_payment_date = null;
 		$subscription      = $this->get_subscription();
 
-		if ( $subscription && in_array( $this->get_status(), array( 'active', 'delayed', 'free_trial', 'paused' ) ) ) {
+		if ( $subscription && $this->has_status( [ 'active', 'delayed', 'free_trial', 'paused' ] ) ) {
 			$next_payment_date = $subscription->get_time( 'next_payment', $timezone );
 		}
 
@@ -349,7 +457,7 @@ class WC_Memberships_Integration_Subscriptions_User_Membership extends \WC_Membe
 			$next_payment_date = wc_memberships_format_date( $next_payment_date, $format );
 		}
 
-		return ! $next_payment_date ? null : $next_payment_date;
+		return ! empty( $next_payment_date ) ? $next_payment_date : null;
 	}
 
 
@@ -363,6 +471,7 @@ class WC_Memberships_Integration_Subscriptions_User_Membership extends \WC_Membe
 	 */
 	public function get_next_bill_on_date( $format = 'mysql' ) {
 
+		// note: 'gmt' rather than 'UTC' as the timezone is intended here as this is passed to Subscriptions
 		 return $this->get_subscription_next_payment_date( $format, 'gmt' );
 	}
 
@@ -377,6 +486,7 @@ class WC_Memberships_Integration_Subscriptions_User_Membership extends \WC_Membe
 	 */
 	public function get_next_bill_on_local_date( $format = 'mysql' ) {
 
+		// note: 'site' as the timezone is intended here as this is passed to Subscriptions
 		return $this->get_subscription_next_payment_date( $format, 'site' );
 	}
 
@@ -437,6 +547,15 @@ class WC_Memberships_Integration_Subscriptions_User_Membership extends \WC_Membe
 
 		$date = get_post_meta( $this->id, $this->free_trial_end_date_meta, true );
 
+		if ( empty( $date ) ) {
+
+			$subscription = $this->get_subscription();
+
+			if ( $subscription && $subscription->has_status( 'pending-cancel' ) ) {
+				$date = $subscription->get_meta( 'trial_end_pre_cancellation' );
+			}
+		}
+
 		return ! empty( $date ) ? wc_memberships_format_date( $date, $format ) : null;
 	}
 
@@ -489,15 +608,50 @@ class WC_Memberships_Integration_Subscriptions_User_Membership extends \WC_Membe
 		// if there is a date and no installment plan, it may indicate that the subscription has a set end date
 		if ( null !== $date && $integration && ! $this->has_installment_plan() ) {
 
-			$end_date = $integration->get_subscription_event_date( $this->get_subscription(), 'end' );
+			$expiry_date = $this->get_subscription_end_date();
 
 			// if there is no subscription end date, then it could mean a date has been forced on the membership instead, so ignore this
-			if ( ! empty( $end_date ) ) {
+			if ( null !== $expiry_date ) {
 				$date = wc_memberships_format_date( $date, $format );
 			}
 		}
 
 		return ! empty( $date ) ? $date : null;
+	}
+
+
+	/**
+	 * Sets expiration events for the subscription-linked membership.
+	 *
+	 * If the subscription has a fixed end date, allow scheduling some expiration events, so we can trigger ending soon emails, for instance.
+	 *
+	 * @see \WC_Memberships_User_Memberships::trigger_expiration_events()
+	 * @see \WC_Memberships_Integration_Subscriptions::update_related_membership_status()
+	 *
+	 * @since 1.14.0
+	 *
+	 * @param int|null $end_timestamp membership end date timestamp: when empty (unlimited membership), it will just clear any existing scheduled event
+	 */
+	public function schedule_expiration_events( $end_timestamp = null ) {
+
+		if ( $subscription = $this->get_subscription() ) {
+
+			// is there a subscription expiry date set?
+			$subscription_end_timestamp = $this->get_subscription_end_date( 'timestamp' );
+
+			if ( is_int( $subscription_end_timestamp ) ) {
+
+				// schedule ending soon emails using the parent logic
+				parent::schedule_expiration_events( $subscription_end_timestamp );
+
+				// unschedule expiration emails anyway: we only want to send ending soon emails, as the subscription will trigger expiration of the linked membership then
+				as_unschedule_action( 'wc_memberships_user_membership_expiry', [ 'user_membership_id' => $this->get_id() ], 'woocommerce-memberships' );
+				return;
+			}
+		}
+
+		// proceed as usual
+		parent::schedule_expiration_events( $end_timestamp );
 	}
 
 

@@ -1,0 +1,1 @@
+†l’`<?php exit; ?>a:1:{s:7:"content";a:6:{s:10:"_edit_lock";a:1:{i:0;s:12:"1619688587:1";}s:10:"_edit_last";a:1:{i:0;s:1:"1";}s:28:"_wc_memberships_force_public";a:1:{i:0;s:2:"no";}s:58:"_wc_memberships_use_custom_post_content_restricted_message";a:1:{i:0;s:2:"no";}s:17:"wpfcas_slide_icon";a:1:{i:0;s:0:"";}s:17:"wpfcas_slide_link";a:1:{i:0;s:0:"";}}}

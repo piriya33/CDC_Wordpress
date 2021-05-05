@@ -17,11 +17,11 @@
  * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @author    SkyVerge
- * @copyright Copyright (c) 2014-2019, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2021, SkyVerge, Inc. (info@skyverge.com)
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
-use SkyVerge\WooCommerce\PluginFramework\v5_3_1 as Framework;
+use SkyVerge\WooCommerce\PluginFramework\v5_10_6 as Framework;
 
 defined( 'ABSPATH' ) or exit;
 
@@ -94,15 +94,11 @@ class WC_Memberships_Integration_Subscriptions_Admin {
 	private function get_edit_subscription_input( $user_membership, $subscription = null ) {
 
 		if ( $subscription && $subscription instanceof \WC_Subscription ) {
-			$subscription_id   = Framework\SV_WC_Order_Compatibility::get_prop( $subscription, 'id' );
+			$subscription_id   = $subscription->get_id();
 			$subscription_url  = get_edit_post_link( $subscription_id );
 			$subscription_link = '<a href="' . esc_url( $subscription_url ) . '">' . esc_html( $subscription_id ) . '</a>';
-			$selected          = array(
-				$subscription_id => wc_memberships()->get_integrations_instance()->get_subscriptions_instance()->get_formatted_subscription_id_holder_name( $subscription ),
-			);
 		} else {
-			$selected        = array();
-			$subscription_id = '';
+			$subscription_id   = '';
 			$subscription_link = esc_html__( 'Membership not linked to a Subscription', 'woocommerce-memberships' );
 		}
 
@@ -117,39 +113,18 @@ class WC_Memberships_Integration_Subscriptions_Admin {
 
 		?><br>
 		<span class="wc-memberships-edit-subscription-link-field">
-
-			<?php if ( Framework\SV_WC_Plugin_Compatibility::is_wc_version_gte_3_0() ) : ?>
-
-				<select
-					class="sv-wc-enhanced-search"
-					id="_subscription_id"
-					name="_subscription_id"
-					data-action="wc_memberships_edit_membership_subscription_link"
-					data-nonce="<?php echo wp_create_nonce( 'edit-membership-subscription-link' ); ?>"
-					data-placeholder="<?php esc_attr_e( 'Link to a Subscription or keep empty to leave unlinked', 'woocommerce-memberships' ); ?>"
-					data-allow_clear="true">
-					<?php if ( $subscription instanceof \WC_Subscription ) : ?>
-						<option value="<?php echo $subscription_id; ?>"><?php echo $subscription_id; ?></option>
-					<?php endif; ?>
-				</select>
-
-			<?php else : ?>
-
-				<input
-					type="hidden"
-					class="sv-wc-enhanced-search"
-					id="_subscription_id"
-					name="_subscription_id"
-					data-action="wc_memberships_edit_membership_subscription_link"
-					data-nonce="<?php echo wp_create_nonce( 'edit-membership-subscription-link' ); ?>"
-					data-placeholder="<?php esc_attr_e( 'Link to a Subscription or keep empty to leave unlinked', 'woocommerce-memberships' ); ?>"
-					data-allow_clear="true"
-					data-selected="<?php echo esc_html( current( $selected ) ); ?>"
-					value="<?php echo esc_attr( $subscription_id ); ?>"
-				/>
-
-			<?php endif; ?>
-
+			<select
+				class="sv-wc-enhanced-search"
+				id="_subscription_id"
+				name="_subscription_id"
+				data-action="wc_memberships_edit_membership_subscription_link"
+				data-nonce="<?php echo wp_create_nonce( 'edit-membership-subscription-link' ); ?>"
+				data-placeholder="<?php esc_attr_e( 'Link to a Subscription or keep empty to leave unlinked', 'woocommerce-memberships' ); ?>"
+				data-allow_clear="true">
+				<?php if ( $subscription instanceof \WC_Subscription ) : ?>
+					<option value="<?php echo $subscription_id; ?>"><?php echo $subscription_id; ?></option>
+				<?php endif; ?>
+			</select>
 		</span>
 		<?php
 
@@ -356,96 +331,99 @@ class WC_Memberships_Integration_Subscriptions_Admin {
 		// check if a membership plan has subscription(s):
 		// if the current membership plan has at least one subscription product that grants access, enable the subscription-specific controls
 		wc_enqueue_js( '
+			( function( $ ) {
 
-			var checkIfPlanHasPurchaseAccess = function() {
+				var checkIfPlanHasPurchaseAccess = function() {
 
-				var $access_method_options = $( ".plan-access-method-selectors" ).find( \'input[name="_access_method"]\' );
+					var $access_method_options = $( ".plan-access-method-selectors" ).find( \'input[name="_access_method"]\' );
 
-				$access_method_options.on( "change", function( e ) {
+					$access_method_options.on( "change", function( e ) {
 
-					if ( "purchase" !== $( this ).val() ) {
-						$( ".plan-access-length-field" ).show();
-						$( ".plan-subscription-access-length-field" ).hide();
-						checkIfPlanHasSubscription();
-					} else {
-						$( ".plan-subscription-access-length-field" ).show();
-						checkIfPlanHasSubscription();
-					}
-				} );
-			}
-
-			var checkIfPlanHasSubscription = function() {
-
-				var product_ids = $( "#_product_ids" ).val() || [];
-				    product_ids = $.isArray( product_ids ) ? product_ids : product_ids.split( "," );
-
-				$.get( wc_memberships_admin.ajax_url, {
-					action:      "wc_memberships_membership_plan_has_subscription_product",
-					security:    "' . wp_create_nonce( 'check-subscriptions' ) . '",
-					product_ids: product_ids,
-				}, function ( subscription_products ) {
-
-					var option = $( ".plan-access-method-selectors" ).find( \'input[name="_access_method"]:checked\' ).val(),
-						action = "purchase" == option && subscription_products && subscription_products.length ? "removeClass" : "addClass",
-						$field = $( ".plan-access-length-field" );
-
-					$( ".js-show-if-has-subscription" )[ action ]( "hide" );
-
-					if ( subscription_products && subscription_products.length === product_ids.length && "purchase" == option ) {
-						$field.hide();
-					} else {
-						$field.show();
-					}
-				} );
-			}
-
-			checkIfPlanHasSubscription();
-			checkIfPlanHasPurchaseAccess();
-
-			$( "#_product_ids" ).on( "change", function() {
-				checkIfPlanHasPurchaseAccess();
-				checkIfPlanHasSubscription();
-			} );
-
-			var $access_length_input     = $( ".plan-subscription-access-length-selectors" ),
-			    $access_length_options   = $access_length_input.find( \'input[name="_subscription_access_length"]\' ),
-			    $access_length_field     = $access_length_input.closest( "p.form-field" ),
-			    $unlimited_length_tip    = $access_length_field.find( ".js-show-if-subscription-access-length-unlimited" ),
-			    $subscription_length_tip = $access_length_field.find( ".js-show-if-subscription-access-length-subscription" ),
-			    $specific_length_input   = $access_length_field.find( ".plan-subscription-access-length-specific" ),
-			    $fixed_length_input      = $access_length_field.find( ".plan-subscription-access-length-fixed" );
-
-			$access_length_options.on( "change", function( e ) {
-
-				var access_length = $( this ).val();
-
-				$subscription_length_tip.hide();
-				$unlimited_length_tip.hide();
-
-				$fixed_length_input.addClass( "hide" );
-				$specific_length_input.addClass( "hide" );
-
-				switch ( access_length ) {
-
-					case "specific" :
-						$specific_length_input.removeClass( "hide" );
-					break;
-
-					case "fixed" :
-						$fixed_length_input.removeClass( "hide" );
-					break;
-
-					case "subscription" :
-					default :
-						$subscription_length_tip.show();
-					break;
-
-					case "unlimited" :
-						$unlimited_length_tip.show();
-					break;
-
+						if ( "purchase" !== $( this ).val() ) {
+							$( ".plan-access-length-field" ).show();
+							$( ".plan-subscription-access-length-field" ).hide();
+							checkIfPlanHasSubscription();
+						} else {
+							$( ".plan-subscription-access-length-field" ).show();
+							checkIfPlanHasSubscription();
+						}
+					} );
 				}
-			} );
+
+				var checkIfPlanHasSubscription = function() {
+
+					var product_ids = $( "#_product_ids" ).val() || [];
+						product_ids = $.isArray( product_ids ) ? product_ids : product_ids.split( "," );
+
+					$.get( wc_memberships_admin.ajax_url, {
+						action:      "wc_memberships_membership_plan_has_subscription_product",
+						security:    "' . wp_create_nonce( 'check-subscriptions' ) . '",
+						product_ids: product_ids,
+					}, function ( subscription_products ) {
+
+						var option = $( ".plan-access-method-selectors" ).find( \'input[name="_access_method"]:checked\' ).val(),
+							action = "purchase" == option && subscription_products && subscription_products.length ? "removeClass" : "addClass",
+							$field = $( ".plan-access-length-field" );
+
+						$( ".js-show-if-has-subscription" )[ action ]( "hide" );
+
+						if ( subscription_products && subscription_products.length === product_ids.length && "purchase" == option ) {
+							$field.hide();
+						} else {
+							$field.show();
+						}
+					} );
+				}
+
+				checkIfPlanHasSubscription();
+				checkIfPlanHasPurchaseAccess();
+
+				$( "#_product_ids" ).on( "change", function() {
+					checkIfPlanHasPurchaseAccess();
+					checkIfPlanHasSubscription();
+				} );
+
+				var $access_length_input     = $( ".plan-subscription-access-length-selectors" ),
+					$access_length_options   = $access_length_input.find( \'input[name="_subscription_access_length"]\' ),
+					$access_length_field     = $access_length_input.closest( "p.form-field" ),
+					$unlimited_length_tip    = $access_length_field.find( ".js-show-if-subscription-access-length-unlimited" ),
+					$subscription_length_tip = $access_length_field.find( ".js-show-if-subscription-access-length-subscription" ),
+					$specific_length_input   = $access_length_field.find( ".plan-subscription-access-length-specific" ),
+					$fixed_length_input      = $access_length_field.find( ".plan-subscription-access-length-fixed" );
+
+				$access_length_options.on( "change", function( e ) {
+
+					var access_length = $( this ).val();
+
+					$subscription_length_tip.hide();
+					$unlimited_length_tip.hide();
+
+					$fixed_length_input.addClass( "hide" );
+					$specific_length_input.addClass( "hide" );
+
+					switch ( access_length ) {
+
+						case "specific" :
+							$specific_length_input.removeClass( "hide" );
+						break;
+
+						case "fixed" :
+							$fixed_length_input.removeClass( "hide" );
+						break;
+
+						case "subscription" :
+						default :
+							$subscription_length_tip.show();
+						break;
+
+						case "unlimited" :
+							$unlimited_length_tip.show();
+						break;
+
+					}
+				} );
+
+			} ) ( jQuery );
 		' );
 
 		?>
@@ -481,14 +459,14 @@ class WC_Memberships_Integration_Subscriptions_Admin {
 		?>
 		<span class="rule-control-group rule-control-group-access-schedule-trial <?php if ( ! $has_subscription ) : ?>hide<?php endif; ?> js-show-if-has-subscription">
 
-			<input type="checkbox"
-				   name="_<?php echo esc_attr( $type ); ?>_rules[<?php echo $index; ?>][access_schedule_exclude_trial]"
-				   id="_<?php echo esc_attr( $type ); ?>_rules_<?php echo $index; ?>_access_schedule_exclude_trial"
-				   value="yes" <?php checked( $rule->is_access_schedule_excluding_trial(), true ); ?>
-				   class="access_schedule-exclude-trial"
-				   <?php if ( ! $rule->current_user_can_edit() ) : ?>disabled<?php endif; ?> />
+			<label class="label-checkbox">
+				<input type="checkbox"
+					   name="_<?php echo esc_attr( $type ); ?>_rules[<?php echo $index; ?>][access_schedule_exclude_trial]"
+					   id="_<?php echo esc_attr( $type ); ?>_rules_<?php echo $index; ?>_access_schedule_exclude_trial"
+					   value="yes" <?php checked( $rule->is_access_schedule_excluding_trial(), true ); ?>
+					   class="access_schedule-exclude-trial"
+					   <?php if ( ! $rule->current_user_can_edit() ) : ?>disabled<?php endif; ?> />
 
-			<label for="_<?php echo esc_attr( $type ); ?>_rules_<?php echo $index; ?>_access_schedule_exclude_trial" class="label-checkbox">
 				<?php esc_html_e( 'Start after trial', 'woocommerce-memberships' ); ?>
 			</label>
 
@@ -525,7 +503,7 @@ class WC_Memberships_Integration_Subscriptions_Admin {
 
 				if ( $subscription instanceof \WC_Subscription ) {
 
-					$actions['delete-with-subscription'] = '<a class="delete-membership-and-subscription" title="' . esc_attr__( 'Delete this membership permanently and the subscription associated with it', 'woocommerce-memberships' ) . '" href="#" data-user-membership-id="' . esc_attr( $user_membership->get_id() ) . '" data-subscription-id="' . esc_attr( Framework\SV_WC_Order_Compatibility::get_prop( $subscription, 'id' ) ) . '">' . esc_html__( 'Delete with subscription', 'woocommerce-memberships' ) . '</a>';
+					$actions['delete-with-subscription'] = '<a class="delete-membership-and-subscription" title="' . esc_attr__( 'Delete this membership permanently and the subscription associated with it', 'woocommerce-memberships' ) . '" href="#" data-user-membership-id="' . esc_attr( $user_membership->get_id() ) . '" data-subscription-id="' . esc_attr( $subscription->get_id() ) . '">' . esc_html__( 'Delete with subscription', 'woocommerce-memberships' ) . '</a>';
 				}
 			}
 		}
@@ -624,18 +602,18 @@ class WC_Memberships_Integration_Subscriptions_Admin {
 
 			if ( $subscription instanceof \WC_Subscription ) {
 
-				$actions = array_merge( array(
-					'delete-with-subscription' => array(
+				$actions = array_merge( [
+					'delete-with-subscription' => [
 						'class'             => 'submitdelete delete-membership-and-subscription',
 						'link'              => '#',
 						'text'              => __( 'Delete User Membership with Subscription', 'woocommerce-memberships' ),
-						'custom_attributes' => array(
+						'custom_attributes' => [
 							'data-user-membership-id' => $user_membership_id,
-							'data-subscription-id'    => Framework\SV_WC_Order_Compatibility::get_prop( $subscription, 'id' ),
+							'data-subscription-id'    => $subscription->get_id(),
 							'data-tip'                => __( 'Delete this membership permanently and the subscription associated with it', 'woocommerce-memberships' ),
-						),
-					),
-				), $actions );
+						],
+					],
+				], $actions );
 			}
 		}
 
@@ -818,7 +796,6 @@ class WC_Memberships_Integration_Subscriptions_Admin {
 		if ( is_array( $data ) && $plan instanceof \WC_Memberships_Membership_Plan ) {
 
 			$subscription_plan    = new \WC_Memberships_Integration_Subscriptions_Membership_Plan( $plan->post );
-			$is_subscription_only = $subscription_plan->is_subscription_only();
 			$has_subscription     = $subscription_plan->has_subscription();
 			$has_installment      = $has_subscription && $subscription_plan->has_installment_plan();
 
@@ -826,108 +803,28 @@ class WC_Memberships_Integration_Subscriptions_Admin {
 			$no   = __( 'No', 'woocommerce-memberships' );
 
 			if ( $has_subscription ) {
-				$html = $is_subscription_only ? $yes : __( 'Optional', 'woocommerce-memberships' );
+				$html = $subscription_plan->is_subscription_only() ? $yes : __( 'Optional', 'woocommerce-memberships' );
 			} else {
 				$html = $no;
 			}
 
-			$data['has_subscription'] = array(
+			$data['has_subscription'] = [
 				'label' => __( 'Subscription', 'woocommerce-memberships' ),
 				'value' => $has_subscription,
 				'html'  => $html,
-			);
+			];
 
 			if ( $has_subscription ) {
 
-				$data['has_installment'] = array(
+				$data['has_installment'] = [
 					'label' => __( 'Installment plan', 'woocommerce-memberships' ),
 					'value' => $has_installment,
 					'html'  => ! $has_installment ? $no : $html,
-				);
+				];
 			}
 		}
 
 		return $data;
-	}
-
-
-	/**
-	 * Backwards compatibility handler for deprecated methods.
-	 *
-	 * TODO remove deprecated methods when they are at least minor versions older (as in x.Y.z semantic versioning) {FN 2018-04-13}
-	 *
-	 * @since 1.10.1
-	 *
-	 * @param string $method method called
-	 * @param void|string|array|mixed $args optional argument(s)
-	 * @return null|void|mixed
-	 */
-	public function __call( $method, $args ) {
-
-		$deprecated = "WC_Memberships_Integration_Subscriptions_Admin::{$method}()";
-
-		switch ( $method ) {
-
-			/* @deprecated since 1.10.1 -- remove by 1.13.0 {FN 2018-04-13} */
-			case 'export_user_membership_headers_add_subscription_id' :
-
-				_deprecated_function( $deprecated, '1.10.1', 'wc_memberships()->get_integrations_instance()->get_subscriptions_instance()->get_utilities_instance()->export_user_membership_headers_add_subscription_id()' );
-
-				$subscriptions = wc_memberships()->get_integrations_instance()->get_subscriptions_instance();
-
-				if ( $subscriptions && ( $utilities = $subscriptions->get_utilities_instance() ) ) {
-
-					return $utilities->add_user_memberships_export_subscription_headers( $args );
-				}
-
-				return is_array( $args ) ? $args : array();
-
-			/* @deprecated since 1.10.1 -- remove by 1.13.0 {FN 2018-04-13} */
-			case 'export_user_membership_subscription_id' :
-
-				_deprecated_function( $deprecated, '1.10.1', 'wc_memberships()->get_integrations_instance()->get_subscriptions_instance()->get_utilities_instance()->export_user_membership_subscription_id()' );
-
-				$subscriptions = wc_memberships()->get_integrations_instance()->get_subscriptions_instance();
-
-				if ( $subscriptions && isset( $args[0], $args[1], $args[2] ) && ( $utilities = $subscriptions->get_utilities_instance() ) ) {
-
-					return $utilities->export_user_membership_subscription_id( $args[0], $args[1], $args[2] );
-				}
-
-				return '';
-
-			/* @deprecated since 1.10.1 -- remove by 1.13.0 {FN 2018-04-13} */
-			case 'import_user_membership_data' :
-
-				_deprecated_function( $deprecated, '1.10.1', 'wc_memberships()->get_integrations_instance()->get_subscriptions_instance()->get_utilities_instance()->import_user_membership_data()' );
-
-				$subscriptions = wc_memberships()->get_integrations_instance()->get_subscriptions_instance();
-
-				if ( $subscriptions  && isset( $args[0], $args[1], $args[2], $args[3] ) && ( $utilities = $subscriptions->get_utilities_instance() ) ) {
-
-					return $utilities->parse_user_membership_subscription_import_data( $args[0], $args[1], $args[2], $args[3] );
-				}
-
-				return is_array( $args ) ? $args : array();
-
-			/* @deprecated since 1.10.1 -- remove by 1.13.0 {FN 2018-04-13} */
-			case 'import_user_membership_subscription_id' :
-
-				_deprecated_function( $deprecated, '1.10.1', 'wc_memberships()->get_integrations_instance()->get_subscriptions_instance()->get_utilities_instance()->import_user_membership_subscription_id()' );
-
-				$subscriptions = wc_memberships()->get_integrations_instance()->get_subscriptions_instance();
-
-				if ( $subscriptions  && isset( $args[0], $args[1], $args[2], $args[3] ) && ( $utilities = $subscriptions->get_utilities_instance() ) ) {
-					$utilities->import_user_membership_subscription_data( $args[0], $args[1], $args[2], $args[3] );
-				}
-
-				return null;
-
-			default :
-				// you're probably doing it wrong
-				trigger_error( "Call to undefined method {$deprecated}", E_USER_ERROR );
-				return null;
-		}
 	}
 
 

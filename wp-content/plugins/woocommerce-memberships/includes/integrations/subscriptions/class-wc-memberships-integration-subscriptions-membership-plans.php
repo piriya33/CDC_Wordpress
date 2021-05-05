@@ -17,11 +17,11 @@
  * needs please refer to https://docs.woocommerce.com/document/woocommerce-memberships/ for more information.
  *
  * @author    SkyVerge
- * @copyright Copyright (c) 2014-2019, SkyVerge, Inc.
+ * @copyright Copyright (c) 2014-2021, SkyVerge, Inc. (info@skyverge.com)
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
-use SkyVerge\WooCommerce\PluginFramework\v5_3_1 as Framework;
+use SkyVerge\WooCommerce\PluginFramework\v5_10_6 as Framework;
 
 defined( 'ABSPATH' ) or exit;
 
@@ -252,7 +252,7 @@ class WC_Memberships_Integration_Subscriptions_Membership_Plans {
 							     && $user_membership->has_status( array( 'pending', 'cancelled' ) )
 							     && wc_memberships_is_user_member( $user_id, $plan ) ) {
 
-								$order_id                = Framework\SV_WC_Order_Compatibility::get_prop( $order, 'id' );
+								$order_id                = $order->get_id();
 								$subscription_membership = new \WC_Memberships_Integration_Subscriptions_User_Membership( $user_membership->post );
 
 								/* translators: Placeholders: %1$s is the subscription product name, %2%s is the order number */
@@ -263,9 +263,9 @@ class WC_Memberships_Integration_Subscriptions_Membership_Plans {
 
 								$subscription_membership->activate_membership( $note );
 
-								$subscription = wc_memberships_get_order_subscription( Framework\SV_WC_Order_Compatibility::get_prop( $order, 'id' ), $product->get_id() );
+								$subscription = wc_memberships_get_order_subscription( $order->get_id(), $product->get_id() );
 
-								$subscription_membership->set_subscription_id( Framework\SV_WC_Order_Compatibility::get_prop( $subscription, 'id' ) );
+								$subscription_membership->set_subscription_id( $subscription ? $subscription->get_id() : 0 );
 							}
 						}
 					}
@@ -365,8 +365,8 @@ class WC_Memberships_Integration_Subscriptions_Membership_Plans {
 
 					if ( $subscription = wcs_get_subscription( $subscription_post ) ) {
 
-						$subscription_id = Framework\SV_WC_Order_Compatibility::get_prop( $subscription, 'id' );
-						$parent_order_id = Framework\SV_WC_Order_Compatibility::get_prop( $subscription, 'parent_id' );
+						$subscription_id = $subscription->get_id();
+						$parent_order_id = $subscription->get_parent_id( 'edit' );
 
 						// the subscription has no parent order, therefore must be a manually added one
 						if ( ! $parent_order_id && $subscription_id && $user_id === (int) $subscription->get_user_id() ) {
@@ -377,13 +377,7 @@ class WC_Memberships_Integration_Subscriptions_Membership_Plans {
 
 								foreach ( $items as $item ) {
 
-									if ( $item instanceof \WC_Order_Item_Product && is_callable( array( $item, 'get_product' ) ) ) {
-										$product = $item->get_product();
-									} elseif ( is_callable( array( $subscription, 'get_product_from_item' ) ) ) {
-										$product = $subscription->get_product_from_item( $item );
-									} else {
-										$product = null;
-									}
+									$product = $item instanceof \WC_Order_Item_Product ? $item->get_product() : null;
 
 									// the product matches a subscription product that would grant access
 									if ( $product && in_array( $product->get_id(), $access_granting_sub_ids, false ) ) {
@@ -519,9 +513,9 @@ class WC_Memberships_Integration_Subscriptions_Membership_Plans {
 
 				$subscription_membership = new \WC_Memberships_Integration_Subscriptions_User_Membership( $args['user_membership_id'] );
 
-				$subscription_membership->set_subscription_id( Framework\SV_WC_Order_Compatibility::get_prop( $subscription, 'id' ) );
+				$subscription_membership->set_subscription_id( $subscription->get_id() );
 
-				$subscription_plan  = new \WC_Memberships_Integration_Subscriptions_Membership_Plan( $subscription_membership->get_plan_id() );
+				$subscription_plan = new \WC_Memberships_Integration_Subscriptions_Membership_Plan( $subscription_membership->get_plan_id() );
 
 				// adjust the start date for installment plans (might not be now for fixed date plans)
 				if ( $subscription_membership->has_installment_plan() ) {
